@@ -6,12 +6,6 @@ import torch.nn.functional as F
 
 import pdb
 
-
-def distillation_loss(student_logits, teacher_logits, temperature=1.0):
-    return F.kl_div(F.log_softmax(student_logits / temperature, dim=1),
-                    F.softmax(teacher_logits / temperature, dim=1),
-                    reduction='sum') * (temperature ** 2)
-
 def train_model(
     model,
     header,
@@ -27,7 +21,6 @@ def train_model(
     patience=5,
     min_delta=0.001,
     scheduler=None,
-    teacher_model=None,
 ):
     model.to(device)
 
@@ -51,7 +44,6 @@ def train_model(
             is_training=True,
             micro_batch_size=micro_batch_size,
             logger=logger,
-            teacher_model=teacher_model,
         )
 
         # Validation phase
@@ -116,7 +108,6 @@ def run_epoch(
     micro_batch_size,
     scheduler=None,
     logger=None,
-    teacher_model=None,
 ):
     total_loss = 0.0
     accs = {k: 0.0 for k in header}
@@ -140,20 +131,10 @@ def run_epoch(
                 for j in range(len(output_by_fields)):
                     output_by_fields[j] = output_by_fields[j].reshape(-1, output_dims[j])
 
-                if teacher_model is not None:
-                    with torch.no_grad():
-                        teacher_logits = teacher_model(_inputs[i:i + micro_batch_size])
-                    
-                    teacher_logits_by_fields = list(teacher_logits.split(output_dims, dim=-1))
-                    for j in range(len(teacher_logits_by_fields)):
-                        teacher_logits_by_fields[j] = teacher_logits_by_fields[j].reshape(-1, output_dims[j])
-                else:
-                    teacher_logits_by_fields = [None] * len(output_by_fields)
-
                 target_by_fields = [t[i:i + micro_batch_size].view(-1) for t in _targets]
 
                 micro_batch_loss = 0.0
-                for k, o, t, tl in zip(header, output_by_fields, target_by_fields, teacher_logits_by_fields):
+                for k, o, t in zip(header, output_by_fields, target_by_fields):
                     mask = t > 0
                     
                     combined_accs[k] += (o.detach().argmax(dim=1) == t)[mask].float().sum()
@@ -161,8 +142,6 @@ def run_epoch(
                     cnt[k] += _cnt
                     
                     micro_batch_loss += criterion(o[mask], t[mask]) / _cnt
-                    if teacher_model is not None:
-                        micro_batch_loss += distillation_loss(o[mask], tl[mask]) / _cnt
                 
                 micro_batch_loss /= (_inputs.shape[0] - 1) // micro_batch_size + 1
                 if is_training:

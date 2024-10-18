@@ -3,26 +3,42 @@ import tiktoken
 from tqdm import tqdm
 
 FUNC_NAMES = [
-    "apple", "banana", "cat", "dog", "elephant", "frog", "giraffe", "hat", "ice", "jug",
-    "kite", "lemon", "mango", "notebook", "orange", "pencil", "quilt", "rose", "sunflower",
-    "table", "umbrella", "vase", "watermelon", "yacht", "zebra", "asparagus",
-    "bottle", "cucumber", "desk", "earrings", "flute", "grapes", "helicopter",
-    "jacket", "kiwi", "lamp", "mirror", "nest", "octopus", "pillow", "rabbit",
-    "shoe", "turtle", "unicorn", "violin", "walnut", "yogurt", "zipper", "acorn",
-    "backpack", "candle", "dolphin", "eggplant", "fence", "glove", "hamburger", "island",
-    "jeans", "kangaroo", "lighthouse", "mushroom", "note", "owl", "pumpkin", "quill",
-    "rocket", "strawberry", "teapot", "urchin", "violet", "whale", "yam", 
-    "anchor", "brush", "clock", "daisy", "envelope", "fox", "guitar", "house", "iceberg",
-    "jar", "koala", "leaf", "mountain", "nail", "ocean", "piano", "queen", "ring", "star",
-    "tree", "ukulele", "volcano", "windmill", "zucchini", "armchair",
-    "book", "couch", "door", "escalator", "fan", "gate", "helmet", "ink", "jellyfish",
-    "lion", "mouse", "nectarine", "ostrich", "peach", "quartz", "rosemary", "sandal",
-    "television", "urchin", "vaccine", "window", "beetle",
-    "coral", "dandelion", "eagle", "fern", "harp", "jade", "kettle", "llama",
-    "maple", "nutmeg", "orchid", "pepper", "quiver", "radish", "seagull", "tulip", "urchin",
-    "van", "wasp", "avocado", "carrot", "duck", "eel",
-    "fig", "goose", "leopard", "mole",
-    "pea", "quinoa", "raccoon", "squirrel", "toad", "urchin", "weasel",
+    "calculate", "process", "handle", "display", "print_message", "read_file",
+    "write_file", "parse_data", "serialize", "deserialize", "validate", "authenticate",
+    "authorize", "hash_password", "encrypt", "decrypt", "send_email", "log_error",
+    "log_info", "connect_database", "disconnect_database", "execute_query", "fetch_data",
+    "update_record", "delete_record", "insert_record", "find_by_id", "search", "filter_data",
+    "sort", "merge", "split", "join", "trim", "format_date", "get_current_time", "sleep",
+    "restart_service", "shutdown", "upload_file", "download_file", "zip_files", "unzip_files",
+    "parse_url", "encode_url", "decode_url", "send_request", "receive_response", "redirect",
+    "render_template", "parse_json", "generate_json", "read_csv", "write_csv", "parse_xml",
+    "generate_xml", "create_directory", "delete_directory", "list_directory", "copy_file",
+    "move_file", "rename_file", "change_file_permissions", "change_directory", "get_file_size",
+    "calculate_hash", "generate_uuid", "parse_arguments", "print_help", "set_configuration",
+    "get_configuration", "save_configuration", "load_configuration", "initialize", "finalize",
+    "start", "stop", "pause", "resume", "run", "execute", "call_api", "process_request",
+    "process_response", "validate_request", "validate_response", "map_data", "reduce_data",
+    "filter_list", "append_list", "remove_from_list", "insert_into_list", "pop_from_list",
+    "clear_list", "index_of", "find_in_list", "sort_list", "reverse_list", "shuffle_list",
+    "merge_lists", "split_list", "join_list", "slice_list", "chunk_list", "pair_list",
+    "update_settings", "load_settings", "save_settings", "apply_settings", "configure",
+    "setup", "teardown", "cleanup", "create_session", "destroy_session", "save_session",
+    "load_session", "refresh", "reload", "parse_header", "format_header", "compress",
+    "decompress", "encode", "decode", "hash", "sign", "verify_signature", "create_token",
+    "validate_token", "revoke_token", "issue_token", "refresh_token", "generate_key",
+    "validate_key", "encrypt_data", "decrypt_data", "serialize_object", "deserialize_object",
+    "create_object", "destroy_object", "clone_object", "inspect_object", "monitor",
+    "analyze", "diagnose", "repair", "optimize", "scale", "upgrade", "update", "patch",
+    "backup", "restore", "import_data", "export_data", "sync_data", "merge_data", "split_data",
+    "transform_data", "encode_data", "decode_data", "scan", "query", "build", "compile",
+    "deploy", "publish", "retract", "log_debug", "log_warning", "assert_condition", "test_connection",
+    "generate_report", "print_report", "create_report", "delete_report", "update_report",
+    "send_notification", "schedule", "unschedule", "initiate_transfer", "complete_transfer",
+    "abort_transfer", "calculate_difference", "compare", "diff", "merge_diff", "patch_diff",
+    "validate_schema", "migrate", "seed_database", "clear_cache", "populate_cache", "invalidate_cache",
+    "encrypt_file", "decrypt_file", "archive", "unarchive", "generate_checksum", "verify_checksum",
+    "create_pipeline", "execute_pipeline", "terminate_pipeline", "schedule_job", "cancel_job",
+    "retry_job", "execute_task", "complete_task", "abort_task", "allocate_resources", "release_resources"
 ]
 VAR_NAMES = [
     'i', 'j', 'k', 'x', 'y', 'z', 'n', 'm', 't', 'val', 'value',
@@ -98,7 +114,7 @@ class Function:
         self.last_called_step = last_called_step
 
 class BasicCodeGenerator:
-    def __init__(self, is_train, seed, min_dist, use_var_rate, error_rate):
+    def __init__(self, is_train, seed, max_args_per_fn, max_calls_per_fn, min_dist, use_var_rate, error_rate):
         if is_train:
             self.func_names = FUNC_NAMES[:len(FUNC_NAMES) // 2]
             self.var_names = VAR_NAMES[:len(VAR_NAMES) // 2]
@@ -110,8 +126,8 @@ class BasicCodeGenerator:
         self.min_dist = min_dist
         self.use_var_rate = use_var_rate
         self.error_rate = error_rate
-        self.max_args_per_fn = 5
-        self.max_calls_per_fn = 5
+        self.max_args_per_fn = max_args_per_fn
+        self.max_calls_per_fn = max_calls_per_fn
         self.used_fn_idx = []
         self.functions = []
         self.result = {
@@ -141,12 +157,8 @@ class BasicCodeGenerator:
         f(self)
         self.push_token("}", rcurl_kind)
 
-    def gen_fn(self):
-        fn_idx = self.rng.integers(low=0, high=len(self.func_names))
-        while fn_idx in self.used_fn_idx:
-            fn_idx = self.rng.integers(low=0, high=len(self.func_names))
-        self.used_fn_idx.append(fn_idx)
-        fn_name = self.func_names[fn_idx]
+    def gen_fn(self, i):
+        fn_name = self.chosen_fn_names[i]
 
         num_vars = self.rng.integers(low=1, high=self.max_args_per_fn + 1)
         input_tys = self.rng.choice([Type.Bool, Type.Int, Type.Float], num_vars).tolist()
@@ -221,9 +233,10 @@ class BasicCodeGenerator:
             return self.rng.choice(FLOAT_LITERALS).item(), AstKind.FloatLiteral
 
     def gen_fns(self, max_fns):
-        num_fns = self.rng.integers(low=3, high=max(max_fns, 3) + 1)
-        for _ in range(num_fns):
-            self.gen_fn()
+        num_fns = self.rng.integers(low=max_fns // 2, high=max_fns + 1)
+        self.chosen_fn_names = self.rng.choice(self.func_names, num_fns, replace=False)
+        for i in range(num_fns):
+            self.gen_fn(i)
 
     def finish(self):
         return self.result
@@ -231,29 +244,18 @@ class BasicCodeGenerator:
 from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
 
-def generate_code(is_train, seed, max_fns, min_dist, use_var_rate, error_rate):
+def generate_code(is_train, seed, max_fns, max_args_per_fn, max_calls_per_fn,min_dist, use_var_rate, error_rate):
     """
     This function is a wrapper for the code generation process,
     designed to be called by each worker in the pool.
     """
-    bcg = BasicCodeGenerator(is_train, seed, min_dist, use_var_rate, error_rate)
+    bcg = BasicCodeGenerator(is_train, seed, max_args_per_fn, max_calls_per_fn, min_dist, use_var_rate, error_rate)
     bcg.gen_fns(max_fns)
     return bcg.finish()
 
-def rnd_codes_parallel(is_train, n, max_fns, min_dist, use_var_rate, error_rate, workers=None):
-    """
-    Generate random codes in parallel.
-
-    :param n: Number of codes to generate.
-    :param max_fns: Maximum number of functions.
-    :param min_dist: Minimum distance.
-    :param use_var_rate: Use variable rate flag.
-    :param error_rate: Error rate.
-    :param workers: Number of worker processes to use. If None, it will use the number of processors on the machine.
-    :return: List of generated codes.
-    """
+def rnd_codes_parallel(is_train, n, max_fns, max_args_per_fn, max_calls_per_fn, min_dist, use_var_rate, error_rate, workers=16):
     # Tuple of arguments to pass to each parallel invocation
-    args = [(is_train, seed, max_fns, min_dist, use_var_rate, error_rate) for seed in range(n)]
+    args = [(is_train, seed, max_fns, max_args_per_fn, max_calls_per_fn, min_dist, use_var_rate, error_rate) for seed in range(n)]
     
     # Use ProcessPoolExecutor to execute calls asynchronously
     with ProcessPoolExecutor(max_workers=workers) as executor:

@@ -20,12 +20,12 @@ HIDDEN_DIM_SPACE = list(range(8, 64 + 1, 8)) + [256]
 BATCH_SIZE = 512
 
 parser = argparse.ArgumentParser(description="Train RNN models with different configurations.")
-parser.add_argument('--dataset', type=str, default="n100000-f10-d3-v0.20-e0.50", help='Dataset to use')
+parser.add_argument('--dataset', type=str, default="n100000-f10-a5-c5-d3-v0.20-e0.50", help='Dataset to use')
 parser.add_argument('--num_epochs', type=int, default=50, help='Number of epochs to train')
 parser.add_argument('--seed', type=int, default=123, help='Random seed for initialization')
 parser.add_argument('--server_name', type=str, default="")
 parser.add_argument('--gpu_id', type=int, default=0)
-parser.add_argument('--try_hidden_dim', type=int, default=None)
+parser.add_argument('--hidden_dims', nargs='+', type=int, help='List of hidden dimensions')
 args = parser.parse_args()
 
 train_dataset = MiniHuskyDataset(os.path.join(os.environ["DATA_ROOT"],
@@ -58,6 +58,15 @@ def run(config, train_dataset, eval_dataset, header):
 
     exp_name = f"rnn_hd{config['hidden_dim']}_l{config['num_layers']}_seed{config['seed']}_{args.dataset}"
 
+    device = torch.device(f"cuda:{config['gpu_id']}" if torch.cuda.is_available() else "cpu")
+    model = SimpleRNN(
+        input_dim=config["vocab_size"],
+        output_dim=sum(train_dataset.get_output_dims()),
+        bidirectional=True,
+        **config
+    ).to(device)
+    config["total_params"] = sum(p.numel() for p in model.parameters() if p.requires_grad)
+
     logger = Logger(
         exp_root=os.path.join(os.environ["EXP_ROOT"], "transformer_vs_rnn"),
         exp_name=exp_name,
@@ -65,18 +74,6 @@ def run(config, train_dataset, eval_dataset, header):
         config=config
     )
 
-    device = torch.device(f"cuda:{config['gpu_id']}" if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}")
-
-    # Create models
-    model = SimpleRNN(
-        input_dim=config["vocab_size"],
-        output_dim=sum(train_dataset.get_output_dims()),
-        bidirectional=True,
-        **config
-    ).to(device)
-
-    # Loss function and optimizers
     criterion = nn.CrossEntropyLoss(reduction="sum")
     optimizer = optim.Adam(model.parameters(), lr=1)
     scheduler = torch.optim.lr_scheduler.LambdaLR(
@@ -87,7 +84,6 @@ def run(config, train_dataset, eval_dataset, header):
         )
     )
 
-    # Train the model
     print("Training RNN...")
     model = train_model(
         model=model,
@@ -105,18 +101,21 @@ def run(config, train_dataset, eval_dataset, header):
     )
 
     logger.finish()
-    torch.save(model.state_dict(), os.path.join(logger.exp_path, "model.pth"))
+    # torch.save(model.state_dict(), os.path.join(logger.exp_path, "model.pth"))
 
-if args.try_hidden_dim is not None:
-    print("Running with hidden_dim:", args.try_hidden_dim)
-    search_space = [args.try_hidden_dim]
+if args.hidden_dims:
+    print("Running with hidden_dims:", args.hidden_dims)
+    search_space = args.hidden_dims
 else:
     search_space = HIDDEN_DIM_SPACE
 
 for hidden_dim in ordered_search_space(search_space):
-    min_lr, max_lr = 1e-5, 1e-3
+    if hidden_dim <= 64:
+        min_lr, max_lr = 1e-5, 1e-3
+    else:
+        min_lr, max_lr = 2e-6, 2e-4
     
-    micro_batch_size = BATCH_SIZE
+    micro_batch_size = 64
 
     config = {
         **vars(args),
