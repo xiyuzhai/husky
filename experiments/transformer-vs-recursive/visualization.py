@@ -7,7 +7,8 @@ import pdb
 from brokenaxes import brokenaxes
 
 DATASETS = [
-    "n100000-f10-a5-c5-d3-v0.20-e0.50",
+    "n200000-f20-a5-c5-d3-v0.20-e0.50",
+    "n300000-f40-a5-c5-d5-v0.20-e0.50"
 ]
 exp_dir = "results"
 
@@ -15,7 +16,13 @@ I1R = 400 * (10**4)
 I2L = 1550 * (10**4)
 I2R = 1650 * (10**4)
 
-RUNS = os.listdir(exp_dir)
+def dfs(path):
+    if os.path.isdir(path):
+        for x in os.listdir(path):
+            yield from dfs(os.path.join(path, x))
+        yield path
+
+RUNS = list(dfs(exp_dir))
 
 plt.rcParams.update({'font.size': 18})
 
@@ -24,27 +31,28 @@ for dataset in DATASETS:
 
     val_dict = {}
     for run in runs:
-        parts = run.split("_")
+        parts = run.split("/")[-1].split("_")
         model = parts[0]
 
-        run_dir = os.path.join(exp_dir, run)
-
-        config = json.load(open(os.path.join(run_dir, "config.json")))
+        config_path = os.path.join(run, "config.json")
+        if not os.path.exists(config_path):
+            continue
+        config = json.load(open(config_path, "r"))
         if "total_params" in config:
             total_params = config["total_params"]
         else:
-            ckpts = [x for x in os.listdir(run_dir) if x.endswith(".pth")]
+            ckpts = [x for x in os.listdir(run) if x.endswith(".pth")]
             if not ckpts:
                 print(f"Skipping {run} as no checkpoints found")
                 continue
-            weights = torch.load(os.path.join(run_dir, ckpts[0]), map_location="cpu")
+            weights = torch.load(os.path.join(run, ckpts[0]), map_location="cpu")
             total_params = 0
             for param in weights:
                 total_params += weights[param].numel()
 
         # read from jsonl file for log
         log = []
-        with open(os.path.join(run_dir, "log.jsonl"), "r") as f:
+        with open(os.path.join(run, "log.jsonl"), "r") as f:
             for line in f:
                 if not line.strip():
                     continue
@@ -52,13 +60,12 @@ for dataset in DATASETS:
         
         local_dict = {}
         for l in log:
-            if "val/loss" in l:
-                for k, v in l.items():
-                    if "val/" in k:
-                        nk = k[4:]
-                        if nk not in local_dict:
-                            local_dict[nk] = []
-                        local_dict[nk].append(v)
+            for k, v in l.items():
+                if "acc" in k or "loss" in k:
+                    nk = k.replace("/", "_")
+                    if nk not in local_dict:
+                        local_dict[nk] = []
+                    local_dict[nk].append(v)
                 
         for k, v in local_dict.items():
             if k not in val_dict:
