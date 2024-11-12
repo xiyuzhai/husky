@@ -13,7 +13,7 @@ use crate::{
     item_path::ItemPathPresentation, synchrotron::accompany::AccompanyingTraceIdsExceptFollowed,
     var_id::VarIdPresentation, view::TraceViewData, *,
 };
-use figure::{FigureKey, TraceFigureKey};
+use figure::{FigureKey, TraceFigureKey, TraceFigureKeys};
 use husky_item_path_interface::ItemPathIdInterface;
 use husky_value_protocol::presentation::synchrotron::{
     ValuePresentationSynchrotron, ValuePresentationSynchrotronStatus,
@@ -39,7 +39,7 @@ pub struct TraceSynchrotron<TraceProtocol: IsTraceProtocol> {
     var_id_presentations:
         FxHashMap<(ItemPathIdInterface, TraceVarId<TraceProtocol>), VarIdPresentation>,
     #[serde_as(as = "Vec<(_, _)>")]
-    figures: FxHashMap<TraceFigureKey<TraceProtocol>, TraceProtocol::Figure>,
+    figure_cache: FxHashMap<TraceFigureKey<TraceProtocol>, TraceProtocol::Figure>,
     actions: Vec<TraceSynchrotronAction<TraceProtocol>>,
     // child synchrotrons
     value_presentation_synchrotron: ValuePresentationSynchrotron,
@@ -97,7 +97,7 @@ impl<TraceProtocol: IsTraceProtocol> TraceSynchrotron<TraceProtocol> {
             item_path_presentations: Default::default(),
             var_id_presentations: Default::default(),
             accompanyings: Default::default(),
-            figures: Default::default(),
+            figure_cache: Default::default(),
         }
     }
 }
@@ -127,12 +127,14 @@ impl<TraceProtocol: IsTraceProtocol> TraceSynchrotron<TraceProtocol> {
     }
 
     #[track_caller]
-    pub fn figure(&self) -> &TraceProtocol::Figure {
-        &self.figures[&self.figure_key()]
+    pub fn figures(&self) -> impl Iterator<Item = &TraceProtocol::Figure> {
+        self.figure_keys()
+            .into_iter()
+            .map(move |key| &self.figure_cache[&key])
     }
 
-    pub fn figure_key(&self) -> TraceFigureKey<TraceProtocol> {
-        FigureKey::new(
+    pub fn figure_keys(&self) -> TraceFigureKeys<TraceProtocol> {
+        FigureKey::collect_from_caryatid(
             self.followed(),
             self.accompanyings_except_followed(self.followed()),
             self.caryatid(),
@@ -227,7 +229,14 @@ impl<TraceProtocol: IsTraceProtocol> TraceSynchrotron<TraceProtocol> {
     }
 
     pub fn has_figure(&self, figure_key: &TraceFigureKey<TraceProtocol>) -> bool {
-        self.figures.contains_key(&figure_key)
+        self.figure_cache.contains_key(figure_key)
+    }
+
+    pub fn has_all_figures<I>(&self, figure_keys: I) -> bool
+    where
+        I: IntoIterator<Item = TraceFigureKey<TraceProtocol>>,
+    {
+        figure_keys.into_iter().all(|key| self.has_figure(&key))
     }
 
     pub(crate) fn cache_figure(
@@ -235,7 +244,7 @@ impl<TraceProtocol: IsTraceProtocol> TraceSynchrotron<TraceProtocol> {
         key: TraceFigureKey<TraceProtocol>,
         figure: TraceProtocol::Figure,
     ) {
-        assert!(self.figures.insert(key, figure).is_none())
+        assert!(self.figure_cache.insert(key, figure).is_none())
     }
 
     pub(crate) fn visual_synchrotron_mut(&mut self) -> &mut VisualSynchrotron {

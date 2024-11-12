@@ -4,16 +4,16 @@ pub mod r#enum;
 pub mod exception;
 pub mod memo;
 pub mod pedestal;
-pub mod static_var;
 pub mod r#struct;
 #[cfg(test)]
 mod tests;
 #[cfg(feature = "ugly")]
 pub mod ugly;
 pub mod val;
+pub mod var;
 
 use self::pedestal::StandardPedestal;
-use self::static_var::StandardVarId;
+use self::var::StandardVarId;
 use self::StandardLinketImpl as LinketImpl;
 #[cfg(test)]
 use self::StandardLinketImpl as __LinketImpl;
@@ -23,6 +23,7 @@ use husky_ki_repr_interface::KiReprInterface;
 use husky_ki_repr_interface::{KiArgumentReprInterface, KiDomainReprInterface};
 use husky_linket_impl::dev_eval_context::DevEvalContextGuard;
 use husky_linket_impl::linket_impl::VmArgumentValues;
+use husky_linket_impl::static_var::StaticVarSvtable;
 use husky_linket_impl::{
     dev_eval_context::DevEvalContext,
     exception::TrackedException,
@@ -58,6 +59,7 @@ pub type StandardVmControlFlow<C = ThawedValue, B = ThawedValue> =
     VmControlFlow<C, B, StandardTrackedException>;
 pub type StandardVmArgumentValue<'comptime> = VmArgumentValue<'comptime, StandardLinketImpl>;
 pub type StandardVmArgumentValues<'comptime> = VmArgumentValues<'comptime, StandardLinketImpl>;
+pub type StandardStaticVarSvtable = StaticVarSvtable<StandardVarId, Value>;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum StandardLinketImpl {
@@ -115,12 +117,6 @@ pub enum StandardLinketImpl {
     StaticVar {
         init_item_path_id_interface: fn(ItemPathIdInterface),
         get_var_id: fn() -> StandardVarId,
-        page_var_ids: for<'db> fn(
-            &'db [ItemPathIdInterface],
-            StandardVarId,
-            Option<usize>,
-        ) -> Box<dyn Iterator<Item = StandardVarId> + 'db>,
-        default_page_start: fn(&[ItemPathIdInterface]) -> StandardStaticVarResult<StandardVarId>,
         // todo: use guard?
         try_set_var_id: unsafe fn(
             StandardVarId,
@@ -132,6 +128,7 @@ pub enum StandardLinketImpl {
             )
                 -> StandardStaticVarResult<(StandardVarId, Box<dyn FnOnce() + 'static>)>,
         get_value: fn() -> Value,
+        svtable: &'static StaticVarSvtable<StandardVarId, Value>,
     },
     // todo: memo
 }
@@ -267,11 +264,10 @@ impl IsLinketImpl for StandardLinketImpl {
             StandardLinketImpl::StaticVar {
                 init_item_path_id_interface,
                 get_var_id,
-                page_var_ids,
-                default_page_start,
                 try_set_var_id,
                 try_set_default_var_id,
                 get_value,
+                ..
             } => todo!(),
         }
     }
@@ -357,29 +353,11 @@ impl IsLinketImpl for StandardLinketImpl {
         }
     }
 
-    fn page_var_ids<'db>(
-        self,
-        locked: &'db [ItemPathIdInterface],
-        page_start: StandardVarId,
-        page_limit: Option<usize>,
-    ) -> Box<dyn Iterator<Item = StandardVarId> + 'db> {
-        let StandardLinketImpl::StaticVar { page_var_ids, .. } = self else {
+    fn static_var_svtable(self) -> &'static StandardStaticVarSvtable {
+        let StandardLinketImpl::StaticVar { svtable, .. } = self else {
             unreachable!()
         };
-        page_var_ids(locked, page_start, page_limit)
-    }
-
-    fn var_default_page_start(
-        self,
-        locked: &[ItemPathIdInterface],
-    ) -> LinketImplStaticVarResult<Self, <Self::Pedestal as IsPedestal>::VarId> {
-        let StandardLinketImpl::StaticVar {
-            default_page_start, ..
-        } = self
-        else {
-            unreachable!()
-        };
-        default_page_start(locked)
+        svtable
     }
 }
 

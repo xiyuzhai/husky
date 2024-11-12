@@ -16,7 +16,7 @@ use crate::quary::FlyQuary;
 
 use crate::*;
 use husky_eth_term::term::{
-    application::EthApplication, curry::EthCurry, lambda_variable::EthLambdaVariable,
+    abstract_variable::EthAbstractVariable, application::EthApplication, curry::EthCurry,
     ritchie::EthRitchie, symbolic_variable::EthSymbolicVariable,
 };
 use husky_term_prelude::literal::Literal;
@@ -122,8 +122,8 @@ impl From<EthSymbolicVariable> for FlyTerm {
     }
 }
 
-impl From<EthLambdaVariable> for FlyTerm {
-    fn from(value: EthLambdaVariable) -> Self {
+impl From<EthAbstractVariable> for FlyTerm {
+    fn from(value: EthAbstractVariable) -> Self {
         Into::<EthTerm>::into(value).into()
     }
 }

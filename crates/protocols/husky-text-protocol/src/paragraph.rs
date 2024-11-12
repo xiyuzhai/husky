@@ -46,7 +46,10 @@ impl<'a> std::iter::Iterator for ParagraphIter<'a> {
         }
         (!content.is_empty()).then_some(Paragraph {
             content: content.trim_end_matches('\n'),
-            span: TextSpan { start, end },
+            span: TextSpan {
+                start: start.index(),
+                end: end.index(),
+            },
         })
     }
 }

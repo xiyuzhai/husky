@@ -172,7 +172,7 @@ pub(crate) fn ethereal_term_application_declarative_ty(
 pub(crate) fn ethereal_term_application_declarative_ty_dependent_aux(
     db: &::salsa::Db,
     function_ty: DecCurry,
-    function_ty_parameter_variable: DecLambdaVariable,
+    function_ty_parameter_variable: DecAbstractVariable,
     argument: DecTerm,
     argument_ty: RawType,
     shift: u8,

@@ -31,7 +31,7 @@ pub fn apply_document_changes(
                 }
                 valid_range = LineMapValidRange::UpToLineExclusive(range.start.line);
                 let range = LineMap::string_range(&line_map, range);
-                old_text.replace_range(range, &change.text);
+                old_text.replace_range(range.raw_range(), &change.text);
             }
             None => {
                 *old_text = change.text;

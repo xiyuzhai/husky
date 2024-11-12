@@ -1,5 +1,5 @@
-#[cfg(feature = "test_utils")]
-pub mod test_utils;
+#[cfg(feature = "test_helpers")]
+pub mod test_helpers;
 
 use self::accompany::AccompanyingTraceIdsExceptFollowed;
 use crate::{
@@ -375,18 +375,19 @@ impl<Tracetime: IsTracetime> TraceServer<Tracetime> {
 
     fn cache_figure(&mut self) {
         let trace_synchrotron = self.trace_synchrotron.as_mut().unwrap();
-        let figure_key = trace_synchrotron.figure_key();
-        if !trace_synchrotron.has_figure(&figure_key) {
-            let figure = self.tracetime.calc_figure(
-                &figure_key,
-                trace_synchrotron.visual_synchrotron_mut(),
-                &mut self.visual_cache,
-            );
-            trace_synchrotron.cache_var_id_presentations_from_figure(&figure, |var_id| {
-                self.tracetime.calc_var_id_presentations(var_id)
-            });
-            trace_synchrotron
-                .take_action(TraceSynchrotronAction::CacheFigure { figure_key, figure })
+        for figure_key in trace_synchrotron.figure_keys() {
+            if !trace_synchrotron.has_figure(&figure_key) {
+                let figure = self.tracetime.calc_figure(
+                    &figure_key,
+                    trace_synchrotron.visual_synchrotron_mut(),
+                    &mut self.visual_cache,
+                );
+                trace_synchrotron.cache_var_id_presentations_from_figure(&figure, |var_id| {
+                    self.tracetime.calc_var_id_presentations(var_id)
+                });
+                trace_synchrotron
+                    .take_action(TraceSynchrotronAction::CacheFigure { figure_key, figure })
+            }
         }
     }
 

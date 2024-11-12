@@ -46,7 +46,7 @@ pub fn hir_lazy_expr_region_from_syn(
     db: &::salsa::Db,
 ) -> HirLazyExprRegion {
     let sem_expr_region = db.sem_expr_region(syn_expr_region);
-    hir_lazy_expr_region_from_sema(sem_expr_region, db)
+    hir_lazy_expr_region_from_sem(sem_expr_region, db)
 }
 
 pub fn hir_lazy_expr_source_map_from_syn(
@@ -57,9 +57,16 @@ pub fn hir_lazy_expr_source_map_from_syn(
     hir_lazy_expr_region_with_source_map(db, sem_expr_region).1
 }
 
-pub fn hir_lazy_expr_region_from_sema(
+pub fn hir_lazy_expr_region_from_sem(
     sem_expr_region: SemExprRegion,
     db: &::salsa::Db,
 ) -> HirLazyExprRegion {
     hir_lazy_expr_region_with_source_map(db, sem_expr_region).0
+}
+
+pub fn hir_lazy_expr_source_map_from_sem(
+    sem_expr_region: SemExprRegion,
+    db: &::salsa::Db,
+) -> HirLazyExprSourceMap {
+    hir_lazy_expr_region_with_source_map(db, sem_expr_region).1
 }

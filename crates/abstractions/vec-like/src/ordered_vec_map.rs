@@ -51,7 +51,7 @@ fn ordered_small_vec_map_from_slice_fails_on_duplication() {
 
 impl<K, E> FromIterator<E> for OrderedVecMap<E>
 where
-    K: Ord + Copy + std::fmt::Debug,
+    K: Ord + std::fmt::Debug,
     E: AsVecMapEntry<K = K> + std::fmt::Debug,
 {
     fn from_iter<T: IntoIterator<Item = E>>(iter: T) -> Self {
@@ -230,10 +230,10 @@ where
 
     pub fn insert_new(&mut self, new: E) -> Result<(), InsertEntryRepeatError<E>>
     where
-        K: Ord + Copy,
+        K: Ord,
     {
-        let key = new.key();
-        match self.entries.binary_search_by(|e| e.key().cmp(&key)) {
+        let key = new.key_ref();
+        match self.entries.binary_search_by(|e| e.key_ref().cmp(&key)) {
             Ok(old) => Err(InsertEntryRepeatError { old, new }),
             Err(index) => Ok(self.entries.insert(index, new)),
         }
@@ -241,10 +241,10 @@ where
 
     pub fn insert(&mut self, new: E)
     where
-        K: Ord + Copy,
+        K: Ord,
     {
-        let key = new.key();
-        match self.entries.binary_search_by(|e| e.key().cmp(&key)) {
+        let key = new.key_ref();
+        match self.entries.binary_search_by(|e| e.key_ref().cmp(&key)) {
             Ok(old) => (),
             Err(index) => self.entries.insert(index, new),
         }

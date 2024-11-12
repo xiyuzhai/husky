@@ -348,7 +348,7 @@ where
 {
     use husky_vfs::{
         script::{Script, ScriptSource},
-        test_utils::VfsTestUtilsDb,
+        test_helpers::VfsTestUtilsDb,
     };
 
     let token_sheet = db.chunk_token_sheet_data(Script::new(

@@ -21,6 +21,7 @@ use husky_devsoul::{
     },
 };
 use husky_entity_path::path::ItemPathId;
+use husky_figure_zone_protocol::FigureZone;
 use husky_item_path_interface::ItemPathIdInterface;
 use husky_ki_repr::repr::KiRepr;
 use husky_ki_repr_interface::{KiDomainReprInterface, KiReprInterface};
@@ -28,6 +29,7 @@ use husky_linket_impl::dev_eval_context::IsDevRuntimeInterface;
 use husky_trace::{jar::TraceDb, trace::Trace};
 use husky_trace_protocol::{
     caryatid::IsCaryatid,
+    chart::Chart,
     figure::{IsFigure, TraceFigureKey},
     item_path::ItemPathPresentation,
     protocol::{IsTraceProtocol, TraceBundle, TraceVarId},
@@ -180,7 +182,39 @@ impl<Devsoul: IsDevsoul> IsTracetime for Devtime<Devsoul> {
                 },
             );
         let trace_plot_map = trace_visual_cache.calc_plots(figure_key.traces().collect());
-        IsFigure::from_chart(chart, trace_plot_map, visual_synchrotron)
+        match figure_key.figure_zone() {
+            Some(zone) => match zone {
+                FigureZone::Gallery => match chart {
+                    Some(chart) => match chart {
+                        Chart::Dim0(_) => todo!(),
+                        Chart::Dim1(chart) => {
+                            IsFigure::new_gallery(chart, trace_plot_map, visual_synchrotron)
+                        }
+                        Chart::Dim2(chart) => todo!(),
+                    },
+                    None => IsFigure::new_void(), // ad hoc
+                },
+                FigureZone::Text => match chart {
+                    Some(chart) => match chart {
+                        Chart::Dim0(_) => todo!(),
+                        Chart::Dim1(chart) => {
+                            IsFigure::new_text(Some(chart), trace_plot_map, visual_synchrotron)
+                        }
+                        Chart::Dim2(chart) => todo!(),
+                    },
+                    None => IsFigure::new_text(None, trace_plot_map, visual_synchrotron), // ad hoc
+                },
+            },
+            None => match chart {
+                Some(chart) => {
+                    let Chart::Dim0(chart) = chart else {
+                        unreachable!()
+                    };
+                    IsFigure::new_specific(chart, trace_plot_map, visual_synchrotron)
+                }
+                None => IsFigure::new_void(),
+            },
+        }
     }
 
     fn calc_item_path_presentations(
@@ -213,15 +247,14 @@ impl<Devsoul: IsDevsoul> IsTracetime for Devtime<Devsoul> {
     {
         self.runtime
             .with_var_ids(
-                caryatid
-                    .clone()
-                    .var_path_windlasses()
-                    .map(|(item_path_id_interface, windlass)| match windlass {
+                caryatid.clone().windlasses().iter().copied().map(
+                    |(item_path_id_interface, windlass)| match windlass {
                         Windlass::Specific(var_id)
                         | Windlass::Generic {
                             page_start: var_id, ..
                         } => (item_path_id_interface, var_id),
-                    }),
+                    },
+                ),
                 |locked| {
                     self.add_extra_var_deps_to_caryatid_aux(
                         caryatid.clone(),
@@ -249,15 +282,16 @@ impl<Devsoul: IsDevsoul> Devtime<Devsoul> {
     {
         match var_deps.next() {
             Some(item_path_id_interface) => {
-                let page_start = self
+                let (zone, page_start) = self
                     .runtime
-                    .var_default_page_start_aux(item_path_id_interface, &locked)?;
+                    .var_default_zone_and_page_start(item_path_id_interface, &locked)?;
                 caryatid.add_new(
                     item_path_id_interface,
                     Windlass::Generic {
                         page_start,
-                        followed: Some(page_start),
+                        moored: page_start,
                         page_limit: Some(page_limit),
+                        zone: Some(zone),
                     },
                 );
                 self.runtime

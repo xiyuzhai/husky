@@ -6,22 +6,21 @@ edition = "2021"
 [dependencies]
 smallvec.workspace = true
 egui = { workspace = true, optional = true }
-rustc-hash = { workspace = true, optional = true }
+eframe = { workspace = true, optional = true }
+rustc-hash.workspace = true
 thiserror.workspace = true
 # abstractions
-enum-class = { workspace = true, optional = true }
+enum-class.workspace = true
+ui-macros.workspace = true
 # protocols
 husky-visual-protocol = { workspace = true }
 
 [dev-dependencies]
 expect-test.workspace = true
 # abstractions
-ui = { path = ".", features = ["egui"] }
+ui = { workspace = true, features = ["egui", "test_helpers"] }
 
 [features]
-egui = [
-    "dep:egui",
-    "dep:rustc-hash",
-    "dep:enum-class",
-    "husky-visual-protocol/egui"
-]
+default = []
+egui = ["dep:egui", "dep:eframe", "husky-visual-protocol/egui"]
+test_helpers = ["egui"]

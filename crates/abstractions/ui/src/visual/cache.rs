@@ -1,12 +1,8 @@
-use crate::ui::UiTextureId;
-
-use husky_visual_protocol::synchrotron::VisualSynchrotron;
-
-use husky_visual_protocol::visual::image::ImageVisual;
-
-use rustc_hash::FxHashMap;
-
 use crate::ui::IsUi;
+use crate::ui::UiTextureId;
+use husky_visual_protocol::synchrotron::VisualSynchrotron;
+use husky_visual_protocol::visual::image::ImageVisual;
+use rustc_hash::FxHashMap;
 
 pub struct VisualUiCache<Ui: IsUi> {
     //todo: optimize by LRU??

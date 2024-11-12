@@ -1,0 +1,7 @@
+[package]
+name = "cybertron-mini-lean-tokens"
+version.workspace = true
+description = "tokens of example mini-lean-compiler in cybertron"
+license = "MIT OR Apache-2.0"
+
+[dependencies]

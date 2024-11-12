@@ -3,7 +3,7 @@ use husky_dec_term::term::abstraction::DecAbstraction;
 
 #[salsa::interned]
 pub struct EthAbstraction {
-    x: EthLambdaVariable,
+    x: EthAbstractVariable,
     m: EthTerm,
 }
 

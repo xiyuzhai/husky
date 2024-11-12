@@ -4,7 +4,7 @@ version.workspace = true
 edition = "2021"
 
 [dependencies]
-rand = "0.8.4"
+rand.workspace = true
 
 [lib]
 doctest = false

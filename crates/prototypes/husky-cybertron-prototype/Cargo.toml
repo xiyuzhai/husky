@@ -1,5 +1,5 @@
 [package]
-name = "husky-cybertron-prototype"
+name = "cybertron-prototype"
 version.workspace = true
 rust-version.workspace = true
 authors.workspace = true

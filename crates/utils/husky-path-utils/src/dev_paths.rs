@@ -4,13 +4,15 @@ use std::path::{Path, PathBuf};
 /// paths useful for the development of the Husky programming language
 pub struct HuskyLangDevPaths {
     cargo_manifest_dir: Option<PathBuf>,
-    lang_dev_root: PathBuf,
+    root: PathBuf,
     /// the path for dev library
-    lang_dev_library_dir: PathBuf,
+    library_dir: PathBuf,
     /// the path for dev examples
-    lang_dev_examples_dir: PathBuf,
+    examples_dir: PathBuf,
     /// the path for dev registry
-    lang_dev_registry_dir: PathBuf,
+    registry_dir: PathBuf,
+    /// the path for experiments
+    experiments_dir: PathBuf,
 }
 
 impl HuskyLangDevPaths {
@@ -18,16 +20,18 @@ impl HuskyLangDevPaths {
         let cargo_manifest_dir: Option<PathBuf> = std::env::var("CARGO_MANIFEST_DIR")
             .ok()
             .map(|path| path.into());
-        let lang_dev_root = find_lang_dev_root().expect("todo");
-        let lang_dev_library_dir = lang_dev_root.join("library");
-        let lang_dev_examples_dir = lang_dev_root.join("examples");
-        let lang_dev_registry_dir = lang_dev_root.join("registry");
+        let root = find_lang_dev_root().expect("todo");
+        let library_dir = root.join("library");
+        let examples_dir = root.join("examples");
+        let registry_dir = root.join("registry");
+        let experiments_dir = root.join("experiments");
         Self {
             cargo_manifest_dir,
-            lang_dev_root,
-            lang_dev_library_dir,
-            lang_dev_examples_dir,
-            lang_dev_registry_dir,
+            root,
+            library_dir,
+            examples_dir,
+            registry_dir,
+            experiments_dir,
         }
     }
 
@@ -35,19 +39,23 @@ impl HuskyLangDevPaths {
         self.cargo_manifest_dir.as_ref().map(|path| path as &Path)
     }
 
-    pub fn dev_root(&self) -> &PathBuf {
-        &self.lang_dev_root
+    pub fn root(&self) -> &PathBuf {
+        &self.root
     }
 
-    pub fn lang_dev_library_dir(&self) -> &PathBuf {
-        &self.lang_dev_library_dir
+    pub fn library_dir(&self) -> &PathBuf {
+        &self.library_dir
     }
 
-    pub fn lang_dev_examples_dir(&self) -> &PathBuf {
-        &self.lang_dev_examples_dir
+    pub fn examples_dir(&self) -> &PathBuf {
+        &self.examples_dir
     }
 
-    pub fn lang_dev_registry_dir(&self) -> &PathBuf {
-        &self.lang_dev_registry_dir
+    pub fn registry_dir(&self) -> &PathBuf {
+        &self.registry_dir
+    }
+
+    pub fn experiments_dir(&self) -> &PathBuf {
+        &self.experiments_dir
     }
 }

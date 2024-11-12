@@ -35,7 +35,7 @@ husky-print-utils.workspace = true
 
 [dev-dependencies]
 # abstractions
-salsa = { path = "../../abstractions/salsa", features = ["test_utils"] }
+salsa = { path = "../../abstractions/salsa", features = ["test_helpers"] }
 # hir
 husky-hir-prelude.workspace = true
 # kernel
@@ -58,7 +58,7 @@ husky-sem-item-path-deps.workspace = true
 husky-sem-static-mut-deps.workspace = true
 husky-sem-var-deps.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-syn-decl.workspace = true
@@ -67,4 +67,4 @@ husky-syn-expr.workspace = true
 husky-syn-defn.workspace = true
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

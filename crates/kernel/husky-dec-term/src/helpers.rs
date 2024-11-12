@@ -57,7 +57,7 @@ impl DecSymbolicVariable {
     }
 }
 
-impl DecLambdaVariable {
+impl DecAbstractVariable {
     pub(crate) fn ty_family(self, db: &::salsa::Db) -> DecTermFamily {
         self.ty(db)
             .ok()

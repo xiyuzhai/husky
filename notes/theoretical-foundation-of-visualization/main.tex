@@ -1,0 +1,30 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{natbib}  % Add this package for citation management
+
+\title{Theoretical Foundation of Visualization}
+\author{Your Name}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Latex is so lame. Cite shit \cite{someAuthor2023}here.
+
+\section{Figure Ocean and Zones}
+
+Suppose we have a function $f:X_1\times\cdots\times X_n\rightarrow Y$, we want to visualize its values but $n$ is not small enough for us to visualize them in a gallery or an array.
+
+Here we explain the method used in husky how to divide the visualization into zones.
+
+An anchor $a_i$ for $X_i$ is either a specific point $x\in X_i$ or a generic (means having more than one element) part (called page in implementation) of $X_i$ with a moored point $x_0$. Basically an anchor is a subset of $X_i$ with additional information. A sequence of anchors then represents a subset of the product space $X_1\times X_n$.
+
+The whole sequence of anchors $(a_1,\ldots,a_n)$ is going to be rendered as an ocean of figures, divided into zones of figures, where a figure zone is determined by a pair $(i,j)\in [n]\times[n]$ with $i<=j$, such that it's equivalent to the visualization of $(a_1',\ldots,a_i',a_{i+1},\ldots,a_j)$ where $a'_l$ is the specific version of anchor $a_l$, where the moored point of the generic case is turned to the specific point.
+
+\bibliographystyle{plainnat}  % Add this before \end{document}
+\bibliography{references}     % Add this before \end{document}
+
+\end{document}

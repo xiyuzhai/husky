@@ -36,21 +36,21 @@ husky-iter-utils.workspace = true
 
 [dev-dependencies]
 # fs
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # kernel
 husky-term-prelude.workspace = true
 # lex
 husky-toml-token.workspace = true
-husky-token = { path = "../../lex/husky-token", features = ["test_utils"] }
+husky-token = { path = "../../lex/husky-token", features = ["test_helpers"] }
 # semantics
 husky-manifest.workspace = true
 husky-corgi-config.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-corgi-config-ast.workspace = true
-husky-syn-decl = { path = ".", features = ["test_utils"] }
+husky-syn-decl = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

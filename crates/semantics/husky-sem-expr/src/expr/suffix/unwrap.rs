@@ -66,7 +66,7 @@ impl<'a> SemExprBuilder<'a> {
                 symbolic_variable: term,
                 ty,
             } => todo!(),
-            FlyTermData::LambdaVariable { .. } => todo!(),
+            FlyTermData::AbstractVariable { .. } => todo!(),
             FlyTermData::TypeVariant { path } => todo!(),
             FlyTermData::MajorTypeVar(_) => todo!(),
             FlyTermData::Trait { .. } => todo!(),

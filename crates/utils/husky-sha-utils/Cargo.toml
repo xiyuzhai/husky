@@ -1,0 +1,25 @@
+[package]
+name = "husky-sha-utils"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+crypto-common.workspace = true
+hex.workspace = true
+sealed.workspace = true
+sha2.workspace = true
+
+[dev-dependencies]
+hex.workspace = true
+hex-literal.workspace = true
+
+[lints]
+workspace = true

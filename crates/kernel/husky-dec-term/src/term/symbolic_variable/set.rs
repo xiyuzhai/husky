@@ -47,7 +47,7 @@ fn calc_dec_symbolic_variables(
         DecTerm::SymbolicVariable(symbol) => {
             Some(DecTermSymbols::new(db, VecSet::new_one_elem_set(symbol)))
         }
-        DecTerm::LambdaVariable(_) => None,
+        DecTerm::AbstractVariable(_) => None,
         DecTerm::ItemPath(path) => match path {
             DecItemPath::Form(_) => todo!(),
             DecItemPath::Trait(_) | DecItemPath::Type(_) => None,

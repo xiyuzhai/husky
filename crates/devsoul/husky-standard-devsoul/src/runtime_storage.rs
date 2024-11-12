@@ -8,7 +8,7 @@ use husky_linket_impl::linket_impl::{
     IsLinketImpl, LinketImplKiControlFlow, LinketImplTrackedExceptedValue,
     LinketImplTrackedException,
 };
-use husky_standard_linket_impl::{static_var::StandardVarId, StandardKiControlFlow};
+use husky_standard_linket_impl::{var::StandardVarId, StandardKiControlFlow};
 use husky_value::ki_control_flow::KiControlFlow;
 use std::{
     convert::Infallible,

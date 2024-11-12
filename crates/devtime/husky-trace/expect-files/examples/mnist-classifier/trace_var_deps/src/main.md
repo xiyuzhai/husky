@@ -109,7 +109,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 2,
@@ -547,7 +551,14 @@
                     hir_lazy_stmt_idx: Some(
                         0,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            6,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -561,7 +572,9 @@
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -606,7 +619,14 @@
                     hir_lazy_stmt_idx: Some(
                         1,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                9,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -667,7 +687,28 @@
                     hir_lazy_stmt_idx: Some(
                         2,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                14,
+                            ),
+                            src: SemExprIdx(
+                                13,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                29,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -728,7 +769,14 @@
                     hir_lazy_stmt_idx: Some(
                         3,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                18,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -789,7 +837,14 @@
                     hir_lazy_stmt_idx: Some(
                         4,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            25,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            24,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -850,7 +905,14 @@
                     hir_lazy_stmt_idx: Some(
                         5,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                28,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -911,7 +973,11 @@
                     hir_lazy_stmt_idx: Some(
                         6,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            29,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -1212,7 +1278,14 @@
                     hir_lazy_stmt_idx: Some(
                         8,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            33,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            32,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -1575,7 +1648,11 @@
                     hir_lazy_stmt_idx: Some(
                         9,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            43,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -2178,7 +2255,14 @@
                     hir_lazy_stmt_idx: Some(
                         10,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                47,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -2451,7 +2535,28 @@
                     hir_lazy_stmt_idx: Some(
                         11,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                53,
+                            ),
+                            src: SemExprIdx(
+                                52,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                112,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 5,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -2862,7 +2967,28 @@
                     hir_lazy_stmt_idx: Some(
                         12,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                59,
+                            ),
+                            src: SemExprIdx(
+                                58,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                123,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 7,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -3273,7 +3399,14 @@
                     hir_lazy_stmt_idx: Some(
                         13,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            64,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            61,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -3691,7 +3824,14 @@
                     hir_lazy_stmt_idx: Some(
                         14,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            73,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            70,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -4299,7 +4439,14 @@
                     hir_lazy_stmt_idx: Some(
                         15,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            80,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            77,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -4747,7 +4894,14 @@
                     hir_lazy_stmt_idx: Some(
                         16,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            83,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            80,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -5025,7 +5179,14 @@
                     hir_lazy_stmt_idx: Some(
                         17,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                86,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -5243,7 +5404,14 @@
                     hir_lazy_stmt_idx: Some(
                         18,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            88,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            85,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -5466,7 +5634,11 @@
                     hir_lazy_stmt_idx: Some(
                         19,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            89,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -5570,7 +5742,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 197,
@@ -5578,7 +5754,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                 },
@@ -5636,12 +5812,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                 },
@@ -5729,12 +5905,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                 },
@@ -5790,12 +5966,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                 },
@@ -5851,12 +6027,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 11,
+                            value: 4,
                         },
                     ),
                 },
@@ -5931,7 +6107,11 @@
                     hir_lazy_stmt_idx: Some(
                         41,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -5939,7 +6119,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -5989,12 +6169,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6074,12 +6254,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6159,12 +6339,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6212,12 +6392,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6267,12 +6447,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6317,7 +6497,14 @@
                     hir_lazy_stmt_idx: Some(
                         42,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            10,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            10,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -6325,7 +6512,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6387,7 +6574,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6435,12 +6622,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6520,12 +6707,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6575,12 +6762,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6630,12 +6817,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6704,7 +6891,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6757,7 +6944,11 @@
                     hir_lazy_stmt_idx: Some(
                         1,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            20,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -6765,7 +6956,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6842,7 +7033,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6895,7 +7086,11 @@
                     hir_lazy_stmt_idx: Some(
                         3,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            29,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -6903,7 +7098,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -6953,12 +7148,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7008,12 +7203,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7063,12 +7258,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7118,12 +7313,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7192,7 +7387,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7245,7 +7440,14 @@
                     hir_lazy_stmt_idx: Some(
                         15,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                33,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7253,7 +7455,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7306,7 +7508,14 @@
                     hir_lazy_stmt_idx: Some(
                         16,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                36,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7314,7 +7523,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7367,7 +7576,14 @@
                     hir_lazy_stmt_idx: Some(
                         17,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            40,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            40,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7375,7 +7591,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7428,7 +7644,14 @@
                     hir_lazy_stmt_idx: Some(
                         18,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            44,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            44,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7436,7 +7659,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7489,7 +7712,14 @@
                     hir_lazy_stmt_idx: Some(
                         19,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            48,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            48,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7497,7 +7727,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7574,7 +7804,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7627,7 +7857,14 @@
                     hir_lazy_stmt_idx: Some(
                         21,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            80,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            79,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7635,7 +7872,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7688,7 +7925,14 @@
                     hir_lazy_stmt_idx: Some(
                         22,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                84,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7696,7 +7940,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7749,7 +7993,11 @@
                     hir_lazy_stmt_idx: Some(
                         23,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            97,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7757,7 +8005,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7810,7 +8058,11 @@
                     hir_lazy_stmt_idx: Some(
                         24,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            114,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -7818,7 +8070,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7895,7 +8147,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -7972,7 +8224,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8025,7 +8277,14 @@
                     hir_lazy_stmt_idx: Some(
                         27,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                196,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8033,7 +8292,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8086,7 +8345,14 @@
                     hir_lazy_stmt_idx: Some(
                         28,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            204,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            201,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8094,7 +8360,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8147,7 +8413,14 @@
                     hir_lazy_stmt_idx: Some(
                         29,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            206,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            203,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8155,7 +8428,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8208,7 +8481,14 @@
                     hir_lazy_stmt_idx: Some(
                         30,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            216,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            213,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8216,7 +8496,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8269,7 +8549,14 @@
                     hir_lazy_stmt_idx: Some(
                         31,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            218,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            215,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8277,7 +8564,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8330,7 +8617,11 @@
                     hir_lazy_stmt_idx: Some(
                         32,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            226,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8338,7 +8629,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8391,7 +8682,14 @@
                     hir_lazy_stmt_idx: Some(
                         33,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                229,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8399,7 +8697,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8452,7 +8750,14 @@
                     hir_lazy_stmt_idx: Some(
                         34,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            231,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            228,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8460,7 +8765,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8513,7 +8818,14 @@
                     hir_lazy_stmt_idx: Some(
                         35,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            233,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            230,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8521,7 +8833,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8574,7 +8886,14 @@
                     hir_lazy_stmt_idx: Some(
                         36,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            236,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            233,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8582,7 +8901,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8635,7 +8954,14 @@
                     hir_lazy_stmt_idx: Some(
                         37,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            239,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            236,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8643,7 +8969,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8696,7 +9022,14 @@
                     hir_lazy_stmt_idx: Some(
                         38,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                243,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8704,7 +9037,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8757,7 +9090,14 @@
                     hir_lazy_stmt_idx: Some(
                         39,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                246,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8765,7 +9105,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8818,7 +9158,11 @@
                     hir_lazy_stmt_idx: Some(
                         40,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            247,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -8826,7 +9170,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -8922,7 +9266,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 227,
@@ -8930,7 +9278,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                 },
@@ -8988,12 +9336,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                 },
@@ -9081,12 +9429,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                 },
@@ -9142,12 +9490,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                 },
@@ -9203,12 +9551,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 14,
+                            value: 7,
                         },
                     ),
                 },
@@ -9281,7 +9629,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            5,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 231,
@@ -9289,7 +9641,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                 },
@@ -9347,12 +9699,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                 },
@@ -9440,12 +9792,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                 },
@@ -9501,12 +9853,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                 },
@@ -9562,12 +9914,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 16,
+                            value: 9,
                         },
                     ),
                 },
@@ -9642,7 +9994,14 @@
                     hir_lazy_stmt_idx: Some(
                         19,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            3,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            3,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -9650,13 +10009,15 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -9710,7 +10071,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -9788,12 +10149,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -9843,12 +10204,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -9898,12 +10259,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -9951,12 +10312,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10001,7 +10362,28 @@
                     hir_lazy_stmt_idx: Some(
                         20,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                5,
+                            ),
+                            src: SemExprIdx(
+                                4,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                12,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -10009,7 +10391,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10059,12 +10441,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10112,12 +10494,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10162,7 +10544,14 @@
                     hir_lazy_stmt_idx: Some(
                         21,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            7,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -10170,7 +10559,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10232,7 +10621,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10310,12 +10699,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10360,7 +10749,14 @@
                     hir_lazy_stmt_idx: Some(
                         22,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            12,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            11,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -10368,7 +10764,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10430,7 +10826,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10508,12 +10904,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10563,12 +10959,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10648,12 +11044,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10722,7 +11118,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10775,7 +11171,11 @@
                     hir_lazy_stmt_idx: Some(
                         5,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            25,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -10783,7 +11183,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10836,7 +11236,14 @@
                     hir_lazy_stmt_idx: Some(
                         6,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            29,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            27,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -10844,7 +11251,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10897,7 +11304,14 @@
                     hir_lazy_stmt_idx: Some(
                         7,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            32,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            30,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -10905,7 +11319,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -10958,7 +11372,14 @@
                     hir_lazy_stmt_idx: Some(
                         8,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            34,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            32,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -10966,7 +11387,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11019,7 +11440,14 @@
                     hir_lazy_stmt_idx: Some(
                         9,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            38,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            36,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -11027,7 +11455,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11080,7 +11508,14 @@
                     hir_lazy_stmt_idx: Some(
                         10,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            40,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            38,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -11088,7 +11523,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11141,7 +11576,14 @@
                     hir_lazy_stmt_idx: Some(
                         11,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                44,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -11149,7 +11591,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11226,7 +11668,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11279,7 +11721,14 @@
                     hir_lazy_stmt_idx: Some(
                         13,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            65,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            62,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -11287,7 +11736,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11340,7 +11789,11 @@
                     hir_lazy_stmt_idx: Some(
                         14,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            75,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -11348,7 +11801,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11425,7 +11878,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11478,7 +11931,11 @@
                     hir_lazy_stmt_idx: Some(
                         16,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            81,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -11486,7 +11943,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11536,12 +11993,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11591,12 +12048,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11646,12 +12103,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11701,12 +12158,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11756,12 +12213,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11809,12 +12266,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11859,7 +12316,11 @@
                     hir_lazy_stmt_idx: Some(
                         24,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            87,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -11867,7 +12328,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -11917,12 +12378,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12002,12 +12463,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12057,12 +12518,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12112,12 +12573,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12167,12 +12628,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12241,7 +12702,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12294,7 +12755,14 @@
                     hir_lazy_stmt_idx: Some(
                         17,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                95,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -12302,7 +12770,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12382,12 +12850,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12437,12 +12905,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12492,12 +12960,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12542,7 +13010,14 @@
                     hir_lazy_stmt_idx: Some(
                         26,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                104,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -12550,7 +13025,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12600,12 +13075,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12655,12 +13130,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12710,12 +13185,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12765,12 +13240,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12820,12 +13295,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12875,12 +13350,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12930,12 +13405,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -12985,12 +13460,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13040,12 +13515,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13095,12 +13570,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13169,7 +13644,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13222,7 +13697,14 @@
                     hir_lazy_stmt_idx: Some(
                         18,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                118,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -13230,7 +13712,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13280,12 +13762,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13335,12 +13817,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13390,12 +13872,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13445,12 +13927,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13500,12 +13982,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13553,12 +14035,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13603,7 +14085,14 @@
                     hir_lazy_stmt_idx: Some(
                         28,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                121,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -13611,7 +14100,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13661,12 +14150,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13716,12 +14205,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13771,12 +14260,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13821,7 +14310,11 @@
                     hir_lazy_stmt_idx: Some(
                         29,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            122,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -13829,7 +14322,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -13925,7 +14418,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 258,
@@ -13933,7 +14430,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                 },
@@ -13991,12 +14488,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                 },
@@ -14084,12 +14581,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                 },
@@ -14145,12 +14642,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                 },
@@ -14206,12 +14703,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 21,
+                            value: 12,
                         },
                     ),
                 },
@@ -14284,7 +14781,14 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                3,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -14292,7 +14796,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14380,12 +14884,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14443,12 +14947,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14506,12 +15010,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14552,7 +15056,14 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                7,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -14560,7 +15071,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14648,12 +15159,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14711,12 +15222,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14774,12 +15285,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14822,7 +15333,14 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            11,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            11,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -14830,7 +15348,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -14970,12 +15488,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15033,12 +15551,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15096,12 +15614,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15159,12 +15677,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15207,7 +15725,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            15,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            15,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -15215,7 +15740,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15355,12 +15880,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15418,12 +15943,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15481,12 +16006,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15544,12 +16069,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15592,7 +16117,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            19,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -15600,7 +16132,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15740,12 +16272,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15803,12 +16335,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15866,12 +16398,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15929,12 +16461,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -15977,7 +16509,28 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                21,
+                            ),
+                            src: SemExprIdx(
+                                20,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                46,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 4,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -15985,7 +16538,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16043,12 +16596,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16104,12 +16657,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16152,7 +16705,14 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                26,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -16160,7 +16720,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16218,12 +16778,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16281,12 +16841,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16344,12 +16904,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16407,12 +16967,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16470,12 +17030,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16518,7 +17078,28 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                28,
+                            ),
+                            src: SemExprIdx(
+                                27,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                60,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 6,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -16526,7 +17107,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16584,12 +17165,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16645,12 +17226,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16693,7 +17274,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            33,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            31,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -16701,7 +17289,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16811,12 +17399,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16874,12 +17462,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -16937,12 +17525,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17000,12 +17588,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17063,12 +17651,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17111,7 +17699,14 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                41,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -17119,7 +17714,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17177,12 +17772,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17240,12 +17835,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17303,12 +17898,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17366,12 +17961,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17429,12 +18024,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17492,12 +18087,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17555,12 +18150,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17603,7 +18198,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            44,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            42,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -17611,7 +18213,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17721,12 +18323,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17784,12 +18386,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17847,12 +18449,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -17895,7 +18497,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            47,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            45,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -17903,7 +18512,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18013,12 +18622,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18076,12 +18685,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18139,12 +18748,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18187,7 +18796,14 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            50,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            48,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -18195,7 +18811,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18305,12 +18921,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18368,12 +18984,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18431,12 +19047,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18479,7 +19095,14 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                53,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -18487,7 +19110,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18545,12 +19168,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18608,12 +19231,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18671,12 +19294,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18719,7 +19342,14 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                57,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -18727,7 +19357,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18815,12 +19445,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18878,12 +19508,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18941,12 +19571,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -18989,7 +19619,14 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                63,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -18997,7 +19634,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -19055,12 +19692,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -19118,12 +19755,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -19181,12 +19818,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -19244,12 +19881,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -19307,12 +19944,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -19355,7 +19992,11 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            64,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -19363,7 +20004,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -19459,7 +20100,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            5,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 278,
@@ -19467,7 +20112,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                 },
@@ -19525,12 +20170,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                 },
@@ -19618,12 +20263,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                 },
@@ -19679,12 +20324,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                 },
@@ -19740,12 +20385,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 25,
+                            value: 16,
                         },
                     ),
                 },
@@ -19818,7 +20463,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 284,
@@ -19826,7 +20475,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                 },
@@ -19884,12 +20533,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                 },
@@ -19977,12 +20626,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                 },
@@ -20038,12 +20687,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                 },
@@ -20099,12 +20748,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 27,
+                            value: 18,
                         },
                     ),
                 },
@@ -20177,7 +20826,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 286,
@@ -20185,7 +20838,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                 },
@@ -20243,12 +20896,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                 },
@@ -20336,12 +20989,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                 },
@@ -20397,12 +21050,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                 },
@@ -20458,12 +21111,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 29,
+                            value: 20,
                         },
                     ),
                 },
@@ -20536,7 +21189,28 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                4,
+                            ),
+                            src: SemExprIdx(
+                                3,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                8,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 1,
+                                },
+                                variables: ArenaIdxRange(
+                                    0..0,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -20544,7 +21218,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -20632,12 +21306,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -20695,12 +21369,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -20758,12 +21432,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -20819,12 +21493,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -20880,12 +21554,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -20928,7 +21602,28 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                9,
+                            ),
+                            src: SemExprIdx(
+                                8,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                20,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 3,
+                                },
+                                variables: ArenaIdxRange(
+                                    0..0,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -20936,7 +21631,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21024,12 +21719,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21087,12 +21782,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21150,12 +21845,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21213,12 +21908,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21274,12 +21969,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21322,7 +22017,14 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            11,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            9,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -21330,7 +22032,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21470,12 +22172,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21518,7 +22220,28 @@
                     hir_eager_stmt_idx: Some(
                         17,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                16,
+                            ),
+                            src: SemExprIdx(
+                                15,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                38,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 5,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -21526,7 +22249,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21584,12 +22307,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21647,12 +22370,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21710,12 +22433,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21773,12 +22496,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21836,12 +22559,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21897,12 +22620,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -21945,7 +22668,14 @@
                     hir_eager_stmt_idx: Some(
                         18,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            20,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            17,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -21953,7 +22683,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22093,12 +22823,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22156,12 +22886,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22219,12 +22949,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22282,12 +23012,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22330,7 +23060,28 @@
                     hir_eager_stmt_idx: Some(
                         19,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                22,
+                            ),
+                            src: SemExprIdx(
+                                21,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                51,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 8,
+                                },
+                                variables: ArenaIdxRange(
+                                    2..2,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -22338,7 +23089,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22396,12 +23147,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22457,12 +23208,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22505,7 +23256,14 @@
                     hir_eager_stmt_idx: Some(
                         20,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            26,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            22,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -22513,7 +23271,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22623,12 +23381,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22686,12 +23444,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22749,12 +23507,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22812,12 +23570,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -22860,7 +23618,14 @@
                     hir_eager_stmt_idx: Some(
                         21,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            31,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            27,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -22868,7 +23633,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23008,12 +23773,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23071,12 +23836,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23164,12 +23929,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23212,7 +23977,14 @@
                     hir_eager_stmt_idx: Some(
                         22,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                34,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23220,7 +23992,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23278,12 +24050,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23341,12 +24113,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23404,12 +24176,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23452,7 +24224,7 @@
                     hir_eager_stmt_idx: Some(
                         23,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 81,
@@ -23476,7 +24248,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23519,7 +24291,14 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                43,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23527,7 +24306,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23570,7 +24349,14 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            47,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            42,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23578,7 +24364,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23621,7 +24407,28 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                49,
+                            ),
+                            src: SemExprIdx(
+                                48,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                110,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 14,
+                                },
+                                variables: ArenaIdxRange(
+                                    5..5,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23629,7 +24436,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23672,7 +24479,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                53,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23680,7 +24494,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23723,7 +24537,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            58,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            52,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23731,7 +24552,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23774,7 +24595,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            62,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            56,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23782,7 +24610,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23825,7 +24653,28 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                64,
+                            ),
+                            src: SemExprIdx(
+                                63,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                142,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 18,
+                                },
+                                variables: ArenaIdxRange(
+                                    7..7,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23833,7 +24682,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23876,7 +24725,14 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                70,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23884,7 +24740,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23927,7 +24783,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                76,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23935,7 +24798,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -23978,7 +24841,14 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                80,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -23986,7 +24856,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24029,7 +24899,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            83,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            76,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -24037,7 +24914,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24080,7 +24957,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                86,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -24088,7 +24972,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24131,7 +25015,14 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                89,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -24139,7 +25030,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24182,7 +25073,11 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            90,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -24190,7 +25085,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24248,12 +25143,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24311,12 +25206,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24374,12 +25269,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24437,12 +25332,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24500,12 +25395,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24561,12 +25456,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24609,7 +25504,11 @@
                     hir_eager_stmt_idx: Some(
                         24,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            91,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 288,
@@ -24617,7 +25516,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 31,
+                            value: 22,
                         },
                     ),
                 },
@@ -24711,7 +25610,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            0,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 300,
@@ -24719,7 +25622,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 33,
+                            value: 24,
                         },
                     ),
                 },
@@ -24813,7 +25716,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 303,
@@ -24821,7 +25728,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                 },
@@ -24879,12 +25786,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                 },
@@ -24972,12 +25879,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                 },
@@ -25033,12 +25940,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                 },
@@ -25094,12 +26001,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 35,
+                            value: 26,
                         },
                     ),
                 },
@@ -25172,7 +26079,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            5,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 307,
@@ -25180,7 +26091,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                 },
@@ -25238,12 +26149,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                 },
@@ -25331,12 +26242,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                 },
@@ -25392,12 +26303,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                 },
@@ -25453,12 +26364,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 37,
+                            value: 28,
                         },
                     ),
                 },
@@ -25531,7 +26442,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                3,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -25539,7 +26457,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -25627,12 +26545,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -25690,12 +26608,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -25753,12 +26671,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -25799,7 +26717,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            5,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            5,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -25807,7 +26732,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -25947,12 +26872,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -25995,7 +26920,7 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 13,
@@ -26019,7 +26944,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26062,7 +26987,28 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                13,
+                            ),
+                            src: SemExprIdx(
+                                12,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                25,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -26070,7 +27016,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26113,7 +27059,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            18,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            17,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -26121,7 +27074,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26164,7 +27117,7 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 40,
@@ -26188,7 +27141,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26231,7 +27184,11 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            34,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -26239,7 +27196,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26297,12 +27254,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26360,12 +27317,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26423,12 +27380,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26471,7 +27428,7 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 74,
@@ -26495,7 +27452,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26538,7 +27495,14 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            42,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            41,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -26546,7 +27510,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26589,7 +27553,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                45,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -26597,7 +27568,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26640,7 +27611,11 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            46,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -26648,7 +27623,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26706,12 +27681,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26769,12 +27744,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26832,12 +27807,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26880,7 +27855,28 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                51,
+                            ),
+                            src: SemExprIdx(
+                                50,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                104,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 8,
+                                },
+                                variables: ArenaIdxRange(
+                                    5..5,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -26888,7 +27884,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -26976,12 +27972,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27039,12 +28035,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27102,12 +28098,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27165,12 +28161,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27226,12 +28222,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27274,7 +28270,14 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            53,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            51,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -27282,7 +28285,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27422,12 +28425,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27470,7 +28473,14 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                54,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -27478,7 +28488,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27536,12 +28546,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27584,7 +28594,11 @@
                     hir_eager_stmt_idx: Some(
                         17,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            55,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -27592,7 +28606,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -27688,7 +28702,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 318,
@@ -27696,7 +28714,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                 },
@@ -27754,12 +28772,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                 },
@@ -27847,12 +28865,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                 },
@@ -27908,12 +28926,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                 },
@@ -27969,12 +28987,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 41,
+                            value: 32,
                         },
                     ),
                 },
@@ -28047,7 +29065,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            4,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 322,
@@ -28055,13 +29080,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -28193,12 +29220,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28256,12 +29283,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28349,12 +29376,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28397,7 +29424,7 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 11,
@@ -28421,7 +29448,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28464,7 +29491,7 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 23,
@@ -28488,7 +29515,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28531,7 +29558,14 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                18,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 322,
@@ -28539,7 +29573,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28627,12 +29661,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28690,12 +29724,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28753,12 +29787,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28816,12 +29850,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28877,12 +29911,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28938,12 +29972,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -28986,7 +30020,11 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 322,
@@ -28994,7 +30032,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -29090,7 +30128,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 325,
@@ -29098,7 +30140,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                 },
@@ -29156,12 +30198,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                 },
@@ -29249,12 +30291,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                 },
@@ -29310,12 +30352,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                 },
@@ -29371,12 +30413,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 45,
+                            value: 36,
                         },
                     ),
                 },
@@ -29449,7 +30491,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 329,
@@ -29457,7 +30503,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                 },
@@ -29515,12 +30561,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                 },
@@ -29608,12 +30654,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                 },
@@ -29669,12 +30715,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                 },
@@ -29730,12 +30776,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 47,
+                            value: 38,
                         },
                     ),
                 },
@@ -29808,7 +30854,14 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -29816,13 +30869,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -29954,12 +31009,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30002,7 +31057,28 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                6,
+                            ),
+                            src: SemExprIdx(
+                                5,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                14,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 1,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -30010,7 +31086,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30068,12 +31144,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30131,12 +31207,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30194,12 +31270,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30257,12 +31333,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30318,12 +31394,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30379,12 +31455,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30427,7 +31503,14 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            10,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            9,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -30435,7 +31518,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30575,12 +31658,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30638,12 +31721,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30701,12 +31784,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30764,12 +31847,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30812,7 +31895,28 @@
                     hir_eager_stmt_idx: Some(
                         17,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                12,
+                            ),
+                            src: SemExprIdx(
+                                11,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                27,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 4,
+                                },
+                                variables: ArenaIdxRange(
+                                    2..2,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -30820,7 +31924,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30878,12 +31982,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30939,12 +32043,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -30987,7 +32091,14 @@
                     hir_eager_stmt_idx: Some(
                         18,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            16,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            14,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -30995,7 +32106,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31105,12 +32216,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31168,12 +32279,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31231,12 +32342,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31294,12 +32405,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31342,7 +32453,14 @@
                     hir_eager_stmt_idx: Some(
                         19,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            21,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -31350,7 +32468,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31490,12 +32608,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31553,12 +32671,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31646,12 +32764,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31694,7 +32812,14 @@
                     hir_eager_stmt_idx: Some(
                         20,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                24,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -31702,7 +32827,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31760,12 +32885,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31823,12 +32948,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31886,12 +33011,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -31934,7 +33059,7 @@
                     hir_eager_stmt_idx: Some(
                         21,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 57,
@@ -31958,7 +33083,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32001,7 +33126,14 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                33,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32009,7 +33141,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32052,7 +33184,14 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            37,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            34,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32060,7 +33199,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32103,7 +33242,28 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                39,
+                            ),
+                            src: SemExprIdx(
+                                38,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                86,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 10,
+                                },
+                                variables: ArenaIdxRange(
+                                    5..5,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32111,7 +33271,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32154,7 +33314,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                43,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32162,7 +33329,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32205,7 +33372,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            48,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            44,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32213,7 +33387,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32256,7 +33430,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            52,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            48,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32264,7 +33445,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32307,7 +33488,28 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                54,
+                            ),
+                            src: SemExprIdx(
+                                53,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                118,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 14,
+                                },
+                                variables: ArenaIdxRange(
+                                    7..7,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32315,7 +33517,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32358,7 +33560,14 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                60,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32366,7 +33575,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32409,7 +33618,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                66,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32417,7 +33633,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32460,7 +33676,14 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                70,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32468,7 +33691,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32511,7 +33734,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            73,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            68,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32519,7 +33749,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32562,7 +33792,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                76,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32570,7 +33807,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32613,7 +33850,14 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                79,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32621,7 +33865,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32664,7 +33908,11 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            80,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -32672,7 +33920,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32730,12 +33978,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32793,12 +34041,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32856,12 +34104,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32919,12 +34167,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -32982,12 +34230,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -33043,12 +34291,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -33091,7 +34339,11 @@
                     hir_eager_stmt_idx: Some(
                         22,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            81,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -33099,7 +34351,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -33195,7 +34447,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 336,
@@ -33203,7 +34459,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                 },
@@ -33261,12 +34517,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                 },
@@ -33354,12 +34610,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                 },
@@ -33415,12 +34671,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                 },
@@ -33476,12 +34732,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 51,
+                            value: 42,
                         },
                     ),
                 },
@@ -33554,7 +34810,14 @@
                     hir_eager_stmt_idx: Some(
                         19,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -33562,13 +34825,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -33700,12 +34965,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -33748,7 +35013,14 @@
                     hir_eager_stmt_idx: Some(
                         20,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            3,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            3,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -33756,13 +35028,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -33894,12 +35168,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -33942,7 +35216,28 @@
                     hir_eager_stmt_idx: Some(
                         21,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                8,
+                            ),
+                            src: SemExprIdx(
+                                7,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                22,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    2..2,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -33950,7 +35245,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34008,12 +35303,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34071,12 +35366,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34134,12 +35429,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34197,12 +35492,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34258,12 +35553,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34319,12 +35614,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34367,7 +35662,14 @@
                     hir_eager_stmt_idx: Some(
                         22,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            12,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            11,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -34375,7 +35677,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34515,12 +35817,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34578,12 +35880,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34641,12 +35943,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34704,12 +36006,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34752,7 +36054,14 @@
                     hir_eager_stmt_idx: Some(
                         23,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            16,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            15,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -34760,7 +36069,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34900,12 +36209,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -34963,12 +36272,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35026,12 +36335,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35089,12 +36398,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35137,7 +36446,14 @@
                     hir_eager_stmt_idx: Some(
                         24,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            20,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -35145,7 +36461,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35285,12 +36601,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35348,12 +36664,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35411,12 +36727,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35474,12 +36790,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35522,7 +36838,14 @@
                     hir_eager_stmt_idx: Some(
                         25,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                23,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -35530,7 +36853,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35588,12 +36911,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35651,12 +36974,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35714,12 +37037,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35762,7 +37085,14 @@
                     hir_eager_stmt_idx: Some(
                         26,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            28,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            27,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -35770,7 +37100,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35910,12 +37240,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -35973,12 +37303,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36066,12 +37396,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36114,7 +37444,14 @@
                     hir_eager_stmt_idx: Some(
                         27,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                31,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36122,7 +37459,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36180,12 +37517,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36243,12 +37580,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36306,12 +37643,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36354,7 +37691,7 @@
                     hir_eager_stmt_idx: Some(
                         28,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 69,
@@ -36378,7 +37715,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36421,7 +37758,28 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                36,
+                            ),
+                            src: SemExprIdx(
+                                35,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                76,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 8,
+                                },
+                                variables: ArenaIdxRange(
+                                    6..6,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36429,7 +37787,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36472,7 +37830,28 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                38,
+                            ),
+                            src: SemExprIdx(
+                                37,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                83,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 10,
+                                },
+                                variables: ArenaIdxRange(
+                                    6..6,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36480,7 +37859,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36523,7 +37902,14 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            41,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            38,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36531,7 +37917,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36574,7 +37960,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                45,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36582,7 +37975,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36625,7 +38018,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            50,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            47,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36633,7 +38033,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36676,7 +38076,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            54,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            51,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36684,7 +38091,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36727,7 +38134,14 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            58,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            55,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36735,7 +38149,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36778,7 +38192,14 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            62,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            59,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36786,7 +38207,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36829,7 +38250,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            66,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            63,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36837,7 +38265,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36880,7 +38308,14 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            72,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            68,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36888,7 +38323,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36931,7 +38366,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            76,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            72,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36939,7 +38381,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -36982,7 +38424,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            80,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            76,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -36990,7 +38439,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37033,7 +38482,14 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            86,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            81,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37041,7 +38497,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37084,7 +38540,14 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                89,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37092,7 +38555,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37150,12 +38613,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37213,12 +38676,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37276,12 +38739,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37324,7 +38787,7 @@
                     hir_eager_stmt_idx: Some(
                         29,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 204,
@@ -37348,7 +38811,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37391,7 +38854,28 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                94,
+                            ),
+                            src: SemExprIdx(
+                                93,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                211,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 22,
+                                },
+                                variables: ArenaIdxRange(
+                                    16..16,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37399,7 +38883,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37442,7 +38926,28 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                96,
+                            ),
+                            src: SemExprIdx(
+                                95,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                218,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 24,
+                                },
+                                variables: ArenaIdxRange(
+                                    16..16,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37450,7 +38955,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37493,7 +38998,28 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                98,
+                            ),
+                            src: SemExprIdx(
+                                97,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                225,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 26,
+                                },
+                                variables: ArenaIdxRange(
+                                    16..16,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37501,7 +39027,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37544,7 +39070,14 @@
                     hir_eager_stmt_idx: Some(
                         17,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                104,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37552,7 +39085,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37595,7 +39128,14 @@
                     hir_eager_stmt_idx: Some(
                         18,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            107,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            99,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37603,7 +39143,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37661,12 +39201,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37724,12 +39264,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37787,12 +39327,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37835,7 +39375,11 @@
                     hir_eager_stmt_idx: Some(
                         30,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            108,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -37843,7 +39387,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -37939,7 +39483,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            2,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 36,
@@ -37947,7 +39495,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                 },
@@ -38005,12 +39553,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                 },
@@ -38202,12 +39750,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                 },
@@ -38384,7 +39932,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            0,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            0,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -38392,7 +39947,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -38500,12 +40055,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -38546,7 +40101,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -38554,7 +40116,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -38662,12 +40224,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -38708,7 +40270,7 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: ForBetween {
+                    eager_stmt_sketch: ForBetween {
                         for_regional_token: StmtForRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 11,
@@ -38734,7 +40296,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -38775,7 +40337,14 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            8,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            7,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -38783,13 +40352,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -38921,12 +40492,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -38984,12 +40555,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39045,12 +40616,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39108,12 +40679,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39156,7 +40727,7 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 29,
@@ -39180,7 +40751,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39223,7 +40794,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            14,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -39231,7 +40806,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39274,7 +40849,11 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            17,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -39282,7 +40861,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39338,12 +40917,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39401,12 +40980,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39464,12 +41043,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39523,12 +41102,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39599,7 +41178,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            2,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 36,
@@ -39607,7 +41190,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                 },
@@ -39665,12 +41248,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39767,7 +41350,11 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            20,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -39775,7 +41362,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39848,7 +41435,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            2,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 36,
@@ -39856,7 +41447,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                 },
@@ -39914,12 +41505,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -39977,12 +41568,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -40038,12 +41629,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -40116,7 +41707,14 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            0,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            0,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 210,
@@ -40124,7 +41722,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40232,12 +41830,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40278,7 +41876,7 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: ForBetween {
+                    eager_stmt_sketch: ForBetween {
                         for_regional_token: StmtForRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 6,
@@ -40304,7 +41902,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40345,7 +41943,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            9,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 210,
@@ -40353,7 +41955,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40411,12 +42013,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40472,12 +42074,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40565,12 +42167,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40628,12 +42230,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40689,12 +42291,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40752,12 +42354,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40813,12 +42415,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -40889,7 +42491,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            2,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 36,
@@ -40897,7 +42503,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 55,
+                            value: 46,
                         },
                     ),
                 },
@@ -40955,12 +42561,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -41057,7 +42663,11 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            13,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 210,
@@ -41065,7 +42675,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -41123,12 +42733,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -41184,12 +42794,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -41262,7 +42872,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            0,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            0,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -41270,7 +42887,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41311,7 +42928,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -41319,7 +42943,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41360,7 +42984,7 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: ForBetween {
+                    eager_stmt_sketch: ForBetween {
                         for_regional_token: StmtForRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 11,
@@ -41386,7 +43010,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41427,7 +43051,11 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            20,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -41435,7 +43063,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41493,12 +43121,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 61,
+                            value: 53,
                         },
                     ),
                 },
@@ -41571,7 +43199,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 349,
@@ -41579,7 +43211,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 63,
+                            value: 55,
                         },
                     ),
                 },
@@ -41652,7 +43284,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            0,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            0,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -41660,7 +43299,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41701,7 +43340,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -41709,7 +43355,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41750,7 +43396,7 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: ForBetween {
+                    eager_stmt_sketch: ForBetween {
                         for_regional_token: StmtForRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 11,
@@ -41776,7 +43422,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41817,7 +43463,11 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            20,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -41825,7 +43475,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -41883,12 +43533,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 63,
+                            value: 55,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 63,
+                            value: 55,
                         },
                     ),
                 },
@@ -41961,7 +43611,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            3,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 24,
@@ -41969,7 +43623,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                 },
@@ -42042,7 +43696,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            0,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            0,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -42050,7 +43711,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -42091,7 +43752,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -42099,7 +43767,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -42140,7 +43808,7 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: ForBetween {
+                    eager_stmt_sketch: ForBetween {
                         for_regional_token: StmtForRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 11,
@@ -42166,7 +43834,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -42207,7 +43875,11 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            20,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 33,
@@ -42215,7 +43887,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 59,
+                            value: 50,
                         },
                     ),
                 },
@@ -42273,12 +43945,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                 },
@@ -42336,12 +44008,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                 },
@@ -42399,12 +44071,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                 },
@@ -42460,12 +44132,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                 },
@@ -42538,7 +44210,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 18,
@@ -42546,7 +44222,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 67,
+                            value: 59,
                         },
                     ),
                 },
@@ -42619,7 +44295,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            3,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 24,
@@ -42627,7 +44307,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 65,
+                            value: 57,
                         },
                     ),
                 },
@@ -42685,12 +44365,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 67,
+                            value: 59,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 67,
+                            value: 59,
                         },
                     ),
                 },
@@ -42763,7 +44443,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 7,
@@ -42771,7 +44455,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 69,
+                            value: 61,
                         },
                     ),
                 },
@@ -42844,7 +44528,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 18,
@@ -42852,7 +44540,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 67,
+                            value: 59,
                         },
                     ),
                 },
@@ -42910,12 +44598,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 69,
+                            value: 61,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 69,
+                            value: 61,
                         },
                     ),
                 },
@@ -42988,7 +44676,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -42996,7 +44688,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -43071,7 +44763,11 @@
                     hir_lazy_stmt_idx: Some(
                         41,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -43079,7 +44775,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43129,12 +44825,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43214,12 +44910,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43299,12 +44995,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43352,12 +45048,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43407,12 +45103,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43457,7 +45153,14 @@
                     hir_lazy_stmt_idx: Some(
                         42,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            10,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            10,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -43465,7 +45168,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43527,7 +45230,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43575,12 +45278,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43660,12 +45363,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43715,12 +45418,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43770,12 +45473,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43844,7 +45547,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43897,7 +45600,11 @@
                     hir_lazy_stmt_idx: Some(
                         1,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            20,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -43905,7 +45612,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -43982,7 +45689,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44035,7 +45742,11 @@
                     hir_lazy_stmt_idx: Some(
                         3,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            29,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44043,7 +45754,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44093,12 +45804,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44148,12 +45859,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44203,12 +45914,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44258,12 +45969,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44332,7 +46043,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44385,7 +46096,14 @@
                     hir_lazy_stmt_idx: Some(
                         15,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                33,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44393,7 +46111,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44446,7 +46164,14 @@
                     hir_lazy_stmt_idx: Some(
                         16,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                36,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44454,7 +46179,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44507,7 +46232,14 @@
                     hir_lazy_stmt_idx: Some(
                         17,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            40,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            40,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44515,7 +46247,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44568,7 +46300,14 @@
                     hir_lazy_stmt_idx: Some(
                         18,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            44,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            44,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44576,7 +46315,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44629,7 +46368,14 @@
                     hir_lazy_stmt_idx: Some(
                         19,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            48,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            48,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44637,7 +46383,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44714,7 +46460,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44767,7 +46513,14 @@
                     hir_lazy_stmt_idx: Some(
                         21,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            80,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            79,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44775,7 +46528,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44828,7 +46581,14 @@
                     hir_lazy_stmt_idx: Some(
                         22,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                84,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44836,7 +46596,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44889,7 +46649,11 @@
                     hir_lazy_stmt_idx: Some(
                         23,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            97,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44897,7 +46661,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -44950,7 +46714,11 @@
                     hir_lazy_stmt_idx: Some(
                         24,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            114,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -44958,7 +46726,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45035,7 +46803,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45112,7 +46880,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45165,7 +46933,14 @@
                     hir_lazy_stmt_idx: Some(
                         27,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                196,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45173,7 +46948,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45226,7 +47001,14 @@
                     hir_lazy_stmt_idx: Some(
                         28,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            204,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            201,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45234,7 +47016,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45287,7 +47069,14 @@
                     hir_lazy_stmt_idx: Some(
                         29,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            206,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            203,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45295,7 +47084,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45348,7 +47137,14 @@
                     hir_lazy_stmt_idx: Some(
                         30,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            216,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            213,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45356,7 +47152,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45409,7 +47205,14 @@
                     hir_lazy_stmt_idx: Some(
                         31,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            218,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            215,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45417,7 +47220,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45470,7 +47273,11 @@
                     hir_lazy_stmt_idx: Some(
                         32,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            226,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45478,7 +47285,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45531,7 +47338,14 @@
                     hir_lazy_stmt_idx: Some(
                         33,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                229,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45539,7 +47353,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45592,7 +47406,14 @@
                     hir_lazy_stmt_idx: Some(
                         34,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            231,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            228,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45600,7 +47421,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45653,7 +47474,14 @@
                     hir_lazy_stmt_idx: Some(
                         35,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            233,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            230,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45661,7 +47489,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45714,7 +47542,14 @@
                     hir_lazy_stmt_idx: Some(
                         36,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            236,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            233,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45722,7 +47557,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45775,7 +47610,14 @@
                     hir_lazy_stmt_idx: Some(
                         37,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            239,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            236,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45783,7 +47625,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45836,7 +47678,14 @@
                     hir_lazy_stmt_idx: Some(
                         38,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                243,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45844,7 +47693,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45897,7 +47746,14 @@
                     hir_lazy_stmt_idx: Some(
                         39,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                246,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45905,7 +47761,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -45958,7 +47814,11 @@
                     hir_lazy_stmt_idx: Some(
                         40,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            247,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 207,
@@ -45966,7 +47826,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 3,
+                            value: 2,
                         },
                     ),
                 },
@@ -46024,12 +47884,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -46072,7 +47932,11 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            3,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -46080,7 +47944,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -46155,7 +48019,14 @@
                     hir_lazy_stmt_idx: Some(
                         19,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            3,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            3,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -46163,13 +48034,15 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -46223,7 +48096,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46301,12 +48174,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46356,12 +48229,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46411,12 +48284,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46464,12 +48337,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46514,7 +48387,28 @@
                     hir_lazy_stmt_idx: Some(
                         20,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                5,
+                            ),
+                            src: SemExprIdx(
+                                4,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                12,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -46522,7 +48416,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46572,12 +48466,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46625,12 +48519,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46675,7 +48569,14 @@
                     hir_lazy_stmt_idx: Some(
                         21,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            7,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -46683,7 +48584,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46745,7 +48646,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46823,12 +48724,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46873,7 +48774,14 @@
                     hir_lazy_stmt_idx: Some(
                         22,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            12,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            11,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -46881,7 +48789,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -46943,7 +48851,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47021,12 +48929,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47076,12 +48984,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47161,12 +49069,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47235,7 +49143,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47288,7 +49196,11 @@
                     hir_lazy_stmt_idx: Some(
                         5,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            25,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47296,7 +49208,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47349,7 +49261,14 @@
                     hir_lazy_stmt_idx: Some(
                         6,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            29,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            27,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47357,7 +49276,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47410,7 +49329,14 @@
                     hir_lazy_stmt_idx: Some(
                         7,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            32,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            30,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47418,7 +49344,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47471,7 +49397,14 @@
                     hir_lazy_stmt_idx: Some(
                         8,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            34,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            32,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47479,7 +49412,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47532,7 +49465,14 @@
                     hir_lazy_stmt_idx: Some(
                         9,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            38,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            36,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47540,7 +49480,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47593,7 +49533,14 @@
                     hir_lazy_stmt_idx: Some(
                         10,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            40,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            38,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47601,7 +49548,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47654,7 +49601,14 @@
                     hir_lazy_stmt_idx: Some(
                         11,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                44,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47662,7 +49616,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47739,7 +49693,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47792,7 +49746,14 @@
                     hir_lazy_stmt_idx: Some(
                         13,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            65,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            62,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47800,7 +49761,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47853,7 +49814,11 @@
                     hir_lazy_stmt_idx: Some(
                         14,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            75,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47861,7 +49826,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47938,7 +49903,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -47991,7 +49956,11 @@
                     hir_lazy_stmt_idx: Some(
                         16,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            81,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -47999,7 +49968,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48049,12 +50018,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48104,12 +50073,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48159,12 +50128,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48214,12 +50183,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48269,12 +50238,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48322,12 +50291,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48372,7 +50341,11 @@
                     hir_lazy_stmt_idx: Some(
                         24,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            87,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -48380,7 +50353,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48430,12 +50403,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48515,12 +50488,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48570,12 +50543,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48625,12 +50598,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48680,12 +50653,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48754,7 +50727,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48807,7 +50780,14 @@
                     hir_lazy_stmt_idx: Some(
                         17,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                95,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -48815,7 +50795,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48895,12 +50875,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -48950,12 +50930,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49005,12 +50985,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49055,7 +51035,14 @@
                     hir_lazy_stmt_idx: Some(
                         26,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                104,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -49063,7 +51050,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49113,12 +51100,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49168,12 +51155,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49223,12 +51210,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49278,12 +51265,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49333,12 +51320,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49388,12 +51375,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49443,12 +51430,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49498,12 +51485,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49553,12 +51540,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49608,12 +51595,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49682,7 +51669,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49735,7 +51722,14 @@
                     hir_lazy_stmt_idx: Some(
                         18,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                118,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -49743,7 +51737,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49793,12 +51787,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49848,12 +51842,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49903,12 +51897,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -49958,12 +51952,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50013,12 +52007,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50066,12 +52060,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50116,7 +52110,14 @@
                     hir_lazy_stmt_idx: Some(
                         28,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                121,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -50124,7 +52125,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50174,12 +52175,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50229,12 +52230,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50284,12 +52285,12 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                     hir_lazy_expr_source_map: HirLazyExprSourceMap(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50334,7 +52335,11 @@
                     hir_lazy_stmt_idx: Some(
                         29,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            122,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 233,
@@ -50342,7 +52347,7 @@
                     ),
                     hir_lazy_expr_region: HirLazyExprRegion(
                         Id {
-                            value: 4,
+                            value: 3,
                         },
                     ),
                 },
@@ -50400,12 +52405,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -50448,7 +52453,11 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            5,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -50456,7 +52465,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -50608,7 +52617,14 @@
                     hir_lazy_stmt_idx: Some(
                         0,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            6,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            6,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -50622,7 +52638,9 @@
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -50667,7 +52685,14 @@
                     hir_lazy_stmt_idx: Some(
                         1,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                9,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -50728,7 +52753,28 @@
                     hir_lazy_stmt_idx: Some(
                         2,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                14,
+                            ),
+                            src: SemExprIdx(
+                                13,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                29,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -50789,7 +52835,14 @@
                     hir_lazy_stmt_idx: Some(
                         3,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                18,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -50850,7 +52903,14 @@
                     hir_lazy_stmt_idx: Some(
                         4,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            25,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            24,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -50911,7 +52971,14 @@
                     hir_lazy_stmt_idx: Some(
                         5,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                28,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -50972,7 +53039,11 @@
                     hir_lazy_stmt_idx: Some(
                         6,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            29,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -51273,7 +53344,14 @@
                     hir_lazy_stmt_idx: Some(
                         8,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            33,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            32,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -51636,7 +53714,11 @@
                     hir_lazy_stmt_idx: Some(
                         9,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            43,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -52239,7 +54321,14 @@
                     hir_lazy_stmt_idx: Some(
                         10,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                47,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -52512,7 +54601,28 @@
                     hir_lazy_stmt_idx: Some(
                         11,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                53,
+                            ),
+                            src: SemExprIdx(
+                                52,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                112,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 5,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -52923,7 +55033,28 @@
                     hir_lazy_stmt_idx: Some(
                         12,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                59,
+                            ),
+                            src: SemExprIdx(
+                                58,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                123,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 7,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -53334,7 +55465,14 @@
                     hir_lazy_stmt_idx: Some(
                         13,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            64,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            61,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -53752,7 +55890,14 @@
                     hir_lazy_stmt_idx: Some(
                         14,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            73,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            70,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -54360,7 +56505,14 @@
                     hir_lazy_stmt_idx: Some(
                         15,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            80,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            77,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -54808,7 +56960,14 @@
                     hir_lazy_stmt_idx: Some(
                         16,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            83,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            80,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -55086,7 +57245,14 @@
                     hir_lazy_stmt_idx: Some(
                         17,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                86,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -55304,7 +57470,14 @@
                     hir_lazy_stmt_idx: Some(
                         18,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            88,
+                        ),
+                        initial_value_hir_lazy_expr_idx: Some(
+                            85,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -55527,7 +57700,11 @@
                     hir_lazy_stmt_idx: Some(
                         19,
                     ),
-                    lazy_stmt_sketch: BasicStmt,
+                    lazy_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            89,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 141,
@@ -55593,12 +57770,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -55641,7 +57818,11 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            7,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -55649,7 +57830,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -55722,7 +57903,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                3,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -55730,7 +57918,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -55818,12 +58006,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -55881,12 +58069,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -55944,12 +58132,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -55990,7 +58178,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            5,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            5,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -55998,7 +58193,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56138,12 +58333,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56186,7 +58381,7 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 13,
@@ -56210,7 +58405,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56253,7 +58448,28 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                13,
+                            ),
+                            src: SemExprIdx(
+                                12,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                25,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -56261,7 +58477,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56304,7 +58520,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            18,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            17,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -56312,7 +58535,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56355,7 +58578,7 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 40,
@@ -56379,7 +58602,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56422,7 +58645,11 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            34,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -56430,7 +58657,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56488,12 +58715,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56551,12 +58778,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56614,12 +58841,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56662,7 +58889,7 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 74,
@@ -56686,7 +58913,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56729,7 +58956,14 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            42,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            41,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -56737,7 +58971,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56780,7 +59014,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                45,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -56788,7 +59029,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56831,7 +59072,11 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            46,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -56839,7 +59084,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56897,12 +59142,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -56960,12 +59205,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57023,12 +59268,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57071,7 +59316,28 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                51,
+                            ),
+                            src: SemExprIdx(
+                                50,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                104,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 8,
+                                },
+                                variables: ArenaIdxRange(
+                                    5..5,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -57079,7 +59345,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57167,12 +59433,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57230,12 +59496,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57293,12 +59559,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57356,12 +59622,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57417,12 +59683,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57465,7 +59731,14 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            53,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            51,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -57473,7 +59746,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57613,12 +59886,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57661,7 +59934,14 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                54,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -57669,7 +59949,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57727,12 +60007,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57775,7 +60055,11 @@
                     hir_eager_stmt_idx: Some(
                         17,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            55,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 313,
@@ -57783,7 +60067,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 39,
+                            value: 30,
                         },
                     ),
                 },
@@ -57841,12 +60125,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -57889,7 +60173,11 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            9,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -57897,7 +60185,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -57970,7 +60258,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            4,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            4,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 322,
@@ -57978,13 +60273,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -58116,12 +60413,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58179,12 +60476,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58272,12 +60569,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58320,7 +60617,7 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 11,
@@ -58344,7 +60641,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58387,7 +60684,7 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 23,
@@ -58411,7 +60708,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58454,7 +60751,14 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                18,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 322,
@@ -58462,7 +60766,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58550,12 +60854,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58613,12 +60917,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58676,12 +60980,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58739,12 +61043,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58800,12 +61104,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58861,12 +61165,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58909,7 +61213,11 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 322,
@@ -58917,7 +61225,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 43,
+                            value: 34,
                         },
                     ),
                 },
@@ -58975,12 +61283,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -59023,7 +61331,11 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            11,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -59031,7 +61343,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -59104,7 +61416,14 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                3,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -59112,7 +61431,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59200,12 +61519,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59263,12 +61582,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59326,12 +61645,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59372,7 +61691,14 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                7,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -59380,7 +61706,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59468,12 +61794,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59531,12 +61857,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59594,12 +61920,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59642,7 +61968,14 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            11,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            11,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -59650,7 +61983,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59790,12 +62123,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59853,12 +62186,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59916,12 +62249,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -59979,12 +62312,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60027,7 +62360,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            15,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            15,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -60035,7 +62375,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60175,12 +62515,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60238,12 +62578,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60301,12 +62641,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60364,12 +62704,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60412,7 +62752,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            19,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -60420,7 +62767,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60560,12 +62907,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60623,12 +62970,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60686,12 +63033,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60749,12 +63096,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60797,7 +63144,28 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                21,
+                            ),
+                            src: SemExprIdx(
+                                20,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                46,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 4,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -60805,7 +63173,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60863,12 +63231,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60924,12 +63292,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -60972,7 +63340,14 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                26,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -60980,7 +63355,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61038,12 +63413,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61101,12 +63476,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61164,12 +63539,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61227,12 +63602,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61290,12 +63665,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61338,7 +63713,28 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                28,
+                            ),
+                            src: SemExprIdx(
+                                27,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                60,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 6,
+                                },
+                                variables: ArenaIdxRange(
+                                    3..3,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -61346,7 +63742,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61404,12 +63800,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61465,12 +63861,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61513,7 +63909,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            33,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            31,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -61521,7 +63924,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61631,12 +64034,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61694,12 +64097,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61757,12 +64160,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61820,12 +64223,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61883,12 +64286,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61931,7 +64334,14 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                41,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -61939,7 +64349,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -61997,12 +64407,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62060,12 +64470,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62123,12 +64533,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62186,12 +64596,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62249,12 +64659,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62312,12 +64722,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62375,12 +64785,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62423,7 +64833,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            44,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            42,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -62431,7 +64848,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62541,12 +64958,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62604,12 +65021,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62667,12 +65084,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62715,7 +65132,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            47,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            45,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -62723,7 +65147,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62833,12 +65257,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62896,12 +65320,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -62959,12 +65383,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63007,7 +65431,14 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            50,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            48,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -63015,7 +65446,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63125,12 +65556,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63188,12 +65619,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63251,12 +65682,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63299,7 +65730,14 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                53,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -63307,7 +65745,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63365,12 +65803,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63428,12 +65866,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63491,12 +65929,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63539,7 +65977,14 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                57,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -63547,7 +65992,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63635,12 +66080,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63698,12 +66143,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63761,12 +66206,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63809,7 +66254,14 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                63,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -63817,7 +66269,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63875,12 +66327,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -63938,12 +66390,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -64001,12 +66453,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -64064,12 +66516,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -64127,12 +66579,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -64175,7 +66627,11 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            64,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 267,
@@ -64183,7 +66639,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 23,
+                            value: 14,
                         },
                     ),
                 },
@@ -64241,12 +66697,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -64289,7 +66745,11 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            13,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -64297,7 +66757,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -64370,7 +66830,14 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -64378,13 +66845,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -64516,12 +66985,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64564,7 +67033,28 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                6,
+                            ),
+                            src: SemExprIdx(
+                                5,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                14,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 1,
+                                },
+                                variables: ArenaIdxRange(
+                                    1..1,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -64572,7 +67062,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64630,12 +67120,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64693,12 +67183,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64756,12 +67246,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64819,12 +67309,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64880,12 +67370,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64941,12 +67431,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -64989,7 +67479,14 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            10,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            9,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -64997,7 +67494,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65137,12 +67634,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65200,12 +67697,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65263,12 +67760,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65326,12 +67823,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65374,7 +67871,28 @@
                     hir_eager_stmt_idx: Some(
                         17,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                12,
+                            ),
+                            src: SemExprIdx(
+                                11,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                27,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 4,
+                                },
+                                variables: ArenaIdxRange(
+                                    2..2,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -65382,7 +67900,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65440,12 +67958,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65501,12 +68019,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65549,7 +68067,14 @@
                     hir_eager_stmt_idx: Some(
                         18,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            16,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            14,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -65557,7 +68082,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65667,12 +68192,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65730,12 +68255,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65793,12 +68318,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65856,12 +68381,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -65904,7 +68429,14 @@
                     hir_eager_stmt_idx: Some(
                         19,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            21,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -65912,7 +68444,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66052,12 +68584,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66115,12 +68647,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66208,12 +68740,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66256,7 +68788,14 @@
                     hir_eager_stmt_idx: Some(
                         20,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                24,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66264,7 +68803,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66322,12 +68861,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66385,12 +68924,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66448,12 +68987,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66496,7 +69035,7 @@
                     hir_eager_stmt_idx: Some(
                         21,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 57,
@@ -66520,7 +69059,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66563,7 +69102,14 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                33,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66571,7 +69117,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66614,7 +69160,14 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            37,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            34,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66622,7 +69175,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66665,7 +69218,28 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                39,
+                            ),
+                            src: SemExprIdx(
+                                38,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                86,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 10,
+                                },
+                                variables: ArenaIdxRange(
+                                    5..5,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66673,7 +69247,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66716,7 +69290,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                43,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66724,7 +69305,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66767,7 +69348,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            48,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            44,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66775,7 +69363,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66818,7 +69406,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            52,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            48,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66826,7 +69421,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66869,7 +69464,28 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                54,
+                            ),
+                            src: SemExprIdx(
+                                53,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                118,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 14,
+                                },
+                                variables: ArenaIdxRange(
+                                    7..7,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66877,7 +69493,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66920,7 +69536,14 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                60,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66928,7 +69551,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -66971,7 +69594,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                66,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -66979,7 +69609,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67022,7 +69652,14 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                70,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -67030,7 +69667,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67073,7 +69710,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            73,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            68,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -67081,7 +69725,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67124,7 +69768,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                76,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -67132,7 +69783,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67175,7 +69826,14 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                79,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -67183,7 +69841,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67226,7 +69884,11 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Return {
+                        result: SemExprIdx(
+                            80,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -67234,7 +69896,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67292,12 +69954,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67355,12 +70017,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67418,12 +70080,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67481,12 +70143,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67544,12 +70206,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67605,12 +70267,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67653,7 +70315,11 @@
                     hir_eager_stmt_idx: Some(
                         22,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            81,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 331,
@@ -67661,7 +70327,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 49,
+                            value: 40,
                         },
                     ),
                 },
@@ -67719,12 +70385,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -67767,7 +70433,11 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            15,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -67775,7 +70445,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -67846,7 +70516,11 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            0,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 300,
@@ -67854,7 +70528,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 33,
+                            value: 24,
                         },
                     ),
                 },
@@ -67910,12 +70584,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -67958,7 +70632,11 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            17,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -67966,7 +70644,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -68039,7 +70717,14 @@
                     hir_eager_stmt_idx: Some(
                         19,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            1,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            1,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -68047,13 +70732,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -68185,12 +70872,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68233,7 +70920,14 @@
                     hir_eager_stmt_idx: Some(
                         20,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            3,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            3,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -68241,13 +70935,15 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
             ),
         },
-        [],
+        [
+            ItemPath(`mnist::INPUT`),
+        ],
     ),
     (
         Trace {
@@ -68379,12 +71075,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68427,7 +71123,28 @@
                     hir_eager_stmt_idx: Some(
                         21,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                8,
+                            ),
+                            src: SemExprIdx(
+                                7,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                22,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 2,
+                                },
+                                variables: ArenaIdxRange(
+                                    2..2,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -68435,7 +71152,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68493,12 +71210,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68556,12 +71273,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68619,12 +71336,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68682,12 +71399,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68743,12 +71460,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68804,12 +71521,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -68852,7 +71569,14 @@
                     hir_eager_stmt_idx: Some(
                         22,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            12,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            11,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -68860,7 +71584,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69000,12 +71724,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69063,12 +71787,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69126,12 +71850,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69189,12 +71913,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69237,7 +71961,14 @@
                     hir_eager_stmt_idx: Some(
                         23,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            16,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            15,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -69245,7 +71976,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69385,12 +72116,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69448,12 +72179,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69511,12 +72242,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69574,12 +72305,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69622,7 +72353,14 @@
                     hir_eager_stmt_idx: Some(
                         24,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            20,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            19,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -69630,7 +72368,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69770,12 +72508,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69833,12 +72571,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69896,12 +72634,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -69959,12 +72697,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70007,7 +72745,14 @@
                     hir_eager_stmt_idx: Some(
                         25,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                23,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -70015,7 +72760,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70073,12 +72818,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70136,12 +72881,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70199,12 +72944,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70247,7 +72992,14 @@
                     hir_eager_stmt_idx: Some(
                         26,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            28,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            27,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -70255,7 +73007,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70395,12 +73147,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70458,12 +73210,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70551,12 +73303,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70599,7 +73351,14 @@
                     hir_eager_stmt_idx: Some(
                         27,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                31,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -70607,7 +73366,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70665,12 +73424,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70728,12 +73487,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70791,12 +73550,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70839,7 +73598,7 @@
                     hir_eager_stmt_idx: Some(
                         28,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 69,
@@ -70863,7 +73622,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70906,7 +73665,28 @@
                     hir_eager_stmt_idx: Some(
                         0,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                36,
+                            ),
+                            src: SemExprIdx(
+                                35,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                76,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 8,
+                                },
+                                variables: ArenaIdxRange(
+                                    6..6,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -70914,7 +73694,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -70957,7 +73737,28 @@
                     hir_eager_stmt_idx: Some(
                         1,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                38,
+                            ),
+                            src: SemExprIdx(
+                                37,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                83,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 10,
+                                },
+                                variables: ArenaIdxRange(
+                                    6..6,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -70965,7 +73766,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71008,7 +73809,14 @@
                     hir_eager_stmt_idx: Some(
                         2,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            41,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            38,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71016,7 +73824,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71059,7 +73867,14 @@
                     hir_eager_stmt_idx: Some(
                         3,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                45,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71067,7 +73882,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71110,7 +73925,14 @@
                     hir_eager_stmt_idx: Some(
                         4,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            50,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            47,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71118,7 +73940,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71161,7 +73983,14 @@
                     hir_eager_stmt_idx: Some(
                         5,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            54,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            51,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71169,7 +73998,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71212,7 +74041,14 @@
                     hir_eager_stmt_idx: Some(
                         6,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            58,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            55,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71220,7 +74056,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71263,7 +74099,14 @@
                     hir_eager_stmt_idx: Some(
                         7,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            62,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            59,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71271,7 +74114,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71314,7 +74157,14 @@
                     hir_eager_stmt_idx: Some(
                         8,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            66,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            63,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71322,7 +74172,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71365,7 +74215,14 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            72,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            68,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71373,7 +74230,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71416,7 +74273,14 @@
                     hir_eager_stmt_idx: Some(
                         10,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            76,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            72,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71424,7 +74288,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71467,7 +74331,14 @@
                     hir_eager_stmt_idx: Some(
                         11,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            80,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            76,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71475,7 +74346,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71518,7 +74389,14 @@
                     hir_eager_stmt_idx: Some(
                         12,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            86,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            81,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71526,7 +74404,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71569,7 +74447,14 @@
                     hir_eager_stmt_idx: Some(
                         13,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                89,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71577,7 +74462,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71635,12 +74520,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71698,12 +74583,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71761,12 +74646,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71809,7 +74694,7 @@
                     hir_eager_stmt_idx: Some(
                         29,
                     ),
-                    eager_stmt_data_sketch: IfBranch {
+                    eager_stmt_sketch: IfBranch {
                         if_regional_token: IfRegionalToken {
                             regional_token_idx: RegionalTokenIdx(
                                 204,
@@ -71833,7 +74718,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71876,7 +74761,28 @@
                     hir_eager_stmt_idx: Some(
                         14,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                94,
+                            ),
+                            src: SemExprIdx(
+                                93,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                211,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 22,
+                                },
+                                variables: ArenaIdxRange(
+                                    16..16,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71884,7 +74790,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71927,7 +74833,28 @@
                     hir_eager_stmt_idx: Some(
                         15,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                96,
+                            ),
+                            src: SemExprIdx(
+                                95,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                218,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 24,
+                                },
+                                variables: ArenaIdxRange(
+                                    16..16,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71935,7 +74862,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -71978,7 +74905,28 @@
                     hir_eager_stmt_idx: Some(
                         16,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Be {
+                            expr: SemExprIdx(
+                                98,
+                            ),
+                            src: SemExprIdx(
+                                97,
+                            ),
+                            contract: Pure,
+                            be_regional_token_idx: RegionalTokenIdx(
+                                225,
+                            ),
+                            target: BePatternSyndicate {
+                                pattern_root: BeSynPatternRoot {
+                                    syn_pattern_idx: 26,
+                                },
+                                variables: ArenaIdxRange(
+                                    16..16,
+                                ),
+                            },
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -71986,7 +74934,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -72029,7 +74977,14 @@
                     hir_eager_stmt_idx: Some(
                         17,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Require {
+                        condition: Other {
+                            expr: SemExprIdx(
+                                104,
+                            ),
+                            conversion: None,
+                        },
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -72037,7 +74992,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -72080,7 +75035,14 @@
                     hir_eager_stmt_idx: Some(
                         18,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Let {
+                        initial_value: SemExprIdx(
+                            107,
+                        ),
+                        initial_value_hir_eager_expr_idx: Some(
+                            99,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -72088,7 +75050,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -72146,12 +75108,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -72209,12 +75171,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -72272,12 +75234,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -72320,7 +75282,11 @@
                     hir_eager_stmt_idx: Some(
                         30,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            108,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 344,
@@ -72328,7 +75294,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 53,
+                            value: 44,
                         },
                     ),
                 },
@@ -72386,12 +75352,12 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                     hir_eager_expr_source_map: HirEagerExprSourceMap(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },
@@ -72434,7 +75400,11 @@
                     hir_eager_stmt_idx: Some(
                         9,
                     ),
-                    eager_stmt_data_sketch: BasicStmt,
+                    eager_stmt_sketch: Eval {
+                        expr: SemExprIdx(
+                            18,
+                        ),
+                    },
                     sem_expr_region: SemExprRegion(
                         Id {
                             value: 347,
@@ -72442,7 +75412,7 @@
                     ),
                     hir_eager_expr_region: HirEagerExprRegion(
                         Id {
-                            value: 71,
+                            value: 63,
                         },
                     ),
                 },

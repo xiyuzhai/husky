@@ -1,4 +1,4 @@
-pub(crate) use husky_ast::test_utils::*;
+pub(crate) use husky_ast::test_helpers::*;
 
 use husky_corgi_config::jar::CorgiConfigJar;
 use husky_corgi_config_ast::CorgiConfigAstJar;

@@ -35,9 +35,9 @@ husky-entity-tree = { workspace = true, optional = true }
 [dev-dependencies]
 # fs
 husky-corgi-config.workspace = true
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # ide
-husky-inlay-hints = { path = ".", features = ["lsp_support"] }
+husky-inlay-hints = { workspace = true, features = ["lsp_support"] }
 # kernel
 husky-coword.workspace = true
 husky-entity-path.workspace = true
@@ -64,7 +64,7 @@ husky-entity-tree.workspace = true
 husky-syn-expr.workspace = true
 husky-syn-decl.workspace = true
 husky-syn-defn.workspace = true
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-corgi-config-ast.workspace = true

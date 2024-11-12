@@ -222,7 +222,7 @@ impl FlyTerm {
                     _ => todo!(),
                 }
             }
-            FlyTermData::LambdaVariable { ty, index } => todo!(),
+            FlyTermData::AbstractVariable { ty, index } => todo!(),
             FlyTermData::TypeVariant { path } => todo!(),
             FlyTermData::MajorTypeVar(_) => todo!(),
         }
@@ -264,7 +264,7 @@ impl FlyTerm {
                 symbolic_variable,
                 ty,
             } => todo!(),
-            FlyTermData::LambdaVariable { ty, index } => todo!(),
+            FlyTermData::AbstractVariable { ty, index } => todo!(),
             FlyTermData::TypeVariant { path } => todo!(),
             FlyTermData::MajorTypeVar(_) => {
                 let trai_path: TraitPath = match trai.base_term_data(engine) {

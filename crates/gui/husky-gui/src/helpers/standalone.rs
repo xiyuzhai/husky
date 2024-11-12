@@ -1,4 +1,4 @@
-use ui::{component::IsUiComponent, hotkey::egui::HotkeyBuffer};
+use ui::{component::ComponentUi, hotkey::egui::HotkeyBuffer};
 
 pub fn run_standalone_ui_component<UiComponent, UiComponentConfig, UiActionBuffer>(
     component: UiComponent,
@@ -6,7 +6,7 @@ pub fn run_standalone_ui_component<UiComponent, UiComponentConfig, UiActionBuffe
     action_buffer: UiActionBuffer,
 ) -> Result<(), eframe::Error>
 where
-    UiComponent: IsUiComponent<egui::Ui, UiComponentConfig, UiActionBuffer> + 'static,
+    UiComponent: ComponentUi<egui::Ui, UiComponentConfig, UiActionBuffer> + 'static,
     UiComponentConfig: 'static,
     UiActionBuffer: 'static,
 {
@@ -38,11 +38,11 @@ struct StandaloneUiApp<UiComponent, UiComponentSettings, UiActionBuffer> {
 impl<UiComponent, UiComponentConfig, UiActionBuffer> eframe::App
     for StandaloneUiApp<UiComponent, UiComponentConfig, UiActionBuffer>
 where
-    UiComponent: IsUiComponent<egui::Ui, UiComponentConfig, UiActionBuffer>,
+    UiComponent: ComponentUi<egui::Ui, UiComponentConfig, UiActionBuffer>,
 {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
-            self.component.render(
+            self.component.component_ui(
                 &mut self.settings,
                 &mut self.hotkey_buffer,
                 &mut self.action_buffer,

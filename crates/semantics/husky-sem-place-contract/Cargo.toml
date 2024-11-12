@@ -45,7 +45,7 @@ husky-toml-token.workspace = true
 husky-token.workspace = true
 husky-token-data.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-entity-tree.workspace = true

@@ -1,35 +1,23 @@
-mod doc;
-mod layout;
+pub mod doc;
+pub mod frame;
+pub mod hotkey;
+pub mod layout;
 
 pub(crate) use self::doc::*;
 pub(crate) use self::layout::*;
 
 use egui::Color32;
+use hotkey::NotebookHotkeySettings;
 use husky_code_editor::settings::HasCodeEditorSettings;
 use husky_trace_doc::settings::HasTraceDocSettings;
 use husky_trace_protocol::settings::HasTraceSettings;
-use ui::{component::IsUiComponent, hotkey::egui::HotkeyBuffer};
+use ui::{component::ComponentUi, hotkey::egui::HotkeyBuffer};
 
 #[derive(Default, PartialEq, Eq)]
 pub(crate) struct NotebookSettings {
     layout: HuskyNotebookLayoutSettings,
     doc: HuskyNotebookDocSettings,
-}
-
-impl NotebookSettings {
-    pub(crate) fn activity_bar_frame(&self) -> egui::Frame {
-        egui::Frame::none()
-    }
-
-    pub(crate) fn log_view_frame(&self) -> egui::Frame {
-        egui::Frame::none()
-    }
-
-    pub(crate) fn main_panel_frame(&self) -> egui::containers::Frame {
-        egui::containers::Frame::default()
-            .inner_margin(0.0)
-            .fill(Color32::BLACK)
-    }
+    hotkey: NotebookHotkeySettings,
 }
 
 impl HasCodeEditorSettings for NotebookSettings {
@@ -56,10 +44,10 @@ impl HasTraceDocSettings for NotebookSettings {
 
 pub(crate) struct NotebookSettingsView;
 
-impl<ParentActionBuffer> IsUiComponent<egui::Ui, NotebookSettings, ParentActionBuffer>
+impl<ParentActionBuffer> ComponentUi<egui::Ui, NotebookSettings, ParentActionBuffer>
     for NotebookSettingsView
 {
-    fn render(
+    fn component_ui(
         &mut self,
         _settings: &mut NotebookSettings,
         hotkey_buffer: &mut HotkeyBuffer,
@@ -67,5 +55,9 @@ impl<ParentActionBuffer> IsUiComponent<egui::Ui, NotebookSettings, ParentActionB
         ui: &mut egui::Ui,
     ) {
         ui.label("Ui Component Context");
+    }
+
+    fn toggle_help_facade(&mut self) {
+        todo!()
     }
 }

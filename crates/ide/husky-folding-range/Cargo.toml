@@ -20,7 +20,7 @@ husky-token.workspace = true
 expect-test.workspace = true
 # fs
 husky-corgi-config.workspace = true
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # kernel
 husky-entity-path.workspace = true
 husky-coword.workspace = true
@@ -29,12 +29,12 @@ husky-term-prelude.workspace = true
 husky-text.workspace = true
 husky-token-data.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
-husky-folding-range = { path = ".", features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
+husky-folding-range = { workspace = true, features = ["test_helpers"] }
 # toml
 husky-toml-token.workspace = true
 husky-toml-ast.workspace = true
 husky-corgi-config-ast.workspace = true
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

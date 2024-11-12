@@ -39,6 +39,10 @@ pub trait IsPedestalFull: IsPedestal + Serialize + for<'a> Deserialize<'a> {}
 
 impl<T> IsPedestalFull for T where T: IsPedestal + Serialize + for<'a> Deserialize<'a> {}
 
+/// This is for figure caching.
+///
+/// It's the combined pedestal of all relevant traces to be visualized.
+///
 /// we don't make it a trait because it's not likely to affect efficiency,
 ///
 /// as it's used only in the debugger end.

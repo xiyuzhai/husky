@@ -11,8 +11,8 @@ pub mod jar;
 mod lsp_support;
 pub mod path;
 pub mod script;
-#[cfg(feature = "test_utils")]
-pub mod test_utils;
+#[cfg(feature = "test_helpers")]
+pub mod test_helpers;
 #[cfg(test)]
 mod tests;
 pub mod toolchain;
@@ -27,8 +27,8 @@ use self::error::*;
 use self::file::*;
 use self::jar::{VfsJar as Jar, *};
 use self::path::*;
-#[cfg(feature = "test_utils")]
-use self::test_utils::*;
+#[cfg(feature = "test_helpers")]
+use self::test_helpers::*;
 use self::toolchain::*;
 use dashmap::{mapref::entry::Entry, DashMap};
 use husky_coword::*;

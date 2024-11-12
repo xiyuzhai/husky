@@ -59,6 +59,7 @@ impl From<&SynExprError> for DecSignatureError {
 
 impl From<&ManifestError> for DecSignatureError {
     fn from(e: &ManifestError) -> Self {
+        husky_print_utils::p!(e);
         todo!()
     }
 }

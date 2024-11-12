@@ -11,7 +11,7 @@ pub struct EthCurry {
     pub curry_kind: CurryKind,
     pub variance: Variance,
     /// a
-    pub parameter_hvar: Option<EthLambdaVariable>,
+    pub parameter_hvar: Option<EthAbstractVariable>,
     /// X
     pub parameter_ty: EthTerm,
     /// Y
@@ -30,7 +30,7 @@ impl EthCurry {
         toolchain: Toolchain,
         curry_kind: CurryKind,
         variance: Variance,
-        parameter_hvar: Option<EthLambdaVariable>,
+        parameter_hvar: Option<EthAbstractVariable>,
         parameter_ty: EthTerm,
         return_ty: EthTerm,
         db: &::salsa::Db,
@@ -103,7 +103,7 @@ pub(crate) fn term_curry_from_dec(db: &::salsa::Db, curry: DecCurry) -> EthTermR
         curry.curry_kind(db),
         curry.variance(db),
         match curry.parameter_hvar(db) {
-            Some(parameter_hvar) => Some(EthLambdaVariable::from_dec(db, parameter_hvar)?),
+            Some(parameter_hvar) => Some(EthAbstractVariable::from_dec(db, parameter_hvar)?),
             None => None,
         },
         t(curry.parameter_ty(db))?,

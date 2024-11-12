@@ -37,8 +37,8 @@ husky-unicode-symbols.workspace = true
 
 [dev-dependencies]
 expect-test.workspace = true
-husky-token-data = { path = ".", features = ["test_utils"] }
+husky-token-data = { workspace = true, features = ["test_helpers"] }
 
 [features]
 protocol_support = ["dep:husky-token-protocol"]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

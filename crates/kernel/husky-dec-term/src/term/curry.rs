@@ -9,7 +9,7 @@ pub struct DecCurry {
     pub curry_kind: CurryKind,
     pub variance: Variance,
     /// a
-    pub parameter_hvar: Option<DecLambdaVariable>,
+    pub parameter_hvar: Option<DecAbstractVariable>,
     /// X
     pub parameter_ty: DecTerm,
     /// Y
@@ -65,7 +65,7 @@ impl DecCurry {
         self,
         db: &::salsa::Db,
         symbol: DecSymbolicVariable,
-        variable: DecLambdaVariable,
+        variable: DecAbstractVariable,
     ) -> Self {
         DecCurry::new(
             db,

@@ -135,7 +135,7 @@ impl VariableRegionData {
         symbols
     }
 
-    pub(super) fn set_lambda_variable_access_end(
+    pub(super) fn set_abstract_variable_access_end(
         &mut self,
         var: CurrentVariableIdx,
         access_end: RegionalTokenIdxRangeEnd,

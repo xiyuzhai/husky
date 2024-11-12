@@ -76,17 +76,78 @@ fn check_jar_paths<'a>(jar_paths: impl Iterator<Item = &'a syn::Path>) {
         if jar_ident == "Jar" {
             continue;
         }
-        let jar_package_name = format!(
-            "husky-{}",
-            jar_ident.split("Jar").next().unwrap().to_case(Case::Kebab)
-        )
-        .replace("-type", "-ty");
+        let jar_package_name = if jar_ident.starts_with("Lx") {
+            format!(
+                "latex-{}",
+                jar_ident[2..]
+                    .split("Jar")
+                    .next()
+                    .unwrap()
+                    .to_case(Case::Kebab)
+            )
+            .replace("-type", "-ty")
+        } else if jar_ident.starts_with("Vd") {
+            format!(
+                "visored-{}",
+                jar_ident[2..]
+                    .split("Jar")
+                    .next()
+                    .unwrap()
+                    .to_case(Case::Kebab)
+            )
+            .replace("-type", "-ty")
+        } else if jar_ident.starts_with("Ln") {
+            format!(
+                "lean-{}",
+                jar_ident[2..]
+                    .split("Jar")
+                    .next()
+                    .unwrap()
+                    .to_case(Case::Kebab)
+            )
+            .replace("-type", "-ty")
+        } else if jar_ident.starts_with("Ie") {
+            format!(
+                "isabelle-{}",
+                jar_ident[2..]
+                    .split("Jar")
+                    .next()
+                    .unwrap()
+                    .to_case(Case::Kebab)
+            )
+            .replace("-type", "-ty")
+        } else {
+            format!(
+                "husky-{}",
+                jar_ident.split("Jar").next().unwrap().to_case(Case::Kebab)
+            )
+            .replace("-type", "-ty")
+        };
         let Some(deps) = jar_tree.get(&jar_package_name) else {
-            panic!("{jar_package_name} is not present in jar tree");
+            panic!("{jar_package_name} is not present in jar tree. Make sure jar tree is updated.");
         };
         for dep in deps {
-            let kebab = dep.split("husky-").last().unwrap();
-            let dep_jar_ident = format!("{}Jar", kebab.to_case(Case::Pascal)).replace("Ty", "Type");
+            let dep_jar_ident = if dep.starts_with("husky-") {
+                let kebab = dep.split("husky-").last().unwrap();
+                format!("{}Jar", kebab.to_case(Case::Pascal)).replace("Ty", "Type")
+            } else if dep.starts_with("latex-") {
+                let kebab = dep.split("latex-").last().unwrap();
+                format!("Lx{}Jar", kebab.to_case(Case::Pascal)).replace("Ty", "Type")
+            } else if dep.starts_with("visored-") {
+                let kebab = dep.split("visored-").last().unwrap();
+                format!("Vd{}Jar", kebab.to_case(Case::Pascal)).replace("Ty", "Type")
+            } else if dep.starts_with("lean-") {
+                let kebab = dep.split("lean-").last().unwrap();
+                format!("Ln{}Jar", kebab.to_case(Case::Pascal)).replace("Ty", "Type")
+            } else if dep.starts_with("isabelle-") {
+                let kebab = dep.split("isabelle-").last().unwrap();
+                format!("Ie{}Jar", kebab.to_case(Case::Pascal)).replace("Ty", "Type")
+            } else if dep.starts_with("rocq-") {
+                let kebab = dep.split("rocq-").last().unwrap();
+                format!("Rq{}Jar", kebab.to_case(Case::Pascal)).replace("Ty", "Type")
+            } else {
+                todo!()
+            };
             assert!(
                 jar_idents.contains(&dep_jar_ident),
                 "expect `{dep_jar_ident}` to be included as a dependency for `{jar_ident}`"

@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{natbib}  % Add this package for citation management
+\usepackage{tcolorbox}  % Add this package for creating boxes
+
+% Define Husky language for listings
+\lstdefinelanguage{Husky}{
+  morekeywords=[1]{fn, let, mut, pub, self, struct, trait, type, use, impl, static, var, of, compterm, term},
+  morekeywords=[2]{for, if, else, while, return, match},
+  morekeywords=[3]{InputId, Fin, Pos, Q, K, V, f32},  % User-defined and built-in types
+  morekeywords=[4]{INPUT_ID, POS, POS_AUX},  % Global variables
+  keywordstyle=[1]{\color{purple}\bfseries},
+  keywordstyle=[2]{\color{orange}\bfseries},
+  keywordstyle=[3]{\color{teal}\bfseries},  % Color for user-defined and built-in types
+  keywordstyle=[4]{\color{blue}\bfseries},  % Color for global variables
+  identifierstyle=\color{black},
+  sensitive=true,
+  commentstyle=\color{green!60!black}\itshape,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]",
+  morestring=[b]',
+  basicstyle=\ttfamily\small,
+}
+
+% Set default language for listings
+\lstset{language=Husky}
+
+% Define a command for inline Husky code
+\newcommand{\huskyinline}[1]{\lstinline[language=Husky]|#1|}
+
+\title{placeholder Variables}
+\author{Xiyu Zhai, Liao Zhang, Yonghao Jin}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Latex is so lame. Cite shit \cite{someAuthor2023}here.
+
+\section{Introduction}
+
+Husky is one of the most sophisticated programming languages on earth, designed during my best years. Thus, it's too exhausting to explain it in one short document. We shall first write a couple of essays addressing specific aspects and then combine them together.
+
+In this paper, we shall describe the placeholder variables in the Husky programming language, which are the basis of Husky's novel high-level syntax and semantics.
+
+A placeholder variable is defined by the keyword \huskyinline{var}. For example,
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50!black,title=Husky Code]
+    \begin{lstlisting}[language=Husky]
+static var INPUT_ID: InputId;
+    \end{lstlisting}
+\end{tcolorbox}
+
+The additional keyword \huskyinline{static} indicates that this placeholder is meant for runtime calculation.
+We also have \huskyinline{type var} for type placeholder variables, and \huskyinline{compterm var} for computable term variables and \huskyinline{term var} for arbitrary term variables.
+
+The intended usage of placeholder variables is inspired by natural language. Consider the following:
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50!black,title=Example]
+    Let $x$ be an integer. We say $x$ is positive if $x>0$. Then if $x=1$, $x$ is positive. Let $y=x+1$, then $y|_{x=0}=1$.
+\end{tcolorbox}
+
+In above, $x$ is not a variable like in Python or Rust. It's a contextual placeholder that can be used to construct a term (including both value and proposition) depending on it, with the dependency automatically tracked. It's actually quite similar to TensorFlow's placeholder variables, designed for compilation purposes, but much more general.
+
+TODO: Ask Liao Zhang whether this mechanism has true support from certain prover languages like Coq or Lean.
+
+The intended purpose is to have a richer semantics for expressing \textbf{values that depends on a set of placeholders} together with \textbf{strong type safety}.
+
+\section{Related Work}
+\subsection{Placeholder Variables as Indices}
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50!black,title=Husky Code]
+    \begin{lstlisting}[language=Husky]
+static var I: Fin 8;
+static var J: Fin 8;
+val m: f32 = I * J
+\end{lstlisting}
+\end{tcolorbox}
+
+The above defines a $8*8$ matrix $m=(ij)_{0\le i,j<8}$
+
+We can define attention as follows:
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50!black,title=Husky Code]
+    \begin{lstlisting}[language=Husky]
+// This is used anywhere.
+// This is the default placeholder for type `Pos'
+pub static var POS: Pos;
+// This is only used within current module.
+static var POS_AUX: Pos;
+gn attn(
+    q: Q,
+    k: K,
+    v: V,
+    f: fn(Q, K) -> f32,
+) -> V:
+    // `of' by default overrides the default placeholder
+    // of the type with the given expr
+    let k = k of POS_AUX // depends on POS, POS_AUX
+    let score = f(q, k) // depends on POS, POS_AUX
+    fold(v, score) // depends on POS
+
+// Fold along the direction of `POS_AUX'.
+//
+// `const[POS_AUX]' denotes that the output is deprived
+// of any dependency on POS_AUX.
+gn fold(v: V, score: f32) -> const[POS_AUX] V:
+    ...
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection{Compare with DexLang}
+TODO: ask Yonghao Jin
+
+\subsubsection{Compare with Tensor Libraries like NumPy, PyTorch, TensorFlow}
+
+\subsection{Mathematica}
+TODO: ask Yonghao Jin
+
+It does a similar thing, but with dynamic typing. And there's a lack of support for compilation and static analysis.
+
+\section{Static Analysis}
+\subsection{Basics}
+TODO: Xiyu Zhai
+\subsection{Global Mutables}
+TODO: Xiyu Zhai
+
+\section{Runtime Calculation}
+\subsection{Single Thread, C implementation}
+TODO: Xiyu Zhai
+\subsection{Multi Threads}
+TODO: Xiyu Zhai
+
+\bibliographystyle{plainnat}  % Add this before \end{document}
+\bibliography{references}     % Add this before \end{document}
+
+\end{document}

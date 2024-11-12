@@ -48,7 +48,7 @@ husky-dec-ty.workspace = true
 # lex
 husky-toml-token.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-syn-expr.workspace = true
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
@@ -59,7 +59,7 @@ husky-dec-signature.workspace = true
 husky-corgi-config.workspace = true
 # utils
 husky-path-utils.workspace = true
-husky-diagnostics = { path = ".", features = ["test_utils"] }
+husky-diagnostics = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

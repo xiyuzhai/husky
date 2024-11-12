@@ -545,37 +545,30 @@ impl<LinketImpl: IsLinketImpl> VmirExprIdx<LinketImpl> {
         coercion: impl Into<Option<VmirCoercion>>,
         ctx: &mut impl EvalVmir<'comptime, LinketImpl>,
     ) -> LinketImplVmControlFlowThawed<LinketImpl> {
-        let value = ctx.eval_expr(self, |ctx| self.eval_aux(ctx))?;
-        VmControlFlow::Continue(match coercion.into() {
-            Some(coercion) => match coercion {
-                VmirCoercion::Trivial => value,
-                VmirCoercion::Never => todo!(),
-                VmirCoercion::WrapInSome => todo!(),
-                VmirCoercion::Redirection => {
-                    // TODO
-                    value
-                }
-                VmirCoercion::Dedirection => todo!(),
-            },
-            None => value,
-        })
+        ctx.eval_expr(self, |ctx| self.eval_aux(coercion.into(), ctx))
     }
 
+    // TODO: check that `.eval_expr_itself` is always used in all arms
     fn eval_aux<'comptime>(
         self,
+        coercion: Option<VmirCoercion>,
         ctx: &mut impl EvalVmir<'comptime, LinketImpl>,
     ) -> LinketImplVmControlFlowThawed<LinketImpl> {
         use VmControlFlow::*;
 
         let db = ctx.db();
 
-        match *self.entry(ctx.vmir_expr_arena()) {
-            VmirExprData::Literal { ref value } => Continue(value.into_thawed_value()),
+        let value = match *self.entry(ctx.vmir_expr_arena()) {
+            VmirExprData::Literal { ref value } => {
+                ctx.eval_expr_itself(self, |ctx| Continue(value.into_thawed_value()))
+            }
             VmirExprData::RuntimeVariable {
                 qual,
                 name,
                 variable_idx,
-            } => Continue(ctx.access_variable(variable_idx, qual)),
+            } => ctx.eval_expr_itself(self, |ctx| {
+                Continue(ctx.access_variable(variable_idx, qual))
+            }),
             VmirExprData::Binary { lopd, opr, ropd } => {
                 let mut lopd = lopd.eval(None, ctx)?;
                 let ropd = ropd.eval(None, ctx)?;
@@ -647,15 +640,17 @@ impl<LinketImpl: IsLinketImpl> VmirExprIdx<LinketImpl> {
                 ref runtime_compterms,
             } => {
                 let opd = opd.eval(None, ctx)?;
-                linket_impl.eval_vm(
-                    smallvec![
-                        VmArgumentValue::Simple(opd),
-                        VmArgumentValue::RuntimeConstants(unsafe {
-                            std::mem::transmute(runtime_compterms as &[_])
-                        }),
-                    ],
-                    db,
-                )
+                ctx.eval_expr_itself(self, |ctx| {
+                    linket_impl.eval_vm(
+                        smallvec![
+                            VmArgumentValue::Simple(opd),
+                            VmArgumentValue::RuntimeConstants(unsafe {
+                                std::mem::transmute(runtime_compterms as &[_])
+                            }),
+                        ],
+                        db,
+                    )
+                })
             }
             VmirExprData::Linket {
                 linket_impl,
@@ -697,26 +692,43 @@ impl<LinketImpl: IsLinketImpl> VmirExprIdx<LinketImpl> {
                 items,
             } => {
                 let self_argument = self_argument.eval(None, ctx)?;
-                match items.0.len() {
-                    1 => {
-                        // TODO: ad hoc
-                        let index = VmirExprIdx(items.0.start()).eval(None, ctx)?.to_usize();
-                        self_argument.index(index).map_err(|_| todo!()).into()
+                ctx.eval_expr_itself(self, |ctx| {
+                    match items.0.len() {
+                        1 => {
+                            // TODO: ad hoc
+                            let index = VmirExprIdx(items.0.start()).eval(None, ctx)?.to_usize();
+                            self_argument.index(index).map_err(|_| todo!()).into()
+                        }
+                        _ => todo!(),
                     }
-                    _ => todo!(),
-                }
+                })
             }
             VmirExprData::Val {
                 linket_impl_or_val_path,
-            } => match linket_impl_or_val_path {
+            } => ctx.eval_expr_itself(self, |ctx| match linket_impl_or_val_path {
                 Left(linket_impl) => linket_impl.eval_vm(smallvec![], db),
                 Right(val_path) => ctx.eval_val(val_path),
-            },
-            VmirExprData::UnitTypeVariant { linket_impl } => linket_impl.eval_vm(smallvec![], db),
+            }),
+            VmirExprData::UnitTypeVariant { linket_impl } => {
+                ctx.eval_expr_itself(self, |ctx| linket_impl.eval_vm(smallvec![], db))
+            }
             VmirExprData::Unwrap { opd } => todo!(),
             VmirExprData::ConstTemplateVariable => todo!(),
             VmirExprData::RitchieItemPath => todo!(),
             VmirExprData::StaticVar { linket_impl } => todo!(),
-        }
+        }?;
+        VmControlFlow::Continue(match coercion {
+            Some(coercion) => match coercion {
+                VmirCoercion::Trivial => value,
+                VmirCoercion::Never => todo!(),
+                VmirCoercion::WrapInSome => todo!(),
+                VmirCoercion::Redirection => {
+                    // TODO
+                    value
+                }
+                VmirCoercion::Dedirection => todo!(),
+            },
+            None => value,
+        })
     }
 }

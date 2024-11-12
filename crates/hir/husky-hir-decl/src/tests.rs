@@ -1,4 +1,4 @@
-pub(crate) use husky_ast::test_utils::*;
+pub(crate) use husky_ast::test_helpers::*;
 use husky_vfs::path::module_path::ModulePath;
 
 use crate::{jar::*, *};

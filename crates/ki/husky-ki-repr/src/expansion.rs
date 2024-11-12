@@ -811,7 +811,7 @@ fn val_ki_repr_expansions(
 #[test]
 fn val_ki_repr_expansions_works() {
     // todo: why compiler needs this line to work?
-    use husky_ast::test_utils::AstTestUtils;
+    use husky_ast::test_helpers::AstTestUtils;
     DB::ast_rich_test_debug_with_db(
         val_ki_repr_expansions,
         &AstTestConfig::new(

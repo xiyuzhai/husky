@@ -214,7 +214,7 @@ impl EthInstantiationBuilder {
             return JustOk(());
         }
         let is_symbol_or_hvar: EthTermMaybeResult<()> = match dst {
-            EthTerm::SymbolicVariable(_) | EthTerm::LambdaVariable(_) => JustOk(()),
+            EthTerm::SymbolicVariable(_) | EthTerm::AbstractVariable(_) => JustOk(()),
             _ => Nothing,
         };
         match src {
@@ -246,7 +246,7 @@ impl EthInstantiationBuilder {
             | EthTerm::ItemPath(_)
             | EthTerm::Sort(_)
             | EthTerm::Universe(_)
-            | EthTerm::LambdaVariable(_) => Nothing,
+            | EthTerm::AbstractVariable(_) => Nothing,
             EthTerm::Curry(_) => {
                 todo!("dependent type")
                 // let EthTerm::TraitConstraint(dst) = dst else {

@@ -1,5 +1,6 @@
 use crate::*;
 use husky_hir_prelude::HirLiteral;
+use ordered_float::OrderedFloat;
 
 /// precompiled to save conversion
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -30,8 +31,8 @@ impl __RegularValueConstant {
             HirLiteral::R64(v) => Value::R64(v),
             HirLiteral::R128(v) => Value::R128(v),
             HirLiteral::RSize(v) => Value::RSize(v),
-            HirLiteral::F32(v) => Value::F32(v.into()),
-            HirLiteral::F64(v) => Value::F64(v.into()),
+            HirLiteral::F32(v) => Value::F32(OrderedFloat(v.into_inner())),
+            HirLiteral::F64(v) => Value::F64(OrderedFloat(v.into_inner())),
             HirLiteral::StringLiteral(v) => Value::StringLiteral(v.into()),
         };
         Self(unsafe { std::mem::transmute(value) })

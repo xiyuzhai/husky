@@ -61,7 +61,7 @@ fn coersible_to_int(engine: &mut impl FlyTermEngineMut, index_ty: FlyTerm) -> bo
             symbolic_variable: term,
             ty,
         } => false,
-        FlyTermData::LambdaVariable { .. } => unreachable!(),
+        FlyTermData::AbstractVariable { .. } => unreachable!(),
         FlyTermData::TypeVariant { path } => unreachable!(),
         FlyTermData::MajorTypeVar(_) => todo!(),
     }

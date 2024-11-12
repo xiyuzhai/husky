@@ -53,7 +53,7 @@ pub fn jar(args: TokenStream, input: TokenStream) -> TokenStream {
     jar::jar(args, input)
 }
 
-#[deprecated(note = "try using derive(DebugWithDb) instead")]
+// TODO: try using derive(DebugWithDb) instead
 #[proc_macro_attribute]
 pub fn derive_debug_with_db(args: TokenStream, input: TokenStream) -> TokenStream {
     debug_with_db::debug_with_db(args, input)

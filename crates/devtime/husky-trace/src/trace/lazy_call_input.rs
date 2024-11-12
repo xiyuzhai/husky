@@ -75,4 +75,8 @@ impl LazyCallInputTraceData {
     pub fn var_deps_expansion(&self, db: &::salsa::Db) -> TraceVarDepsExpansion {
         todo!()
     }
+
+    pub(crate) fn biological_parent(&self) -> Trace {
+        self.biological_parent
+    }
 }

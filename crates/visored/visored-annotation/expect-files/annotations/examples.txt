@@ -1,0 +1,136 @@
+[
+    VdAnnotationsExample {
+        input: "",
+        root_mode: Math,
+        annotations: VdAnnotations {
+            token_annotation_records: [],
+            space_annotation_records: [],
+            token_annotations: [],
+            space_annotations: [],
+        },
+    },
+    VdAnnotationsExample {
+        input: "xy",
+        root_mode: Math,
+        annotations: VdAnnotations {
+            token_annotation_records: [
+                VdAnnotationRecord {
+                    offset_range: TextOffsetRange {
+                        start: TextOffset(
+                            0,
+                        ),
+                        end: TextOffset(
+                            1,
+                        ),
+                    },
+                    annotation: Variable(
+                        Usage,
+                    ),
+                },
+                VdAnnotationRecord {
+                    offset_range: TextOffsetRange {
+                        start: TextOffset(
+                            1,
+                        ),
+                        end: TextOffset(
+                            2,
+                        ),
+                    },
+                    annotation: Variable(
+                        Usage,
+                    ),
+                },
+            ],
+            space_annotation_records: [
+                VdAnnotationRecord {
+                    offset_range: TextOffsetRange {
+                        start: TextOffset(
+                            1,
+                        ),
+                        end: TextOffset(
+                            2,
+                        ),
+                    },
+                    annotation: Apply(
+                        ScalarMul,
+                    ),
+                },
+            ],
+            token_annotations: [
+                Some(
+                    Variable(
+                        Usage,
+                    ),
+                ),
+                Some(
+                    Variable(
+                        Usage,
+                    ),
+                ),
+                None,
+                None,
+            ],
+            space_annotations: [
+                None,
+                Some(
+                    Apply(
+                        ScalarMul,
+                    ),
+                ),
+                None,
+                None,
+            ],
+        },
+    },
+    VdAnnotationsExample {
+        input: "dx",
+        root_mode: Math,
+        annotations: VdAnnotations {
+            token_annotation_records: [
+                VdAnnotationRecord {
+                    offset_range: TextOffsetRange {
+                        start: TextOffset(
+                            0,
+                        ),
+                        end: TextOffset(
+                            1,
+                        ),
+                    },
+                    annotation: Differential,
+                },
+                VdAnnotationRecord {
+                    offset_range: TextOffsetRange {
+                        start: TextOffset(
+                            1,
+                        ),
+                        end: TextOffset(
+                            2,
+                        ),
+                    },
+                    annotation: Variable(
+                        SingleVariableIntegralVariableDecl,
+                    ),
+                },
+            ],
+            space_annotation_records: [],
+            token_annotations: [
+                Some(
+                    Differential,
+                ),
+                Some(
+                    Variable(
+                        SingleVariableIntegralVariableDecl,
+                    ),
+                ),
+                None,
+                None,
+            ],
+            space_annotations: [
+                None,
+                None,
+                None,
+                None,
+            ],
+        },
+    },
+]

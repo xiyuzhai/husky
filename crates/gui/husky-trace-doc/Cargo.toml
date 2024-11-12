@@ -10,6 +10,7 @@ epaint = { workspace = true, optional = true }
 pathdiff.workspace = true
 rustc-hash.workspace = true
 serde.workspace = true
+smallvec.workspace = true
 tokio.workspace = true
 # abstractions
 enum-class.workspace = true

@@ -25,7 +25,7 @@ husky-hir-eager-expr.workspace = true
 husky-hir-lazy-expr.workspace = true
 
 [dev-dependencies]
-husky-hir-expr = { path = ".", features = ["test_utils"] }
+husky-hir-expr = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

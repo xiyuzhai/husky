@@ -44,7 +44,7 @@ impl FlyTerm {
                     FlyTermData::Trait { .. } => todo!(),
                     FlyTermData::Hole(_, _) => todo!(),
                     FlyTermData::SymbolicVariable { .. } => todo!(),
-                    FlyTermData::LambdaVariable { .. } => todo!(),
+                    FlyTermData::AbstractVariable { .. } => todo!(),
                     FlyTermData::TypeVariant { .. } => todo!(),
                     FlyTermData::Sort(_)
                     | FlyTermData::Literal(_)

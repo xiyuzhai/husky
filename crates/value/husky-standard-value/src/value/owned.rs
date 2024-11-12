@@ -11,6 +11,15 @@ impl std::ops::Deref for OwnedValue {
     }
 }
 
+impl PartialEq for OwnedValue {
+    fn eq(&self, other: &Self) -> bool {
+        // self.0 == other.0
+        todo!()
+    }
+}
+
+impl Eq for OwnedValue {}
+
 impl OwnedValue {
     pub(super) fn index_owned_dyn(self, index: usize) -> ExceptedValue {
         self.0.index_owned_dyn(index)

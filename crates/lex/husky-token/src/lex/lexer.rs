@@ -109,8 +109,8 @@ impl<'token> Tokenizer<'token> {
                                 if token_range.start.col <= ranged_pretoken.range.start.col {
                                     break;
                                 }
-                                if token_range.start.col.0
-                                    == ranged_pretoken.range.start.col.0 + INDENT_INCR
+                                if token_range.start.col
+                                    == ranged_pretoken.range.start.col + INDENT_INCR
                                 {
                                     token_data = match i {
                                         0 => TokenData::Error(

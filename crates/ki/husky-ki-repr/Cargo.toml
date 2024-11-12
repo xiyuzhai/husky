@@ -81,7 +81,7 @@ husky-corgi-config.workspace = true
 husky-sem-expr.workspace = true
 husky-sem-place-contract.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-syn-decl.workspace = true
@@ -92,7 +92,7 @@ husky-syn-defn.workspace = true
 husky-standard-devsoul.workspace = true
 # ki
 husky-ki.workspace = true
-husky-ki-repr = { path = "../../ki/husky-ki-repr", features = ["test_utils"] }
+husky-ki-repr = { path = "../../ki/husky-ki-repr", features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

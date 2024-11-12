@@ -39,15 +39,15 @@ husky-print-utils.workspace = true
 [dev-dependencies]
 expect-test.workspace = true
 # fs
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # kernel
 husky-term-prelude.workspace = true
 # lex
-husky-token = { path = "../../lex/husky-token", features = ["test_utils"] }
+husky-token = { path = "../../lex/husky-token", features = ["test_helpers"] }
 # syntax
-husky-ast = { path = ".", features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 # utils
 husky-path-utils.workspace = true
 
 [features]
-test_utils = ["husky-vfs/test_utils", "husky-token/test_utils"]
+test_helpers = ["husky-vfs/test_helpers", "husky-token/test_helpers"]

@@ -1,0 +1,159 @@
+[
+    LatexAstsExample {
+        annotations: VdAnnotationsExample {
+            root_mode: Math,
+            input: "",
+            annotations: VdAnnotations {
+                token_annotations: [],
+                space_annotations: [],
+            },
+        },
+        ast_arena: LxAstArena {
+            math: Arena {
+                data: [],
+            },
+            rose: Arena {
+                data: [],
+            },
+        },
+        asts: None,
+        ast_token_idx_range_map: LxAstArenaMap {
+            math: ArenaMap {
+                data: [],
+            },
+            rose: ArenaMap {
+                data: [],
+            },
+        },
+    },
+    LatexAstsExample {
+        annotations: VdAnnotationsExample {
+            root_mode: Math,
+            input: "xy",
+            annotations: VdAnnotations {
+                token_annotations: [
+                    VdAnnotationEntry {
+                        start: 0,
+                        end: 1,
+                        annotation: Variable(
+                            Usage,
+                        ),
+                    },
+                    VdAnnotationEntry {
+                        start: 1,
+                        end: 2,
+                        annotation: Variable(
+                            Usage,
+                        ),
+                    },
+                ],
+                space_annotations: [
+                    VdAnnotationEntry {
+                        start: 1,
+                        end: 2,
+                        annotation: Apply(
+                            ScalarMul,
+                        ),
+                    },
+                ],
+            },
+        },
+        ast_arena: LxAstArena {
+            math: Arena {
+                data: [
+                    Letter(
+                        LxTokenIdx(
+                            0,
+                        ),
+                        LowerX,
+                    ),
+                ],
+            },
+            rose: Arena {
+                data: [],
+            },
+        },
+        asts: Some(
+            Math(
+                ArenaIdxRange(
+                    0..1,
+                ),
+            ),
+        ),
+        ast_token_idx_range_map: LxAstArenaMap {
+            math: ArenaMap {
+                data: [
+                    Some(
+                        LxTokenIdxRange {
+                            start: 0,
+                            end: 1,
+                        },
+                    ),
+                ],
+            },
+            rose: ArenaMap {
+                data: [],
+            },
+        },
+    },
+    LatexAstsExample {
+        annotations: VdAnnotationsExample {
+            root_mode: Math,
+            input: "dx",
+            annotations: VdAnnotations {
+                token_annotations: [
+                    VdAnnotationEntry {
+                        start: 0,
+                        end: 1,
+                        annotation: Differential,
+                    },
+                    VdAnnotationEntry {
+                        start: 1,
+                        end: 2,
+                        annotation: Variable(
+                            SingleVariableIntegralVariableDecl,
+                        ),
+                    },
+                ],
+                space_annotations: [],
+            },
+        },
+        ast_arena: LxAstArena {
+            math: Arena {
+                data: [
+                    Letter(
+                        LxTokenIdx(
+                            0,
+                        ),
+                        LowerD,
+                    ),
+                ],
+            },
+            rose: Arena {
+                data: [],
+            },
+        },
+        asts: Some(
+            Math(
+                ArenaIdxRange(
+                    0..1,
+                ),
+            ),
+        ),
+        ast_token_idx_range_map: LxAstArenaMap {
+            math: ArenaMap {
+                data: [
+                    Some(
+                        LxTokenIdxRange {
+                            start: 0,
+                            end: 1,
+                        },
+                    ),
+                ],
+            },
+            rose: ArenaMap {
+                data: [],
+            },
+        },
+    },
+]

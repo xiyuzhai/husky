@@ -1,5 +1,5 @@
-pub(crate) use husky_ast::test_utils::{AstTestConfig, AstTestUtils};
-pub(crate) use husky_vfs::{path::module_path::ModulePath, test_utils::*};
+pub(crate) use husky_ast::test_helpers::{AstTestConfig, AstTestUtils};
+pub(crate) use husky_vfs::{path::module_path::ModulePath, test_helpers::*};
 
 use husky_corgi_config::jar::CorgiConfigJar;
 use husky_corgi_config_ast::CorgiConfigAstJar;

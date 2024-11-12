@@ -1,3 +1,5 @@
+use husky_text_protocol::offset::TextOffset;
+
 use super::*;
 
 impl<'a> TomlTokenIter<'a> {
@@ -9,7 +11,7 @@ impl<'a> TomlTokenIter<'a> {
             &mut TomlTokenIter<'_>,
             &mut MaybeString,
             bool,
-            usize,
+            TextOffset,
             char,
         ) -> TomlTokenResult<()>,
     ) -> TomlTokenData {
@@ -31,8 +33,8 @@ impl<'a> TomlTokenIter<'a> {
             match self.next_char_with_offset() {
                 Some((i, '\n')) => {
                     if multiline {
-                        if self.input.as_bytes()[i] == b'\r' {
-                            val.to_owned(&self.input[..i]);
+                        if self.input.as_bytes()[i.index()] == b'\r' {
+                            val.to_owned(&self.input[..i.index()]);
                         }
                         if n == 1 {
                             val = MaybeString::NotEscaped(self.current());
@@ -65,7 +67,7 @@ impl<'a> TomlTokenIter<'a> {
                         }
                     }
                     return TomlTokenData::StringLiteral {
-                        val: val.into_cow(&self.input[..i]),
+                        val: val.into_cow(&self.input[..i.index()]),
                         multiline,
                     };
                 }
@@ -89,7 +91,7 @@ impl<'a> TomlTokenIter<'a> {
     pub(crate) fn next_basic_string(&mut self) -> TomlTokenData {
         self.next_string('"', &mut |this, val, multi, i, ch| match ch {
             '\\' => {
-                val.to_owned(&this.input[..i]);
+                val.to_owned(&this.input[..i.index()]);
                 match this.next_char_with_offset() {
                     Some((_, '"')) => val.push('"'),
                     Some((_, '\\')) => val.push('\\'),
@@ -143,7 +145,7 @@ impl<'a> TomlTokenIter<'a> {
 
 #[derive(Debug)]
 enum MaybeString {
-    NotEscaped(usize),
+    NotEscaped(TextOffset),
     Owned(std::string::String),
 }
 
@@ -159,7 +161,7 @@ impl MaybeString {
     fn to_owned(&mut self, input: &str) {
         match *self {
             MaybeString::NotEscaped(start) => {
-                *self = MaybeString::Owned(input[start..].to_owned());
+                *self = MaybeString::Owned(input[start.index()..].to_owned());
             }
             MaybeString::Owned(..) => {}
         }
@@ -167,7 +169,7 @@ impl MaybeString {
 
     fn into_cow(self, input: &str) -> StringValue {
         match self {
-            MaybeString::NotEscaped(start) => Arc::from(&input[start..]),
+            MaybeString::NotEscaped(start) => Arc::from(&input[start.index()..]),
             MaybeString::Owned(s) => Arc::from(s),
         }
     }

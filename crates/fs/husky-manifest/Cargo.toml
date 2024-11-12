@@ -26,7 +26,7 @@ husky-manifest-ast.workspace = true
 husky-print-utils.workspace = true
 
 [dev-dependencies]
-husky-manifest = { path = ".", features = ["test_utils"] }
+husky-manifest = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils", "husky-vfs/test_utils"]
+test_helpers = ["salsa/test_helpers", "husky-vfs/test_helpers"]

@@ -40,6 +40,6 @@ husky-print-utils.workspace = true
 # husky-standard-devsoul-interface.workspace = true
 # comptime
 husky-dev-comptime.workspace = true
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # linket
 husky-standard-linket-impl.workspace = true

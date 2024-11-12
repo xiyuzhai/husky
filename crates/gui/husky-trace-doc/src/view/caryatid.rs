@@ -8,7 +8,7 @@ where
     TraceProtocol::Caryatid: CaryatidUi<Ui>,
     Settings: HasTraceDocSettings,
 {
-    pub(in crate::view) fn render_caryatid(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn render_caryatid(&mut self, ui: &mut egui::Ui) {
         self.trace_synchrotron.caryatid().caryatid_ui(
             self.trace_synchrotron,
             ui,

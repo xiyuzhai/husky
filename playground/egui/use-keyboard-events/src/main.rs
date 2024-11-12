@@ -52,7 +52,7 @@ impl eframe::App for Content {
         egui::CentralPanel::default().show(ctx, |ui| {
             use husky_print_utils::p;
 
-            if let Some((_, &action)) = self.hotkey_buffer.extract(&self.hotkey_map) {
+            if let Some((_, action)) = self.hotkey_buffer.extract(&self.hotkey_map) {
                 self.last_action = Some(action);
             }
             match self.last_action {

@@ -134,7 +134,7 @@ fn item_sem_static_mut_deps_initial_value(
             match shard.dep_term(db) {
                 EthTerm::Literal(_) => todo!(),
                 EthTerm::SymbolicVariable(_) => todo!(),
-                EthTerm::LambdaVariable(_) => todo!(),
+                EthTerm::AbstractVariable(_) => todo!(),
                 EthTerm::ItemPath(path) => match path {
                     ItemPathTerm::MajorForm(path) => match path.kind(db) {
                         MajorFormKind::Ritchie(_) => (),

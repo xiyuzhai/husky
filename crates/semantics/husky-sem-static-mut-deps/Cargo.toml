@@ -58,10 +58,10 @@ husky-opr.workspace = true
 husky-syn-decl.workspace = true
 husky-syn-defn.workspace = true
 husky-syn-opr.workspace = true
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
-husky-entity-tree = { workspace = true, features = ["test_utils"] }
+husky-entity-tree = { workspace = true, features = ["test_helpers"] }
 husky-corgi-config-ast.workspace = true
 # semantics
 husky-sem-expr.workspace = true

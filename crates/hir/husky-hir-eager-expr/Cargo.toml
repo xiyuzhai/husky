@@ -32,6 +32,8 @@ husky-text.workspace = true
 husky-token-data.workspace = true
 husky-token.workspace = true
 husky-regional-token.workspace = true
+# protocols
+husky-text-protocol.workspace = true
 # semantics
 husky-sem-expr.workspace = true
 husky-sem-opr.workspace = true
@@ -46,7 +48,7 @@ husky-print-utils.workspace = true
 husky-decl-macro-utils.workspace = true
 
 [dev-dependencies]
-husky-hir-eager-expr = { path = ".", features = ["test_utils"] }
+husky-hir-eager-expr = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

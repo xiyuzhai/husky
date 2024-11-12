@@ -1,7 +1,8 @@
 use super::*;
+use husky_text_protocol::offset::TextOffset;
 
 impl<'a> TomlTokenIter<'a> {
-    pub(crate) fn next_hex(&mut self, i: usize, len: usize) -> TomlTokenResult<char> {
+    pub(crate) fn next_hex(&mut self, i: TextOffset, len: usize) -> TomlTokenResult<char> {
         let mut buf = String::with_capacity(len);
         for _ in 0..len {
             match self.next_char_with_offset() {

@@ -92,13 +92,13 @@ where
         let spaces_before: u32 = if token_idx.index() > 0 {
             let prev_text_range = self.ranged_token_sheet.token_text_range(token_idx - 1);
             if prev_text_range.start.line == text_range.end.line {
-                text_range.start.col.0 - prev_text_range.end.col.0
+                text_range.start.col.index32() - prev_text_range.end.col.index32()
             } else {
                 self.new_line_if_tokens_data_is_empty();
-                text_range.start.col.0
+                text_range.start.col.index32()
             }
         } else {
-            text_range.start.col.0
+            text_range.start.col.index32()
         };
         self.tokens_data.push(TraceViewTokenData::new(
             text.to_string(),

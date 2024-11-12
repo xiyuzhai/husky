@@ -1,0 +1,53 @@
+[package]
+name = "visored-hir-expr"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+either.workspace = true
+# abstractions
+idx-arena.workspace = true
+salsa.workspace = true
+# latex
+latex-prelude = { workspace = true, optional = true }
+# visored
+visored-annotation = { workspace = true, optional = true }
+visored-global-resolution.workspace = true
+visored-item-path.workspace = true
+visored-sem-expr.workspace = true
+visored-opr.workspace = true
+visored-zfc-ty.workspace = true
+# utils
+husky-tree-utils = { workspace = true, optional = true }
+
+[dev-dependencies]
+expect-test.workspace = true
+# latex
+latex-ast.workspace = true
+latex-command.workspace = true
+latex-environment.workspace = true
+# kernel
+husky-coword.workspace = true
+# visored
+visored-sem-expr.workspace = true
+visored-syn-expr.workspace = true
+visored-hir-expr = { workspace = true, features = ["test_helpers"] }
+
+[lints]
+workspace = true
+
+[features]
+test_helpers = [
+    "dep:latex-prelude",
+    "dep:visored-annotation",
+    "dep:husky-tree-utils",
+    "visored-sem-expr/test_helpers"
+]

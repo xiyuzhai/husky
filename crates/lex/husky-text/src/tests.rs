@@ -6,7 +6,10 @@ pub(crate) fn run_test_on_text(raw_text: &str, f: impl FnOnce(Text)) {
     use husky_text_protocol::line_map::LineMap;
 
     let line_map = &LineMap::new(raw_text);
-    f(Text { raw_text, line_map });
+    f(Text {
+        raw: raw_text,
+        line_map,
+    });
 }
 
 #[test]

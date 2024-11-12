@@ -8,7 +8,7 @@ impl<TraceProtocol: IsTraceProtocol> TraceSynchrotron<TraceProtocol> {
         &mut self,
         f: impl Fn(ItemPathIdInterface) -> ItemPathPresentation,
     ) {
-        for (item_path_id_interface, _) in self.caryatid.clone().var_path_windlasses() {
+        for &(item_path_id_interface, _) in self.caryatid.clone().windlasses() {
             if !self
                 .item_path_presentations
                 .contains_key(&item_path_id_interface)
@@ -26,13 +26,9 @@ impl<TraceProtocol: IsTraceProtocol> TraceSynchrotron<TraceProtocol> {
         // return Some if not cache
         f: impl Fn(TraceVarId<TraceProtocol>) -> VarIdPresentation,
     ) {
-        for (item_path_id_interface, windlass) in self.caryatid.clone().var_path_windlasses() {
+        for &(item_path_id_interface, windlass) in self.caryatid.clone().windlasses() {
             match windlass {
-                Windlass::Specific(var_id)
-                | Windlass::Generic {
-                    followed: Some(var_id),
-                    ..
-                } => {
+                Windlass::Specific(var_id) | Windlass::Generic { moored: var_id, .. } => {
                     if !self
                         .var_id_presentations
                         .contains_key(&(item_path_id_interface, var_id))

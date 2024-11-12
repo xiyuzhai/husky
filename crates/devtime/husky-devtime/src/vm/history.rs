@@ -10,12 +10,31 @@ impl<Devsoul: IsDevsoul> Devtime<Devsoul> {
         trace: Trace,
         pedestal: Devsoul::Pedestal,
     ) -> Arc<VmHistory<Devsoul::LinketImpl>> {
-        let key = (trace, pedestal.clone());
-        self.eager_trace_cache
-            .entry(key)
-            .or_insert_with(|| Arc::new(self.calc_trace_history(trace, pedestal).1))
-            .value()
-            .clone()
+        let db = self.db();
+        match trace.data(db) {
+            TraceData::Submodule(submodule_trace_data) => todo!(),
+            TraceData::Val(_) => {
+                let key = (trace, pedestal.clone());
+                self.eager_trace_cache
+                    .entry(key)
+                    .or_insert_with(|| Arc::new(self.calc_trace_history(trace, pedestal).1))
+                    .value()
+                    .clone()
+            }
+            TraceData::StaticVar(static_var_trace_data) => todo!(),
+            TraceData::LazyCall(lazy_call_trace_data) => todo!(),
+            TraceData::LazyPattern(lazy_pattern_trace_data) => todo!(),
+            TraceData::LazyLoopFrame(lazy_loop_frame_trace_data) => todo!(),
+            TraceData::LazyLoopRange(lazy_loop_range_trace_data) => todo!(),
+            TraceData::EagerCallInput(eager_call_input_trace_data) => todo!(),
+            TraceData::EagerCall(eager_call_trace_data) => todo!(),
+            TraceData::EagerPattern(eager_pattern_trace_data) => todo!(),
+            TraceData::EagerLoopFrame(eager_loop_frame_trace_data) => todo!(),
+            TraceData::EagerLoopRange(eager_loop_range_trace_data) => todo!(),
+            TraceData::Place(place_trace_data) => todo!(),
+            TraceData::Script(script_trace_data) => todo!(),
+            _ => self.trace_history(trace.biological_parent(db).unwrap(), pedestal),
+        }
     }
 
     fn calc_trace_history(

@@ -7,7 +7,7 @@ impl EthTerm {
         match self {
             EthTerm::Literal(_) => None,
             EthTerm::SymbolicVariable(term) => Some(term.toolchain(db)),
-            EthTerm::LambdaVariable(term) => term.toolchain(db),
+            EthTerm::AbstractVariable(term) => term.toolchain(db),
             EthTerm::ItemPath(path) => Some(path.toolchain(db)),
             EthTerm::Sort(_) => None,
             EthTerm::Universe(_) => None,

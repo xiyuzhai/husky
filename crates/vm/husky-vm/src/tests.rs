@@ -1,5 +1,5 @@
-pub(crate) use husky_linket::test_utils::TestLinket;
-pub(crate) use husky_vfs::test_utils::*;
+pub(crate) use husky_linket::test_helpers::TestLinket;
+pub(crate) use husky_vfs::test_helpers::*;
 
 use husky_corgi_config::jar::CorgiConfigJar;
 use husky_corgi_config_ast::CorgiConfigAstJar;

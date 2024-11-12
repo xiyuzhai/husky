@@ -221,12 +221,12 @@ impl<'a> SynExprContext<'a> {
         self.tokra_region_data
     }
 
-    pub(crate) fn set_lambda_variable_access_end(
+    pub(crate) fn set_abstract_variable_access_end(
         &mut self,
         var: CurrentVariableIdx,
         access_end: RegionalTokenIdxRangeEnd,
     ) {
         self.variable_context
-            .set_lambda_variable_access_end(var, access_end)
+            .set_abstract_variable_access_end(var, access_end)
     }
 }

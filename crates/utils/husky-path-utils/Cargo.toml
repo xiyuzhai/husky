@@ -22,7 +22,7 @@ husky-minimal-toml-utils = { path = "../../utils/husky-minimal-toml-utils" }
 [dev-dependencies]
 expect-test.workspace = true
 # utils
-husky-path-utils = { path = ".", features = ["test_utils"] }
+husky-path-utils = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

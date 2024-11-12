@@ -5,6 +5,16 @@ use serde::{Deserialize, Serialize};
 pub struct TextLine(pub u32);
 
 impl TextLine {
+    pub fn index(self) -> usize {
+        self.0 as usize
+    }
+
+    pub(crate) fn index32(&self) -> u32 {
+        self.0
+    }
+}
+
+impl TextLine {
     pub fn to_next_line(&self) -> Self {
         Self(self.0 + 1)
     }

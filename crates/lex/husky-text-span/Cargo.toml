@@ -1,6 +1,0 @@
-[package]
-name = "husky-text-span"
-version.workspace = true
-edition = "2021"
-
-[dependencies]

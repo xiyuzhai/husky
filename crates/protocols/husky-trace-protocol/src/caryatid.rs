@@ -21,16 +21,16 @@ pub trait IsCaryatid:
     type UiBuffer: IsCaryatidUiBuffer<Caryatid = Self>;
 
     fn pedestal(&self, var_deps: &[ItemPathIdInterface]) -> Option<Self::Pedestal>;
+    #[deprecated]
     fn has_var_deps(&self, var_deps: &[ItemPathIdInterface]) -> bool;
+    #[deprecated]
     fn has_var_dep(&self, var_dep: ItemPathIdInterface) -> bool;
-    fn var_path_windlasses(
+    fn windlasses(
         &self,
-    ) -> impl Iterator<
-        Item = (
-            ItemPathIdInterface,
-            Windlass<<Self::Pedestal as IsPedestal>::VarId>,
-        ),
-    >;
+    ) -> &[(
+        ItemPathIdInterface,
+        Windlass<<Self::Pedestal as IsPedestal>::VarId>,
+    )];
     /// # Panic
     ///
     /// if not new

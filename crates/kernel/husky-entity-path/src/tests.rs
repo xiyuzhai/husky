@@ -8,7 +8,7 @@ pub(crate) struct DB;
 
 #[test]
 fn item_path_debug_works() {
-    use husky_vfs::test_utils::jar::VfsTestUtilsDb;
+    use husky_vfs::test_helpers::jar::VfsTestUtilsDb;
 
     let db = DB::default();
     let db = &*db;

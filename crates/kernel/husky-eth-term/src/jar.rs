@@ -3,7 +3,7 @@ pub struct EthTermJar(
     // symbol
     crate::term::symbolic_variable::EthSymbolicVariable,
     // hvar
-    crate::term::lambda_variable::EthLambdaVariable,
+    crate::term::abstract_variable::EthAbstractVariable,
     // curry
     crate::term::curry::EthCurry,
     crate::term::curry::term_curry_from_dec,

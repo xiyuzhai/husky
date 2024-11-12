@@ -92,6 +92,7 @@ impl<T, V> ArenaMap<T, V> {
         self.data[idx.index()].is_some()
     }
 
+    #[track_caller]
     pub fn get(&self, idx: ArenaIdx<T>) -> Option<&V> {
         match self.data[idx.index()] {
             Some(ref v) => Some(v),

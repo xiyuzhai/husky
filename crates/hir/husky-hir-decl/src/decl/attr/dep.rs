@@ -21,7 +21,7 @@ impl DepAttrHirDecl {
                 Some(dep_term) => match dep_term {
                     EthTerm::Literal(_) => todo!(),
                     EthTerm::SymbolicVariable(_) => todo!(),
-                    EthTerm::LambdaVariable(_) => todo!(),
+                    EthTerm::AbstractVariable(_) => todo!(),
                     EthTerm::ItemPath(path) => path,
                     EthTerm::Sort(_) => todo!(),
                     EthTerm::Universe(_) => todo!(),

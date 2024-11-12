@@ -37,11 +37,9 @@ impl IsCaryatid for StandardCaryatid {
                     .get_value(dep)
                     .copied()
                     .map(|windlass| match windlass {
-                        Windlass::Specific(var_id)
-                        | Windlass::Generic {
-                            followed: Some(var_id),
-                            ..
-                        } => Some((dep, var_id)),
+                        Windlass::Specific(var_id) | Windlass::Generic { moored: var_id, .. } => {
+                            Some((dep, var_id))
+                        }
                         _ => None,
                     })
                     .flatten()
@@ -72,15 +70,13 @@ impl IsCaryatid for StandardCaryatid {
     //     slf
     // }
 
-    fn var_path_windlasses(
+    fn windlasses(
         &self,
-    ) -> impl Iterator<
-        Item = (
-            ItemPathIdInterface,
-            Windlass<<Self::Pedestal as IsPedestal>::VarId>,
-        ),
-    > {
-        self.windlasses.iter().copied()
+    ) -> &[(
+        ItemPathIdInterface,
+        Windlass<<Self::Pedestal as IsPedestal>::VarId>,
+    )] {
+        &self.windlasses
     }
 
     fn add_new(

@@ -1,0 +1,28 @@
+[package]
+name = "cybertron-mini-lean-compiler-developer"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+tracing.workspace = true
+tracing-subscriber.workspace = true
+# comptime
+husky-dev-comptime.workspace = true
+# devtime
+husky-devtime.workspace = true
+# protocols
+husky-standard-trace-protocol.workspace = true
+husky-ad-hoc-protocol.workspace = true
+# devsoul
+husky-standard-devsoul.workspace = true
+
+[lints]
+workspace = true

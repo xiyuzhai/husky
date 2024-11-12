@@ -18,7 +18,7 @@ where
     >,
 {
     use husky_entity_tree::{region_path::SynNodeRegionPath, symbol::ModuleSymbolContext};
-    use husky_vfs::{jar::VfsDb, test_utils::VfsTestUtilsDb};
+    use husky_vfs::{jar::VfsDb, test_helpers::VfsTestUtilsDb};
     use parsec::IsStreamParser;
 
     // "" wouldn't work

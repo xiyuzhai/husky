@@ -1,7 +1,8 @@
 use super::*;
+use husky_text_protocol::offset::TextOffset;
 
 impl<'a> TomlTokenIter<'a> {
-    pub(crate) fn next_keylike(&mut self, start: usize) -> TomlTokenData {
+    pub(crate) fn next_keylike(&mut self, start: TextOffset) -> TomlTokenData {
         while let Some(ch) = self.peek_char() {
             if !is_keylike(ch) {
                 break;
@@ -10,7 +11,7 @@ impl<'a> TomlTokenIter<'a> {
         }
         TomlTokenData::Word(Coword::from_ref(
             self.db,
-            &self.input[start..self.current()],
+            &self.input[TextOffsetRange::from(start..self.current())],
         ))
     }
 }

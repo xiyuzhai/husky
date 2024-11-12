@@ -4,7 +4,7 @@ pub mod instantiation;
 pub mod jar;
 pub mod linket;
 pub mod template_argument;
-pub mod test_utils;
+pub mod test_helpers;
 #[cfg(test)]
 mod tests;
 pub mod trai;

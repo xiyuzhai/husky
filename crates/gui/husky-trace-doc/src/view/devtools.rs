@@ -7,7 +7,7 @@ where
     TraceProtocol: IsTraceProtocol,
     Settings: HasTraceDocSettings,
 {
-    pub(in crate::view) fn render_devtools(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn render_devtools(&mut self, ui: &mut egui::Ui) {
         ui.vertical(|ui| {
             ui.label(RichText::new("Devtools").color(Color32::WHITE));
             ui.separator();
@@ -23,7 +23,7 @@ figure_key = {:?}"#,
                     ui.input(|input| input.pointer.interact_pos()),
                     &**self.trace_synchrotron.accompanying_trace_ids(),
                     self.trace_synchrotron.caryatid(),
-                    self.trace_synchrotron.figure_key(),
+                    self.trace_synchrotron.figure_keys(),
                 ))
                 .color(Color32::GRAY),
             );

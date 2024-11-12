@@ -391,7 +391,7 @@ fn ki_repr_eval_works() {
     let lock = runtime_test_lock();
     let dev_paths = HuskyLangDevPaths::new();
     let runtime: Pin<Box<DevRuntime<StandardDevsoul>>> =
-        DevRuntime::new(dev_paths.dev_root().join("examples/mnist-classifier"), None).unwrap();
+        DevRuntime::new(dev_paths.root().join("examples/mnist-classifier"), None).unwrap();
     let db = runtime.db();
     let DevComptimeTarget::SingleCrate(crate_path) = runtime.comptime_target() else {
         unreachable!()

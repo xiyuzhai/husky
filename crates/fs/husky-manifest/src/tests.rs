@@ -1,4 +1,4 @@
-pub(crate) use husky_vfs::test_utils::*;
+pub(crate) use husky_vfs::test_helpers::*;
 
 #[salsa::db(
     husky_vfs::jar::VfsJar,

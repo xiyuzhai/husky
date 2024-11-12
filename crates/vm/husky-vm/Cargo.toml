@@ -75,7 +75,7 @@ husky-sem-item-path-deps.workspace = true
 husky-sem-static-mut-deps.workspace = true
 husky-sem-var-deps.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-syn-decl.workspace = true

@@ -39,7 +39,7 @@ impl FlyTerms {
         let hole_kind = match template_parameter_symbol.ty(db) {
             EthTerm::Literal(_) => todo!(),
             EthTerm::SymbolicVariable(_) => HoleKind::AnyOriginal,
-            EthTerm::LambdaVariable(_) => todo!(),
+            EthTerm::AbstractVariable(_) => todo!(),
             EthTerm::ItemPath(_) => todo!(),
             EthTerm::Sort(cat) => {
                 if cat.universe().raw() != 1 {
@@ -72,7 +72,7 @@ impl FlyTerms {
         parameter_hvar: FlyHvar,
     ) -> HolTerm {
         let hole_kind = match parameter_hvar.base_term_data2(db, self) {
-            FlyTermData::LambdaVariable { ty, .. } => match ty.base_term_data2(db, self) {
+            FlyTermData::AbstractVariable { ty, .. } => match ty.base_term_data2(db, self) {
                 FlyTermData::TypeOntology {
                     ty_path: path,
                     refined_ty_path: refined_path,
@@ -102,7 +102,7 @@ impl FlyTerms {
                     return_ty,
                 } => todo!(),
                 FlyTermData::SymbolicVariable { .. } => HoleKind::AnyOriginal,
-                FlyTermData::LambdaVariable { .. } => todo!(),
+                FlyTermData::AbstractVariable { .. } => todo!(),
                 _ => unreachable!(),
             },
             FlyTermData::Hole(_, _) => todo!(),

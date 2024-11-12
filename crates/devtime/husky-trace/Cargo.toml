@@ -80,26 +80,26 @@ husky-corgi-config.workspace = true
 husky-sem-expr.workspace = true
 husky-sem-place-contract.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-entity-tree = { path = "../../syntax/husky-entity-tree", features = [
-    "test_utils"
+    "test_helpers"
 ] }
 husky-syn-decl = { path = "../../syntax/husky-syn-decl", features = [
-    "test_utils"
+    "test_helpers"
 ] }
 husky-syn-expr = { path = "../../syntax/husky-syn-expr", features = [
-    "test_utils"
+    "test_helpers"
 ] }
 husky-syn-defn = { path = "../../syntax/husky-syn-defn", features = [
-    "test_utils"
+    "test_helpers"
 ] }
 # toml
 husky-corgi-config-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-toml-ast.workspace = true
 # ki
-husky-ki = { path = "../../ki/husky-ki", features = ["test_utils"] }
-husky-ki-repr = { path = "../../ki/husky-ki-repr", features = ["test_utils"] }
+husky-ki = { path = "../../ki/husky-ki", features = ["test_helpers"] }
+husky-ki-repr = { path = "../../ki/husky-ki-repr", features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

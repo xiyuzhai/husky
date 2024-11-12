@@ -150,7 +150,10 @@ impl __IsStaticVar<__VarId> for INPUT {
         INPUT().into_value()
     }
 
-    fn default_page_start(locked: &[__ItemPathIdInterface]) -> __StaticVarResult<__VarId> {
+    fn default_page_start(
+        figure_zone: __FigureZone,
+        locked: &[__ItemPathIdInterface],
+    ) -> __StaticVarResult<__VarId> {
         Ok(0u32.into())
     }
 
@@ -159,6 +162,10 @@ impl __IsStaticVar<__VarId> for INPUT {
     ) -> __StaticVarResult<(__VarId, impl FnOnce() + 'static)> {
         let default = 0usize.into();
         Ok((default, Self::try_set_var_id(default, locked)?))
+    }
+
+    fn zones() -> &'static [__FigureZone] {
+        &[__FigureZone::Gallery]
     }
 }
 
@@ -199,6 +206,7 @@ impl __IsStaticVar<__VarId> for TASK {
     }
 
     fn default_page_start(
+        figure_zone: __FigureZone,
         locked: &[__ItemPathIdInterface],
     ) -> husky_linket_impl::static_var::StaticVarResult<__VarId, __VarId> {
         todo!()
@@ -209,5 +217,9 @@ impl __IsStaticVar<__VarId> for TASK {
     ) -> __StaticVarResult<(__VarId, impl FnOnce() + 'static)> {
         todo!();
         Ok((todo!(), || todo!()))
+    }
+
+    fn zones() -> &'static [__FigureZone] {
+        todo!()
     }
 }

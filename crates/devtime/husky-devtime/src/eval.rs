@@ -1,7 +1,8 @@
 use crate::*;
 use either::*;
 use husky_devsoul::helpers::{DevsoulKiControlFlow, DevsoulVmControlFlow};
-use husky_trace::trace::TraceData;
+use husky_trace::trace::{eager_stmt::EagerStmtSketch, TraceData};
+use husky_value::vm_control_flow::VmControlFlow;
 
 impl<Devsoul: IsDevsoul> Devtime<Devsoul> {
     pub fn eval_trace_at_pedestal(
@@ -56,14 +57,22 @@ impl<Devsoul: IsDevsoul> Devtime<Devsoul> {
                 )))
             }
             TraceData::EagerPattern(_) => todo!(),
-            TraceData::EagerStmt(data) => {
-                // think about it
-                Some(Right(self.eager_stmt_trace_value(
+            TraceData::EagerStmt(data) => match data.eager_stmt_sketch {
+                EagerStmtSketch::Let {
+                    initial_value,
+                    initial_value_hir_eager_expr_idx,
+                    ..
+                } => Some(Right(self.eager_expr_trace_value(
+                    data.biological_parent(),
+                    initial_value_hir_eager_expr_idx,
+                    pedestal.clone(),
+                ))),
+                _ => Some(Right(self.eager_stmt_trace_value(
                     data.biological_parent(),
                     data.hir_eager_stmt_idx,
                     pedestal.clone(),
-                )))
-            }
+                ))),
+            },
             TraceData::Place(_) => todo!(),
             TraceData::Script(_) => todo!(),
             TraceData::LazyLoopFrame(_) => todo!(),
@@ -99,19 +108,20 @@ impl<Devsoul: IsDevsoul> Devtime<Devsoul> {
                 KiControlFlow::Undefined => None,
                 KiControlFlow::Throw(_) => Some(Visual::Error),
             },
-            Right(vcf) => todo!(),
+            Right(vcf) => match vcf? {
+                VmControlFlow::Continue(value)
+                | VmControlFlow::LoopExit(value)
+                | VmControlFlow::Return(value) => {
+                    Some(trace_visual_cache.visual(trace_id, pedestal, || {
+                        use husky_value::IsFrozenValue;
+                        let visual = value.visualize(visual_synchrotron);
+                        let plot_class = visual.plot_class(visual_synchrotron);
+                        (visual, plot_class)
+                    }))
+                }
+                VmControlFlow::LoopContinue => todo!(),
+                VmControlFlow::Throw(_) => todo!(),
+            },
         }
-        // match trace.ki_repr(db) {
-        //     Some(ki_repr) => runtime
-        //         .trace_ki_repr_visual(
-        //             trace_id,
-        //             ki_repr,
-        //             pedestal,
-        //             visual_synchrotron,
-        //             trace_visual_cache,
-        //         )
-        //         .map(|visual| (trace_id, visual)),
-        //     None => todo!(),
-        // }
     }
 }

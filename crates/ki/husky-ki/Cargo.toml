@@ -19,7 +19,7 @@ husky-hir-opr.workspace = true
 husky-linket.workspace = true
 
 [dev-dependencies]
-husky-ki = { path = ".", features = ["test_utils"] }
+husky-ki = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

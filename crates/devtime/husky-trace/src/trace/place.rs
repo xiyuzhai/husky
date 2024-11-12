@@ -1,4 +1,4 @@
-use super::TracePath;
+use super::*;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PlaceTracePathData {
@@ -13,4 +13,12 @@ pub enum PlaceAccess {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct PlaceTraceData {}
+pub struct PlaceTraceData {
+    biological_parent: Trace,
+}
+
+impl PlaceTraceData {
+    pub fn biological_parent(&self) -> Trace {
+        self.biological_parent
+    }
+}

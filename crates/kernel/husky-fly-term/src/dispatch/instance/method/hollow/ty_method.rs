@@ -52,8 +52,8 @@ impl HasFlyTypeMethodDispatch for HolTerm {
             FlyBaseTypeData::SymbolicVariable {
                 symbolic_variable: term,
             } => todo!(),
-            FlyBaseTypeData::LambdaVariable {
-                lambda_variable: hvar,
+            FlyBaseTypeData::AbstractVariable {
+                abstract_variable: hvar,
             } => todo!(),
         }
     }

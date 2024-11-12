@@ -43,12 +43,12 @@ husky-unicode-symbols.workspace = true
 expect-test.workspace = true
 indicatif = "0.17.2"
 # fs
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # kernel
 husky-entity-path.workspace = true
 # utils
 husky-adversarial-utils = { path = "../../utils/husky-adversarial-utils" }
-husky-token = { path = ".", features = ["test_utils"] }
+husky-token = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["husky-vfs/test_utils"]
+test_helpers = ["husky-vfs/test_helpers"]

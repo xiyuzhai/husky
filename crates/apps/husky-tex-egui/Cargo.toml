@@ -1,5 +1,5 @@
 [package]
-name = "husky-tex-egui"
+name = "latex-egui"
 version.workspace = true
 rust-version.workspace = true
 authors.workspace = true
@@ -14,8 +14,8 @@ keywords.workspace = true
 [dependencies]
 eframe.workspace = true
 egui.workspace = true
-# tex
-husky-tex-ast = { workspace = true, features = ["egui"] }
+# latex
+latex-ast = { workspace = true, features = ["egui"] }
 
 [lints]
 workspace = true

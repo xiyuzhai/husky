@@ -32,7 +32,7 @@ impl<'a> RefIndex<'a, Range<(u32, u32)>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range: Range<(u32, u32)>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range(range)]
+        &self.raw[self.line_map.offset_range(range)]
     }
 }
 
@@ -46,7 +46,7 @@ impl<'a> RefIndex<'a, TextRange> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range: TextRange) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range(range)]
+        &self.raw[self.line_map.offset_range(range)]
     }
 }
 
@@ -60,7 +60,7 @@ impl<'a> RefIndex<'a, RangeFrom<TextPosition>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range_from: RangeFrom<TextPosition>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range_from(range_from)]
+        &self.raw[self.line_map.offset_range_from(range_from)]
     }
 }
 
@@ -81,7 +81,7 @@ impl<'a> RefIndex<'a, RangeTo<TextPosition>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range_to: RangeTo<TextPosition>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range_to(range_to)]
+        &self.raw[self.line_map.offset_range_to(range_to)]
     }
 }
 
@@ -91,39 +91,41 @@ pub(crate) fn text_ref_index_by_range_to_text_position_works() {
     t("hello", ..((0, 3).into()), "hel");
 }
 
-impl<'a> RefIndex<'a, RangeInclusive<TextPosition>> for Text<'a> {
-    type Output = str;
+// TODO: inclusive text position might be tricky because a char might span multiple bytes
 
-    fn ref_index(self, range_inclusive: RangeInclusive<TextPosition>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range_inclusive(range_inclusive)]
-    }
-}
+// impl<'a> RefIndex<'a, RangeInclusive<TextPosition>> for Text<'a> {
+//     type Output = str;
 
-#[test]
-pub(crate) fn text_ref_index_by_range_inclusive_text_position_works() {
-    let t = run_index_test_on_text::<RangeInclusive<TextPosition>>;
-    t("hello", ((0, 0).into())..=((0, 2).into()), "hel");
-}
+//     fn ref_index(self, range_inclusive: RangeInclusive<TextPosition>) -> &'a Self::Output {
+//         &self.raw[self.line_map.offset_range_inclusive(range_inclusive)]
+//     }
+// }
 
-impl<'a> RefIndex<'a, RangeToInclusive<TextPosition>> for Text<'a> {
-    type Output = str;
+// #[test]
+// pub(crate) fn text_ref_index_by_range_inclusive_text_position_works() {
+//     let t = run_index_test_on_text::<RangeInclusive<TextPosition>>;
+//     t("hello", ((0, 0).into())..=((0, 2).into()), "hel");
+// }
 
-    fn ref_index(self, range_to_inclusive: RangeToInclusive<TextPosition>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range_to_inclusive(range_to_inclusive)]
-    }
-}
+// impl<'a> RefIndex<'a, RangeToInclusive<TextPosition>> for Text<'a> {
+//     type Output = str;
 
-#[test]
-pub(crate) fn text_ref_index_by_range_to_inclusive_text_position_works() {
-    let t = run_index_test_on_text::<RangeToInclusive<TextPosition>>;
-    t("hello", ..=((0, 2).into()), "hel");
-}
+//     fn ref_index(self, range_to_inclusive: RangeToInclusive<TextPosition>) -> &'a Self::Output {
+//         &self.raw[self.line_map.offset_range_to_inclusive(range_to_inclusive)]
+//     }
+// }
+
+// #[test]
+// pub(crate) fn text_ref_index_by_range_to_inclusive_text_position_works() {
+//     let t = run_index_test_on_text::<RangeToInclusive<TextPosition>>;
+//     t("hello", ..=((0, 2).into()), "hel");
+// }
 
 impl<'a> RefIndex<'a, TextLine> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range: TextLine) -> &'a Self::Output {
-        &self.raw_text[self.line_map.text_line_offset_range(range)]
+        &self.raw[self.line_map.text_line_offset_range(range)]
     }
 }
 
@@ -131,7 +133,7 @@ impl<'a> RefIndex<'a, Range<TextLine>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range: Range<TextLine>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.text_line_range_offset_range(range)]
+        &self.raw[self.line_map.text_line_range_offset_range(range)]
     }
 }
 
@@ -139,7 +141,7 @@ impl<'a> RefIndex<'a, RangeFrom<TextLine>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range_from: RangeFrom<TextLine>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range_from_text_line(range_from)]
+        &self.raw[self.line_map.offset_range_from_text_line(range_from)]
     }
 }
 
@@ -155,7 +157,7 @@ impl<'a> RefIndex<'a, RangeTo<TextLine>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range_to: RangeTo<TextLine>) -> &'a Self::Output {
-        &self.raw_text[self.line_map.offset_range_to_text_line(range_to)]
+        &self.raw[self.line_map.offset_range_to_text_line(range_to)]
     }
 }
 
@@ -172,7 +174,7 @@ impl<'a> RefIndex<'a, RangeInclusive<TextLine>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range_inclusive: RangeInclusive<TextLine>) -> &'a Self::Output {
-        &self.raw_text[self
+        &self.raw[self
             .line_map
             .offset_range_inclusive_text_line(range_inclusive)]
     }
@@ -198,7 +200,7 @@ impl<'a> RefIndex<'a, RangeToInclusive<TextLine>> for Text<'a> {
     type Output = str;
 
     fn ref_index(self, range_to_inclusive: RangeToInclusive<TextLine>) -> &'a Self::Output {
-        &self.raw_text[self
+        &self.raw[self
             .line_map
             .offset_range_to_inclusive_text_line(range_to_inclusive)]
     }
@@ -213,9 +215,9 @@ pub(crate) fn text_ref_index_by_range_to_inclusive_text_line_works() {
     t("hello\nworld\n", ..=(2.into()), "hello\nworld\n");
 }
 
-#[test]
-#[should_panic]
-pub(crate) fn text_ref_index_by_range_to_inclusive_text_line_fails() {
-    let t = run_index_test_on_text::<RangeToInclusive<TextLine>>;
-    t("hello\nworld", ..=(2.into()), "hello\nworld");
-}
+// #[test]
+// #[should_panic]
+// pub(crate) fn text_ref_index_by_range_to_inclusive_text_line_fails() {
+//     let t = run_index_test_on_text::<RangeToInclusive<TextLine>>;
+//     t("hello\nworld", ..=(2.into()), "hello\nworld");
+// }

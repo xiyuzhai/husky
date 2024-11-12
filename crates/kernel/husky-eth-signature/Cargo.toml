@@ -28,9 +28,9 @@ husky-print-utils.workspace = true
 
 [dev-dependencies]
 # fs
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # kernel
-husky-eth-signature = { path = ".", features = ["test_utils"] }
+husky-eth-signature = { workspace = true, features = ["test_helpers"] }
 husky-dec-term.workspace = true
 husky-dec-ty.workspace = true
 # infer
@@ -42,7 +42,7 @@ husky-token.workspace = true
 husky-token-data.workspace = true
 husky-toml-token.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-syn-expr.workspace = true
 husky-syn-decl.workspace = true
 # toml
@@ -51,4 +51,4 @@ husky-manifest-ast.workspace = true
 husky-corgi-config-ast.workspace = true
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

@@ -91,6 +91,10 @@ mnist-developer:
 	# SKIP_COMPILATION=1 cargo run --bin husky-mnist-classifier-developer
 	cargo run --bin husky-mnist-classifier-developer -- --nocapture
 
+cybertron-mini-lean-compiler-developer:
+	# SKIP_COMPILATION=1 cargo run --bin husky-mnist-classifier-developer
+	cargo run --bin cybertron-mini-lean-compiler-developer -- --nocapture
+
 save:
 # git add -A
 # git commit -m "save"
@@ -156,3 +160,12 @@ gen-mini-husky-basic:
 
 bibtex:
 	scripts/research/bibtex_finder.py references/papers.txt -o references/papers.bib --use semantic --max-sleep 0
+
+chmod-local-scripts:
+	chmod +x .local/scripts/*
+
+debug: chmod-local-scripts
+	.local/scripts/debug.sh
+
+debug-tracked: chmod-local-scripts
+	.local/scripts/debug_tracked.sh

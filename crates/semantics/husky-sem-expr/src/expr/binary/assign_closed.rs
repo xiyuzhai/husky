@@ -75,8 +75,8 @@ impl<'a> SemExprBuilder<'a> {
                     FlyBaseTypeData::SymbolicVariable {
                         symbolic_variable: symbol,
                     } => todo!(),
-                    FlyBaseTypeData::LambdaVariable {
-                        lambda_variable: hvar,
+                    FlyBaseTypeData::AbstractVariable {
+                        abstract_variable: hvar,
                     } => todo!(),
                 };
                 self.build_expr(ropd, ExpectCoercion::new(Contract::Move, ropd_ty_expected))

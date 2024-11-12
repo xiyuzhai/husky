@@ -17,8 +17,8 @@ pub struct EagerExprTracePathData {
     disambiguator: TracePathDisambiguator<EagerExprEssence>,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 #[salsa::derive_debug_with_db]
+#[derive(Debug, PartialEq, Eq, Clone, Hash)]
 pub enum EagerExprEssence {
     Haha,
 }

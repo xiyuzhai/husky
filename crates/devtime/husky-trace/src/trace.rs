@@ -172,6 +172,10 @@ impl Trace {
 }
 
 impl Trace {
+    pub fn biological_parent(self, db: &::salsa::Db) -> Option<Trace> {
+        self.data(db).biological_parent()
+    }
+
     #[cfg(test)]
     fn assoc_traces(self, db: &::salsa::Db) -> Vec<Trace> {
         self.view_data(db)
@@ -225,6 +229,30 @@ impl Trace {
 }
 
 impl TraceData {
+    pub fn biological_parent(&self) -> Option<Trace> {
+        match self {
+            TraceData::Submodule(slf) => None,
+            TraceData::Val(slf) => None,
+            TraceData::StaticVar(slf) => None,
+            TraceData::LazyCallInput(slf) => Some(slf.biological_parent()),
+            TraceData::LazyCall(slf) => Some(slf.biological_parent()),
+            TraceData::LazyExpr(slf) => Some(slf.biological_parent()),
+            TraceData::LazyPattern(slf) => Some(slf.biological_parent()),
+            TraceData::LazyStmt(slf) => Some(slf.biological_parent()),
+            TraceData::LazyLoopFrame(slf) => Some(slf.biological_parent()),
+            TraceData::LazyLoopRange(slf) => Some(slf.biological_parent()),
+            TraceData::EagerCallInput(slf) => Some(slf.biological_parent()),
+            TraceData::EagerCall(slf) => Some(slf.biological_parent()),
+            TraceData::EagerExpr(slf) => Some(slf.biological_parent()),
+            TraceData::EagerPattern(slf) => Some(slf.biological_parent()),
+            TraceData::EagerStmt(slf) => Some(slf.biological_parent()),
+            TraceData::EagerLoopFrame(slf) => Some(slf.biological_parent()),
+            TraceData::EagerLoopRange(slf) => Some(slf.biological_parent()),
+            TraceData::Place(slf) => Some(slf.biological_parent()),
+            TraceData::Script(slf) => Some(slf.biological_parent()),
+        }
+    }
+
     pub fn trace_kind(&self) -> TraceKind {
         match self {
             TraceData::Submodule(_) => TraceKind::Submodule,

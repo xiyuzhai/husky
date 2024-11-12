@@ -84,17 +84,23 @@ fn basic_strings() {
     t(db, "\"\"\"\na\"\"\"", "a", true);
     t(db, "\"\"\"\n\"\"\"", "", true);
     t(db, r#""""a\"""b""""#, "a\"\"\"b", true);
-    err(r#""\a"#, TomlTokenError::InvalidEscape(2, 'a'));
-    err("\"\\\n", TomlTokenError::InvalidEscape(2, '\n'));
-    err("\"\\\r\n", TomlTokenError::InvalidEscape(2, '\n'));
+    err(r#""\a"#, TomlTokenError::InvalidEscape(2.into(), 'a'));
+    err("\"\\\n", TomlTokenError::InvalidEscape(2.into(), '\n'));
+    err("\"\\\r\n", TomlTokenError::InvalidEscape(2.into(), '\n'));
     err("\"\\", TomlTokenError::UnterminatedString);
-    err("\"\u{0}", TomlTokenError::InvalidCharInString(1, '\u{0}'));
-    err(r#""\U00""#, TomlTokenError::InvalidHexEscape(5, '"'));
+    err(
+        "\"\u{0}",
+        TomlTokenError::InvalidCharInString(1.into(), '\u{0}'),
+    );
+    err(r#""\U00""#, TomlTokenError::InvalidHexEscape(5.into(), '"'));
     err(r#""\U00"#, TomlTokenError::UnterminatedString);
-    err(r#""\uD800"#, TomlTokenError::InvalidEscapeValue(2, 0xd800));
+    err(
+        r#""\uD800"#,
+        TomlTokenError::InvalidEscapeValue(2.into(), 0xd800),
+    );
     err(
         r#""\UFFFFFFFF"#,
-        TomlTokenError::InvalidEscapeValue(2, 0xffff_ffff),
+        TomlTokenError::InvalidEscapeValue(2.into(), 0xffff_ffff),
     );
 }
 
@@ -128,11 +134,14 @@ fn all() {
         let mut tokens = TomlTokenIter::new(db, input);
         let mut actual: Vec<(TomlToken, &str)> = Vec::new();
         while let Some(token) = tokens.next() {
-            let code = &input[token.span().start..token.span().end];
+            let code = &input[token.offset_range()];
             actual.push((token, code));
         }
         for (a, b) in actual.iter().zip(expected) {
-            assert_eq!((a.0.span().into(), a.0.data(), a.1), (b.0, &b.1, b.2));
+            assert_eq!(
+                (a.0.offset_range().raw_tuple(), a.0.data(), a.1),
+                (b.0, &b.1, b.2)
+            );
         }
         assert_eq!(actual.len(), expected.len());
     }
@@ -170,8 +179,11 @@ fn all() {
 #[test]
 fn bare_cr_bad() {
     err("\r", TomlTokenError::UnexpectedChar('\r'));
-    err("'\n", TomlTokenError::NewlineInString(1));
-    err("'\u{0}", TomlTokenError::InvalidCharInString(1, '\u{0}'));
+    err("'\n", TomlTokenError::NewlineInString(1.into()));
+    err(
+        "'\u{0}",
+        TomlTokenError::InvalidCharInString(1.into(), '\u{0}'),
+    );
     err("'", TomlTokenError::UnterminatedString);
     err("\u{0}", TomlTokenError::UnexpectedChar('\u{0}'));
 }
@@ -191,7 +203,7 @@ fn bad_comment() {
 
 #[test]
 fn builtin_library_toml_token_sheets() {
-    use husky_vfs::test_utils::VfsTestUtilsDb;
+    use husky_vfs::test_helpers::VfsTestUtilsDb;
 
     let db = DB::default();
     let db = &*db;

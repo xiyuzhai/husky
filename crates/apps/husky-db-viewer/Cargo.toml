@@ -1,0 +1,21 @@
+[package]
+name = "husky-db-viewer"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+egui.workspace = true
+eframe.workspace = true
+rfd.workspace = true
+rusqlite.workspace = true
+
+[lints]
+workspace = true

@@ -15,8 +15,8 @@ pub mod jar;
 mod parser;
 pub mod range;
 mod sheet;
-#[cfg(feature = "test_utils")]
-pub mod test_utils;
+#[cfg(feature = "test_helpers")]
+pub mod test_helpers;
 #[cfg(test)]
 mod tests;
 mod utils;

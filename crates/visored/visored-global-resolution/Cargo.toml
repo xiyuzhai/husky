@@ -1,0 +1,28 @@
+[package]
+name = "visored-global-resolution"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+rustc-hash.workspace = true
+# abstractions
+enum-index.workspace = true
+salsa.workspace = true
+# latex
+latex-command.workspace = true
+latex-math-letter.workspace = true
+latex-math-punctuation.workspace = true
+# visored
+visored-opr.workspace = true
+visored-item-path.workspace = true
+
+[lints]
+workspace = true

@@ -7,4 +7,5 @@ edition = "2021"
 serde = { workspace = true, optional = true }
 
 [features]
+default = ["serde"]
 serde = ["dep:serde"]

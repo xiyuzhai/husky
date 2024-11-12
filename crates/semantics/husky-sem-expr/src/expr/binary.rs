@@ -203,7 +203,7 @@ impl<'a> SemExprBuilder<'a> {
                 return_ty,
             } => todo!(),
             FlyBaseTypeData::SymbolicVariable { symbolic_variable } => todo!(),
-            FlyBaseTypeData::LambdaVariable { lambda_variable } => todo!(),
+            FlyBaseTypeData::AbstractVariable { abstract_variable } => todo!(),
         }
     }
 

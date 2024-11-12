@@ -1,9 +1,11 @@
+use offset::TextOffset;
+
 use crate::*;
 
 #[derive(Clone)]
 pub struct TextCharIter<'a> {
     pub(super) iter: core::slice::Iter<'a, u8>,
-    current_offset: usize,
+    current_raw_offset: usize,
     current_position: TextPosition,
 }
 
@@ -24,24 +26,24 @@ impl<'a> Iterator for TextCharIter<'a> {
                     }
                 {
                     self.iter = attempt;
-                    self.current_offset += 2;
+                    self.current_raw_offset += 2;
                     self.current_position = self.current_position.to_next_line();
                     Some('\n')
                 } else {
                     let len = self.iter.len();
-                    self.current_offset += pre_len - len;
+                    self.current_raw_offset += pre_len - len;
                     self.current_position = self.current_position.to_right(1);
                     Some(ch)
                 }
             }
             '\n' => {
-                self.current_offset += 1;
+                self.current_raw_offset += 1;
                 self.current_position = self.current_position.to_next_line();
                 Some(ch)
             }
             _ => {
                 let len = self.iter.len();
-                self.current_offset += pre_len - len;
+                self.current_raw_offset += pre_len - len;
                 self.current_position = self.current_position.to_right(1);
                 Some(ch)
             }
@@ -57,7 +59,7 @@ impl<'a> TextCharIter<'a> {
     pub(crate) fn new_aux(input: &'a str, next_offset: usize, start_pos: TextPosition) -> Self {
         Self {
             iter: input.as_bytes().iter(),
-            current_offset: next_offset,
+            current_raw_offset: next_offset,
             current_position: start_pos,
         }
     }
@@ -88,9 +90,9 @@ impl<'a> TextCharIter<'a> {
 
     pub fn next_str_slice_while(&mut self, predicate: impl FnMut(char) -> bool) -> &'a str {
         let slice = self.iter.as_slice();
-        let start = self.current_offset;
+        let start = self.current_raw_offset;
         self.eat_chars_while(predicate);
-        let end = self.current_offset;
+        let end = self.current_raw_offset;
         unsafe { std::str::from_utf8_unchecked(&slice[..(end - start)]) }
     }
 
@@ -108,7 +110,7 @@ impl<'a> TextCharIter<'a> {
     /// ```
     pub fn next_numeric_str_slice(&mut self) -> &'a str {
         let slice = self.iter.as_slice();
-        let start = self.current_offset;
+        let start = self.current_raw_offset;
         self.eat_chars_while(|c| c.is_numeric());
         if self.eat_char_if(|c| c == '.') {
             self.eat_chars_while(|c| c.is_numeric());
@@ -117,7 +119,7 @@ impl<'a> TextCharIter<'a> {
             self.eat_char_if(|c| matches!(c, '+' | '-'));
             self.eat_chars_while(|c| c.is_numeric());
         }
-        let end = self.current_offset;
+        let end = self.current_raw_offset;
         unsafe { std::str::from_utf8_unchecked(&slice[..(end - start)]) }
     }
 
@@ -129,21 +131,23 @@ impl<'a> TextCharIter<'a> {
         self.current_position
     }
 
-    pub fn current_offset(&self) -> usize {
-        self.current_offset
+    pub fn current_offset(&self) -> TextOffset {
+        self.current_raw_offset.into()
     }
 
-    pub fn next_char_with_offset(&mut self) -> Option<(usize, char)> {
-        let offset = self.current_offset;
+    pub fn next_char_with_offset(&mut self) -> Option<(TextOffset, char)> {
+        let offset = self.current_raw_offset;
         let ch = self.next()?;
-        Some((offset, ch))
+        Some((offset.into(), ch))
     }
 
-    pub fn next_char_with_offset_and_position(&mut self) -> Option<(usize, TextPosition, char)> {
-        let offset = self.current_offset;
+    pub fn next_char_with_offset_and_position(
+        &mut self,
+    ) -> Option<(TextOffset, TextPosition, char)> {
+        let offset = self.current_raw_offset;
         let position = self.current_position;
         let ch = self.next()?;
-        Some((offset, position, ch))
+        Some((offset.into(), position, ch))
     }
 
     pub fn peek(&self) -> Option<char> {
@@ -163,12 +167,16 @@ pub struct OffsetedTextCharIter<'a> {
 }
 
 impl<'a> OffsetedTextCharIter<'a> {
-    pub(crate) fn new_aux(input: &'a str, front_offset: usize, start_pos: TextPosition) -> Self {
+    pub(crate) fn new_aux(
+        input: &'a str,
+        current_raw_offset: usize,
+        current_position: TextPosition,
+    ) -> Self {
         Self {
             iter: TextCharIter {
                 iter: input.as_bytes().iter(),
-                current_offset: front_offset,
-                current_position: start_pos,
+                current_raw_offset,
+                current_position,
             },
         }
     }
@@ -179,7 +187,7 @@ impl<'a> OffsetedTextCharIter<'a> {
 }
 
 impl<'a> Iterator for OffsetedTextCharIter<'a> {
-    type Item = (usize, char);
+    type Item = (TextOffset, char);
 
     fn next(&mut self) -> Option<Self::Item> {
         let offset = self.iter.current_offset();
@@ -196,7 +204,7 @@ impl<'a> PositionedTextCharIter<'a> {
         Self {
             iter: TextCharIter {
                 iter: input.as_bytes().iter(),
-                current_offset: front_offset,
+                current_raw_offset: front_offset,
                 current_position: start_pos,
             },
         }
@@ -286,7 +294,11 @@ mod tests {
     fn test_crlf_fold() {
         fn t(sample_text: &str, expect: &[(usize, char)]) {
             let fold = OffsetedTextCharIter::new(sample_text);
-            assert_eq!(fold.collect::<Vec<_>>(), expect)
+            assert_eq!(
+                fold.map(|(offset, c)| (offset.index(), c))
+                    .collect::<Vec<_>>(),
+                expect
+            )
         }
 
         t(

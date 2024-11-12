@@ -13,7 +13,7 @@ pub(super) fn ethereal_term_data<'a>(db: &'a ::salsa::Db, term: EthTerm) -> FlyT
             symbolic_variable: term,
             ty: term.ty(db).into(),
         },
-        EthTerm::LambdaVariable(term) => FlyTermData::LambdaVariable {
+        EthTerm::AbstractVariable(term) => FlyTermData::AbstractVariable {
             ty: term.ty(db).into(),
             index: term.index(db),
         },
@@ -202,8 +202,8 @@ pub(super) fn ethereal_term_fly_base_ty_data<'a>(
         EthTerm::SymbolicVariable(symbol) => FlyBaseTypeData::SymbolicVariable {
             symbolic_variable: symbol,
         },
-        EthTerm::LambdaVariable(hvar) => FlyBaseTypeData::LambdaVariable {
-            lambda_variable: hvar,
+        EthTerm::AbstractVariable(hvar) => FlyBaseTypeData::AbstractVariable {
+            abstract_variable: hvar,
         },
         EthTerm::ItemPath(path) => match path {
             ItemPathTerm::MajorForm(_) => todo!(),

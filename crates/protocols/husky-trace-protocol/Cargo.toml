@@ -31,6 +31,7 @@ husky-ki-repr-interface.workspace = true
 # linket
 husky-linket-impl.workspace = true
 # protocols
+husky-figure-zone-protocol.workspace = true
 husky-token-protocol = { workspace = true, features = ["serde"] }
 husky-value-protocol.workspace = true
 husky-value.workspace = true
@@ -44,7 +45,7 @@ husky-websocket-utils = { path = "../../utils/husky-websocket-utils", features =
 
 [dev-dependencies]
 # protocol
-husky-trace-protocol = { path = ".", features = ["trivial"] }
+husky-trace-protocol = { workspace = true, features = ["trivial"] }
 
 [features]
 mock = []
@@ -71,4 +72,4 @@ server = [
     "dep:tokio-tungstenite",
     "husky-websocket-utils/easy_server"
 ]
-test_utils = ["mock", "client", "server", "dep:sealed"]
+test_helpers = ["mock", "client", "server", "dep:sealed"]

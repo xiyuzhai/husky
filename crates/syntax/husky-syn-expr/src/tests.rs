@@ -1,5 +1,5 @@
 pub(crate) use expect_test::*;
-pub(crate) use husky_vfs::test_utils::*;
+pub(crate) use husky_vfs::test_helpers::*;
 
 use expect_test::{expect, Expect};
 use husky_vfs::jar::VfsDb;

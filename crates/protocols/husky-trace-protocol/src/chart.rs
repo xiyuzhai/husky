@@ -2,6 +2,7 @@ use husky_item_path_interface::ItemPathIdInterface;
 use husky_linket_impl::{pedestal::JointPedestal, var_id::IsVarId};
 use vec_like::SmallVecPairMap;
 
+/// the name comes from differential geometry and algebraic geometry
 #[enum_class::from_variants]
 #[derive(Debug, PartialEq, Eq)]
 pub enum Chart<VarId: IsVarId, R> {

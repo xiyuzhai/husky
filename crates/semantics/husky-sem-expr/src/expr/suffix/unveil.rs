@@ -288,7 +288,7 @@ fn unveil_impl_block_signature_builders<'db>(
 ) -> EthSignatureMaybeResult<SmallVec<[TraitForTypeImplBlockEthSignatureBuilderItd; 2]>> {
     match term {
         EthTerm::SymbolicVariable(_) => Nothing, // ad hoc
-        EthTerm::LambdaVariable(_) => Nothing,   // ad hoc
+        EthTerm::AbstractVariable(_) => Nothing, // ad hoc
         EthTerm::ItemPath(ItemPathTerm::TypeOntology(path)) => {
             ty_ontology_path_unveil_impl_block_signature_templates(path, context_itd, db)
         }

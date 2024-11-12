@@ -154,22 +154,6 @@ impl IsLinketImpl for VirtualLinketImpl {
         todo!()
     }
 
-    fn page_var_ids<'a>(
-        self,
-        locked: &'a [ItemPathIdInterface],
-        page_start: <Self::Pedestal as IsPedestal>::VarId,
-        page_limit: Option<usize>,
-    ) -> Box<dyn Iterator<Item = <Self::Pedestal as IsPedestal>::VarId> + 'a> {
-        todo!()
-    }
-
-    fn var_default_page_start(
-        self,
-        locked: &[ItemPathIdInterface],
-    ) -> LinketImplStaticVarResult<Self, <Self::Pedestal as IsPedestal>::VarId> {
-        todo!()
-    }
-
     fn with_default_var_id<R>(
         self,
         locked: &[ItemPathIdInterface],
@@ -181,6 +165,15 @@ impl IsLinketImpl for VirtualLinketImpl {
     fn try_set_dev_eval_context(
         ctx: DevEvalContext<Self>,
     ) -> Result<husky_linket_impl::dev_eval_context::DevEvalContextGuard, ()> {
+        todo!()
+    }
+
+    fn static_var_svtable(
+        self,
+    ) -> &'static husky_linket_impl::static_var::StaticVarSvtable<
+        <Self::Pedestal as IsPedestal>::VarId,
+        Self::Value,
+    > {
         todo!()
     }
 }

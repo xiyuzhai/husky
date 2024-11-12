@@ -1,0 +1,5 @@
+```rust
+SynNodeDeclSheet {
+    decls: [],
+}
+```

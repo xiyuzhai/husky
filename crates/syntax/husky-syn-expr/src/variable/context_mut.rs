@@ -93,12 +93,12 @@ impl<'a> VariableContextMut<'a> {
         &self.variable_region
     }
 
-    pub(crate) fn set_lambda_variable_access_end(
+    pub(crate) fn set_abstract_variable_access_end(
         &mut self,
         var: CurrentVariableIdx,
         access_end: RegionalTokenIdxRangeEnd,
     ) {
         self.variable_region
-            .set_lambda_variable_access_end(var, access_end)
+            .set_abstract_variable_access_end(var, access_end)
     }
 }

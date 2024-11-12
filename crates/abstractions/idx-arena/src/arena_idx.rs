@@ -1,5 +1,5 @@
 use crate::*;
-use std::num::NonZeroU32;
+use std::{num::NonZeroU32, ops::AddAssign};
 
 pub struct ArenaIdx<T> {
     raw: NonZeroU32,
@@ -83,6 +83,12 @@ impl<T> Add<usize> for ArenaIdx<T> {
     }
 }
 
+impl<T> AddAssign<usize> for ArenaIdx<T> {
+    fn add_assign(&mut self, rhs: usize) {
+        *self = *self + rhs;
+    }
+}
+
 impl<T> Sub<Self> for ArenaIdx<T> {
     type Output = usize;
 
@@ -94,6 +100,7 @@ impl<T> Sub<Self> for ArenaIdx<T> {
 impl<T> std::ops::Sub<usize> for ArenaIdx<T> {
     type Output = Self;
 
+    #[track_caller]
     fn sub(self, rhs: usize) -> Self::Output {
         Self::new(self.index() - rhs)
     }

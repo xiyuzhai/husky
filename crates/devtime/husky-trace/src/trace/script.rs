@@ -7,5 +7,12 @@ pub struct ScriptTracePathData {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ScriptTraceData {
+    biological_parent: Trace,
     source: String,
+}
+
+impl ScriptTraceData {
+    pub fn biological_parent(&self) -> Trace {
+        self.biological_parent
+    }
 }

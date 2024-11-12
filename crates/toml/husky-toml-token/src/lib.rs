@@ -18,8 +18,7 @@ pub use self::stream::*;
 use self::jar::TomlTokenJar as Jar;
 use crate::jar::TomlTokenDb;
 use husky_coword::Coword;
-use husky_text_protocol::range::TextRange;
-use husky_text_span::DocumentSpan;
+use husky_text_protocol::{offset::TextOffsetRange, range::TextRange};
 use std::char;
 use std::str;
 use std::sync::Arc;
@@ -30,18 +29,22 @@ pub type StringValue = Arc<str>;
 /// tokens in toml file
 #[derive(Debug, PartialEq, Eq)]
 pub struct TomlToken {
-    span: DocumentSpan,
+    offset_range: TextOffsetRange,
     range: TextRange,
     data: TomlTokenData,
 }
 
 impl TomlToken {
-    pub fn new(span: DocumentSpan, range: TextRange, data: TomlTokenData) -> Self {
-        Self { span, range, data }
+    pub fn new(span: TextOffsetRange, range: TextRange, data: TomlTokenData) -> Self {
+        Self {
+            offset_range: span,
+            range,
+            data,
+        }
     }
 
-    pub fn span(&self) -> DocumentSpan {
-        self.span
+    pub fn offset_range(&self) -> TextOffsetRange {
+        self.offset_range
     }
 
     pub fn range(&self) -> TextRange {

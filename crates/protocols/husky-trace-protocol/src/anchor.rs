@@ -18,8 +18,8 @@ impl<VarId: IsVarId> From<Windlass<VarId>> for Anchor<VarId> {
             Windlass::Specific(var_id) => Anchor::Specific(var_id),
             Windlass::Generic {
                 page_start,
-                followed,
                 page_limit,
+                ..
             } => Anchor::Generic {
                 page_start,
                 page_limit,

@@ -19,6 +19,6 @@ pub struct NonLiteralPlotClassTerm {
 pub enum PlotClassTermData {
     Literal(PlotClass),
     SymbolicVariable(EthSymbolicVariable),
-    LambdaVariable(EthLambdaVariable),
+    AbstractVariable(EthAbstractVariable),
     Group(Vec<PlotClassTerm>),
 }

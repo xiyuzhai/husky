@@ -6,7 +6,7 @@ impl EthTerm {
     pub fn final_destination(self, db: &::salsa::Db) -> FinalDestination {
         match self {
             EthTerm::Literal(_) => FinalDestination::AnyDerived,
-            EthTerm::SymbolicVariable(_) | EthTerm::LambdaVariable(_) => {
+            EthTerm::SymbolicVariable(_) | EthTerm::AbstractVariable(_) => {
                 FinalDestination::AnyOriginal
             }
             EthTerm::ItemPath(path) => match path {

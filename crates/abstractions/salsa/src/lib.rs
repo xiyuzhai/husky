@@ -26,8 +26,8 @@ pub mod salsa_struct;
 pub mod setter;
 pub mod snapshot;
 pub mod storage;
-#[cfg(feature = "test_utils")]
-pub mod test_utils;
+#[cfg(feature = "test_helpers")]
+pub mod test_helpers;
 #[doc(hidden)]
 pub mod tracked_struct;
 pub mod utils;

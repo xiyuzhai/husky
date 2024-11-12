@@ -1,6 +1,6 @@
 use std::{cell::Cell, sync::Arc};
 
-use salsa::test_utils::Db;
+use salsa::test_helpers::Db;
 
 use crate::signal::Signal;
 

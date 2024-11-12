@@ -7,12 +7,6 @@ pub struct EagerLoopFrameTracePath(TracePath);
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct EagerLoopFrameTracePathData {}
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
-pub enum EagerLoopFrameTraceBiologicalParent {
-    Stmt,
-    LoopGroup,
-}
-
 impl EagerLoopFrameTracePath {
     pub fn view_data(self, _db: &::salsa::Db) -> TraceViewData {
         todo!()
@@ -26,7 +20,7 @@ pub struct EagerLoopFrameTrace(Trace);
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EagerLoopFrameTraceData {
     path: EagerLoopFrameTracePath,
-    biological_parent: EagerLoopFrameTraceBiologicalParent,
+    biological_parent: Trace,
 }
 
 impl EagerLoopFrameTraceData {
@@ -40,5 +34,9 @@ impl EagerLoopFrameTraceData {
 
     pub fn var_deps_expansion(&self, db: &::salsa::Db) -> TraceVarDepsExpansion {
         todo!()
+    }
+
+    pub fn biological_parent(&self) -> Trace {
+        self.biological_parent
     }
 }

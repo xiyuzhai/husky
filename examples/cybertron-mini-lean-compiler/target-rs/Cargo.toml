@@ -1,0 +1,18 @@
+[workspace]
+members = ["cybertron-mini-lean-compiler", "cybertron-mini-lean-compiler-linkets"]
+resolver = "2"
+
+[workspace.dependencies.ad-hoc-devsoul-dependency]
+path = "../../../registry/ad-hoc-devsoul-dependency"
+
+[workspace.dependencies.cybertron-mini-lean-compiler]
+path = "cybertron-mini-lean-compiler"
+
+[workspace.dependencies.cybertron-mini-lean-compiler-linkets]
+path = "cybertron-mini-lean-compiler-linkets"
+
+[workspace.dependencies.cybertron-mini-lean-tokens]
+path = "../../../registry/cybertron-mini-lean-tokens-0.1.0"
+
+[workspace.dependencies.husky-core]
+path = "../../../library/core"

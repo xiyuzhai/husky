@@ -21,7 +21,7 @@ impl HirTrait {
         match trai_term {
             EthTerm::Literal(_) => todo!(),
             EthTerm::SymbolicVariable(_) => todo!(),
-            EthTerm::LambdaVariable(_) => todo!(),
+            EthTerm::AbstractVariable(_) => todo!(),
             EthTerm::ItemPath(path) => match path {
                 ItemPathTerm::MajorForm(_) => todo!(),
                 ItemPathTerm::Trait(trai_path) => Self::new(db, trai_path, smallvec![]),

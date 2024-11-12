@@ -8,6 +8,7 @@ use husky_vmir::{
 use std::sync::Mutex;
 use vec_like::ordered_vec_map::OrderedVecPairMap;
 
+#[derive(Debug)]
 pub struct VmHistory<LinketImpl: IsLinketImpl> {
     linket: Linket,
     expr_control_flows: VmirExprMap<LinketImpl, VmRecord<LinketImpl>>,
@@ -51,6 +52,7 @@ where
     }
 }
 
+#[derive(Debug)]
 pub struct VmRecord<LinketImpl: IsLinketImpl> {
     control_flow: LinketImplVmControlFlowFrozen<LinketImpl>,
 }

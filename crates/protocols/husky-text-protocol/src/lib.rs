@@ -4,6 +4,7 @@
 pub mod change;
 pub mod char;
 pub mod line_map;
+pub mod offset;
 pub mod paragraph;
 pub mod position;
 pub mod range;

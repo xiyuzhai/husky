@@ -86,20 +86,20 @@ impl TextPosition {
         self.line.0
     }
     pub fn j(&self) -> u32 {
-        self.col.0
+        self.col.index32()
     }
 
     pub fn to_left(&self, x: u32) -> TextPosition {
         Self {
             line: self.line,
-            col: TextColumn(self.col.0 - x),
+            col: self.col - x,
         }
     }
 
     pub fn to_right(&self, x: u32) -> TextPosition {
         Self {
             line: self.line,
-            col: TextColumn(self.col.0 + x),
+            col: self.col + x,
         }
     }
 
@@ -113,13 +113,17 @@ impl TextPosition {
 
 impl std::fmt::Display for TextPosition {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{:?}:{:?}", self.line.0 + 1, self.col.0 + 1))
+        f.write_fmt(format_args!(
+            "{:?}:{:?}",
+            self.line.index() + 1,
+            self.col.index() + 1
+        ))
     }
 }
 
 #[cfg(feature = "lsp_support")]
 impl From<TextPosition> for lsp_types::Position {
     fn from(val: TextPosition) -> Self {
-        lsp_types::Position::new(val.line.0, val.col.0)
+        lsp_types::Position::new(val.line.index32(), val.col.index32())
     }
 }

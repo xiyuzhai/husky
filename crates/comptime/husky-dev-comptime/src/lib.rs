@@ -47,7 +47,11 @@ impl<Devsoul: IsDevsoul> DevComptime<Devsoul> {
         let target_package_path =
             match PackagePath::new_local_or_toolchain_package(&db, toolchain, target_crate_path) {
                 Ok(package_path) => package_path,
-                Err(_e) => todo!(),
+                Err(e) => todo!(
+                    "Handle error creating PackagePath for `{}`: {}",
+                    target_crate_path.display(),
+                    e
+                ),
             };
         let Some(target_crate_path) =
             CratePath::new(target_package_path, CrateKind::Main, &db).into_result_option()?

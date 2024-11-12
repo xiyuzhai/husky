@@ -171,7 +171,7 @@ impl FlyTerm {
             }
             FlyTermData::SymbolicVariable { .. } => todo!(),
             // todo: this is wrong
-            FlyTermData::LambdaVariable { .. } => substitution_rules
+            FlyTermData::AbstractVariable { .. } => substitution_rules
                 .iter()
                 .copied()
                 .find_map(|rule| (*rule.hvar == self).then_some(rule.substitute))

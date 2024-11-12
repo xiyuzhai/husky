@@ -1,25 +1,26 @@
+use husky_text_protocol::offset::TextOffset;
 use thiserror::Error;
 
 #[derive(Debug, Error, PartialEq, Eq, Clone, Hash)]
 pub enum TomlTokenError {
     #[error("invalid char in string {0} {1}")]
-    InvalidCharInString(usize, char),
+    InvalidCharInString(TextOffset, char),
     #[error("todo")]
-    InvalidEscape(usize, char),
+    InvalidEscape(TextOffset, char),
     #[error("todo")]
-    InvalidHexEscape(usize, char),
+    InvalidHexEscape(TextOffset, char),
     #[error("todo")]
-    InvalidEscapeValue(usize, u32),
+    InvalidEscapeValue(TextOffset, u32),
     #[error("todo")]
-    NewlineInString(usize),
+    NewlineInString(TextOffset),
     #[error("todo")]
     UnexpectedChar(char),
     #[error("todo")]
     UnterminatedString,
     #[error("todo")]
-    NewlineInTableKey(usize),
+    NewlineInTableKey(TextOffset),
     #[error("todo")]
-    MultilineStringKey(usize),
+    MultilineStringKey(TextOffset),
     #[error("todo")]
     Wanted {
         at: usize,

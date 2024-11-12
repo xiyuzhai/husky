@@ -26,11 +26,19 @@ impl HotkeyBuffer {
 }
 
 #[derive(Debug, PartialEq, Eq, Clone)]
-pub struct HotkeyMap<T> {
+pub struct HotkeyMap<T: Copy> {
     data: Vec<(HotkeyPattern, T)>,
 }
 
-impl<'a, T> HotkeyMap<T> {
+impl<T: Copy> std::ops::Deref for HotkeyMap<T> {
+    type Target = [(HotkeyPattern, T)];
+
+    fn deref(&self) -> &Self::Target {
+        &self.data
+    }
+}
+
+impl<'a, T: Copy> HotkeyMap<T> {
     pub fn new(iter: impl IntoIterator<Item = (&'a str, T)>) -> HotkeyPatternParseResult<Self> {
         Ok(Self {
             data: iter
@@ -141,7 +149,11 @@ impl HotkeyBuffer {
 }
 
 impl HotkeyBuffer {
-    /// should be invoked before rendering a frame
+    /// This method:
+    /// 1. Converts input events into buffered key presses to be extracted later.
+    /// 2. Resets the text edit interception flag.
+    ///
+    /// This should be invoked before rendering a frame
     pub fn start_frame(&mut self, ctx: &::egui::Context) {
         ctx.input(|i| self.start_frame_aux(&i.events));
     }
@@ -179,10 +191,10 @@ impl HotkeyBuffer {
         self.fragments.push(fragment)
     }
 
-    pub fn extract<'a, T>(
+    pub fn extract<'a, T: Copy>(
         &mut self,
-        hotkey_map: &'a HotkeyMap<T>,
-    ) -> Option<(Option<usize>, &'a T)> {
+        hotkey_map: impl IntoIterator<Item = (&'a HotkeyPattern, T)>,
+    ) -> Option<(Option<usize>, T)> {
         let extract = self.extract_aux(hotkey_map);
         if extract.is_some() {
             self.reset()
@@ -190,16 +202,14 @@ impl HotkeyBuffer {
         extract
     }
 
-    fn extract_aux<'a, T>(
-        &mut self,
-        hotkey_map: &'a HotkeyMap<T>,
-    ) -> Option<(Option<usize>, &'a T)> {
-        for (pattern, t) in &hotkey_map.data {
-            if pattern.recognize(&self.fragments) {
-                return Some((self.number, t));
-            }
-        }
-        None
+    fn extract_aux<'a, T: Copy>(
+        &self,
+        hotkey_map: impl IntoIterator<Item = (&'a HotkeyPattern, T)>,
+    ) -> Option<(Option<usize>, T)> {
+        hotkey_map
+            .into_iter()
+            .find(|(pattern, _)| pattern.recognize(&self.fragments))
+            .map(|(_, t)| (self.number, t))
     }
 }
 
@@ -299,7 +309,7 @@ impl HotkeyPatternFragment {
 fn hotkey_buffer_works() {
     use expect_test::expect;
 
-    #[derive(Debug, PartialEq, Eq)]
+    #[derive(Debug, PartialEq, Eq, Clone, Copy)]
     enum Action {
         Copy,
         Paste,
@@ -310,7 +320,7 @@ fn hotkey_buffer_works() {
 
     fn t(
         events_sequence: &[&[Event]],
-        expect: Option<(Option<usize>, &Action)>,
+        expect: Option<(Option<usize>, Action)>,
         intercept_for_text_edit: bool,
         hotkey_map: &HotkeyMap<Action>,
     ) {
@@ -389,7 +399,7 @@ fn hotkey_buffer_works() {
                 },
             ],
         ],
-        Some((None, &Return)),
+        Some((None, Return)),
         false,
         &hotkey_map,
     );
@@ -426,7 +436,7 @@ fn hotkey_buffer_works() {
                 },
             ],
         ],
-        Some((Some(1), &Return)),
+        Some((Some(1), Return)),
         false,
         &hotkey_map,
     );
@@ -524,8 +534,20 @@ fn hotkey_buffer_works() {
                 },
             ],
         ],
-        Some((None, &Return)),
+        Some((None, Return)),
         false,
         &hotkey_map,
     );
+}
+
+impl<'a, T: Copy> IntoIterator for &'a HotkeyMap<T> {
+    type Item = (&'a HotkeyPattern, T);
+    type IntoIter = std::iter::Map<
+        std::slice::Iter<'a, (HotkeyPattern, T)>,
+        fn(&'a (HotkeyPattern, T)) -> (&'a HotkeyPattern, T),
+    >;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.data.iter().map(|(pattern, value)| (pattern, *value))
+    }
 }

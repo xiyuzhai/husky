@@ -229,7 +229,7 @@ pub trait IsThawedValue:
     fn assign(self, other: Self);
 }
 
-pub trait IsFrozenValue: Clone + Send + Sync + 'static {
+pub trait IsFrozenValue: std::fmt::Debug + Clone + Send + Sync + 'static {
     type Value: IsValue;
 
     fn thaw(
@@ -243,4 +243,5 @@ pub trait IsFrozenValue: Clone + Send + Sync + 'static {
         value_presenter_cache: &mut ValuePresenterCache,
         value_presentation_synchrotron: &mut ValuePresentationSynchrotron,
     ) -> ValuePresentation;
+    fn visualize(&self, visual_synchrotron: &mut VisualSynchrotron) -> Visual;
 }

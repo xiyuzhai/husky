@@ -7,8 +7,8 @@ mod lex;
 pub mod sheet;
 mod snippet;
 mod stream;
-#[cfg(feature = "test_utils")]
-pub mod test_utils;
+#[cfg(feature = "test_helpers")]
+pub mod test_helpers;
 #[cfg(test)]
 mod tests;
 mod token_idx;

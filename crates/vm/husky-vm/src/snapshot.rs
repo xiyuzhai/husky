@@ -8,6 +8,7 @@ pub enum VmSnapshotKey {
     Loop { loop_index: usize },
 }
 
+#[derive(Debug)]
 pub struct VmSnapshot<LinketImpl: IsLinketImpl> {
     linket: Linket,
     variable_frozen_values: Vec<LinketImplFrozenValue<LinketImpl>>,
@@ -41,6 +42,7 @@ pub(crate) type VmSnapshotsData<LinketImpl: IsLinketImpl> = SmallVecPairMap<
     4,
 >;
 
+#[derive(Debug)]
 pub struct VmSnapshots<LinketImpl: IsLinketImpl> {
     data: VmSnapshotsData<LinketImpl>,
 }

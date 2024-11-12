@@ -11,7 +11,7 @@ parsec.workspace = true
 salsa.workspace = true
 shifted-unsigned-int.workspace = true
 # fs
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # lex
 husky-text.workspace = true
 husky-token-data.workspace = true
@@ -26,7 +26,7 @@ husky-opr.workspace = true
 husky-print-utils.workspace = true
 
 [dev-dependencies]
-husky-regional-token = { path = ".", features = ["test_utils"] }
+husky-regional-token = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

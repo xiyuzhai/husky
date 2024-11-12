@@ -52,14 +52,14 @@ husky-check-utils.workspace = true
 expect-test.workspace = true
 # fs
 husky-corgi-config.workspace = true
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # kernel
 husky-term-prelude = { path = "../../kernel/husky-term-prelude", features = [
-    "test_utils"
+    "test_helpers"
 ] }
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
-husky-entity-tree = { path = ".", features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
+husky-entity-tree = { workspace = true, features = ["test_helpers"] }
 # toml
 husky-corgi-config-ast.workspace = true
 husky-manifest-ast.workspace = true
@@ -67,4 +67,4 @@ husky-toml-ast.workspace = true
 husky-toml-token.workspace = true
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

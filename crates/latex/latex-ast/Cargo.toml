@@ -1,0 +1,47 @@
+[package]
+name = "latex-ast"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+egui = { workspace = true, optional = true }
+smallvec.workspace = true
+# abstractions
+enum-class.workspace = true
+idx-arena.workspace = true
+ptree.workspace = true
+salsa.workspace = true
+time-capsule.workspace = true
+# kernel
+husky-coword.workspace = true
+# latex
+latex-command.workspace = true
+latex-environment.workspace = true
+latex-math-letter.workspace = true
+latex-math-punctuation.workspace = true
+latex-rose-punctuation.workspace = true
+latex-prelude.workspace = true
+latex-token.workspace = true
+# utils
+husky-tree-utils.workspace = true
+
+[dev-dependencies]
+expect-test.workspace = true
+# latex
+latex-command.workspace = true
+latex-ast = { workspace = true, features = ["test_helpers"] }
+
+[lints]
+workspace = true
+
+[features]
+egui = ["dep:egui"]
+test_helpers = []

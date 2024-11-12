@@ -31,7 +31,7 @@ pub fn hir_eager_expr_region(
     hir_eager_expr_region_with_source_map(db, sem_expr_region).0
 }
 
-pub fn hir_eager_expr_source_map_from_sema(
+pub fn hir_eager_expr_source_map_from_sem(
     sem_expr_region: SemExprRegion,
     db: &::salsa::Db,
 ) -> HirEagerExprSourceMap {

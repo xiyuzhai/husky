@@ -1,0 +1,72 @@
+# LaTeX temporary files
+*.aux
+*.log
+*.toc
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# BibTeX
+*.bbl
+*.blg
+
+# PDF output (uncomment if you don't want to track the compiled PDF)
+# *.pdf
+
+# Beamer
+*.nav
+*.snm
+*.vrb
+
+# Editor temporary/backup files
+*~
+*.backup
+*.swp
+.#*
+\#*#
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+
+# Latexmk
+*.dep
+
+# Custom LaTeX packages
+*.sty
+
+# LaTeX build directory
+build/
+
+# Glossaries
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+
+# Makeindex
+*.idx
+*.ilg
+*.ind
+
+# Nomenclature
+*.nlo
+*.nls
+
+# Sage
+*.sage.py
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# VS Code settings
+.vscode/
+

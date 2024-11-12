@@ -16,4 +16,4 @@ husky-token.workspace = true
 [dev-dependencies]
 # kernel
 husky-coword.workspace = true
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }

@@ -17,6 +17,7 @@ use husky_entity_tree::{
 };
 use husky_regional_token::RegionalTokenIdxBase;
 use husky_text::{HasText, Text};
+use husky_text_protocol::offset::TextOffsetRange;
 use husky_token::{RangedTokenSheet, TokenDb};
 use husky_vfs::path::module_path::ModulePath;
 use salsa::DisplayWithDb;
@@ -169,14 +170,14 @@ impl<'a> SynExprCodespanEmitter<'a> {
 
 /// # getters
 impl<'a> SynExprCodespanEmitter<'a> {
-    fn expr_offset_range(&self, expr: SynExprIdx) -> std::ops::Range<usize> {
+    fn expr_offset_range(&self, expr: SynExprIdx) -> TextOffsetRange {
         let token_idx_range =
             self.syn_expr_range_region[expr].token_idx_range(self.regional_token_idx_base);
         let text_range = self.ranged_token_sheet.tokens_text_range(token_idx_range);
         self.text.offset_range(text_range)
     }
 
-    fn pattern_offset_range(&self, pattern: SynPatternIdx) -> std::ops::Range<usize> {
+    fn pattern_offset_range(&self, pattern: SynPatternIdx) -> TextOffsetRange {
         let token_idx_range =
             self.syn_expr_range_region[pattern].token_idx_range(self.regional_token_idx_base);
         let text_range = self.ranged_token_sheet.tokens_text_range(token_idx_range);

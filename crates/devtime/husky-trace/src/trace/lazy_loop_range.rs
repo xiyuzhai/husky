@@ -7,4 +7,12 @@ pub struct LazyLoopRangeTracePath(TracePath);
 pub struct LazyLoopRangeTracePathData {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct LazyLoopRangeTraceData {}
+pub struct LazyLoopRangeTraceData {
+    biological_parent: Trace,
+}
+
+impl LazyLoopRangeTraceData {
+    pub fn biological_parent(&self) -> Trace {
+        self.biological_parent
+    }
+}

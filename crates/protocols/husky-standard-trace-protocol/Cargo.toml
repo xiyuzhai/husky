@@ -27,6 +27,7 @@ husky-ki-repr-interface.workspace = true
 husky-linket-impl.workspace = true
 husky-standard-linket-impl.workspace = true
 # protocols
+husky-figure-zone-protocol.workspace = true
 husky-visual-protocol.workspace = true
 husky-trace-protocol.workspace = true
 # husky-standard-devsoul-interface.workspace = true

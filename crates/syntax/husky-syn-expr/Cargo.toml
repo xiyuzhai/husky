@@ -33,6 +33,8 @@ husky-entity-kind.workspace = true
 husky-term-prelude.workspace = true
 husky-opr.workspace = true
 husky-expr = { path = "../../kernel/husky-expr" }
+# protocols
+husky-text-protocol.workspace = true
 # syntax
 husky-entity-tree.workspace = true
 husky-item-decl-ast.workspace = true
@@ -46,9 +48,9 @@ husky-expect-test-snippets-utils = { path = "../../utils/husky-expect-test-snipp
 [dev-dependencies]
 expect-test.workspace = true
 # abstractions
-salsa = { path = "../../abstractions/salsa", features = ["test_utils"] }
+salsa = { path = "../../abstractions/salsa", features = ["test_helpers"] }
 # fs
-husky-vfs = { workspace = true, features = ["test_utils"] }
+husky-vfs = { workspace = true, features = ["test_helpers"] }
 # infer
 husky-manifest.workspace = true
 husky-corgi-config.workspace = true
@@ -58,10 +60,10 @@ husky-coword.workspace = true
 husky-text.workspace = true
 husky-toml-token.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
 husky-corgi-config-ast.workspace = true
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

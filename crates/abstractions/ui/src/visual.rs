@@ -2,6 +2,7 @@ pub mod cache;
 
 use super::*;
 use crate::ui::{IsTextureHandle, IsUi};
+#[cfg(feature = "egui")]
 use egui::{pos2, Rect, Sense};
 use husky_visual_protocol::{
     synchrotron::VisualSynchrotron,
@@ -12,13 +13,14 @@ use rustc_hash::FxHashMap;
 pub trait VisualUi<Ui: IsUi>: Copy {
     fn ui(
         self,
-        rect: Option<Rect>,
+        rect: Option<Ui::Rect>,
         visual_synchrotron: &VisualSynchrotron,
         cache: &mut cache::VisualUiCache<Ui>,
         ui: &mut Ui,
     );
 }
 
+#[cfg(feature = "egui")]
 impl VisualUi<::egui::Ui> for Visual {
     fn ui(
         self,
@@ -43,6 +45,7 @@ impl VisualUi<::egui::Ui> for Visual {
     }
 }
 
+#[cfg(feature = "egui")]
 impl VisualUi<::egui::Ui> for ImageVisual {
     fn ui(
         self,
@@ -63,6 +66,7 @@ impl VisualUi<::egui::Ui> for ImageVisual {
     }
 }
 
+#[cfg(feature = "egui")]
 impl VisualUi<::egui::Ui> for PrimitiveVisual {
     fn ui(
         self,

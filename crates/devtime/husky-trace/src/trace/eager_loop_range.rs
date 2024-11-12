@@ -6,12 +6,6 @@ pub struct EagerLoopRangeTracePath(TracePath);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct EagerLoopRangeTracePathData {}
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
-pub enum EagerLoopRangeTraceBiologicalParent {
-    Stmt,
-    LoopGroup,
-}
-
 impl EagerLoopRangeTracePath {
     pub fn view_data(self, _db: &::salsa::Db) -> TraceViewData {
         todo!()
@@ -25,10 +19,14 @@ pub struct EagerLoopGroupTrace(Trace);
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EagerLoopRangeTraceData {
     path: EagerLoopRangeTracePath,
-    biological_parent: EagerLoopRangeTraceBiologicalParent,
+    biological_parent: Trace,
 }
 
 impl EagerLoopRangeTraceData {
+    pub fn biological_parent(&self) -> Trace {
+        self.biological_parent
+    }
+
     pub fn subtraces(self, _db: &::salsa::Db) -> &[Trace] {
         todo!()
     }

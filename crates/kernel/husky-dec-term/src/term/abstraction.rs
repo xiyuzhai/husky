@@ -2,7 +2,7 @@ use super::*;
 
 #[salsa::interned]
 pub struct DecAbstraction {
-    pub x: DecLambdaVariable,
+    pub x: DecAbstractVariable,
     pub m: DecTerm,
 }
 

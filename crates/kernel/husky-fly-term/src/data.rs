@@ -7,7 +7,7 @@ pub(crate) use self::hol::*;
 pub(crate) use self::sol::*;
 
 use crate::*;
-use husky_dec_term::term::LambdaVariableIndex;
+use husky_dec_term::term::AbstractVariableIndex;
 use husky_entity_path::path::{
     major_item::ty::{OtherTypePath, PreludeTypePath, TypePath},
     ty_variant::TypeVariantPath,
@@ -16,7 +16,7 @@ use husky_eth_signature::{
     helpers::trai_for_ty::is_ty_term_always_copyable, signature::package::PackageEthSignatureData,
 };
 use husky_eth_term::term::{
-    curry::EthCurry, lambda_variable::EthLambdaVariable, symbolic_variable::EthSymbolicVariable,
+    abstract_variable::EthAbstractVariable, curry::EthCurry, symbolic_variable::EthSymbolicVariable,
 };
 use husky_term_prelude::{literal::Literal, ritchie::RitchieKind};
 use husky_vfs::toolchain::Toolchain;
@@ -63,9 +63,9 @@ pub enum FlyTermData<'a> {
         symbolic_variable: EthSymbolicVariable,
         ty: FlyTerm,
     },
-    LambdaVariable {
+    AbstractVariable {
         ty: FlyTerm,
-        index: LambdaVariableIndex,
+        index: AbstractVariableIndex,
     },
     TypeVariant {
         path: TypeVariantPath,
@@ -142,7 +142,7 @@ impl<'a> FlyTermData<'a> {
                 symbolic_variable: term,
                 ty,
             } => format!("symbol({})", ty.show2(db, terms)),
-            FlyTermData::LambdaVariable { ty, index: idx } => {
+            FlyTermData::AbstractVariable { ty, index: idx } => {
                 format!("hvar({idx}, {})", ty.show2(db, terms))
             }
             FlyTermData::TypeVariant { path } => format!("{:?}", path.debug(db)),
@@ -178,8 +178,8 @@ pub enum FlyBaseTypeData<'a> {
     SymbolicVariable {
         symbolic_variable: EthSymbolicVariable,
     },
-    LambdaVariable {
-        lambda_variable: EthLambdaVariable,
+    AbstractVariable {
+        abstract_variable: EthAbstractVariable,
     },
 }
 
@@ -270,8 +270,8 @@ impl FlyTerm {
             FlyBaseTypeData::SymbolicVariable {
                 symbolic_variable: term,
             } => Ok(Some(false)),
-            FlyBaseTypeData::LambdaVariable {
-                lambda_variable: hvar,
+            FlyBaseTypeData::AbstractVariable {
+                abstract_variable: hvar,
             } => todo!(), // ad hoc
         }
     }

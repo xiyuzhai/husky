@@ -101,7 +101,6 @@
   "husky-manifest-ast": [
     "husky-toml-ast"
   ],
-  "husky-namekian-ast": [],
   "husky-place": [
     "husky-eth-term"
   ],
@@ -139,12 +138,6 @@
   "husky-term-prelude": [
     "husky-entity-path"
   ],
-  "husky-tex-ast": [
-    "husky-coword"
-  ],
-  "husky-tex-command": [
-    "husky-coword"
-  ],
   "husky-text": [
     "husky-vfs"
   ],
@@ -175,5 +168,39 @@
   ],
   "husky-vmir": [
     "husky-ki-repr"
-  ]
+  ],
+  "latex-ast": [
+    "latex-command",
+    "latex-environment"
+  ],
+  "latex-command": [
+    "husky-coword"
+  ],
+  "latex-environment": [
+    "husky-coword"
+  ],
+  "lean-hir-expr": [
+    "lean-term"
+  ],
+  "lean-sem-expr": [],
+  "lean-term": [],
+  "namekian-ast": [],
+  "visored-hir-expr": [
+    "visored-sem-expr"
+  ],
+  "visored-lean-transpilation": [
+    "lean-hir-expr",
+    "lean-sem-expr",
+    "visored-hir-expr"
+  ],
+  "visored-opr": [],
+  "visored-sem-expr": [
+    "visored-syn-expr"
+  ],
+  "visored-syn-expr": [
+    "latex-ast",
+    "visored-opr",
+    "visored-zfc-ty"
+  ],
+  "visored-zfc-ty": []
 }

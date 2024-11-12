@@ -3,6 +3,7 @@ use std::marker::PhantomData;
 use husky_item_path_interface::ItemPathIdInterface;
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
+use ui::app::IsParentActionBuffer;
 use vec_like::SmallVecSet;
 
 use crate::{trace_id::TraceId, IsTraceProtocol};
@@ -47,7 +48,10 @@ impl<TraceProtocol: IsTraceProtocol> TraceViewActionBuffer<TraceProtocol> {
         self.actions.push(action)
     }
 
-    pub fn take_actions(&mut self) -> SmallVec<[TraceViewAction<TraceProtocol>; 2]> {
+    pub fn take_actions<ParentActionBuffer: IsParentActionBuffer>(
+        &mut self,
+        parent_action_buffer: &mut ParentActionBuffer,
+    ) -> SmallVec<[TraceViewAction<TraceProtocol>; 2]> {
         std::mem::take(&mut self.actions)
     }
 }

@@ -1,0 +1,19 @@
+[package]
+name = "cybertron-mini-lean-tokens-linkets"
+edition = "2021"
+version = "0.1.0"
+
+[dependencies.ad-hoc-devsoul-dependency]
+workspace = true
+
+[dependencies.cybertron-mini-lean-tokens]
+workspace = true
+
+[dependencies.husky-core]
+workspace = true
+
+[lib]
+plugin = false
+proc-macro = false
+required-features = []
+crate-type = ["cdylib"]

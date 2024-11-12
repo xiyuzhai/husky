@@ -34,13 +34,13 @@ where
         };
         let body =
             self.parse_expr_expected(None, OriginalSynExprError::ExpectedBodyExprForClosure)?;
-        let access_end = RegionalTokenIdxRangeEnd::new_lambda_variables_access_end(self.state());
+        let access_end = RegionalTokenIdxRangeEnd::new_abstract_variables_access_end(self.state());
         for param in parameters.elements() {
             match param {
                 ClosureParameterSyndicate::Simple { variables, .. } => {
                     for var in variables {
                         self.context_mut()
-                            .set_lambda_variable_access_end(var, access_end)
+                            .set_abstract_variable_access_end(var, access_end)
                     }
                 }
             }

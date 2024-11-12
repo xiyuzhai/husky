@@ -6,14 +6,14 @@ pub(crate) fn produce_line_group_starts(tokens: &[TomlToken]) -> Vec<usize> {
     let mut line_group_starts = vec![];
     while i < line_starts.len() {
         let line_start0 = line_starts[i];
-        let line_indent0 = tokens[line_start0].range().start.col.0;
+        let line_indent0 = tokens[line_start0].range().start.col.index32();
         line_group_starts.push(line_start0);
         i = {
             let mut j = i + 1;
             while j < line_starts.len() {
                 let line_start1 = line_starts[j];
                 let line_start_token = &tokens[line_start1];
-                let line_indent1 = line_start_token.range().start.col.0;
+                let line_indent1 = line_start_token.range().start.col.index32();
                 if line_indent1 > line_indent0 {
                     // detect an indentation
                     j += 1;

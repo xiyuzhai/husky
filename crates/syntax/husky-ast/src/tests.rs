@@ -1,4 +1,4 @@
-pub(crate) use crate::test_utils::*;
+pub(crate) use crate::test_helpers::*;
 
 use crate::*;
 use husky_coword::jar::CowordJar;

@@ -3,9 +3,9 @@ pub mod final_destination;
 pub mod toolchain;
 
 use self::term::{
+    abstract_variable::EthAbstractVariable,
     application::{EthApplication, TermFunctionReduced},
     curry::EthCurry,
-    lambda_variable::EthLambdaVariable,
     ritchie::EthRitchie,
 };
 use super::*;
@@ -97,7 +97,7 @@ impl EthTerm {
     }
 }
 
-impl EthLambdaVariable {
+impl EthAbstractVariable {
     fn toolchain(self, db: &::salsa::Db) -> Option<Toolchain> {
         self.ty(db).toolchain(db)
     }

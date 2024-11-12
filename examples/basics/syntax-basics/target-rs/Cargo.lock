@@ -280,6 +280,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "husky-figure-zone-protocol"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "shifted-unsigned-int",
+]
+
+[[package]]
 name = "husky-item-path-interface"
 version = "0.1.0"
 dependencies = [
@@ -301,6 +309,7 @@ name = "husky-linket-impl"
 version = "0.1.0"
 dependencies = [
  "husky-decl-macro-utils",
+ "husky-figure-zone-protocol",
  "husky-item-path-interface",
  "husky-ki-repr-interface",
  "husky-value",

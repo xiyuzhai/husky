@@ -8,7 +8,7 @@ use std::collections::{BTreeMap, BTreeSet};
 
 pub fn husky_lang_packages() -> Vec<PackageSummary> {
     let dev_paths = HuskyLangDevPaths::new();
-    workspace_package_summaries(dev_paths.dev_root())
+    workspace_package_summaries(dev_paths.root())
         .into_iter()
         .map(|summary| PackageSummary::new(summary, &dev_paths))
         .collect()
@@ -24,7 +24,7 @@ pub struct PackageSummary {
 impl PackageSummary {
     fn new(summary: Summary, dev_paths: &HuskyLangDevPaths) -> Self {
         let url = summary.source_id().url().to_string();
-        let dev_root = dev_paths.dev_root();
+        let dev_root = dev_paths.root();
         assert!(url.starts_with("file://"));
         let path: PathBuf = url.trim_start_matches("file://").into();
         assert!(path.exists());
@@ -68,7 +68,7 @@ pub fn husky_lang_jar_packages() -> Vec<JarPackageSummary> {
         .filter(|package| {
             (!package.relative_path.starts_with("crates/abstraction"))
                 && dev_paths
-                    .dev_root()
+                    .root()
                     .join(&package.relative_path)
                     .join("src/jar.rs")
                     .exists()

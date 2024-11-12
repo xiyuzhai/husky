@@ -24,8 +24,8 @@ husky-check-utils.workspace = true
 husky-print-utils.workspace = true
 
 [dev-dependencies]
-husky-text = { path = ".", features = ["test_utils"] }
+husky-text = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]
 lsp_support = ["dep:lsp-types", "husky-text-protocol/lsp_support"]

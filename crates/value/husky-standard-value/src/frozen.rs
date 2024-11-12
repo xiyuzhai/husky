@@ -19,8 +19,8 @@ use husky_value_protocol::presentation::ValuePresentation;
 use husky_value_protocol::presentation::{
     synchrotron::ValuePresentationSynchrotron, EnumUnitValuePresenter, ValuePresenterCache,
 };
-use husky_visual_protocol::synchrotron::VisualSynchrotron;
 use husky_visual_protocol::visual::Visual;
+use husky_visual_protocol::{synchrotron::VisualSynchrotron, visual::primitive::PrimitiveVisual};
 use slush::SlushValue;
 use smallvec::SmallVec;
 use thawed::{FromThawedValue, ThawedValue};
@@ -127,7 +127,7 @@ pub enum FrozenValue {
     Owned(Arc<dyn FrozenDyn>),
     Leash(&'static dyn ImmortalDyn),
     SizedRef(Arc<dyn FrozenDyn>),
-    SizedRefMut(Arc<dyn FrozenDyn>),
+    SizedMut(Arc<dyn FrozenDyn>),
     OptionBox(Option<Arc<dyn FrozenDyn>>),
     OptionLeash(Option<&'static dyn FrozenDyn>),
     OptionSizedRef(Option<Arc<dyn FrozenDyn>>),
@@ -183,9 +183,52 @@ impl IsFrozenValue for FrozenValue {
             FrozenValue::Owned(arc) => (**arc).present_dyn(),
             FrozenValue::Leash(leash) => leash.present_dyn(),
             FrozenValue::SizedRef(_) => todo!(),
-            FrozenValue::SizedRefMut(_) => todo!(),
+            FrozenValue::SizedMut(_) => todo!(),
             FrozenValue::OptionBox(_) => todo!(),
             FrozenValue::OptionLeash(_) => todo!(),
+            FrozenValue::OptionSizedRef(_) => todo!(),
+            FrozenValue::OptionSizedRefMut(_) => todo!(),
+            FrozenValue::Intrinsic(_) => todo!(),
+        }
+    }
+
+    fn visualize(&self, visual_synchrotron: &mut VisualSynchrotron) -> Visual {
+        use husky_visual_protocol::visualize::Visualize;
+        match *self {
+            FrozenValue::Unit(_) => Visual::Void,
+            FrozenValue::Bool(_) => todo!(),
+            FrozenValue::Char(_) => todo!(),
+            FrozenValue::I8(value) => PrimitiveVisual::I8(value).into(),
+            FrozenValue::I16(_) => todo!(),
+            FrozenValue::I32(_) => todo!(),
+            FrozenValue::I64(_) => todo!(),
+            FrozenValue::I128(_) => todo!(),
+            FrozenValue::ISize(_) => todo!(),
+            FrozenValue::U8(_) => todo!(),
+            FrozenValue::U16(_) => todo!(),
+            FrozenValue::U32(_) => todo!(),
+            FrozenValue::U64(_) => todo!(),
+            FrozenValue::U128(_) => todo!(),
+            FrozenValue::USize(_) => todo!(),
+            FrozenValue::R8(_) => todo!(),
+            FrozenValue::R16(_) => todo!(),
+            FrozenValue::R32(_) => todo!(),
+            FrozenValue::R64(_) => todo!(),
+            FrozenValue::R128(_) => todo!(),
+            FrozenValue::RSize(_) => todo!(),
+            FrozenValue::F32(f) => f.visualize(visual_synchrotron),
+            FrozenValue::F64(_) => todo!(),
+            FrozenValue::StringLiteral(_) => todo!(),
+            FrozenValue::Owned(ref value) => (**value).visualize_or_void_dyn(visual_synchrotron),
+            FrozenValue::Leash(value) => value.visualize_or_void_dyn(visual_synchrotron),
+            FrozenValue::OptionBox(_) => todo!(),
+            FrozenValue::OptionLeash(_) => todo!(),
+            FrozenValue::Uninit => todo!(),
+            FrozenValue::Invalid => todo!(),
+            FrozenValue::Moved => todo!(),
+            FrozenValue::EnumUsize { index, presenter } => todo!(),
+            FrozenValue::SizedRef(_) => todo!(),
+            FrozenValue::SizedMut(_) => todo!(),
             FrozenValue::OptionSizedRef(_) => todo!(),
             FrozenValue::OptionSizedRefMut(_) => todo!(),
             FrozenValue::Intrinsic(_) => todo!(),

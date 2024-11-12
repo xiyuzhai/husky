@@ -1,0 +1,32 @@
+[package]
+name = "cybertron"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+bounded-vec.workspace = true
+lazy_static.workspace = true
+# abstractions
+shifted-unsigned-int.workspace = true
+paste.workspace = true
+# cybertron
+cybertron-macros.workspace = true
+# utils
+husky-decl-macro-utils.workspace = true
+husky-fmt-utils.workspace = true
+husky-print-utils.workspace = true
+husky-wild-utils.workspace = true
+
+[dev-dependencies]
+expect-test.workspace = true
+
+[lints]
+workspace = true

@@ -36,6 +36,7 @@ husky-token-data.workspace = true
 husky-token.workspace = true
 husky-regional-token.workspace = true
 # protocol
+husky-text-protocol.workspace = true
 husky-visual-protocol.workspace = true
 # semantics
 husky-sem-opr.workspace = true
@@ -61,13 +62,13 @@ husky-dec-term.workspace = true
 husky-toml-token.workspace = true
 husky-token.workspace = true
 # syntax
-husky-ast = { workspace = true, features = ["test_utils"] }
+husky-ast = { workspace = true, features = ["test_helpers"] }
 husky-toml-ast.workspace = true
 husky-manifest-ast.workspace = true
-husky-entity-tree = { workspace = true, features = ["test_utils"] }
+husky-entity-tree = { workspace = true, features = ["test_helpers"] }
 husky-corgi-config-ast.workspace = true
 # semantics
-husky-sem-expr = { path = ".", features = ["test_utils"] }
+husky-sem-expr = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

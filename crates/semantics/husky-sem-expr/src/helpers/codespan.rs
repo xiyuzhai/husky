@@ -11,6 +11,7 @@ use husky_entity_path::region::RegionPath;
 use husky_entity_tree::helpers::tokra_region::HasRegionalTokenIdxBase;
 use husky_regional_token::RegionalTokenIdxBase;
 use husky_text::{HasText, Text};
+use husky_text_protocol::offset::TextOffsetRange;
 use husky_token::{RangedTokenSheet, TokenDb};
 use husky_vfs::path::module_path::ModulePath;
 use salsa::DisplayWithDb;
@@ -133,7 +134,7 @@ impl<'a> SemExprCodespanEmitter<'a> {
 
 /// # getters
 impl<'a> SemExprCodespanEmitter<'a> {
-    fn expr_offset_range(&self, expr: SemExprIdx) -> std::ops::Range<usize> {
+    fn expr_offset_range(&self, expr: SemExprIdx) -> TextOffsetRange {
         let token_idx_range =
             self.sem_expr_range_region_data[expr].token_idx_range(self.regional_token_idx_base);
         let text_range = self.ranged_token_sheet.tokens_text_range(token_idx_range);

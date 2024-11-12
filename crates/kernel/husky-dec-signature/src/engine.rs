@@ -448,7 +448,7 @@ impl<'a> DecTermEngine<'a> {
                             _ => todo!(),
                         }
                     }
-                    DecTerm::LambdaVariable(_) => todo!(),
+                    DecTerm::AbstractVariable(_) => todo!(),
                     DecTerm::ItemPath(_) => todo!(),
                     DecTerm::Category(_) => todo!(),
                     DecTerm::Universe(_) => todo!(),

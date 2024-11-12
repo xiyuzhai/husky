@@ -10,7 +10,7 @@ salsa.workspace = true
 husky-term-prelude.workspace = true
 
 [dev-dependencies]
-husky-hir-prelude = { path = ".", features = ["test_utils"] }
+husky-hir-prelude = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

@@ -1,9 +1,13 @@
 TomlTokenSheet {
     tokens: [
         TomlToken {
-            span: DocumentSpan {
-                start: 0,
-                end: 1,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    0,
+                ),
+                end: TextOffset(
+                    1,
+                ),
             },
             range: [1:1, 1:2),
             data: Special(
@@ -11,9 +15,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 1,
-                end: 8,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    1,
+                ),
+                end: TextOffset(
+                    8,
+                ),
             },
             range: [1:2, 1:9),
             data: Word(
@@ -25,9 +33,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 8,
-                end: 9,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    8,
+                ),
+                end: TextOffset(
+                    9,
+                ),
             },
             range: [1:9, 1:10),
             data: Special(
@@ -35,9 +47,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 10,
-                end: 14,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    10,
+                ),
+                end: TextOffset(
+                    14,
+                ),
             },
             range: [2:1, 2:5),
             data: Word(
@@ -49,9 +65,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 15,
-                end: 16,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    15,
+                ),
+                end: TextOffset(
+                    16,
+                ),
             },
             range: [2:6, 2:7),
             data: Special(
@@ -59,9 +79,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 17,
-                end: 23,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    17,
+                ),
+                end: TextOffset(
+                    23,
+                ),
             },
             range: [2:8, 2:14),
             data: StringLiteral {
@@ -70,9 +94,13 @@ TomlTokenSheet {
             },
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 24,
-                end: 31,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    24,
+                ),
+                end: TextOffset(
+                    31,
+                ),
             },
             range: [3:1, 3:8),
             data: Word(
@@ -84,9 +112,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 31,
-                end: 32,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    31,
+                ),
+                end: TextOffset(
+                    32,
+                ),
             },
             range: [3:8, 3:9),
             data: Special(
@@ -94,9 +126,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 32,
-                end: 41,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    32,
+                ),
+                end: TextOffset(
+                    41,
+                ),
             },
             range: [3:9, 3:18),
             data: Word(
@@ -108,9 +144,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 42,
-                end: 43,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    42,
+                ),
+                end: TextOffset(
+                    43,
+                ),
             },
             range: [3:19, 3:20),
             data: Special(
@@ -118,9 +158,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 44,
-                end: 48,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    44,
+                ),
+                end: TextOffset(
+                    48,
+                ),
             },
             range: [3:21, 3:25),
             data: Word(
@@ -132,9 +176,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 49,
-                end: 56,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    49,
+                ),
+                end: TextOffset(
+                    56,
+                ),
             },
             range: [4:1, 4:8),
             data: Word(
@@ -146,9 +194,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 57,
-                end: 58,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    57,
+                ),
+                end: TextOffset(
+                    58,
+                ),
             },
             range: [4:9, 4:10),
             data: Special(
@@ -156,9 +208,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 59,
-                end: 78,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    59,
+                ),
+                end: TextOffset(
+                    78,
+                ),
             },
             range: [4:11, 4:30),
             data: StringLiteral {
@@ -167,9 +223,13 @@ TomlTokenSheet {
             },
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 79,
-                end: 89,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    79,
+                ),
+                end: TextOffset(
+                    89,
+                ),
             },
             range: [5:1, 5:11),
             data: Word(
@@ -181,9 +241,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 90,
-                end: 91,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    90,
+                ),
+                end: TextOffset(
+                    91,
+                ),
             },
             range: [5:12, 5:13),
             data: Special(
@@ -191,9 +255,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 92,
-                end: 142,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    92,
+                ),
+                end: TextOffset(
+                    142,
+                ),
             },
             range: [5:14, 5:64),
             data: StringLiteral {
@@ -202,9 +270,13 @@ TomlTokenSheet {
             },
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 143,
-                end: 154,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    143,
+                ),
+                end: TextOffset(
+                    154,
+                ),
             },
             range: [6:1, 6:12),
             data: Word(
@@ -216,9 +288,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 155,
-                end: 156,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    155,
+                ),
+                end: TextOffset(
+                    156,
+                ),
             },
             range: [6:13, 6:14),
             data: Special(
@@ -226,9 +302,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 157,
-                end: 181,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    157,
+                ),
+                end: TextOffset(
+                    181,
+                ),
             },
             range: [6:15, 6:39),
             data: StringLiteral {
@@ -237,9 +317,13 @@ TomlTokenSheet {
             },
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 182,
-                end: 191,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    182,
+                ),
+                end: TextOffset(
+                    191,
+                ),
             },
             range: [7:1, 7:10),
             data: Word(
@@ -251,9 +335,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 192,
-                end: 193,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    192,
+                ),
+                end: TextOffset(
+                    193,
+                ),
             },
             range: [7:11, 7:12),
             data: Special(
@@ -261,9 +349,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 194,
-                end: 199,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    194,
+                ),
+                end: TextOffset(
+                    199,
+                ),
             },
             range: [7:13, 7:18),
             data: Word(
@@ -275,9 +367,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 200,
-                end: 211,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    200,
+                ),
+                end: TextOffset(
+                    211,
+                ),
             },
             range: [8:1, 8:12),
             data: Word(
@@ -289,9 +385,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 212,
-                end: 213,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    212,
+                ),
+                end: TextOffset(
+                    213,
+                ),
             },
             range: [8:13, 8:14),
             data: Special(
@@ -299,9 +399,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 214,
-                end: 219,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    214,
+                ),
+                end: TextOffset(
+                    219,
+                ),
             },
             range: [8:15, 8:20),
             data: Word(
@@ -313,25 +417,37 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 220,
-                end: 294,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    220,
+                ),
+                end: TextOffset(
+                    294,
+                ),
             },
             range: [9:1, 9:75),
             data: Comment,
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 295,
-                end: 371,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    295,
+                ),
+                end: TextOffset(
+                    371,
+                ),
             },
             range: [10:1, 10:77),
             data: Comment,
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 372,
-                end: 379,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    372,
+                ),
+                end: TextOffset(
+                    379,
+                ),
             },
             range: [11:1, 11:8),
             data: Word(
@@ -343,9 +459,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 380,
-                end: 381,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    380,
+                ),
+                end: TextOffset(
+                    381,
+                ),
             },
             range: [11:9, 11:10),
             data: Special(
@@ -353,9 +473,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 382,
-                end: 388,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    382,
+                ),
+                end: TextOffset(
+                    388,
+                ),
             },
             range: [11:11, 11:17),
             data: StringLiteral {
@@ -364,9 +488,13 @@ TomlTokenSheet {
             },
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 390,
-                end: 391,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    390,
+                ),
+                end: TextOffset(
+                    391,
+                ),
             },
             range: [13:1, 13:2),
             data: Special(
@@ -374,9 +502,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 391,
-                end: 394,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    391,
+                ),
+                end: TextOffset(
+                    394,
+                ),
             },
             range: [13:2, 13:5),
             data: Word(
@@ -388,9 +520,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 394,
-                end: 395,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    394,
+                ),
+                end: TextOffset(
+                    395,
+                ),
             },
             range: [13:5, 13:6),
             data: Special(
@@ -398,9 +534,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 396,
-                end: 400,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    396,
+                ),
+                end: TextOffset(
+                    400,
+                ),
             },
             range: [14:1, 14:5),
             data: Word(
@@ -412,9 +552,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 401,
-                end: 402,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    401,
+                ),
+                end: TextOffset(
+                    402,
+                ),
             },
             range: [14:6, 14:7),
             data: Special(
@@ -422,9 +566,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 403,
-                end: 408,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    403,
+                ),
+                end: TextOffset(
+                    408,
+                ),
             },
             range: [14:8, 14:13),
             data: Word(
@@ -436,9 +584,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 409,
-                end: 414,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    409,
+                ),
+                end: TextOffset(
+                    414,
+                ),
             },
             range: [15:1, 15:6),
             data: Word(
@@ -450,9 +602,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 415,
-                end: 416,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    415,
+                ),
+                end: TextOffset(
+                    416,
+                ),
             },
             range: [15:7, 15:8),
             data: Special(
@@ -460,9 +616,13 @@ TomlTokenSheet {
             ),
         },
         TomlToken {
-            span: DocumentSpan {
-                start: 417,
-                end: 422,
+            offset_range: TextOffsetRange {
+                start: TextOffset(
+                    417,
+                ),
+                end: TextOffset(
+                    422,
+                ),
             },
             range: [15:9, 15:14),
             data: Word(

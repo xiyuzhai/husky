@@ -1,0 +1,10 @@
+name = "central-46"
+version = "0.1.0"
+defaultTargets = ["central-46"]
+
+[[lean_lib]]
+name = "Central46"
+
+[[lean_exe]]
+name = "central-46"
+root = "Main"

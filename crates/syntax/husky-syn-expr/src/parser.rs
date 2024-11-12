@@ -26,7 +26,7 @@ where
     pub(crate) context: C,
     env_stack: ExprEnvironmentStack,
     token_stream: RegionalTokenStream<'a>,
-    stack: ExprStack,
+    stack: SynExprStack,
 }
 
 pub type StandaloneSynExprParser<'a> = SynExprParser<'a, SynExprContext<'a>>;

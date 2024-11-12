@@ -24,7 +24,7 @@ where
 impl DecTermRewriteCopy for DecTerm {
     fn substitute_copy(self, db: &::salsa::Db, substitution: &DecTermSubstitution) -> Self {
         match self {
-            DecTerm::LambdaVariable(symbol) => match symbol == substitution.src() {
+            DecTerm::AbstractVariable(symbol) => match symbol == substitution.src() {
                 true => substitution.dst(),
                 false => self,
             },

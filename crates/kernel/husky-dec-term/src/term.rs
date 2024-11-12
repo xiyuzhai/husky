@@ -1,10 +1,10 @@
+pub mod abstract_variable;
 pub mod abstraction;
 pub mod application;
 pub mod application_or_ritchie_call;
 pub mod constraint;
 pub mod curry;
 pub mod item_path;
-pub mod lambda_variable;
 pub mod list;
 pub mod literal;
 pub mod ritchie;
@@ -15,12 +15,12 @@ pub mod wrapper;
 
 use ty_as_trai::DecTypeAsTrait;
 
+pub use self::abstract_variable::*;
 pub use self::application::*;
 pub use self::application_or_ritchie_call::*;
 pub use self::constraint::*;
 pub use self::curry::*;
 pub use self::item_path::*;
-pub use self::lambda_variable::*;
 pub use self::list::*;
 pub use self::literal::*;
 pub use self::ritchie::*;
@@ -43,7 +43,7 @@ pub enum DecTerm {
     SymbolicVariable(DecSymbolicVariable),
     /// variables are those appearing in lambda expression
     /// variables are derived from symbols
-    LambdaVariable(DecLambdaVariable),
+    AbstractVariable(DecAbstractVariable),
     ItemPath(DecItemPath),
     Category(Sort),
     Universe(Universe),

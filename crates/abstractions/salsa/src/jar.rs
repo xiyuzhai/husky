@@ -91,7 +91,7 @@ For example, one could have a hack like following in the Cargo.toml file of the 
 ```
 [dev-dependencies]
 ...
-husky-sem-expr = {{ path = ".", features = ["test_utils"] }}
+husky-sem-expr = {{ workspace = true, features = ["test_helpers"] }}
 ```
 
 Then `husky-sem-expr::jar::SemExprJar` and `crate::jar::SemExprJar` have different type ids, for unknown reasons.
@@ -158,6 +158,10 @@ pub enum JarIndex {
     // ki
     KiJar,
     KiReprJar,
+    // lean
+    LnTermJar,
+    LnSemExprJar,
+    LnHirExprJar,
     // lex
     TextJar,
     TokenJar,
@@ -186,8 +190,16 @@ pub enum JarIndex {
     TomlAstJar,
     CorgiConfigAstJar,
     // tex
-    TexAstJar,
-    TexCommandJar,
+    LxAstJar,
+    LxCommandJar,
+    LxEnvironmentJar,
+    // visored
+    VdZfcTypeJar,
+    VdOprJar,
+    VdSynExprJar,
+    VdSemExprJar,
+    VdHirExprJar,
+    VdLeanTranspilationJar,
     // vm
     VmirJar,
 }

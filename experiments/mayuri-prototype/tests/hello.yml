@@ -1,0 +1,17 @@
+---
+name: hello-1
+src:
+    "dataset.py": "datasets/gaussian.py"
+    "model.py": "models/fcn.py"
+
+config:
+    epochs: 10
+
+---
+name: hello-2
+src:
+    "dataset.py": "datasets/ring.py"
+    "model.py": "models/fcn.py"
+
+config:
+    epochs: 10

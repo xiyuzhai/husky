@@ -19,13 +19,13 @@ use vec_like::SmallVecPairMap;
 
 pub struct DeclarativeInstantiation {
     /// some hvar might not have an instantiation
-    hvar_map: SmallVecPairMap<DecLambdaVariable, Option<DecTerm>, 4>,
+    hvar_map: SmallVecPairMap<DecAbstractVariable, Option<DecTerm>, 4>,
     /// indicates the separation for associated item template instantiation
     separator: Option<u8>,
 }
 
 impl DeclarativeInstantiation {
-    pub fn hvar_map(&self) -> &[(DecLambdaVariable, Option<DecTerm>)] {
+    pub fn hvar_map(&self) -> &[(DecAbstractVariable, Option<DecTerm>)] {
         self.hvar_map.as_ref()
     }
 
@@ -33,7 +33,7 @@ impl DeclarativeInstantiation {
         self.separator
     }
 
-    pub fn hvar_instantiation(&self, hvar: DecLambdaVariable) -> Option<DecTerm> {
+    pub fn hvar_instantiation(&self, hvar: DecAbstractVariable) -> Option<DecTerm> {
         *self
             .hvar_map
             .get_value(hvar)

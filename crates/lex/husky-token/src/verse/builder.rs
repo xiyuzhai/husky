@@ -55,7 +55,7 @@ impl<'a> TokenVersesBuilder<'a> {
         let mut state = TokenVerseProductionState::None;
         while *i < line_starts.len() {
             let line0_start = line_starts[*i];
-            let line0_indent = token_ranges[line0_start].start.col.0;
+            let line0_indent = token_ranges[line0_start].start.col.index32();
             if line0_indent < indent0 {
                 return token_verse_starts;
             }
@@ -80,7 +80,7 @@ impl<'a> TokenVersesBuilder<'a> {
                 while j < line_starts.len() {
                     let line1_start = line_starts[j];
                     let line1_start_token_data = &tokens_data[line1_start];
-                    let line1_indent = token_ranges[line1_start].start.col.0;
+                    let line1_indent = token_ranges[line1_start].start.col.index32();
                     let control_flow = if line1_indent > line0_indent {
                         // detected an indentation
                         match tokens_data[line1_start - 1] {

@@ -13,7 +13,7 @@ impl DecTerm {
         match self {
             DecTerm::Literal(term) => term.display_fmt_with_db_and_ctx(f, db, ctx),
             DecTerm::SymbolicVariable(term) => term.display_fmt_with_db_and_ctx(f, db, ctx),
-            DecTerm::LambdaVariable(term) => term.display_fmt_with_db(f, db),
+            DecTerm::AbstractVariable(term) => term.display_fmt_with_db(f, db),
             DecTerm::ItemPath(term) => term.display_fmt_with_db_and_ctx(f, db, ctx),
             DecTerm::Category(term) => f.write_str(&term.to_string()),
             DecTerm::Universe(term) => f.write_str(&term.to_string()),

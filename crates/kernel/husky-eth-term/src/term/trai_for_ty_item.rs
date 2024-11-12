@@ -67,7 +67,7 @@ fn reduce_eth_ty_as_trai_item(db: &::salsa::Db, term: EthTypeAsTraitItem) -> Eth
     match term.self_ty(db) {
         EthTerm::Literal(_) => todo!(),
         EthTerm::SymbolicVariable(_) => term.into(),
-        EthTerm::LambdaVariable(_) => todo!(),
+        EthTerm::AbstractVariable(_) => todo!(),
         EthTerm::ItemPath(_) => todo!(),
         EthTerm::Sort(_) => todo!(),
         EthTerm::Universe(_) => todo!(),

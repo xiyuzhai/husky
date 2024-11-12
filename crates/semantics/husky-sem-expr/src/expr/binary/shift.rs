@@ -69,7 +69,7 @@ impl<'a> SemExprBuilder<'a> {
             | FlyTermData::Sort(_) => todo!(),
             FlyTermData::Ritchie { .. } => todo!(),
             FlyTermData::SymbolicVariable { .. } => todo!(),
-            FlyTermData::LambdaVariable { .. } => todo!(),
+            FlyTermData::AbstractVariable { .. } => todo!(),
             FlyTermData::TypeVariant { path } => todo!(),
             FlyTermData::MajorTypeVar(_) => todo!(),
             FlyTermData::Trait { .. } => todo!(),

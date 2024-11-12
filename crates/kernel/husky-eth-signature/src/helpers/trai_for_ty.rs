@@ -91,7 +91,7 @@ pub fn trai_path_for_ty_term_impl_block_ethereal_signature_builder_exists<'db>(
 ) -> EthSignatureResult<bool> {
     match ty_term {
         EthTerm::SymbolicVariable(_) => return Ok(false), // ad hoc
-        EthTerm::LambdaVariable(_) => todo!(),
+        EthTerm::AbstractVariable(_) => todo!(),
         EthTerm::Ritchie(ritchie) => match ritchie.ritchie_kind(db) {
             RitchieKind::Type(ritchie_ty_kind) => match ritchie_ty_kind {
                 RitchieTypeKind::Item(ritchie_item_kind) => match ritchie_item_kind {

@@ -28,6 +28,7 @@ use husky_visual_protocol::{
     synchrotron::VisualSynchrotron,
     visual::{primitive::PrimitiveVisual, Visual},
 };
+use ordered_float::OrderedFloat;
 use serde::Serialize;
 use std::cmp::Ordering;
 use thawed::{FromThawedValue, ThawedValue};
@@ -60,8 +61,8 @@ pub enum Value {
     R64(u64),
     R128(u128),
     RSize(usize),
-    F32(f32),
-    F64(f64),
+    F32(OrderedFloat<f32>),
+    F64(OrderedFloat<f64>),
     StringLiteral(StringLiteralId),
     /// `Box<T>`
     Owned(OwnedValue),
@@ -75,6 +76,8 @@ pub enum Value {
         presenter: EnumUnitValuePresenter,
     },
 }
+
+impl Eq for Value {}
 
 pub trait Immortal:
     Thawed<Frozen = Self>

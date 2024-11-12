@@ -253,8 +253,8 @@ impl ExpectCoercion {
             FlyBaseTypeData::SymbolicVariable {
                 symbolic_variable: term,
             } => AltNone,
-            FlyBaseTypeData::LambdaVariable {
-                lambda_variable: hvar,
+            FlyBaseTypeData::AbstractVariable {
+                abstract_variable: hvar,
             } => todo!(),
         }
     }

@@ -1,4 +1,4 @@
-use husky_standard_linket_impl::static_var::StandardVarId;
+use husky_standard_linket_impl::var::StandardVarId;
 use husky_trace_protocol::chart::{Chart, ChartDim0, ChartDim1, ChartDim2};
 
 pub type StandardChart<R> = Chart<StandardVarId, R>;

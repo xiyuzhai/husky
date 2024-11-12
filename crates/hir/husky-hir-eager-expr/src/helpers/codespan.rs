@@ -1,7 +1,7 @@
 pub use codespan_reporting::diagnostic::Severity;
 pub use husky_decl_macro_utils::file_rel_curr;
 
-use super::region::hir_eager_expr_source_map_from_sema;
+use super::region::hir_eager_expr_source_map_from_sem;
 use crate::{HirEagerExprIdx, HirEagerExprRegion, HirEagerExprSourceMapData};
 use codespan_reporting::diagnostic::{Diagnostic, Label};
 use codespan_reporting::files::SimpleFiles;
@@ -17,6 +17,7 @@ use husky_sem_expr::{
     SemExprIdx, SemExprRegionData,
 };
 use husky_text::{HasText, Text};
+use husky_text_protocol::offset::TextOffsetRange;
 use husky_token::{RangedTokenSheet, TokenDb};
 use husky_vfs::path::module_path::ModulePath;
 
@@ -108,7 +109,7 @@ impl<'a> HirEagerExprCodespanEmitter<'a> {
         let region_path = hir_eager_expr_region.region_path(db);
         let sem_expr_region = hir_eager_expr_region.sem_expr_region(db);
         let hir_eager_expr_source_map_data =
-            hir_eager_expr_source_map_from_sema(sem_expr_region, db).data(db);
+            hir_eager_expr_source_map_from_sem(sem_expr_region, db).data(db);
         let sem_expr_region_data = sem_expr_region.data(db);
         let sem_expr_range_region_data = sem_expr_range_region(db, sem_expr_region).data(db);
         let module_path = region_path.module_path(db);
@@ -145,7 +146,7 @@ impl<'a> HirEagerExprCodespanEmitter<'a> {
 
 /// # getters
 impl<'a> HirEagerExprCodespanEmitter<'a> {
-    fn expr_offset_range(&self, expr: HirEagerExprIdx) -> std::ops::Range<usize> {
+    fn expr_offset_range(&self, expr: HirEagerExprIdx) -> TextOffsetRange {
         let expr: SemExprIdx = self
             .hir_eager_expr_source_map_data
             .hir_eager_to_sem_expr_idx(expr);

@@ -12,7 +12,7 @@ pub use crate::{
         StandardTrackedException as __TrackedException,
     },
     pedestal::StandardPedestal as __Pedestal,
-    static_var::StandardVarId as __VarId,
+    var::StandardVarId as __VarId,
     IsGnItem as __IsGnItem, StandardKiControlFlow as __KiControlFlow,
     StandardLinketImpl as __LinketImpl, StandardVmArgumentValue as __VmArgumentValue,
     StandardVmArgumentValues as __VmArgumentValues, StandardVmControlFlow as __VmControlFlow,
@@ -22,6 +22,7 @@ pub use husky_ki_repr_interface::ugly::*;
 pub use husky_linket_impl::ugly::*;
 pub use husky_standard_value::ugly::*;
 
-use husky_linket_impl::static_var::StaticVarResult;
+use husky_linket_impl::static_var::{StaticVarResult, StaticVarSvtable};
 
 pub type __StaticVarResult<T> = StaticVarResult<__VarId, T>;
+pub type __StaticVarSvtable = StaticVarSvtable<__VarId, __Value>;

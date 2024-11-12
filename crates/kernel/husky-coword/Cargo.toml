@@ -15,7 +15,7 @@ husky-unicode-symbols.workspace = true
 [dev-dependencies]
 expect-test.workspace = true
 # kernel
-husky-coword = { path = ".", features = ["test_utils"] }
+husky-coword = { workspace = true, features = ["test_helpers"] }
 
 [features]
-test_utils = ["salsa/test_utils"]
+test_helpers = ["salsa/test_helpers"]

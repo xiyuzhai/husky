@@ -227,14 +227,14 @@ impl Into<isize> for Value {
 
 impl From<f32> for Value {
     fn from(value: f32) -> Self {
-        Value::F32(value)
+        Value::F32(value.into())
     }
 }
 
 impl Into<f32> for Value {
     fn into(self) -> f32 {
         match self {
-            Value::F32(value) => value,
+            Value::F32(value) => value.into(),
             _ => unreachable!(),
         }
     }
@@ -242,14 +242,14 @@ impl Into<f32> for Value {
 
 impl From<f64> for Value {
     fn from(value: f64) -> Self {
-        Value::F64(value)
+        Value::F64(value.into())
     }
 }
 
 impl Into<f64> for Value {
     fn into(self) -> f64 {
         match self {
-            Value::F64(value) => value,
+            Value::F64(value) => value.into(),
             _ => unreachable!(),
         }
     }

@@ -1,4 +1,5 @@
 pub mod action;
+mod app;
 mod components;
 mod doc;
 mod facade;
@@ -7,6 +8,7 @@ mod settings;
 use std::sync::Arc;
 
 use self::action::*;
+use self::app::*;
 use self::doc::{DocTab, Docs};
 use self::settings::*;
 use eframe::egui;
@@ -24,49 +26,4 @@ fn main() -> Result<(), eframe::Error> {
         options,
         Box::new(|_cc| Ok(Box::new(NotebookApp::default()))),
     )
-}
-
-struct NotebookApp {
-    dock_state: egui_dock::DockState<DocTab>,
-    docs: Docs,
-    settings: NotebookSettings,
-    hotkey_buffer: HotkeyBuffer,
-    action_buffer: NotebookActionBuffer,
-    tokio_runtime: Arc<tokio::runtime::Runtime>,
-    init_done: bool,
-}
-
-impl Default for NotebookApp {
-    fn default() -> Self {
-        let action_buffer = Default::default();
-        let dock_state = egui_dock::DockState::new(vec![]);
-        let docs = Docs::default();
-        let settings = Default::default();
-        Self {
-            settings,
-            dock_state,
-            docs,
-            hotkey_buffer: Default::default(),
-            action_buffer,
-            tokio_runtime: Arc::new(tokio::runtime::Runtime::new().unwrap()),
-            init_done: false,
-        }
-    }
-}
-
-impl eframe::App for NotebookApp {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        if !self.init_done {
-            self.init(ctx);
-            self.init_done = true;
-        }
-        self.hotkey_buffer.start_frame(ctx);
-        self.render_facade(ctx)
-    }
-}
-
-impl NotebookApp {
-    fn init(&mut self, ctx: &egui::Context) {
-        self.add_default_docs(ctx);
-    }
 }

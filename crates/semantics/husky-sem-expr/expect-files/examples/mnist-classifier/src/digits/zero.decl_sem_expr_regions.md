@@ -891,8 +891,8 @@
                                                                 FlyTerm {
                                                                     quary: None,
                                                                     base: Eth(
-                                                                        LambdaVariable(
-                                                                            EthLambdaVariable(
+                                                                        AbstractVariable(
+                                                                            EthAbstractVariable(
                                                                                 Id {
                                                                                     value: 1,
                                                                                 },

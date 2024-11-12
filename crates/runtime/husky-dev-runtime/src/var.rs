@@ -4,10 +4,12 @@ use husky_devsoul::helpers::{
     DevsoulAnchor, DevsoulChart, DevsoulChartDim0, DevsoulChartDim1, DevsoulJointPedestal,
     DevsoulOrderedVarMap, DevsoulPedestal, DevsoulStaticVarMap, DevsoulStaticVarResult,
 };
+use husky_figure_zone_protocol::FigureZone;
 use husky_ki_repr::repr::KiDomainRepr;
 use husky_linket_impl::{pedestal::JointPedestal, static_var::StaticVarResult};
 use husky_trace_protocol::chart::{ChartDim0, ChartDim1};
 use husky_trace_protocol::{anchor::Anchor, chart::Chart};
+use smallvec::smallvec;
 use smallvec::SmallVec;
 use vec_like::SmallVecSet;
 
@@ -67,7 +69,9 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
     ) -> StaticVarResult<DevsoulVarId<Devsoul>, R> {
         let db = self.db();
         let mut locked1 = locked.clone();
-        locked1.insert_new(item_path_id_interface).unwrap();
+        locked1
+            .insert_new(item_path_id_interface)
+            .expect("`locked` shouldn't contain `item_path_id_interface`");
         let path_id: ItemPathId = item_path_id_interface.into();
         let ItemPath::MajorItem(MajorItemPath::Form(major_form_path)) = path_id.item_path(db)
         else {
@@ -99,17 +103,28 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
     ) -> StaticVarResult<DevsoulVarId<Devsoul>, R> {
         let db = self.db();
         match var_paths.next() {
-            Some(var_path) => self
-                .with_default_var_id(var_path, &locked, |default_var_id, locked| {
-                    pedestal.insert(var_path, default_var_id);
+            Some(var_path) => {
+                if locked.has(var_path) {
+                    // ignore this `var_path` because it has already be initialized
                     self.with_default_var_ids_aux(var_paths, pedestal, locked, f)
-                })
-                .flatten(),
+                } else {
+                    self.with_default_var_id(var_path, &locked, |default_var_id, locked| {
+                        pedestal.insert(var_path, default_var_id);
+                        self.with_default_var_ids_aux(var_paths, pedestal, locked, f)
+                    })
+                    .flatten()
+                }
+            }
             None => Ok(f(pedestal, locked)),
         }
     }
 
-    // todo: change to result
+    /// An anchor is either associating a global variable with a fixed value (specific anchor),
+    /// or with a range of values (generic anchor).
+    ///
+    /// Now, a sequence of anchors can then be viewed as associating a tuple of global variables with a set of values.
+    ///
+    /// This function eval `f` on the set of values and returns a chart.
     pub fn with_var_anchors<R>(
         &self,
         var_anchors: impl IntoIterator<Item = (ItemPathIdInterface, DevsoulAnchor<Devsoul>)>,
@@ -131,7 +146,6 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
                     DevsoulAnchor<Devsoul>,
                     SmallVecSet<ItemPathIdInterface, 2>,
                 )> {
-                    // todo: simplify using with_var_id
                     let item_path_id: ItemPathId = item_path_id_interface.into();
                     let ItemPath::MajorItem(MajorItemPath::Form(path)) = item_path_id.item_path(db)
                     else {
@@ -164,10 +178,10 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
             .count();
         match number_of_generics {
             0 => self
-                .with_var_anchors_aux0(Default::default(), &var_anchors, f)
+                .with_var_anchors0(Default::default(), &var_anchors, f)
                 .map(Into::into),
             1 => self
-                .with_var_anchors_aux1(Default::default(), &var_anchors, f)
+                .with_var_anchors1(Default::default(), &var_anchors, f)
                 .map(Into::into),
             2 => {
                 todo!()
@@ -176,7 +190,10 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
         }
     }
 
-    fn with_var_anchors_aux0<R>(
+    /// the remaining anchors are all specifics now,
+    ///
+    /// so it returns a chart of dimension 0.
+    fn with_var_anchors0<R>(
         &self,
         mut var_map: DevsoulOrderedVarMap<Devsoul>,
         remaining_vars: &[(
@@ -186,25 +203,34 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
         )],
         mut f: impl FnMut(&DevsoulJointPedestal<Devsoul>) -> Option<R>,
     ) -> Option<DevsoulChartDim0<Devsoul, R>> {
+        let &[(path, anchor, ref locked), ref remaining_vars @ ..] = remaining_vars else {
+            let joint_pedestal = JointPedestal::new(var_map);
+            let r = f(&joint_pedestal)?;
+            return Some((joint_pedestal, r));
+        };
         let db = self.db();
-        for &(path, anchor, ref locked) in remaining_vars {
-            let ItemPath::MajorItem(MajorItemPath::Form(major_form_path)) = path else {
-                todo!()
-            };
-            let linket_impl = self
-                .comptime
-                .linket_impl(Linket::new_var(major_form_path, db));
-            let Anchor::Specific(var_id) = anchor else {
-                unreachable!()
-            };
+        let ItemPath::MajorItem(MajorItemPath::Form(major_form_path)) = path else {
             todo!()
-        }
-        let joint_pedestal = JointPedestal::new(var_map);
-        let r = f(&joint_pedestal)?;
-        Some((joint_pedestal, r))
+        };
+        let linket_impl = self
+            .comptime
+            .linket_impl(Linket::new_var(major_form_path, db));
+        let Anchor::Specific(var_id) = anchor else {
+            unreachable!()
+        };
+        var_map.insert((path.into(), var_id));
+        linket_impl
+            .with_var_id(var_id, locked, || {
+                self.with_var_anchors0(var_map, remaining_vars, f)
+            })
+            .ok()
+            .flatten()
     }
 
-    fn with_var_anchors_aux1<R>(
+    /// the remaining anchors are all specifics except on generic,
+    ///
+    /// so it returns a chart of dimension 0.
+    fn with_var_anchors1<R>(
         &self,
         mut var_map: DevsoulOrderedVarMap<Devsoul>,
         remaining_vars: &[(
@@ -229,7 +255,7 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
                 var_map.insert(((*path).into(), var_id));
                 linket_impl
                     .with_var_id(var_id, locked, || {
-                        self.with_var_anchors_aux1(var_map, remaining_vars, f)
+                        self.with_var_anchors1(var_map, remaining_vars, f)
                     })
                     .ok()
                     .flatten()
@@ -239,13 +265,14 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
                 page_limit,
             } => {
                 let iter = linket_impl
+                    .static_var_svtable()
                     .page_var_ids(locked, page_start, page_limit)
                     .filter_map(|var_id| {
                         let mut var_map = var_map.clone();
                         var_map.insert(((*path).into(), var_id));
                         linket_impl
                             .with_var_id(var_id, locked, || {
-                                self.with_var_anchors_aux0(var_map, remaining_vars, &mut f)
+                                self.with_var_anchors0(var_map, remaining_vars, &mut f)
                             })
                             .ok()
                             .flatten()
@@ -258,11 +285,11 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
         }
     }
 
-    pub fn var_default_page_start_aux(
+    pub fn var_default_zone_and_page_start(
         &self,
         item_path_id_interface: ItemPathIdInterface,
         locked: &SmallVecSet<ItemPathIdInterface, 4>,
-    ) -> DevsoulStaticVarResult<Devsoul, DevsoulVarId<Devsoul>> {
+    ) -> DevsoulStaticVarResult<Devsoul, (FigureZone, DevsoulVarId<Devsoul>)> {
         let db = self.db();
         let path_id: ItemPathId = item_path_id_interface.into();
         let ItemPath::MajorItem(MajorItemPath::Form(major_form_path)) = path_id.item_path(db)
@@ -272,7 +299,9 @@ impl<Devsoul: IsDevsoul> DevRuntime<Devsoul> {
         let linket_impl = self
             .comptime
             .linket_impl(Linket::new_var(major_form_path, db));
-        linket_impl.var_default_page_start(locked)
+        let static_var_svtable = linket_impl.static_var_svtable();
+        let zone = static_var_svtable.zones()[0];
+        Ok((zone, static_var_svtable.default_page_start(zone, locked)?))
     }
 
     pub fn with_pedestal<R>(

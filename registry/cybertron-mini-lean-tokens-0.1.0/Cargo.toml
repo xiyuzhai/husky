@@ -1,0 +1,19 @@
+[package]
+name = "cybertron-mini-lean-tokens"
+edition = "2021"
+version.workspace = true
+description = "tokens of example mini-lean-compiler in cybertron"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+shifted-unsigned-int.workspace = true
+husky-core.workspace = true
+husky-linket-impl.workspace = true
+husky-standard-linket-impl.workspace = true
+husky-standard-value.workspace = true
+# husky-devsoul-interface.workspace = true
+husky-rng-utils.workspace = true
+lazy_static.workspace = true
+serde.workspace = true
+# registry
+ml-task.workspace = true

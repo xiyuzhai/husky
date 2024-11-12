@@ -1,5 +1,5 @@
 use super::*;
-use husky_text_protocol::{char::TextCharIter, position::TextPosition};
+use husky_text_protocol::{char::TextCharIter, offset::TextOffset, position::TextPosition};
 
 #[derive(Clone)]
 pub(crate) struct TomlTokenIter<'a> {
@@ -50,21 +50,18 @@ impl<'a> TomlTokenIter<'a> {
         t
     }
 
-    pub(crate) fn current(&self) -> usize {
+    pub(crate) fn current(&self) -> TextOffset {
         self.chars.current_offset()
     }
 
     pub(crate) fn emit_token(
         &self,
-        start_offset: usize,
+        start_offset: TextOffset,
         start_position: TextPosition,
         variant: TomlTokenData,
     ) -> TomlToken {
         TomlToken::new(
-            DocumentSpan {
-                start: start_offset,
-                end: self.chars.current_offset(),
-            },
+            (start_offset..self.chars.current_offset()).into(),
             (start_position..self.chars.current_position()).into(),
             variant,
         )
@@ -92,7 +89,7 @@ impl<'a> TomlTokenIter<'a> {
         self.chars.next()
     }
 
-    pub(crate) fn next_char_with_offset(&mut self) -> Option<(usize, char)> {
+    pub(crate) fn next_char_with_offset(&mut self) -> Option<(TextOffset, char)> {
         self.chars.next_char_with_offset()
     }
 }

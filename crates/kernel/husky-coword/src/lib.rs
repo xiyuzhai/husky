@@ -25,6 +25,7 @@ pub struct Coword(salsa::Id);
 pub struct __CowordData {
     data: String,
 }
+
 impl salsa::storage::IngredientsFor for Coword {
     type Jar = Jar;
     type Ingredients = salsa::interned::InternedIngredient<Coword, __CowordData>;

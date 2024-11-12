@@ -1,0 +1,15 @@
+[workspace]
+members = ["cybertron-mini-lean-tokens-linkets"]
+resolver = "2"
+
+[workspace.dependencies.ad-hoc-devsoul-dependency]
+path = "../../ad-hoc-devsoul-dependency"
+
+[workspace.dependencies.cybertron-mini-lean-tokens]
+path = ".."
+
+[workspace.dependencies.cybertron-mini-lean-tokens-linkets]
+path = "cybertron-mini-lean-tokens-linkets"
+
+[workspace.dependencies.husky-core]
+path = "../../../library/core"

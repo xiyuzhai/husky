@@ -130,4 +130,8 @@ impl LazyPatternTraceData {
     pub fn var_deps_expansion(&self, db: &::salsa::Db) -> TraceVarDepsExpansion {
         todo!()
     }
+
+    pub fn biological_parent(&self) -> Trace {
+        self.biological_parent
+    }
 }

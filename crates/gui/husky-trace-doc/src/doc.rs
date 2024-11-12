@@ -1,11 +1,9 @@
 use crate::{view::TraceDocView, *};
 #[cfg(feature = "egui")]
 use egui::*;
+use facade::TraceDocFacade;
 use hotkey::TraceDocHotkeyAction;
 use husky_gui::helpers::repaint_signal::EguiRepaintSignal;
-
-use std::{path::PathBuf, sync::Arc};
-
 use husky_trace_protocol::{
     caryatid::CaryatidUi,
     client::TraceClient,
@@ -14,8 +12,10 @@ use husky_trace_protocol::{
     view::action::TraceViewActionBuffer,
 };
 use notify_change::NotifyChange;
+use std::{path::PathBuf, sync::Arc};
 use ui::{
-    component::IsUiComponent,
+    app::IsParentActionBuffer,
+    component::ComponentUi,
     hotkey::egui::{HotkeyBuffer, HotkeyMap},
     visual::cache::VisualUiCache,
 };
@@ -28,6 +28,8 @@ where
 {
     current_dir: PathBuf,
     trace_client: TraceClient<TraceProtocol, RepaintSignal>,
+    facade: TraceDocFacade,
+    prev_facade: Option<TraceDocFacade>,
     view_action_buffer: TraceViewActionBuffer<TraceProtocol>,
     figure_ui_cache: ui::visual::cache::VisualUiCache<egui::Ui>,
     // set after client is initialized
@@ -37,15 +39,16 @@ where
 
 #[cfg(feature = "egui")]
 impl<TraceProtocol, ParentSettings, ParentActionBuffer>
-    IsUiComponent<egui::Ui, ParentSettings, ParentActionBuffer>
+    ComponentUi<egui::Ui, ParentSettings, ParentActionBuffer>
     for TraceDoc<TraceProtocol, EguiRepaintSignal>
 where
     TraceProtocol: IsTraceProtocolFull,
     TraceProtocol::Figure: FigureUi<egui::Ui>,
     TraceProtocol::Caryatid: CaryatidUi<Ui>,
     ParentSettings: HasTraceDocSettings,
+    ParentActionBuffer: IsParentActionBuffer,
 {
-    fn render(
+    fn component_ui(
         &mut self,
         parent_settings: &mut ParentSettings,
         hotkey_buffer: &mut HotkeyBuffer,
@@ -63,7 +66,7 @@ where
             }
         }
         self.render_inner(ui, parent_settings);
-        let actions = self.view_action_buffer.take_actions();
+        let actions = self.view_action_buffer.take_actions(parent_action_buffer);
         if actions.len() > 1 {
             use husky_print_utils::p;
             p!(actions);
@@ -74,6 +77,17 @@ where
                 Ok(_) => (),
                 Err(e) => println!("e = {e} while take action"),
             }
+        }
+    }
+
+    fn toggle_help_facade(&mut self) {
+        if self.facade != TraceDocFacade::Help {
+            assert!(self.prev_facade.is_none());
+            self.prev_facade = Some(self.facade);
+            self.facade = TraceDocFacade::Help;
+        } else {
+            self.facade = self.prev_facade.unwrap_or_default();
+            self.prev_facade = None;
         }
     }
 }
@@ -97,13 +111,14 @@ where
             TraceDocView::new(
                 &self.current_dir,
                 trace_synchrotron,
+                &mut self.facade,
                 &mut self.view_action_buffer,
                 settings,
                 &mut self.figure_ui_cache,
                 &mut self.caryatid_ui_buffer,
                 ui,
             )
-            .render_standard_facade(ui);
+            .facade_ui(ui);
         } else {
             // todo: render connecting status
         }
@@ -119,6 +134,8 @@ impl<TraceProtocol: IsTraceProtocolFull> TraceDoc<TraceProtocol, EguiRepaintSign
         Self {
             current_dir: std::env::current_dir().unwrap(),
             trace_client: TraceClient::new_mock(tokio_runtime, repaint_signal),
+            facade: Default::default(),
+            prev_facade: None,
             view_action_buffer: Default::default(),
             figure_ui_cache: Default::default(),
             caryatid_ui_buffer: Default::default(),

@@ -363,7 +363,7 @@ impl FlyTermInstantiationBuilder {
                 }
                 JustOk(())
             }
-            EthTerm::LambdaVariable(_) => todo!(),
+            EthTerm::AbstractVariable(_) => todo!(),
             EthTerm::ItemPath(_) => todo!(),
             EthTerm::Sort(_) => todo!(),
             EthTerm::Universe(_) => todo!(),
@@ -423,7 +423,7 @@ impl FlyInstantiate for EthTerm {
                     FlyTermSymbolResolution::SelfQuary(place) => place.into(),
                 },
             },
-            EthTerm::LambdaVariable(_) => todo!(),
+            EthTerm::AbstractVariable(_) => todo!(),
             EthTerm::ItemPath(_) => self.into(),
             EthTerm::Sort(_) => todo!(),
             EthTerm::Universe(_) => todo!(),

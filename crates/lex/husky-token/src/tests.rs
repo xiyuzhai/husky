@@ -1,6 +1,6 @@
 mod adv;
 
-pub(crate) use husky_vfs::test_utils::*;
+pub(crate) use husky_vfs::test_helpers::*;
 
 use crate::*;
 use husky_coword::jar::CowordJar;

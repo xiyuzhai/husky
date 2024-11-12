@@ -135,7 +135,7 @@ fn item_sem_var_deps_initial_value(db: &::salsa::Db, item_path_id: ItemPathId) -
             match shard.dep_term(db) {
                 EthTerm::Literal(_) => todo!(),
                 EthTerm::SymbolicVariable(_) => todo!(),
-                EthTerm::LambdaVariable(_) => todo!(),
+                EthTerm::AbstractVariable(_) => todo!(),
                 EthTerm::ItemPath(dep_item_path_term) => match dep_item_path_term {
                     ItemPathTerm::MajorForm(dep_major_form_path) => {
                         match dep_major_form_path.kind(db) {

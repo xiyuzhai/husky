@@ -51,7 +51,7 @@ impl HirTemplateArgument {
         Some(match argument {
             EthTerm::Literal(lit) => HirCompterm::from_term(lit, db).into(),
             EthTerm::SymbolicVariable(symbol) => HirTemplateVariable::from_eth(symbol, db)?.into(),
-            EthTerm::LambdaVariable(_) => todo!(),
+            EthTerm::AbstractVariable(_) => todo!(),
             EthTerm::ItemPath(path) => match path {
                 ItemPathTerm::MajorForm(_path) => todo!(),
                 ItemPathTerm::Trait(_) => todo!(),

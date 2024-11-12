@@ -1,4 +1,4 @@
-pub use husky_ast::test_utils::*;
+pub use husky_ast::test_helpers::*;
 
 #[salsa::db(
     husky_coword::jar::CowordJar,

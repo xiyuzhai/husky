@@ -1,8 +1,8 @@
 pub mod error;
 #[cfg(feature = "mock")]
 pub mod mock;
-#[cfg(feature = "test_utils")]
-pub mod test_utils;
+#[cfg(feature = "test_helpers")]
+pub mod test_helpers;
 
 use crate::caryatid::IsCaryatid;
 use crate::{
@@ -164,13 +164,12 @@ where
                     .accompanyings_except_followed(Some(followed))
                     .clone();
                 let caryatid = trace_synchrotron.caryatid();
-                let figure_key = FigureKey::new(
+                if !trace_synchrotron.has_all_figures(FigureKey::collect_from_caryatid(
                     Some(followed),
                     accompanyings_except_followed,
                     caryatid,
                     trace_synchrotron,
-                );
-                if !trace_synchrotron.has_figure(&figure_key) {
+                )) {
                     return None;
                 }
                 Some(TraceSynchrotronAction::FollowTrace { followed })
@@ -184,14 +183,12 @@ where
                         trace_synchrotron.accompanying_trace_ids().clone();
                     accompanying_trace_ids.toggle(trace_id);
                     let followed = trace_synchrotron.followed();
-                    let figure_key = FigureKey::new(
+                    if !trace_synchrotron.has_all_figures(FigureKey::collect_from_caryatid(
                         followed,
                         AccompanyingTraceIdsExceptFollowed::new(followed, accompanying_trace_ids),
                         caryatid,
                         trace_synchrotron,
-                    );
-                    let has_figure = trace_synchrotron.has_figure(&figure_key);
-                    if !has_figure {
+                    )) {
                         return None;
                     }
                 }
@@ -217,13 +214,12 @@ where
                     let followed = trace_synchrotron.followed();
                     let accompanyings_except_followed =
                         trace_synchrotron.accompanyings_except_followed(followed);
-                    let figure_key = FigureKey::new(
+                    if !trace_synchrotron.has_all_figures(FigureKey::collect_from_caryatid(
                         followed,
                         accompanyings_except_followed,
                         caryatid,
                         trace_synchrotron,
-                    );
-                    if !trace_synchrotron.has_figure(&figure_key) {
+                    )) {
                         return None;
                     }
                 }

@@ -1,4 +1,4 @@
-use husky_eth_term::term::lambda_variable::EthLambdaVariable;
+use husky_eth_term::term::abstract_variable::EthAbstractVariable;
 
 use super::*;
 
@@ -47,16 +47,16 @@ impl FlyHvar {
             FlyBaseTypeData::SymbolicVariable {
                 symbolic_variable: symbol,
             } => todo!(),
-            FlyBaseTypeData::LambdaVariable {
-                lambda_variable: hvar,
+            FlyBaseTypeData::AbstractVariable {
+                abstract_variable: hvar,
             } => (),
         }
         Self(slf)
     }
 }
 
-impl From<EthLambdaVariable> for FlyHvar {
-    fn from(value: EthLambdaVariable) -> Self {
+impl From<EthAbstractVariable> for FlyHvar {
+    fn from(value: EthAbstractVariable) -> Self {
         FlyHvar(value.into())
     }
 }

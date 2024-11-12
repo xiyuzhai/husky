@@ -7,7 +7,7 @@ pub mod menu;
 pub mod path;
 pub mod region;
 #[cfg(feature = "tes")]
-pub mod test_utils;
+pub mod test_helpers;
 #[cfg(test)]
 mod tests;
 mod utils;
