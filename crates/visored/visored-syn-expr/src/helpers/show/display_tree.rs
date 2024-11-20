@@ -1,7 +1,10 @@
 use crate::{
     builder::VdSynExprBuilder,
     clause::{VdSynClauseArenaRef, VdSynClauseChild, VdSynClauseData, VdSynClauseIdx},
-    division::VdSynDivisionArenaRef,
+    division::{
+        VdSynDivisionArenaRef, VdSynDivisionChild, VdSynDivisionData, VdSynDivisionIdx,
+        VdSynDivisionIdxRange,
+    },
     expr::{VdSynExprArenaRef, VdSynExprData, VdSynExprIdx, VdSynExprIdxRange},
     phrase::VdSynPhraseArenaRef,
     range::{
@@ -142,48 +145,34 @@ impl<'a> VdSynExprDisplayTreeBuilder<'a> {
         DisplayTree::new(value, self.render_exprs(self.expr_arena[expr].children()))
     }
 
-    pub fn render_all_stmts(&self, stmts: VdSynStmtIdxRange) -> DisplayTree {
-        let stmts_range =
-            self.stmt_range_map[stmts.start()].join(self.stmt_range_map[stmts.last().unwrap()]);
-        let offset_range = self.token_storage.token_idx_range_offset_range(stmts_range);
-        DisplayTree::new(
-            self.input[offset_range].to_string(),
-            self.render_stmts(stmts),
-        )
-    }
-
-    pub fn render_stmts(&self, stmts: VdSynStmtIdxRange) -> Vec<DisplayTree> {
-        stmts
-            .into_iter()
-            .map(|stmt| self.render_stmt(stmt))
-            .collect()
-    }
-
-    pub fn render_stmt(&self, stmt: VdSynStmtIdx) -> DisplayTree {
-        let stmt_range = self.stmt_range_map[stmt];
-        let offset_range = self.token_storage.token_idx_range_offset_range(stmt_range);
+    pub fn render_clause(&self, clause: VdSynClauseIdx) -> DisplayTree {
+        let clause_range = self.clause_range_map[clause];
+        let offset_range = self
+            .token_storage
+            .token_idx_range_offset_range(clause_range);
         let source = &self.input[offset_range];
-        let value = match self.stmt_arena[stmt] {
-            VdSynStmtData::Paragraph(arena_idx_range) => format!("{:?} stmt.paragraph", source),
-            VdSynStmtData::Block { environment, stmts } => format!("{:?} stmt.block", source),
+        let value = match self.clause_arena[clause] {
+            VdSynClauseData::Let { .. } => format!("{:?} clause.let", source),
+            VdSynClauseData::Assume { .. } => format!("{:?} clause.assume", source),
+            VdSynClauseData::Then { .. } => format!("{:?} clause.then", source),
+            VdSynClauseData::Todo(..) => format!("{:?} clause.todo", source),
         };
         DisplayTree::new(
             value,
-            self.render_stmt_children(self.stmt_arena[stmt].children()),
+            self.render_clause_children(self.clause_arena[clause].children()),
         )
     }
 
-    fn render_stmt_children(&self, children: Vec<VdSynStmtChild>) -> Vec<DisplayTree> {
+    fn render_clause_children(&self, children: Vec<VdSynClauseChild>) -> Vec<DisplayTree> {
         children
             .into_iter()
             .map(|child| match child {
-                VdSynStmtChild::Sentence(sentence) => self.render_sentence(sentence),
-                VdSynStmtChild::Stmt(stmt) => self.render_stmt(stmt),
+                VdSynClauseChild::Expr(expr) => self.render_expr(expr),
             })
             .collect()
     }
 
-    fn render_sentence(&self, sentence: VdSynSentenceIdx) -> DisplayTree {
+    pub fn render_sentence(&self, sentence: VdSynSentenceIdx) -> DisplayTree {
         let sentence_range = self.sentence_range_map[sentence];
         let offset_range = self
             .token_storage
@@ -207,35 +196,91 @@ impl<'a> VdSynExprDisplayTreeBuilder<'a> {
             .collect()
     }
 
-    fn render_clause(&self, clause: VdSynClauseIdx) -> DisplayTree {
-        let clause_range = self.clause_range_map[clause];
-        let offset_range = self
-            .token_storage
-            .token_idx_range_offset_range(clause_range);
-        let source = &self.input[offset_range];
-        let value = match self.clause_arena[clause] {
-            VdSynClauseData::Let { .. } => format!("{:?} clause.let", source),
-            VdSynClauseData::Assume { .. } => format!("{:?} clause.assume", source),
-            VdSynClauseData::Then { .. } => format!("{:?} clause.then", source),
-        };
+    pub fn render_all_stmts(&self, stmts: VdSynStmtIdxRange) -> DisplayTree {
+        let stmts_range =
+            self.stmt_range_map[stmts.start()].join(self.stmt_range_map[stmts.last().unwrap()]);
+        let offset_range = self.token_storage.token_idx_range_offset_range(stmts_range);
         DisplayTree::new(
-            value,
-            self.render_clause_children(self.clause_arena[clause].children()),
+            self.input[offset_range].to_string(),
+            self.render_stmts(stmts),
         )
     }
 
-    fn render_clause_children(&self, children: Vec<VdSynClauseChild>) -> Vec<DisplayTree> {
+    pub fn render_stmts(&self, stmts: VdSynStmtIdxRange) -> Vec<DisplayTree> {
+        stmts
+            .into_iter()
+            .map(|stmt| self.render_stmt(stmt))
+            .collect()
+    }
+
+    pub fn render_stmt(&self, stmt: VdSynStmtIdx) -> DisplayTree {
+        let stmt_range = self.stmt_range_map[stmt];
+        let offset_range = self.token_storage.token_idx_range_offset_range(stmt_range);
+        let source = &self.input[offset_range];
+        let value = match self.stmt_arena[stmt] {
+            VdSynStmtData::Paragraph(arena_idx_range) => format!("{:?} stmt.paragraph", source),
+            VdSynStmtData::Environment { .. } => format!("{:?} stmt.block", source),
+        };
+        DisplayTree::new(
+            value,
+            self.render_stmt_children(self.stmt_arena[stmt].children()),
+        )
+    }
+
+    fn render_stmt_children(&self, children: Vec<VdSynStmtChild>) -> Vec<DisplayTree> {
         children
             .into_iter()
             .map(|child| match child {
-                VdSynClauseChild::Expr(expr) => self.render_expr(expr),
+                VdSynStmtChild::Sentence(sentence) => self.render_sentence(sentence),
+                VdSynStmtChild::Stmt(stmt) => self.render_stmt(stmt),
             })
             .collect()
     }
 
+    pub fn render_divisions(&self, divisions: VdSynDivisionIdxRange) -> Vec<DisplayTree> {
+        divisions
+            .into_iter()
+            .map(|division| self.render_division(division))
+            .collect()
+    }
+
+    fn render_division(&self, division: VdSynDivisionIdx) -> DisplayTree {
+        let division_range = self.division_range_map[division];
+        let offset_range = self
+            .token_storage
+            .token_idx_range_offset_range(division_range);
+        let source = &self.input[offset_range];
+        let value = match self.division_arena[division] {
+            VdSynDivisionData::Stmts { .. } => format!("{:?} division.stmts", source),
+            VdSynDivisionData::Divisions { level, .. } => {
+                format!("{:?} division.{level}", source)
+            }
+        };
+        DisplayTree::new(
+            value,
+            self.division_arena[division]
+                .children()
+                .into_iter()
+                .map(|child| self.render_division_child(child))
+                .collect(),
+        )
+    }
+
+    fn render_division_child(&self, child: VdSynDivisionChild) -> DisplayTree {
+        match child {
+            VdSynDivisionChild::Division(division) => self.render_division(division),
+            VdSynDivisionChild::Stmt(stmt) => self.render_stmt(stmt),
+            VdSynDivisionChild::Title(stmts) => {
+                DisplayTree::new("title".to_string(), self.render_stmts(stmts))
+            }
+        }
+    }
+
     fn ast_offset_range(&self, ast: LxAstIdx) -> TextOffsetRange {
         match ast {
+            LxAstIdx::Lisp(ast) => todo!(),
             LxAstIdx::Math(ast) => self.math_ast_offset_range(ast),
+            LxAstIdx::Root(ast) => todo!(),
             LxAstIdx::Rose(ast) => self.rose_ast_offset_range(ast),
         }
     }
@@ -252,7 +297,9 @@ impl<'a> VdSynExprDisplayTreeBuilder<'a> {
 
     fn asts_offset_range(&self, asts: LxAstIdxRange) -> TextOffsetRange {
         match asts {
+            LxAstIdxRange::Lisp(asts) => todo!(),
             LxAstIdxRange::Math(asts) => self.math_asts_offset_range(asts),
+            LxAstIdxRange::Root(asts) => todo!(),
             LxAstIdxRange::Rose(asts) => self.rose_asts_offset_range(asts),
         }
     }

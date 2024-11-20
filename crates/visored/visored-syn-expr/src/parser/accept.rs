@@ -1,4 +1,5 @@
 use super::*;
+use disambiguate::DisambiguatedAst;
 use either::*;
 use error::OriginalVdSynExprError;
 use expr::{
@@ -8,7 +9,6 @@ use expr::{
 use expr_stack::TopVdSynExpr;
 use incomplete_expr::{IncompleteCallListOpr, IncompleteSeparatedListOpr, IncompleteVdSynExprData};
 use latex_token::idx::{LxTokenIdx, LxTokenIdxRange};
-use resolve::ResolvedAst;
 use smallvec::smallvec;
 use visored_annotation::annotation::space::VdSpaceAnnotation;
 use visored_opr::{
@@ -23,10 +23,10 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
         &mut self,
         preceding_space_annotation: Option<VdSpaceAnnotation>,
         token_idx_range: LxTokenIdxRange,
-        ast: ResolvedAst,
+        ast: DisambiguatedAst,
     ) {
         match ast {
-            ResolvedAst::Expr(expr, class) => match class {
+            DisambiguatedAst::Expr(expr, class) => match class {
                 VdSynExprClass::Complete(_) => {
                     self.accept_complete_expr(preceding_space_annotation, expr)
                 }
@@ -35,19 +35,19 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
                 VdSynExprClass::Separator => todo!(),
                 VdSynExprClass::BinaryOpr => todo!(),
             },
-            ResolvedAst::Opr(opr) => {
+            DisambiguatedAst::Opr(opr) => {
                 self.accept_opr(preceding_space_annotation, token_idx_range, opr)
             }
-            ResolvedAst::Separator(sep) => self.accept_separator(
+            DisambiguatedAst::Separator(sep) => self.accept_separator(
                 preceding_space_annotation,
                 token_idx_range,
                 VdSynSeparator::Base(token_idx_range, sep),
             ),
-            ResolvedAst::LeftDelimiter(left_delimiter) => self.accept_left_delimiter(
+            DisambiguatedAst::LeftDelimiter(left_delimiter) => self.accept_left_delimiter(
                 preceding_space_annotation,
                 VdSynLeftDelimiter::Base(token_idx_range, left_delimiter),
             ),
-            ResolvedAst::RightDelimiter(right_delimiter) => self.accept_right_delimiter(
+            DisambiguatedAst::RightDelimiter(right_delimiter) => self.accept_right_delimiter(
                 preceding_space_annotation,
                 VdSynRightDelimiter::Base(token_idx_range, right_delimiter),
             ),
@@ -220,6 +220,8 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
         }
         self.reduce(VdPrecedenceRange::RIGHT_DELIMITER_LEFT, None);
         let Some(item) = self.take_complete_expr() else {
+            use husky_print_utils::{p, DisplayIt};
+            p!(self.show());
             todo!()
         };
         let Some(IncompleteVdSynExprData::Delimited { left_delimiter }) =

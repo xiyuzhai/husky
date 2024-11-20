@@ -48,6 +48,8 @@ impl VdPrecedence {
     pub const SEMICOLON: Self = VdPrecedence(1000);
     pub const COMMA: Self = VdPrecedence(5000);
     pub const ADD_SUB: Self = VdPrecedence(20000);
+    pub const SIGN: Self = VdPrecedence(25000);
+    /// `reduce` is from `map reduce`, examples are like sum/integral/prod
     pub const REDUCE_PREFIX: Self = VdPrecedence(25000);
     pub const DIFFERENTIAL: Self = VdPrecedence(25000);
     pub const MUL_DIV: Self = VdPrecedence(30000);
@@ -69,7 +71,7 @@ fn vd_precedence_works() {
     // a+a\times b
     assert!(VdPrecedence::ADD_SUB < VdPrecedence::MUL_DIV);
     // a\times b c
-    assert!(VdPrecedence::MUL_DIV < VdPrecedence::SPACE);
+    assert!(VdPrecedence::SIGN < VdPrecedence::SPACE);
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]

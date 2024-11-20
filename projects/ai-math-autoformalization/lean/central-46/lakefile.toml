@@ -8,3 +8,7 @@ name = "Central46"
 [[lean_exe]]
 name = "central-46"
 root = "Main"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"

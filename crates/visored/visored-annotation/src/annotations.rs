@@ -6,7 +6,7 @@ use crate::{
 };
 use builder::sparce::collect_from_sparse_annotations;
 use husky_text_protocol::offset::TextOffsetRange;
-use latex_token::{idx::LxTokenIdx, storage::LxTokenStorage};
+use latex_token::{idx::LxTokenIdx, lane::LxTokenLane, storage::LxTokenStorage};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct VdAnnotationRecord<A> {
@@ -33,8 +33,11 @@ impl VdAnnotations {
         space_annotation_records: Vec<VdSpaceAnnotationRecord>,
         token_storage: &LxTokenStorage,
     ) -> Self {
-        let token_annotations = collect_token_annotations(&token_annotation_records, token_storage);
-        let space_annotations = collect_space_annotations(&space_annotation_records, token_storage);
+        // ad hoc
+        let token_annotations =
+            collect_token_annotations(LxTokenLane::Main, &token_annotation_records, token_storage);
+        let space_annotations =
+            collect_space_annotations(LxTokenLane::Main, &space_annotation_records, token_storage);
         Self {
             token_annotation_records,
             space_annotation_records,
@@ -75,20 +78,21 @@ impl VdAnnotations {
 }
 
 fn collect_token_annotations(
+    lane: LxTokenLane,
     token_annotation_records: &[VdTokenAnnotationRecord],
     token_storage: &LxTokenStorage,
 ) -> Vec<Option<VdTokenAnnotation>> {
     let mut entry_idx = 0;
-    token_storage
-        .ranged_tokens()
+    token_storage[lane]
         .iter()
-        .map(|&(range, _, _)| {
+        .map(|entry| {
             if entry_idx < token_annotation_records.len()
-                && token_annotation_records[entry_idx].offset_range.start() == range.start()
+                && token_annotation_records[entry_idx].offset_range.start()
+                    == entry.text_offset_range().start()
             {
                 assert_eq!(
                     token_annotation_records[entry_idx].offset_range.end(),
-                    range.end()
+                    entry.text_offset_range().end()
                 );
                 entry_idx += 1;
                 Some(token_annotation_records[entry_idx - 1].annotation)
@@ -100,20 +104,21 @@ fn collect_token_annotations(
 }
 
 fn collect_space_annotations(
+    lane: LxTokenLane,
     space_annotation_records: &[VdSpaceAnnotationRecord],
     token_storage: &LxTokenStorage,
 ) -> Vec<Option<VdSpaceAnnotation>> {
     let mut entry_idx = 0;
-    token_storage
-        .ranged_tokens()
+    token_storage[lane]
         .iter()
-        .map(|&(offset_range, _, _)| {
+        .map(|entry| {
             let annotation = if entry_idx < space_annotation_records.len()
-                && space_annotation_records[entry_idx].offset_range.start() == offset_range.start()
+                && space_annotation_records[entry_idx].offset_range.start()
+                    == entry.text_offset_range().start()
             {
                 assert_eq!(
                     space_annotation_records[entry_idx].offset_range.end(),
-                    offset_range.end()
+                    entry.text_offset_range().end()
                 );
                 entry_idx += 1;
                 Some(space_annotation_records[entry_idx - 1].annotation)

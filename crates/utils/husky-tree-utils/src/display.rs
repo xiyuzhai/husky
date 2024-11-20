@@ -29,9 +29,18 @@ impl DisplayTree {
         builder.push_str(&format!("{}{}\n", prefix, self.value));
 
         // Process children
-        if !self.children.is_empty() {
-            for (i, child) in self.children.iter().enumerate() {
-                let is_last = i == self.children.len() - 1;
+        Self::process_trees(&self.children, child_prefix, builder, chars);
+    }
+
+    fn process_trees(
+        children: &[DisplayTree],
+        child_prefix: &str,
+        builder: &mut String,
+        chars: &CharSet,
+    ) {
+        if !children.is_empty() {
+            for (i, child) in children.iter().enumerate() {
+                let is_last = i == children.len() - 1;
                 let (next_prefix, next_child_prefix) = if is_last {
                     (
                         format!("{}{}─ ", child_prefix, chars.end_connector),
@@ -46,6 +55,12 @@ impl DisplayTree {
                 child.build_string(&next_prefix, &next_child_prefix, builder, chars);
             }
         }
+    }
+
+    pub fn show_trees(trees: &[DisplayTree], chars: &CharSet) -> String {
+        let mut builder = String::new();
+        Self::process_trees(trees, "", &mut builder, chars);
+        builder
     }
 }
 

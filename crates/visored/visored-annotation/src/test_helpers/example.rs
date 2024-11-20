@@ -10,7 +10,7 @@ use latex_ast::ast::{parse_latex_input_into_asts, LxAstArena};
 use latex_command::signature::table::LxCommandSignatureTable;
 use latex_environment::signature::table::LxEnvironmentSignatureTable;
 use latex_prelude::mode::LxMode;
-use latex_token::storage::LxTokenStorage;
+use latex_token::{lane::LxTokenLane, storage::LxTokenStorage};
 use lazy_static::lazy_static;
 
 #[derive(Debug, Clone)]
@@ -43,6 +43,7 @@ impl VdAnnotationsExample {
                         &command_signature_table,
                         &environment_signature_table,
                         &input,
+                        LxTokenLane::Main,
                         LxMode::Math,
                         &mut token_storage,
                         &mut ast_arena,
@@ -53,6 +54,7 @@ impl VdAnnotationsExample {
                         &command_signature_table,
                         &environment_signature_table,
                         &input,
+                        LxTokenLane::Main,
                         LxMode::Math,
                         &mut token_storage,
                         &mut ast_arena,

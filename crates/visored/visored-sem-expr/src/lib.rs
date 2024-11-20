@@ -5,14 +5,13 @@ pub mod error;
 pub mod expr;
 pub mod helpers;
 pub mod jar;
+pub mod pattern;
 pub mod phrase;
 pub mod range;
 pub mod region;
 pub mod sentence;
 pub mod stmt;
 pub mod symbol;
-#[cfg(feature = "test_helpers")]
-pub mod test_helpers;
 #[cfg(test)]
 mod tests;
 

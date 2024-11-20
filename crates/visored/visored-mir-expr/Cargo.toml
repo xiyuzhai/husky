@@ -1,0 +1,53 @@
+[package]
+name = "visored-mir-expr"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+either.workspace = true
+# abstractions
+idx-arena.workspace = true
+salsa.workspace = true
+# latex
+latex-environment.workspace = true
+latex-math-letter.workspace = true
+latex-prelude.workspace = true
+# visored
+visored-annotation.workspace = true
+visored-global-resolution.workspace = true
+visored-global-dispatch.workspace = true
+visored-item-path.workspace = true
+visored-opr.workspace = true
+visored-prelude.workspace = true
+visored-sem-expr.workspace = true
+visored-signature.workspace = true
+visored-term.workspace = true
+latex-vfs.workspace = true
+# utils
+husky-tree-utils.workspace = true
+
+[dev-dependencies]
+expect-test.workspace = true
+# latex
+latex-ast.workspace = true
+latex-command.workspace = true
+latex-token.workspace = true
+# kernel
+husky-coword.workspace = true
+# visored
+visored-item-path.workspace = true
+visored-sem-expr.workspace = true
+visored-syn-expr.workspace = true
+visored-global-dispatch.workspace = true
+visored-signature.workspace = true
+
+[lints]
+workspace = true

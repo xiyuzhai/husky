@@ -36,6 +36,7 @@ husky-coword.workspace = true
 # latex
 latex-command.workspace = true
 latex-environment.workspace = true
+latex-vfs.workspace = true
 # visored
 visored-annotation = { workspace = true, features = ["test_helpers"] }
 

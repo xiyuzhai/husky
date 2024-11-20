@@ -64,6 +64,7 @@ impl<'a> TextCharIter<'a> {
         }
     }
 
+    #[track_caller]
     pub fn eat_char(&mut self) {
         self.next().expect("what");
     }
@@ -94,6 +95,11 @@ impl<'a> TextCharIter<'a> {
         self.eat_chars_while(predicate);
         let end = self.current_raw_offset;
         unsafe { std::str::from_utf8_unchecked(&slice[..(end - start)]) }
+    }
+
+    pub fn peek_str(&self) -> &'a str {
+        let slice = self.iter.as_slice();
+        unsafe { std::str::from_utf8_unchecked(slice) }
     }
 
     /// scientific number included

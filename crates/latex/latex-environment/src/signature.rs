@@ -7,6 +7,7 @@ use latex_prelude::mode::LxMode;
 pub struct LxEnvironmentSignature {
     path: LxEnvironmentPath,
     allowed_in_math: bool,
+    allowed_in_root: bool,
     allowed_in_rose: bool,
     body_mode: LxMode,
 }
@@ -16,6 +17,7 @@ impl LxEnvironmentSignature {
         Self {
             path,
             allowed_in_math: allowed_modes.contains(&LxMode::Math),
+            allowed_in_root: allowed_modes.contains(&LxMode::Root),
             allowed_in_rose: allowed_modes.contains(&LxMode::Rose),
             body_mode,
         }
@@ -33,6 +35,10 @@ impl LxEnvironmentSignature {
 
     pub fn allowed_in_rose(&self) -> bool {
         self.allowed_in_rose
+    }
+
+    pub fn allowed_in_root(&self) -> bool {
+        self.allowed_in_root
     }
 
     pub fn body_mode(&self) -> LxMode {

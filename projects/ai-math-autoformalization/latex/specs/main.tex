@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{natbib}
+
+\title{Specification for Visored}
+\author{AI Math Autoformalization Team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+\subsection{Purpose}
+This document specifies the syntax and semantics of the Formal Mathematics Programming Language (FMPL), a language designed for automated theorem proving and mathematical formalization.
+
+\section{Related Work}
+
+\paragraph{Naproche} In \cite{Lon2021TheIN}, the authors describe the syntax and semantics of the Naproche proof assistant, which is a natural language proof assistant based on the Isabelle theorem prover.
+\section{Goals}
+\begin{itemize}
+    \item Provide a rigorous foundation for expressing mathematical concepts
+    \item Enable automated reasoning and proof verification
+    \item Bridge the gap between informal and formal mathematics
+    \item Support integration with existing theorem provers
+\end{itemize}
+
+\section{Syntax}
+
+The syntax of visored is a subset of LaTeX. In fact, visored has no syntactic stage of its own. It's based on the syntactic output of my personal LaTeX parser.
+
+\subsection{Lexical Elements}
+% Basic tokens, keywords, identifiers, etc.
+
+\subsection{Grammar}
+% Formal grammar specification using BNF or similar notation
+
+\section{Semantics}
+\subsection{Type System}
+% Type rules, type checking, type inference
+
+\subsection{Operational Semantics}
+% Execution model, evaluation rules
+
+\section{Standard Library}
+% Built-in functions and types
+
+\section{Examples and Use Cases}
+% Code examples demonstrating language features
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+
+\input{sec-A-standard-library}
+
+\end{document}

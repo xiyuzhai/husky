@@ -1574,6 +1574,7 @@ impl<'a> SemExprBuilder<'a> {
                 // the `unsafe` is due to Rust currently don't have view type
                 // item_term_result wouldn't change ontology_dispatch, so the reference is valid
                 // of course, we can circumvent this by utilizing struct field tricks, but what's the point
+                // TODO: find a better way to avoid this
                 unsafe { arb_ref(ontology_dispatch) }
                     .item_term_result(self)
                     .map_err(Into::into)

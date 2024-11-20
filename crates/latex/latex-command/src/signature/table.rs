@@ -48,6 +48,7 @@ impl LxCommandSignatureTable {
                             path.name(),
                             LxCommandSignature::Complete(LxCompleteCommandSignature {
                                 path,
+                                options: (),
                                 parameters: parameter_modes
                                     .into_iter()
                                     .copied()
@@ -75,8 +76,20 @@ impl LxCommandSignatureTable {
         use LxCommandParameterMode::*;
 
         let LxCommandPathMenu {
+            // - root
             begin,
             end,
+            usepackage,
+            documentclass,
+            newtheorem,
+            // - divisions
+            part,
+            chapter,
+            section,
+            subsection,
+            subsubsection,
+            // - maths
+            // ## letter style
             mathbb,
             mathbf,
             mathcal,
@@ -88,6 +101,8 @@ impl LxCommandSignatureTable {
             // -- relations
             eq,
             ne,
+            le,
+            ge,
             r#in,
             subset,
             supset,
@@ -103,13 +118,16 @@ impl LxCommandSignatureTable {
             prod,
             times,
             otimes,
+            // -- extended letters
             alpha,
             beta,
             gamma,
             pi,
-            sqrt,
+            // -- functions
             sin,
             cos,
+            // -- layouts
+            sqrt,
             frac,
             text,
         } = *command_path_menu(db);
@@ -126,10 +144,22 @@ impl LxCommandSignatureTable {
                 (mathscr, LxMathLetterStyle::MATHSCR),
             ],
             &[
+                // - root
+                (usepackage, &[Name]),
+                (documentclass, &[Name]),
+                (newtheorem, &[Name, Name]),
+                // - divisions
+                (part, &[Rose]),
+                (chapter, &[Rose]),
+                (section, &[Rose]),
+                (subsection, &[Rose]),
+                (subsubsection, &[Rose]),
                 // - operators
                 // -- relations
                 (eq, &[]),
                 (ne, &[]),
+                (le, &[]),
+                (ge, &[]),
                 (r#in, &[]),
                 (subset, &[]),
                 (supset, &[]),
@@ -145,13 +175,16 @@ impl LxCommandSignatureTable {
                 (prod, &[]),
                 (times, &[]),
                 (otimes, &[]),
+                // -- extended letters
                 (alpha, &[]),
                 (beta, &[]),
                 (gamma, &[]),
                 (pi, &[]),
+                // -- functions
                 (sqrt, &[Math]),
                 (sin, &[]),
                 (cos, &[]),
+                // -- layouts
                 (frac, &[Math, Math]),
                 (text, &[Rose]),
             ],

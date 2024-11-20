@@ -1,5 +1,6 @@
 use super::{
-    local_defn::VdSynSymbolLocalDefnTable,
+    lineage::VdSynLineage,
+    local_defn::VdSynSymbolLocalDefnStorage,
     resolution::{VdSynSymbolResolution, VdSynSymbolResolutionsTable},
     *,
 };
@@ -9,13 +10,10 @@ use r#let::{
     VdSynLetClauseResolution,
 };
 use smallvec::{smallvec, SmallVec};
+use visored_item_path::module::VdModulePath;
 
 pub struct VdSynSymbolBuilder<'a> {
     db: &'a ::salsa::Db,
-    token_storage: &'a LxTokenStorage,
-    ast_arena: LxAstArenaRef<'a>,
-    ast_token_idx_range_map: &'a LxAstTokenIdxRangeMap,
-    annotations: &'a VdAnnotations,
     default_global_resolution_table: &'a VdDefaultGlobalResolutionTable,
     expr_arena: VdSynExprArenaRef<'a>,
     phrase_arena: VdSynPhraseArenaRef<'a>,
@@ -23,25 +21,23 @@ pub struct VdSynSymbolBuilder<'a> {
     sentence_arena: VdSynSentenceArenaRef<'a>,
     stmt_arena: VdSynStmtArenaRef<'a>,
     division_arena: VdSynDivisionArenaRef<'a>,
-    symbol_local_defn_table: VdSynSymbolLocalDefnTable,
+    expr_range_map: &'a VdSynExprTokenIdxRangeMap,
+    phrase_range_map: &'a VdSynPhraseTokenIdxRangeMap,
+    clause_range_map: &'a VdSynClauseTokenIdxRangeMap,
+    sentence_range_map: &'a VdSynSentenceTokenIdxRangeMap,
+    stmt_range_map: &'a VdSynStmtTokenIdxRangeMap,
+    division_range_map: &'a VdSynDivisionTokenIdxRangeMap,
+    stmt_entity_tree_node_map: &'a VdSynStmtMap<VdSynExprEntityTreeNode>,
+    division_entity_tree_node_map: &'a VdSynDivisionMap<VdSynExprEntityTreeNode>,
+    symbol_local_defn_table: VdSynSymbolLocalDefnStorage,
     symbol_resolutions_table: VdSynSymbolResolutionsTable,
-    // the order is from outer to inner
-    current_divisions: SmallVec<[VdSynDivisionIdx; 8]>,
-    current_stmts: SmallVec<[VdSynStmtIdx; 8]>,
-    current_sentence: Option<VdSynSentenceIdx>,
-    current_clause: Option<VdSynClauseIdx>,
-    current_phrases: SmallVec<[VdSynPhraseIdx; 8]>,
-    current_exprs: SmallVec<[VdSynExprIdx; 8]>,
+    lineage: VdSynLineage,
 }
 
 impl<'a> VdSynSymbolBuilder<'a> {
     pub fn new(
         db: &'a ::salsa::Db,
-        token_storage: &'a LxTokenStorage,
-        ast_arena: LxAstArenaRef<'a>,
-        ast_token_idx_range_map: &'a LxAstTokenIdxRangeMap,
-        annotations: &'a VdAnnotations,
-        default_resolution_table: &'a VdDefaultGlobalResolutionTable,
+        default_global_resolution_table: &'a VdDefaultGlobalResolutionTable,
         expr_arena: VdSynExprArenaRef<'a>,
         phrase_arena: VdSynPhraseArenaRef<'a>,
         clause_arena: VdSynClauseArenaRef<'a>,
@@ -54,28 +50,37 @@ impl<'a> VdSynSymbolBuilder<'a> {
         sentence_range_map: &'a VdSynSentenceTokenIdxRangeMap,
         stmt_range_map: &'a VdSynStmtTokenIdxRangeMap,
         division_range_map: &'a VdSynDivisionTokenIdxRangeMap,
+        stmt_entity_tree_node_map: &'a VdSynStmtMap<VdSynExprEntityTreeNode>,
+        division_entity_tree_node_map: &'a VdSynDivisionMap<VdSynExprEntityTreeNode>,
     ) -> Self {
         Self {
             db,
-            token_storage,
-            ast_arena,
-            ast_token_idx_range_map,
-            annotations,
-            default_global_resolution_table: default_resolution_table,
+            default_global_resolution_table,
             expr_arena,
             phrase_arena,
             clause_arena,
             sentence_arena,
             stmt_arena,
             division_arena,
-            symbol_local_defn_table: VdSynSymbolLocalDefnTable::default(),
+            expr_range_map,
+            phrase_range_map,
+            clause_range_map,
+            sentence_range_map,
+            stmt_range_map,
+            division_range_map,
+            stmt_entity_tree_node_map,
+            division_entity_tree_node_map,
+
+            symbol_local_defn_table: VdSynSymbolLocalDefnStorage::default(),
             symbol_resolutions_table: VdSynSymbolResolutionsTable::new(expr_arena),
-            current_divisions: smallvec![],
-            current_stmts: smallvec![],
-            current_sentence: None,
-            current_clause: None,
-            current_phrases: smallvec![],
-            current_exprs: smallvec![],
+            lineage: VdSynLineage {
+                divisions: smallvec![],
+                stmts: smallvec![],
+                sentence: None,
+                clause: None,
+                phrases: smallvec![],
+                exprs: smallvec![],
+            },
         }
     }
 }
@@ -86,7 +91,7 @@ impl<'a> VdSynSymbolBuilder<'a> {
         self.default_global_resolution_table
     }
 
-    pub(crate) fn symbol_local_defn_table(&self) -> &VdSynSymbolLocalDefnTable {
+    pub(crate) fn symbol_local_defn_table(&self) -> &VdSynSymbolLocalDefnStorage {
         &self.symbol_local_defn_table
     }
 
@@ -117,6 +122,33 @@ impl<'a> VdSynSymbolBuilder<'a> {
 
 /// # actions
 impl<'a> VdSynSymbolBuilder<'a> {
+    pub(crate) fn build_divisions(&mut self, divisions: VdSynDivisionIdxRange) {
+        for division in divisions {
+            self.build_division(division);
+        }
+    }
+
+    pub(crate) fn build_division(&mut self, division: VdSynDivisionIdx) {
+        self.lineage.divisions.push(division);
+        self.build_division_aux(division);
+        self.lineage.divisions.pop();
+    }
+
+    fn build_division_aux(&mut self, division: VdSynDivisionIdx) {
+        match self.division_arena[division] {
+            VdSynDivisionData::Stmts { stmts } => self.build_stmts(stmts),
+            VdSynDivisionData::Divisions {
+                level: kind,
+                command_token_idx,
+                lcurl_token_idx,
+                rcurl_token_idx,
+                subdivisions,
+            } => {
+                self.build_divisions(subdivisions);
+            }
+        }
+    }
+
     pub(crate) fn build_stmts(&mut self, stmts: VdSynStmtIdxRange) {
         for stmt in stmts {
             self.build_stmt(stmt);
@@ -124,9 +156,9 @@ impl<'a> VdSynSymbolBuilder<'a> {
     }
 
     pub(crate) fn build_stmt(&mut self, stmt: VdSynStmtIdx) {
-        self.current_stmts.push(stmt);
+        self.lineage.stmts.push(stmt);
         self.build_stmt_aux(stmt);
-        self.current_stmts.pop();
+        self.lineage.stmts.pop();
     }
 
     pub(crate) fn build_sentences(&mut self, sentences: VdSynSentenceIdxRange) {
@@ -136,10 +168,10 @@ impl<'a> VdSynSymbolBuilder<'a> {
     }
 
     pub(crate) fn build_sentence(&mut self, sentence: VdSynSentenceIdx) {
-        debug_assert!(self.current_sentence.is_none());
-        self.current_sentence = Some(sentence);
+        debug_assert!(self.lineage.sentence.is_none());
+        self.lineage.sentence = Some(sentence);
         self.build_sentence_aux(sentence);
-        self.current_sentence = None;
+        self.lineage.sentence = None;
     }
 
     pub(crate) fn build_sentence_aux(&mut self, sentence: VdSynSentenceIdx) {
@@ -155,24 +187,24 @@ impl<'a> VdSynSymbolBuilder<'a> {
     }
 
     pub(crate) fn build_clause(&mut self, clause: VdSynClauseIdx) {
-        debug_assert!(self.current_clause.is_none());
-        self.current_clause = Some(clause);
+        debug_assert!(self.lineage.clause.is_none());
+        self.lineage.clause = Some(clause);
         self.build_clause_aux(clause);
-        self.current_clause = None;
+        self.lineage.clause = None;
     }
 
     pub(crate) fn build_phrase(&mut self, phrase: VdSynPhraseIdx) {
-        self.current_phrases.push(phrase);
+        self.lineage.phrases.push(phrase);
         self.build_phrase_aux(phrase);
-        self.current_phrases.pop();
+        self.lineage.phrases.pop();
     }
 
     pub(crate) fn build_expr(&mut self, expr: VdSynExprIdx) {
-        self.current_exprs.push(expr);
+        self.lineage.exprs.push(expr);
         let resolutions_result = self.build_expr_aux(expr);
         self.symbol_resolutions_table
             .add_expr_symbol_resolutions(expr, resolutions_result);
-        self.current_exprs.pop();
+        self.lineage.exprs.pop();
     }
 
     pub(crate) fn define_symbol(
@@ -181,10 +213,24 @@ impl<'a> VdSynSymbolBuilder<'a> {
         body: VdSynSymbolLocalDefnBody,
         src: VdSynSymbolLocalDefnSrc,
     ) {
-        self.symbol_local_defn_table.define_symbol(head, body, src);
+        let module_path = self.current_module_path();
+        self.symbol_local_defn_table.define_symbol(
+            head,
+            body,
+            src,
+            self.lineage.clone(),
+            module_path,
+        );
     }
 
-    pub(super) fn finish(self) -> (VdSynSymbolLocalDefnTable, VdSynSymbolResolutionsTable) {
+    pub(crate) fn current_module_path(&self) -> VdModulePath {
+        match self.lineage.current_stmt_or_division() {
+            Left(stmt) => self.stmt_entity_tree_node_map[stmt].module_path(),
+            Right(division) => self.division_entity_tree_node_map[division].module_path(),
+        }
+    }
+
+    pub(super) fn finish(self) -> (VdSynSymbolLocalDefnStorage, VdSynSymbolResolutionsTable) {
         (self.symbol_local_defn_table, self.symbol_resolutions_table)
     }
 }

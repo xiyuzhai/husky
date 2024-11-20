@@ -5,16 +5,16 @@ use rustc_hash::FxHashMap;
 use visored_item_path::path::VdItemPath;
 
 #[derive(Debug, PartialEq, Eq)]
-pub struct VdItemPathTranslationTable {
-    translations: FxHashMap<VdItemPath, VdItemPathTranslation>,
-}
-
-#[derive(Debug, PartialEq, Eq)]
 pub enum VdItemPathTranslation {
     ItemPath(LnItemPath),
 }
 
-impl VdItemPathTranslationTable {
+#[derive(Debug, PartialEq, Eq)]
+pub struct VdItemPathDictionary {
+    translations: FxHashMap<VdItemPath, VdItemPathTranslation>,
+}
+
+impl VdItemPathDictionary {
     pub fn new(
         translations: impl IntoIterator<Item = (VdItemPath, VdItemPathTranslation)>,
     ) -> Self {
@@ -22,13 +22,34 @@ impl VdItemPathTranslationTable {
             translations: translations.into_iter().collect(),
         }
     }
-    pub(crate) fn new_standard() -> Self {
-        Self::new([(
-            VdItemPath::NATURAL_NUMBER,
-            VdItemPathTranslation::ItemPath(LnItemPath::NAT),
-        )])
-    }
 
+    pub fn new_standard() -> Self {
+        Self::new([
+            (
+                VdItemPath::NAT,
+                VdItemPathTranslation::ItemPath(LnItemPath::NAT),
+            ),
+            (
+                VdItemPath::INT,
+                VdItemPathTranslation::ItemPath(LnItemPath::INT),
+            ),
+            (
+                VdItemPath::RAT,
+                VdItemPathTranslation::ItemPath(LnItemPath::RAT),
+            ),
+            (
+                VdItemPath::REAL,
+                VdItemPathTranslation::ItemPath(LnItemPath::REAL),
+            ),
+            (
+                VdItemPath::COMPLEX,
+                VdItemPathTranslation::ItemPath(LnItemPath::COMPLEX),
+            ),
+        ])
+    }
+}
+
+impl VdItemPathDictionary {
     pub(crate) fn get(&self, item_path: VdItemPath) -> Option<&VdItemPathTranslation> {
         self.translations.get(&item_path)
     }

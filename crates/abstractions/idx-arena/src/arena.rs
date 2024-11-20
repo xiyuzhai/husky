@@ -39,6 +39,12 @@ where
 }
 
 impl<T> Arena<T> {
+    pub unsafe fn new_ext(data: Vec<T>) -> Self {
+        Self { data }
+    }
+}
+
+impl<T> Arena<T> {
     #[inline]
     pub fn alloc_batch(&mut self, items: impl IntoIterator<Item = T>) -> ArenaIdxRange<T> {
         let start = ArenaIdx::new(self.data.len());
@@ -55,6 +61,10 @@ impl<T> Arena<T> {
 
     pub unsafe fn next_idx(&self) -> ArenaIdx<T> {
         ArenaIdx::new(self.data.len())
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.data.is_empty()
     }
 
     #[inline]

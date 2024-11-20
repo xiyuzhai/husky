@@ -5,7 +5,7 @@ use crate::{
     phrase::{VdSynPhraseArena, VdSynPhraseArenaRef, VdSynPhraseData, VdSynPhraseIdx},
     sentence::{VdSynSentenceArena, VdSynSentenceArenaRef, VdSynSentenceData, VdSynSentenceIdx},
     stmt::{VdSynStmtArena, VdSynStmtArenaRef},
-    symbol::{local_defn::VdSynSymbolLocalDefnTable, resolution::VdSynSymbolResolutionsTable},
+    symbol::{local_defn::VdSynSymbolLocalDefnStorage, resolution::VdSynSymbolResolutionsTable},
 };
 
 pub struct VdSynExprRegionData {
@@ -15,7 +15,7 @@ pub struct VdSynExprRegionData {
     sentence_arena: VdSynSentenceArena,
     stmt_arena: VdSynStmtArena,
     division_arena: VdSynDivisionArena,
-    symbol_defns: VdSynSymbolLocalDefnTable,
+    symbol_defns: VdSynSymbolLocalDefnStorage,
     symbol_resolutions: VdSynSymbolResolutionsTable,
 }
 
@@ -27,7 +27,7 @@ impl VdSynExprRegionData {
         sentence_arena: VdSynSentenceArena,
         stmt_arena: VdSynStmtArena,
         division_arena: VdSynDivisionArena,
-        symbol_defns: VdSynSymbolLocalDefnTable,
+        symbol_defns: VdSynSymbolLocalDefnStorage,
         symbol_resolutions: VdSynSymbolResolutionsTable,
     ) -> Self {
         Self {
@@ -66,7 +66,7 @@ impl VdSynExprRegionData {
         self.division_arena.as_arena_ref()
     }
 
-    pub fn symbol_defns(&self) -> &VdSynSymbolLocalDefnTable {
+    pub fn symbol_defns(&self) -> &VdSynSymbolLocalDefnStorage {
         &self.symbol_defns
     }
 

@@ -15,6 +15,20 @@ pub enum VdSynLetClausePlaceholderType {
     Expr(VdSynExprIdx),
 }
 
+impl VdSynLetPlaceholderResolution {
+    pub fn pattern(&self) -> &VdSynPattern {
+        &self.pattern
+    }
+
+    pub fn pattern_expr(&self) -> VdSynExprIdx {
+        self.pattern_expr
+    }
+
+    pub fn ty(&self) -> VdSynLetClausePlaceholderType {
+        self.ty
+    }
+}
+
 impl<'db> VdSynExprBuilder<'db> {
     pub fn build_let_placeholder_resolution(
         &self,
@@ -38,7 +52,11 @@ impl<'db> VdSynSymbolBuilder<'db> {
         // Order matters!
         self.build_let_clause_placeholder_ty(resolution.ty);
         match resolution.pattern {
-            VdSynPattern::Letter(token_idx_range, letter) => {
+            VdSynPattern::Letter {
+                token_idx_range,
+                letter,
+                pattern_expr,
+            } => {
                 self.define_symbol(
                     VdSynSymbolLocalDefnHead::Letter {
                         token_idx_range,

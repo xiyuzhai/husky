@@ -15,6 +15,23 @@ pub enum LxMathDistinctUpperGreekLetter {
     Omega,
 }
 
+impl LxMathDistinctUpperGreekLetter {
+    pub fn latex_code(self) -> String {
+        match self {
+            Self::Gamma => "\\Gamma".to_string(),
+            Self::Delta => "\\Delta".to_string(),
+            Self::Theta => "\\Theta".to_string(),
+            Self::Lambda => "\\Lambda".to_string(),
+            Self::Xi => "\\Xi".to_string(),
+            Self::Pi => "\\Pi".to_string(),
+            Self::Sigma => "\\Sigma".to_string(),
+            Self::Phi => "\\Phi".to_string(),
+            Self::Psi => "\\Psi".to_string(),
+            Self::Omega => "\\Omega".to_string(),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum LxMathDistinctLowerGreekLetter {
     Alpha,
@@ -41,6 +58,37 @@ pub enum LxMathDistinctLowerGreekLetter {
     Chi,
     Psi,
     Omega,
+}
+
+impl LxMathDistinctLowerGreekLetter {
+    pub fn latex_code(self) -> &'static str {
+        match self {
+            LxMathDistinctLowerGreekLetter::Alpha => "\\alpha",
+            LxMathDistinctLowerGreekLetter::Beta => "\\beta",
+            LxMathDistinctLowerGreekLetter::Gamma => "\\gamma",
+            LxMathDistinctLowerGreekLetter::Delta => "\\delta",
+            LxMathDistinctLowerGreekLetter::Epsilon => "\\epsilon",
+            LxMathDistinctLowerGreekLetter::Zeta => "\\zeta",
+            LxMathDistinctLowerGreekLetter::Eta => "\\eta",
+            LxMathDistinctLowerGreekLetter::Theta => "\\theta",
+            LxMathDistinctLowerGreekLetter::Iota => "\\iota",
+            LxMathDistinctLowerGreekLetter::Kappa => "\\kappa",
+            LxMathDistinctLowerGreekLetter::Lambda => "\\lambda",
+            LxMathDistinctLowerGreekLetter::Mu => "\\mu",
+            LxMathDistinctLowerGreekLetter::Nu => "\\nu",
+            LxMathDistinctLowerGreekLetter::Xi => "\\xi",
+            LxMathDistinctLowerGreekLetter::Omicron => "\\omicron",
+            LxMathDistinctLowerGreekLetter::Pi => "\\pi",
+            LxMathDistinctLowerGreekLetter::Rho => "\\rho",
+            LxMathDistinctLowerGreekLetter::Sigma => "\\sigma",
+            LxMathDistinctLowerGreekLetter::Tau => "\\tau",
+            LxMathDistinctLowerGreekLetter::Upsilon => "\\upsilon",
+            LxMathDistinctLowerGreekLetter::Phi => "\\phi",
+            LxMathDistinctLowerGreekLetter::Chi => "\\chi",
+            LxMathDistinctLowerGreekLetter::Psi => "\\psi",
+            LxMathDistinctLowerGreekLetter::Omega => "\\omega",
+        }
+    }
 }
 
 impl LxMathLetter {

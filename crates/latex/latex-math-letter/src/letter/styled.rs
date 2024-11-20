@@ -22,6 +22,20 @@ impl LxMathLetterStyle {
 }
 
 impl LxMathLetterStyle {
+    pub fn latex_code(self) -> String {
+        match self {
+            Self::Mathbb => "\\mathbb".to_string(),
+            Self::Mathcal => "\\mathcal".to_string(),
+            Self::Mathfrak => "\\mathfrak".to_string(),
+            Self::Mathit => "\\mathit".to_string(),
+            Self::Mathrm => "\\mathrm".to_string(),
+            Self::Mathscr => "\\mathscr".to_string(),
+            Self::Mathsf => "\\mathsf".to_string(),
+        }
+    }
+}
+
+impl LxMathLetterStyle {
     pub fn apply(self, letter: LxMathLetter) -> LxMathLetterResult<LxMathLetter> {
         match letter {
             LxMathLetter::UpperLatin(l) => Ok(LxMathLetter::StyledUpperLatin(self, l)),

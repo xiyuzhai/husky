@@ -170,8 +170,9 @@
         "husky-ki-repr",
     },
     "latex-ast": {
-        "latex-command",
         "latex-environment",
+        "latex-token",
+        "latex-vfs",
     },
     "latex-command": {
         "husky-coword",
@@ -179,28 +180,51 @@
     "latex-environment": {
         "husky-coword",
     },
-    "lean-hir-expr": {
+    "latex-token": {
+        "latex-command",
+    },
+    "latex-vfs": {},
+    "lean-item-path": {
+        "husky-coword",
+    },
+    "lean-mir-expr": {
         "lean-term",
     },
     "lean-sem-expr": {},
-    "lean-term": {},
+    "lean-term": {
+        "lean-item-path",
+    },
     "namekian-ast": {},
-    "visored-hir-expr": {
-        "visored-sem-expr",
+    "visored-global-dispatch": {
+        "visored-opr",
+        "visored-signature",
+    },
+    "visored-item-path": {
+        "latex-environment",
+        "latex-vfs",
     },
     "visored-lean-transpilation": {
-        "lean-hir-expr",
+        "lean-mir-expr",
         "lean-sem-expr",
-        "visored-hir-expr",
+        "visored-mir-expr",
+    },
+    "visored-mir-expr": {
+        "visored-sem-expr",
     },
     "visored-opr": {},
     "visored-sem-expr": {
+        "visored-global-dispatch",
         "visored-syn-expr",
+    },
+    "visored-signature": {
+        "visored-term",
     },
     "visored-syn-expr": {
         "latex-ast",
         "visored-opr",
-        "visored-zfc-ty",
+        "visored-term",
     },
-    "visored-zfc-ty": {},
+    "visored-term": {
+        "visored-item-path",
+    },
 }

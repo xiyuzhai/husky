@@ -12,6 +12,10 @@ impl LnLiteral {
     pub fn new(data: LnLiteralData, db: &::salsa::Db) -> Self {
         Self(LnTermId::new(db, data.into()))
     }
+
+    pub(crate) fn show(&self, db: &salsa::Db) -> String {
+        todo!()
+    }
 }
 
 impl LnLiteral {

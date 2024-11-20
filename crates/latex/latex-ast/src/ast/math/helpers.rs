@@ -2,7 +2,7 @@ use super::*;
 
 pub enum LxMathAstChild {
     Ast(LxMathAstIdx),
-    CommandArgument(LxMathCommandArgument),
+    CommandArgument(LxMathCompleteCommandArgument),
 }
 
 impl LxMathAstData {
@@ -35,6 +35,8 @@ impl LxMathAstData {
             LxMathAstData::Environment { asts, .. } => match asts {
                 LxAstIdxRange::Math(asts) => asts.into_iter().map(LxMathAstChild::Ast).collect(),
                 LxAstIdxRange::Rose(asts) => todo!(),
+                LxAstIdxRange::Lisp(asts) => todo!(),
+                LxAstIdxRange::Root(arena_idx_range) => todo!(),
             },
         }
     }

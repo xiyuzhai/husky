@@ -7,6 +7,7 @@ pub struct LxCommandParameter {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum LxCommandParameterMode {
+    Name,
     Math,
     Rose,
     SingleLetter,

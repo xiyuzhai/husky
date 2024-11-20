@@ -6,6 +6,7 @@ use crate::{
     phrase::{VdSemPhraseArena, VdSemPhraseArenaRef, VdSemPhraseData, VdSemPhraseIdx},
     sentence::{VdSemSentenceArena, VdSemSentenceArenaRef, VdSemSentenceData, VdSemSentenceIdx},
     stmt::{VdSemStmtArena, VdSemStmtArenaRef},
+    symbol::local_defn::storage::VdSemSymbolLocalDefnStorage,
 };
 
 pub struct VdSemExprRegionData {
@@ -15,6 +16,7 @@ pub struct VdSemExprRegionData {
     sentence_arena: VdSemSentenceArena,
     stmt_arena: VdSemStmtArena,
     division_arena: VdSemDivisionArena,
+    sem_symbol_local_defn_storage: VdSemSymbolLocalDefnStorage,
 }
 
 impl VdSemExprRegionData {
@@ -25,6 +27,7 @@ impl VdSemExprRegionData {
         sentence_arena: VdSemSentenceArena,
         stmt_arena: VdSemStmtArena,
         division_arena: VdSemDivisionArena,
+        sem_symbol_local_defn_storage: VdSemSymbolLocalDefnStorage,
     ) -> Self {
         Self {
             expr_arena,
@@ -33,6 +36,7 @@ impl VdSemExprRegionData {
             sentence_arena,
             stmt_arena,
             division_arena,
+            sem_symbol_local_defn_storage,
         }
     }
 
@@ -58,5 +62,9 @@ impl VdSemExprRegionData {
 
     pub fn division_arena(&self) -> VdSemDivisionArenaRef {
         self.division_arena.as_arena_ref()
+    }
+
+    pub fn sem_symbol_local_defn_storage(&self) -> &VdSemSymbolLocalDefnStorage {
+        &self.sem_symbol_local_defn_storage
     }
 }

@@ -103,6 +103,7 @@ mod tests {
             &command_signature_table,
             &environment_signature_table,
             input,
+            LxTokenLane::Main,
             LxMode::Math,
             &mut token_storage,
             &mut ast_arena,

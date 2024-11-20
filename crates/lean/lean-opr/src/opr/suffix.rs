@@ -11,4 +11,8 @@ impl LnSuffixOpr {
     pub fn precedence_range(self) -> LnPrecedenceRange {
         todo!()
     }
+
+    pub fn outer_precedence(&self) -> crate::precedence::LnPrecedence {
+        todo!()
+    }
 }

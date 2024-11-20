@@ -20,6 +20,7 @@ pub enum VdSemSentenceData {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VdSemSentenceEnd {
     Period(LxRoseTokenIdx),
+    Void,
 }
 
 pub type VdSemSentenceArena = Arena<VdSemSentenceData>;
@@ -55,6 +56,7 @@ impl ToVdSem<VdSemSentenceEnd> for VdSynSentenceEnd {
             VdSynSentenceEnd::Period(lx_rose_token_idx) => {
                 VdSemSentenceEnd::Period(lx_rose_token_idx)
             }
+            VdSynSentenceEnd::Void => VdSemSentenceEnd::Void,
         }
     }
 }
