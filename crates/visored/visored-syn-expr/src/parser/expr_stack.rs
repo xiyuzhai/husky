@@ -69,6 +69,20 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
         &self.stack.incomplete_exprs
     }
 
+    pub(super) fn might_accept_new_binary_opr_or_non_space_separator(&self) -> bool {
+        self.stack.complete_expr.is_some()
+            || matches!(
+                self.stack.incomplete_exprs.last(),
+                Some(&(
+                    IncompleteVdSynExprData::SeparatedList {
+                        separator_class: VdSeparatorClass::Space,
+                        ..
+                    },
+                    _
+                ))
+            )
+    }
+
     pub(super) fn take_last_incomplete_expr(&mut self) -> Option<IncompleteVdSynExprData> {
         self.stack.incomplete_exprs.pop().map(|(expr, _)| expr)
     }

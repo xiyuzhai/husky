@@ -1,4 +1,4 @@
-use crate::{data::math::LxMathTokenData, idx::LxMathTokenIdx, lexer::LxLexer};
+use crate::{idx::LxMathTokenIdx, lexer::LxLexer, token::math::LxMathTokenData};
 
 pub struct LxMathTokenStream<'a> {
     lexer: LxLexer<'a>,

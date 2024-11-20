@@ -13,6 +13,20 @@ pub enum LxRosePunctuation {
     Exclamation,
     /// `?`
     Question,
+    /// `{`
+    LeftCurl,
+    /// `}`
+    RightCurl,
+    /// `[`
+    LeftBox,
+    /// `]`
+    RightBox,
+    /// `\\`
+    EscapedBackslash,
+    /// `\{`
+    EscapedLcurl,
+    /// `\}`
+    EscapedRcurl,
 }
 
 impl LxRosePunctuation {
@@ -26,5 +40,29 @@ impl LxRosePunctuation {
             '?' => Some(Self::Question),
             _ => None,
         }
+    }
+
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            LxRosePunctuation::Comma => ",",
+            LxRosePunctuation::Period => ".",
+            LxRosePunctuation::Colon => ":",
+            LxRosePunctuation::Semicolon => ";",
+            LxRosePunctuation::Exclamation => "!",
+            LxRosePunctuation::Question => "?",
+            LxRosePunctuation::LeftCurl => "{",
+            LxRosePunctuation::RightCurl => "}",
+            LxRosePunctuation::LeftBox => "[",
+            LxRosePunctuation::RightBox => "]",
+            LxRosePunctuation::EscapedBackslash => "\\",
+            LxRosePunctuation::EscapedLcurl => "{",
+            LxRosePunctuation::EscapedRcurl => "}",
+        }
+    }
+}
+
+impl std::fmt::Display for LxRosePunctuation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.as_str())
     }
 }

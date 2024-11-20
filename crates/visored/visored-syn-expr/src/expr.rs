@@ -26,8 +26,8 @@ use latex_ast::ast::{
 use latex_math_letter::letter::LxMathLetter;
 use latex_prelude::script::LxScriptKind;
 use latex_token::{
-    data::math::LxMathDelimiter,
     idx::{LxMathTokenIdx, LxTokenIdx, LxTokenIdxRange},
+    token::math::LxMathDelimiter,
 };
 use range::VdSynExprTokenIdxRange;
 use smallvec::{smallvec, SmallVec};
@@ -53,7 +53,7 @@ use visored_opr::{
     precedence::{VdPrecedence, VdPrecedenceRange},
     separator::{VdBaseSeparator, VdSeparatorClass},
 };
-use visored_zfc_ty::term::literal::{VdZfcLiteral, VdZfcLiteralData};
+use visored_term::term::literal::{VdLiteral, VdLiteralData};
 
 /// It's a tree of both form and meaning
 #[salsa::derive_debug_with_db]
@@ -61,7 +61,7 @@ use visored_zfc_ty::term::literal::{VdZfcLiteral, VdZfcLiteralData};
 pub enum VdSynExprData {
     Literal {
         token_idx_range: LxTokenIdxRange,
-        literal: VdZfcLiteral,
+        literal: VdLiteral,
     },
     Letter {
         token_idx_range: LxTokenIdxRange,
@@ -116,6 +116,7 @@ pub enum VdSynExprData {
     Sqrt {
         // TODO: add field for the index or degree
         command_token_idx: LxMathTokenIdx,
+        radicand_lcurl_token_idx: LxMathTokenIdx,
         radicand: VdSynExprIdx,
         radicand_rcurl_token_idx: LxMathTokenIdx,
     },
@@ -430,10 +431,10 @@ impl VdSynExprData {
                 token_idx_range,
                 literal,
             } => match literal.data(db) {
-                VdZfcLiteralData::NaturalNumber(n) => n.to_string(),
-                VdZfcLiteralData::NegativeInteger(n) => n.to_string(),
-                VdZfcLiteralData::FiniteDecimalRepresentation(n) => n.to_string(),
-                VdZfcLiteralData::SpecialConstant(vd_zfc_special_constant) => todo!(),
+                VdLiteralData::NaturalNumber(n) => n.to_string(),
+                VdLiteralData::NegativeInteger(n) => n.to_string(),
+                VdLiteralData::FiniteDecimalRepresentation(n) => n.to_string(),
+                VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
             },
             VdSynExprData::Letter { letter, .. } => letter.latex_code().to_string(),
             VdSynExprData::BaseOpr { opr } => opr.latex_code().to_string(),

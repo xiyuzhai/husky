@@ -8153,9 +8153,9 @@ dependencies = [
  "enum-class",
  "expect-test",
  "husky-coword",
+ "husky-print-utils",
  "husky-tree-utils",
  "idx-arena",
- "latex-ast",
  "latex-command",
  "latex-environment",
  "latex-math-letter",
@@ -8163,6 +8163,7 @@ dependencies = [
  "latex-prelude",
  "latex-rose-punctuation",
  "latex-token",
+ "latex-vfs",
  "ptree",
  "salsa",
  "smallvec",
@@ -8219,6 +8220,7 @@ dependencies = [
 name = "latex-prelude"
 version = "0.1.0"
 dependencies = [
+ "latex-vfs",
  "salsa",
 ]
 
@@ -8240,8 +8242,17 @@ dependencies = [
  "latex-math-punctuation",
  "latex-prelude",
  "latex-rose-punctuation",
+ "ordered-float 4.2.2",
+ "rustc-hash 2.0.0",
  "salsa",
  "shifted-unsigned-int",
+]
+
+[[package]]
+name = "latex-vfs"
+version = "0.1.0"
+dependencies = [
+ "salsa",
 ]
 
 [[package]]
@@ -8296,7 +8307,17 @@ name = "lean-hir-defn"
 version = "0.1.0"
 
 [[package]]
-name = "lean-hir-expr"
+name = "lean-item-path"
+version = "0.1.0"
+dependencies = [
+ "husky-coword",
+ "lean-coword",
+ "salsa",
+ "smallvec",
+]
+
+[[package]]
+name = "lean-mir-expr"
 version = "0.1.0"
 dependencies = [
  "husky-tree-utils",
@@ -8307,13 +8328,6 @@ dependencies = [
  "lean-term",
  "salsa",
  "smallvec",
-]
-
-[[package]]
-name = "lean-item-path"
-version = "0.1.0"
-dependencies = [
- "salsa",
 ]
 
 [[package]]
@@ -8336,7 +8350,9 @@ name = "lean-term"
 version = "0.1.0"
 dependencies = [
  "enum-class",
+ "lean-item-path",
  "salsa",
+ "smallvec",
 ]
 
 [[package]]
@@ -12556,6 +12572,7 @@ dependencies = [
  "latex-environment",
  "latex-prelude",
  "latex-token",
+ "latex-vfs",
  "lazy_static 1.5.0",
  "salsa",
  "visored-annotation",
@@ -12569,41 +12586,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "visored-global-dispatch"
+version = "0.1.0"
+dependencies = [
+ "rustc-hash 2.0.0",
+ "salsa",
+ "visored-opr",
+ "visored-signature",
+ "visored-term",
+]
+
+[[package]]
 name = "visored-global-resolution"
 version = "0.1.0"
 dependencies = [
  "enum-index",
  "latex-command",
+ "latex-environment",
  "latex-math-letter",
  "latex-math-punctuation",
  "rustc-hash 2.0.0",
  "salsa",
  "visored-item-path",
  "visored-opr",
-]
-
-[[package]]
-name = "visored-hir-expr"
-version = "0.1.0"
-dependencies = [
- "either",
- "expect-test",
- "husky-coword",
- "husky-tree-utils",
- "idx-arena",
- "latex-ast",
- "latex-command",
- "latex-environment",
- "latex-prelude",
- "salsa",
- "visored-annotation",
- "visored-global-resolution",
- "visored-hir-expr",
- "visored-item-path",
- "visored-opr",
- "visored-sem-expr",
- "visored-syn-expr",
- "visored-zfc-ty",
+ "visored-prelude",
 ]
 
 [[package]]
@@ -12617,36 +12623,81 @@ dependencies = [
 name = "visored-item-path"
 version = "0.1.0"
 dependencies = [
+ "enum-class",
+ "husky-coword",
+ "latex-environment",
+ "latex-prelude",
+ "latex-vfs",
+ "rustc-hash 2.0.0",
  "salsa",
+ "visored-prelude",
 ]
 
 [[package]]
 name = "visored-lean-transpilation"
 version = "0.1.0"
 dependencies = [
+ "convert_case",
  "either",
  "expect-test",
  "husky-coword",
+ "husky-path-utils",
+ "husky-print-utils",
  "husky-tree-utils",
  "latex-ast",
  "latex-command",
  "latex-environment",
  "latex-prelude",
- "lean-hir-expr",
+ "latex-token",
+ "latex-vfs",
+ "lean-coword",
  "lean-item-path",
+ "lean-mir-expr",
  "lean-opr",
  "lean-sem-expr",
  "lean-term",
  "rustc-hash 2.0.0",
  "salsa",
+ "smallvec",
  "visored-annotation",
- "visored-hir-expr",
+ "visored-global-dispatch",
  "visored-item-path",
- "visored-lean-transpilation",
+ "visored-mir-expr",
  "visored-opr",
+ "visored-prelude",
  "visored-sem-expr",
+ "visored-signature",
  "visored-syn-expr",
- "visored-zfc-ty",
+ "visored-term",
+]
+
+[[package]]
+name = "visored-mir-expr"
+version = "0.1.0"
+dependencies = [
+ "either",
+ "expect-test",
+ "husky-coword",
+ "husky-tree-utils",
+ "idx-arena",
+ "latex-ast",
+ "latex-command",
+ "latex-environment",
+ "latex-math-letter",
+ "latex-prelude",
+ "latex-token",
+ "latex-vfs",
+ "salsa",
+ "visored-annotation",
+ "visored-global-dispatch",
+ "visored-global-resolution",
+ "visored-item-path",
+ "visored-opr",
+ "visored-prelude",
+ "visored-sem-expr",
+ "visored-signature",
+ "visored-syn-expr",
+ "visored-term",
 ]
 
 [[package]]
@@ -12657,6 +12708,10 @@ dependencies = [
  "enum-index",
  "salsa",
 ]
+
+[[package]]
+name = "visored-prelude"
+version = "0.1.0"
 
 [[package]]
 name = "visored-prototype"
@@ -12682,15 +12737,27 @@ dependencies = [
  "latex-math-letter",
  "latex-prelude",
  "latex-token",
+ "latex-vfs",
  "salsa",
  "smallvec",
  "thiserror",
  "visored-annotation",
+ "visored-global-dispatch",
  "visored-global-resolution",
+ "visored-item-path",
  "visored-opr",
- "visored-sem-expr",
+ "visored-prelude",
+ "visored-signature",
  "visored-syn-expr",
- "visored-zfc-ty",
+ "visored-term",
+]
+
+[[package]]
+name = "visored-signature"
+version = "0.1.0"
+dependencies = [
+ "salsa",
+ "visored-term",
 ]
 
 [[package]]
@@ -12706,6 +12773,7 @@ dependencies = [
  "husky-text-protocol",
  "husky-tree-utils",
  "idx-arena",
+ "itertools 0.13.0",
  "latex-ast",
  "latex-command",
  "latex-environment",
@@ -12713,24 +12781,29 @@ dependencies = [
  "latex-prelude",
  "latex-rose-punctuation",
  "latex-token",
+ "latex-vfs",
  "salsa",
+ "sealed",
  "smallvec",
  "thiserror",
  "visored-annotation",
  "visored-global-resolution",
+ "visored-item-path",
  "visored-opr",
- "visored-syn-expr",
- "visored-zfc-ty",
+ "visored-prelude",
+ "visored-term",
 ]
 
 [[package]]
-name = "visored-zfc-ty"
+name = "visored-term"
 version = "0.1.0"
 dependencies = [
  "enum-class",
+ "rustc-hash 2.0.0",
  "salsa",
  "smallvec",
  "visored-coword",
+ "visored-item-path",
 ]
 
 [[package]]

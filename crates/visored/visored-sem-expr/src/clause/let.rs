@@ -9,7 +9,7 @@ use visored_syn_expr::clause::r#let::VdSynLetClauseResolution;
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdSemLetClauseDispatch {
     Assigned(VdSemLetAssignedDispatch),
-    Unassigned(VdSemLetPlaceholderDispatch),
+    Placeholder(VdSemLetPlaceholderDispatch),
 }
 
 impl<'a> VdSemExprBuilder<'a> {

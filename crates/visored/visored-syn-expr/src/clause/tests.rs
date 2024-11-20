@@ -1,11 +1,13 @@
 use super::*;
-use crate::test_helpers::example::VdSynExprExample;
 use expect_test::{expect, Expect};
-use latex_prelude::mode::LxMode;
+use helpers::tracker::VdSynExprTracker;
+use latex_prelude::{helper::tracker::LxPageInput, mode::LxMode};
+use latex_vfs::path::LxFilePath;
+use std::path::PathBuf;
 use visored_annotation::annotation::{space::VdSpaceAnnotation, token::VdTokenAnnotation};
 
 fn t(
-    input: &str,
+    content: &str,
     token_annotations: &[((&str, &str), VdTokenAnnotation)],
     space_annotations: &[((&str, &str), VdSpaceAnnotation)],
     expected: &Expect,
@@ -13,14 +15,14 @@ fn t(
     use crate::helpers::show::display_tree::VdSynExprDisplayTreeBuilder;
 
     let db = &DB::default();
-    let example = VdSynExprExample::new(
-        input,
-        LxMode::Rose,
+    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
+    let tracker = VdSynExprTracker::new(
+        LxPageInput { file_path, content },
         token_annotations,
         space_annotations,
         db,
     );
-    expected.assert_eq(&example.show_display_tree(db));
+    expected.assert_eq(&tracker.show_display_tree(db));
 }
 
 #[test]

@@ -18,11 +18,13 @@ enum-index.workspace = true
 salsa.workspace = true
 # latex
 latex-command.workspace = true
+latex-environment.workspace = true
 latex-math-letter.workspace = true
 latex-math-punctuation.workspace = true
 # visored
-visored-opr.workspace = true
 visored-item-path.workspace = true
+visored-opr.workspace = true
+visored-prelude.workspace = true
 
 [lints]
 workspace = true

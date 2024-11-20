@@ -1,4 +1,4 @@
-use crate::{data::rose::LxRoseTokenData, idx::LxRoseTokenIdx, lexer::LxLexer};
+use crate::{idx::LxRoseTokenIdx, lexer::LxLexer, token::rose::LxRoseTokenData};
 
 pub struct LxRoseTokenStream<'a> {
     lexer: LxLexer<'a>,

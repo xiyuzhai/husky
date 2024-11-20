@@ -1,6 +1,7 @@
 use crate::{
     builder::VdSynExprBuilder,
     expr::{VdSynExprData, VdSynExprIdx},
+    symbol::local_defn::VdSynSymbolLocalDefnIdx,
 };
 use latex_math_letter::letter::LxMathLetter;
 use latex_token::idx::LxTokenIdxRange;
@@ -8,7 +9,12 @@ use latex_token::idx::LxTokenIdxRange;
 #[enum_class::from_variants]
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdSynPattern {
-    Letter(LxTokenIdxRange, LxMathLetter),
+    Letter {
+        token_idx_range: LxTokenIdxRange,
+        letter: LxMathLetter,
+        /// We have pattern expression here because local defn is not yet created yet.
+        pattern_expr: VdSynExprIdx,
+    },
 }
 
 impl<'db> VdSynExprBuilder<'db> {
@@ -21,7 +27,11 @@ impl<'db> VdSynExprBuilder<'db> {
             VdSynExprData::Letter {
                 token_idx_range,
                 letter,
-            } => VdSynPattern::Letter(token_idx_range, letter),
+            } => VdSynPattern::Letter {
+                token_idx_range,
+                letter,
+                pattern_expr,
+            },
             VdSynExprData::BaseOpr { opr } => todo!(),
             VdSynExprData::Binary { lopd, opr, ropd } => todo!(),
             VdSynExprData::Prefix { opr, opd } => todo!(),
@@ -52,6 +62,7 @@ impl<'db> VdSynExprBuilder<'db> {
             } => todo!(),
             VdSynExprData::Sqrt {
                 command_token_idx,
+                radicand_lcurl_token_idx,
                 radicand,
                 radicand_rcurl_token_idx,
             } => todo!(),

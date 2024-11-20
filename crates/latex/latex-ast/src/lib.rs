@@ -5,8 +5,6 @@ mod parser;
 pub mod range;
 pub mod region;
 pub mod sheet;
-#[cfg(feature = "test_helpers")]
-pub mod test_helpers;
 #[cfg(test)]
 mod tests;
 

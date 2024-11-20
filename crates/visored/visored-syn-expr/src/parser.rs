@@ -1,10 +1,10 @@
 // TODO: maybe move this under expr
 mod accept;
 mod debug;
+mod disambiguate;
 mod env;
 mod expr_stack;
 pub(crate) mod incomplete_expr;
-mod resolve;
 mod utils;
 
 use expr::VdSynExprIdx;

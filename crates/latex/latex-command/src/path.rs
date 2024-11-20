@@ -57,13 +57,13 @@ impl LxCommandName {
             Err(LxCommandNameError::Empty)?
         } else if data.len() == 1 {
             let c = data.chars().next().unwrap();
-            if !c.is_alphabetic() {
+            if !c.is_ascii_alphabetic() {
                 return Ok(Self::Escape(OneDigitNonLetterLxCommandName(c)));
             }
         } else {
             for c in data.chars() {
-                if !c.is_alphabetic() {
-                    Err(LxCommandNameError::NonAlphabeticCharater(c))?;
+                if !c.is_ascii_alphabetic() {
+                    Err(LxCommandNameError::NonAsciiAlphabeticCharater(c))?;
                 }
             }
         }
@@ -75,13 +75,13 @@ impl LxCommandName {
             Err(LxCommandNameError::Empty)?
         } else if data.len() == 1 {
             let c = data.chars().next().unwrap();
-            if !c.is_alphabetic() {
+            if !c.is_ascii_alphabetic() {
                 return Ok(Self::Escape(OneDigitNonLetterLxCommandName(c)));
             }
         } else {
             for c in data.chars() {
-                if !c.is_alphabetic() {
-                    Err(LxCommandNameError::NonAlphabeticCharater(c))?;
+                if !c.is_ascii_alphabetic() {
+                    Err(LxCommandNameError::NonAsciiAlphabeticCharater(c))?;
                 }
             }
         }
@@ -112,7 +112,7 @@ pub enum LxCommandNameError {
     Empty,
     /// for an identifier with len > 1, all characters must be alphabetic
     #[error("non alphabetic character `{0}` in command name is not allowed")]
-    NonAlphabeticCharater(char),
+    NonAsciiAlphabeticCharater(char),
 }
 
 pub type LxCommandNameResult<T> = Result<T, LxCommandNameError>;

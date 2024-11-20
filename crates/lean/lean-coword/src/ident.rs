@@ -5,7 +5,11 @@ use salsa::db::Db;
 pub struct LnIdent(Coword);
 
 impl LnIdent {
-    pub fn new(db: &Db, ident: &str) -> Self {
+    pub fn from_owned(ident: String, db: &::salsa::Db) -> Self {
+        LnIdent(Coword::from_owned(db, ident))
+    }
+
+    pub fn from_ref(ident: &str, db: &Db) -> Self {
         // TODO: allow broader idents, like h\1
         assert!(Self::is_valid(ident));
         LnIdent(Coword::from_ref(db, ident))

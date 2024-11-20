@@ -1,28 +1,39 @@
 use super::*;
-use crate::test_helpers::example::VdSemExprExample;
 use expect_test::{expect, Expect};
-use latex_prelude::mode::LxMode;
+use helpers::tracker::VdSemExprTracker;
+use latex_prelude::helper::tracker::LxPageInput;
+use latex_vfs::path::LxFilePath;
+use std::path::PathBuf;
 
-pub(crate) fn t(input: &str, expected: &Expect) {
+pub(crate) fn t(content: &str, expected: &Expect) {
     let db = &DB::default();
-    let example = VdSemExprExample::new(input, LxMode::Rose, &[], &[], db);
-    expected.assert_eq(&example.show_display_tree(db))
+    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
+    let tracker = VdSemExprTracker::new(LxPageInput { file_path, content }, &[], &[], db);
+    expected.assert_eq(&tracker.show_display_tree(db))
 }
 
 #[test]
 pub(crate) fn basic_vd_sem_clause_works() {
-    // t(
-    //     "Let $x=1$.",
-    //     &expect![[r#"
-    //         Let $x=1$.
-    //         └─ "Let $x=1$." stmt.paragraph
-    //           └─ "Let $x=1$." sentence.clauses
-    //             └─ "Let $x=1$" clause.let
-    //               └─ "x=1" expr.separated_list
-    //                 ├─ "x" expr.letter
-    //                 └─ "1" expr.literal
-    //     "#]],
-    // );
+    t(
+        "Let $x=1$. Let $y=-2x$.",
+        &expect![[r#"
+            Let $x=1$. Let $y=-2x$.
+            └─ "Let $x=1$. Let $y=-2x$." stmt.paragraph
+              ├─ "Let $x=1$." sentence.clauses
+              │ └─ "Let $x=1$" clause.let
+              │   └─ "x=1" expr.separated_list
+              │     ├─ "x" expr.letter
+              │     └─ "1" expr.literal
+              └─ "Let $y=-2x$." sentence.clauses
+                └─ "Let $y=-2x$" clause.let
+                  └─ "y=-2x" expr.separated_list
+                    ├─ "y" expr.letter
+                    └─ "-2x" expr.prefix
+                      └─ "2x" expr.separated_list
+                        ├─ "2" expr.literal
+                        └─ "x" expr.letter
+        "#]],
+    );
     t(
         "Let $x\\in \\mathbb{N}$. Assume $x=1$.",
         &expect![[r#"

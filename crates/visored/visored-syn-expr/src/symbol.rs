@@ -1,4 +1,5 @@
 pub(crate) mod builder;
+pub mod lineage;
 pub mod local_defn;
 pub mod resolution;
 pub mod scope;
@@ -9,8 +10,12 @@ use crate::{
     phrase::VdSynPhraseArenaRef, range::*, sentence::VdSynSentenceArenaRef,
     stmt::VdSynStmtArenaRef, *,
 };
+use division::VdSynDivisionMap;
+use entity_tree::VdSynExprEntityTreeNode;
+use helpers::tracker::IsVdSynOutput;
 use latex_math_letter::letter::LxMathLetter;
-use stmt::VdSynStmtIdxRange;
+use stmt::{VdSynStmtIdxRange, VdSynStmtMap};
+use visored_item_path::module::VdModulePath;
 
 pub enum VdSynSymbol {
     Letter(LxMathLetter),
@@ -20,7 +25,7 @@ pub struct VdSynExprVariableIdx {}
 
 pub struct VdSynExprVariableData {}
 
-pub(crate) fn build_all_symbol_defns_and_resolutions_in_expr_or_stmts(
+pub(crate) fn build_all_symbol_defns_and_resolutions_with(
     db: &::salsa::Db,
     token_storage: &LxTokenStorage,
     ast_arena: LxAstArenaRef,
@@ -39,14 +44,12 @@ pub(crate) fn build_all_symbol_defns_and_resolutions_in_expr_or_stmts(
     sentence_range_map: &VdSynSentenceTokenIdxRangeMap,
     stmt_range_map: &VdSynStmtTokenIdxRangeMap,
     division_range_map: &VdSynDivisionTokenIdxRangeMap,
-    expr_or_stmts: Either<VdSynExprIdx, VdSynStmtIdxRange>,
-) -> (VdSynSymbolLocalDefnTable, VdSynSymbolResolutionsTable) {
+    stmt_entity_tree_node_map: &VdSynStmtMap<VdSynExprEntityTreeNode>,
+    division_entity_tree_node_map: &VdSynDivisionMap<VdSynExprEntityTreeNode>,
+    t: impl IsVdSynOutput,
+) -> (VdSynSymbolLocalDefnStorage, VdSynSymbolResolutionsTable) {
     let mut symbol_builder = VdSynSymbolBuilder::new(
         db,
-        &token_storage,
-        ast_arena,
-        ast_token_idx_range_map,
-        annotations,
         default_resolution_table,
         expr_arena,
         phrase_arena,
@@ -60,10 +63,9 @@ pub(crate) fn build_all_symbol_defns_and_resolutions_in_expr_or_stmts(
         sentence_range_map,
         stmt_range_map,
         division_range_map,
+        stmt_entity_tree_node_map,
+        division_entity_tree_node_map,
     );
-    match expr_or_stmts {
-        Left(expr) => symbol_builder.build_expr(expr),
-        Right(stmts) => symbol_builder.build_stmts(stmts),
-    };
+    t.build_all_symbols(&mut symbol_builder);
     symbol_builder.finish()
 }

@@ -2,7 +2,10 @@ use crate::{
     clause::{
         VdSynClauseArena, VdSynClauseArenaRef, VdSynClauseData, VdSynClauseIdx, VdSynClauseMap,
     },
-    division::{VdSynDivisionArena, VdSynDivisionMap},
+    division::{
+        VdSynDivisionArena, VdSynDivisionArenaRef, VdSynDivisionData, VdSynDivisionIdx,
+        VdSynDivisionMap,
+    },
     expr::{
         VdSynExprArena, VdSynExprArenaRef, VdSynExprData, VdSynExprIdx, VdSynExprMap,
         VdSynLeftDelimiter, VdSynPrefixOpr, VdSynRightDelimiter, VdSynSeparator,
@@ -79,6 +82,7 @@ struct VdSynExprRangeCalculator<'db> {
     clause_arena: VdSynClauseArenaRef<'db>,
     sentence_arena: VdSynSentenceArenaRef<'db>,
     stmt_arena: VdSynStmtArenaRef<'db>,
+    division_arena: VdSynDivisionArenaRef<'db>,
     expr_range_map: VdSynExprTokenIdxRangeMap,
     phrase_range_map: VdSynPhraseTokenIdxRangeMap,
     clause_range_map: VdSynClauseTokenIdxRangeMap,
@@ -104,6 +108,7 @@ impl<'db> VdSynExprRangeCalculator<'db> {
             clause_arena: clause_arena.as_arena_ref(),
             sentence_arena: sentence_arena.as_arena_ref(),
             stmt_arena: stmt_arena.as_arena_ref(),
+            division_arena: division_arena.as_arena_ref(),
             expr_range_map: VdSynExprTokenIdxRangeMap::new(expr_arena),
             phrase_range_map: VdSynPhraseTokenIdxRangeMap::new(phrase_arena),
             clause_range_map: VdSynClauseTokenIdxRangeMap::new(clause_arena),
@@ -130,6 +135,9 @@ impl<'db> VdSynExprRangeCalculator<'db> {
         }
         for stmt in self.stmt_arena.index_iter() {
             self.infer_stmt(stmt);
+        }
+        for division in self.division_arena.index_iter() {
+            self.infer_division(division);
         }
     }
 
@@ -273,7 +281,7 @@ impl<'db> VdSynExprRangeCalculator<'db> {
         match self.clause_arena[clause] {
             VdSynClauseData::Let {
                 let_token_idx,
-                right_dollar_token_idx,
+                right_math_delimiter_token_idx: right_dollar_token_idx,
                 ..
             } => LxTokenIdxRange::new_closed(*let_token_idx, *right_dollar_token_idx),
             VdSynClauseData::Assume {
@@ -286,6 +294,7 @@ impl<'db> VdSynExprRangeCalculator<'db> {
                 right_dollar_token_idx,
                 ..
             } => LxTokenIdxRange::new_closed(*then_token_idx, *right_dollar_token_idx),
+            VdSynClauseData::Todo(token_idx) => LxTokenIdxRange::new_closed(*token_idx, *token_idx),
         }
     }
 
@@ -308,6 +317,7 @@ impl<'db> VdSynExprRangeCalculator<'db> {
                 let clauses_range = self.get_clause(clauses.start());
                 match end {
                     VdSynSentenceEnd::Period(token_idx) => clauses_range.to_included(*token_idx),
+                    VdSynSentenceEnd::Void => clauses_range,
                 }
             }
         }
@@ -334,13 +344,52 @@ impl<'db> VdSynExprRangeCalculator<'db> {
                     self.get_sentence(sentences.last().expect("sentences are always non-empty"));
                 first.join(last)
             }
-            VdSynStmtData::Block { environment, stmts } => todo!(),
+            VdSynStmtData::Environment {
+                begin_command_token_idx,
+                end_rcurl_token_idx,
+                ..
+            } => LxTokenIdxRange::new_closed(*begin_command_token_idx, *end_rcurl_token_idx),
         }
     }
 
     fn get_stmt(&mut self, stmt: VdSynStmtIdx) -> VdSynStmtTokenIdxRange {
         self.infer_stmt(stmt);
         self.stmt_range_map[stmt]
+    }
+
+    fn infer_division(&mut self, division: VdSynDivisionIdx) {
+        if self.division_range_map.has(division) {
+            return;
+        }
+        let range = self.calc_division(division);
+        self.division_range_map.insert(division, range);
+    }
+
+    fn calc_division(&mut self, division: VdSynDivisionIdx) -> VdSynDivisionTokenIdxRange {
+        match self.division_arena[division] {
+            VdSynDivisionData::Stmts { stmts } => {
+                // TODO: this might be wrong
+                let first = self.get_stmt(stmts.first().expect("stmts are always non-empty"));
+                let last = self.get_stmt(stmts.last().expect("stmts are always non-empty"));
+                first.join(last)
+            }
+            VdSynDivisionData::Divisions {
+                command_token_idx,
+                rcurl_token_idx,
+                subdivisions,
+                ..
+            } => match subdivisions.last() {
+                Some(last) => {
+                    LxTokenIdxRange::new(*command_token_idx, self.get_division(last).end())
+                }
+                None => LxTokenIdxRange::new_closed(*command_token_idx, *rcurl_token_idx),
+            },
+        }
+    }
+
+    fn get_division(&mut self, division: VdSynDivisionIdx) -> VdSynDivisionTokenIdxRange {
+        self.infer_division(division);
+        self.division_range_map[division]
     }
 
     fn finish(

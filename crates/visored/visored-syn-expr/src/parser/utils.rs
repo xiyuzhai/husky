@@ -50,6 +50,7 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
             } => todo!(),
             VdSynExprData::Sqrt {
                 command_token_idx,
+                radicand_lcurl_token_idx,
                 radicand,
                 radicand_rcurl_token_idx,
             } => todo!(),

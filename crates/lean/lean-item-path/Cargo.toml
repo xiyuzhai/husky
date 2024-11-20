@@ -12,8 +12,15 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+smallvec.workspace = true
 # abstractions
 salsa.workspace = true
+# lean
+lean-coword.workspace = true
+
+[dev-dependencies]
+# kernel
+husky-coword.workspace = true
 
 [lints]
 workspace = true

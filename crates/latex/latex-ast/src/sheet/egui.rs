@@ -25,6 +25,8 @@ impl<'a> LxAstView<'a> {
                 LxRoseAstData::TextEdit { .. } => todo!(),
                 _ => todo!(),
             },
+            LxAstIdx::Lisp(arena_idx) => todo!(),
+            LxAstIdx::Root(arena_idx) => todo!(),
         }
     }
 }

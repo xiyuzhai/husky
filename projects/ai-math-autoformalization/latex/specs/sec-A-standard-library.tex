@@ -1,0 +1,172 @@
+% \section{Standard Library}
+% \subsection{Item Paths}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Path} & \textbf{Description}     \\
+%     \hline
+%     std::path     & Standard path operations \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Basic Types}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Type} & \textbf{Description}         \\
+%     \hline
+%     bool          & Boolean type (true/false)    \\
+%     int           & Integer numbers              \\
+%     float         & Floating-point numbers       \\
+%     string        & Text sequences               \\
+%     list<T>       & Ordered collection of type T \\
+%     set<T>        & Unique collection of type T  \\
+%     map<K,V>      & Key-value associations       \\
+%     option<T>     & Optional value of type T     \\
+%     result<T,E>   & Success T or error E value   \\
+%     vector<T>     & Mathematical vector          \\
+%     matrix<T>     & Mathematical matrix          \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Basic Functions}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function} & \textbf{Description}     \\
+%     \hline
+%     add(x, y)         & Addition operation       \\
+%     sub(x, y)         & Subtraction operation    \\
+%     mul(x, y)         & Multiplication operation \\
+%     div(x, y)         & Division operation       \\
+%     pow(x, y)         & Exponentiation           \\
+%     sqrt(x)           & Square root              \\
+%     log(x)            & Natural logarithm        \\
+%     exp(x)            & Exponential function     \\
+%     abs(x)            & Absolute value           \\
+%     floor(x)          & Floor function           \\
+%     ceil(x)           & Ceiling function         \\
+%     round(x)          & Rounding function        \\
+%     min(x, y)         & Minimum of two values    \\
+%     max(x, y)         & Maximum of two values    \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Collection Operations}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function} & \textbf{Description}               \\
+%     \hline
+%     map(f, xs)        & Apply function to each element     \\
+%     filter(p, xs)     & Keep elements satisfying predicate \\
+%     reduce(f, xs)     & Reduce collection using function   \\
+%     zip(xs, ys)       & Pair corresponding elements        \\
+%     flatten(xss)      & Flatten nested collections         \\
+%     sort(xs)          & Sort collection                    \\
+%     reverse(xs)       & Reverse collection order           \\
+%     length(xs)        & Collection size                    \\
+%     contains(xs, x)   & Test element membership            \\
+%     \hline
+% \end{tabular}
+
+% \subsection{String Operations}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function}    & \textbf{Description}      \\
+%     \hline
+%     concat(s1, s2)       & String concatenation      \\
+%     split(s, sep)        & Split string on separator \\
+%     trim(s)              & Remove whitespace         \\
+%     lowercase(s)         & Convert to lowercase      \\
+%     uppercase(s)         & Convert to uppercase      \\
+%     replace(s, old, new) & Replace substring         \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Mathematical Functions}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function} & \textbf{Description} \\
+%     \hline
+%     sin(x)            & Sine function        \\
+%     cos(x)            & Cosine function      \\
+%     tan(x)            & Tangent function     \\
+%     asin(x)           & Inverse sine         \\
+%     acos(x)           & Inverse cosine       \\
+%     atan(x)           & Inverse tangent      \\
+%     sinh(x)           & Hyperbolic sine      \\
+%     cosh(x)           & Hyperbolic cosine    \\
+%     tanh(x)           & Hyperbolic tangent   \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Linear Algebra Operations}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function} & \textbf{Description} \\
+%     \hline
+%     dot(v1, v2)       & Vector dot product   \\
+%     cross(v1, v2)     & Vector cross product \\
+%     norm(v)           & Vector norm          \\
+%     transpose(m)      & Matrix transpose     \\
+%     det(m)            & Matrix determinant   \\
+%     inv(m)            & Matrix inverse       \\
+%     eigenvals(m)      & Matrix eigenvalues   \\
+%     eigenvecs(m)      & Matrix eigenvectors  \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Resolution Rules}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Rule} & \textbf{Description}      \\
+%     \hline
+%     resolve\_path & Path resolution algorithm \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Error Handling}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function} & \textbf{Description}      \\
+%     \hline
+%     ok(value)         & Create success result     \\
+%     err(error)        & Create error result       \\
+%     is\_ok(result)    & Test if result is success \\
+%     is\_err(result)   & Test if result is error   \\
+%     unwrap(result)    & Extract success value     \\
+%     catch(result, f)  & Handle error case         \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Dispatch Rules}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Rule} & \textbf{Description}        \\
+%     \hline
+%     dispatch\_fn  & Function dispatch mechanism \\
+%     \hline
+% \end{tabular}
+
+% \subsection{Type Conversion}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function} & \textbf{Description}    \\
+%     \hline
+%     to\_int(x)        & Convert to integer      \\
+%     to\_float(x)      & Convert to float        \\
+%     to\_string(x)     & Convert to string       \\
+%     to\_bool(x)       & Convert to boolean      \\
+%     parse\_int(s)     & Parse string as integer \\
+%     parse\_float(s)   & Parse string as float   \\
+%     \hline
+% \end{tabular}
+
+% \subsection{IO Operations}
+% \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+%     \hline
+%     \textbf{Function}          & \textbf{Description}     \\
+%     \hline
+%     read\_file(path)           & Read file contents       \\
+%     write\_file(path, content) & Write to file            \\
+%     print(x)                   & Print to standard output \\
+%     input()                    & Read from standard input \\
+%     \hline
+% \end{tabular}

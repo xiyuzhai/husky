@@ -17,6 +17,8 @@ pub enum LxCommandSignature {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LxCompleteCommandSignature {
     path: LxCommandPath,
+    // TODO: ad hoc
+    options: (),
     parameters: LxCommandParameters,
 }
 

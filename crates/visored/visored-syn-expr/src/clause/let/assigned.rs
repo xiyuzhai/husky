@@ -49,7 +49,11 @@ impl<'db> VdSynSymbolBuilder<'db> {
     ) {
         self.build_expr(resolution.assignment);
         match resolution.pattern {
-            VdSynPattern::Letter(token_idx_range, letter) => {
+            VdSynPattern::Letter {
+                token_idx_range,
+                letter,
+                pattern_expr,
+            } => {
                 self.define_symbol(
                     VdSynSymbolLocalDefnHead::Letter {
                         token_idx_range,

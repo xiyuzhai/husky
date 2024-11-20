@@ -1,14 +1,14 @@
 use std::iter::Peekable;
 
 use crate::{
-    builder::VdSynExprBuilder,
+    builder::{ToVdSyn, VdSynExprBuilder},
     clause::{VdSynClauseIdx, VdSynClauseIdxRange},
 };
 use husky_coword::Coword;
 use idx_arena::{
     map::ArenaMap, ordered_map::ArenaOrderedMap, Arena, ArenaIdx, ArenaIdxRange, ArenaRef,
 };
-use latex_ast::ast::rose::{LxRoseAstData, LxRoseAstIdx};
+use latex_ast::ast::rose::{LxRoseAstData, LxRoseAstIdx, LxRoseAstIdxRange};
 use latex_rose_punctuation::LxRosePunctuation;
 use latex_token::idx::LxRoseTokenIdx;
 
@@ -38,6 +38,7 @@ impl VdSynSentenceData {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VdSynSentenceEnd {
     Period(LxRoseTokenIdx),
+    Void,
 }
 
 pub type VdSynSentenceArena = Arena<VdSynSentenceData>;
@@ -56,6 +57,9 @@ impl<'db> VdSynExprBuilder<'db> {
     ) -> VdSynSentenceData {
         let clauses = vec![self.parse_clause(token_idx, word, asts)];
         let end = loop {
+            if self.peek_new_division(asts).is_some() {
+                break VdSynSentenceEnd::Void;
+            }
             if let Some(ast_idx) = asts.next() {
                 match self.ast_arena()[ast_idx] {
                     LxRoseAstData::TextEdit { .. } => todo!(),
@@ -70,16 +74,34 @@ impl<'db> VdSynExprBuilder<'db> {
                             LxRosePunctuation::Semicolon => todo!(),
                             LxRosePunctuation::Exclamation => todo!(),
                             LxRosePunctuation::Question => todo!(),
+                            LxRosePunctuation::LeftCurl => todo!(),
+                            LxRosePunctuation::RightCurl => todo!(),
+                            LxRosePunctuation::LeftBox => todo!(),
+                            LxRosePunctuation::RightBox => todo!(),
+                            LxRosePunctuation::EscapedBackslash => todo!(),
+                            LxRosePunctuation::EscapedLcurl => todo!(),
+                            LxRosePunctuation::EscapedRcurl => todo!(),
                         }
                     }
-                    LxRoseAstData::Math {
-                        left_dollar_token_idx,
-                        math_asts,
-                        right_dollar_token_idx,
+                    LxRoseAstData::Math { .. } => todo!(),
+                    LxRoseAstData::Delimited {
+                        left_delimiter_token_idx,
+                        left_delimiter,
+                        asts,
+                        right_delimiter_token_idx,
+                        right_delimiter,
                     } => todo!(),
+                    LxRoseAstData::CompleteCommand {
+                        command_token_idx,
+                        command_path,
+                        options,
+                        ref arguments,
+                    } => todo!(),
+                    LxRoseAstData::Environment { .. } => todo!(),
+                    LxRoseAstData::NewParagraph(_) => todo!(),
                 }
             } else {
-                todo!()
+                break VdSynSentenceEnd::Void;
             }
         };
         let clauses = self.alloc_clauses(clauses);

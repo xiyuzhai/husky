@@ -1,0 +1,25 @@
+[package]
+name = "visored-term"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+rustc-hash.workspace = true
+smallvec.workspace = true
+# abstraction
+enum-class.workspace = true
+salsa.workspace = true
+# visored
+visored-coword.workspace = true
+visored-item-path.workspace = true
+
+[lints]
+workspace = true

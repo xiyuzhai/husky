@@ -5,7 +5,10 @@ use husky_dec_signature::signature::major_item::form::val::MajorValDecTemplate;
 #[salsa::interned]
 pub struct MajorValEthTemplate {
     pub path: MajorFormPath,
+    /// the type of the definition body
     pub return_ty: EthTerm,
+    /// the type of the expression when used
+    // TODO: maybe rename as output_ty?
     pub expr_ty: EthTerm,
 }
 

@@ -12,7 +12,10 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+# abstractions
 salsa.workspace = true
+# latex
+latex-vfs.workspace = true
 
 [lints]
 workspace = true

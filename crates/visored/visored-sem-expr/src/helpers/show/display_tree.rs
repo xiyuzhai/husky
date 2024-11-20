@@ -1,7 +1,10 @@
 use super::*;
 use crate::{
     clause::{VdSemClauseArenaRef, VdSemClauseChild, VdSemClauseData, VdSemClauseIdx},
-    division::VdSemDivisionArenaRef,
+    division::{
+        helpers::VdSemDivisionChild, VdSemDivisionArenaRef, VdSemDivisionData, VdSemDivisionIdx,
+        VdSemDivisionIdxRange,
+    },
     expr::{VdSemExprArenaRef, VdSemExprData, VdSemExprIdx},
     phrase::VdSemPhraseArenaRef,
     range::{
@@ -93,7 +96,7 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
                 .token_idx_range_offset_range(token_idx_range),
         };
         let source = &self.input[offset_range];
-        let value = match self.expr_arena[expr] {
+        let value = match *self.expr_arena[expr].data() {
             VdSemExprData::Literal {
                 token_idx_range,
                 literal,
@@ -117,14 +120,17 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
                 item,
                 right_delimiter,
             } => format!("{:?} delimited", source),
-            VdSemExprData::Fraction {
+            VdSemExprData::Frac {
                 numerator,
                 denominator,
                 ..
             } => format!("{:?} fraction", source),
             VdSemExprData::Sqrt { radicand, .. } => format!("{:?} sqrt", source),
         };
-        DisplayTree::new(value, self.render_exprs(self.expr_arena[expr].children()))
+        DisplayTree::new(
+            value,
+            self.render_exprs(self.expr_arena[expr].data().children()),
+        )
     }
 
     pub fn render_all_stmts(&self, stmts: VdSemStmtIdxRange) -> DisplayTree {
@@ -148,13 +154,18 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
         let stmt_range = self.stmt_range_map[stmt];
         let offset_range = self.token_storage.token_idx_range_offset_range(stmt_range);
         let source = &self.input[offset_range];
-        let value = match self.stmt_arena[stmt] {
+        let value = match *self.stmt_arena[stmt].data() {
             VdSemStmtData::Paragraph(arena_idx_range) => format!("{:?} stmt.paragraph", source),
-            VdSemStmtData::Block { environment, stmts } => format!("{:?} stmt.block", source),
+            VdSemStmtData::Environment {
+                environment_signature,
+                stmts,
+                begin_command_token_idx,
+                end_rcurl_token_idx,
+            } => format!("{:?} stmt.block", source),
         };
         DisplayTree::new(
             value,
-            self.render_stmt_children(self.stmt_arena[stmt].children()),
+            self.render_stmt_children(self.stmt_arena[stmt].data().children()),
         )
     }
 
@@ -168,7 +179,7 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
             .collect()
     }
 
-    fn render_sentence(&self, sentence: VdSemSentenceIdx) -> DisplayTree {
+    pub fn render_sentence(&self, sentence: VdSemSentenceIdx) -> DisplayTree {
         let sentence_range = self.sentence_range_map[sentence];
         let offset_range = self
             .token_storage
@@ -192,7 +203,7 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
             .collect()
     }
 
-    fn render_clause(&self, clause: VdSemClauseIdx) -> DisplayTree {
+    pub fn render_clause(&self, clause: VdSemClauseIdx) -> DisplayTree {
         let clause_range = self.clause_range_map[clause];
         let offset_range = self
             .token_storage
@@ -203,6 +214,7 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
             VdSemClauseData::Let { .. } => format!("{:?} clause.let", source),
             VdSemClauseData::Assume { .. } => format!("{:?} clause.assume", source),
             VdSemClauseData::Then { .. } => format!("{:?} clause.then", source),
+            VdSemClauseData::Todo(lx_rose_token_idx) => format!("{:?} clause.todo", source),
         };
         DisplayTree::new(
             value,
@@ -217,5 +229,43 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
                 VdSemClauseChild::Expr(expr) => self.render_expr(expr),
             })
             .collect()
+    }
+
+    pub fn render_divisions(&self, divisions: VdSemDivisionIdxRange) -> Vec<DisplayTree> {
+        divisions
+            .into_iter()
+            .map(|division| self.render_division(division))
+            .collect()
+    }
+
+    pub fn render_division(&self, division: VdSemDivisionIdx) -> DisplayTree {
+        let division_range = self.division_range_map[division];
+        let offset_range = self
+            .token_storage
+            .token_idx_range_offset_range(division_range);
+        let source = &self.input[offset_range];
+        let value = match *self.division_arena[division].data() {
+            VdSemDivisionData::Stmts { stmts } => format!("{:?} division.stmts", source),
+            VdSemDivisionData::Divisions { .. } => format!("{:?} division.divisions", source),
+        };
+        DisplayTree::new(
+            value,
+            self.division_arena[division]
+                .data()
+                .children()
+                .into_iter()
+                .map(|child| self.render_division_child(child))
+                .collect(),
+        )
+    }
+
+    fn render_division_child(&self, child: VdSemDivisionChild) -> DisplayTree {
+        match child {
+            VdSemDivisionChild::Division(division) => self.render_division(division),
+            VdSemDivisionChild::Title(stmts) => {
+                DisplayTree::new("title".to_string(), self.render_stmts(stmts))
+            }
+            VdSemDivisionChild::Stmt(stmt) => self.render_stmt(stmt),
+        }
     }
 }

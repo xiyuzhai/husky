@@ -30,6 +30,7 @@ pub enum VdSemClauseData {
         formula: VdSemExprIdx,
         right_dollar_token_idx: LxRoseTokenIdx,
     },
+    Todo(LxRoseTokenIdx),
 }
 
 pub type VdSemClauseArena = Arena<VdSemClauseData>;
@@ -53,9 +54,9 @@ impl<'a> VdSemExprBuilder<'a> {
         match self.syn_clause_arena()[clause] {
             VdSynClauseData::Let {
                 let_token_idx,
-                left_dollar_token_idx,
+                left_math_delimiter_token_idx: left_dollar_token_idx,
                 formula,
-                right_dollar_token_idx,
+                right_math_delimiter_token_idx: right_dollar_token_idx,
                 ref resolution,
             } => self.build_let_clause(
                 let_token_idx,
@@ -86,6 +87,7 @@ impl<'a> VdSemExprBuilder<'a> {
                 formula: formula.to_vd_sem(self),
                 right_dollar_token_idx,
             },
+            VdSynClauseData::Todo(token_idx) => VdSemClauseData::Todo(token_idx),
         }
     }
 }
@@ -117,6 +119,7 @@ impl VdSemClauseData {
                 formula,
                 right_dollar_token_idx,
             } => vec![VdSemClauseChild::Expr(formula)],
+            VdSemClauseData::Todo(..) => vec![],
         }
     }
 }

@@ -24,14 +24,18 @@ impl std::fmt::Display for LxMathLetter {
 }
 
 impl LxMathLetter {
-    pub fn latex_code(self) -> &'static str {
+    pub fn latex_code(self) -> String {
         match self {
-            LxMathLetter::UpperLatin(l) => l.upper_case_latex_code(),
-            LxMathLetter::LowerLatin(l) => l.lower_case_latex_code(),
-            LxMathLetter::StyledUpperLatin(lx_math_letter_style, lx_math_latin_letter) => todo!(),
-            LxMathLetter::StyledLowerLatin(lx_math_letter_style, lx_math_latin_letter) => todo!(),
-            LxMathLetter::DistinctUpperGreek(lx_math_upper_greek_letter) => todo!(),
-            LxMathLetter::DistinctLowerGreek(lx_math_lower_greek_letter) => todo!(),
+            LxMathLetter::UpperLatin(l) => l.upper_case_latex_code().to_string(),
+            LxMathLetter::LowerLatin(l) => l.lower_case_latex_code().to_string(),
+            LxMathLetter::StyledUpperLatin(style, l) => {
+                format!("{}{{{}}}", style.latex_code(), l.upper_case_latex_code())
+            }
+            LxMathLetter::StyledLowerLatin(style, l) => {
+                format!("{}{{{}}}", style.latex_code(), l.lower_case_latex_code())
+            }
+            LxMathLetter::DistinctUpperGreek(l) => l.latex_code().to_string(),
+            LxMathLetter::DistinctLowerGreek(l) => l.latex_code().to_string(),
         }
     }
 

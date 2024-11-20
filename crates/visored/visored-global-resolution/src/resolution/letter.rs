@@ -10,9 +10,9 @@ pub enum VdLetterGlobalResolution {
 pub type VdLetterGlobalResolutionMap = FxHashMap<LxMathLetter, VdLetterGlobalResolution>;
 
 impl VdLetterGlobalResolution {
-    pub const NATURAL_NUMBER: Self = Self::Item(VdItemPath::NATURAL_NUMBER);
-    pub const RATIONAL_NUMBER: Self = Self::Item(VdItemPath::RATIONAL_NUMBER);
-    pub const INTEGER: Self = Self::Item(VdItemPath::INTEGER);
-    pub const REAL_NUMBER: Self = Self::Item(VdItemPath::REAL_NUMBER);
-    pub const COMPLEX_NUMBER: Self = Self::Item(VdItemPath::COMPLEX_NUMBER);
+    pub const NATURAL_NUMBER: Self = Self::Item(VdItemPath::NAT);
+    pub const RATIONAL_NUMBER: Self = Self::Item(VdItemPath::RAT);
+    pub const INTEGER: Self = Self::Item(VdItemPath::INT);
+    pub const REAL_NUMBER: Self = Self::Item(VdItemPath::REAL);
+    pub const COMPLEX_NUMBER: Self = Self::Item(VdItemPath::COMPLEX);
 }

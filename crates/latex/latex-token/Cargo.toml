@@ -12,8 +12,10 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+rustc-hash.workspace = true
 # abstractions
 enum-class.workspace = true
+ordered-float.workspace = true
 salsa.workspace = true
 shifted-unsigned-int.workspace = true
 # kernel
