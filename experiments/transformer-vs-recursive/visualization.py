@@ -7,14 +7,16 @@ import pdb
 from brokenaxes import brokenaxes
 
 DATASETS = [
+    "n100000-f10-a5-c5-d3-v0.20-e0.50",
     "n200000-f20-a5-c5-d3-v0.20-e0.50",
-    "n300000-f40-a5-c5-d5-v0.20-e0.50"
+    "n300000-f40-a5-c5-d5-v0.20-e0.50",
+    "n400000-f80-a5-c5-d10-v0.20-e0.50",
 ]
 exp_dir = "results"
 
 I1R = 400 * (10**4)
-I2L = 1550 * (10**4)
-I2R = 1650 * (10**4)
+I2L = 1500 * (10**4)
+I2R = 1700 * (10**4)
 
 def dfs(path):
     if os.path.isdir(path):
@@ -24,7 +26,7 @@ def dfs(path):
 
 RUNS = list(dfs(exp_dir))
 
-plt.rcParams.update({'font.size': 18})
+plt.rcParams.update({'font.size': 14})
 
 for dataset in DATASETS:
     runs = [run for run in RUNS if dataset in run]
@@ -93,12 +95,15 @@ for dataset in DATASETS:
         fig = plt.figure(figsize=(6, 6))
         if "acc" in metric:
             bax = brokenaxes(xlims=((0, I1R), (I2L, I2R)), width_ratios=[5, 1],
-                             ylims=((0, 0.05), (0.6, 1.01)),
+                             ylims=((0, 0.05), (0.5, 1.01)),
                              hspace=.05, fig=fig)
         else:
             bax = brokenaxes(xlims=((0, I1R), (I2L, I2R)), width_ratios=[5, 1],
                              hspace=.05, fig=fig)
-            bax.set_ylim(bottom=0, top=1.5)
+            bax.set_ylim(bottom=0, top=1.0)
+        
+        # bax.axs[-1].set_xticks(ticks=right_ticks)
+
         for model in model_order:
             if model not in val_dict[metric]:
                 continue
