@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{natbib}
+\newtheorem{example}{Example}
+\begin{document}
+
+
+%%%%%% Note: I just skip all the requirement of x > 0, because it seems that adding 'Assume $x>0$.' will has some problem.
+
+%%%%%%%%% success examples %%%%%%%%%
+\begin{example}
+    Then $1+1=2$.
+\end{example}
+
+\begin{example}
+    Let $x\in\mathbb{R}$. Then $x^2\ge 0$.
+\end{example}
+
+\begin{example}
+    Let $a\in\mathbb{R}$. Let $b\in\mathbb{R}$. Then $a+b=b+a$.
+\end{example}
+
+\begin{example}
+    Let $x\in\mathbb{R}$. Then $x^2 \ge 0$.
+\end{example}
+
+% prove x + 1/x \geq 2 
+% fail case:
+% when I add 'Assume $x>0$.' after 'Let $x\in\mathbb{R}$.'
+% when I has two eq in a $$, like $x + \frac{1}{x} - 2 = \frac{x^2 + 1 - 2x}{x} = \frac{{(x-1)}^2}{x}$.
+\begin{example}
+    Let $x\in\mathbb{R}$. Then $x + \frac{1}{x} - 2 = \frac{x^2 + 1 - 2x}{x}$. 
+    Then $\frac{x^2 + 1 - 2x}{x} = \frac{{(x-1)}^2}{x}$.
+    Then $x + \frac{1}{x} - 2 = \frac{{(x-1)}^2}{x}$. 
+    Then $\frac{{(x-1)}^2}{x} \ge 0$. 
+    Then $x + \frac{1}{x} - 2 \ge 0$. 
+    Then $x + \frac{1}{x} \ge 2$.
+\end{example}
+
+
+
+%%%%%%%%% failure examples %%%%%%%%%
+% prove x^2 + 1 \geq 2x
+% \begin{example}
+%     Let $x\in\mathbb{R}$. Then $x^2 + 1 - 2x = {(x-1)}^2$. Then ${(x-1)}^2 \ge 0$. Then $x^2 + 1 - 2x \ge 0$. Then $x^2 + 1 \ge 2x$.
+% \end{example}
+
+% prove x + 1 \geq 2\sqrt{x}
+% \begin{example}
+%     Let $x\in\mathbb{R}$. Assume $x > 0$. Then $x + 1 - 2\sqrt{x} = {(\sqrt{x}-1)}^2$. Then ${(\sqrt{x}-1)}^2 \ge 0$. Then $x + 1 - 2\sqrt{x} \ge 0$. Then $x + 1 \ge 2\sqrt{x}$.
+% \end{example}
+
+% % prove 1/x + 1/y \geq 4/(x+y)
+% \begin{example}
+%     Let $x\in\mathbb{R}$. Let $y\in\mathbb{R}$. 
+%     Then $\frac{1}{x} + \frac{1}{y} - \frac{4}{x+y} = \frac{y(x+y) + x(x+y) - 4xy}{xy(x+y)}$.
+%     Then $\frac{y(x+y) + x(x+y) - 4xy}{xy(x+y)} = \frac{yx + x^2 + x^2 + yx - 4xy}{xy(x+y)}$.
+%     Then $\frac{yx + x^2 + x^2 + yx - 4xy}{xy(x+y)} = \frac{x^2 + x^2 -2xy}{xy(x+y)}$ % may has a jump step here
+%     Then $\frac{x^2 + x^2 -2xy}{xy(x+y)} = \frac{{(x-y)}^2}{xy(x+y)}$.
+%     Then $\frac{{(x-y)}^2}{xy(x+y)} \ge 0$.
+%     Then $\frac{1}{x} + \frac{1}{y} - \frac{4}{x+y} \ge 0$.
+%     Then $\frac{1}{x} + \frac{1}{y} \ge \frac{4}{x+y}$.
+% \end{example}
+
+% prove a/b + b/a \geq 2
+% \begin{example}
+%     Let $a\in\mathbb{R}$. Let $b\in\mathbb{R}$. 
+%     % Then $\frac{a}{b} + \frac{b}{a} - 2 = \frac{a^2 + b^2 - 2ab}{ab}$.
+%     % Then $\frac{a^2 + b^2 - 2ab}{ab} = \frac{{(a-b)}^2}{ab}$.
+%     % Then $\frac{{(a-b)}^2}{ab} \ge 0$.
+%     % Then $\frac{a}{b} + \frac{b}{a} - 2 \ge 0$.
+%     % Then $\frac{a}{b} + \frac{b}{a} \ge 2$.
+% \end{example}
+
+% prove x^2 + y^2 \ge 2xy
+% \begin{example}
+%     Let $x\in\mathbb{R}$. Let $y\in\mathbb{R}$. 
+%     Then $x^2 + y^2 - 2xy = {(x-y)}^2$. 
+%     Then ${(x-y)}^2 \ge 0$. 
+%     Then $x^2 + y^2 - 2xy \ge 0$. 
+%     Then $x^2 + y^2 \ge 2xy$.
+% \end{example}
+
+\end{document}
