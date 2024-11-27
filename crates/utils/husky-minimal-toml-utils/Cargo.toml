@@ -10,4 +10,5 @@ salsa.workspace = true
 # kernel
 husky-coword.workspace = true
 # utils
+husky-io-utils.workspace = true
 husky-print-utils.workspace = true

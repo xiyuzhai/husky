@@ -5,10 +5,13 @@ mod tests;
 use self::block::*;
 use crate::{expr::VdMirExprIdx, pattern::VdMirPattern, *};
 use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
-use visored_item_path::module::VdModulePath;
+use visored_entity_path::module::VdModulePath;
 use visored_prelude::division::VdDivisionLevel;
 use visored_sem_expr::{
-    clause::{r#let::VdSemLetClauseDispatch, VdSemClauseData, VdSemClauseIdx, VdSemClauseIdxRange},
+    clause::{
+        r#let::{placeholder::VdSemLetClausePlaceholderTypeRepr, VdSemLetClauseDispatch},
+        VdSemClauseData, VdSemClauseIdx, VdSemClauseIdxRange,
+    },
     division::{VdSemDivisionData, VdSemDivisionIdx, VdSemDivisionIdxRange},
     sentence::{VdSemSentenceData, VdSemSentenceIdx, VdSemSentenceIdxRange},
     stmt::{VdSemStmtData, VdSemStmtIdx, VdSemStmtIdxRange},
@@ -23,7 +26,7 @@ pub enum VdMirStmtData {
     },
     LetPlaceholder {
         pattern: VdMirPattern,
-        ty: VdType,
+        ty: VdMirExprIdx,
     },
     LetAssigned {
         pattern: VdMirPattern,
@@ -155,7 +158,9 @@ impl<'db> VdMirExprBuilder<'db> {
                 VdSemLetClauseDispatch::Assigned(dispatch) => todo!(),
                 VdSemLetClauseDispatch::Placeholder(dispatch) => VdMirStmtData::LetPlaceholder {
                     pattern: dispatch.pattern().to_vd_mir(self),
-                    ty: dispatch.ty(),
+                    ty: match *dispatch.ty_repr() {
+                        VdSemLetClausePlaceholderTypeRepr::Expr(ty_expr) => ty_expr.to_vd_mir(self),
+                    },
                 },
             },
             VdSemClauseData::Assume {
@@ -163,7 +168,10 @@ impl<'db> VdMirExprBuilder<'db> {
                 left_dollar_token_idx,
                 formula,
                 right_dollar_token_idx,
-            } => todo!(),
+            } => VdMirStmtData::LetPlaceholder {
+                pattern: VdMirPattern::Assumed,
+                ty: formula.to_vd_mir(self),
+            },
             VdSemClauseData::Then {
                 then_token_idx,
                 left_dollar_token_idx,

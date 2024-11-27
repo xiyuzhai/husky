@@ -48,7 +48,6 @@ husky-websocket-utils = { path = "../../utils/husky-websocket-utils", features =
 husky-trace-protocol = { workspace = true, features = ["trivial"] }
 
 [features]
-mock = []
 trivial = []
 egui = []
 message = []
@@ -72,4 +71,4 @@ server = [
     "dep:tokio-tungstenite",
     "husky-websocket-utils/easy_server"
 ]
-test_helpers = ["mock", "client", "server", "dep:sealed"]
+test_helpers = ["client", "server", "dep:sealed"]

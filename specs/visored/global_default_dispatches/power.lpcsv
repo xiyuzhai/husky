@@ -1,0 +1,8 @@
+//! Format:
+//!
+//! <base-type>, <exponent-type>, <signature-ident>
+nat, nat, nat_to_the_power_of_nat
+int, nat, int_to_the_power_of_nat
+rat, nat, rat_to_the_power_of_nat
+real, nat, real_to_the_power_of_nat
+complex, nat, complex_to_the_power_of_nat

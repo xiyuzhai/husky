@@ -60,7 +60,6 @@ impl<'a, Input: IsVdLeanTranspilationInput<'a>> VdLeanTranspilationTracker<'a, I
         input: Input,
         token_annotations: &[((&str, &str), VdTokenAnnotation)],
         space_annotations: &[((&str, &str), VdSpaceAnnotation)],
-        db: &::salsa::Db,
     ) -> Self {
         let VdMirExprTracker {
             root_module_path,
@@ -68,10 +67,9 @@ impl<'a, Input: IsVdLeanTranspilationInput<'a>> VdLeanTranspilationTracker<'a, I
             stmt_arena: vd_mir_stmt_arena,
             symbol_local_defn_storage: vd_mir_symbol_local_defn_storage,
             output,
-        } = VdMirExprTracker::new(input, &[], &[], db);
-        let dictionary = &VdLeanDictionary::new_standard(db);
+        } = VdMirExprTracker::new(input, &[], &[]);
+        let dictionary = &VdLeanDictionary::new_standard();
         let mut builder = VdLeanTranspilationBuilder::new(
-            db,
             vd_mir_expr_arena.as_arena_ref(),
             vd_mir_stmt_arena.as_arena_ref(),
             &vd_mir_symbol_local_defn_storage,
@@ -89,9 +87,8 @@ impl<'a, Input: IsVdLeanTranspilationInput<'a>> VdLeanTranspilationTracker<'a, I
         }
     }
 
-    pub fn show_display_tree(&self, db: &::salsa::Db) -> String {
+    pub fn show_display_tree(&self) -> String {
         let builder = LnMirExprDisplayTreeBuilder::new(
-            db,
             self.expr_arena.as_arena_ref(),
             self.stmt_arena.as_arena_ref(),
             self.tactic_arena.as_arena_ref(),
@@ -100,25 +97,20 @@ impl<'a, Input: IsVdLeanTranspilationInput<'a>> VdLeanTranspilationTracker<'a, I
         self.output.show_display_tree(&builder)
     }
 
-    pub fn show_fmt(&self, db: &::salsa::Db) -> String {
+    pub fn show_fmt(&self) -> String {
         let fmt_config = Default::default();
-        let mut formatter = self.formatter(db, &fmt_config);
+        let mut formatter = self.formatter(&fmt_config);
         self.output.show_fmt(&mut formatter);
         formatter.finish()
     }
 
-    fn formatter<'b>(
-        &'b self,
-        db: &'b ::salsa::Db,
-        config: &'b LnMirExprFormatterConfig,
-    ) -> LnMirExprFormatter<'b> {
+    fn formatter<'b>(&'b self, config: &'b LnMirExprFormatterConfig) -> LnMirExprFormatter<'b> {
         LnMirExprFormatter::new(
             self.expr_arena.as_arena_ref(),
             self.stmt_arena.as_arena_ref(),
             self.tactic_arena.as_arena_ref(),
             self.defn_arena.as_arena_ref(),
             config,
-            db,
         )
     }
 }

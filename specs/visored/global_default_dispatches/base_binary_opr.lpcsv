@@ -1,0 +1,32 @@
+//! Format:
+//!
+//! <lopd-type>, <operator>, <ropd-type>, <signature-ident>
+// ## int
+nat, sub, nat, int_sub
+nat, sub, int, int_sub
+int, sub, nat, int_sub
+int, sub, int, int_sub
+// ## rat
+nat, sub, rat, rat_sub
+int, sub, rat, rat_sub
+rat, sub, nat, rat_sub
+rat, sub, int, rat_sub
+rat, sub, rat, rat_sub
+// ## real
+nat, sub, real, real_sub
+int, sub, real, real_sub
+rat, sub, real, real_sub
+real, sub, nat, real_sub
+real, sub, int, real_sub
+real, sub, rat, real_sub
+real, sub, real, real_sub
+// ## complex
+nat, sub, complex, complex_sub
+int, sub, complex, complex_sub
+rat, sub, complex, complex_sub
+real, sub, complex, complex_sub
+complex, sub, nat, complex_sub
+complex, sub, int, complex_sub
+complex, sub, rat, complex_sub
+complex, sub, real, complex_sub
+complex, sub, complex, complex_sub

@@ -1,5 +1,6 @@
 use crate::precedence::{VdPrecedence, VdPrecedenceRange};
 use enum_index::IsEnumIndex;
+use lisp_csv::expr::{LpCsvExpr, LpCsvExprData};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, IsEnumIndex, Hash)]
 pub enum VdBaseSeparator {
@@ -198,6 +199,35 @@ impl VdSeparatorClass {
             VdSeparatorClass::Add => VdPrecedenceRange::Greater(VdPrecedence::ADD_SUB),
             VdSeparatorClass::Mul => VdPrecedenceRange::Greater(VdPrecedence::MUL_DIV),
             VdSeparatorClass::Relation => VdPrecedenceRange::Greater(VdPrecedence::RELATION),
+        }
+    }
+}
+
+impl VdBaseSeparator {
+    pub fn from_lp_csv_expr(expr: &LpCsvExpr) -> Self {
+        let LpCsvExprData::Ident(ref ident) = expr.data else {
+            todo!()
+        };
+        match ident.as_str() {
+            "space" => Self::Space,
+            "comma" => Self::Comma,
+            "semicolon" => Self::Semicolon,
+            "add" => Self::Add,
+            "mul" => Self::Mul,
+            "dot" => Self::Dot,
+            "eq" => Self::Eq,
+            "ne" => Self::Ne,
+            "lt" => Self::Lt,
+            "gt" => Self::Gt,
+            "le" => Self::Le,
+            "ge" => Self::Ge,
+            "subset" => Self::Subset,
+            "supset" => Self::Supset,
+            "in" => Self::In,
+            "notin" => Self::Notin,
+            "times" => Self::Times,
+            "otimes" => Self::Otimes,
+            _ => todo!(),
         }
     }
 }

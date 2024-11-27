@@ -65,12 +65,16 @@ impl std::ops::Sub<Self> for TextOffset {
 
 /// # Offset Range
 
-#[derive(
-    Debug, PartialEq, Default, Eq, PartialOrd, Ord, Clone, Copy, Hash, Serialize, Deserialize,
-)]
+#[derive(PartialEq, Default, Eq, PartialOrd, Ord, Clone, Copy, Hash, Serialize, Deserialize)]
 pub struct TextOffsetRange {
     start: TextOffset,
     end: TextOffset,
+}
+
+impl std::fmt::Debug for TextOffsetRange {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}..{}", self.start, self.end)
+    }
 }
 
 impl From<Range<usize>> for TextOffsetRange {

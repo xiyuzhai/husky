@@ -20,7 +20,6 @@ use latex_ast::{ast::LxAstArenaRef, range::LxAstTokenIdxRangeMap};
 use latex_token::storage::LxTokenStorage;
 
 pub struct VdSemExprDisplayTreeBuilder<'a> {
-    db: &'a salsa::Db,
     input: &'a str,
     token_storage: &'a LxTokenStorage,
     ast_arena: LxAstArenaRef<'a>,
@@ -40,7 +39,6 @@ pub struct VdSemExprDisplayTreeBuilder<'a> {
 }
 impl<'a> VdSemExprDisplayTreeBuilder<'a> {
     pub(crate) fn new(
-        db: &'a salsa::Db,
         input: &'a str,
         token_storage: &'a LxTokenStorage,
         ast_arena: LxAstArenaRef<'a>,
@@ -59,7 +57,6 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
         division_range_map: &'a VdSemDivisionTokenIdxRangeMap,
     ) -> Self {
         Self {
-            db,
             input,
             token_storage,
             ast_arena,
@@ -108,7 +105,12 @@ impl<'a> VdSemExprDisplayTreeBuilder<'a> {
             } => format!("{:?} expr.binary", source),
             VdSemExprData::Prefix { opr, opd, .. } => format!("{:?} expr.prefix", source),
             VdSemExprData::Suffix { opd, opr, .. } => format!("{:?} expr.suffix", source),
-            VdSemExprData::SeparatedList { .. } => format!("{:?} expr.separated_list", source),
+            VdSemExprData::FoldingSeparatedList { .. } => {
+                format!("{:?} expr.folding_separated_list", source)
+            }
+            VdSemExprData::ChainingSeparatedList { .. } => {
+                format!("{:?} expr.chaining_separated_list", source)
+            }
             VdSemExprData::Attach { .. } => format!("{:?} expr.attach", source),
             VdSemExprData::UniadicChain => format!("{:?} expr.uniadic_chain", source),
             VdSemExprData::VariadicChain => format!("{:?} expr.variadic_chain", source),

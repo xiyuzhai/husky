@@ -2,7 +2,7 @@ use super::*;
 use pattern::VdSynPattern;
 use symbol::{
     builder::VdSynSymbolBuilder,
-    local_defn::{VdSynSymbolLocalDefnBody, VdSynSymbolLocalDefnHead},
+    local_defn::{VdSynSymbolLocalDefnBody, VdSynSymbolLocalDefnHead, VdSynSymbolLocalDefnSrc},
 };
 
 #[derive(Debug, PartialEq, Eq)]
@@ -60,7 +60,7 @@ impl<'db> VdSynSymbolBuilder<'db> {
                         letter,
                     },
                     VdSynSymbolLocalDefnBody::Assigned,
-                    clause.into(),
+                    VdSynSymbolLocalDefnSrc::LetAssigned(clause),
                 );
             }
         }

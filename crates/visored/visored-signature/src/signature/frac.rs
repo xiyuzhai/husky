@@ -1,5 +1,12 @@
 use super::*;
 
+#[salsa::derive_debug_with_db]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub enum VdFracSignature {
+    Base(VdBaseFracSignature),
+}
+
+#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct VdBaseFracSignature {
     instantiation: VdInstantiation,

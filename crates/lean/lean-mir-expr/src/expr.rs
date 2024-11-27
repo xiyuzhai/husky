@@ -3,7 +3,7 @@ pub mod application;
 use application::LnMirFunc;
 use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
 use lean_coword::ident::LnIdent;
-use lean_item_path::LnItemPath;
+use lean_entity_path::LnItemPath;
 use lean_opr::{
     opr::{binary::LnBinaryOpr, prefix::LnPrefixOpr, suffix::LnSuffixOpr},
     precedence::LnPrecedence,

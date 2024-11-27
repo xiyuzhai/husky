@@ -84,12 +84,19 @@ adversarial:
 	# cargo test
 	ADVERSARIAL_ROUND=1000 cargo test
 
-run-notebook:
-	cargo run --bin husky-notebook
-
 mnist-developer:
 	# SKIP_COMPILATION=1 cargo run --bin husky-mnist-classifier-developer
-	cargo run --bin husky-mnist-classifier-developer -- --nocapture
+	# cargo run --bin husky-mnist-classifier-developer -- --nocapture
+	cargo run --bin husky-developer -- --session sessions/mnist.yaml
+
+mnist-notebook:
+	cargo run --bin husky-notebook -- --session sessions/mnist.yaml
+
+latex2lean-developer:
+	cargo run --bin husky-developer -- --session sessions/latex2lean.yaml
+
+latex2lean-notebook:
+	cargo run --bin husky-notebook -- --session sessions/latex2lean.yaml
 
 cybertron-mini-lean-compiler-developer:
 	# SKIP_COMPILATION=1 cargo run --bin husky-mnist-classifier-developer

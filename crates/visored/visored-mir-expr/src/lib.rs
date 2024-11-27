@@ -1,7 +1,6 @@
 pub mod builder;
 pub mod expr;
 pub mod helpers;
-pub mod jar;
 pub mod pattern;
 pub mod region;
 pub mod stmt;
@@ -10,7 +9,6 @@ pub mod symbol;
 mod tests;
 
 use self::builder::VdMirExprBuilder;
-use self::jar::VdMirExprJar as Jar;
 #[cfg(test)]
 use self::tests::*;
 use either::*;

@@ -1,0 +1,88 @@
+//! format:
+//! <instance-ident> = <instantiation>, <signature-data-variant-path> <arg0> <arg1> ...
+//! <instantiation> = <item-path> <arg0> <arg1> ...
+# instances of lisp-csv
+
+## prefix operators
+### pos
+int_pos = ring_pos int, base_prefix_opr int int
+rat_pos = ring_pos rat, base_prefix_opr rat rat
+real_pos = ring_pos real, base_prefix_opr real real
+complex_pos = ring_pos complex, base_prefix_opr complex complex
+### neg
+int_neg = ring_neg int, base_prefix_opr int int
+rat_neg = ring_neg rat, base_prefix_opr rat rat
+real_neg = ring_neg real, base_prefix_opr real real
+complex_neg = ring_neg complex, base_prefix_opr complex complex
+## binary operators
+### sub
+int_sub = ring_sub int, base_binary_opr int int int
+rat_sub = ring_sub rat, base_binary_opr rat rat rat
+real_sub = ring_sub real, base_binary_opr real real real
+complex_sub = ring_sub complex, base_binary_opr complex complex complex
+### div
+// TODO: use nzrat, i.e., non-zero rational numbers
+rat_div = field_div rat, base_binary_opr rat rat rat
+// TODO: use nzreal, i.e., non-zero real numbers
+real_div = field_div real, base_binary_opr real real real
+// TODO: use nzcomplex, i.e., non-zero complex numbers
+complex_div = field_div complex, base_binary_opr complex complex complex
+## separators
+### add
+nat_add = nat_add, base_folding nat nat
+int_add = ring_add int, base_folding int int
+rat_add = ring_add rat, base_folding rat rat
+real_add = ring_add real, base_folding real real
+complex_add = ring_add complex, base_folding complex complex
+### mul
+nat_mul = nat_mul, base_folding nat nat
+int_mul = ring_mul int, base_folding int int
+rat_mul = ring_mul rat, base_folding rat rat
+real_mul = ring_mul real, base_folding real real
+complex_mul = ring_mul complex, base_folding complex complex
+### eq
+nat_eq = eq nat, base_chaining nat prop
+int_eq = eq int, base_chaining int prop
+rat_eq = eq rat, base_chaining rat prop
+real_eq = eq real, base_chaining real prop
+complex_eq = eq complex, base_chaining complex prop
+### ne
+nat_ne = ne nat, base_chaining nat prop
+int_ne = ne int, base_chaining int prop
+rat_ne = ne rat, base_chaining rat prop
+real_ne = ne real, base_chaining real prop
+complex_ne = ne complex, base_chaining complex prop
+### lt
+nat_lt = lt nat, base_chaining nat prop
+int_lt = lt int, base_chaining int prop
+rat_lt = lt rat, base_chaining rat prop
+real_lt = lt real, base_chaining real prop
+complex_lt = lt complex, base_chaining complex prop
+### gt
+nat_gt = gt nat, base_chaining nat prop
+int_gt = gt int, base_chaining int prop
+rat_gt = gt rat, base_chaining rat prop
+real_gt = gt real, base_chaining real prop
+complex_gt = gt complex, base_chaining complex prop
+### le
+nat_le = le nat, base_chaining nat prop
+int_le = le int, base_chaining int prop
+rat_le = le rat, base_chaining rat prop
+real_le = le real, base_chaining real prop
+complex_le = le complex, base_chaining complex prop
+### ge
+nat_ge = ge nat, base_chaining nat prop
+int_ge = ge int, base_chaining int prop
+rat_ge = ge rat, base_chaining rat prop
+real_ge = ge real, base_chaining real prop
+complex_ge = ge complex, base_chaining complex prop
+## sqrt
+// TODO: use nnreal, i.e., non-negative real numbers
+real_sqrt = real_sqrt, base_sqrt real real
+## attach
+### power
+nat_to_the_power_of_nat = ring_power nat, power nat nat nat
+int_to_the_power_of_nat = ring_power int, power int nat int
+rat_to_the_power_of_nat = ring_power rat, power rat nat rat
+real_to_the_power_of_nat = ring_power real, power real nat real
+complex_to_the_power_of_nat = ring_power complex, power complex nat complex

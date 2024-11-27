@@ -14,12 +14,12 @@ keywords.workspace = true
 [dependencies]
 rustc-hash.workspace = true
 # abstractions
+salsa = { workspace = true, optional = true }
+coword.workspace = true
 enum-class.workspace = true
+interned.workspace = true
 ordered-float.workspace = true
-salsa.workspace = true
 shifted-unsigned-int.workspace = true
-# kernel
-husky-coword.workspace = true
 # protocols
 husky-text-protocol.workspace = true
 # latex
@@ -36,3 +36,6 @@ expect-test.workspace = true
 
 [lints]
 workspace = true
+
+[features]
+salsa = ["dep:salsa"]

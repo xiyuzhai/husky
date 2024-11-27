@@ -1,10 +1,15 @@
 use super::{VdTerm, VdTermData, VdTermId, ZfcTerms};
 
-#[salsa::derive_debug_with_db]
-#[salsa::as_id]
-#[salsa::deref_id]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct VdApplication(VdTermId);
+
+impl std::ops::Deref for VdApplication {
+    type Target = VdTermId;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct VdApplicationData {
@@ -13,8 +18,8 @@ pub struct VdApplicationData {
 }
 
 impl VdApplication {
-    pub fn data(self, db: &::salsa::Db) -> &VdApplicationData {
-        match self.0.data(db) {
+    pub fn data(&self) -> &VdApplicationData {
+        match self.0.data() {
             VdTermData::Application(data) => data,
             _ => unreachable!(),
         }

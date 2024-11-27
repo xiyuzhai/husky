@@ -6,7 +6,7 @@ use crate::stmt::VdSemStmtIdxRange;
 use crate::*;
 use idx_arena::{map::ArenaMap, Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
 use latex_token::idx::LxRoseTokenIdx;
-use visored_item_path::module::VdModulePath;
+use visored_entity_path::module::VdModulePath;
 use visored_prelude::division::VdDivisionLevel;
 use visored_syn_expr::division::{VdSynDivisionData, VdSynDivisionIdx, VdSynDivisionIdxRange};
 

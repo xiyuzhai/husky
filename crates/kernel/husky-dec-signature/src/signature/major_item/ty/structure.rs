@@ -2,7 +2,7 @@ use crate::*;
 use husky_entity_path::path::major_item::ty::TypePath;
 use husky_syn_decl::decl::major_item::ty::structure::StructureSynDecl;
 
-#[salsa::tracked]
+#[salsa::interned]
 pub struct StructureTypeDecTemplate {
     #[return_ref]
     pub template_parameters: DecTemplateParameters,

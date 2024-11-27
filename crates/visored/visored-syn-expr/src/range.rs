@@ -47,7 +47,6 @@ pub type VdSynStmtTokenIdxRangeMap = VdSynStmtMap<VdSynStmtTokenIdxRange>;
 pub type VdSynDivisionTokenIdxRangeMap = VdSynDivisionMap<VdSynDivisionTokenIdxRange>;
 
 pub fn calc_expr_range_map(
-    db: &::salsa::Db,
     expr_arena: &VdSynExprArena,
     phrase_arena: &VdSynPhraseArena,
     clause_arena: &VdSynClauseArena,
@@ -63,7 +62,6 @@ pub fn calc_expr_range_map(
     VdSynDivisionTokenIdxRangeMap,
 ) {
     let mut calculator = VdSynExprRangeCalculator::new(
-        db,
         expr_arena,
         phrase_arena,
         clause_arena,
@@ -76,7 +74,6 @@ pub fn calc_expr_range_map(
 }
 
 struct VdSynExprRangeCalculator<'db> {
-    db: &'db ::salsa::Db,
     expr_arena: VdSynExprArenaRef<'db>,
     phrase_arena: VdSynPhraseArenaRef<'db>,
     clause_arena: VdSynClauseArenaRef<'db>,
@@ -93,7 +90,6 @@ struct VdSynExprRangeCalculator<'db> {
 
 impl<'db> VdSynExprRangeCalculator<'db> {
     fn new(
-        db: &'db ::salsa::Db,
         expr_arena: &'db VdSynExprArena,
         phrase_arena: &'db VdSynPhraseArena,
         clause_arena: &'db VdSynClauseArena,
@@ -102,7 +98,6 @@ impl<'db> VdSynExprRangeCalculator<'db> {
         division_arena: &'db VdSynDivisionArena,
     ) -> Self {
         Self {
-            db,
             expr_arena: expr_arena.as_arena_ref(),
             phrase_arena: phrase_arena.as_arena_ref(),
             clause_arena: clause_arena.as_arena_ref(),

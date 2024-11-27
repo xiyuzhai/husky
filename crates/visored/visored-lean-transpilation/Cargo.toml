@@ -17,13 +17,14 @@ either.workspace = true
 rustc-hash.workspace = true
 smallvec.workspace = true
 # abstractions
-salsa.workspace = true
+interned.workspace = true
+salsa = { workspace = true, optional = true }
 # latex
 latex-prelude.workspace = true
 # lean
 lean-coword.workspace = true
 lean-mir-expr.workspace = true
-lean-item-path.workspace = true
+lean-entity-path.workspace = true
 lean-opr.workspace = true
 lean-term.workspace = true
 # utils
@@ -31,10 +32,11 @@ husky-print-utils.workspace = true
 husky-tree-utils.workspace = true
 # visored
 visored-annotation.workspace = true
-visored-item-path.workspace = true
+visored-entity-path.workspace = true
 visored-mir-expr.workspace = true
 visored-opr.workspace = true
 visored-prelude.workspace = true
+visored-signature.workspace = true
 visored-term.workspace = true
 
 [dev-dependencies]
@@ -42,22 +44,21 @@ expect-test.workspace = true
 # kernel
 husky-coword.workspace = true
 # latex
+latex-ast.workspace = true
 latex-command.workspace = true
 latex-environment.workspace = true
-latex-ast.workspace = true
 latex-token.workspace = true
+latex-vfs.workspace = true
 # lean
 lean-term.workspace = true
 lean-sem-expr.workspace = true
 # utils
 husky-path-utils.workspace = true
 # visored
+visored-annotation.workspace = true
+visored-global-dispatch.workspace = true
 visored-sem-expr.workspace = true
 visored-syn-expr.workspace = true
-visored-global-dispatch.workspace = true
-visored-signature.workspace = true
-visored-annotation.workspace = true
-latex-vfs.workspace = true
 
 [lints]
 workspace = true

@@ -23,7 +23,7 @@ use husky_coword::coword_menu;
 use husky_entity_path::path::attr::AttrItemPath;
 use husky_entity_tree::node::attr::AttrSynNodePath;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[enum_class::from_variants]
 pub enum AttrSynNodeDecl {
     Affect(AffectAttrSynNodeDecl),
@@ -103,7 +103,7 @@ fn attr_syn_node_decl(db: &::salsa::Db, syn_node_path: AttrSynNodePath) -> AttrS
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[enum_class::from_variants]
 pub enum AttrSynDecl {
     Affect(AffectAttrSynDecl),

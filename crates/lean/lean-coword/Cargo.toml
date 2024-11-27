@@ -13,9 +13,8 @@ keywords.workspace = true
 
 [dependencies]
 # abstractions
-salsa.workspace = true
-# kernel
-husky-coword.workspace = true
+coword.workspace = true
+interned.workspace = true
 
 [lints]
 workspace = true

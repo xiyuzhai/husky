@@ -50,7 +50,7 @@ impl<'a> std::fmt::Debug for Text<'a> {
 }
 
 impl<'a> Text<'a> {
-    pub fn offset_range(self, range: TextRange) -> TextOffsetRange {
+    pub fn offset_range(self, range: TextPositionRange) -> TextOffsetRange {
         self.line_map.offset_range(range)
     }
 }

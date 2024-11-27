@@ -1,10 +1,15 @@
 use super::*;
 
-#[salsa::derive_debug_with_db]
-#[salsa::as_id]
-#[salsa::deref_id]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct VdItemPathTerm(VdTermId);
+
+impl std::ops::Deref for VdItemPathTerm {
+    type Target = VdTermId;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct VdItemPathTermData {
@@ -17,8 +22,14 @@ impl VdItemPathTermData {
     }
 }
 
+impl VdItemPathTerm {
+    pub fn new(item_path: VdItemPath) -> Self {
+        VdItemPathTerm(VdTermId::new(VdItemPathTermData { item_path }.into())).into()
+    }
+}
+
 impl VdTerm {
-    pub fn new_item_path(item_path: VdItemPath, db: &::salsa::Db) -> Self {
-        VdItemPathTerm(VdTermId::new(db, VdItemPathTermData { item_path }.into())).into()
+    pub fn new_item_path(item_path: VdItemPath) -> Self {
+        VdTerm::ItemPath(VdItemPathTerm::new(item_path))
     }
 }

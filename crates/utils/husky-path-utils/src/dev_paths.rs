@@ -9,11 +9,13 @@ pub struct HuskyLangDevPaths {
     library_dir: PathBuf,
     /// the path for dev examples
     examples_dir: PathBuf,
+    /// the path for experiments
+    experiments_dir: PathBuf,
     projects_dir: PathBuf,
     /// the path for dev registry
     registry_dir: PathBuf,
-    /// the path for experiments
-    experiments_dir: PathBuf,
+    sessions_dir: PathBuf,
+    specs_dir: PathBuf,
 }
 
 impl HuskyLangDevPaths {
@@ -27,14 +29,18 @@ impl HuskyLangDevPaths {
         let projects_dir = root.join("projects");
         let registry_dir = root.join("registry");
         let experiments_dir = root.join("experiments");
+        let sessions_dir = root.join("sessions");
+        let specs_dir = root.join("specs");
         Self {
             cargo_manifest_dir,
             root,
             library_dir,
             examples_dir,
+            experiments_dir,
             projects_dir,
             registry_dir,
-            experiments_dir,
+            sessions_dir,
+            specs_dir,
         }
     }
 
@@ -54,6 +60,10 @@ impl HuskyLangDevPaths {
         &self.examples_dir
     }
 
+    pub fn experiments_dir(&self) -> &PathBuf {
+        &self.experiments_dir
+    }
+
     pub fn projects_dir(&self) -> &PathBuf {
         &self.projects_dir
     }
@@ -62,7 +72,11 @@ impl HuskyLangDevPaths {
         &self.registry_dir
     }
 
-    pub fn experiments_dir(&self) -> &PathBuf {
-        &self.experiments_dir
+    pub fn sessions_dir(&self) -> &PathBuf {
+        &self.sessions_dir
+    }
+
+    pub fn specs_dir(&self) -> &PathBuf {
+        &self.specs_dir
     }
 }

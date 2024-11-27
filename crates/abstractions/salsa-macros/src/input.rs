@@ -53,7 +53,7 @@ impl crate::options::AllowedOptions for InputStruct {
 
 impl InputStruct {
     fn generate_input(&self) -> syn::Result<TokenStream> {
-        let id_struct = self.id_struct();
+        let id_struct = self.id_struct(SalsaStructKind::Input);
         let inherent_impl = self.input_inherent_impl();
         let ingredients_for_impl = self.input_ingredients();
         let as_id_impl = self.as_id_impl();

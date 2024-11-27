@@ -56,7 +56,7 @@ impl TrackedStruct {
         let (config_structs, config_impls) =
             self.field_config_structs_and_impls(self.value_fields());
 
-        let id_struct = self.id_struct();
+        let id_struct = self.id_struct(SalsaStructKind::Tracked);
         let inherent_impl = self.tracked_inherent_impl();
         let ingredients_for_impl = self.tracked_struct_ingredients(&config_structs);
         let salsa_struct_in_db_impl = self.salsa_struct_in_db_impl();

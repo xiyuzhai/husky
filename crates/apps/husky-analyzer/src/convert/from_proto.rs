@@ -1,4 +1,4 @@
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use husky_vfs::{jar::VfsDb, path::module_path::ModulePath};
 
 use crate::*;
@@ -43,7 +43,7 @@ pub(crate) fn module_path_and_range(
     db: &::salsa::Db,
     document_uri: &lsp_types::Url,
     range: lsp_types::Range,
-) -> Result<(ModulePath, TextRange)> {
+) -> Result<(ModulePath, TextPositionRange)> {
     let path = path_from_url(document_uri)?;
     let module_path = db.resolve_module_path_and_update_live_packages(&path)?;
     Ok((module_path, range.into()))

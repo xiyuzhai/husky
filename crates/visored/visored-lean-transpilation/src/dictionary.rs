@@ -4,7 +4,7 @@ pub mod item_path;
 use self::{func_key::*, item_path::*};
 use rustc_hash::FxHashMap;
 use smallvec::{smallvec, SmallVec};
-use visored_item_path::path::VdItemPath;
+use visored_entity_path::path::VdItemPath;
 use visored_mir_expr::expr::application::{VdMirFunc, VdMirFuncKey};
 use visored_term::instantiation::VdInstantiation;
 
@@ -19,10 +19,10 @@ impl VdLeanDictionary {
         todo!()
     }
 
-    pub fn new_standard(db: &::salsa::Db) -> Self {
+    pub fn new_standard() -> Self {
         Self {
             item_path_translation_table: VdItemPathDictionary::new_standard(),
-            func_key_translation_table: VdFuncKeyDictionary::new_standard(db),
+            func_key_translation_table: VdFuncKeyDictionary::new_standard(),
         }
     }
 }

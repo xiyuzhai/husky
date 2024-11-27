@@ -13,10 +13,9 @@ use expr::VdSynBinaryOpr;
 use latex_token::idx::LxTokenIdxRange;
 use sentence::VdSynSentenceEnd;
 use visored_opr::opr::binary::VdBaseBinaryOpr;
-use visored_term::{menu::vd_ty_menu, term::literal::VdLiteralData};
+use visored_term::{menu::VD_TYPE_MENU, term::literal::VdLiteralData};
 
 pub struct VdSynExprLaTeXFormatter<'a> {
-    db: &'a ::salsa::Db,
     expr_arena: VdSynExprArenaRef<'a>,
     phrase_arena: VdSynPhraseArenaRef<'a>,
     clause_arena: VdSynClauseArenaRef<'a>,
@@ -26,14 +25,12 @@ pub struct VdSynExprLaTeXFormatter<'a> {
 
 impl<'a> VdSynExprLaTeXFormatter<'a> {
     pub fn new(
-        db: &'a ::salsa::Db,
         expr_arena: VdSynExprArenaRef<'a>,
         phrase_arena: VdSynPhraseArenaRef<'a>,
         clause_arena: VdSynClauseArenaRef<'a>,
         sentence_arena: VdSynSentenceArenaRef<'a>,
     ) -> Self {
         Self {
-            db,
             expr_arena,
             phrase_arena,
             clause_arena,
@@ -93,9 +90,8 @@ impl<'a> VdSynExprLaTeXFormatter<'a> {
     }
 
     pub fn fmt_expr(&mut self, expr_idx: VdSynExprIdx) {
-        let db = self.db;
         match self.expr_arena[expr_idx] {
-            VdSynExprData::Literal { literal, .. } => match literal.data(db) {
+            VdSynExprData::Literal { literal, .. } => match literal.data() {
                 VdLiteralData::NaturalNumber(s) => {
                     if self
                         .result
@@ -108,7 +104,7 @@ impl<'a> VdSynExprLaTeXFormatter<'a> {
                     self.result.push_str(s);
                 }
                 VdLiteralData::NegativeInteger(_) => todo!(),
-                VdLiteralData::FiniteDecimalRepresentation(_) => {
+                VdLiteralData::Float(_) => {
                     todo!()
                 }
                 VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
@@ -160,8 +156,8 @@ impl<'a> VdSynExprLaTeXFormatter<'a> {
 #[ignore]
 fn latex_fmt_works() {
     // let db = &DB::default();
-    // let menu = vd_ty_menu(db);
-    // let mut builder = VdSynExprTestBuilder::new(db);
+    // let menu = VD_TYPE_MENU();
+    // let mut builder = VdSynExprTestBuilder::new();
     // let one = builder.new_expr_checked(
     //     VdSynExprData::Literal {
     //         literal: menu.one_literal(),

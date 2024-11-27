@@ -1,10 +1,24 @@
 use super::*;
 
+#[salsa::derive_debug_with_db]
+#[enum_class::from_variants]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub enum VdPrefixOprSignature {
+    Base(VdBasePrefixOprSignature),
+}
+
+#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct VdBasePrefixOprSignature {
     pub instantiation: VdInstantiation,
     pub opd_ty: VdType,
     pub expr_ty: VdType,
+}
+
+impl From<VdBasePrefixOprSignature> for VdSignature {
+    fn from(signature: VdBasePrefixOprSignature) -> Self {
+        VdSignature::PrefixOpr(VdPrefixOprSignature::Base(signature))
+    }
 }
 
 impl VdBasePrefixOprSignature {

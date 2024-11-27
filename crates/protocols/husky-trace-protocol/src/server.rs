@@ -411,7 +411,7 @@ pub trait IsTracetime: Send + 'static + Sized {
     type SerdeImpl: serde_impl::IsSerdeImpl;
 
     /// final
-    fn serve_traces(self, addr: impl ToSocketAddrs) {
+    fn serve_traces(self, addr: impl std::fmt::Debug + ToSocketAddrs) {
         TraceServer::new(self).easy_serve(addr)
     }
 

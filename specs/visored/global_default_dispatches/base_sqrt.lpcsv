@@ -1,0 +1,7 @@
+//! Format:
+//!
+//! <base-ty>, <signature-ident>
+nat, real_sqrt
+int, real_sqrt
+rat, real_sqrt
+real, real_sqrt

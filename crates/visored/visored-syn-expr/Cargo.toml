@@ -19,12 +19,12 @@ sealed.workspace = true
 smallvec.workspace = true
 thiserror.workspace = true
 # abstractions
-salsa.workspace = true
+coword.workspace = true
+salsa = { workspace = true, optional = true }
 idx-arena.workspace = true
-# kernel
-husky-coword.workspace = true
 # latex
 latex-math-letter.workspace = true
+latex-math-punctuation.workspace = true
 latex-rose-punctuation.workspace = true
 latex-prelude.workspace = true
 latex-token.workspace = true
@@ -41,7 +41,7 @@ husky-tree-utils.workspace = true
 # visored
 visored-annotation.workspace = true
 visored-global-resolution.workspace = true
-visored-item-path.workspace = true
+visored-entity-path.workspace = true
 visored-opr.workspace = true
 visored-prelude.workspace = true
 visored-term.workspace = true
@@ -52,8 +52,10 @@ expect-test.workspace = true
 husky-coword.workspace = true
 # latex
 latex-command.workspace = true
+# utils
+husky-path-utils.workspace = true
 # visored
-visored-item-path.workspace = true
+visored-entity-path.workspace = true
 
 [lints]
 workspace = true

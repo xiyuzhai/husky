@@ -334,7 +334,7 @@ impl Diagnose for OriginalSynExprError {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, ctx: &Self::Context<'_>) -> TextRange {
+    fn range(&self, ctx: &Self::Context<'_>) -> TextPositionRange {
         ctx.tokens_text_range(self.regional_token_idx_range())
     }
 }

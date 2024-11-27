@@ -8,10 +8,10 @@ tracing.workspace = true
 tracing-subscriber.workspace = true
 # comptime
 husky-dev-comptime.workspace = true
+# devsoul
+husky-standard-devsoul.workspace = true
 # devtime
 husky-devtime.workspace = true
 # protocols
 husky-standard-trace-protocol.workspace = true
 husky-ad-hoc-protocol.workspace = true
-# devsoul
-husky-standard-devsoul.workspace = true

@@ -15,27 +15,13 @@
         annotations: VdAnnotations {
             token_annotation_records: [
                 VdAnnotationRecord {
-                    offset_range: TextOffsetRange {
-                        start: TextOffset(
-                            0,
-                        ),
-                        end: TextOffset(
-                            1,
-                        ),
-                    },
+                    offset_range: 0..1,
                     annotation: Variable(
                         Usage,
                     ),
                 },
                 VdAnnotationRecord {
-                    offset_range: TextOffsetRange {
-                        start: TextOffset(
-                            1,
-                        ),
-                        end: TextOffset(
-                            2,
-                        ),
-                    },
+                    offset_range: 1..2,
                     annotation: Variable(
                         Usage,
                     ),
@@ -43,14 +29,7 @@
             ],
             space_annotation_records: [
                 VdAnnotationRecord {
-                    offset_range: TextOffsetRange {
-                        start: TextOffset(
-                            1,
-                        ),
-                        end: TextOffset(
-                            2,
-                        ),
-                    },
+                    offset_range: 1..2,
                     annotation: Apply(
                         ScalarMul,
                     ),
@@ -88,25 +67,11 @@
         annotations: VdAnnotations {
             token_annotation_records: [
                 VdAnnotationRecord {
-                    offset_range: TextOffsetRange {
-                        start: TextOffset(
-                            0,
-                        ),
-                        end: TextOffset(
-                            1,
-                        ),
-                    },
+                    offset_range: 0..1,
                     annotation: Differential,
                 },
                 VdAnnotationRecord {
-                    offset_range: TextOffsetRange {
-                        start: TextOffset(
-                            1,
-                        ),
-                        end: TextOffset(
-                            2,
-                        ),
-                    },
+                    offset_range: 1..2,
                     annotation: Variable(
                         SingleVariableIntegralVariableDecl,
                     ),

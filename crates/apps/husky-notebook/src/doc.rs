@@ -6,7 +6,6 @@ pub(crate) use self::tab::*;
 use self::arena::*;
 use super::*;
 use husky_gui::helpers::repaint_signal::EguiRepaintSignal;
-use husky_standard_linket_impl::pedestal::StandardPedestal;
 use husky_standard_trace_protocol::figure::StandardFigure;
 use husky_standard_trace_protocol::StandardTraceProtocol;
 use husky_trace_doc::doc::TraceDoc;
@@ -47,6 +46,8 @@ impl NotebookApp {
             title: "trace doc".to_string(),
             component: UiComponent::new(TraceDoc::<StandardTraceProtocol, _>::new(
                 self.tokio_runtime().clone(),
+                // TODO: ad hoc
+                format!("ws://localhost:{}/ws", self.session.port),
                 EguiRepaintSignal::new(ctx.clone()),
                 ctx,
             )),

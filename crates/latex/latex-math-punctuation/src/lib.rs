@@ -59,6 +59,7 @@ pub enum LxMathPunctuation {
     EscapedLcurl,
     /// Escaped right curly `}`
     EscapedRcurl,
+    Ldot,
 }
 
 pub type LxMathPunctuationMap<T> = EnumFullVecMap<LxMathPunctuation, T>;
@@ -94,6 +95,7 @@ impl LxMathPunctuation {
             LxMathPunctuation::Rbox => "]",
             LxMathPunctuation::EscapedLcurl => "\\{",
             LxMathPunctuation::EscapedRcurl => "\\}",
+            LxMathPunctuation::Ldot => ".",
         }
     }
 

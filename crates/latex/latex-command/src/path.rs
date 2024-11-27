@@ -1,9 +1,8 @@
 pub mod menu;
 
-use husky_coword::Coword;
+use coword::Coword;
 use thiserror::Error;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LxCommandPath {
     package: LxPackagePath,
@@ -15,27 +14,24 @@ pub enum LxPackagePath {
     Prelude,
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum LxCommandName {
     LettersOnly(LettersOnlyLxCommandName),
     Escape(OneDigitNonLetterLxCommandName),
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LettersOnlyLxCommandName(Coword);
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct OneDigitNonLetterLxCommandName(char);
 
 impl LxCommandPath {
     #[deprecated(note = "ad hoc")]
-    pub fn new_prelude(ident: Coword, db: &salsa::Db) -> Self {
+    pub fn new_prelude(ident: Coword) -> Self {
         Self {
             package: LxPackagePath::Prelude,
-            name: LxCommandName::new(ident, db).unwrap(),
+            name: LxCommandName::new(ident).unwrap(),
         }
     }
 }
@@ -51,8 +47,8 @@ impl LxCommandPath {
 }
 
 impl LxCommandName {
-    pub fn new(ident: Coword, db: &salsa::Db) -> LxCommandNameResult<Self> {
-        let data = ident.data(db);
+    pub fn new(ident: Coword) -> LxCommandNameResult<Self> {
+        let data = ident.data();
         if data.len() == 0 {
             Err(LxCommandNameError::Empty)?
         } else if data.len() == 1 {
@@ -70,7 +66,7 @@ impl LxCommandName {
         Ok(Self::LettersOnly(LettersOnlyLxCommandName(ident)))
     }
 
-    pub fn new2(data: &str, db: &salsa::Db) -> LxCommandNameResult<Self> {
+    pub fn new2(data: &str) -> LxCommandNameResult<Self> {
         if data.len() == 0 {
             Err(LxCommandNameError::Empty)?
         } else if data.len() == 1 {
@@ -86,25 +82,20 @@ impl LxCommandName {
             }
         }
         Ok(Self::LettersOnly(LettersOnlyLxCommandName(
-            Coword::from_ref(db, data),
+            Coword::from_ref(data),
         )))
     }
 }
 
-impl salsa::DisplayWithDb for LxCommandName {
-    fn display_fmt_with_db(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-        db: &salsa::Db,
-    ) -> std::fmt::Result {
+impl std::fmt::Display for LxCommandName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::LettersOnly(LettersOnlyLxCommandName(c)) => write!(f, "{}", c.data(db)),
+            Self::LettersOnly(LettersOnlyLxCommandName(c)) => write!(f, "{}", c.data()),
             Self::Escape(OneDigitNonLetterLxCommandName(c)) => write!(f, "{}", c),
         }
     }
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Error, PartialEq, Eq, Clone, Copy)]
 pub enum LxCommandNameError {
     /// command identifier cannot be empty

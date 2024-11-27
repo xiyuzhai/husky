@@ -108,7 +108,7 @@ impl LineMap {
         self.newlines[pos.line.index()] + usize::from(pos.col.index())
     }
 
-    pub fn offset_range(&self, range: impl Into<TextRange>) -> TextOffsetRange {
+    pub fn offset_range(&self, range: impl Into<TextPositionRange>) -> TextOffsetRange {
         let range = range.into();
         (self.offset(range.start)..self.offset(range.end)).into()
     }

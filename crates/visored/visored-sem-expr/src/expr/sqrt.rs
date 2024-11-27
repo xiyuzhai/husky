@@ -18,7 +18,7 @@ impl<'a> VdSemExprBuilder<'a> {
         let radicand = self.build_expr_entry(syn_radicand);
         if let Some(dispatch) = self
             .default_global_dispatch_table()
-            .sqrt_default_dispatch(radicand.ty)
+            .base_sqrt_default_dispatch(radicand.ty)
         {
             match dispatch {
                 VdSqrtGlobalDispatch::Base { signature } => {

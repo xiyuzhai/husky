@@ -1,7 +1,7 @@
 use crate::{line_map::LineMap, *};
 
 pub struct DocumentChange {
-    pub range: Option<TextRange>,
+    pub range: Option<TextPositionRange>,
     pub text: String,
 }
 

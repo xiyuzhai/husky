@@ -68,7 +68,7 @@ impl From<Id> for usize {
 }
 
 /// Trait for types that can be interconverted to a salsa Id;
-pub trait AsId: Sized + Copy + Eq + Hash + Debug {
+pub trait AsId: Sized + Copy + Eq + Debug {
     fn as_id(self) -> Id;
     fn from_id(id: Id) -> Self;
 }

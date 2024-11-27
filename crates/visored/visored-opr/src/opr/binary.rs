@@ -1,11 +1,8 @@
 use crate::precedence::{VdPrecedence, VdPrecedenceRange};
+use lisp_csv::expr::{LpCsvExpr, LpCsvExprData};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
 pub enum VdBaseBinaryOpr {
-    /// `a \times b`
-    Times,
-    /// `a \otimes b`
-    Otimes,
     /// a-b
     Sub,
     /// a/b
@@ -13,17 +10,26 @@ pub enum VdBaseBinaryOpr {
 }
 
 impl VdBaseBinaryOpr {
-    pub const TIMES: Self = VdBaseBinaryOpr::Times;
-    pub const OTIMES: Self = VdBaseBinaryOpr::Otimes;
     pub const SUB: Self = VdBaseBinaryOpr::Sub;
     pub const DIV: Self = VdBaseBinaryOpr::Div;
 }
 
 impl VdBaseBinaryOpr {
+    pub fn from_lp_csv_expr(expr: &LpCsvExpr) -> Self {
+        let LpCsvExprData::Ident(ref ident) = expr.data else {
+            todo!()
+        };
+        match ident.as_str() {
+            "sub" => VdBaseBinaryOpr::Sub,
+            "div" => VdBaseBinaryOpr::Div,
+            _ => todo!(),
+        }
+    }
+}
+
+impl VdBaseBinaryOpr {
     pub fn fmt_str(self) -> &'static str {
         match self {
-            VdBaseBinaryOpr::Times => todo!(),
-            VdBaseBinaryOpr::Otimes => todo!(),
             VdBaseBinaryOpr::Sub => todo!(),
             VdBaseBinaryOpr::Div => todo!(),
         }
@@ -31,8 +37,6 @@ impl VdBaseBinaryOpr {
 
     pub fn left_precedence_range(self) -> VdPrecedenceRange {
         match self {
-            VdBaseBinaryOpr::Times => VdPrecedenceRange::MUL_DIV_LEFT,
-            VdBaseBinaryOpr::Otimes => VdPrecedenceRange::MUL_DIV_LEFT,
             VdBaseBinaryOpr::Sub => VdPrecedenceRange::ADD_SUB_LEFT,
             VdBaseBinaryOpr::Div => todo!(),
         }
@@ -44,8 +48,6 @@ impl VdBaseBinaryOpr {
 
     pub fn latex_code(self) -> &'static str {
         match self {
-            VdBaseBinaryOpr::Times => "\\times",
-            VdBaseBinaryOpr::Otimes => "\\otimes",
             VdBaseBinaryOpr::Sub => "-",
             VdBaseBinaryOpr::Div => "/",
         }
@@ -53,8 +55,6 @@ impl VdBaseBinaryOpr {
 
     pub fn precedence(self) -> VdPrecedence {
         match self {
-            VdBaseBinaryOpr::Times => VdPrecedence::MUL_DIV,
-            VdBaseBinaryOpr::Otimes => VdPrecedence::MUL_DIV,
             VdBaseBinaryOpr::Sub => VdPrecedence::ADD_SUB,
             VdBaseBinaryOpr::Div => VdPrecedence::MUL_DIV,
         }

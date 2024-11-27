@@ -37,6 +37,30 @@ where
     hotkey_map: HotkeyMap<TraceDocHotkeyAction>,
 }
 
+impl<TraceProtocol: IsTraceProtocolFull> TraceDoc<TraceProtocol, EguiRepaintSignal> {
+    pub fn new(
+        tokio_runtime: Arc<tokio::runtime::Runtime>,
+        server_address: impl Into<String>,
+        repaint_signal: EguiRepaintSignal,
+        _ctx: &egui::Context,
+    ) -> Self {
+        Self {
+            current_dir: std::env::current_dir().unwrap(),
+            trace_client: TraceClient::new(tokio_runtime, server_address, repaint_signal),
+            facade: Default::default(),
+            prev_facade: None,
+            view_action_buffer: Default::default(),
+            figure_ui_cache: Default::default(),
+            caryatid_ui_buffer: Default::default(),
+            hotkey_map: HotkeyMap::new([(
+                "Alt+F",
+                TraceDocHotkeyAction::FillCaryatidWithTraceVarDeps,
+            )])
+            .unwrap(),
+        }
+    }
+}
+
 #[cfg(feature = "egui")]
 impl<TraceProtocol, ParentSettings, ParentActionBuffer>
     ComponentUi<egui::Ui, ParentSettings, ParentActionBuffer>
@@ -121,29 +145,6 @@ where
             .facade_ui(ui);
         } else {
             // todo: render connecting status
-        }
-    }
-}
-
-impl<TraceProtocol: IsTraceProtocolFull> TraceDoc<TraceProtocol, EguiRepaintSignal> {
-    pub fn new(
-        tokio_runtime: Arc<tokio::runtime::Runtime>,
-        repaint_signal: EguiRepaintSignal,
-        _ctx: &egui::Context,
-    ) -> Self {
-        Self {
-            current_dir: std::env::current_dir().unwrap(),
-            trace_client: TraceClient::new_mock(tokio_runtime, repaint_signal),
-            facade: Default::default(),
-            prev_facade: None,
-            view_action_buffer: Default::default(),
-            figure_ui_cache: Default::default(),
-            caryatid_ui_buffer: Default::default(),
-            hotkey_map: HotkeyMap::new([(
-                "Alt+F",
-                TraceDocHotkeyAction::FillCaryatidWithTraceVarDeps,
-            )])
-            .unwrap(),
         }
     }
 }

@@ -26,9 +26,9 @@ use latex_ast::{
     range::LxAstTokenIdxRangeMap,
 };
 use latex_token::storage::LxTokenStorage;
+use latex_vfs::path::LxFilePath;
 
 pub struct VdSynExprDisplayTreeBuilder<'a> {
-    db: &'a salsa::Db,
     input: &'a str,
     token_storage: &'a LxTokenStorage,
     ast_arena: LxAstArenaRef<'a>,
@@ -50,7 +50,6 @@ pub struct VdSynExprDisplayTreeBuilder<'a> {
 /// # construction
 impl<'a> VdSynExprDisplayTreeBuilder<'a> {
     pub fn new(
-        db: &'a salsa::Db,
         input: &'a str,
         token_storage: &'a LxTokenStorage,
         ast_arena: LxAstArenaRef<'a>,
@@ -69,7 +68,6 @@ impl<'a> VdSynExprDisplayTreeBuilder<'a> {
         division_range_map: &'a VdSynDivisionTokenIdxRangeMap,
     ) -> Self {
         Self {
-            db,
             input,
             token_storage,
             ast_arena,

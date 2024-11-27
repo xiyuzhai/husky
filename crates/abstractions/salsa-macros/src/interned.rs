@@ -58,7 +58,7 @@ impl crate::options::AllowedOptions for InternedStruct {
 impl InternedStruct {
     fn generate_interned(&self) -> syn::Result<TokenStream> {
         self.validate_interned()?;
-        let id_struct = self.id_struct();
+        let id_struct = self.id_struct(SalsaStructKind::Interned);
         let data_struct = self.data_struct();
         let ingredients_for_impl = self.ingredients_for_impl();
         let as_id_impl = self.as_id_impl();

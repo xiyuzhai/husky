@@ -12,13 +12,29 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+lazy_static.workspace = true
 rustc-hash.workspace = true
 # abstractions
-salsa.workspace = true
+salsa = { workspace = true, optional = true }
+# lisp
+lisp-csv.workspace = true
+# utils
+husky-print-utils.workspace = true
+husky-path-utils.workspace = true
 # visored
 visored-opr.workspace = true
 visored-term.workspace = true
 visored-signature.workspace = true
+
+[dev-dependencies]
+# kernel
+husky-coword.workspace = true
+# latex
+latex-vfs.workspace = true
+# utils
+husky-path-utils.workspace = true
+# visored
+visored-entity-path.workspace = true
 
 [lints]
 workspace = true

@@ -58,7 +58,7 @@ pub(crate) fn handle_semantic_tokens_range(
 fn semantic_tokens(
     snapshot: &AnalyzerDBSnapshot,
     uri: &Url,
-    range: Option<TextRange>,
+    range: Option<TextPositionRange>,
 ) -> Result<SemanticTokens> {
     static SEMANTIC_TOKENS_RESULT_ID_NEXT: AtomicU32 = AtomicU32::new(1);
     fn new_result_id() -> u32 {

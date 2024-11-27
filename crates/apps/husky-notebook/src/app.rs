@@ -3,6 +3,7 @@ use doc::arena::DocId;
 
 // TODO: more privacy
 pub(crate) struct NotebookApp {
+    pub(crate) session: Session,
     pub(crate) dock_state: egui_dock::DockState<DocTab>,
     pub(crate) docs: Docs,
     pub(crate) settings: NotebookSettings,
@@ -13,13 +14,14 @@ pub(crate) struct NotebookApp {
     init_done: bool,
 }
 
-impl Default for NotebookApp {
-    fn default() -> Self {
+impl NotebookApp {
+    pub fn new(session: Session) -> Self {
         let action_buffer = Default::default();
         let dock_state = egui_dock::DockState::new(vec![]);
         let docs = Docs::default();
         let settings = Default::default();
         Self {
+            session,
             settings,
             dock_state,
             docs,

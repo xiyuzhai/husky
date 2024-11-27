@@ -1,23 +1,29 @@
 pub mod literal;
 
 use self::literal::{LnLiteral, LnLiteralData};
-use lean_item_path::LnItemPath;
+use lean_entity_path::LnItemPath;
 
 // TODO: ad hoc, use LnTermId
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub enum LnTerm {
     Literal(LnLiteral),
     ItemPath(LnItemPath),
 }
+
+impl std::fmt::Debug for LnTerm {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        todo!()
+    }
+}
+
 impl LnTerm {
     pub fn new_item_path(path: LnItemPath) -> Self {
         LnTerm::ItemPath(path)
     }
 }
 
-#[salsa::interned]
+#[interned::interned]
 pub struct LnTermId {
-    #[return_ref]
     data: LnTermData,
 }
 
@@ -28,10 +34,10 @@ pub enum LnTermData {
 }
 
 impl LnTerm {
-    pub fn show(&self, db: &::salsa::Db) -> String {
+    pub fn show(&self) -> String {
         match self {
-            LnTerm::Literal(literal) => literal.show(db),
-            LnTerm::ItemPath(item_path) => item_path.show(db),
+            LnTerm::Literal(literal) => literal.show(),
+            LnTerm::ItemPath(item_path) => item_path.show(),
         }
     }
 }

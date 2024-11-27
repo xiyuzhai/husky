@@ -10,7 +10,7 @@ use idx_arena::{
 use latex_environment::signature::LxEnvironmentSignature;
 use latex_token::idx::LxRoseTokenIdx;
 use sentence::VdSemSentenceIdx;
-use visored_item_path::module::VdModulePath;
+use visored_entity_path::module::VdModulePath;
 use visored_syn_expr::stmt::{VdSynStmtData, VdSynStmtIdx};
 
 pub struct VdSemStmtEntry {

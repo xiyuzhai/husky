@@ -5,20 +5,22 @@ use crossbeam_utils::atomic::AtomicCell;
 
 use crate::{
     hash::FxDashMap, key::DatabaseKeyIndex, runtime::local_state::QueryRevisions, AsId, Event,
-    EventKind, Revision, Runtime,
+    EventKind, Id, Revision, Runtime,
 };
 
 /// The memo map maps from a key of type `K` to the memoized value for that `K`.
 /// The memoized value is a `Memo<V>` which contains, in addition to the value `V`,
 /// dependency information.
-pub(super) struct MemoMap<K: AsId, V> {
-    map: FxDashMap<K, ArcSwap<Memo<V>>>,
+pub(super) struct MemoMap<K, V> {
+    map: FxDashMap<Id, ArcSwap<Memo<V>>>,
+    phantom: std::marker::PhantomData<K>,
 }
 
-impl<K: AsId, V> Default for MemoMap<K, V> {
+impl<K, V> Default for MemoMap<K, V> {
     fn default() -> Self {
         Self {
             map: Default::default(),
+            phantom: std::marker::PhantomData,
         }
     }
 }
@@ -27,20 +29,20 @@ impl<K: AsId, V> MemoMap<K, V> {
     /// Inserts the memo for the given key; (atomically) overwrites any previously existing memo.-
     #[must_use]
     pub(super) fn insert(&self, key: K, memo: Arc<Memo<V>>) -> Option<ArcSwap<Memo<V>>> {
-        self.map.insert(key, ArcSwap::from(memo))
+        self.map.insert(key.as_id(), ArcSwap::from(memo))
     }
 
     /// Removes any existing memo for the given key.
     #[must_use]
     pub(super) fn remove(&self, key: K) -> Option<ArcSwap<Memo<V>>> {
-        self.map.remove(&key).map(|o| o.1)
+        self.map.remove(&key.as_id()).map(|o| o.1)
     }
 
     /// Loads the current memo for `key_index`. This does not hold any sort of
     /// lock on the `memo_map` once it returns, so this memo could immediately
     /// become outdated if other threads store into the `memo_map`.
     pub(super) fn get(&self, key: K) -> Option<Guard<Arc<Memo<V>>>> {
-        self.map.get(&key).map(|v| v.load())
+        self.map.get(&key.as_id()).map(|v| v.load())
     }
 
     /// Evicts the existing memo for the given key, replacing it
@@ -50,7 +52,7 @@ impl<K: AsId, V> MemoMap<K, V> {
         use crate::runtime::local_state::QueryOrigin;
         use dashmap::mapref::entry::Entry::*;
 
-        if let Occupied(entry) = self.map.entry(key) {
+        if let Occupied(entry) = self.map.entry(key.as_id()) {
             let memo = entry.get().load();
             match memo.revisions.origin {
                 QueryOrigin::Assigned(_)

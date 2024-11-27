@@ -14,7 +14,7 @@ pub trait HasLspInlayHints: Is<ModulePath> + Copy {
     fn lsp_inlay_hints(
         self,
         db: &::salsa::Db,
-        range: Option<TextRange>,
+        range: Option<TextPositionRange>,
     ) -> InlayHintResult<Option<Vec<lsp_types::InlayHint>>>;
 }
 
@@ -23,7 +23,7 @@ impl HasLspInlayHints for ModulePath {
     fn lsp_inlay_hints(
         self,
         db: &salsa::Db,
-        range: Option<TextRange>,
+        range: Option<TextPositionRange>,
     ) -> InlayHintResult<Option<Vec<lsp_types::InlayHint>>> {
         let mut builder = LspInlayHintBuilder::new(self, range, db);
         match self.data(db) {
@@ -52,14 +52,18 @@ fn module_lsp_inlay_hints_works() {
 
 struct LspInlayHintBuilder<'db> {
     db: &'db ::salsa::Db,
-    text_range: Option<TextRange>,
+    text_range: Option<TextPositionRange>,
     base: Option<RegionalTokenIdxBase>,
     token_range_sheet_data: &'db RangedTokenSheet,
     lsp_inlay_hints: Vec<lsp_types::InlayHint>,
 }
 
 impl<'db> LspInlayHintBuilder<'db> {
-    fn new(module_path: ModulePath, range: Option<TextRange>, db: &'db ::salsa::Db) -> Self {
+    fn new(
+        module_path: ModulePath,
+        range: Option<TextPositionRange>,
+        db: &'db ::salsa::Db,
+    ) -> Self {
         Self {
             db,
             text_range: range,

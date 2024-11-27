@@ -15,7 +15,7 @@ use self::convert::*;
 use self::jar::SemanticTokenJar as Jar;
 use self::token::*;
 use husky_entity_tree::error::EntityTreeResult;
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use husky_token::*;
 use husky_token_info::*;
 use husky_vfs::path::module_path::ModulePath;
@@ -42,7 +42,7 @@ fn semantic_tokens_ext_without_range(
 fn semantic_tokens_ext_within_range(
     db: &::salsa::Db,
     module_path: ModulePath,
-    range: &TextRange,
+    range: &TextPositionRange,
 ) -> EntityTreeResult<Vec<ext::SemanticToken>> {
     let tokens = semantic_tokens(db, module_path)
         .as_ref()

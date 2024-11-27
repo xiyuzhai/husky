@@ -2927,7 +2927,7 @@
                                         Unspecified(
                                             UnspecifiedFloatLiteral(
                                                 Id {
-                                                    value: 31,
+                                                    value: 2,
                                                 },
                                             ),
                                         ),
@@ -4221,7 +4221,7 @@
                                         Unspecified(
                                             UnspecifiedFloatLiteral(
                                                 Id {
-                                                    value: 32,
+                                                    value: 2,
                                                 },
                                             ),
                                         ),

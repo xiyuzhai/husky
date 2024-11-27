@@ -7,7 +7,6 @@ use husky_regional_token::RegionalTokenIdx;
 
 #[salsa::tracked]
 pub struct UseSymbol {
-    #[id]
     pub original_symbol: EntitySymbol,
     pub path: PrincipalEntityPath,
     pub visibility: Scope,
@@ -15,7 +14,7 @@ pub struct UseSymbol {
     pub use_expr_idx: UseExprIdx,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum EntitySymbol {

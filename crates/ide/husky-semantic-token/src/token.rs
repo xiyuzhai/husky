@@ -1,12 +1,12 @@
 use crate::*;
 
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use husky_token_protocol::TokenClass;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SemanticToken {
     pub token_class: TokenClass,
-    pub range: TextRange,
+    pub range: TextPositionRange,
 }
 
 impl PartialOrd for SemanticToken {
@@ -16,7 +16,7 @@ impl PartialOrd for SemanticToken {
 }
 
 impl SemanticToken {
-    pub fn new(token_protocol: TokenClass, range: TextRange) -> Self {
+    pub fn new(token_protocol: TokenClass, range: TextPositionRange) -> Self {
         Self {
             token_class: token_protocol,
             range,

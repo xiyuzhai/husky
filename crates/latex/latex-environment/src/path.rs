@@ -1,22 +1,20 @@
 pub mod menu;
 
-use husky_coword::Coword;
+use coword::Coword;
 use thiserror::Error;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LxEnvironmentPath {
     name: LxEnvironmentName,
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LxEnvironmentName(Coword);
 
 impl LxEnvironmentPath {
-    pub fn new(name: &str, db: &::salsa::Db) -> Self {
+    pub fn new(name: &str) -> Self {
         Self {
-            name: LxEnvironmentName::from_ref(name, db),
+            name: LxEnvironmentName::from_ref(name),
         }
     }
 }
@@ -32,8 +30,8 @@ impl LxEnvironmentName {
         Self(coword)
     }
 
-    pub fn from_ref(name: &str, db: &::salsa::Db) -> Self {
-        Self(Coword::from_ref(db, name))
+    pub fn from_ref(name: &str) -> Self {
+        Self(Coword::from_ref(name))
     }
 }
 

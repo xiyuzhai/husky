@@ -4,6 +4,7 @@ version.workspace = true
 edition = "2021"
 
 [dependencies]
+clap.workspace = true
 eframe.workspace = true
 egui.workspace = true
 egui_dock.workspace = true
@@ -12,18 +13,13 @@ tracing-subscriber = "0.3.16"
 # abstractions
 ui.workspace = true
 enum-index.workspace = true
-# devsoul
-# husky-standard-devsoul-interface.workspace = true
-# linket
-husky-standard-linket-impl.workspace = true
+# devtime
+husky-devtime.workspace = true
+husky-session.workspace = true
 # gui
 husky-gui.workspace = true
 husky-code-editor.workspace = true
-husky-trace-doc = { workspace = true, features = [
-    # ad hoc
-    "mock",
-    "egui"
-] }
+husky-trace-doc = { workspace = true, features = ["egui"] }
 # protocols
 husky-token-protocol.workspace = true
 husky-trace-protocol.workspace = true

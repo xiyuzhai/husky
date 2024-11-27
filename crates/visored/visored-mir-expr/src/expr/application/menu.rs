@@ -1,5 +1,6 @@
 use super::*;
-use visored_term::instantiation::menu::{vd_instantiation_menu, VdInstantiationMenu};
+use lazy_static::lazy_static;
+use visored_term::instantiation::menu::{VdInstantiationMenu, VD_INSTANTIATION_MENU};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdMirFuncKeyMenu {
@@ -84,7 +85,7 @@ pub struct VdMirFuncKeyMenu {
 }
 
 impl VdMirFuncKeyMenu {
-    pub fn new(db: &::salsa::Db) -> Self {
+    pub fn new() -> Self {
         let VdInstantiationMenu {
             int_pos,
             rat_pos,
@@ -143,7 +144,7 @@ impl VdMirFuncKeyMenu {
             rat_ge,
             real_ge,
             real_sqrt,
-        } = *vd_instantiation_menu(db);
+        } = *VD_INSTANTIATION_MENU;
         Self {
             int_pos: VdMirFuncKey::NormalBasePrefixOpr(int_pos),
             rat_pos: VdMirFuncKey::NormalBasePrefixOpr(rat_pos),
@@ -210,7 +211,6 @@ impl VdMirFuncKeyMenu {
     }
 }
 
-#[salsa::tracked(return_ref)]
-pub fn vd_mir_func_key_menu(db: &::salsa::Db) -> VdMirFuncKeyMenu {
-    VdMirFuncKeyMenu::new(db)
+lazy_static! {
+    pub static ref vd_mir_func_key_menu: VdMirFuncKeyMenu = VdMirFuncKeyMenu::new();
 }

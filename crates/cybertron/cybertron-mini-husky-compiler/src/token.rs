@@ -192,8 +192,8 @@ impl<'a> Tokenizer<'a> {
                 ));
                 Some(Opr::Suffix(SuffixOpr::Field(ident)).into())
             }
-            c if c.is_alphabetic() || c == '_' => Some(self.next_keyword_or_ident(c)),
-            c if c.is_numeric() => Some(self.next_numeric_literal(c)),
+            c if c.is_ascii_alphabetic() || c == '_' => Some(self.next_keyword_or_ident(c)),
+            c if c.is_ascii_digit() => Some(self.next_numeric_literal(c)),
             c => todo!("c = `{c}`"),
         }
     }
@@ -211,7 +211,7 @@ impl<'a> Tokenizer<'a> {
 
     fn next_numeric_literal(&mut self, c: char) -> Token {
         let mut s = String::from(c);
-        s += self.chars.next_str_slice_while(|c| c.is_numeric());
+        s += self.chars.next_str_slice_while(|c| c.is_ascii_digit());
         let i: i32 = s.parse().unwrap();
         Token::Literal(Literal::Int(i))
     }

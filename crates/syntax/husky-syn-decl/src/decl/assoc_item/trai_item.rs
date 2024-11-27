@@ -20,7 +20,7 @@ use husky_entity_kind::TraitItemKind;
 use husky_entity_path::path::assoc_item::trai_item::TraitItemPath;
 use husky_entity_tree::node::assoc_item::trai_item::TraitItemSynNodePath;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum TraitItemSynNodeDecl {
@@ -117,7 +117,7 @@ impl<'a> ItemSynNodeDeclParser<'a> {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum TraitItemSynDecl {

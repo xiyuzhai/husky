@@ -6,10 +6,20 @@ use latex_vfs::path::LxFilePath;
 use std::path::PathBuf;
 
 pub(crate) fn t(content: &str, expected: &Expect) {
-    let db = &DB::default();
-    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
-    let tracker = VdSemExprTracker::new(LxPageInput { file_path, content }, &[], &[], db);
-    expected.assert_eq(&tracker.show_display_tree(db))
+    use husky_path_utils::HuskyLangDevPaths;
+
+    let dev_paths = HuskyLangDevPaths::new();
+    let file_path = LxFilePath::new(PathBuf::from(file!()));
+    let tracker = VdSemExprTracker::new(
+        LxPageInput {
+            specs_dir: dev_paths.specs_dir(),
+            file_path,
+            content,
+        },
+        &[],
+        &[],
+    );
+    expected.assert_eq(&tracker.show_display_tree());
 }
 
 #[test]
@@ -21,15 +31,15 @@ pub(crate) fn basic_vd_sem_clause_works() {
             └─ "Let $x=1$. Let $y=-2x$." stmt.paragraph
               ├─ "Let $x=1$." sentence.clauses
               │ └─ "Let $x=1$" clause.let
-              │   └─ "x=1" expr.separated_list
+              │   └─ "x=1" expr.chaining_separated_list
               │     ├─ "x" expr.letter
               │     └─ "1" expr.literal
               └─ "Let $y=-2x$." sentence.clauses
                 └─ "Let $y=-2x$" clause.let
-                  └─ "y=-2x" expr.separated_list
+                  └─ "y=-2x" expr.chaining_separated_list
                     ├─ "y" expr.letter
                     └─ "-2x" expr.prefix
-                      └─ "2x" expr.separated_list
+                      └─ "2x" expr.folding_separated_list
                         ├─ "2" expr.literal
                         └─ "x" expr.letter
         "#]],
@@ -41,12 +51,12 @@ pub(crate) fn basic_vd_sem_clause_works() {
             └─ "Let $x\\in \\mathbb{N}$. Assume $x=1$." stmt.paragraph
               ├─ "Let $x\\in \\mathbb{N}$." sentence.clauses
               │ └─ "Let $x\\in \\mathbb{N}$" clause.let
-              │   └─ "x\\in \\mathbb{N}" expr.separated_list
+              │   └─ "x\\in \\mathbb{N}" expr.chaining_separated_list
               │     ├─ "x" expr.letter
               │     └─ "\\mathbb{N}" expr.letter
               └─ "Assume $x=1$." sentence.clauses
                 └─ "Assume $x=1$" clause.assume
-                  └─ "x=1" expr.separated_list
+                  └─ "x=1" expr.chaining_separated_list
                     ├─ "x" expr.letter
                     └─ "1" expr.literal
         "#]],

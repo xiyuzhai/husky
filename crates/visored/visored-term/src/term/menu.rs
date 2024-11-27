@@ -1,5 +1,6 @@
 use super::*;
-use visored_item_path::menu::{vd_item_path_menu, VdItemPathMenu};
+use lazy_static::lazy_static;
+use visored_entity_path::menu::{VdItemPathMenu, VD_ITEM_PATH_MENU};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdTermMenu {
@@ -16,7 +17,7 @@ pub struct VdTermMenu {
 }
 
 impl VdTermMenu {
-    fn new(db: &::salsa::Db) -> Self {
+    fn new() -> Self {
         let VdItemPathMenu {
             set,
             prop,
@@ -31,6 +32,9 @@ impl VdTermMenu {
             ring,
             group_mul,
             abelian_group_add,
+            nat_add,
+            nat_mul,
+            ring_sub,
             ring_add,
             ring_mul,
             ring_power,
@@ -44,16 +48,16 @@ impl VdTermMenu {
             le,
             ge,
             real_sqrt,
-        } = *vd_item_path_menu(db);
+        } = *VD_ITEM_PATH_MENU;
 
-        let zero = VdLiteral::new(VdLiteralData::NaturalNumber("0".to_string()), db);
-        let one = VdLiteral::new(VdLiteralData::NaturalNumber("1".to_string()), db);
-        let two = VdLiteral::new(VdLiteralData::NaturalNumber("2".to_string()), db);
-        let nat = VdTerm::new_item_path(nat.into(), db);
-        let int = VdTerm::new_item_path(int.into(), db);
-        let rat = VdTerm::new_item_path(rat.into(), db);
-        let real = VdTerm::new_item_path(real.into(), db);
-        let complex = VdTerm::new_item_path(complex.into(), db);
+        let zero = VdLiteral::new(VdLiteralData::NaturalNumber("0".to_string()));
+        let one = VdLiteral::new(VdLiteralData::NaturalNumber("1".to_string()));
+        let two = VdLiteral::new(VdLiteralData::NaturalNumber("2".to_string()));
+        let nat = VdTerm::new_item_path(nat.into());
+        let int = VdTerm::new_item_path(int.into());
+        let rat = VdTerm::new_item_path(rat.into());
+        let real = VdTerm::new_item_path(real.into());
+        let complex = VdTerm::new_item_path(complex.into());
         Self {
             zero,
             one,
@@ -67,7 +71,6 @@ impl VdTermMenu {
     }
 }
 
-#[salsa::tracked(return_ref)]
-pub fn vd_term_menu(db: &::salsa::Db) -> VdTermMenu {
-    VdTermMenu::new(db)
+lazy_static! {
+    pub static ref VD_TERM_MENU: VdTermMenu = VdTermMenu::new();
 }

@@ -38,6 +38,7 @@ use visored_opr::{
     },
     separator::{VdBaseSeparator, VdSeparatorClass},
 };
+use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
 use visored_syn_expr::expr::{VdSynExprData, VdSynSeparator};
 use visored_term::{
     term::{literal::VdLiteral, VdTerm},
@@ -82,10 +83,16 @@ pub enum VdSemExprData {
         scripts: Vec<(LxScriptKind, VdSemExprIdx)>,
         dispatch: VdSemAttachDispatch,
     },
-    SeparatedList {
+    FoldingSeparatedList {
         separator_class: VdSeparatorClass,
-        items: VdSemExprIdxRange,
-        dispatch: VdSemSeparatedListDispatch,
+        leader: VdSemExprIdx,
+        followers: VdSemSeparatedListFollowers,
+    },
+    ChainingSeparatedList {
+        separator_class: VdSeparatorClass,
+        leader: VdSemExprIdx,
+        followers: VdSemSeparatedListFollowers,
+        joined_separator_and_signature: Option<(VdBaseSeparator, VdBaseSeparatorSignature)>,
     },
     // TODO: maybe these two are just separated lists?
     UniadicChain,
@@ -187,7 +194,6 @@ impl ToVdSem<VdSemExprIdx> for VdSynExprIdx {
 
 impl<'a> VdSemExprBuilder<'a> {
     pub(crate) fn build_expr_entry(&mut self, syn_expr: VdSynExprIdx) -> VdSemExprEntry {
-        let db = self.db();
         let (data, ty) = match self.syn_expr_arena()[syn_expr] {
             VdSynExprData::Literal {
                 token_idx_range,
@@ -197,7 +203,7 @@ impl<'a> VdSemExprBuilder<'a> {
                     token_idx_range,
                     literal,
                 },
-                literal.ty(db),
+                literal.ty(),
             ),
             VdSynExprData::Letter {
                 token_idx_range,
@@ -314,7 +320,27 @@ impl VdSemExprData {
             VdSemExprData::UniadicArray => vec![],
             // ad hoc
             VdSemExprData::VariadicArray => vec![],
-            VdSemExprData::SeparatedList { ref items, .. } => items.into_iter().collect(),
+            VdSemExprData::FoldingSeparatedList {
+                leader,
+                ref followers,
+                ..
+            }
+            | VdSemExprData::ChainingSeparatedList {
+                leader,
+                ref followers,
+                ..
+            } => [leader]
+                .into_iter()
+                .chain(
+                    followers
+                        .iter()
+                        .map(|f| match f.separator {
+                            VdSemSeparator::Base(..) => vec![f.expr],
+                            VdSemSeparator::Composite(expr, _) => vec![expr, f.expr],
+                        })
+                        .flatten(),
+                )
+                .collect(),
             VdSemExprData::LxDelimited { item, .. } => vec![item],
             VdSemExprData::Delimited {
                 left_delimiter,
@@ -369,11 +395,8 @@ impl<'db> VdSemExprBuilder<'db> {
                 ref scripts,
                 ref dispatch,
             } => todo!(),
-            VdSemExprData::SeparatedList {
-                separator_class,
-                items,
-                ref dispatch,
-            } => todo!(),
+            VdSemExprData::FoldingSeparatedList { .. } => todo!(),
+            VdSemExprData::ChainingSeparatedList { .. } => todo!(),
             VdSemExprData::UniadicChain => todo!(),
             VdSemExprData::VariadicChain => todo!(),
             VdSemExprData::UniadicArray => todo!(),

@@ -14,7 +14,7 @@ pub use self::literal::*;
 pub use self::punctuation::*;
 pub use self::wordopr::*;
 
-use self::jar::*;
+use self::jar::{TokenDataJar as Jar, *};
 use husky_coword::*;
 
 #[cfg(feature = "protocol_support")]

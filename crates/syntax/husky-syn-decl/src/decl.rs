@@ -26,7 +26,7 @@ type SmallVecImpl<T> = smallvec::SmallVec<[T; 2]>;
 /// A `NodeDecl` is a tolerant information-preserving declaration
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum ItemSynNodeDecl {
     Submodule(SubmoduleSynNodeDecl),
     MajorItem(MajorItemSynNodeDecl),
@@ -61,7 +61,7 @@ impl ItemSynNodeDecl {
 }
 
 /// A `Decl` is a strict version, handy for subsequent processing
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum SynDecl {

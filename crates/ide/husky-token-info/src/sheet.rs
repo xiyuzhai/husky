@@ -1,7 +1,7 @@
 use crate::*;
 use husky_entity_tree::region_path::SynNodeRegionPath;
 use husky_regional_token::RegionalTokenIdx;
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use husky_token_data::TokenData;
 use smallvec::{smallvec, SmallVec};
 
@@ -69,7 +69,8 @@ impl TokenInfoSheet {
         &'db self,
         ranged_token_sheet: &'db RangedTokenSheet,
         db: &'db ::salsa::Db,
-    ) -> impl Iterator<Item = (&'db [TokenInfo], (&'db TextRange, &'db TokenData))> + 'db {
+    ) -> impl Iterator<Item = (&'db [TokenInfo], (&'db TextPositionRange, &'db TokenData))> + 'db
+    {
         std::iter::zip(
             self.token_infos_list.iter(),
             ranged_token_sheet.ranged_token_iter(db),

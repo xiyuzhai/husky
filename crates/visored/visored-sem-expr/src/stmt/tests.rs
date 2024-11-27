@@ -7,10 +7,20 @@ use latex_vfs::path::LxFilePath;
 use std::path::PathBuf;
 
 fn t(content: &str, expect: &Expect) {
-    let db = &DB::default();
-    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
-    let tracker = VdSemExprTracker::new(LxDocumentBodyInput { file_path, content }, &[], &[], db);
-    expect.assert_eq(&tracker.show_display_tree(db));
+    use husky_path_utils::HuskyLangDevPaths;
+
+    let dev_paths = HuskyLangDevPaths::new();
+    let file_path = LxFilePath::new(PathBuf::from(file!()));
+    let tracker = VdSemExprTracker::new(
+        LxDocumentBodyInput {
+            specs_dir: dev_paths.specs_dir(),
+            file_path,
+            content,
+        },
+        &[],
+        &[],
+    );
+    expect.assert_eq(&tracker.show_display_tree());
 }
 
 #[test]
@@ -22,7 +32,7 @@ fn basic_body_to_vd_mir_works() {
               └─ "Let $x\\in\\mathbb{R}$." stmt.paragraph
                 └─ "Let $x\\in\\mathbb{R}$." sentence.clauses
                   └─ "Let $x\\in\\mathbb{R}$" clause.let
-                    └─ "x\\in\\mathbb{R}" expr.separated_list
+                    └─ "x\\in\\mathbb{R}" expr.chaining_separated_list
                       ├─ "x" expr.letter
                       └─ "\\mathbb{R}" expr.letter
         "#]],
@@ -42,7 +52,7 @@ fn basic_body_to_vd_mir_works() {
                 └─ "Let $x\\in\\mathbb{R}$." stmt.paragraph
                   └─ "Let $x\\in\\mathbb{R}$." sentence.clauses
                     └─ "Let $x\\in\\mathbb{R}$" clause.let
-                      └─ "x\\in\\mathbb{R}" expr.separated_list
+                      └─ "x\\in\\mathbb{R}" expr.chaining_separated_list
                         ├─ "x" expr.letter
                         └─ "\\mathbb{R}" expr.letter
         "#]],

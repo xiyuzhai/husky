@@ -1,6 +1,5 @@
 use crate::input_field::InputFieldIngredient;
 use crate::{AsId, Durability, Runtime};
-use std::hash::Hash;
 
 #[must_use]
 pub struct Setter<'setter, K, F> {
@@ -12,7 +11,7 @@ pub struct Setter<'setter, K, F> {
 
 impl<'setter, K, F> Setter<'setter, K, F>
 where
-    K: Eq + Hash + AsId,
+    K: Eq + AsId,
 {
     pub fn new(
         runtime: &'setter mut Runtime,

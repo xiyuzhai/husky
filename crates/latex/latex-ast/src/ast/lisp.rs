@@ -13,7 +13,6 @@ use latex_token::{
 };
 use smallvec::{smallvec, SmallVec};
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LxLispAstData {
     Literal(LxLispTokenIdx, LxLispLiteral),
@@ -36,7 +35,6 @@ pub enum LxLispAstData {
     },
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct LxLispCommandArgument {
     lcurl_token_idx: LxLispTokenIdx,
@@ -50,7 +48,6 @@ pub type LxLispAstArenaMap<T> = ArenaMap<LxLispAstData, T>;
 pub type LxLispAstIdx = ArenaIdx<LxLispAstData>;
 pub type LxLispAstIdxRange = ArenaIdxRange<LxLispAstData>;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum LxLispCommandArgumentData {}
 

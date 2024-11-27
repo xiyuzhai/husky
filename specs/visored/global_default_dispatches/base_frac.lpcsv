@@ -1,0 +1,28 @@
+//! Format:
+//!
+//! <numerator-ty>, <denominator-ty>, <signature-ident>
+nat, nat, rat_div
+nat, int, rat_div
+int, nat, rat_div
+int, int, rat_div
+nat, rat, rat_div
+int, rat, rat_div
+rat, nat, rat_div
+rat, int, rat_div
+rat, rat, rat_div
+nat, real, real_div
+int, real, real_div
+rat, real, real_div
+real, nat, real_div
+real, int, real_div
+real, rat, real_div
+real, real, real_div
+nat, complex, complex_div
+int, complex, complex_div
+rat, complex, complex_div
+real, complex, complex_div
+complex, nat, complex_div
+complex, int, complex_div
+complex, rat, complex_div
+complex, real, complex_div
+complex, complex, complex_div

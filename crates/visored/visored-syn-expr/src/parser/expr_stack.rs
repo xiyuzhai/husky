@@ -317,7 +317,7 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
 }
 
 impl VdSynExprStack {
-    pub fn show(&self, db: &::salsa::Db, arena: VdSynExprArenaRef) -> String {
+    pub fn show(&self, arena: VdSynExprArenaRef) -> String {
         use std::fmt::Write;
 
         let mut s = "Stack { incomplete: [".to_string();
@@ -326,17 +326,11 @@ impl VdSynExprStack {
             if i > 0 {
                 s += ", ";
             }
-            write!(
-                s,
-                "(\"{}\", {})",
-                expr.show(db, arena),
-                precedence.to_string()
-            )
-            .unwrap();
+            write!(s, "(\"{}\", {})", expr.show(arena), precedence.to_string()).unwrap();
         }
         s += "], complete: ";
         if let Some(expr) = &self.complete_expr {
-            write!(s, "\"{}\"", expr.show(db, arena)).unwrap();
+            write!(s, "\"{}\"", expr.show(arena)).unwrap();
         } else {
             s += "None";
         };

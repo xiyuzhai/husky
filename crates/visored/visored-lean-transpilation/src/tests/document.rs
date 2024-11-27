@@ -1,5 +1,5 @@
 use super::*;
-use helpers::tracker::VdLeanTranspilationTracker;
+use crate::helpers::tracker::VdLeanTranspilationTracker;
 use latex_prelude::{
     helper::tracker::{LxDocumentBodyInput, LxDocumentInput, LxPageInput},
     mode::LxMode,
@@ -8,12 +8,21 @@ use latex_vfs::path::LxFilePath;
 use std::path::PathBuf;
 
 fn t(content: &str, expected_display_tree: &Expect, expected_fmt: &Expect) {
-    let db = &DB::default();
-    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
-    let tracker =
-        VdLeanTranspilationTracker::new(LxDocumentInput { file_path, content }, &[], &[], db);
-    expected_display_tree.assert_eq(&tracker.show_display_tree(db));
-    expected_fmt.assert_eq(&tracker.show_fmt(db));
+    use husky_path_utils::HuskyLangDevPaths;
+
+    let dev_paths = HuskyLangDevPaths::new();
+    let file_path = LxFilePath::new(PathBuf::from(file!()));
+    let tracker = VdLeanTranspilationTracker::new(
+        LxDocumentInput {
+            specs_dir: dev_paths.specs_dir(),
+            file_path,
+            content,
+        },
+        &[],
+        &[],
+    );
+    expected_display_tree.assert_eq(&tracker.show_display_tree());
+    expected_fmt.assert_eq(&tracker.show_fmt());
 }
 
 #[test]
@@ -112,7 +121,6 @@ fn latex_shorts_to_lean_works() {
 
     let dev_paths = HuskyLangDevPaths::new();
     let projects_dir = dev_paths.projects_dir();
-    let db = &DB::default();
 
     for file in fs::read_dir(projects_dir.join("ai-math-autoformalization/latex/shorts")).unwrap() {
         let file = file.unwrap();
@@ -122,9 +130,16 @@ fn latex_shorts_to_lean_works() {
         }
         let content = &fs::read_to_string(&file_path).unwrap();
         let filestem = file_path.file_stem().unwrap().to_str().unwrap();
-        let file_path = LxFilePath::new(db, file_path.clone());
-        let tracker =
-            VdLeanTranspilationTracker::new(LxDocumentInput { file_path, content }, &[], &[], db);
+        let file_path = LxFilePath::new(file_path.clone());
+        let tracker = VdLeanTranspilationTracker::new(
+            LxDocumentInput {
+                specs_dir: dev_paths.specs_dir(),
+                file_path,
+                content,
+            },
+            &[],
+            &[],
+        );
         expect_file![projects_dir.join(format!(
             "ai-math-autoformalization/lean/central-46/Central46/Shorts/{}.lean",
             filestem
@@ -136,7 +151,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Explode
 
 {}"#,
-            tracker.show_fmt(db)
+            tracker.show_fmt()
         ));
     }
 }

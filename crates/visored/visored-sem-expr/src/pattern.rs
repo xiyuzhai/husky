@@ -26,6 +26,8 @@ impl ToVdSem<VdSemPattern> for &VdSynPattern {
                 pattern_expr,
             } => {
                 let Ok(resolution) = &builder.syn_symbol_resolution_table()[pattern_expr] else {
+                    use husky_print_utils::{p, DisplayIt};
+                    p!(&builder.syn_symbol_resolution_table()[pattern_expr]);
                     todo!()
                 };
                 let syn_local_defn = match *resolution {

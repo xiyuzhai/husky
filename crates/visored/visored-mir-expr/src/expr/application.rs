@@ -20,8 +20,7 @@ pub enum VdMirFunc {
     NormalBaseFrac(VdBaseBinaryOprSignature),
 }
 
-#[salsa::derive_debug_with_db]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum VdMirFuncKey {
     NormalBasePrefixOpr(VdInstantiation),
     NormalBaseSeparator(VdInstantiation),
@@ -33,7 +32,7 @@ pub enum VdMirFuncKey {
 }
 
 impl VdMirFunc {
-    pub fn key_or_expr(self, db: &::salsa::Db) -> Either<VdMirFuncKey, VdMirExprIdx> {
+    pub fn key_or_expr(self) -> Either<VdMirFuncKey, VdMirExprIdx> {
         match self {
             VdMirFunc::NormalBaseSeparator(signature) => {
                 Left(VdMirFuncKey::NormalBaseSeparator(signature.instantiation()))

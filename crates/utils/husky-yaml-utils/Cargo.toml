@@ -15,6 +15,7 @@ keywords.workspace = true
 hashlink.workspace = true
 yaml-rust2.workspace = true
 serde.workspace = true
+thiserror.workspace = true
 # abstractions
 vec-like.workspace = true
 

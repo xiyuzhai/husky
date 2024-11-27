@@ -3,7 +3,7 @@ use husky_entity_path::path::impl_block::trai_for_ty_impl_block::TraitForTypeImp
 use husky_eth_signature::signature::HasEthTemplate;
 use husky_hir_ty::trai::HirTrait;
 
-#[salsa::tracked(db = HirDeclDb, jar = HirDeclJar, constructor = new)]
+#[salsa::interned(constructor = new)]
 pub struct TraitForTypeImplBlockHirDecl {
     pub path: TraitForTypeImplBlockPath,
     #[return_ref]

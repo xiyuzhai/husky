@@ -5,7 +5,6 @@ use visored_mir_expr::expr::application::{
     VdMirFunc, VdMirFuncKey,
 };
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VdFuncKeyTranslation {
     PrefixOpr(LnMirFuncKey),
@@ -23,7 +22,7 @@ pub struct VdFuncKeyDictionary {
 }
 
 impl VdFuncKeyDictionary {
-    pub fn new_standard(db: &::salsa::Db) -> Self {
+    pub fn new_standard() -> Self {
         use VdFuncKeyTranslation::*;
 
         let VdMirFuncKeyMenu {
@@ -88,7 +87,7 @@ impl VdFuncKeyDictionary {
             rat_frac,
             real_frac,
             complex_frac,
-        } = *vd_mir_func_key_menu(db);
+        } = *vd_mir_func_key_menu;
         let LnMirFuncKeyMenu {
             int_pos: ln_int_pos,
             rat_pos: ln_rat_pos,
@@ -147,7 +146,7 @@ impl VdFuncKeyDictionary {
             rat_ge: ln_rat_ge,
             real_ge: ln_real_ge,
             real_sqrt: ln_real_sqrt,
-        } = *ln_mir_func_key_menu(db);
+        } = *ln_mir_func_key_menu;
         Self::new([
             (int_pos, PrefixOpr(ln_int_pos)),
             (rat_pos, PrefixOpr(ln_rat_pos)),

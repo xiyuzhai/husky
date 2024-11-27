@@ -13,16 +13,20 @@ fn t(
     expected: &Expect,
 ) {
     use crate::helpers::show::display_tree::VdSynExprDisplayTreeBuilder;
+    use husky_path_utils::HuskyLangDevPaths;
 
-    let db = &DB::default();
-    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
+    let dev_paths = HuskyLangDevPaths::new();
+    let file_path = LxFilePath::new(PathBuf::from(file!()));
     let tracker = VdSynExprTracker::new(
-        LxFormulaInput { file_path, content },
+        LxFormulaInput {
+            specs_dir: dev_paths.specs_dir(),
+            file_path,
+            content,
+        },
         token_annotations,
         space_annotations,
-        db,
     );
-    expected.assert_eq(&tracker.show_display_tree(db));
+    expected.assert_eq(&tracker.show_display_tree());
 }
 
 #[test]

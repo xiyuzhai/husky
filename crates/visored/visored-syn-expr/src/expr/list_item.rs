@@ -1,7 +1,6 @@
 use super::*;
 use latex_ast::ast::LxAstIdx;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct VdSynSeparatedListItem {
     syn_expr_idx: VdSynExprIdx,

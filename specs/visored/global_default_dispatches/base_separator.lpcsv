@@ -1,0 +1,217 @@
+//! Format:
+//!
+//! <lopd-type>, <operator>, <ropd-type>, <signature-ident>
+// ## add
+// ### nat
+nat, add, nat, folding nat_add
+// ### int
+nat, add, int, folding int_add
+int, add, nat, folding int_add
+int, add, int, folding int_add
+// ### rat
+nat, add, rat, folding rat_add
+int, add, rat, folding rat_add
+rat, add, nat, folding rat_add
+rat, add, int, folding rat_add
+rat, add, rat, folding rat_add
+// ### real
+nat, add, real, folding real_add
+int, add, real, folding real_add
+rat, add, real, folding real_add
+real, add, nat, folding real_add
+real, add, int, folding real_add
+real, add, rat, folding real_add
+real, add, real, folding real_add
+// ### complex
+nat, add, complex, folding complex_add
+int, add, complex, folding complex_add
+rat, add, complex, folding complex_add
+real, add, complex, folding complex_add
+complex, add, nat, folding complex_add
+complex, add, int, folding complex_add
+complex, add, rat, folding complex_add
+complex, add, real, folding complex_add
+complex, add, complex, folding complex_add
+// ## mul
+// ### nat
+nat, space, nat, folding nat_mul
+// ### int
+nat, space, int, folding int_mul
+int, space, nat, folding int_mul
+int, space, int, folding int_mul
+// ### rat
+nat, space, rat, folding rat_mul
+int, space, rat, folding rat_mul
+rat, space, nat, folding rat_mul
+rat, space, int, folding rat_mul
+rat, space, rat, folding rat_mul
+// ### real
+nat, space, real, folding real_mul
+int, space, real, folding real_mul
+rat, space, real, folding real_mul
+real, space, nat, folding real_mul
+real, space, int, folding real_mul
+real, space, rat, folding real_mul
+real, space, real, folding real_mul
+// ### complex
+nat, space, complex, folding complex_mul
+int, space, complex, folding complex_mul
+rat, space, complex, folding complex_mul
+real, space, complex, folding complex_mul
+complex, space, nat, folding complex_mul
+complex, space, int, folding complex_mul
+complex, space, rat, folding complex_mul
+complex, space, real, folding complex_mul
+complex, space, complex, folding complex_mul
+// ## eq
+// ### nat
+nat, eq, nat, chaining nat_eq
+// ### int
+nat, eq, int, chaining int_eq
+int, eq, nat, chaining int_eq
+int, eq, int, chaining int_eq
+// ### rat
+nat, eq, rat, chaining rat_eq
+int, eq, rat, chaining rat_eq
+rat, eq, nat, chaining rat_eq
+rat, eq, int, chaining rat_eq
+rat, eq, rat, chaining rat_eq
+// ### real
+nat, eq, real, chaining real_eq
+int, eq, real, chaining real_eq
+rat, eq, real, chaining real_eq
+real, eq, nat, chaining real_eq
+real, eq, int, chaining real_eq
+real, eq, rat, chaining real_eq
+real, eq, real, chaining real_eq
+// ### complex
+nat, eq, complex, chaining complex_eq
+rat, eq, complex, chaining complex_eq
+int, eq, complex, chaining complex_eq
+real, eq, complex, chaining complex_eq
+complex, eq, nat, chaining complex_eq
+complex, eq, rat, chaining complex_eq
+complex, eq, int, chaining complex_eq
+complex, eq, real, chaining complex_eq
+complex, eq, complex, chaining complex_eq
+// ## ne
+// ### nat
+nat, ne, nat, chaining nat_ne
+// ### int
+nat, ne, int, chaining int_ne
+int, ne, nat, chaining int_ne
+int, ne, int, chaining int_ne
+// ### rat
+nat, ne, rat, chaining rat_ne
+int, ne, rat, chaining rat_ne
+rat, ne, nat, chaining rat_ne
+rat, ne, int, chaining rat_ne
+rat, ne, rat, chaining rat_ne
+// ### real
+nat, ne, real, chaining real_ne
+int, ne, real, chaining real_ne
+rat, ne, real, chaining real_ne
+real, ne, nat, chaining real_ne
+real, ne, int, chaining real_ne
+real, ne, rat, chaining real_ne
+real, ne, real, chaining real_ne
+// ### complex
+nat, ne, complex, chaining complex_ne
+rat, ne, complex, chaining complex_ne
+int, ne, complex, chaining complex_ne
+real, ne, complex, chaining complex_ne
+complex, ne, nat, chaining complex_ne
+complex, ne, rat, chaining complex_ne
+complex, ne, int, chaining complex_ne
+complex, ne, real, chaining complex_ne
+complex, ne, complex, chaining complex_ne
+// ## lt
+// ### nat
+nat, lt, nat, chaining nat_lt
+// ### int
+nat, lt, int, chaining int_lt
+int, lt, nat, chaining int_lt
+int, lt, int, chaining int_lt
+// ### rat
+nat, lt, rat, chaining rat_lt
+int, lt, rat, chaining rat_lt
+rat, lt, nat, chaining rat_lt
+rat, lt, int, chaining rat_lt
+rat, lt, rat, chaining rat_lt
+// ### real
+nat, lt, real, chaining real_lt
+int, lt, real, chaining real_lt
+rat, lt, real, chaining real_lt
+real, lt, nat, chaining real_lt
+real, lt, int, chaining real_lt
+real, lt, rat, chaining real_lt
+real, lt, real, chaining real_lt
+// ## gt
+// ### nat
+nat, gt, nat, chaining nat_gt
+// ### int
+nat, gt, int, chaining int_gt
+int, gt, nat, chaining int_gt
+int, gt, int, chaining int_gt
+// ### rat
+nat, gt, rat, chaining rat_gt
+int, gt, rat, chaining rat_gt
+rat, gt, nat, chaining rat_gt
+rat, gt, int, chaining rat_gt
+rat, gt, rat, chaining rat_gt
+// ### real
+nat, gt, real, chaining real_gt
+int, gt, real, chaining real_gt
+rat, gt, real, chaining real_gt
+real, gt, nat, chaining real_gt
+real, gt, int, chaining real_gt
+real, gt, rat, chaining real_gt
+real, gt, real, chaining real_gt
+// ## le
+// ### nat
+nat, le, nat, chaining nat_le
+// ### int
+nat, le, int, chaining int_le
+int, le, nat, chaining int_le
+int, le, int, chaining int_le
+// ### rat
+nat, le, rat, chaining rat_le
+int, le, rat, chaining rat_le
+rat, le, nat, chaining rat_le
+rat, le, int, chaining rat_le
+rat, le, rat, chaining rat_le
+// ### real
+nat, le, real, chaining real_le
+int, le, real, chaining real_le
+rat, le, real, chaining real_le
+real, le, nat, chaining real_le
+real, le, int, chaining real_le
+real, le, rat, chaining real_le
+real, le, real, chaining real_le
+// ## ge
+// ### nat
+nat, ge, nat, chaining nat_ge
+// ### int
+nat, ge, int, chaining int_ge
+int, ge, nat, chaining int_ge
+int, ge, int, chaining int_ge
+// ### rat
+nat, ge, rat, chaining rat_ge
+int, ge, rat, chaining rat_ge
+rat, ge, nat, chaining rat_ge
+rat, ge, int, chaining rat_ge
+rat, ge, rat, chaining rat_ge
+// ### real
+nat, ge, real, chaining real_ge
+int, ge, real, chaining real_ge
+rat, ge, real, chaining real_ge
+real, ge, nat, chaining real_ge
+real, ge, int, chaining real_ge
+real, ge, rat, chaining real_ge
+real, ge, real, chaining real_ge
+// ## in
+nat, in, set, in_set
+int, in, set, in_set
+rat, in, set, in_set
+real, in, set, in_set
+complex, in, set, in_set

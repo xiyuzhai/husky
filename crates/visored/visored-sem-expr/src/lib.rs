@@ -4,7 +4,6 @@ pub mod division;
 pub mod error;
 pub mod expr;
 pub mod helpers;
-pub mod jar;
 pub mod pattern;
 pub mod phrase;
 pub mod range;
@@ -15,7 +14,6 @@ pub mod symbol;
 #[cfg(test)]
 mod tests;
 
-use self::jar::VdSemExprJar as Jar;
 #[cfg(test)]
 use self::tests::*;
 use builder::VdSemExprBuilder;

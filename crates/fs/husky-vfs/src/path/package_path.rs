@@ -48,8 +48,7 @@ impl PackagePath {
         path: &Path,
     ) -> VfsResult<Self> {
         let manifest_path = path.join("Corgi.toml");
-        let name = read_package_name_kebab_from_manifest(db, &manifest_path)
-            .ok_or(VfsError::FailToReadPackageNameFromManifest)?;
+        let name = read_package_name_kebab_from_manifest(db, &manifest_path)??;
         match name.data(db) {
             "core" | "std" => {
                 debug_assert_eq!(

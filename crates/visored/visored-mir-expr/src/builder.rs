@@ -11,7 +11,6 @@ use visored_sem_expr::{
 };
 
 pub struct VdMirExprBuilder<'db> {
-    db: &'db ::salsa::Db,
     sem_expr_arena: VdSemExprArenaRef<'db>,
     sem_phrase_arena: VdSemPhraseArenaRef<'db>,
     sem_clause_arena: VdSemClauseArenaRef<'db>,
@@ -24,9 +23,8 @@ pub struct VdMirExprBuilder<'db> {
 }
 
 impl<'db> VdMirExprBuilder<'db> {
-    pub fn new0(db: &'db ::salsa::Db, vd_sem_expr_region_data: &'db VdSemExprRegionData) -> Self {
+    pub fn new0(vd_sem_expr_region_data: &'db VdSemExprRegionData) -> Self {
         Self::new(
-            db,
             vd_sem_expr_region_data.expr_arena(),
             vd_sem_expr_region_data.phrase_arena(),
             vd_sem_expr_region_data.clause_arena(),
@@ -38,7 +36,6 @@ impl<'db> VdMirExprBuilder<'db> {
     }
 
     pub fn new(
-        db: &'db ::salsa::Db,
         sem_expr_arena: VdSemExprArenaRef<'db>,
         sem_phrase_arena: VdSemPhraseArenaRef<'db>,
         sem_clause_arena: VdSemClauseArenaRef<'db>,
@@ -48,7 +45,6 @@ impl<'db> VdMirExprBuilder<'db> {
         sem_symbol_local_defn_storage: &VdSemSymbolLocalDefnStorage,
     ) -> Self {
         let mut slf = Self {
-            db,
             sem_expr_arena,
             sem_phrase_arena,
             sem_clause_arena,

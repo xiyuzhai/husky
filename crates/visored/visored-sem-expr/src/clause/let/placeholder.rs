@@ -37,7 +37,7 @@ impl ToVdSem<VdSemLetPlaceholderDispatch> for &VdSynLetPlaceholderResolution {
         let pattern = self.pattern().to_vd_sem(builder);
         let ty_repr = self.ty().to_vd_sem(builder);
         let ty_term = builder.infer_pattern_ty_term(ty_repr);
-        let ty = ty_term.to_ty(builder.db());
+        let ty = ty_term.to_ty();
         builder.infer_pattern_symbol_tys(&pattern, ty);
         VdSemLetPlaceholderDispatch {
             pattern,

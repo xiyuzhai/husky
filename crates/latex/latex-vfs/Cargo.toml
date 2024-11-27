@@ -13,7 +13,7 @@ keywords.workspace = true
 
 [dependencies]
 # abstractions
-salsa.workspace = true
+interned.workspace = true
 
 [lints]
 workspace = true

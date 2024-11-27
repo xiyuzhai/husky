@@ -45,8 +45,8 @@ use visored_annotation::{
     annotation::{space::VdSpaceAnnotation, token::VdTokenAnnotation},
     annotations::VdAnnotations,
 };
+use visored_entity_path::module::VdModulePath;
 use visored_global_resolution::default_table::VdDefaultGlobalResolutionTable;
-use visored_item_path::module::VdModulePath;
 
 pub struct VdSynExprTracker<'a, Input: IsVdSynExprInput<'a>> {
     pub input: Input,
@@ -95,7 +95,6 @@ impl<'a, Input: IsVdSynExprInput<'a>> VdSynExprTracker<'a, Input> {
         input: Input,
         token_annotations: &[((&str, &str), VdTokenAnnotation)],
         space_annotations: &[((&str, &str), VdSpaceAnnotation)],
-        db: &salsa::Db,
     ) -> Self {
         let LxAstTracker {
             command_signature_table,
@@ -104,7 +103,7 @@ impl<'a, Input: IsVdSynExprInput<'a>> VdSynExprTracker<'a, Input> {
             ast_arena,
             ast_token_idx_range_map,
             output: lx_ast_output,
-        } = LxAstTracker::new(input, db);
+        } = LxAstTracker::new(input);
         // ad hoc
         let whole_token_range = token_storage.whole_token_idx_range(LxTokenLane::Main);
         let annotations = VdAnnotations::from_sparse(
@@ -113,9 +112,8 @@ impl<'a, Input: IsVdSynExprInput<'a>> VdSynExprTracker<'a, Input> {
             space_annotations.iter().copied(),
             &token_storage,
         );
-        let default_resolution_table = VdDefaultGlobalResolutionTable::new_standard(db);
+        let default_resolution_table = VdDefaultGlobalResolutionTable::new_standard();
         let mut builder = VdSynExprBuilder::new(
-            db,
             input.file_path(),
             &token_storage,
             ast_arena.as_arena_ref(),
@@ -172,9 +170,8 @@ impl<'a, Input: IsVdSynExprInput<'a>> VdSynExprTracker<'a, Input> {
         }
     }
 
-    fn display_tree_builder<'b>(&'b self, db: &'b salsa::Db) -> VdSynExprDisplayTreeBuilder<'b> {
+    fn display_tree_builder<'b>(&'b self) -> VdSynExprDisplayTreeBuilder<'b> {
         VdSynExprDisplayTreeBuilder::new(
-            db,
             self.input.content(),
             &self.token_storage,
             self.ast_arena.as_arena_ref(),
@@ -194,8 +191,8 @@ impl<'a, Input: IsVdSynExprInput<'a>> VdSynExprTracker<'a, Input> {
         )
     }
 
-    pub(crate) fn show_display_tree(&self, db: &salsa::Db) -> String {
-        let builder = self.display_tree_builder(db);
+    pub(crate) fn show_display_tree(&self) -> String {
+        let builder = self.display_tree_builder();
         self.output.show(&builder)
     }
 }
@@ -255,10 +252,7 @@ impl IsVdSynOutput for VdSynExprIdx {
         self,
         builder: &mut VdSynExprEntityTreeBuilder,
     ) -> VdSynExprEntityTreeNode {
-        VdSynExprEntityTreeNode::new(
-            VdModulePath::new_root(builder.db(), builder.file_path()),
-            vec![],
-        )
+        VdSynExprEntityTreeNode::new(VdModulePath::new_root(builder.file_path()), vec![])
     }
 
     fn build_all_symbols(self, builder: &mut VdSynSymbolBuilder) {

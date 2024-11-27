@@ -222,7 +222,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 75,
+                            value: 2,
                         },
                     ),
                 ),
@@ -361,7 +361,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 76,
+                            value: 2,
                         },
                     ),
                 ),
@@ -500,7 +500,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 77,
+                            value: 2,
                         },
                     ),
                 ),
@@ -902,7 +902,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 78,
+                            value: 15,
                         },
                     ),
                 ),
@@ -1051,7 +1051,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 79,
+                            value: 29,
                         },
                     ),
                 ),
@@ -1387,7 +1387,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 80,
+                            value: 13,
                         },
                     ),
                 ),
@@ -1551,7 +1551,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 81,
+                            value: 13,
                         },
                     ),
                 ),
@@ -1752,7 +1752,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 82,
+                            value: 9,
                         },
                     ),
                 ),

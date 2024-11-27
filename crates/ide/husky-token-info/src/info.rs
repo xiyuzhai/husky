@@ -211,7 +211,7 @@ impl TokenInfoData {
 }
 
 /// the purpose is to avoid extra debug with db in expr region
-#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub struct ExprRegionLeash(SynExprRegion);
 
 impl From<SynExprRegion> for ExprRegionLeash {

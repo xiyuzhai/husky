@@ -11,7 +11,8 @@ use crate::{
 use builder::VdSynExprEntityTreeBuilder;
 use either::*;
 use latex_vfs::path::LxFilePath;
-use visored_item_path::module::{VdModulePath, VdModulePathRegistry};
+use visored_entity_path::module::{VdModulePath, VdModulePathRegistry};
+use visored_global_resolution::default_table::VdDefaultGlobalResolutionTable;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct VdSynExprEntityTreeNode {
@@ -29,7 +30,7 @@ impl VdSynExprEntityTreeNode {
 }
 
 pub(crate) fn build_entity_tree_with(
-    db: &::salsa::Db,
+    default_global_resolution_table: &VdDefaultGlobalResolutionTable,
     file_path: LxFilePath,
     stmt_arena: VdSynStmtArenaRef,
     division_arena: VdSynDivisionArenaRef,
@@ -39,7 +40,12 @@ pub(crate) fn build_entity_tree_with(
     VdSynStmtMap<VdSynExprEntityTreeNode>,
     VdSynDivisionMap<VdSynExprEntityTreeNode>,
 ) {
-    let mut builder = VdSynExprEntityTreeBuilder::new(db, file_path, stmt_arena, division_arena);
+    let mut builder = VdSynExprEntityTreeBuilder::new(
+        default_global_resolution_table,
+        file_path,
+        stmt_arena,
+        division_arena,
+    );
     let root_node = output.build_entity_tree_root_node(&mut builder);
     let (stmt_entity_tree_node_map, division_entity_tree_node_map) = builder.finish();
     (

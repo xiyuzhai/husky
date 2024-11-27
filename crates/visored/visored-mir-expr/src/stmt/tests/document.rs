@@ -7,10 +7,20 @@ use latex_vfs::path::LxFilePath;
 use std::path::PathBuf;
 
 fn t(content: &str, expect: &Expect) {
-    let db = &DB::default();
-    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
-    let tracker = VdMirExprTracker::new(LxDocumentInput { file_path, content }, &[], &[], db);
-    expect.assert_eq(&tracker.show_display_tree(db));
+    use husky_path_utils::HuskyLangDevPaths;
+
+    let dev_paths = HuskyLangDevPaths::new();
+    let file_path = LxFilePath::new(PathBuf::from(file!()));
+    let tracker = VdMirExprTracker::new(
+        LxDocumentInput {
+            specs_dir: dev_paths.specs_dir(),
+            file_path,
+            content,
+        },
+        &[],
+        &[],
+    );
+    expect.assert_eq(&tracker.show_display_tree());
 }
 
 #[test]
@@ -22,7 +32,7 @@ fn basic_document_to_vd_mir_works() {
 Let $x\in\mathbb{R}$.
 \end{document}"#,
         &expect![[r#"
-            └─ block: Division(Stmts, VdModulePath(Id { value: 2 }))
+            └─ block: Division(Stmts, VdModulePath(`root.stmts1`))
               └─ block: Paragraph
                 └─ block: Sentence
                   └─ let placeholder
@@ -36,8 +46,8 @@ Let $x\in\mathbb{R}$.
 Let $x\in\mathbb{R}$.
 \end{document}"#,
         &expect![[r#"
-            └─ block: Division(Section, VdModulePath(Id { value: 2 }))
-              └─ block: Division(Stmts, VdModulePath(Id { value: 3 }))
+            └─ block: Division(Section, VdModulePath(`root.section1`))
+              └─ block: Division(Stmts, VdModulePath(`root.section1.stmts1`))
                 └─ block: Paragraph
                   └─ block: Sentence
                     └─ let placeholder
@@ -57,20 +67,20 @@ Let $y\in\mathbb{R}$.
 \subsubsection{Bad}
 \end{document}"#,
         &expect![[r#"
-            └─ block: Division(Section, VdModulePath(Id { value: 2 }))
-              ├─ block: Division(Stmts, VdModulePath(Id { value: 3 }))
+            └─ block: Division(Section, VdModulePath(`root.section1`))
+              ├─ block: Division(Stmts, VdModulePath(`root.section1.stmts1`))
               │ └─ block: Paragraph
               │   └─ block: Sentence
               │     └─ let placeholder
-              ├─ block: Division(Subsection, VdModulePath(Id { value: 5 }))
-              │ └─ block: Division(Stmts, VdModulePath(Id { value: 6 }))
+              ├─ block: Division(Subsection, VdModulePath(`root.section1.subsection1`))
+              │ └─ block: Division(Stmts, VdModulePath(`root.section1.subsection1.stmts1`))
               │   └─ block: Paragraph
               │     └─ block: Sentence
               │       └─ let placeholder
-              ├─ block: Division(Subsection, VdModulePath(Id { value: 8 }))
-              └─ block: Division(Subsection, VdModulePath(Id { value: 9 }))
-                ├─ block: Division(Subsubsection, VdModulePath(Id { value: 10 }))
-                └─ block: Division(Subsubsection, VdModulePath(Id { value: 11 }))
+              ├─ block: Division(Subsection, VdModulePath(`root.section1.subsection2`))
+              └─ block: Division(Subsection, VdModulePath(`root.section1.subsection3`))
+                ├─ block: Division(Subsubsection, VdModulePath(`root.section1.subsection3.subsubsection1`))
+                └─ block: Division(Subsubsection, VdModulePath(`root.section1.subsection3.subsubsection2`))
         "#]],
     );
 }

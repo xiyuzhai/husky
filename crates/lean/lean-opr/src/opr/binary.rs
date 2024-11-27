@@ -18,17 +18,17 @@ pub enum LnBinaryOpr {
 impl LnBinaryOpr {
     pub fn fmt_str(self) -> &'static str {
         match self {
-            LnBinaryOpr::Add => "+",
-            LnBinaryOpr::Sub => "-",
-            LnBinaryOpr::Mul => "*",
-            LnBinaryOpr::Div => "/",
-            LnBinaryOpr::Pow => "^",
-            LnBinaryOpr::Eq => "=",
-            LnBinaryOpr::Ne => "≠",
-            LnBinaryOpr::Lt => "<",
-            LnBinaryOpr::Gt => ">",
-            LnBinaryOpr::Le => "≤",
-            LnBinaryOpr::Ge => "≥",
+            LnBinaryOpr::Add => " + ",
+            LnBinaryOpr::Sub => " - ",
+            LnBinaryOpr::Mul => " * ",
+            LnBinaryOpr::Div => " / ",
+            LnBinaryOpr::Pow => " ^ ",
+            LnBinaryOpr::Eq => " = ",
+            LnBinaryOpr::Ne => " ≠ ",
+            LnBinaryOpr::Lt => " < ",
+            LnBinaryOpr::Gt => " > ",
+            LnBinaryOpr::Le => " ≤ ",
+            LnBinaryOpr::Ge => " ≥ ",
         }
     }
 

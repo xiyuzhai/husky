@@ -1,6 +1,6 @@
 use husky_entity_tree::error::EntityTreeResult;
 use husky_sem_expr::{helpers::path::sem_expr_region_from_region_path, SemExprRegionData};
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 
 use husky_token::{verse::idx::TokenVerseIdx, TokenDb};
 use husky_token_data::{Keyword, TokenData};
@@ -24,7 +24,7 @@ struct HoverResultCalculator<'db> {
     module_path: ModulePath,
     token_idx: TokenIdx,
     token: &'db TokenData,
-    token_range: TextRange,
+    token_range: TextPositionRange,
     token_infos: &'db [TokenInfo],
     markdown_content: String,
     actions: Vec<CommandLinkGroup>,

@@ -102,7 +102,7 @@ impl Diagnose for OriginalSynNodeDeclError {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, ctx: &Self::Context<'_>) -> TextRange {
+    fn range(&self, ctx: &Self::Context<'_>) -> TextPositionRange {
         match self {
             OriginalSynNodeDeclError::Expr(error) => error.range(ctx),
             OriginalSynNodeDeclError::ExpectedOutputType(regional_token_stream_state)

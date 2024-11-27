@@ -6,13 +6,12 @@ pub mod literal;
 use self::{delimiter::LxLispDelimiter, ident::LxLispIdent, literal::LxLispLiteral};
 use super::*;
 use crate::idx::LxLispTokenIdx;
-use husky_coword::Coword;
-use husky_text_protocol::{offset::TextOffsetRange, range::TextRange};
+use coword::Coword;
+use husky_text_protocol::{offset::TextOffsetRange, range::TextPositionRange};
 use label::LxLispXlabel;
 use latex_command::path::LxCommandName;
 use ordered_float::NotNan;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum LxLispTokenData {
     Literal(LxLispLiteral),
@@ -35,13 +34,13 @@ impl<'a> LxLexer<'a> {
 
     fn next_ranged_lisp_token_data(
         &mut self,
-    ) -> Option<(TextOffsetRange, TextRange, LxLispTokenData)> {
+    ) -> Option<(TextOffsetRange, TextPositionRange, LxLispTokenData)> {
         self.eat_spaces_and_tabs();
         let mut start_offset = self.chars.current_offset();
         let mut start_position = self.chars.current_position();
         let token_data = self.next_lisp_token_data()?;
         let end_offset = self.chars.current_offset();
-        let range = TextRange {
+        let range = TextPositionRange {
             start: start_position,
             end: self.chars.current_position(),
         };
@@ -56,7 +55,6 @@ impl<'a> LxLexer<'a> {
     }
 
     pub(crate) fn next_lisp_token_data(&mut self) -> Option<LxLispTokenData> {
-        let db = self.db;
         Some(match self.chars.peek()? {
             '}' => return None,
             '\\' => {
@@ -66,7 +64,6 @@ impl<'a> LxLexer<'a> {
                         c if c.is_ascii_alphabetic() => {
                             let Ok(command_name) = LxCommandName::new2(
                                 self.chars.next_str_slice_while(|c| c.is_ascii_alphabetic()),
-                                db,
                             ) else {
                                 todo!()
                             };
@@ -79,13 +76,13 @@ impl<'a> LxLexer<'a> {
                     None => todo!(),
                 }
             }
-            n if n.is_numeric() => {
+            n if n.is_ascii_digit() => {
                 let mut dot_count = 0;
                 let s = self.chars.next_str_slice_while(|c| {
                     if c == '.' {
                         dot_count += 1;
                     }
-                    (c.is_numeric() || c == '.') && dot_count < 2
+                    (c.is_ascii_digit() || c == '.') && dot_count < 2
                 });
                 let literal = match dot_count {
                     0 => {
@@ -114,18 +111,15 @@ impl<'a> LxLexer<'a> {
                 let ident = LxLispIdent::new(
                     self.chars
                         .next_str_slice_while(|c| c.is_ascii_alphanumeric() || c == '_'),
-                    db,
                 );
                 LxLispTokenData::Ident(ident)
             }
             '\'' => {
                 self.chars.eat_char();
-                let label = LxLispXlabel::new(
-                    self.chars.next_str_slice_while(|c| {
+                let label =
+                    LxLispXlabel::new(self.chars.next_str_slice_while(|c| {
                         c.is_ascii_alphanumeric() || c == '-' || c == ':'
-                    }),
-                    db,
-                );
+                    }));
                 LxLispTokenData::Xlabel(label)
             }
             '"' => {
@@ -145,7 +139,7 @@ impl<'a> LxLexer<'a> {
                         c => data.push(c),
                     }
                 }
-                LxLispTokenData::Literal(LxLispLiteral::String(Coword::from_owned(db, data)))
+                LxLispTokenData::Literal(LxLispLiteral::String(Coword::new(data)))
             }
             c => {
                 self.chars.eat_char();

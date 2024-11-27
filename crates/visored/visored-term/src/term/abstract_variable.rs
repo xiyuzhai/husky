@@ -1,10 +1,15 @@
 use super::*;
 
-#[salsa::derive_debug_with_db]
-#[salsa::as_id]
-#[salsa::deref_id]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct VdAbstractVariable(VdTermId);
+
+impl std::ops::Deref for VdAbstractVariable {
+    type Target = VdTermId;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct VdAbstractVariableData {
@@ -12,8 +17,8 @@ pub struct VdAbstractVariableData {
 }
 
 impl VdAbstractVariable {
-    pub fn data(self, db: &::salsa::Db) -> &VdAbstractVariableData {
-        match self.0.data(db) {
+    pub fn data(&self) -> &VdAbstractVariableData {
+        match self.0.data() {
             VdTermData::AbstractVariable(data) => data,
             _ => unreachable!(),
         }

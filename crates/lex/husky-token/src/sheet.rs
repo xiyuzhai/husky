@@ -2,7 +2,7 @@ use crate::{
     verse::{idx::TokenVerseIdx, iter::TokenVerseIter, start::TokenVerseStart, TokenVerses},
     TokenIdx, TokenIdxRange, TokenJar, TokenStreamState,
 };
-use husky_text_protocol::{position::TextPosition, range::TextRange};
+use husky_text_protocol::{position::TextPosition, range::TextPositionRange};
 use husky_token_data::TokenData;
 use husky_vfs::path::module_path::ModulePath;
 
@@ -23,7 +23,7 @@ pub enum TokenIdxRangeConfig {
 pub struct RangedTokenSheet {
     token_sheet: TokenSheet,
     // external
-    token_ranges: Vec<TextRange>,
+    token_ranges: Vec<TextPositionRange>,
     comments: Vec<Comment>,
 }
 
@@ -44,14 +44,14 @@ pub struct TokenSheetData {
 pub struct Comment {
     kind: CommentKind,
     number_of_preceding_tokens: usize,
-    range: TextRange,
+    range: TextPositionRange,
 }
 
 impl Comment {
     pub(crate) fn new(
         kind: CommentKind,
         number_of_preceding_tokens: usize,
-        range: TextRange,
+        range: TextPositionRange,
     ) -> Self {
         Self {
             kind,
@@ -64,7 +64,7 @@ impl Comment {
         self.number_of_preceding_tokens
     }
 
-    pub fn range(&self) -> TextRange {
+    pub fn range(&self) -> TextPositionRange {
         self.range
     }
 }
@@ -86,7 +86,7 @@ impl RangedTokenSheet {
     pub fn ranged_token_iter<'a>(
         &'a self,
         db: &'a ::salsa::Db,
-    ) -> impl Iterator<Item = (&'a TextRange, &'a TokenData)> + 'a {
+    ) -> impl Iterator<Item = (&'a TextPositionRange, &'a TokenData)> + 'a {
         let tokens = self.tokens(db);
         (0..tokens.len())
             .into_iter()
@@ -96,7 +96,7 @@ impl RangedTokenSheet {
     pub fn indexed_ranged_token_iter<'a>(
         &'a self,
         db: &'a ::salsa::Db,
-    ) -> impl Iterator<Item = (TokenIdx, &'a TextRange, &'a TokenData)> + 'a {
+    ) -> impl Iterator<Item = (TokenIdx, &'a TextPositionRange, &'a TokenData)> + 'a {
         let tokens = self.tokens(db);
         (0..tokens.len())
             .into_iter()
@@ -124,7 +124,7 @@ impl RangedTokenSheet {
         self.token_sheet.data(db)
     }
 
-    pub fn token_text_ranges(&self) -> &[TextRange] {
+    pub fn token_text_ranges(&self) -> &[TextPositionRange] {
         self.token_ranges.as_ref()
     }
 
@@ -151,7 +151,7 @@ impl RangedTokenSheet {
     pub fn new(
         db: &::salsa::Db,
         tokens: Vec<TokenData>,
-        token_ranges: Vec<TextRange>,
+        token_ranges: Vec<TextPositionRange>,
         comments: Vec<Comment>,
     ) -> RangedTokenSheet {
         let token_verses = TokenVerses::new(&tokens, &token_ranges);
@@ -168,24 +168,27 @@ impl RangedTokenSheet {
         }
     }
 
-    pub fn token_text_range(&self, token_idx: TokenIdx) -> TextRange {
+    pub fn token_text_range(&self, token_idx: TokenIdx) -> TextPositionRange {
         debug_assert!(token_idx.index() < self.token_ranges.len());
         self.token_ranges[token_idx.index()]
     }
 
-    pub fn tokens_text_range(&self, token_idx_range: TokenIdxRange) -> TextRange {
+    pub fn tokens_text_range(&self, token_idx_range: TokenIdxRange) -> TextPositionRange {
         debug_assert!(token_idx_range.end().token_idx() > token_idx_range.start().token_idx());
         let text_range_start = self.token_ranges[token_idx_range.start().index()].start;
         let text_range_end = self.token_ranges[(token_idx_range.end().index() - 1) as usize].end;
         (text_range_start..text_range_end).into()
     }
 
-    pub fn token_stream_state_text_range(&self, token_stream_state: TokenStreamState) -> TextRange {
+    pub fn token_stream_state_text_range(
+        &self,
+        token_stream_state: TokenStreamState,
+    ) -> TextPositionRange {
         match token_stream_state.drained() {
             true => {
                 let next_token_idx_index = token_stream_state.next_token_idx().index();
                 match next_token_idx_index {
-                    0 => TextRange::default(),
+                    0 => TextPositionRange::default(),
                     _ => self.token_ranges[(next_token_idx_index - 1) as usize].right_after(),
                 }
             }

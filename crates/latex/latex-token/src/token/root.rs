@@ -1,9 +1,8 @@
 use super::*;
 use crate::idx::LxRootTokenIdx;
-use husky_text_protocol::{offset::TextOffsetRange, range::TextRange};
+use husky_text_protocol::{offset::TextOffsetRange, range::TextPositionRange};
 use latex_command::path::LxCommandName;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum LxRootTokenData {
     Command(LxCommandName),
@@ -28,13 +27,15 @@ impl<'a> LxLexer<'a> {
         ))
     }
 
-    fn next_ranged_root_token(&mut self) -> Option<(TextOffsetRange, TextRange, LxRootTokenData)> {
+    fn next_ranged_root_token(
+        &mut self,
+    ) -> Option<(TextOffsetRange, TextPositionRange, LxRootTokenData)> {
         self.eat_spaces_and_tabs_and_lines_and_comments();
         let mut start_offset = self.chars.current_offset();
         let mut start_position = self.chars.current_position();
         let token_data = self.next_root_token_data()?;
         let end_offset = self.chars.current_offset();
-        let range = TextRange {
+        let range = TextPositionRange {
             start: start_position,
             end: self.chars.current_position(),
         };
@@ -48,7 +49,6 @@ impl<'a> LxLexer<'a> {
         Some(token_data)
     }
     pub(crate) fn next_root_token_data(&mut self) -> Option<LxRootTokenData> {
-        let db = self.db;
         match self.chars.peek()? {
             '\\' => {
                 self.chars.eat_char();
@@ -57,11 +57,10 @@ impl<'a> LxLexer<'a> {
                         c if c.is_ascii_alphabetic() => Some(LxRootTokenData::Command(
                             LxCommandName::new(
                                 self.next_coword_with(|c| c.is_ascii_alphabetic()).unwrap(),
-                                db,
                             )
                             .unwrap(),
                         )),
-                        c if c.is_numeric() => todo!("latex might allow single digit command"),
+                        c if c.is_ascii_digit() => todo!("latex might allow single digit command"),
                         _ => todo!("latex one digit non letter command"),
                     },
                     None => todo!(),
@@ -93,20 +92,19 @@ pub fn next_root_token_data_works() {
     fn t(input: &str, expected: &Expect) {
         use crate::lane::LxTokenLane;
 
-        let db = &DB::default();
         let mut storage = LxTokenStorage::default();
-        let stream = LxLexer::new(db, input, LxTokenLane::Main, &mut storage)
+        let stream = LxLexer::new(input, LxTokenLane::Main, &mut storage)
             .into_root_stream()
             .map(|(_, token_data)| token_data);
         let tokens: Vec<_> = stream.collect();
-        expected.assert_debug_eq(&(tokens.debug(db)));
+        expected.assert_debug_eq(&tokens);
     }
     t(
         "\\usepackage",
         &expect![[r#"
             [
-                LxRootTokenData::Command(
-                    LxCommandName::LettersOnly(
+                Command(
+                    LettersOnly(
                         LettersOnlyLxCommandName(
                             Coword(
                                 "usepackage",
@@ -121,7 +119,7 @@ pub fn next_root_token_data_works() {
         "{",
         &expect![[r#"
             [
-                LxRootTokenData::LeftDelimiter(
+                LeftDelimiter(
                     Curl,
                 ),
             ]
@@ -131,7 +129,7 @@ pub fn next_root_token_data_works() {
         "}",
         &expect![[r#"
             [
-                LxRootTokenData::RightDelimiter(
+                RightDelimiter(
                     Curl,
                 ),
             ]
@@ -142,18 +140,17 @@ pub fn next_root_token_data_works() {
 #[test]
 pub fn next_root_token_data_with_comments_works() {
     fn t(input_with_comments: &str, input_without_comments: &str) {
-        fn f(db: &DB, input: &str) -> Vec<LxRootTokenData> {
+        fn f(input: &str) -> Vec<LxRootTokenData> {
             use crate::lane::LxTokenLane;
 
-            let db = &DB::default();
             let mut storage = LxTokenStorage::default();
-            let stream = LxLexer::new(db, input, LxTokenLane::Main, &mut storage)
+            let stream = LxLexer::new(input, LxTokenLane::Main, &mut storage)
                 .into_root_stream()
                 .map(|(_, token_data)| token_data);
             stream.collect()
         }
-        let tokens_with_comments = f(&DB::default(), input_with_comments);
-        let tokens_without_comments = f(&DB::default(), input_without_comments);
+        let tokens_with_comments = f(input_with_comments);
+        let tokens_without_comments = f(input_without_comments);
         assert_eq!(tokens_with_comments, tokens_without_comments);
     }
     t(

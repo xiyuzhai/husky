@@ -1,18 +1,17 @@
-use husky_coword::Coword;
-use salsa::db::Db;
+use coword::Coword;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
 pub struct LnIdent(Coword);
 
 impl LnIdent {
-    pub fn from_owned(ident: String, db: &::salsa::Db) -> Self {
-        LnIdent(Coword::from_owned(db, ident))
+    pub fn from_owned(ident: String) -> Self {
+        LnIdent(Coword::new(ident))
     }
 
-    pub fn from_ref(ident: &str, db: &Db) -> Self {
+    pub fn from_ref(ident: &str) -> Self {
         // TODO: allow broader idents, like h\1
         assert!(Self::is_valid(ident));
-        LnIdent(Coword::from_ref(db, ident))
+        LnIdent(Coword::from_ref(ident))
     }
 
     pub fn is_valid(ident: &str) -> bool {
@@ -45,7 +44,7 @@ impl LnIdent {
         RESERVED_KEYWORDS.contains(&ident)
     }
 
-    pub fn data<'db>(&self, db: &'db ::salsa::Db) -> &'db str {
-        self.0.data(db)
+    pub fn data(&self) -> &'static str {
+        self.0.data()
     }
 }

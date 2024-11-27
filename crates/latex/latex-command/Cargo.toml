@@ -12,15 +12,24 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+lazy_static.workspace = true
 rustc-hash.workspace = true
 thiserror.workspace = true
 # abstractions
-salsa.workspace = true
+coword.workspace = true
+salsa = { workspace = true, optional = true }
 # kernel
 husky-coword.workspace = true
 # latex
 latex-prelude.workspace = true
 latex-math-letter.workspace = true
+# lisp
+lisp-csv.workspace = true
+
+[dev-dependencies]
+husky-path-utils.workspace = true
+# latex
+latex-command.workspace = true
 
 [lints]
 workspace = true

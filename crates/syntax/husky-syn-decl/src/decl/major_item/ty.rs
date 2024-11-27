@@ -20,7 +20,7 @@ use husky_entity_kind::TypeKind;
 use husky_entity_path::path::major_item::ty::TypePath;
 use husky_entity_tree::node::major_item::ty::TypeSynNodePath;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum TypeSynNodeDecl {
@@ -148,7 +148,7 @@ impl<'a> ItemSynNodeDeclParser<'a> {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum TypeSynDecl {

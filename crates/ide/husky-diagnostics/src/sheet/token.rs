@@ -24,7 +24,7 @@ pub(crate) fn token_diagnostic_sheet(
     TokenDiagnosticSheet::new(db, diagnostics)
 }
 
-impl Diagnose for (&TextRange, &TokenDataError) {
+impl Diagnose for (&TextPositionRange, &TokenDataError) {
     type Context<'a> = SheetDiagnosticsContext<'a>;
 
     fn message(&self, _db: &Self::Context<'_>) -> String {
@@ -60,7 +60,7 @@ impl Diagnose for (&TextRange, &TokenDataError) {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, _ctx: &Self::Context<'_>) -> TextRange {
+    fn range(&self, _ctx: &Self::Context<'_>) -> TextPositionRange {
         // todo: modify for special cases like TokenDataError::IncompleteStringLiteralBeforeEol
         *self.0
     }

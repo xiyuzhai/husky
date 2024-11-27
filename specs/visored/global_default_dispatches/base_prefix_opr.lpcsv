@@ -1,0 +1,13 @@
+//! Format:
+//!
+//! <prefix-opr-ident> <opd-type> <signature-ident>
+pos, nat, int_pos
+pos, int, int_pos
+pos, rat, rat_pos
+pos, real, real_pos
+pos, complex, complex_pos
+neg, nat, int_neg
+neg, int, int_neg
+neg, rat, rat_neg
+neg, real, real_neg
+neg, complex, complex_neg

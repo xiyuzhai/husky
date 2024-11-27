@@ -15,7 +15,7 @@ use entity_tree::VdSynExprEntityTreeNode;
 use helpers::tracker::IsVdSynOutput;
 use latex_math_letter::letter::LxMathLetter;
 use stmt::{VdSynStmtIdxRange, VdSynStmtMap};
-use visored_item_path::module::VdModulePath;
+use visored_entity_path::module::VdModulePath;
 
 pub enum VdSynSymbol {
     Letter(LxMathLetter),
@@ -26,7 +26,6 @@ pub struct VdSynExprVariableIdx {}
 pub struct VdSynExprVariableData {}
 
 pub(crate) fn build_all_symbol_defns_and_resolutions_with(
-    db: &::salsa::Db,
     token_storage: &LxTokenStorage,
     ast_arena: LxAstArenaRef,
     ast_token_idx_range_map: &LxAstTokenIdxRangeMap,
@@ -44,12 +43,12 @@ pub(crate) fn build_all_symbol_defns_and_resolutions_with(
     sentence_range_map: &VdSynSentenceTokenIdxRangeMap,
     stmt_range_map: &VdSynStmtTokenIdxRangeMap,
     division_range_map: &VdSynDivisionTokenIdxRangeMap,
+    root_node: &VdSynExprEntityTreeNode,
     stmt_entity_tree_node_map: &VdSynStmtMap<VdSynExprEntityTreeNode>,
     division_entity_tree_node_map: &VdSynDivisionMap<VdSynExprEntityTreeNode>,
     t: impl IsVdSynOutput,
 ) -> (VdSynSymbolLocalDefnStorage, VdSynSymbolResolutionsTable) {
     let mut symbol_builder = VdSynSymbolBuilder::new(
-        db,
         default_resolution_table,
         expr_arena,
         phrase_arena,
@@ -63,6 +62,7 @@ pub(crate) fn build_all_symbol_defns_and_resolutions_with(
         sentence_range_map,
         stmt_range_map,
         division_range_map,
+        root_node,
         stmt_entity_tree_node_map,
         division_entity_tree_node_map,
     );

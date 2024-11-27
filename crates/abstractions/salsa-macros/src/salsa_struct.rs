@@ -160,7 +160,7 @@ impl<A: AllowedOptions> SalsaStruct<A> {
     }
 
     /// Generate `struct Foo(Id)`
-    pub(crate) fn id_struct(&self) -> syn::ItemStruct {
+    pub(crate) fn id_struct(&self, kind: SalsaStructKind) -> syn::ItemStruct {
         let ident = self.id_ident();
         let visibility = &self.struct_item.vis;
 
@@ -171,11 +171,17 @@ impl<A: AllowedOptions> SalsaStruct<A> {
             .iter()
             .filter(|attr| !attr.path().is_ident("derive"))
             .collect();
-
-        parse_quote! {
-            #(#attrs)*
-            #[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Hash, Debug)]
-            #visibility struct #ident(salsa::Id);
+        match kind {
+            SalsaStructKind::Input | SalsaStructKind::Tracked => parse_quote! {
+                #(#attrs)*
+                #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+                #visibility struct #ident(salsa::Id);
+            },
+            SalsaStructKind::Interned => parse_quote! {
+                #(#attrs)*
+                #[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Hash, Debug)]
+                #visibility struct #ident(salsa::Id);
+            },
         }
     }
 

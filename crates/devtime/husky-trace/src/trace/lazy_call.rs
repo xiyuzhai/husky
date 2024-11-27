@@ -9,7 +9,7 @@ pub struct LazyCallTracePathData {
     callee_path: ItemPath,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct LazyCallTraceData {
     path: TracePath,
     biological_parent: Trace,

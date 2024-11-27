@@ -8,8 +8,8 @@ pub mod tests;
 
 use self::{complete_command::*, delimited::*, environment::*};
 use super::*;
+use coword::Coword;
 use helpers::LxRoseAstChild;
-use husky_coword::Coword;
 use latex_command::{
     path::{LxCommandName, LxCommandPath},
     signature::LxCommandSignature,
@@ -22,7 +22,6 @@ use latex_token::{
 };
 use smallvec::{smallvec, SmallVec};
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LxRoseAstData {
     TextEdit {
@@ -151,10 +150,9 @@ impl<'a> LxAstParser<'a> {
         command_name: LxCommandName,
     ) -> LxRoseAstData {
         let Some(command_signature) = self.command_signature_table().signature(command_name) else {
-            use salsa::DisplayWithDb;
             todo!(
                 "handle command `{}` not found in command signature table",
-                command_name.display(self.db())
+                command_name
             )
         };
         match *command_signature {

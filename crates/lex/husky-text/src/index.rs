@@ -1,7 +1,7 @@
 use crate::*;
 use husky_text_protocol::{
     position::{TextLine, TextPosition},
-    range::TextRange,
+    range::TextPositionRange,
 };
 use ref_index::RefIndex;
 use std::ops::{Range, RangeFrom, RangeInclusive, RangeTo, RangeToInclusive};
@@ -42,17 +42,17 @@ pub(crate) fn text_ref_index_by_u32_pair_range_works() {
     t("hello", (0, 1)..(0, 3), "el");
 }
 
-impl<'a> RefIndex<'a, TextRange> for Text<'a> {
+impl<'a> RefIndex<'a, TextPositionRange> for Text<'a> {
     type Output = str;
 
-    fn ref_index(self, range: TextRange) -> &'a Self::Output {
+    fn ref_index(self, range: TextPositionRange) -> &'a Self::Output {
         &self.raw[self.line_map.offset_range(range)]
     }
 }
 
 #[test]
 pub(crate) fn text_ref_index_by_text_range_works() {
-    let t = run_index_test_on_text::<TextRange>;
+    let t = run_index_test_on_text::<TextPositionRange>;
     t("hello", ((0, 1)..(0, 3)).into(), "el");
 }
 

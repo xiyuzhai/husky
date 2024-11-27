@@ -14,7 +14,9 @@ keywords.workspace = true
 [dependencies]
 enum-class.workspace = true
 enum-index.workspace = true
-salsa.workspace = true
+lazy_static.workspace = true
+# lisp
+lisp-csv.workspace = true
 
 [lints]
 workspace = true

@@ -5,7 +5,7 @@ pub mod helpers;
 mod tests;
 
 use super::*;
-use husky_coword::Coword;
+use coword::Coword;
 use latex_command::{
     path::{LxCommandName, LxCommandPath},
     signature::{
@@ -26,7 +26,6 @@ use latex_token::{
 };
 use smallvec::{smallvec, SmallVec};
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LxMathAstData {
     PlainLetter(LxMathTokenIdx, LxMathLetter),
@@ -74,7 +73,6 @@ pub enum LxMathAstData {
     },
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct LxMathCompleteCommandArgument {
     lcurl_token_idx: LxMathTokenIdx,
@@ -82,7 +80,6 @@ pub struct LxMathCompleteCommandArgument {
     rcurl_token_idx: LxMathTokenIdx,
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum LxMathCommandArgumentData {
     Math(LxMathAstIdxRange),
@@ -204,10 +201,9 @@ impl<'a> LxAstParser<'a> {
         command_name: LxCommandName,
     ) -> LxMathAstData {
         let Some(command_signature) = self.command_signature_table().signature(command_name) else {
-            use salsa::DisplayWithDb;
             todo!(
                 "handle command `{}` not found in command signature table",
-                command_name.display(self.db())
+                command_name
             )
         };
         match *command_signature {

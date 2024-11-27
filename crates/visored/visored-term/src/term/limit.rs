@@ -1,10 +1,15 @@
 use super::*;
 
-#[salsa::derive_debug_with_db]
-#[salsa::as_id]
-#[salsa::deref_id]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct VdLimit(VdTermId);
+
+impl std::ops::Deref for VdLimit {
+    type Target = VdTermId;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct VdLimitData {
@@ -12,8 +17,8 @@ pub struct VdLimitData {
 }
 
 impl VdLimit {
-    pub fn data(self, db: &::salsa::Db) -> &VdLimitData {
-        match self.0.data(db) {
+    pub fn data(&self) -> &VdLimitData {
+        match self.0.data() {
             VdTermData::Limit(data) => data,
             _ => unreachable!(),
         }

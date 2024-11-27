@@ -10,7 +10,7 @@ use husky_entity_path::path::impl_block::ImplBlockPath;
 use husky_entity_tree::node::impl_block::ImplBlockSynNodePath;
 use husky_regional_token::ImplRegionalToken;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum ImplBlockSynNodeDecl {
@@ -63,7 +63,7 @@ impl HasSynNodeDecl for ImplBlockSynNodePath {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum ImplBlockSynDecl {

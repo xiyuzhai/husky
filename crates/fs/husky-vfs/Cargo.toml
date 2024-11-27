@@ -38,10 +38,10 @@ husky-platform = { path = "../../kernel/husky-platform" }
 # utils
 husky-path-utils.workspace = true
 husky-print-utils.workspace = true
-husky-minimal-toml-utils = { path = "../../utils/husky-minimal-toml-utils" }
-husky-adversarial-utils = { path = "../../utils/husky-adversarial-utils", optional = true }
-husky-io-utils = { path = "../../utils/husky-io-utils", optional = true }
-husky-rng-utils = { path = "../../utils/husky-rng-utils", optional = true }
+husky-minimal-toml-utils = { workspace = true }
+husky-adversarial-utils = { workspace = true, optional = true }
+husky-io-utils.workspace = true
+husky-rng-utils = { workspace = true, optional = true }
 husky-toml-utils.workspace = true
 
 [dev-dependencies]
@@ -55,7 +55,6 @@ test_helpers = [
     "dep:expect-test",
     "dep:indicatif",
     "dep:husky-rng-utils",
-    "dep:husky-io-utils",
     "dep:husky-adversarial-utils"
 ]
 lsp_support = ["dep:lsp-types", "husky-text-protocol/lsp_support"]

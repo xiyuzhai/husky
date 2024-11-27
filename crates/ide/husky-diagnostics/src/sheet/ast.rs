@@ -192,7 +192,7 @@ impl Diagnose for (TokenVerseIdx, &OriginalAstError) {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, ctx: &SheetDiagnosticsContext) -> TextRange {
+    fn range(&self, ctx: &SheetDiagnosticsContext) -> TextPositionRange {
         // merge branches
         match self.1 {
             OriginalAstError::ExcessiveIndent

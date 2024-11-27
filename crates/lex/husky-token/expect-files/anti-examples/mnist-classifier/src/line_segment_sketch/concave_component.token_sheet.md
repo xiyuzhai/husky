@@ -503,7 +503,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 109,
+                            value: 2,
                         },
                     ),
                 ),
@@ -943,7 +943,7 @@ TokenSheetData {
                 Unspecified(
                     UnspecifiedFloatLiteral(
                         Id {
-                            value: 110,
+                            value: 2,
                         },
                     ),
                 ),

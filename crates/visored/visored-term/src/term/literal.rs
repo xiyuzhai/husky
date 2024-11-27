@@ -2,25 +2,39 @@ pub mod special_constant;
 
 use self::special_constant::VdSpecialConstant;
 use super::*;
-use crate::{menu::vd_ty_menu, ty::VdType};
+use crate::{menu::VD_TYPE_MENU, ty::VdType};
 
-#[salsa::derive_debug_with_db]
-#[salsa::as_id]
-#[salsa::deref_id]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+// #[salsa::derive_debug_with_db]
+// #[salsa::as_id]
+// #[salsa::deref_id]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct VdLiteral(VdTermId);
 
-#[salsa::derive_debug_with_db]
+impl std::ops::Deref for VdLiteral {
+    type Target = VdTermId;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl std::fmt::Debug for VdLiteral {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        todo!()
+        // self.0.fmt(f)
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum VdLiteralData {
     NaturalNumber(String),
     NegativeInteger(String),
-    FiniteDecimalRepresentation(String),
+    Float(String),
     SpecialConstant(VdSpecialConstant),
 }
 
 impl VdLiteral {
-    pub fn new(data: VdLiteralData, db: &::salsa::Db) -> Self {
+    pub fn new(data: VdLiteralData) -> Self {
         #[cfg(test)]
         {
             match data {
@@ -29,33 +43,32 @@ impl VdLiteral {
                     debug_assert!(n.chars().all(|c| c.is_digit(10)));
                 }
                 VdLiteralData::NegativeInteger(_) => todo!(),
-                VdLiteralData::FiniteDecimalRepresentation(_) => todo!(),
+                VdLiteralData::Float(_) => todo!(),
                 VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
             }
         }
-        Self(VdTermId::new(db, data.into()))
+        Self(VdTermId::new(data.into()))
     }
 
-    pub fn data(self, db: &::salsa::Db) -> &VdLiteralData {
-        match self.0.data(db) {
+    pub fn data(self) -> &'static VdLiteralData {
+        match self.0.data() {
             VdTermData::Literal(data) => data,
             _ => unreachable!(),
         }
     }
 
-    pub fn ty(self, db: &::salsa::Db) -> VdType {
-        zfc_literal_ty(db, self)
+    pub fn ty(self) -> VdType {
+        zfc_literal_ty(self)
     }
 }
 
-#[salsa::tracked]
-fn zfc_literal_ty(db: &::salsa::Db, literal: VdLiteral) -> VdType {
-    let data = literal.data(db);
-    let menu = vd_ty_menu(db);
+fn zfc_literal_ty(literal: VdLiteral) -> VdType {
+    let data = literal.data();
+    let menu = &VD_TYPE_MENU;
     match data {
         VdLiteralData::NaturalNumber(_) => menu.nat,
         VdLiteralData::NegativeInteger(_) => todo!(),
-        VdLiteralData::FiniteDecimalRepresentation(_) => todo!(),
+        VdLiteralData::Float(_) => menu.rat,
         VdLiteralData::SpecialConstant(special_constant) => todo!(),
     }
 }
@@ -65,7 +78,7 @@ impl VdLiteralData {
         match self {
             VdLiteralData::NaturalNumber(n) => n,
             VdLiteralData::NegativeInteger(n) => n,
-            VdLiteralData::FiniteDecimalRepresentation(n) => n,
+            VdLiteralData::Float(n) => n,
             VdLiteralData::SpecialConstant(_) => {
                 todo!()
             }

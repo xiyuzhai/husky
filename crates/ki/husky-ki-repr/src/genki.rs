@@ -5,7 +5,7 @@ use crate::*;
 use husky_ki::genki::{GenkiOpn, GenkiRuntimeConstant};
 use smallvec::SmallVec;
 
-#[salsa::tracked(constructor = new_inner)]
+#[salsa::interned(constructor = new_inner)]
 pub struct GenkiRepr {
     pub ki_domain_repr: GenkiDomainRepr,
     pub opn: GenkiOpn,

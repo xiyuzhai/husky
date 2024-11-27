@@ -13,10 +13,9 @@ use crate::{
     idx::{LxMathTokenIdx, LxTokenIdx},
     token::{math::LxMathTokenData, rose::LxRoseTokenData},
 };
-use husky_text_protocol::{offset::TextOffsetRange, range::TextRange};
+use husky_text_protocol::{offset::TextOffsetRange, range::TextPositionRange};
 use rustc_hash::FxHashMap;
 
-#[salsa::derive_debug_with_db]
 #[derive(Default, Debug)]
 pub struct LxTokenStorage {
     main_ranged_tokens: Vec<LxTokenEntry>,
@@ -26,7 +25,7 @@ pub struct LxTokenStorage {
 #[derive(Debug)]
 pub struct LxTokenEntry {
     text_offset_range: TextOffsetRange,
-    text_range: TextRange,
+    text_range: TextPositionRange,
     data: LxTokenData,
 }
 
@@ -35,7 +34,7 @@ impl LxTokenEntry {
         self.text_offset_range
     }
 
-    pub fn text_range(&self) -> TextRange {
+    pub fn text_range(&self) -> TextPositionRange {
         self.text_range
     }
 
@@ -137,7 +136,7 @@ impl LxTokenStorage {
         &mut self,
         lane: LxTokenLane,
         text_offset_range: TextOffsetRange,
-        text_range: TextRange,
+        text_range: TextPositionRange,
         token_data: LxMathTokenData,
     ) -> LxMathTokenIdx {
         let ranged_tokens = &mut self[lane];
@@ -154,7 +153,7 @@ impl LxTokenStorage {
         &mut self,
         lane: LxTokenLane,
         text_offset_range: TextOffsetRange,
-        text_range: TextRange,
+        text_range: TextPositionRange,
         token_data: LxRoseTokenData,
     ) -> LxRoseTokenIdx {
         let ranged_tokens = &mut self[lane];
@@ -171,7 +170,7 @@ impl LxTokenStorage {
         &mut self,
         lane: LxTokenLane,
         text_offset_range: TextOffsetRange,
-        text_range: TextRange,
+        text_range: TextPositionRange,
         token_data: LxNameTokenData,
     ) -> LxNameTokenIdx {
         let ranged_tokens = &mut self[lane];
@@ -188,7 +187,7 @@ impl LxTokenStorage {
         &mut self,
         lane: LxTokenLane,
         text_offset_range: TextOffsetRange,
-        text_range: TextRange,
+        text_range: TextPositionRange,
         token_data: LxLispTokenData,
     ) -> LxLispTokenIdx {
         let ranged_tokens = &mut self[lane];
@@ -205,7 +204,7 @@ impl LxTokenStorage {
         &mut self,
         lane: LxTokenLane,
         text_offset_range: TextOffsetRange,
-        text_range: TextRange,
+        text_range: TextPositionRange,
         token_data: LxRootTokenData,
     ) -> LxRootTokenIdx {
         let ranged_tokens = &mut self[lane];
@@ -222,7 +221,7 @@ impl LxTokenStorage {
         &mut self,
         lane: LxTokenLane,
         text_offset_range: TextOffsetRange,
-        text_range: TextRange,
+        text_range: TextPositionRange,
         token_data: LxSpecTokenData,
     ) -> LxSpecTokenIdx {
         let ranged_tokens = &mut self[lane];

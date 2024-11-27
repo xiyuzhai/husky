@@ -24,7 +24,7 @@ fn token_to_semantic_token(
     db: &::salsa::Db,
     infos: &[TokenInfo],
     token_data: &TokenData,
-    range: &husky_text_protocol::range::TextRange,
+    range: &husky_text_protocol::range::TextPositionRange,
 ) -> Option<SemanticToken> {
     Some(SemanticToken {
         token_class: match infos.last() {

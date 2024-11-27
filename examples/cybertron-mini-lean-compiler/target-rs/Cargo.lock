@@ -76,6 +76,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "composite-pattern"
+version = "0.1.0"
+
+[[package]]
 name = "convert_case"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -345,6 +349,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "husky-io-utils"
+version = "0.1.0"
+dependencies = [
+ "composite-pattern",
+ "husky-print-utils",
+ "relative-path",
+ "thiserror",
+]
+
+[[package]]
 name = "husky-item-path-interface"
 version = "0.1.0"
 dependencies = [
@@ -390,6 +404,7 @@ name = "husky-minimal-toml-utils"
 version = "0.1.0"
 dependencies = [
  "husky-coword",
+ "husky-io-utils",
  "husky-print-utils",
  "salsa",
  "thiserror",

@@ -38,8 +38,6 @@ tokio.workspace = true
 husky-gui.workspace = true
 # protocols
 husky-visual-protocol.workspace = true
-husky-trace-protocol = { workspace = true, features = ["mock"] }
 
 [features]
-mock = ["husky-trace-protocol/mock"]
 egui = ["dep:egui", "dep:epaint"]

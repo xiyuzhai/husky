@@ -1,6 +1,7 @@
 pub mod config;
 pub mod error;
 pub mod file_sync;
+pub mod read;
 pub mod relative_path_pattern;
 pub use config::*;
 
@@ -13,6 +14,7 @@ use std::{
 };
 
 // first read and compare, and then write if necessary
+// TODO: add error handling
 pub fn diff_write(path: impl AsRef<Path>, content: impl AsRef<str>, verbose: bool) {
     let path = path.as_ref();
     let content = content.as_ref();

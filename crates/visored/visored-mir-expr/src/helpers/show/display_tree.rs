@@ -6,19 +6,13 @@ use crate::{
 };
 
 pub struct VdMirExprDisplayTreeBuilder<'a> {
-    db: &'a salsa::Db,
     expr_arena: VdMirExprArenaRef<'a>,
     stmt_arena: VdMirStmtArenaRef<'a>,
 }
 
 impl<'a> VdMirExprDisplayTreeBuilder<'a> {
-    pub fn new(
-        db: &'a salsa::Db,
-        expr_arena: VdMirExprArenaRef<'a>,
-        stmt_arena: VdMirStmtArenaRef<'a>,
-    ) -> Self {
+    pub fn new(expr_arena: VdMirExprArenaRef<'a>, stmt_arena: VdMirStmtArenaRef<'a>) -> Self {
         Self {
-            db,
             expr_arena,
             stmt_arena,
         }
@@ -27,9 +21,8 @@ impl<'a> VdMirExprDisplayTreeBuilder<'a> {
 
 impl<'a> VdMirExprDisplayTreeBuilder<'a> {
     pub fn render_expr(&self, expr: VdMirExprIdx) -> DisplayTree {
-        let db = self.db;
         let (value, children) = match self.expr_arena[expr] {
-            VdMirExprData::Literal(literal) => (literal.data(db).as_str().to_string(), vec![]),
+            VdMirExprData::Literal(literal) => (literal.data().as_str().to_string(), vec![]),
             VdMirExprData::Variable(ref variable) => ("variable".to_string(), vec![]),
             VdMirExprData::Application {
                 function,
@@ -61,6 +54,26 @@ impl<'a> VdMirExprDisplayTreeBuilder<'a> {
                 )
             }
             VdMirExprData::ItemPath(item_path) => todo!(),
+            VdMirExprData::FoldingSeparatedList {
+                leader,
+                ref followers,
+            }
+            | VdMirExprData::ChainingSeparatedList {
+                leader,
+                ref followers,
+                ..
+            } => (
+                format!("folding separated list"),
+                [self.render_expr(leader)]
+                    .into_iter()
+                    .chain(
+                        followers
+                            .iter()
+                            .copied()
+                            .map(|(_, expr)| self.render_expr(expr)),
+                    )
+                    .collect(),
+            ),
         };
         DisplayTree::new(value, children)
     }
@@ -73,7 +86,6 @@ impl<'a> VdMirExprDisplayTreeBuilder<'a> {
     }
 
     pub fn render_stmt(&self, stmt: VdMirStmtIdx) -> DisplayTree {
-        let db = self.db;
         let (value, children) = match self.stmt_arena[stmt] {
             VdMirStmtData::Block { stmts, ref meta } => {
                 (format!("block: {:?}", meta), self.render_stmts(stmts))

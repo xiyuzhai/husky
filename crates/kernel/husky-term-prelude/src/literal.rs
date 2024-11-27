@@ -67,7 +67,7 @@ pub enum Literal {
     StaticLifetime,
 }
 
-#[salsa::tracked]
+#[salsa::interned]
 pub struct StringLiteralTokenData {
     #[return_ref]
     pub data: Arc<str>,

@@ -28,10 +28,7 @@ use crate::parser::LxAstParser;
 #[cfg(test)]
 use crate::*;
 use idx_arena::{map::ArenaMap, Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
-use latex_command::{
-    path::menu::{command_path_menu, LxCommandPathMenu},
-    signature::table::LxCommandSignatureTable,
-};
+use latex_command::{path::menu::LxCommandPathMenu, signature::table::LxCommandSignatureTable};
 use latex_environment::signature::table::LxEnvironmentSignatureTable;
 use latex_math_letter::letter::LxMathLetter;
 use latex_math_punctuation::LxMathPunctuation;
@@ -46,14 +43,12 @@ use latex_token::{
 };
 
 #[enum_class::from_variants]
-#[salsa::derive_debug_with_db]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LxAstData {
     Math(LxMathAstData),
     Rose(LxRoseAstData),
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Default, Debug)]
 pub struct LxAstArena {
     pub(crate) math: LxMathAstArena,
@@ -72,7 +67,6 @@ impl LxAstArena {
     }
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct LxAstArenaRef<'a> {
     math: LxMathAstArenaRef<'a>,
@@ -115,7 +109,6 @@ impl<'a> LxAstArenaRef<'a> {
     }
 }
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq)]
 pub struct LxAstArenaMap<T> {
     pub(crate) math: LxMathAstArenaMap<T>,
@@ -135,7 +128,6 @@ impl<T> LxAstArenaMap<T> {
     }
 }
 
-#[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum LxAstIdx {
@@ -145,7 +137,6 @@ pub enum LxAstIdx {
     Root(LxRootAstIdx),
 }
 
-#[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum LxAstIdxRange {
@@ -156,7 +147,6 @@ pub enum LxAstIdxRange {
 }
 
 pub fn parse_latex_input_into_asts<'a>(
-    db: &'a ::salsa::Db,
     command_signature_table: &'a LxCommandSignatureTable,
     environment_signature_table: &'a LxEnvironmentSignatureTable,
     input: &'a str,
@@ -166,7 +156,6 @@ pub fn parse_latex_input_into_asts<'a>(
     arena: &'a mut LxAstArena,
 ) -> LxAstIdxRange {
     let mut parser = LxAstParser::new(
-        db,
         command_signature_table,
         environment_signature_table,
         input,
@@ -196,13 +185,16 @@ fn parse_tex_input_into_asts_works() {
     use expect_test::Expect;
 
     fn t(input: &str, mode: LxMode, expected: Expect) {
-        let db = &DB::default();
+        use husky_path_utils::HuskyLangDevPaths;
+
+        let dev_paths = HuskyLangDevPaths::new();
+        let complete_commands_path = &dev_paths.specs_dir().join("latex/complete-commands.lpcsv");
         let mut arena = LxAstArena::default();
         let mut token_storage = LxTokenStorage::default();
-        let command_signature_table = &LxCommandSignatureTable::new_default(db);
-        let environment_signature_table = &LxEnvironmentSignatureTable::new_default(db);
+        let command_signature_table =
+            &LxCommandSignatureTable::new_from_lp_csv_file_paths(complete_commands_path);
+        let environment_signature_table = &LxEnvironmentSignatureTable::new_default();
         let asts = parse_latex_input_into_asts(
-            db,
             command_signature_table,
             environment_signature_table,
             input,
@@ -211,7 +203,7 @@ fn parse_tex_input_into_asts_works() {
             &mut token_storage,
             &mut arena,
         );
-        expected.assert_debug_eq(&((token_storage, arena, asts).debug(db)));
+        expected.assert_debug_eq(&(token_storage, arena, asts));
     }
     t(
         "",
@@ -236,7 +228,7 @@ fn parse_tex_input_into_asts_works() {
                         data: [],
                     },
                 },
-                LxAstIdxRange::Math(
+                Math(
                     ArenaIdxRange(
                         0..0,
                     ),
@@ -252,14 +244,7 @@ fn parse_tex_input_into_asts_works() {
                 LxTokenStorage {
                     main_ranged_tokens: [
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    0,
-                                ),
-                                end: TextOffset(
-                                    1,
-                                ),
-                            },
+                            text_offset_range: 0..1,
                             text_range: [1:1, 1:2),
                             data: Math(
                                 Digit(
@@ -273,7 +258,7 @@ fn parse_tex_input_into_asts_works() {
                 LxAstArena {
                     math: Arena {
                         data: [
-                            LxMathAstData::Digit(
+                            Digit(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -294,7 +279,7 @@ fn parse_tex_input_into_asts_works() {
                         data: [],
                     },
                 },
-                LxAstIdxRange::Math(
+                Math(
                     ArenaIdxRange(
                         0..1,
                     ),
@@ -310,14 +295,7 @@ fn parse_tex_input_into_asts_works() {
                 LxTokenStorage {
                     main_ranged_tokens: [
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    0,
-                                ),
-                                end: TextOffset(
-                                    1,
-                                ),
-                            },
+                            text_offset_range: 0..1,
                             text_range: [1:1, 1:2),
                             data: Math(
                                 Letter(
@@ -333,7 +311,7 @@ fn parse_tex_input_into_asts_works() {
                 LxAstArena {
                     math: Arena {
                         data: [
-                            LxMathAstData::PlainLetter(
+                            PlainLetter(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -356,7 +334,7 @@ fn parse_tex_input_into_asts_works() {
                         data: [],
                     },
                 },
-                LxAstIdxRange::Math(
+                Math(
                     ArenaIdxRange(
                         0..1,
                     ),
@@ -372,14 +350,7 @@ fn parse_tex_input_into_asts_works() {
                 LxTokenStorage {
                     main_ranged_tokens: [
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    0,
-                                ),
-                                end: TextOffset(
-                                    1,
-                                ),
-                            },
+                            text_offset_range: 0..1,
                             text_range: [1:1, 1:2),
                             data: Math(
                                 Letter(
@@ -390,14 +361,7 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    1,
-                                ),
-                                end: TextOffset(
-                                    2,
-                                ),
-                            },
+                            text_offset_range: 1..2,
                             text_range: [1:2, 1:3),
                             data: Math(
                                 Punctuation(
@@ -406,14 +370,7 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    2,
-                                ),
-                                end: TextOffset(
-                                    3,
-                                ),
-                            },
+                            text_offset_range: 2..3,
                             text_range: [1:3, 1:4),
                             data: Math(
                                 Digit(
@@ -427,7 +384,7 @@ fn parse_tex_input_into_asts_works() {
                 LxAstArena {
                     math: Arena {
                         data: [
-                            LxMathAstData::PlainLetter(
+                            PlainLetter(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -438,7 +395,7 @@ fn parse_tex_input_into_asts_works() {
                                     X,
                                 ),
                             ),
-                            LxMathAstData::Punctuation(
+                            Punctuation(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -447,7 +404,7 @@ fn parse_tex_input_into_asts_works() {
                                 ),
                                 Add,
                             ),
-                            LxMathAstData::Digit(
+                            Digit(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -468,7 +425,7 @@ fn parse_tex_input_into_asts_works() {
                         data: [],
                     },
                 },
-                LxAstIdxRange::Math(
+                Math(
                     ArenaIdxRange(
                         0..3,
                     ),
@@ -484,14 +441,7 @@ fn parse_tex_input_into_asts_works() {
                 LxTokenStorage {
                     main_ranged_tokens: [
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    0,
-                                ),
-                                end: TextOffset(
-                                    1,
-                                ),
-                            },
+                            text_offset_range: 0..1,
                             text_range: [1:1, 1:2),
                             data: Math(
                                 Letter(
@@ -502,28 +452,14 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    1,
-                                ),
-                                end: TextOffset(
-                                    2,
-                                ),
-                            },
+                            text_offset_range: 1..2,
                             text_range: [1:2, 1:3),
                             data: Math(
                                 Superscript,
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    2,
-                                ),
-                                end: TextOffset(
-                                    3,
-                                ),
-                            },
+                            text_offset_range: 2..3,
                             text_range: [1:3, 1:4),
                             data: Math(
                                 Digit(
@@ -537,7 +473,7 @@ fn parse_tex_input_into_asts_works() {
                 LxAstArena {
                     math: Arena {
                         data: [
-                            LxMathAstData::PlainLetter(
+                            PlainLetter(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -548,7 +484,7 @@ fn parse_tex_input_into_asts_works() {
                                     X,
                                 ),
                             ),
-                            LxMathAstData::Digit(
+                            Digit(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -557,11 +493,11 @@ fn parse_tex_input_into_asts_works() {
                                 ),
                                 Two,
                             ),
-                            LxMathAstData::Attach {
+                            Attach {
                                 base: 0,
                                 scripts: [
                                     (
-                                        LxScriptKind::Superscript,
+                                        Superscript,
                                         1,
                                     ),
                                 ],
@@ -578,7 +514,7 @@ fn parse_tex_input_into_asts_works() {
                         data: [],
                     },
                 },
-                LxAstIdxRange::Math(
+                Math(
                     ArenaIdxRange(
                         2..3,
                     ),
@@ -594,14 +530,7 @@ fn parse_tex_input_into_asts_works() {
                 LxTokenStorage {
                     main_ranged_tokens: [
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    0,
-                                ),
-                                end: TextOffset(
-                                    1,
-                                ),
-                            },
+                            text_offset_range: 0..1,
                             text_range: [1:1, 1:2),
                             data: Math(
                                 Letter(
@@ -612,28 +541,14 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    1,
-                                ),
-                                end: TextOffset(
-                                    2,
-                                ),
-                            },
+                            text_offset_range: 1..2,
                             text_range: [1:2, 1:3),
                             data: Math(
                                 Subscript,
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    2,
-                                ),
-                                end: TextOffset(
-                                    3,
-                                ),
-                            },
+                            text_offset_range: 2..3,
                             text_range: [1:3, 1:4),
                             data: Math(
                                 Digit(
@@ -647,7 +562,7 @@ fn parse_tex_input_into_asts_works() {
                 LxAstArena {
                     math: Arena {
                         data: [
-                            LxMathAstData::PlainLetter(
+                            PlainLetter(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -658,7 +573,7 @@ fn parse_tex_input_into_asts_works() {
                                     X,
                                 ),
                             ),
-                            LxMathAstData::Digit(
+                            Digit(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -667,11 +582,11 @@ fn parse_tex_input_into_asts_works() {
                                 ),
                                 Two,
                             ),
-                            LxMathAstData::Attach {
+                            Attach {
                                 base: 0,
                                 scripts: [
                                     (
-                                        LxScriptKind::Subscript,
+                                        Subscript,
                                         1,
                                     ),
                                 ],
@@ -688,7 +603,7 @@ fn parse_tex_input_into_asts_works() {
                         data: [],
                     },
                 },
-                LxAstIdxRange::Math(
+                Math(
                     ArenaIdxRange(
                         2..3,
                     ),
@@ -704,14 +619,7 @@ fn parse_tex_input_into_asts_works() {
                 LxTokenStorage {
                     main_ranged_tokens: [
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    0,
-                                ),
-                                end: TextOffset(
-                                    1,
-                                ),
-                            },
+                            text_offset_range: 0..1,
                             text_range: [1:1, 1:2),
                             data: Math(
                                 Letter(
@@ -722,28 +630,14 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    1,
-                                ),
-                                end: TextOffset(
-                                    2,
-                                ),
-                            },
+                            text_offset_range: 1..2,
                             text_range: [1:2, 1:3),
                             data: Math(
                                 Superscript,
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    2,
-                                ),
-                                end: TextOffset(
-                                    3,
-                                ),
-                            },
+                            text_offset_range: 2..3,
                             text_range: [1:3, 1:4),
                             data: Math(
                                 LeftDelimiter(
@@ -752,14 +646,7 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    3,
-                                ),
-                                end: TextOffset(
-                                    4,
-                                ),
-                            },
+                            text_offset_range: 3..4,
                             text_range: [1:4, 1:5),
                             data: Math(
                                 Letter(
@@ -770,14 +657,7 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    4,
-                                ),
-                                end: TextOffset(
-                                    5,
-                                ),
-                            },
+                            text_offset_range: 4..5,
                             text_range: [1:5, 1:6),
                             data: Math(
                                 Punctuation(
@@ -786,14 +666,7 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    5,
-                                ),
-                                end: TextOffset(
-                                    6,
-                                ),
-                            },
+                            text_offset_range: 5..6,
                             text_range: [1:6, 1:7),
                             data: Math(
                                 Digit(
@@ -802,14 +675,7 @@ fn parse_tex_input_into_asts_works() {
                             ),
                         },
                         LxTokenEntry {
-                            text_offset_range: TextOffsetRange {
-                                start: TextOffset(
-                                    6,
-                                ),
-                                end: TextOffset(
-                                    7,
-                                ),
-                            },
+                            text_offset_range: 6..7,
                             text_range: [1:7, 1:8),
                             data: Math(
                                 RightDelimiter(
@@ -823,7 +689,7 @@ fn parse_tex_input_into_asts_works() {
                 LxAstArena {
                     math: Arena {
                         data: [
-                            LxMathAstData::PlainLetter(
+                            PlainLetter(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -834,7 +700,7 @@ fn parse_tex_input_into_asts_works() {
                                     X,
                                 ),
                             ),
-                            LxMathAstData::PlainLetter(
+                            PlainLetter(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -845,7 +711,7 @@ fn parse_tex_input_into_asts_works() {
                                     I,
                                 ),
                             ),
-                            LxMathAstData::Punctuation(
+                            Punctuation(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -854,7 +720,7 @@ fn parse_tex_input_into_asts_works() {
                                 ),
                                 Add,
                             ),
-                            LxMathAstData::Digit(
+                            Digit(
                                 LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -863,7 +729,7 @@ fn parse_tex_input_into_asts_works() {
                                 ),
                                 Two,
                             ),
-                            LxMathAstData::Delimited {
+                            Delimited {
                                 left_delimiter_token_idx: LxMathTokenIdx(
                                     LxTokenIdx(
                                         Main,
@@ -882,11 +748,11 @@ fn parse_tex_input_into_asts_works() {
                                 ),
                                 right_delimiter: Curl,
                             },
-                            LxMathAstData::Attach {
+                            Attach {
                                 base: 0,
                                 scripts: [
                                     (
-                                        LxScriptKind::Superscript,
+                                        Superscript,
                                         4,
                                     ),
                                 ],
@@ -903,7 +769,7 @@ fn parse_tex_input_into_asts_works() {
                         data: [],
                     },
                 },
-                LxAstIdxRange::Math(
+                Math(
                     ArenaIdxRange(
                         5..6,
                     ),

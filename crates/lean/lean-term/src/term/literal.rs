@@ -1,26 +1,34 @@
 use super::*;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LnLiteral(LnTermId);
+
+impl std::fmt::Debug for LnLiteral {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        todo!()
+        // write!(f, "LnLiteral({})", self.0)
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum LnLiteralData {
     Nat(String),
+    Float(String),
 }
 
 impl LnLiteral {
-    pub fn new(data: LnLiteralData, db: &::salsa::Db) -> Self {
-        Self(LnTermId::new(db, data.into()))
+    pub fn new(data: LnLiteralData) -> Self {
+        Self(LnTermId::new(data.into()))
     }
 
-    pub(crate) fn show(&self, db: &salsa::Db) -> String {
+    pub(crate) fn show(&self) -> String {
         todo!()
     }
 }
 
 impl LnLiteral {
-    pub fn data(self, db: &::salsa::Db) -> &LnLiteralData {
-        match self.0.data(db) {
+    pub fn data(&self) -> &LnLiteralData {
+        match self.0.data() {
             LnTermData::Literal(data) => data,
             _ => unreachable!(),
         }
@@ -31,6 +39,7 @@ impl LnLiteralData {
     pub fn str(&self) -> &str {
         match self {
             LnLiteralData::Nat(s) => s,
+            LnLiteralData::Float(s) => s,
         }
     }
 }

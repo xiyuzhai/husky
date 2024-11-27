@@ -1,3 +1,5 @@
+use lisp_csv::expr::{LpCsvExpr, LpCsvExprData};
+
 use crate::precedence::{VdPrecedence, VdPrecedenceRange};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
@@ -39,6 +41,7 @@ impl VdBasePrefixOpr {
     }
 }
 
+#[deprecated(note = "use prefix opr class instead")]
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
 pub enum VdCompositePrefixOpr {
     /// `d/dx`
@@ -52,5 +55,18 @@ impl VdCompositePrefixOpr {
 
     pub fn precedence(self) -> VdPrecedence {
         todo!()
+    }
+}
+
+impl VdBasePrefixOpr {
+    pub fn from_lp_csv_expr(expr: &LpCsvExpr) -> Self {
+        let LpCsvExprData::Ident(ref ident) = expr.data else {
+            todo!()
+        };
+        match ident.as_str() {
+            "pos" => Self::Pos,
+            "neg" => Self::Neg,
+            _ => todo!(),
+        }
     }
 }

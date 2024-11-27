@@ -5,10 +5,9 @@ use crate::{
     stmt::{LnMirStmtArena, LnMirStmtData, LnMirStmtIdx, LnMirStmtIdxRange},
     tactic::{LnMirTacticArena, LnMirTacticData, LnMirTacticIdx, LnMirTacticIdxRange},
 };
-use lean_item_path::namespace::LnNamespace;
+use lean_entity_path::namespace::LnNamespace;
 
-pub struct LnMirExprBuilder<'db> {
-    db: &'db ::salsa::Db,
+pub struct LnMirExprBuilder {
     expr_arena: LnMirExprArena,
     stmt_arena: LnMirStmtArena,
     tactic_arena: LnMirTacticArena,
@@ -16,24 +15,19 @@ pub struct LnMirExprBuilder<'db> {
     current_namespace: LnNamespace,
 }
 
-impl<'db> LnMirExprBuilder<'db> {
-    pub fn new(db: &'db ::salsa::Db) -> Self {
+impl LnMirExprBuilder {
+    pub fn new() -> Self {
         Self {
-            db,
             expr_arena: Default::default(),
             stmt_arena: Default::default(),
             tactic_arena: Default::default(),
             item_defn_arena: Default::default(),
-            current_namespace: LnNamespace::new_root(db),
+            current_namespace: LnNamespace::new_root(),
         }
     }
 }
 
-impl<'db> LnMirExprBuilder<'db> {
-    pub fn db(&self) -> &'db ::salsa::Db {
-        self.db
-    }
-
+impl LnMirExprBuilder {
     pub fn formatter<'a>(&'a self, config: &'a LnMirExprFormatterConfig) -> LnMirExprFormatter<'a> {
         LnMirExprFormatter::new(
             self.expr_arena.as_arena_ref(),
@@ -41,12 +35,11 @@ impl<'db> LnMirExprBuilder<'db> {
             self.tactic_arena.as_arena_ref(),
             self.item_defn_arena.as_arena_ref(),
             config,
-            self.db,
         )
     }
 }
 
-impl<'db> LnMirExprBuilder<'db> {
+impl LnMirExprBuilder {
     pub fn alloc_expr(&mut self, data: LnMirExprData) -> LnMirExprIdx {
         self.expr_arena.alloc_one(data)
     }
@@ -101,8 +94,8 @@ impl<'db> LnMirExprBuilder<'db> {
     }
 }
 
-pub trait WithLnNamespace<'db> {
-    fn ln_mir_expr_builder_mut(&mut self) -> &mut LnMirExprBuilder<'db>;
+pub trait WithLnNamespace {
+    fn ln_mir_expr_builder_mut(&mut self) -> &mut LnMirExprBuilder;
 
     fn with_ln_namespace<R>(
         &mut self,

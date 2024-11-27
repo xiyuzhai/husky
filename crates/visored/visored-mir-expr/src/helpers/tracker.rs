@@ -14,7 +14,7 @@ use latex_prelude::{
 };
 use symbol::local_defn::storage::VdMirSymbolLocalDefnStorage;
 use visored_annotation::annotation::{space::VdSpaceAnnotation, token::VdTokenAnnotation};
-use visored_item_path::module::VdModulePath;
+use visored_entity_path::module::VdModulePath;
 use visored_sem_expr::helpers::tracker::{IsVdSemExprInput, VdSemExprTracker};
 
 pub struct VdMirExprTracker<'a, Input: IsVdMirExprInput<'a>> {
@@ -51,7 +51,6 @@ impl<'a, Input: IsVdMirExprInput<'a>> VdMirExprTracker<'a, Input> {
         input: Input,
         token_annotations: &[((&str, &str), VdTokenAnnotation)],
         space_annotations: &[((&str, &str), VdSpaceAnnotation)],
-        db: &salsa::Db,
     ) -> Self {
         let VdSemExprTracker {
             root_module_path,
@@ -75,9 +74,8 @@ impl<'a, Input: IsVdMirExprInput<'a>> VdMirExprTracker<'a, Input> {
             division_range_map: sem_division_range_map,
             symbol_local_defn_storage: sem_symbol_local_defn_storage,
             output,
-        } = VdSemExprTracker::new(input, token_annotations, space_annotations, db);
+        } = VdSemExprTracker::new(input, token_annotations, space_annotations);
         let mut builder = VdMirExprBuilder::new(
-            db,
             sem_expr_arena.as_arena_ref(),
             sem_phrase_arena.as_arena_ref(),
             sem_clause_arena.as_arena_ref(),
@@ -97,14 +95,13 @@ impl<'a, Input: IsVdMirExprInput<'a>> VdMirExprTracker<'a, Input> {
         }
     }
 
-    pub(crate) fn show_display_tree(&self, db: &::salsa::Db) -> String {
-        let builder = self.display_tree_builder(db);
+    pub(crate) fn show_display_tree(&self) -> String {
+        let builder = self.display_tree_builder();
         self.output.show(&builder)
     }
 
-    fn display_tree_builder<'b>(&'b self, db: &'b ::salsa::Db) -> VdMirExprDisplayTreeBuilder<'b> {
+    fn display_tree_builder<'b>(&'b self) -> VdMirExprDisplayTreeBuilder<'b> {
         VdMirExprDisplayTreeBuilder::new(
-            db,
             self.expr_arena.as_arena_ref(),
             self.stmt_arena.as_arena_ref(),
         )

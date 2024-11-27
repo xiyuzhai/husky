@@ -26,7 +26,10 @@ use husky_item_path_interface::ItemPathIdInterface;
 use husky_ki_repr::repr::KiRepr;
 use husky_ki_repr_interface::{KiDomainReprInterface, KiReprInterface};
 use husky_linket_impl::dev_eval_context::IsDevRuntimeInterface;
-use husky_trace::{jar::TraceDb, trace::Trace};
+use husky_trace::{
+    jar::TraceDb,
+    trace::{Trace, TracePath},
+};
 use husky_trace_protocol::{
     caryatid::IsCaryatid,
     chart::Chart,
@@ -62,7 +65,7 @@ pub struct Devtime<Devsoul: IsDevsoul> {
     // cache histories of eager traces
     // when hot reload, reset this
     // TODO benchmark this
-    eager_trace_cache: DashMap<(Trace, Devsoul::Pedestal), Arc<VmHistory<Devsoul::LinketImpl>>>,
+    eager_trace_cache: DashMap<(TracePath, Devsoul::Pedestal), Arc<VmHistory<Devsoul::LinketImpl>>>,
     vmir_storage: DevVmirStorage<Devsoul::LinketImpl>,
 }
 

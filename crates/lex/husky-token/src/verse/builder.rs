@@ -2,7 +2,7 @@ use super::*;
 
 pub(super) struct TokenVersesBuilder<'a> {
     tokens: &'a [TokenData],
-    token_ranges: &'a [TextRange],
+    token_ranges: &'a [TextPositionRange],
     line_starts: &'a [usize],
     main_sequence: MainTokenVerseSequence,
     nested_sequences: VecMap<NestedTokenVerseSequence>,
@@ -11,7 +11,7 @@ pub(super) struct TokenVersesBuilder<'a> {
 impl<'a> TokenVersesBuilder<'a> {
     pub(super) fn new(
         tokens_data: &'a [TokenData],
-        token_ranges: &'a [TextRange],
+        token_ranges: &'a [TextPositionRange],
         line_starts: &'a [usize],
     ) -> Self {
         Self {
@@ -197,7 +197,7 @@ pub enum TokenVerseProductionState {
     MatchVertical,
 }
 
-pub(super) fn produce_line_starts(token_ranges: &[TextRange]) -> Vec<usize> {
+pub(super) fn produce_line_starts(token_ranges: &[TextPositionRange]) -> Vec<usize> {
     (0..token_ranges.len())
         .filter_map(|line_start| {
             if line_start == 0 {

@@ -34,9 +34,9 @@ use visored_annotation::{
     annotation::{space::VdSpaceAnnotation, token::VdTokenAnnotation},
     annotations::VdAnnotations,
 };
+use visored_entity_path::module::VdModulePath;
 use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 use visored_global_resolution::default_table::VdDefaultGlobalResolutionTable;
-use visored_item_path::module::VdModulePath;
 use visored_syn_expr::{
     clause::VdSynClauseArena,
     division::VdSynDivisionArena,
@@ -102,7 +102,6 @@ impl<'a, Input: IsVdSemExprInput<'a>> VdSemExprTracker<'a, Input> {
         input: Input,
         token_annotations: &[((&str, &str), VdTokenAnnotation)],
         space_annotations: &[((&str, &str), VdSpaceAnnotation)],
-        db: &salsa::Db,
     ) -> Self {
         let VdSynExprTracker {
             input,
@@ -129,11 +128,11 @@ impl<'a, Input: IsVdSemExprInput<'a>> VdSemExprTracker<'a, Input> {
             stmt_entity_tree_node_map: syn_stmt_entity_tree_node_map,
             division_entity_tree_node_map: syn_division_entity_tree_node_map,
             output: syn_output,
-        } = VdSynExprTracker::new(input, token_annotations, space_annotations, db);
-        let item_path_zfc_ty_table = VdItemPathZfcTypeTable::new_standard(db);
-        let default_global_dispatch_table = VdDefaultGlobalDispatchTable::new_standard(db);
+        } = VdSynExprTracker::new(input, token_annotations, space_annotations);
+        let item_path_zfc_ty_table = VdItemPathZfcTypeTable::new_standard();
+        let default_global_dispatch_table =
+            VdDefaultGlobalDispatchTable::from_standard_lisp_csv_file_dir();
         let mut builder = VdSemExprBuilder::new(
-            db,
             &token_storage,
             &annotations,
             &default_resolution_table,
@@ -168,7 +167,6 @@ impl<'a, Input: IsVdSemExprInput<'a>> VdSemExprTracker<'a, Input> {
             stmt_range_map,
             division_range_map,
         ) = calc_expr_range_map(
-            db,
             &expr_arena,
             &phrase_arena,
             &clause_arena,
@@ -201,9 +199,8 @@ impl<'a, Input: IsVdSemExprInput<'a>> VdSemExprTracker<'a, Input> {
         }
     }
 
-    pub(crate) fn show_display_tree(&self, db: &salsa::Db) -> String {
+    pub(crate) fn show_display_tree(&self) -> String {
         let builder = VdSemExprDisplayTreeBuilder::new(
-            db,
             self.input.content(),
             &self.token_storage,
             self.ast_arena.as_arena_ref(),

@@ -16,7 +16,7 @@ use husky_vfs::path::crate_path::{CrateKind, CratePath};
 
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum CrateSynNodeDecl {
     Lib(LibCrateSynNodeDecl),
     Main(MainCrateSynNodeDecl),
@@ -67,7 +67,7 @@ fn crate_syn_node_decl_works() {
 
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum CrateSynDecl {
     Lib(LibCrateSynDecl),
     Main(MainCrateSynDecl),

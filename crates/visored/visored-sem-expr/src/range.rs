@@ -48,7 +48,6 @@ pub type VdSemStmtTokenIdxRangeMap = VdSemStmtMap<VdSemStmtTokenIdxRange>;
 pub type VdSemDivisionTokenIdxRangeMap = VdSemDivisionMap<VdSemDivisionTokenIdxRange>;
 
 pub fn calc_expr_range_map(
-    db: &::salsa::Db,
     expr_arena: &VdSemExprArena,
     phrase_arena: &VdSemPhraseArena,
     clause_arena: &VdSemClauseArena,
@@ -64,7 +63,6 @@ pub fn calc_expr_range_map(
     VdSemDivisionTokenIdxRangeMap,
 ) {
     let mut calculator = VdSemExprRangeCalculator::new(
-        db,
         expr_arena,
         phrase_arena,
         clause_arena,
@@ -77,7 +75,6 @@ pub fn calc_expr_range_map(
 }
 
 struct VdSemExprRangeCalculator<'db> {
-    db: &'db ::salsa::Db,
     expr_arena: VdSemExprArenaRef<'db>,
     phrase_arena: VdSemPhraseArenaRef<'db>,
     clause_arena: VdSemClauseArenaRef<'db>,
@@ -94,7 +91,6 @@ struct VdSemExprRangeCalculator<'db> {
 
 impl<'db> VdSemExprRangeCalculator<'db> {
     fn new(
-        db: &'db ::salsa::Db,
         expr_arena: &'db VdSemExprArena,
         phrase_arena: &'db VdSemPhraseArena,
         clause_arena: &'db VdSemClauseArena,
@@ -103,7 +99,6 @@ impl<'db> VdSemExprRangeCalculator<'db> {
         division_arena: &'db VdSemDivisionArena,
     ) -> Self {
         Self {
-            db,
             expr_arena: expr_arena.as_arena_ref(),
             phrase_arena: phrase_arena.as_arena_ref(),
             clause_arena: clause_arena.as_arena_ref(),
@@ -189,9 +184,23 @@ impl<'db> VdSemExprRangeCalculator<'db> {
             VdSemExprData::VariadicChain => todo!(),
             VdSemExprData::UniadicArray => todo!(),
             VdSemExprData::VariadicArray => todo!(),
-            VdSemExprData::SeparatedList { items, .. } => {
-                let first_range = self.get_expr(items.start());
-                let last_range = self.get_expr(items.last().expect("items are always non-empty"));
+            VdSemExprData::FoldingSeparatedList {
+                leader,
+                ref followers,
+                ..
+            }
+            | VdSemExprData::ChainingSeparatedList {
+                leader,
+                ref followers,
+                ..
+            } => {
+                let first_range = self.get_expr(leader);
+                let last_range = self.get_expr(
+                    followers
+                        .last()
+                        .expect("followers are always non-empty")
+                        .expr,
+                );
                 first_range.join(last_range)
             }
             VdSemExprData::LxDelimited {

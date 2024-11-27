@@ -169,62 +169,10 @@
     "husky-vmir": {
         "husky-ki-repr",
     },
-    "latex-ast": {
-        "latex-environment",
-        "latex-token",
-        "latex-vfs",
-    },
-    "latex-command": {
-        "husky-coword",
-    },
-    "latex-environment": {
-        "husky-coword",
-    },
-    "latex-token": {
-        "latex-command",
-    },
-    "latex-vfs": {},
-    "lean-item-path": {
-        "husky-coword",
-    },
-    "lean-mir-expr": {
-        "lean-term",
-    },
+    "latex-token": {},
     "lean-sem-expr": {},
-    "lean-term": {
-        "lean-item-path",
-    },
     "namekian-ast": {},
-    "visored-global-dispatch": {
-        "visored-opr",
-        "visored-signature",
-    },
-    "visored-item-path": {
-        "latex-environment",
-        "latex-vfs",
-    },
-    "visored-lean-transpilation": {
-        "lean-mir-expr",
-        "lean-sem-expr",
-        "visored-mir-expr",
-    },
-    "visored-mir-expr": {
-        "visored-sem-expr",
-    },
-    "visored-opr": {},
-    "visored-sem-expr": {
-        "visored-global-dispatch",
-        "visored-syn-expr",
-    },
-    "visored-signature": {
-        "visored-term",
-    },
-    "visored-syn-expr": {
-        "latex-ast",
-        "visored-opr",
-        "visored-term",
-    },
-    "visored-term": {
-        "visored-item-path",
+    "visored-entity-path": {
+        "husky-coword",
     },
 }

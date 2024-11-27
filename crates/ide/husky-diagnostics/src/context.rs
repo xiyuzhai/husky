@@ -34,19 +34,22 @@ impl<'a> SheetDiagnosticsContext<'a> {
         self.token_sheet_data
     }
 
-    pub(crate) fn token_idx_text_range(&self, token_idx: TokenIdx) -> TextRange {
+    pub(crate) fn token_idx_text_range(&self, token_idx: TokenIdx) -> TextPositionRange {
         self.ranged_token_sheet.token_text_range(token_idx)
     }
 
     pub(crate) fn token_stream_state_text_range(
         &self,
         token_stream_state: TokenStreamState,
-    ) -> TextRange {
+    ) -> TextPositionRange {
         self.ranged_token_sheet
             .token_stream_state_text_range(token_stream_state)
     }
 
-    pub(crate) fn token_verse_text_range(&self, token_verse_idx: TokenVerseIdx) -> TextRange {
+    pub(crate) fn token_verse_text_range(
+        &self,
+        token_verse_idx: TokenVerseIdx,
+    ) -> TextPositionRange {
         let token_idx_range = self
             .token_sheet_data()
             .token_verse_token_idx_range(token_verse_idx);
@@ -101,7 +104,7 @@ impl<'a> RegionDiagnosticsContext<'a> {
         self.sem_expr_region_data.fly_term_region()
     }
 
-    pub(crate) fn expr_text_range(&self, expr_idx: SynExprIdx) -> TextRange {
+    pub(crate) fn expr_text_range(&self, expr_idx: SynExprIdx) -> TextPositionRange {
         self.text_range(
             self.expr_range_region[expr_idx].token_idx_range(self.regional_token_idx_base),
         )
@@ -110,11 +113,11 @@ impl<'a> RegionDiagnosticsContext<'a> {
     pub(crate) fn tokens_text_range(
         &self,
         regional_token_idx_range: RegionalTokenIdxRange,
-    ) -> TextRange {
+    ) -> TextPositionRange {
         self.text_range(regional_token_idx_range.token_idx_range(self.regional_token_idx_base))
     }
 
-    fn text_range(&self, token_idx_range: TokenIdxRange) -> TextRange {
+    fn text_range(&self, token_idx_range: TokenIdxRange) -> TextPositionRange {
         assert!(token_idx_range.start().token_idx() < token_idx_range.end().token_idx());
         let first = self
             .ranged_token_sheet
@@ -128,7 +131,7 @@ impl<'a> RegionDiagnosticsContext<'a> {
     pub(crate) fn token_stream_state_text_range(
         &self,
         regional_token_stream_state: RegionalTokenStreamState,
-    ) -> TextRange {
+    ) -> TextPositionRange {
         self.ranged_token_sheet.token_stream_state_text_range(
             regional_token_stream_state.token_stream_state(self.regional_token_idx_base),
         )

@@ -1,12 +1,33 @@
+pub mod join;
+
 use super::*;
 use crate::menu::VdGlobalDispatchMenu;
+use default_table::VdBaseSeparatorKey;
+use lisp_csv::{
+    expr::LpCsvExprData,
+    file::{LpCsvFile, LpCsvFileData},
+    row::LpCsvRow,
+};
 use visored_opr::{menu::VdOprMenu, separator::VdBaseSeparator};
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
-use visored_term::{menu::VdTypeMenu, ty::VdType};
+use visored_signature::{
+    signature::{
+        separator::{base::VdBaseSeparatorSignature, VdSeparatorSignature},
+        VdSignature,
+    },
+    table::VdSignatureTable,
+};
+use visored_term::{
+    menu::{VdTypeMenu, VD_TYPE_MENU},
+    ty::VdType,
+};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum VdSeparatorGlobalDispatch {
-    Normal {
+    Folding {
+        base_separator: VdBaseSeparator,
+        signature: VdBaseSeparatorSignature,
+    },
+    Chaining {
         base_separator: VdBaseSeparator,
         signature: VdBaseSeparatorSignature,
     },
@@ -138,7 +159,7 @@ impl VdSeparatorGlobalDispatch {
             ((complex, add, nat), complex_add),
             ((complex, add, int), complex_add),
             ((complex, add, rat), complex_add),
-            ((complex, add, rat), complex_add),
+            ((complex, add, real), complex_add),
             ((complex, add, complex), complex_add),
             // ## mul
             // ### nat
@@ -324,5 +345,102 @@ impl VdSeparatorGlobalDispatch {
             ((real, r#in, set), in_set),
             ((complex, r#in, set), in_set),
         ]
+    }
+
+    pub fn collect_from_lisp_csv_files<'a>(
+        base_separator_file: &'a LpCsvFile,
+        signature_table: &'a VdSignatureTable,
+    ) -> impl Iterator<Item = (VdBaseSeparatorKey, Self)> + 'a {
+        let LpCsvFileData::Rows(rows) = base_separator_file.data();
+        rows.iter()
+            .map(|row| Self::collect_from_lisp_csv_row(row, signature_table))
+    }
+
+    fn collect_from_lisp_csv_row(
+        row: &LpCsvRow,
+        signature_table: &VdSignatureTable,
+    ) -> (VdBaseSeparatorKey, Self) {
+        let LpCsvRow::SeparatedExprs(exprs) = row else {
+            todo!()
+        };
+        let &[ref prev_item_ty, ref base_separator, ref next_item_ty, ref dispatch] =
+            exprs as &[_]
+        else {
+            todo!()
+        };
+        let base_separator = VdBaseSeparator::from_lp_csv_expr(base_separator);
+        let (ref dispatch_variant, ref dispatch_arguments) = dispatch.application_expansion();
+        let LpCsvExprData::Ident(ref dispatch_variant_ident) = dispatch_variant.data else {
+            todo!()
+        };
+        let prev_item_ty = VdType::from_lp_csv_expr(prev_item_ty);
+        let next_item_ty = VdType::from_lp_csv_expr(next_item_ty);
+        let key = VdBaseSeparatorKey {
+            base_separator,
+            prev_item_ty,
+            next_item_ty,
+        };
+        let dispatch = match dispatch_variant_ident.as_str() {
+            "folding" => {
+                let [ref signature] = dispatch_arguments else {
+                    todo!()
+                };
+                let LpCsvExprData::Ident(ref signature_ident) = signature.data else {
+                    todo!()
+                };
+                let VdSignature::Separator(VdSeparatorSignature::Base(signature)) =
+                    signature_table[signature_ident]
+                else {
+                    todo!()
+                };
+                VdSeparatorGlobalDispatch::Folding {
+                    base_separator,
+                    signature,
+                }
+            }
+            "chaining" => {
+                let [ref signature] = dispatch_arguments else {
+                    todo!()
+                };
+                let LpCsvExprData::Ident(ref signature_ident) = signature.data else {
+                    todo!()
+                };
+                let VdSignature::Separator(VdSeparatorSignature::Base(signature)) =
+                    signature_table[signature_ident]
+                else {
+                    todo!()
+                };
+                VdSeparatorGlobalDispatch::Chaining {
+                    base_separator,
+                    signature,
+                }
+            }
+            "in_set" => VdSeparatorGlobalDispatch::InSet {
+                expr_ty: VD_TYPE_MENU.prop,
+            },
+            ident => todo!("ident: {ident} not handled"),
+        };
+        (key, dispatch)
+    }
+}
+
+#[test]
+fn vd_separator_global_dispatch_standard_defaults_works() {
+    use crate::default_table::VdDefaultGlobalDispatchTable;
+    use crate::menu::{vd_global_dispatch_menu, VdGlobalDispatchMenu};
+    use visored_opr::menu::vd_opr_menu;
+    use visored_term::menu::VD_TYPE_MENU;
+
+    let table = VdDefaultGlobalDispatchTable::from_standard_lisp_csv_file_dir();
+    let ty_menu = &VD_TYPE_MENU;
+    let global_dispatch_menu = &vd_global_dispatch_menu;
+    let opr_menu = &vd_opr_menu;
+    for ((prev_item_ty, base_separator, next_item_ty), dispatch) in
+        VdSeparatorGlobalDispatch::standard_defaults(&ty_menu, &opr_menu, &global_dispatch_menu)
+    {
+        assert_eq!(
+            table.base_separator_default_dispatch(prev_item_ty, base_separator, next_item_ty),
+            Some(dispatch)
+        );
     }
 }

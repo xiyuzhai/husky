@@ -1,6 +1,6 @@
 use super::*;
 
-#[salsa::tracked]
+#[salsa::interned]
 pub struct DecList {
     pub toolchain: Toolchain,
     #[return_ref]

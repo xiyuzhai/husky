@@ -9,7 +9,7 @@ use husky_syn_defn::{item_syn_defn, ItemSynDefn};
 use salsa::DebugWithDb;
 
 #[salsa::derive_debug_with_db]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum KiReprSource {
     Val(MajorFormPath),
     Expansion {
@@ -78,7 +78,7 @@ impl KiReprSource {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum KiReprExpansionSource {
     LetVariable {
         stmt: HirLazyStmtIdx,

@@ -1,10 +1,11 @@
 use super::*;
 use crate::{
-    menu::{vd_ty_menu, VdTypeMenu},
-    term::menu::{vd_term_menu, VdTermMenu},
+    menu::{VdTypeMenu, VD_TYPE_MENU},
+    term::menu::{VdTermMenu, VD_TERM_MENU},
 };
+use lazy_static::lazy_static;
 use smallvec::{smallvec, SmallVec};
-use visored_item_path::menu::{vd_item_path_menu, VdItemPathMenu};
+use visored_entity_path::menu::{VdItemPathMenu, VD_ITEM_PATH_MENU};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdInstantiationMenu {
@@ -85,7 +86,7 @@ pub struct VdInstantiationMenu {
 }
 
 impl VdInstantiationMenu {
-    pub fn new(db: &salsa::Db) -> Self {
+    pub fn new() -> Self {
         let VdItemPathMenu {
             set,
             prop,
@@ -100,6 +101,9 @@ impl VdInstantiationMenu {
             ring,
             group_mul,
             abelian_group_add,
+            nat_add,
+            nat_mul,
+            ring_sub,
             ring_add,
             ring_mul,
             ring_power,
@@ -113,7 +117,7 @@ impl VdInstantiationMenu {
             gt,
             le,
             ge,
-        } = *vd_item_path_menu(db);
+        } = *VD_ITEM_PATH_MENU;
         let VdTermMenu {
             zero,
             one,
@@ -123,86 +127,87 @@ impl VdInstantiationMenu {
             rat,
             real,
             complex,
-        } = *vd_term_menu(db);
+        } = *VD_TERM_MENU;
         macro_rules! ins{
-            ($db: expr, $path: expr $(, $args: expr)*) => {
-                VdInstantiation::new($db, $path.into(), smallvec![$($args),*])
+            ($path: expr $(, $args: expr)*) => {
+                VdInstantiation::new($path.into(), smallvec![$($args),*])
             };
         }
         // # prefix
         // ## pos
-        let int_pos = ins!(db, ring_pos, int);
-        let rat_pos = ins!(db, ring_pos, rat);
-        let real_pos = ins!(db, ring_pos, real);
-        let complex_pos = ins!(db, ring_pos, complex);
+        let int_pos = ins!(ring_pos, int);
+        let rat_pos = ins!(ring_pos, rat);
+        let real_pos = ins!(ring_pos, real);
+        let complex_pos = ins!(ring_pos, complex);
         // ## neg
-        let int_neg = ins!(db, ring_neg, int);
-        let rat_neg = ins!(db, ring_neg, rat);
-        let real_neg = ins!(db, ring_neg, real);
-        let complex_neg = ins!(db, ring_neg, complex);
+        let int_neg = ins!(ring_neg, int);
+        let rat_neg = ins!(ring_neg, rat);
+        let real_neg = ins!(ring_neg, real);
+        let complex_neg = ins!(ring_neg, complex);
         // # binary operators
         // ## sub
-        let int_sub = ins!(db, ring_add, int);
-        let rat_sub = ins!(db, ring_add, rat);
-        let real_sub = ins!(db, ring_add, real);
-        let complex_sub = ins!(db, ring_add, complex);
+        let int_sub = ins!(ring_sub, int);
+        let rat_sub = ins!(ring_sub, rat);
+        let real_sub = ins!(ring_sub, real);
+        let complex_sub = ins!(ring_sub, complex);
         // ## div
-        let rat_div = ins!(db, field_div, rat);
-        let real_div = ins!(db, field_div, real);
-        let complex_div = ins!(db, field_div, complex);
+        let rat_div = ins!(field_div, rat);
+        let real_div = ins!(field_div, real);
+        let complex_div = ins!(field_div, complex);
         // # separators
         // ## add
-        let nat_add = ins!(db, ring_add, nat);
-        let int_add = ins!(db, ring_add, int);
-        let rat_add = ins!(db, ring_add, rat);
-        let real_add = ins!(db, ring_add, real);
-        let complex_add = ins!(db, ring_add, complex);
+        let nat_add = ins!(nat_add);
+        let int_add = ins!(ring_add, int);
+        let rat_add = ins!(ring_add, rat);
+        let real_add = ins!(ring_add, real);
+        let complex_add = ins!(ring_add, complex);
         // ## mul
-        let nat_mul = ins!(db, ring_mul, nat);
-        let int_mul = ins!(db, ring_mul, int);
-        let rat_mul = ins!(db, ring_mul, rat);
-        let real_mul = ins!(db, ring_mul, real);
-        let complex_mul = ins!(db, ring_mul, complex);
-        // ## power
-        let nat_to_the_power_of_nat = ins!(db, ring_power, nat, nat);
-        let int_to_the_power_of_nat = ins!(db, ring_power, int, nat);
-        let rat_to_the_power_of_nat = ins!(db, ring_power, rat, nat);
-        let real_to_the_power_of_nat = ins!(db, ring_power, real, nat);
-        let complex_to_the_power_of_nat = ins!(db, ring_power, complex, nat);
+        let nat_mul = ins!(nat_mul);
+        let int_mul = ins!(ring_mul, int);
+        let rat_mul = ins!(ring_mul, rat);
+        let real_mul = ins!(ring_mul, real);
+        let complex_mul = ins!(ring_mul, complex);
         // ## eq
-        let nat_eq = ins!(db, eq, nat);
-        let int_eq = ins!(db, eq, int);
-        let rat_eq = ins!(db, eq, rat);
-        let real_eq = ins!(db, eq, real);
-        let complex_eq = ins!(db, eq, complex);
+        let nat_eq = ins!(eq, nat);
+        let int_eq = ins!(eq, int);
+        let rat_eq = ins!(eq, rat);
+        let real_eq = ins!(eq, real);
+        let complex_eq = ins!(eq, complex);
         // ## ne
-        let nat_ne = ins!(db, ne, nat);
-        let int_ne = ins!(db, ne, int);
-        let rat_ne = ins!(db, ne, rat);
-        let real_ne = ins!(db, ne, real);
-        let complex_ne = ins!(db, ne, complex);
+        let nat_ne = ins!(ne, nat);
+        let int_ne = ins!(ne, int);
+        let rat_ne = ins!(ne, rat);
+        let real_ne = ins!(ne, real);
+        let complex_ne = ins!(ne, complex);
         // ## lt
-        let nat_lt = ins!(db, lt, nat);
-        let int_lt = ins!(db, lt, int);
-        let rat_lt = ins!(db, lt, rat);
-        let real_lt = ins!(db, lt, real);
+        let nat_lt = ins!(lt, nat);
+        let int_lt = ins!(lt, int);
+        let rat_lt = ins!(lt, rat);
+        let real_lt = ins!(lt, real);
         // ## gt
-        let nat_gt = ins!(db, gt, nat);
-        let int_gt = ins!(db, gt, int);
-        let rat_gt = ins!(db, gt, rat);
-        let real_gt = ins!(db, gt, real);
+        let nat_gt = ins!(gt, nat);
+        let int_gt = ins!(gt, int);
+        let rat_gt = ins!(gt, rat);
+        let real_gt = ins!(gt, real);
         // ## le
-        let nat_le = ins!(db, le, nat);
-        let int_le = ins!(db, le, int);
-        let rat_le = ins!(db, le, rat);
-        let real_le = ins!(db, le, real);
+        let nat_le = ins!(le, nat);
+        let int_le = ins!(le, int);
+        let rat_le = ins!(le, rat);
+        let real_le = ins!(le, real);
         // ## ge
-        let nat_ge = ins!(db, ge, nat);
-        let int_ge = ins!(db, ge, int);
-        let rat_ge = ins!(db, ge, rat);
-        let real_ge = ins!(db, ge, real);
+        let nat_ge = ins!(ge, nat);
+        let int_ge = ins!(ge, int);
+        let rat_ge = ins!(ge, rat);
+        let real_ge = ins!(ge, real);
         // # sqrt
-        let real_sqrt = ins!(db, real_sqrt);
+        let real_sqrt = ins!(real_sqrt);
+        // # attach
+        // ## power
+        let nat_to_the_power_of_nat = ins!(ring_power, nat);
+        let int_to_the_power_of_nat = ins!(ring_power, int);
+        let rat_to_the_power_of_nat = ins!(ring_power, rat);
+        let real_to_the_power_of_nat = ins!(ring_power, real);
+        let complex_to_the_power_of_nat = ins!(ring_power, complex);
         Self {
             // # prefix
             // ## pos
@@ -281,7 +286,6 @@ impl VdInstantiationMenu {
     }
 }
 
-#[salsa::tracked(return_ref)]
-pub fn vd_instantiation_menu(db: &::salsa::Db) -> VdInstantiationMenu {
-    VdInstantiationMenu::new(db)
+lazy_static! {
+    pub static ref VD_INSTANTIATION_MENU: VdInstantiationMenu = VdInstantiationMenu::new();
 }

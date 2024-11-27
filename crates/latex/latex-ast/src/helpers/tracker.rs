@@ -40,13 +40,14 @@ pub trait IsLxAstInput<'a>: IsLxInput<'a> {
 }
 
 impl<'a, Input: IsLxAstInput<'a>> LxAstTracker<'a, Input> {
-    pub fn new(input: Input, db: &salsa::Db) -> Self {
+    pub fn new(input: Input) -> Self {
         let mut ast_arena = LxAstArena::default();
         let mut token_storage = LxTokenStorage::default();
-        let command_signature_table = LxCommandSignatureTable::new_default(db);
-        let environment_signature_table = LxEnvironmentSignatureTable::new_default(db);
+        let command_signature_table = LxCommandSignatureTable::new_from_lp_csv_file_paths(
+            &input.latex_complete_commands_path(),
+        );
+        let environment_signature_table = LxEnvironmentSignatureTable::new_default();
         let mut parser = LxAstParser::new(
-            db,
             &command_signature_table,
             &environment_signature_table,
             input.content(),
@@ -56,7 +57,7 @@ impl<'a, Input: IsLxAstInput<'a>> LxAstTracker<'a, Input> {
             &mut ast_arena,
         );
         let output = Input::parse(parser);
-        let ast_token_idx_range_map = calc_ast_token_idx_range_map(db, &ast_arena);
+        let ast_token_idx_range_map = calc_ast_token_idx_range_map(&ast_arena);
         Self {
             command_signature_table,
             input,
@@ -69,9 +70,8 @@ impl<'a, Input: IsLxAstInput<'a>> LxAstTracker<'a, Input> {
 }
 
 impl<'a, Input: IsLxAstInput<'a>> LxAstTracker<'a, Input> {
-    fn display_tree_builder<'b>(&'b self, db: &'b salsa::Db) -> LxAstDisplayTreeBuilder<'b> {
+    fn display_tree_builder<'b>(&'b self) -> LxAstDisplayTreeBuilder<'b> {
         LxAstDisplayTreeBuilder::new(
-            db,
             self.input.content(),
             &self.token_storage,
             self.ast_arena.as_arena_ref(),
@@ -79,8 +79,8 @@ impl<'a, Input: IsLxAstInput<'a>> LxAstTracker<'a, Input> {
         )
     }
 
-    pub fn show(&self, db: &salsa::Db) -> String {
-        let display_tree_builder = self.display_tree_builder(db);
+    pub fn show(&self) -> String {
+        let display_tree_builder = self.display_tree_builder();
         Input::show_lx_ast_output(self.output, display_tree_builder)
     }
 }

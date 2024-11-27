@@ -1,0 +1,565 @@
+VdSignatureTable {
+    table: {
+        "real_ne": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≠(ne) ...,
+                    item_ty: ℝ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "rat_gt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: >(gt) ...,
+                    item_ty: ℚ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "nat_add": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: +(nat_add) ...,
+                    item_ty: ℕ,
+                    expr_ty: ℕ,
+                },
+            ),
+        ),
+        "rat_ge": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≥(ge) ...,
+                    item_ty: ℚ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "int_le": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≤(le) ...,
+                    item_ty: ℤ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "real_eq": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: =(eq) ...,
+                    item_ty: ℝ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "nat_ne": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≠(ne) ...,
+                    item_ty: ℕ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "real_sub": BinaryOpr(
+            Base(
+                VdBaseBinaryOprSignature {
+                    instantiation: -(ring_sub) ...,
+                    lopd_ty: ℝ,
+                    ropd_ty: ℝ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "int_mul": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: *(ring_mul) ...,
+                    item_ty: ℤ,
+                    expr_ty: ℤ,
+                },
+            ),
+        ),
+        "real_lt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: <(lt) ...,
+                    item_ty: ℝ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "real_le": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≤(le) ...,
+                    item_ty: ℝ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "nat_lt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: <(lt) ...,
+                    item_ty: ℕ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "rat_mul": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: *(ring_mul) ...,
+                    item_ty: ℚ,
+                    expr_ty: ℚ,
+                },
+            ),
+        ),
+        "nat_ge": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≥(ge) ...,
+                    item_ty: ℕ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_ne": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≠(ne) ...,
+                    item_ty: ℂ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_to_the_power_of_nat": Attach(
+            Power(
+                VdPowerSignature {
+                    instantiation: ^(ring_power) ...,
+                    base_ty: ℂ,
+                    exponent_ty: ℕ,
+                    expr_ty: ℂ,
+                },
+            ),
+        ),
+        "rat_ne": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≠(ne) ...,
+                    item_ty: ℚ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "real_neg": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: -(ring_neg) ...,
+                    opd_ty: ℝ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "rat_to_the_power_of_nat": Attach(
+            Power(
+                VdPowerSignature {
+                    instantiation: ^(ring_power) ...,
+                    base_ty: ℚ,
+                    exponent_ty: ℕ,
+                    expr_ty: ℚ,
+                },
+            ),
+        ),
+        "int_eq": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: =(eq) ...,
+                    item_ty: ℤ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "real_div": BinaryOpr(
+            Base(
+                VdBaseBinaryOprSignature {
+                    instantiation: /(field_div) ...,
+                    lopd_ty: ℝ,
+                    ropd_ty: ℝ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "real_mul": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: *(ring_mul) ...,
+                    item_ty: ℝ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "nat_to_the_power_of_nat": Attach(
+            Power(
+                VdPowerSignature {
+                    instantiation: ^(ring_power) ...,
+                    base_ty: ℕ,
+                    exponent_ty: ℕ,
+                    expr_ty: ℕ,
+                },
+            ),
+        ),
+        "int_add": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: +(ring_add) ...,
+                    item_ty: ℤ,
+                    expr_ty: ℤ,
+                },
+            ),
+        ),
+        "int_gt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: >(gt) ...,
+                    item_ty: ℤ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_gt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: >(gt) ...,
+                    item_ty: ℂ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_mul": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: *(ring_mul) ...,
+                    item_ty: ℂ,
+                    expr_ty: ℂ,
+                },
+            ),
+        ),
+        "complex_lt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: <(lt) ...,
+                    item_ty: ℂ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "nat_gt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: >(gt) ...,
+                    item_ty: ℕ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "real_sqrt": Sqrt(
+            Base(
+                VdBaseSqrtSignature {
+                    instantiation: √(real_sqrt) ...,
+                    base_ty: ℝ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "rat_pos": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: +(ring_pos) ...,
+                    opd_ty: ℚ,
+                    expr_ty: ℚ,
+                },
+            ),
+        ),
+        "real_pos": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: +(ring_pos) ...,
+                    opd_ty: ℝ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "real_gt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: >(gt) ...,
+                    item_ty: ℝ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "int_neg": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: -(ring_neg) ...,
+                    opd_ty: ℤ,
+                    expr_ty: ℤ,
+                },
+            ),
+        ),
+        "rat_lt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: <(lt) ...,
+                    item_ty: ℚ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "real_ge": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≥(ge) ...,
+                    item_ty: ℝ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "nat_le": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≤(le) ...,
+                    item_ty: ℕ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "rat_add": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: +(ring_add) ...,
+                    item_ty: ℚ,
+                    expr_ty: ℚ,
+                },
+            ),
+        ),
+        "complex_add": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: +(ring_add) ...,
+                    item_ty: ℂ,
+                    expr_ty: ℂ,
+                },
+            ),
+        ),
+        "real_add": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: +(ring_add) ...,
+                    item_ty: ℝ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "rat_neg": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: -(ring_neg) ...,
+                    opd_ty: ℚ,
+                    expr_ty: ℚ,
+                },
+            ),
+        ),
+        "int_ne": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≠(ne) ...,
+                    item_ty: ℤ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_ge": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≥(ge) ...,
+                    item_ty: ℂ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_div": BinaryOpr(
+            Base(
+                VdBaseBinaryOprSignature {
+                    instantiation: /(field_div) ...,
+                    lopd_ty: ℂ,
+                    ropd_ty: ℂ,
+                    expr_ty: ℂ,
+                },
+            ),
+        ),
+        "int_pos": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: +(ring_pos) ...,
+                    opd_ty: ℤ,
+                    expr_ty: ℤ,
+                },
+            ),
+        ),
+        "rat_div": BinaryOpr(
+            Base(
+                VdBaseBinaryOprSignature {
+                    instantiation: /(field_div) ...,
+                    lopd_ty: ℚ,
+                    ropd_ty: ℚ,
+                    expr_ty: ℚ,
+                },
+            ),
+        ),
+        "nat_mul": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: * ...,
+                    item_ty: ℕ,
+                    expr_ty: ℕ,
+                },
+            ),
+        ),
+        "int_to_the_power_of_nat": Attach(
+            Power(
+                VdPowerSignature {
+                    instantiation: ^(ring_power) ...,
+                    base_ty: ℤ,
+                    exponent_ty: ℕ,
+                    expr_ty: ℤ,
+                },
+            ),
+        ),
+        "rat_sub": BinaryOpr(
+            Base(
+                VdBaseBinaryOprSignature {
+                    instantiation: -(ring_sub) ...,
+                    lopd_ty: ℚ,
+                    ropd_ty: ℚ,
+                    expr_ty: ℚ,
+                },
+            ),
+        ),
+        "nat_eq": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: =(eq) ...,
+                    item_ty: ℕ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "int_lt": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: <(lt) ...,
+                    item_ty: ℤ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_pos": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: +(ring_pos) ...,
+                    opd_ty: ℂ,
+                    expr_ty: ℂ,
+                },
+            ),
+        ),
+        "complex_neg": PrefixOpr(
+            Base(
+                VdBasePrefixOprSignature {
+                    instantiation: -(ring_neg) ...,
+                    opd_ty: ℂ,
+                    expr_ty: ℂ,
+                },
+            ),
+        ),
+        "rat_eq": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: =(eq) ...,
+                    item_ty: ℚ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "int_sub": BinaryOpr(
+            Base(
+                VdBaseBinaryOprSignature {
+                    instantiation: -(ring_sub) ...,
+                    lopd_ty: ℤ,
+                    ropd_ty: ℤ,
+                    expr_ty: ℤ,
+                },
+            ),
+        ),
+        "real_to_the_power_of_nat": Attach(
+            Power(
+                VdPowerSignature {
+                    instantiation: ^(ring_power) ...,
+                    base_ty: ℝ,
+                    exponent_ty: ℕ,
+                    expr_ty: ℝ,
+                },
+            ),
+        ),
+        "rat_le": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≤(le) ...,
+                    item_ty: ℚ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_sub": BinaryOpr(
+            Base(
+                VdBaseBinaryOprSignature {
+                    instantiation: -(ring_sub) ...,
+                    lopd_ty: ℂ,
+                    ropd_ty: ℂ,
+                    expr_ty: ℂ,
+                },
+            ),
+        ),
+        "complex_eq": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: =(eq) ...,
+                    item_ty: ℂ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "complex_le": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≤(le) ...,
+                    item_ty: ℂ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+        "int_ge": Separator(
+            Base(
+                VdBaseSeparatorSignature {
+                    instantiation: ≥(ge) ...,
+                    item_ty: ℤ,
+                    expr_ty: Prop,
+                },
+            ),
+        ),
+    },
+}

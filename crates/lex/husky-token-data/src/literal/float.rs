@@ -9,7 +9,7 @@ pub enum FloatLiteralTokenData {
     F64(F64Literal),
 }
 
-#[salsa::tracked(db = TokenDataDb, jar = TokenDataJar)]
+#[salsa::interned]
 pub struct UnspecifiedFloatLiteral {
     #[return_ref]
     pub text: String,

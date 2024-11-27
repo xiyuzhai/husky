@@ -19,7 +19,7 @@ impl<'a> VdSemExprBuilder<'a> {
         let denominator = self.build_expr_entry(syn_denominator);
         if let Some(dispatch) = self
             .default_global_dispatch_table()
-            .frac_default_dispatch(numerator.ty, denominator.ty)
+            .base_frac_default_dispatch(numerator.ty, denominator.ty)
         {
             let numerator = self.alloc_expr(syn_numerator, numerator);
             let denominator = self.alloc_expr(syn_denominator, denominator);

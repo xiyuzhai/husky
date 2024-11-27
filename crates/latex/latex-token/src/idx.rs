@@ -4,8 +4,22 @@ use std::ops::{Add, Sub};
 
 use crate::lane::LxTokenLane;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct LxTokenIdx(LxTokenLane, ShiftedU32);
+
+impl PartialOrd for LxTokenIdx {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        assert_eq!(self.0, other.0);
+        self.1.partial_cmp(&other.1)
+    }
+}
+
+impl Ord for LxTokenIdx {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        assert_eq!(self.0, other.0);
+        self.1.cmp(&other.1)
+    }
+}
 
 impl LxTokenIdx {
     pub(crate) fn lane(self) -> LxTokenLane {
@@ -194,11 +208,25 @@ impl Step for LxTokenIdx {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LxTokenIdxRange {
     lane: LxTokenLane,
     start: ShiftedU32,
     end: ShiftedU32,
+}
+
+impl PartialOrd for LxTokenIdxRange {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        assert_eq!(self.lane, other.lane);
+        self.start.partial_cmp(&other.start)
+    }
+}
+
+impl Ord for LxTokenIdxRange {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        assert_eq!(self.lane, other.lane);
+        self.start.cmp(&other.start)
+    }
 }
 
 impl From<std::ops::Range<LxTokenIdx>> for LxTokenIdxRange {

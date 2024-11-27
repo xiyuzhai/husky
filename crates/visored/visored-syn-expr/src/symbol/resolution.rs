@@ -10,7 +10,7 @@ use crate::expr::VdSynExprMap;
 use crate::expr::*;
 
 #[enum_class::from_variants]
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum VdSynSymbolResolution {
     Letter(VdSynLetterSymbolResolution),
 }

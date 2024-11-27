@@ -1,7 +1,7 @@
-use lean_item_path::menu::{ln_item_path_menu, LnItemPathMenu};
-
 use crate::term::LnTerm;
 use crate::*;
+use lazy_static::lazy_static;
+use lean_entity_path::menu::{ln_item_path_menu, LnItemPathMenu};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct LnTermMenu {
@@ -13,7 +13,7 @@ pub struct LnTermMenu {
 }
 
 impl LnTermMenu {
-    pub fn new(db: &::salsa::Db) -> Self {
+    pub fn new() -> Self {
         let LnItemPathMenu {
             nat,
             rat,
@@ -29,7 +29,7 @@ impl LnTermMenu {
             ge,
             eq,
             real_sqrt,
-        } = *ln_item_path_menu(db);
+        } = *ln_item_path_menu;
         Self {
             nat: LnTerm::new_item_path(nat),
             int: LnTerm::new_item_path(int),
@@ -40,7 +40,6 @@ impl LnTermMenu {
     }
 }
 
-#[salsa::tracked(return_ref)]
-pub fn ln_term_menu(db: &::salsa::Db) -> LnTermMenu {
-    LnTermMenu::new(db)
+lazy_static! {
+    pub static ref ln_term_menu: LnTermMenu = LnTermMenu::new();
 }

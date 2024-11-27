@@ -60,10 +60,11 @@ impl VirtualPath {
             },
             Err(e) => match e {
                 VfsError::FileNotExists(_) => todo!(),
-                VfsError::IO {
+                VfsError::Io {
                     path: _,
                     error_message: _,
                 } => todo!(),
+                VfsError::Io2(_) => todo!(),
                 VfsError::NotSourceFile(_) => todo!(),
                 VfsError::FailToAbsolutize {
                     path: _,

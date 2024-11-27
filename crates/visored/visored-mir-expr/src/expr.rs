@@ -1,23 +1,29 @@
 pub mod application;
 pub mod attach;
+pub mod separated_list;
 #[cfg(test)]
 pub mod tests;
 
 use crate::*;
 use application::VdMirFunc;
 use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
+use smallvec::SmallVec;
 use symbol::local_defn::VdMirSymbolLocalDefnIdx;
+use visored_entity_path::path::VdItemPath;
 use visored_global_dispatch::dispatch::{
     binary_opr::VdBinaryOprGlobalDispatch, prefix_opr::VdPrefixOprGlobalDispatch,
 };
 use visored_global_resolution::resolution::letter::VdLetterGlobalResolution;
-use visored_item_path::path::VdItemPath;
-use visored_opr::opr::binary::VdBaseBinaryOpr;
+use visored_opr::{
+    opr::binary::VdBaseBinaryOpr,
+    separator::{VdBaseSeparator, VdSeparatorClass},
+};
 use visored_sem_expr::expr::{
     binary::VdSemBinaryDispatch, frac::VdSemFracDispatch, letter::VdSemLetterDispatch,
-    prefix::VdSemPrefixDispatch, separated_list::VdSemSeparatedListDispatch,
+    prefix::VdSemPrefixDispatch, separated_list::VdSemSeparatedListFollowerDispatch,
     sqrt::VdSemSqrtDispatch, VdSemExprData, VdSemExprIdx, VdSemExprIdxRange,
 };
+use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -27,6 +33,15 @@ pub enum VdMirExprData {
     Application {
         function: VdMirFunc,
         arguments: VdMirExprIdxRange,
+    },
+    FoldingSeparatedList {
+        leader: VdMirExprIdx,
+        followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]>,
+    },
+    ChainingSeparatedList {
+        leader: VdMirExprIdx,
+        followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]>,
+        joined_separator_and_signature: Option<(VdBaseSeparator, VdBaseSeparatorSignature)>,
     },
     ItemPath(VdItemPath),
 }
@@ -131,18 +146,22 @@ impl<'db> VdMirExprBuilder<'db> {
                 }
             },
             VdSemExprData::BaseOpr { opr } => todo!(),
-            VdSemExprData::SeparatedList {
-                items, dispatch, ..
-            } => VdMirExprData::Application {
-                function: match dispatch {
-                    VdSemSeparatedListDispatch::Normal {
-                        base_separator,
-                        signature,
-                    } => VdMirFunc::NormalBaseSeparator(signature),
-                    VdSemSeparatedListDispatch::InSet { expr_ty } => VdMirFunc::InSet,
-                },
-                arguments: items.to_vd_mir(self),
-            },
+            VdSemExprData::FoldingSeparatedList {
+                separator_class,
+                leader,
+                ref followers,
+                ..
+            } => self.build_folding_separated_list(leader, followers),
+            VdSemExprData::ChainingSeparatedList {
+                separator_class,
+                leader,
+                ref followers,
+                joined_separator_and_signature,
+            } => self.build_chaining_separated_list(
+                leader,
+                followers,
+                joined_separator_and_signature,
+            ),
             VdSemExprData::LxDelimited { item, .. } | VdSemExprData::Delimited { item, .. } => {
                 self.build_expr(item)
             }

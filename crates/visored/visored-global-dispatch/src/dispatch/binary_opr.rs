@@ -1,7 +1,18 @@
 use super::*;
 use crate::{default_table::VdBaseBinaryOprKey, menu::VdGlobalDispatchMenu};
+use lisp_csv::{
+    expr::LpCsvExprData,
+    file::{LpCsvFile, LpCsvFileData},
+    row::LpCsvRow,
+};
 use visored_opr::{menu::VdOprMenu, opr::binary::VdBaseBinaryOpr};
-use visored_signature::signature::binary_opr::base::VdBaseBinaryOprSignature;
+use visored_signature::{
+    signature::{
+        binary_opr::{base::VdBaseBinaryOprSignature, VdBinaryOprSignature},
+        VdSignature,
+    },
+    table::VdSignatureTable,
+};
 use visored_term::{menu::VdTypeMenu, ty::VdType};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
@@ -78,9 +89,75 @@ impl VdBinaryOprGlobalDispatch {
         ]
     }
 
+    pub fn collect_from_lisp_csv_files<'a>(
+        base_binary_opr_file: &'a LpCsvFile,
+        signature_table: &'a VdSignatureTable,
+    ) -> impl Iterator<Item = (VdBaseBinaryOprKey, Self)> + 'a {
+        let LpCsvFileData::Rows(rows) = base_binary_opr_file.data();
+        rows.iter()
+            .map(|row| Self::collect_from_lisp_csv_row(row, signature_table))
+    }
+
+    pub fn collect_from_lisp_csv_row(
+        row: &LpCsvRow,
+        signature_table: &VdSignatureTable,
+    ) -> (VdBaseBinaryOprKey, Self) {
+        let LpCsvRow::SeparatedExprs(exprs) = row else {
+            todo!()
+        };
+        let &[ref lopd_ty, ref base_binary_opr, ref ropd_ty, ref signature_ident] = exprs as &[_]
+        else {
+            todo!()
+        };
+        let lopd_ty = VdType::from_lp_csv_expr(lopd_ty);
+        let base_binary_opr = VdBaseBinaryOpr::from_lp_csv_expr(base_binary_opr);
+        let ropd_ty = VdType::from_lp_csv_expr(ropd_ty);
+        let LpCsvExprData::Ident(ref signature_ident) = signature_ident.data else {
+            todo!()
+        };
+        let VdSignature::BinaryOpr(VdBinaryOprSignature::Base(signature)) =
+            signature_table[signature_ident]
+        else {
+            todo!()
+        };
+        let dispatch = VdBinaryOprGlobalDispatch::Normal {
+            base_binary_opr,
+            signature,
+        };
+        (
+            VdBaseBinaryOprKey {
+                lopd_ty,
+                base_binary_opr,
+                ropd_ty,
+            },
+            dispatch,
+        )
+    }
+
     pub fn expr_ty(self) -> VdType {
         match self {
             VdBinaryOprGlobalDispatch::Normal { signature, .. } => signature.expr_ty(),
         }
+    }
+}
+
+#[test]
+fn vd_binary_opr_global_dispatch_standard_defaults_works() {
+    use crate::default_table::VdDefaultGlobalDispatchTable;
+    use crate::menu::{vd_global_dispatch_menu, VdGlobalDispatchMenu};
+    use visored_opr::menu::vd_opr_menu;
+    use visored_term::menu::VD_TYPE_MENU;
+
+    let table = VdDefaultGlobalDispatchTable::from_standard_lisp_csv_file_dir();
+    let ty_menu = &VD_TYPE_MENU;
+    let global_dispatch_menu = &vd_global_dispatch_menu;
+    let opr_menu = &vd_opr_menu;
+    for ((lopd_ty, base_binary_opr, ropd_ty), dispatch) in
+        VdBinaryOprGlobalDispatch::standard_defaults(ty_menu, opr_menu, global_dispatch_menu)
+    {
+        assert_eq!(
+            table.base_binary_opr_default_dispatch(lopd_ty, base_binary_opr, ropd_ty),
+            Some(dispatch)
+        );
     }
 }

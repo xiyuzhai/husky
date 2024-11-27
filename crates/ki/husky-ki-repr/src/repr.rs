@@ -13,7 +13,7 @@ use husky_linket::linket::Linket;
 use smallvec::{smallvec, SmallVec};
 
 /// has more information than `Ki`
-#[salsa::tracked(constructor = new_inner)]
+#[salsa::interned(constructor = new_inner)]
 pub struct KiRepr {
     pub ki_domain_repr: KiDomainRepr,
     pub opn: KiOpn,

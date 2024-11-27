@@ -1,0 +1,2 @@
+dir: examples/mnist-classifier
+port: 50600

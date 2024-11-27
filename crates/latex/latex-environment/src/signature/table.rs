@@ -1,6 +1,6 @@
 use super::LxEnvironmentSignature;
 use crate::path::{
-    menu::{lx_environment_path_menu, LxEnvironmentPathMenu},
+    menu::{LxEnvironmentPathMenu, LX_ENVIRONMENT_PATH_MENU},
     LxEnvironmentName, LxEnvironmentPath,
 };
 use latex_prelude::mode::LxMode;
@@ -27,7 +27,7 @@ impl LxEnvironmentSignatureTable {
         }
     }
 
-    pub fn new_default(db: &::salsa::Db) -> Self {
+    pub fn new_default() -> Self {
         let LxEnvironmentPathMenu {
             document,
             example,
@@ -45,7 +45,7 @@ impl LxEnvironmentSignatureTable {
             equation,
             figure,
             table,
-        } = *lx_environment_path_menu(db);
+        } = *LX_ENVIRONMENT_PATH_MENU;
         Self::new([
             (document, (&[LxMode::Root], LxMode::Rose)),
             // theorems

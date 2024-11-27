@@ -57,8 +57,8 @@ impl LxAstTokenIdxRangeMap {
     }
 }
 
-pub fn calc_ast_token_idx_range_map(db: &salsa::Db, arena: &LxAstArena) -> LxAstTokenIdxRangeMap {
-    let mut calculator = LxAstTokenIdxRangeCalculator::new(db, arena);
+pub fn calc_ast_token_idx_range_map(arena: &LxAstArena) -> LxAstTokenIdxRangeMap {
+    let mut calculator = LxAstTokenIdxRangeCalculator::new(arena);
     calculator.infer_all();
     LxAstTokenIdxRangeMap {
         lisp: calculator.lisp_data,
@@ -69,7 +69,6 @@ pub fn calc_ast_token_idx_range_map(db: &salsa::Db, arena: &LxAstArena) -> LxAst
 }
 
 struct LxAstTokenIdxRangeCalculator<'a> {
-    db: &'a ::salsa::Db,
     ast_arena: LxAstArenaRef<'a>,
     lisp_data: LxLispAstArenaMap<LxTokenIdxRange>,
     math_data: LxMathAstArenaMap<LxTokenIdxRange>,
@@ -78,9 +77,8 @@ struct LxAstTokenIdxRangeCalculator<'a> {
 }
 
 impl<'a> LxAstTokenIdxRangeCalculator<'a> {
-    fn new(db: &'a ::salsa::Db, arena: &'a LxAstArena) -> Self {
+    fn new(arena: &'a LxAstArena) -> Self {
         Self {
-            db,
             ast_arena: arena.as_arena_ref(),
             lisp_data: LxLispAstArenaMap::new(&arena.lisp),
             math_data: LxMathAstArenaMap::new(&arena.math),

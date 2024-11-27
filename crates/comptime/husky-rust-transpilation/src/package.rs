@@ -8,7 +8,7 @@ use crate::{
 use ::relative_path::RelativePathBuf;
 use husky_corgi_config::transpilation_setup::TranspilationSetup;
 use husky_entity_tree::helpers::paths::crate_module_paths;
-use husky_io_utils::error::IOResult;
+use husky_io_utils::error::IoResult;
 use husky_manifest::HasManifest;
 use husky_vfs::{
     path::{
@@ -130,7 +130,7 @@ impl RustTranspilationPackage {
         &self,
         setup: TranspilationSetup,
         db: &::salsa::Db,
-    ) -> IOResult<()> {
+    ) -> IoResult<()> {
         let workspace_dir = self.target_path.rust_workspace_abs_dir(db);
         match self.data {
             package::RustTranspilationPackageData::Source { package_path } => {
@@ -148,7 +148,7 @@ fn transpile_source_package_to_fs(
     rust_workspace_dir: &std::path::Path,
     package_path: PackagePath,
     db: &::salsa::Db,
-) -> IOResult<()> {
+) -> IoResult<()> {
     if package_path.is_virtual(db) {
         return Ok(());
     }
@@ -208,7 +208,7 @@ fn transpile_linkets_package_to_fs(
     rust_workspace_dir: &std::path::Path,
     target_path: LinktimeTargetPath,
     db: &::salsa::Db,
-) -> IOResult<()> {
+) -> IoResult<()> {
     let package_dir = rust_workspace_dir.join(format!("{}-linkets", target_path.name(db).data(db)));
     let src_dir = package_dir.join("src");
     let cargo_toml_path = package_dir.join("Cargo.toml");

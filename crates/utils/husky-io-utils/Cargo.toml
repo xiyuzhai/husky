@@ -7,6 +7,7 @@ edition = "2021"
 doctest = false
 
 [dependencies]
-relative-path = "1.7.2"
-husky-print-utils = { path = "../husky-print-utils" }
-composite-pattern = { path = "../../abstractions/composite-pattern" }
+relative-path.workspace = true
+thiserror.workspace = true
+husky-print-utils.workspace = true
+composite-pattern.workspace = true

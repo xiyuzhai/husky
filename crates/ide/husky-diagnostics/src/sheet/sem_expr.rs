@@ -80,7 +80,7 @@ impl Diagnose for OriginalSemExprTermError {
         todo!()
     }
 
-    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextRange {
+    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextPositionRange {
         todo!()
     }
 }
@@ -136,7 +136,7 @@ impl Diagnose for OriginalSemExprDataError {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextRange {
+    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextPositionRange {
         todo!()
         // match self {
         //     OriginalSemExprTypeError::NoSuchField { ident_token, .. } => {
@@ -216,7 +216,7 @@ impl Diagnose for OriginalSemExprTypeError {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextRange {
+    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextPositionRange {
         todo!()
         // match self {
         //     OriginalSemExprTypeError::NoSuchField { ident_token, .. } => {
@@ -243,7 +243,7 @@ impl Diagnose for (HoleSource, &'_ OriginalHollowTermResolveError) {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextRange {
+    fn range(&self, _ctx: &RegionDiagnosticsContext) -> TextPositionRange {
         match self.0 {
             HoleSource::Expr(_) => todo!(),
             HoleSource::Expectation(_) => todo!(),
@@ -307,7 +307,7 @@ impl Diagnose for (ExpectationSource, &'_ OriginalFlyTermExpectationError) {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, ctx: &RegionDiagnosticsContext) -> TextRange {
+    fn range(&self, ctx: &RegionDiagnosticsContext) -> TextPositionRange {
         ctx.expr_text_range(self.0.syn_expr_idx())
     }
 }

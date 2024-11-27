@@ -13,7 +13,7 @@ use husky_term_prelude::TypeFinalDestinationExpectation;
 use salsa::DebugWithDb;
 use vec_like::VecMapGetEntry;
 
-#[salsa::tracked(constructor = new)]
+#[salsa::interned(constructor = new)]
 pub struct TraitForTypeImplBlockEthTemplate {
     pub path: TraitForTypeImplBlockPath,
     #[return_ref]
@@ -28,7 +28,7 @@ impl TraitForTypeImplBlockEthTemplate {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
 pub enum EtherealSelfTypeInTraitImpl {
     PathLeading(EthTerm),
     DeriveAny(EthSymbolicVariable),

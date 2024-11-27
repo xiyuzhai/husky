@@ -1,8 +1,8 @@
-use opr::prefix::VdBasePrefixOpr;
-
 use crate::opr::binary::VdBaseBinaryOpr;
 use crate::separator::VdBaseSeparator;
 use crate::*;
+use lazy_static::lazy_static;
+use opr::prefix::VdBasePrefixOpr;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdOprMenu {
@@ -23,9 +23,8 @@ pub struct VdOprMenu {
     pub r#in: VdBaseSeparator,
 }
 
-#[salsa::tracked(return_ref)]
-pub fn vd_opr_menu(db: &::salsa::Db) -> VdOprMenu {
-    VdOprMenu {
+lazy_static! {
+    pub static ref vd_opr_menu: VdOprMenu = VdOprMenu {
         pos: VdBasePrefixOpr::POS,
         neg: VdBasePrefixOpr::NEG,
         sub: VdBaseBinaryOpr::SUB,
@@ -38,5 +37,5 @@ pub fn vd_opr_menu(db: &::salsa::Db) -> VdOprMenu {
         le: VdBaseSeparator::LE,
         ge: VdBaseSeparator::GE,
         r#in: VdBaseSeparator::IN,
-    }
+    };
 }

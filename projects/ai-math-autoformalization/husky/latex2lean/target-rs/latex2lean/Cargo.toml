@@ -1,0 +1,10 @@
+[package]
+name = "latex2lean"
+edition = "2021"
+version = "0.1.0"
+
+[dependencies.ad-hoc-devsoul-dependency]
+workspace = true
+
+[dependencies.husky-core]
+workspace = true

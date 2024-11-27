@@ -1,10 +1,10 @@
 use crate::{
-    menu::{vd_ty_menu, VdTypeMenu},
+    menu::{VdTypeMenu, VD_TYPE_MENU},
     ty::VdType,
 };
 use rustc_hash::FxHashMap;
-use visored_item_path::{
-    menu::{vd_item_path_menu, VdItemPathMenu},
+use visored_entity_path::{
+    menu::{VdItemPathMenu, VD_ITEM_PATH_MENU},
     path::VdItemPath,
 };
 
@@ -19,7 +19,7 @@ impl VdItemPathZfcTypeTable {
         }
     }
 
-    pub fn new_standard(db: &::salsa::Db) -> Self {
+    pub fn new_standard() -> Self {
         // TODO: use menu?
         let VdItemPathMenu {
             nat: nat_path,
@@ -35,7 +35,10 @@ impl VdItemPathZfcTypeTable {
             ring: ring_path,
             group_mul: group_mul_path,
             abelian_group_add: abelian_group_add_path,
+            nat_add: nat_add_path,
+            nat_mul: nat_mul_path,
             ring_add: ring_add_path,
+            ring_sub: ring_sub_path,
             ring_mul: ring_mul_path,
             ring_power: ring_power_path,
             ring_pos: ring_pos_path,
@@ -48,7 +51,7 @@ impl VdItemPathZfcTypeTable {
             le: le_path,
             ge: ge_path,
             real_sqrt: real_sqrt_path,
-        } = *vd_item_path_menu(db);
+        } = *VD_ITEM_PATH_MENU;
         let VdTypeMenu {
             nat,
             int,
@@ -57,7 +60,7 @@ impl VdItemPathZfcTypeTable {
             complex,
             set,
             prop,
-        } = *vd_ty_menu(db);
+        } = *VD_TYPE_MENU;
         Self::new([
             (nat_path.into(), set),
             (rat_path.into(), set),

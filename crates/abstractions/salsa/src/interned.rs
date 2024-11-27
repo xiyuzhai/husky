@@ -4,13 +4,13 @@ use std::hash::Hash;
 use std::marker::PhantomData;
 use std::{borrow::Borrow, fmt};
 
-use crate::id::AsId;
 use crate::ingredient::{fmt_index, IngredientRequiresReset};
 use crate::key::DependencyIndex;
 use crate::runtime::local_state::QueryOrigin;
 use crate::runtime::Runtime;
 use crate::DatabaseKeyIndex;
 use crate::{durability::Durability, Db};
+use crate::{id::AsId, Id};
 
 use super::hash::FxDashMap;
 use super::ingredient::Ingredient;
@@ -26,14 +26,14 @@ impl<T: Eq + Hash + Clone> InternedData for T {}
 /// The interned ingredient has the job of hashing values of type `Data` to produce an `Id`.
 /// It used to store interned structs but also to store the id fields of a tracked struct.
 /// Interned values endure until they are explicitly removed in some way.
-pub struct InternedIngredient<Id: InternedId, Data: InternedData> {
+pub struct InternedIngredient<K: InternedId, Data: InternedData> {
     /// Index of this ingredient in the database (used to construct database-ids, etc).
     ingredient_index: IngredientIndex,
 
     /// Maps from data to the existing interned id for that data.
     ///
     /// Deadlock requirement: We access `value_map` while holding lock on `key_map`, but not vice versa.
-    key_map: FxDashMap<Data, Id>,
+    key_map: FxDashMap<Data, K>,
 
     /// Maps from an interned id to its data.
     ///
@@ -59,9 +59,9 @@ pub struct InternedIngredient<Id: InternedId, Data: InternedData> {
     debug_name: &'static str,
 }
 
-impl<Id, Data> InternedIngredient<Id, Data>
+impl<K, Data> InternedIngredient<K, Data>
 where
-    Id: InternedId,
+    K: InternedId,
     Data: InternedData,
 {
     pub fn new(ingredient_index: IngredientIndex, debug_name: &'static str) -> Self {
@@ -76,7 +76,7 @@ where
         }
     }
 
-    pub fn intern(&self, runtime: &Runtime, data: Data) -> Id {
+    pub fn intern(&self, runtime: &Runtime, data: Data) -> K {
         runtime.report_tracked_read(
             DependencyIndex::for_table(self.ingredient_index),
             Durability::MAX,
@@ -95,19 +95,19 @@ where
             // We won any races so should intern the data
             dashmap::mapref::entry::Entry::Vacant(entry) => {
                 let next_id = self.counter.fetch_add(1);
-                let next_id = Id::from_id(crate::id::Id::from_u32(next_id));
-                let old_value = self.value_map.insert(next_id, Box::new(data));
+                let next_k = K::from_id(crate::id::Id::from_u32(next_id));
+                let old_value = self.value_map.insert(next_k.as_id(), Box::new(data));
                 assert!(
                     old_value.is_none(),
                     "next_id is guaranteed to be unique, bar overflow"
                 );
-                entry.insert(next_id);
-                next_id
+                entry.insert(next_k);
+                next_k
             }
         }
     }
 
-    pub fn intern_borrowed<Q>(&self, runtime: &Runtime, data: &Q) -> Id
+    pub fn intern_borrowed<Q>(&self, runtime: &Runtime, data: &Q) -> K
     where
         Data: Borrow<Q> + for<'a> From<&'a Q>,
         Q: Hash + Eq + ?Sized + 'static,
@@ -130,14 +130,14 @@ where
             // We won any races so should intern the data
             dashmap::mapref::entry::Entry::Vacant(entry) => {
                 let next_id = self.counter.fetch_add(1);
-                let next_id = Id::from_id(crate::id::Id::from_u32(next_id));
-                let old_value = self.value_map.insert(next_id, Box::new(data.into()));
+                let next_k = K::from_id(crate::id::Id::from_u32(next_id));
+                let old_value = self.value_map.insert(next_k.as_id(), Box::new(data.into()));
                 assert!(
                     old_value.is_none(),
                     "next_id is guaranteed to be unique, bar overflow"
                 );
-                entry.insert(next_id);
-                next_id
+                entry.insert(next_k);
+                next_k
             }
         }
     }
@@ -154,14 +154,14 @@ where
     }
 
     #[track_caller]
-    pub fn data<'db>(&'db self, runtime: &'db Runtime, id: Id) -> &'db Data {
+    pub fn data<'db>(&'db self, runtime: &'db Runtime, id: K) -> &'db Data {
         runtime.report_tracked_read(
             DependencyIndex::for_table(self.ingredient_index),
             Durability::MAX,
             self.reset_at,
         );
 
-        let data = match self.value_map.get(&id) {
+        let data = match self.value_map.get(&id.as_id()) {
             Some(d) => d,
             None => {
                 panic!("no data found for id `{:?}`", id)
@@ -192,10 +192,10 @@ where
     /// produced in the last revision. Any expect entities `E_prev - E_new` can be deleted.
     ///
     /// If you are wrong about this, it should not be unsafe, but unpredictable results may occur.
-    pub(crate) fn delete_index(&self, id: Id) {
+    pub(crate) fn delete_index(&self, id: K) {
         let (_, key) = self
             .value_map
-            .remove(&id)
+            .remove(&id.as_id())
             .unwrap_or_else(|| panic!("No entry for id `{:?}`", id));
 
         self.key_map.remove(&key);

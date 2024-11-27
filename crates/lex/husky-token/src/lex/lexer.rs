@@ -6,15 +6,15 @@ use husky_text_protocol::position::TextLine;
 pub(crate) struct Tokenizer<'lex> {
     db: &'lex ::salsa::Db,
     token_datas: Vec<TokenData>,
-    token_ranges: Vec<TextRange>,
+    token_ranges: Vec<TextPositionRange>,
     line: TextLine,
     comments: Vec<Comment>,
 }
 
 enum TokenizerAction {
-    Push((TokenData, TextRange)),
-    Comment(TextRange),
-    ReplaceLast((TokenData, TextRange)),
+    Push((TokenData, TextPositionRange)),
+    Comment(TextPositionRange),
+    ReplaceLast((TokenData, TextPositionRange)),
     NewLine,
 }
 

@@ -3,12 +3,12 @@ use crate::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Default, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
-pub struct TextRange {
+pub struct TextPositionRange {
     pub start: TextPosition,
     pub end: TextPosition,
 }
 
-impl TextRange {
+impl TextPositionRange {
     pub fn join(self, other: Self) -> Self {
         Self {
             start: self.start,
@@ -18,10 +18,10 @@ impl TextRange {
 
     /// returns the text range after `self` in the same line
     /// ```
-    /// use husky_text_protocol::range::TextRange;
+    /// use husky_text_protocol::range::TextPositionRange;
     ///
-    /// let a: TextRange = ((0,0)..(0,3)).into();
-    /// let b: TextRange = ((0,3)..(0,4)).into();
+    /// let a: TextPositionRange = ((0,0)..(0,3)).into();
+    /// let b: TextPositionRange = ((0,3)..(0,4)).into();
     /// assert_eq!(a.right_after(), b)
     /// ```
     pub fn right_after(self) -> Self {
@@ -33,7 +33,7 @@ impl TextRange {
 }
 
 #[cfg(feature = "lsp_support")]
-impl From<lsp_types::Range> for TextRange {
+impl From<lsp_types::Range> for TextPositionRange {
     fn from(range: lsp_types::Range) -> Self {
         Self {
             start: range.start.into(),
@@ -42,7 +42,7 @@ impl From<lsp_types::Range> for TextRange {
     }
 }
 
-impl TextRange {
+impl TextPositionRange {
     pub fn closed_end(&self) -> TextPosition {
         self.end.to_left(1)
     }
@@ -51,24 +51,24 @@ impl TextRange {
     }
 }
 
-impl std::fmt::Display for TextRange {
+impl std::fmt::Display for TextPositionRange {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{} - {}", self.start, self.end))
     }
 }
 
-impl std::fmt::Debug for TextRange {
+impl std::fmt::Debug for TextPositionRange {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("[{}, {})", self.start, self.end))
     }
 }
 
-impl TextRange {
-    pub fn whole() -> TextRange {
+impl TextPositionRange {
+    pub fn whole() -> TextPositionRange {
         ((0, 0)..(0, 4)).into()
     }
 
-    pub fn from_line(line: u32) -> TextRange {
+    pub fn from_line(line: u32) -> TextPositionRange {
         ((line, 0)..(line, 4)).into()
     }
 
@@ -81,7 +81,7 @@ impl TextRange {
     }
 }
 
-impl From<std::ops::Range<(u32, u32)>> for TextRange {
+impl From<std::ops::Range<(u32, u32)>> for TextPositionRange {
     fn from(range: std::ops::Range<(u32, u32)>) -> Self {
         Self {
             start: range.start.into(),
@@ -90,7 +90,7 @@ impl From<std::ops::Range<(u32, u32)>> for TextRange {
     }
 }
 
-impl From<std::ops::Range<TextPosition>> for TextRange {
+impl From<std::ops::Range<TextPosition>> for TextPositionRange {
     fn from(range: std::ops::Range<TextPosition>) -> Self {
         Self {
             start: range.start,
@@ -100,14 +100,14 @@ impl From<std::ops::Range<TextPosition>> for TextRange {
 }
 
 #[cfg(feature = "lsp_support")]
-impl Into<lsp_types::Range> for TextRange {
+impl Into<lsp_types::Range> for TextPositionRange {
     fn into(self) -> lsp_types::Range {
         lsp_types::Range::new(self.start.into(), self.end.into())
     }
 }
 
-pub fn new_same_line(i: u32, start: u32, end: u32) -> TextRange {
-    TextRange {
+pub fn new_same_line(i: u32, start: u32, end: u32) -> TextPositionRange {
+    TextPositionRange {
         start: (i, start).into(),
         end: (i, end).into(),
     }
@@ -115,5 +115,5 @@ pub fn new_same_line(i: u32, start: u32, end: u32) -> TextRange {
 
 pub struct RangeInfo<T> {
     pub t: T,
-    pub range: TextRange,
+    pub range: TextPositionRange,
 }

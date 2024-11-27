@@ -1,6 +1,5 @@
 use crate::ast::LxAstArena;
 
-#[salsa::tracked]
 pub struct LxAstRegion {}
 
 pub struct LxAstRegionData {

@@ -28,20 +28,19 @@ use latex_ast::{
 use latex_token::{idx::LxTokenIdxRange, storage::LxTokenStorage};
 use latex_vfs::path::LxFilePath;
 use visored_annotation::annotations::VdAnnotations;
+use visored_entity_path::module::VdModulePath;
 use visored_global_resolution::{
     default_table::VdDefaultGlobalResolutionTable,
     resolution::command::VdCompleteCommandGlobalResolution,
 };
-use visored_item_path::module::VdModulePath;
 
 pub struct VdSynExprBuilder<'db> {
-    db: &'db ::salsa::Db,
     file_path: LxFilePath,
     token_storage: &'db LxTokenStorage,
     ast_arena: LxAstArenaRef<'db>,
     ast_token_idx_range_map: &'db LxAstTokenIdxRangeMap,
     annotations: &'db VdAnnotations,
-    default_resolution_table: &'db VdDefaultGlobalResolutionTable,
+    default_global_resolution_table: &'db VdDefaultGlobalResolutionTable,
     expr_arena: VdSynExprArena,
     phrase_arena: VdSynPhraseArena,
     clause_arena: VdSynClauseArena,
@@ -53,7 +52,6 @@ pub struct VdSynExprBuilder<'db> {
 /// # constructor
 impl<'db> VdSynExprBuilder<'db> {
     pub fn new(
-        db: &'db ::salsa::Db,
         file_path: LxFilePath,
         token_storage: &'db LxTokenStorage,
         ast_arena: LxAstArenaRef<'db>,
@@ -62,13 +60,12 @@ impl<'db> VdSynExprBuilder<'db> {
         default_resolution_table: &'db VdDefaultGlobalResolutionTable,
     ) -> Self {
         Self {
-            db,
             file_path,
             token_storage,
             ast_arena,
             ast_token_idx_range_map,
             annotations,
-            default_resolution_table,
+            default_global_resolution_table: default_resolution_table,
             expr_arena: Default::default(),
             phrase_arena: Default::default(),
             clause_arena: Default::default(),
@@ -81,10 +78,6 @@ impl<'db> VdSynExprBuilder<'db> {
 
 /// # getters
 impl<'db> VdSynExprBuilder<'db> {
-    pub(crate) fn db(&self) -> &'db ::salsa::Db {
-        self.db
-    }
-
     pub(crate) fn token_storage(&self) -> &LxTokenStorage {
         self.token_storage
     }
@@ -102,7 +95,7 @@ impl<'db> VdSynExprBuilder<'db> {
     }
 
     pub(crate) fn default_resolution_table(&self) -> &VdDefaultGlobalResolutionTable {
-        self.default_resolution_table
+        self.default_global_resolution_table
     }
 
     pub(crate) fn expr_arena(&self) -> &VdSynExprArena {
@@ -268,7 +261,6 @@ impl<'db> VdSynExprBuilder<'db> {
             stmt_range_map,
             division_range_map,
         ) = calc_expr_range_map(
-            self.db,
             &self.expr_arena,
             &self.phrase_arena,
             &self.clause_arena,
@@ -278,19 +270,18 @@ impl<'db> VdSynExprBuilder<'db> {
         );
         let (root_node, stmt_entity_tree_node_map, division_entity_tree_node_map) =
             build_entity_tree_with(
-                self.db,
+                self.default_global_resolution_table,
                 self.file_path,
                 self.stmt_arena.as_arena_ref(),
                 self.division_arena.as_arena_ref(),
                 output,
             );
         let (symbol_defns, symbol_resolutions) = build_all_symbol_defns_and_resolutions_with(
-            self.db,
             self.token_storage,
             self.ast_arena,
             self.ast_token_idx_range_map,
             self.annotations,
-            self.default_resolution_table,
+            self.default_global_resolution_table,
             self.expr_arena.as_arena_ref(),
             self.phrase_arena.as_arena_ref(),
             self.clause_arena.as_arena_ref(),
@@ -303,6 +294,7 @@ impl<'db> VdSynExprBuilder<'db> {
             &sentence_range_map,
             &stmt_range_map,
             &division_range_map,
+            &root_node,
             &stmt_entity_tree_node_map,
             &division_entity_tree_node_map,
             output,

@@ -7,7 +7,7 @@ use crate::{
     symbol::builder::VdSynSymbolBuilder,
     *,
 };
-use husky_coword::Coword;
+use coword::Coword;
 use idx_arena::{
     map::ArenaMap, ordered_map::ArenaOrderedMap, Arena, ArenaIdx, ArenaIdxRange, ArenaRef,
 };
@@ -162,8 +162,7 @@ impl<'db> VdSynExprBuilder<'db> {
                     ref arguments,
                 } => {
                     use husky_print_utils::{p, DisplayIt};
-                    use salsa::DebugWithDb;
-                    p!(command_path.debug(self.db()));
+                    p!(command_path);
                     todo!()
                 }
                 LxRoseAstData::Environment { .. } => todo!(),

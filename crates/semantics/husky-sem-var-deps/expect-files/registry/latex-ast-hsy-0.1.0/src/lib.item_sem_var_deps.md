@@ -1,0 +1,7 @@
+## `LxAstId`
+
+```rust
+SemValueVarDeps(
+    [],
+)
+```

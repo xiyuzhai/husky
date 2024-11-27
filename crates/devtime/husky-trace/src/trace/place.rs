@@ -12,7 +12,7 @@ pub enum PlaceAccess {
     EnumVariantField,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PlaceTraceData {
     biological_parent: Trace,
 }

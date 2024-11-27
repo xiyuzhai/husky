@@ -10,7 +10,7 @@ use husky_syn_defn::{item_syn_defn, ItemSynDefn};
 use salsa::DebugWithDb;
 
 #[salsa::derive_debug_with_db]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum GenkiReprSource {
     Val(MajorFormPath),
     Expansion {
@@ -79,7 +79,7 @@ impl GenkiReprSource {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum GenkiReprExpansionSource {
     LetVariable {
         stmt: HirLazyStmtIdx,

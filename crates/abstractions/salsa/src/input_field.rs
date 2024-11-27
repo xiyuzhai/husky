@@ -7,7 +7,6 @@ use crate::{AsId, DatabaseKeyIndex, Durability, Id, IngredientIndex, Revision, R
 use dashmap::mapref::entry::Entry;
 use dashmap::DashMap;
 use std::fmt;
-use std::hash::Hash;
 
 /// Ingredient used to represent the fields of a `#[salsa::input]`.
 ///
@@ -23,19 +22,21 @@ pub struct InputFieldIngredient<K, V> {
     // value is stored in a box so internal moves in the dashmap don't
     // invalidate the reference to the value inside the box.
     // Values are only removed or altered when we have `&mut self`.
-    map: DashMap<K, Box<StampedValue<V>>>,
+    map: DashMap<Id, Box<StampedValue<V>>>,
     debug_name: &'static str,
+    phantom: std::marker::PhantomData<K>,
 }
 
 impl<K, V> InputFieldIngredient<K, V>
 where
-    K: Eq + Hash + AsId,
+    K: Eq + AsId,
 {
     pub fn new(index: IngredientIndex, debug_name: &'static str) -> Self {
         Self {
             index,
             map: Default::default(),
             debug_name,
+            phantom: std::marker::PhantomData,
         }
     }
 
@@ -56,7 +57,7 @@ where
         });
 
         self.map
-            .insert(key, stamped_value)
+            .insert(key.as_id(), stamped_value)
             .map(|old_value| old_value.value)
     }
 
@@ -71,7 +72,7 @@ where
             changed_at: revision,
         });
 
-        match self.map.entry(key) {
+        match self.map.entry(key.as_id()) {
             Entry::Occupied(_) => {
                 panic!("attempted to set field of existing input using `store_new`, use `store_mut` instead");
             }
@@ -86,7 +87,7 @@ where
             value,
             durability,
             changed_at,
-        } = &**self.map.get(&key).unwrap();
+        } = &**self.map.get(&key.as_id()).unwrap();
 
         runtime.report_tracked_read(
             self.database_key_index(key).into(),
@@ -127,7 +128,7 @@ where
 
     fn maybe_changed_after(&self, _db: &Db, input: DependencyIndex, revision: Revision) -> bool {
         let key = K::from_id(input.key_index.unwrap());
-        self.map.get(&key).unwrap().changed_at > revision
+        self.map.get(&key.as_id()).unwrap().changed_at > revision
     }
 
     fn origin(&self, _key_index: Id) -> Option<QueryOrigin> {

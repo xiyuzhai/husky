@@ -6,10 +6,16 @@ use latex_vfs::path::LxFilePath;
 use std::path::PathBuf;
 
 fn t(content: &str, expected: Expect) {
-    let db = &DB::default();
-    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
-    let tracker = LxAstTracker::new(LxDocumentInput { file_path, content }, db);
-    let show = tracker.show(db);
+    use husky_path_utils::HuskyLangDevPaths;
+
+    let dev_paths = HuskyLangDevPaths::new();
+    let file_path = LxFilePath::new(PathBuf::from(file!()));
+    let tracker = LxAstTracker::new(LxDocumentInput {
+        specs_dir: dev_paths.specs_dir(),
+        file_path,
+        content,
+    });
+    let show = tracker.show();
     expected.assert_eq(&show);
 }
 

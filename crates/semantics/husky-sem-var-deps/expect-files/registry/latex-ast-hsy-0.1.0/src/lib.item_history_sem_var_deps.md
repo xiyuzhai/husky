@@ -1,0 +1,5 @@
+## `LxAstId`
+
+```rust
+None
+```

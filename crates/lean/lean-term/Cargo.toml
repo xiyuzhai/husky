@@ -12,12 +12,14 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+lazy_static.workspace = true
 smallvec.workspace = true
 # abstractions
 enum-class.workspace = true
-salsa.workspace = true
+interned.workspace = true
+salsa = { workspace = true, optional = true }
 # lean
-lean-item-path.workspace = true
+lean-entity-path.workspace = true
 
 [lints]
 workspace = true

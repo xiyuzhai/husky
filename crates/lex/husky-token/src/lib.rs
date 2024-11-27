@@ -31,5 +31,5 @@ use self::snippet::*;
 use self::tests::*;
 use husky_coword::Ident;
 use husky_term_prelude::*;
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use husky_token_data::*;

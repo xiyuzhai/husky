@@ -20,6 +20,7 @@ members = [
     "crates/lean/*",
     "crates/linket/*",
     "crates/linktime/*",
+    "crates/lisp/*",
     "crates/mayuri/*",
     "crates/mir/*",
     "crates/mizar/*",
@@ -41,8 +42,6 @@ members = [
     "playground/learn-rusqlite",
     "playground/egui/*",
     "playground/try-py-ffi-in-rs",
-    "crates/rocq/rocq-hir-expr",
-    "crates/mizar/mizar-hir-expr",
 ]
 resolver = "2"
 
@@ -180,6 +179,7 @@ rustc_version = "0.4"
 sealed = "0.5"
 serde = { version = "1.0.209", features = ["derive"] }
 serde_json = { version = "1.0.127", features = ["preserve_order"] }
+serde_yaml = { version = "0.9.0" }
 serde_with = "3.9.0"
 sha2 = "0.10.8"
 similar = "2.6.0"
@@ -213,6 +213,8 @@ xxhash-rust = { version = "0.8.5" }
 yaml-rust2 = "0.9.0"
 # abstractions
 alt-option = { path = "crates/abstractions/alt-option" }
+composite-pattern = { path = "crates/abstractions/composite-pattern" }
+coword = { path = "crates/abstractions/coword" }
 enum-class = { path = "crates/abstractions/enum-class" }
 enum-class-macros = { path = "crates/abstractions/enum-class-macros" }
 enum-index = { path = "crates/abstractions/enum-index" }
@@ -221,6 +223,8 @@ from-str-pos = { path = "crates/abstractions/from-str-pos" }
 graph-dynamics = { path = "crates/abstractions/graph-dynamics" }
 idx = { path = "crates/abstractions/idx" }
 idx-arena = { path = "crates/abstractions/idx-arena" }
+interned = { path = "crates/abstractions/interned" }
+interned-macros = { path = "crates/abstractions/interned-macros" }
 is = { path = "crates/abstractions/is" }
 maybe-result = { path = "crates/abstractions/maybe-result" }
 original-error = { path = "crates/abstractions/original-error" }
@@ -259,6 +263,7 @@ husky-devsoul = { path = "crates/devsoul/husky-devsoul" }
 husky-standard-devsoul = { path = "crates/devsoul/husky-standard-devsoul" }
 # devtime
 husky-devtime = { path = "crates/devtime/husky-devtime" }
+husky-session = { path = "crates/devtime/husky-session" }
 husky-trace = { path = "crates/devtime/husky-trace" }
 # fs
 husky-corgi-config = { path = "crates/fs/husky-corgi-config" }
@@ -333,7 +338,7 @@ lean-coword = { path = "crates/lean/lean-coword" }
 lean-mir-expr = { path = "crates/lean/lean-mir-expr" }
 lean-hir-decl = { path = "crates/lean/lean-hir-decl" }
 lean-hir-defn = { path = "crates/lean/lean-hir-defn" }
-lean-item-path = { path = "crates/lean/lean-item-path" }
+lean-entity-path = { path = "crates/lean/lean-entity-path" }
 lean-opr = { path = "crates/lean/lean-opr" }
 lean-sem-expr = { path = "crates/lean/lean-sem-expr" }
 lean-syn-expr = { path = "crates/lean/lean-syn-expr" }
@@ -357,6 +362,8 @@ husky-linktime = { path = "crates/linktime/husky-linktime" }
 husky-boot-linktime = { path = "crates/linktime/husky-boot-linktime" }
 husky-mono-linktime = { path = "crates/linktime/husky-mono-linktime" }
 husky-virtual-linktime = { path = "crates/linktime/husky-virtual-linktime" }
+# lisp
+lisp-csv = { path = "crates/lisp/lisp-csv" }
 # protocols
 husky-ad-hoc-protocol = { path = "crates/protocols/husky-ad-hoc-protocol" }
 husky-entity-protocol = { path = "crates/protocols/husky-entity-protocol" }
@@ -394,6 +401,7 @@ husky-toml-ast = { path = "crates/toml/husky-toml-ast" }
 husky-toml-token = { path = "crates/toml/husky-toml-token" }
 husky-toolchain-config-ast = { path = "crates/toml/husky-toolchain-config-ast" }
 # utils
+husky-adversarial-utils = { path = "crates/utils/husky-adversarial-utils" }
 husky-cargo-utils = { path = "crates/utils/husky-cargo-utils" }
 husky-check-utils = { path = "crates/utils/husky-check-utils" }
 husky-cli-utils = { path = "crates/utils/husky-cli-utils" }
@@ -408,6 +416,7 @@ husky-io-utils = { path = "crates/utils/husky-io-utils" }
 husky-iter-utils = { path = "crates/utils/husky-iter-utils" }
 husky-lifetime-utils = { path = "crates/utils/husky-lifetime-utils" }
 husky-make-utils = { path = "crates/utils/husky-make-utils" }
+husky-minimal-toml-utils = { path = "crates/utils/husky-minimal-toml-utils" }
 husky-proc-macro-utils = { path = "crates/utils/husky-proc-macro-utils" }
 husky-path-utils = { path = "crates/utils/husky-path-utils" }
 husky-print-utils = { path = "crates/utils/husky-print-utils" }
@@ -434,7 +443,7 @@ visored-annotation = { path = "crates/visored/visored-annotation" }
 visored-coword = { path = "crates/visored/visored-coword" }
 visored-mir-expr = { path = "crates/visored/visored-mir-expr" }
 visored-isabelle-hol-transpilation = { path = "crates/visored/visored-isabelle-hol-transpilation" }
-visored-item-path = { path = "crates/visored/visored-item-path" }
+visored-entity-path = { path = "crates/visored/visored-entity-path" }
 visored-lean-transpilation = { path = "crates/visored/visored-lean-transpilation" }
 visored-global-resolution = { path = "crates/visored/visored-global-resolution" }
 visored-global-dispatch = { path = "crates/visored/visored-global-dispatch" }

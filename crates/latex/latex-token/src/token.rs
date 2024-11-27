@@ -16,7 +16,6 @@ use latex_prelude::mode::LxMode;
 use spec::LxSpecTokenData;
 
 #[enum_class::from_variants]
-#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum LxTokenData {
     Lisp(LxLispTokenData),

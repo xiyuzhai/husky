@@ -1,13 +1,18 @@
+use std::path::Path;
+
 use super::*;
-use crate::path::{
-    menu::{command_path_menu, LxCommandPathMenu},
-    LxCommandName,
-};
+use crate::path::{menu::LX_COMMAND_PATH_MENU, LxCommandName};
+use coword::Coword;
 use latex_prelude::mode::LxMode;
+use lisp_csv::{
+    expr::LpCsvExprData,
+    file::{LpCsvFile, LpCsvFileData},
+    row::LpCsvRow,
+};
 use parameter::{LxCommandParameter, LxCommandParameterMode};
+use path::menu::LxCommandPathMenu;
 use rustc_hash::FxHashMap;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug)]
 pub struct LxCommandSignatureTable {
     pub signatures: FxHashMap<LxCommandName, LxCommandSignature>,
@@ -25,7 +30,13 @@ impl LxCommandSignatureTable {
         begin: LxCommandPath,
         end: LxCommandPath,
         letter_style_commands: &[(LxCommandPath, LxMathLetterStyle)],
-        complete_commands: &[(LxCommandPath, &[LxCommandParameterMode])],
+        complete_commands: impl IntoIterator<
+            Item = (
+                LxCommandPath,
+                impl AsRef<[LxMode]>,
+                impl AsRef<[LxCommandParameterMode]>,
+            ),
+        >,
     ) -> Self {
         Self {
             signatures: [
@@ -42,15 +53,16 @@ impl LxCommandSignatureTable {
             .chain(
                 complete_commands
                     .into_iter()
-                    .copied()
-                    .map(|(path, parameter_modes)| {
+                    .map(|(path, allowed_modes, parameter_modes)| {
                         (
                             path.name(),
                             LxCommandSignature::Complete(LxCompleteCommandSignature {
                                 path,
+                                allowed_modes: allowed_modes.as_ref().iter().copied().collect(),
                                 options: (),
                                 parameters: parameter_modes
-                                    .into_iter()
+                                    .as_ref()
+                                    .iter()
                                     .copied()
                                     .map(LxCommandParameter::new)
                                     .collect(),
@@ -72,9 +84,11 @@ impl std::ops::Deref for LxCommandSignatureTable {
 }
 
 impl LxCommandSignatureTable {
-    pub fn new_default(db: &salsa::Db) -> Self {
-        use LxCommandParameterMode::*;
-
+    fn default_commands() -> [(
+        LxCommandPath,
+        &'static [LxMode],
+        &'static [LxCommandParameterMode],
+    ); 35] {
         let LxCommandPathMenu {
             // - root
             begin,
@@ -130,7 +144,101 @@ impl LxCommandSignatureTable {
             sqrt,
             frac,
             text,
-        } = *command_path_menu(db);
+        } = *LX_COMMAND_PATH_MENU;
+        [
+            // - root
+            (usepackage, &[LxMode::Root], &[LxCommandParameterMode::Name]),
+            (
+                documentclass,
+                &[LxMode::Root],
+                &[LxCommandParameterMode::Name],
+            ),
+            (
+                newtheorem,
+                &[LxMode::Root],
+                &[LxCommandParameterMode::Name, LxCommandParameterMode::Name],
+            ),
+            // - divisions
+            (part, &[LxMode::Root], &[LxCommandParameterMode::Rose]),
+            (chapter, &[LxMode::Root], &[LxCommandParameterMode::Rose]),
+            (section, &[LxMode::Root], &[LxCommandParameterMode::Rose]),
+            (subsection, &[LxMode::Root], &[LxCommandParameterMode::Rose]),
+            (
+                subsubsection,
+                &[LxMode::Root],
+                &[LxCommandParameterMode::Rose],
+            ),
+            // - operators
+            // -- relations
+            (eq, &[LxMode::Math], &[]),
+            (ne, &[LxMode::Math], &[]),
+            (le, &[LxMode::Math], &[]),
+            (ge, &[LxMode::Math], &[]),
+            (r#in, &[LxMode::Math], &[]),
+            (subset, &[LxMode::Math], &[]),
+            (supset, &[LxMode::Math], &[]),
+            (subseteq, &[LxMode::Math], &[]),
+            (supseteq, &[LxMode::Math], &[]),
+            (subseteqq, &[LxMode::Math], &[]),
+            (supseteqq, &[LxMode::Math], &[]),
+            (subsetneq, &[LxMode::Math], &[]),
+            (supsetneq, &[LxMode::Math], &[]),
+            // -- arithmetic
+            (int, &[LxMode::Math], &[]),
+            (sum, &[LxMode::Math], &[]),
+            (prod, &[LxMode::Math], &[]),
+            (times, &[LxMode::Math], &[]),
+            (otimes, &[LxMode::Math], &[]),
+            // -- extended letters
+            (alpha, &[LxMode::Math], &[]),
+            (beta, &[LxMode::Math], &[]),
+            (gamma, &[LxMode::Math], &[]),
+            (pi, &[LxMode::Math], &[]),
+            // -- functions
+            (sqrt, &[LxMode::Math], &[LxCommandParameterMode::Math]),
+            (sin, &[LxMode::Math], &[]),
+            (cos, &[LxMode::Math], &[]),
+            // -- layouts
+            (
+                frac,
+                &[LxMode::Math],
+                &[LxCommandParameterMode::Math, LxCommandParameterMode::Math],
+            ),
+            (text, &[LxMode::Math], &[LxCommandParameterMode::Rose]),
+        ]
+    }
+
+    pub fn new_from_lp_csv_file_paths(complete_commands_path: &Path) -> Self {
+        use lisp_csv::parse_lp_csv_filepath;
+
+        Self::new_from_csv_files(&parse_lp_csv_filepath(complete_commands_path).expect("todo"))
+    }
+
+    pub fn new_from_csv_files(complete_commands_file: &LpCsvFile) -> Self {
+        let LxCommandPathMenu {
+            // - root
+            begin,
+            end,
+            usepackage,
+            documentclass,
+            newtheorem,
+            // - divisions
+            part,
+            chapter,
+            section,
+            subsection,
+            subsubsection,
+            // - maths
+            // ## letter style
+            mathbb,
+            mathbf,
+            mathcal,
+            mathit,
+            mathrm,
+            mathsf,
+            mathscr,
+            ..
+        } = *LX_COMMAND_PATH_MENU;
         Self::new(
             begin,
             end,
@@ -143,51 +251,104 @@ impl LxCommandSignatureTable {
                 (mathsf, LxMathLetterStyle::MATHSF),
                 (mathscr, LxMathLetterStyle::MATHSCR),
             ],
-            &[
-                // - root
-                (usepackage, &[Name]),
-                (documentclass, &[Name]),
-                (newtheorem, &[Name, Name]),
-                // - divisions
-                (part, &[Rose]),
-                (chapter, &[Rose]),
-                (section, &[Rose]),
-                (subsection, &[Rose]),
-                (subsubsection, &[Rose]),
-                // - operators
-                // -- relations
-                (eq, &[]),
-                (ne, &[]),
-                (le, &[]),
-                (ge, &[]),
-                (r#in, &[]),
-                (subset, &[]),
-                (supset, &[]),
-                (subseteq, &[]),
-                (supseteq, &[]),
-                (subseteqq, &[]),
-                (supseteqq, &[]),
-                (subsetneq, &[]),
-                (supsetneq, &[]),
-                // -- arithmetic
-                (int, &[]),
-                (sum, &[]),
-                (prod, &[]),
-                (times, &[]),
-                (otimes, &[]),
-                // -- extended letters
-                (alpha, &[]),
-                (beta, &[]),
-                (gamma, &[]),
-                (pi, &[]),
-                // -- functions
-                (sqrt, &[Math]),
-                (sin, &[]),
-                (cos, &[]),
-                // -- layouts
-                (frac, &[Math, Math]),
-                (text, &[Rose]),
-            ],
+            Self::complete_commands_from_csv_file(complete_commands_file),
         )
+    }
+
+    fn complete_commands_from_csv_file<'a>(
+        complete_commands_file: &'a LpCsvFile,
+    ) -> impl Iterator<Item = (LxCommandPath, Vec<LxMode>, Vec<LxCommandParameterMode>)> + 'a {
+        let LpCsvFileData::Rows(rows) = complete_commands_file.data();
+        Self::complete_commands_from_csv_rows(rows)
+    }
+
+    fn complete_commands_from_csv_rows<'a>(
+        rows: &'a [LpCsvRow],
+    ) -> impl Iterator<Item = (LxCommandPath, Vec<LxMode>, Vec<LxCommandParameterMode>)> + 'a {
+        rows.iter()
+            .map(|row| Self::complete_command_from_csv_row(row))
+    }
+
+    fn complete_command_from_csv_row(
+        row: &LpCsvRow,
+    ) -> (LxCommandPath, Vec<LxMode>, Vec<LxCommandParameterMode>) {
+        let LpCsvRow::SeparatedExprs(exprs) = row else {
+            todo!("row = {:?}", row)
+        };
+        let [command_ident, allowed_modes, parameter_modes] = exprs.as_slice() else {
+            todo!()
+        };
+        let LpCsvExprData::Ident(ref command_ident) = command_ident.data else {
+            todo!()
+        };
+        // TODO: ad hoc
+        let command_path = LxCommandPath::new_prelude(Coword::from_ref(command_ident));
+        let LpCsvExprData::List(ref allowed_modes) = allowed_modes.data else {
+            todo!()
+        };
+        let allowed_modes: Vec<LxMode> = allowed_modes
+            .iter()
+            .map(|s| {
+                let LpCsvExprData::Ident(ref ident) = s.data else {
+                    todo!()
+                };
+                match ident.as_ref() {
+                    "root" => LxMode::Root,
+                    "math" => LxMode::Math,
+                    "rose" => LxMode::Rose,
+                    "name" => LxMode::Name,
+                    _ => todo!(),
+                }
+            })
+            .collect();
+        let LpCsvExprData::List(ref parameter_modes) = parameter_modes.data else {
+            todo!()
+        };
+        let parameter_modes: Vec<LxCommandParameterMode> = parameter_modes
+            .iter()
+            .map(|s| {
+                let LpCsvExprData::Ident(ref ident) = s.data else {
+                    todo!()
+                };
+                match ident.as_ref() {
+                    "name" => LxCommandParameterMode::Name,
+                    "math" => LxCommandParameterMode::Math,
+                    "rose" => LxCommandParameterMode::Rose,
+                    "single_letter" => LxCommandParameterMode::SingleLetter,
+                    _ => todo!(),
+                }
+            })
+            .collect();
+        (command_path, allowed_modes, parameter_modes)
+    }
+}
+
+#[test]
+fn lx_command_signature_table_works() {
+    use husky_path_utils::HuskyLangDevPaths;
+
+    let dev_paths = HuskyLangDevPaths::new();
+    let complete_commands_path = &dev_paths.specs_dir().join("latex/complete-commands.lpcsv");
+    let table = LxCommandSignatureTable::new_from_lp_csv_file_paths(complete_commands_path);
+    for (path, allowed_modes, parameter_modes) in LxCommandSignatureTable::default_commands() {
+        let Some(signature) = table.signature(path.name()) else {
+            todo!()
+        };
+        let LxCommandSignature::Complete(ref complete_signature) = signature else {
+            todo!()
+        };
+        assert_eq!(
+            complete_signature.allowed_modes,
+            allowed_modes.iter().copied().collect()
+        );
+        assert_eq!(
+            complete_signature.parameters.as_slice(),
+            parameter_modes
+                .as_ref()
+                .iter()
+                .copied()
+                .map(LxCommandParameter::new)
+                .collect::<Vec<_>>()
+        );
     }
 }

@@ -8,10 +8,14 @@ use crate::{
 };
 use itertools::Itertools;
 use latex_vfs::path::LxFilePath;
-use visored_item_path::module::{VdModulePath, VdModulePathRegistry};
+use visored_entity_path::module::{VdModulePath, VdModulePathRegistry};
+use visored_global_resolution::{
+    default_table::VdDefaultGlobalResolutionTable,
+    resolution::environment::VdEnvironmentGlobalResolution,
+};
 
 pub struct VdSynExprEntityTreeBuilder<'a> {
-    db: &'a ::salsa::Db,
+    default_global_resolution_table: &'a VdDefaultGlobalResolutionTable,
     file_path: LxFilePath,
     stmt_arena: VdSynStmtArenaRef<'a>,
     division_arena: VdSynDivisionArenaRef<'a>,
@@ -31,13 +35,13 @@ impl VdSynExprEntityTreeNode {
 
 impl<'a> VdSynExprEntityTreeBuilder<'a> {
     pub fn new(
-        db: &'a ::salsa::Db,
+        default_global_resolution_table: &'a VdDefaultGlobalResolutionTable,
         file_path: LxFilePath,
         stmt_arena: VdSynStmtArenaRef<'a>,
         division_arena: VdSynDivisionArenaRef<'a>,
     ) -> Self {
         Self {
-            db,
+            default_global_resolution_table,
             file_path,
             stmt_arena,
             division_arena,
@@ -48,10 +52,6 @@ impl<'a> VdSynExprEntityTreeBuilder<'a> {
 }
 
 impl<'a> VdSynExprEntityTreeBuilder<'a> {
-    pub(crate) fn db(&self) -> &'a ::salsa::Db {
-        self.db
-    }
-
     pub(crate) fn file_path(&self) -> LxFilePath {
         self.file_path
     }
@@ -62,7 +62,7 @@ impl<'a> VdSynExprEntityTreeBuilder<'a> {
         &mut self,
         divisions: VdSynDivisionIdxRange,
     ) -> VdSynExprEntityTreeNode {
-        let module_path = VdModulePath::new_root(self.db, self.file_path);
+        let module_path = VdModulePath::new_root(self.file_path);
         let mut registry = VdModulePathRegistry::new(module_path);
         let children = self.build_divisions(divisions, &mut registry);
         VdSynExprEntityTreeNode {
@@ -72,7 +72,7 @@ impl<'a> VdSynExprEntityTreeBuilder<'a> {
     }
 
     pub fn build_root_stmts(&mut self, stmts: VdSynStmtIdxRange) -> VdSynExprEntityTreeNode {
-        let module_path = VdModulePath::new_root(self.db, self.file_path);
+        let module_path = VdModulePath::new_root(self.file_path);
         let mut registry = VdModulePathRegistry::new(module_path);
         let children = self.build_stmts(stmts, &mut registry);
         VdSynExprEntityTreeNode {
@@ -111,7 +111,7 @@ impl<'a> VdSynExprEntityTreeBuilder<'a> {
     ) -> VdSynExprEntityTreeNode {
         let division_arena = self.division_arena;
         let division_data = &division_arena[division];
-        let module_path = registry.issue_new_division(division_data.kind(), self.db);
+        let module_path = registry.issue_new_division(division_data.kind());
         let mut division_registry = VdModulePathRegistry::new(module_path);
         let children: Vec<VdModulePath> = match *division_data {
             VdSynDivisionData::Stmts { stmts } => stmts
@@ -166,7 +166,7 @@ impl<'a> VdSynExprEntityTreeBuilder<'a> {
         let stmt_arena = self.stmt_arena;
         let (module_path, children) = match stmt_arena[stmt] {
             VdSynStmtData::Paragraph(_) => {
-                let module_path = registry.issue_new_paragraph(self.db);
+                let module_path = registry.issue_new_paragraph();
                 (module_path, vec![])
             }
             VdSynStmtData::Environment {
@@ -175,11 +175,23 @@ impl<'a> VdSynExprEntityTreeBuilder<'a> {
                 begin_command_token_idx,
                 end_rcurl_token_idx,
             } => {
-                let module_path =
-                    registry.issue_new_environment(environment_signature.path(), self.db);
-                let mut subregistry = VdModulePathRegistry::new(module_path);
-                let children = self.build_stmts(stmts, &mut subregistry);
-                (module_path, children)
+                let Some(resolution) = self
+                    .default_global_resolution_table
+                    .resolve_environment(environment_signature.path())
+                else {
+                    todo!(
+                        "can't resolve environment `{}`",
+                        environment_signature.path().name().coword().data()
+                    );
+                };
+                match resolution {
+                    VdEnvironmentGlobalResolution::Environment(environment_path) => {
+                        let module_path = registry.issue_new_environment(environment_path);
+                        let mut subregistry = VdModulePathRegistry::new(module_path);
+                        let children = self.build_stmts(stmts, &mut subregistry);
+                        (module_path, children)
+                    }
+                }
             }
         };
         VdSynExprEntityTreeNode {

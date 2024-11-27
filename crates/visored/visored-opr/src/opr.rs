@@ -22,9 +22,6 @@ impl VdBaseOpr {
     pub const SUM: Self = Self::Prefix(VdBasePrefixOpr::SUM);
     pub const PROD: Self = Self::Prefix(VdBasePrefixOpr::PROD);
 
-    pub const TIMES: Self = Self::Binary(VdBaseBinaryOpr::TIMES);
-    pub const OTIMES: Self = Self::Binary(VdBaseBinaryOpr::OTIMES);
-
     pub const SUB: Self = Self::Binary(VdBaseBinaryOpr::SUB);
     pub const DIV: Self = Self::Binary(VdBaseBinaryOpr::DIV);
 }

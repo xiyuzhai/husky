@@ -1,11 +1,18 @@
 use super::*;
 
+#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct VdBaseBinaryOprSignature {
     pub instantiation: VdInstantiation,
     pub lopd_ty: VdType,
     pub ropd_ty: VdType,
     pub expr_ty: VdType,
+}
+
+impl From<VdBaseBinaryOprSignature> for VdSignature {
+    fn from(signature: VdBaseBinaryOprSignature) -> Self {
+        VdSignature::BinaryOpr(signature.into())
+    }
 }
 
 impl VdBaseBinaryOprSignature {

@@ -28,7 +28,7 @@ where
 
     fn handle(&mut self, request: Self::Request) -> Option<Self::Response>;
 
-    fn easy_serve(self, addr: impl ToSocketAddrs)
+    fn easy_serve(self, addr: impl std::fmt::Debug + ToSocketAddrs)
     where
         Self: Sized,
     {
@@ -37,8 +37,10 @@ where
 }
 
 #[tokio::main]
-pub async fn easy_serve<S>(server: std::sync::Arc<Mutex<S>>, addr: impl ToSocketAddrs)
-where
+pub async fn easy_serve<S>(
+    server: std::sync::Arc<Mutex<S>>,
+    addr: impl std::fmt::Debug + ToSocketAddrs,
+) where
     S: IsEasyWebsocketServer,
     <S::SerdeImpl as IsSerdeImpl>::Error: Send,
 {
@@ -49,7 +51,7 @@ where
             };
             easy_server_aux(server, addr).await
         }
-        Err(_) => todo!(),
+        Err(e) => todo!("addr = {addr:?}, e = {e}"),
     }
 }
 

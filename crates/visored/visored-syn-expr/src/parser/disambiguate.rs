@@ -7,11 +7,11 @@ use latex_ast::ast::math::{
 };
 use latex_command::path::LxCommandPath;
 use latex_math_letter::letter::LxMathLetter;
+use latex_math_punctuation::LxMathPunctuation;
 use latex_token::{
     idx::{LxMathTokenIdx, LxTokenIdxRange},
     token::math::digit::LxMathDigit,
 };
-use salsa::DebugWithDb;
 use visored_annotation::annotation::{space::VdSpaceAnnotation, token::VdTokenAnnotation};
 use visored_global_resolution::resolution::{
     command::VdCompleteCommandGlobalResolution, punctuation::VdPunctuationGlobalResolution,
@@ -152,6 +152,11 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
                     .text_offset_range()
                     .end();
                 let mut s = String::from(digit.char());
+                enum LiteralNumberKind {
+                    NaturalNumber,
+                    Float,
+                }
+                let mut literal_number_kind = LiteralNumberKind::NaturalNumber;
                 // TODO: handle real number by using a kind variable, literal number kind
                 while *next < end {
                     match self.builder.ast_arena()[*next] {
@@ -175,14 +180,31 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
                             last_offset_end = offset_range.end();
                             s.push(digit.char())
                         }
-                        // TODO: handle real number
+                        LxMathAstData::Punctuation(token_idx, LxMathPunctuation::Ldot) => {
+                            match literal_number_kind {
+                                LiteralNumberKind::NaturalNumber => {
+                                    literal_number_kind = LiteralNumberKind::Float;
+                                }
+                                LiteralNumberKind::Float => todo!(),
+                            }
+                            last_token_idx = token_idx;
+                            let offset_range =
+                                self.builder.token_storage()[*token_idx].text_offset_range();
+                            last_offset_end = offset_range.end();
+                            s.push('.');
+                        }
+                        // TODO: handle scientific notation 2e3
                         _ => break,
                     }
                     *next += 1;
                 }
+                let data = match literal_number_kind {
+                    LiteralNumberKind::NaturalNumber => VdLiteralData::NaturalNumber(s),
+                    LiteralNumberKind::Float => VdLiteralData::Float(s),
+                };
                 let expr_data = VdSynExprData::Literal {
                     token_idx_range: LxTokenIdxRange::new_closed(*first_token_idx, *last_token_idx),
-                    literal: VdLiteral::new(VdLiteralData::NaturalNumber(s), self.builder.db()),
+                    literal: VdLiteral::new(data),
                 };
                 DisambiguatedAst::Expr(expr_data, VdSynExprClass::ATOM)
             }
@@ -241,7 +263,7 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
             .default_resolution_table()
             .resolve_complete_command(command_path)
         else {
-            todo!("command_path = {:?}", command_path.debug(self.builder.db()))
+            todo!("command_path = {:?}", command_path)
         };
         match resolve_complete_command {
             VdCompleteCommandGlobalResolution::Letter(letter) => {
@@ -260,7 +282,7 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
                 )
             }
             VdCompleteCommandGlobalResolution::Todo => {
-                todo!("command_path = {:?}", command_path.debug(self.builder.db()))
+                todo!("command_path = {:?}", command_path)
             }
             VdCompleteCommandGlobalResolution::Item(_) => todo!(),
             VdCompleteCommandGlobalResolution::Frac => {

@@ -18,7 +18,7 @@ thiserror.workspace = true
 # abstractions
 enum-class.workspace = true
 idx-arena.workspace = true
-salsa.workspace = true
+salsa = { workspace = true, optional = true }
 # latex
 latex-ast.workspace = true
 # kernel
@@ -34,7 +34,7 @@ husky-print-utils.workspace = true
 husky-tree-utils.workspace = true
 # visored
 visored-annotation.workspace = true
-visored-item-path.workspace = true
+visored-entity-path.workspace = true
 visored-opr.workspace = true
 visored-prelude.workspace = true
 visored-global-resolution.workspace = true
@@ -50,8 +50,10 @@ husky-coword.workspace = true
 # latex
 latex-command.workspace = true
 latex-environment.workspace = true
+# utils
+husky-path-utils.workspace = true
 # visored
-visored-item-path.workspace = true
+visored-entity-path.workspace = true
 latex-vfs.workspace = true
 
 [lints]

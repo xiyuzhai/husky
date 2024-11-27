@@ -15,10 +15,11 @@ keywords.workspace = true
 egui = { workspace = true, optional = true }
 smallvec.workspace = true
 # abstractions
+coword.workspace = true
 enum-class.workspace = true
 idx-arena.workspace = true
 ptree.workspace = true
-salsa.workspace = true
+salsa = { workspace = true, optional = true }
 time-capsule.workspace = true
 # kernel
 husky-coword.workspace = true
@@ -39,6 +40,8 @@ expect-test.workspace = true
 # latex
 latex-command.workspace = true
 latex-vfs.workspace = true
+# utils
+husky-path-utils.workspace = true
 
 [lints]
 workspace = true

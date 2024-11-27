@@ -1,0 +1,15 @@
+[workspace]
+members = ["latex2lean", "latex2lean-linkets"]
+resolver = "2"
+
+[workspace.dependencies.ad-hoc-devsoul-dependency]
+path = "../../../../../registry/ad-hoc-devsoul-dependency"
+
+[workspace.dependencies.husky-core]
+path = "../../../../../library/core"
+
+[workspace.dependencies.latex2lean]
+path = "latex2lean"
+
+[workspace.dependencies.latex2lean-linkets]
+path = "latex2lean-linkets"

@@ -14,7 +14,7 @@ pub use severity::DiagnosticSeverity;
 use self::collector::{ModuleDiagnosticsCollector, RegionDiagnosticsCollector};
 use self::context::*;
 use self::sheet::*;
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use husky_vfs::path::module_path::ModulePath;
 #[cfg(test)]
 use tests::*;
@@ -41,7 +41,7 @@ pub struct DiagnosticsJar(
 pub struct Diagnostic {
     message: String,
     severity: DiagnosticSeverity,
-    range: TextRange,
+    range: TextPositionRange,
 }
 
 impl Into<lsp_types::Diagnostic> for &Diagnostic {
@@ -65,7 +65,7 @@ trait Diagnose {
 
     fn message(&self, db: &Self::Context<'_>) -> String;
     fn severity(&self) -> DiagnosticSeverity;
-    fn range(&self, ctx: &Self::Context<'_>) -> TextRange;
+    fn range(&self, ctx: &Self::Context<'_>) -> TextPositionRange;
     fn to_diagnostic(&self, ctx: &Self::Context<'_>) -> Diagnostic {
         Diagnostic {
             message: self.message(ctx),

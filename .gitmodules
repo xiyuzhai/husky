@@ -1,0 +1,3 @@
+[submodule "data/math/stacks-project/stacks-project"]
+	path = data/math/stacks-project/stacks-project
+	url = https://github.com/stacks/stacks-project.git

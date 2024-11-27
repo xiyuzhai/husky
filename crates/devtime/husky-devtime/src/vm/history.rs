@@ -14,7 +14,7 @@ impl<Devsoul: IsDevsoul> Devtime<Devsoul> {
         match trace.data(db) {
             TraceData::Submodule(submodule_trace_data) => todo!(),
             TraceData::Val(_) => {
-                let key = (trace, pedestal.clone());
+                let key = (trace.path(db), pedestal.clone());
                 self.eager_trace_cache
                     .entry(key)
                     .or_insert_with(|| Arc::new(self.calc_trace_history(trace, pedestal).1))

@@ -4,7 +4,7 @@ use super::*;
 use idx_arena::{Arena, ArenaIdx};
 use latex_math_letter::letter::LxMathLetter;
 use latex_token::idx::LxTokenIdxRange;
-use visored_item_path::module::VdModulePath;
+use visored_entity_path::module::VdModulePath;
 use visored_syn_expr::symbol::local_defn::{
     VdSynSymbolLocalDefnBody, VdSynSymbolLocalDefnHead, VdSynSymbolLocalDefnIdx,
 };

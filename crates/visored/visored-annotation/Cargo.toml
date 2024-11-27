@@ -15,7 +15,6 @@ keywords.workspace = true
 lazy_static.workspace = true
 # abstractions
 enum-class.workspace = true
-salsa.workspace = true
 # latex
 latex-prelude.workspace = true
 latex-token.workspace = true

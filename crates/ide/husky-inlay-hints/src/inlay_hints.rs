@@ -5,7 +5,7 @@ pub(crate) mod item_defn;
 use crate::*;
 use husky_entity_path::path::{ItemPath, ItemPathId};
 use husky_regional_token::RegionalTokenIdx;
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use husky_vfs::path::module_path::ModulePath;
 use is::Is;
 
@@ -63,7 +63,7 @@ pub struct InlayHintLabelPartTooltip;
 #[derive(Debug, PartialEq, Eq)]
 pub struct InlayHintLocation {
     module_path: ModulePath,
-    range: TextRange,
+    range: TextPositionRange,
 }
 
 #[derive(Debug, PartialEq, Eq)]

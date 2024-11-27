@@ -102,9 +102,7 @@ impl<'a> VdSemExprBuilder<'a> {
         global_resolution: VdLetterGlobalResolution,
     ) -> VdTerm {
         match global_resolution {
-            VdLetterGlobalResolution::Item(item_path) => {
-                VdTerm::new_item_path(item_path, self.db())
-            }
+            VdLetterGlobalResolution::Item(item_path) => VdTerm::new_item_path(item_path),
         }
     }
 

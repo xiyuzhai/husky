@@ -1,8 +1,8 @@
 //! We use the word `translation` to mean the process is rather straightforward, which doesn't involve the complexity of arranging placeholders in super computation graph.
 use super::*;
-use lean_item_path::LnItemPath;
+use lean_entity_path::LnItemPath;
 use rustc_hash::FxHashMap;
-use visored_item_path::path::VdItemPath;
+use visored_entity_path::path::VdItemPath;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdItemPathTranslation {

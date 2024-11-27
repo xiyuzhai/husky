@@ -11,7 +11,6 @@ use crate::{
 use husky_tree_utils::display::DisplayTree;
 
 pub struct LnMirExprDisplayTreeBuilder<'a> {
-    db: &'a ::salsa::Db,
     expr_arena: LnMirExprArenaRef<'a>,
     stmt_arena: LnMirStmtArenaRef<'a>,
     tactic_arena: LnMirTacticArenaRef<'a>,
@@ -20,14 +19,12 @@ pub struct LnMirExprDisplayTreeBuilder<'a> {
 
 impl<'a> LnMirExprDisplayTreeBuilder<'a> {
     pub fn new(
-        db: &'a ::salsa::Db,
         expr_arena: LnMirExprArenaRef<'a>,
         stmt_arena: LnMirStmtArenaRef<'a>,
         tactic_arena: LnMirTacticArenaRef<'a>,
         defn_arena: LnItemDefnArenaRef<'a>,
     ) -> Self {
         Self {
-            db,
             expr_arena,
             stmt_arena,
             tactic_arena,
@@ -38,11 +35,10 @@ impl<'a> LnMirExprDisplayTreeBuilder<'a> {
 
 impl<'a> LnMirExprDisplayTreeBuilder<'a> {
     pub fn render_expr(&self, expr: LnMirExprIdx) -> DisplayTree {
-        let db = self.db;
         let value = match self.expr_arena[expr] {
-            LnMirExprData::Literal(literal) => format!("literal: `{}`", literal.data(db)),
-            LnMirExprData::ItemPath(item_path) => format!("item path: `{}`", item_path.show(db)),
-            LnMirExprData::Variable { ident } => format!("variable: `{}`", ident.data(db)),
+            LnMirExprData::Literal(literal) => format!("literal: `{}`", literal.data()),
+            LnMirExprData::ItemPath(item_path) => format!("item path: `{}`", item_path.show()),
+            LnMirExprData::Variable { ident } => format!("variable: `{}`", ident.data()),
             LnMirExprData::Lambda {
                 ref parameters,
                 body,
@@ -61,7 +57,6 @@ impl<'a> LnMirExprDisplayTreeBuilder<'a> {
     }
 
     pub fn render_defns_together(&self, defns: LnItemDefnIdxRange) -> DisplayTree {
-        let db = self.db;
         let children = self.render_defns(defns);
         DisplayTree::new("defns".to_string(), children)
     }
@@ -74,12 +69,13 @@ impl<'a> LnMirExprDisplayTreeBuilder<'a> {
     }
 
     pub fn render_defn(&self, defn: LnItemDefnIdx) -> DisplayTree {
-        let db = self.db;
         let defn_data = &self.defn_arena[defn];
         let value = match defn_data {
-            LnItemDefnData::Variable { symbol, ty } => format!("variable: `{}`", symbol.data(db)),
+            LnItemDefnData::Variable { ident: symbol, ty } => {
+                format!("variable: `{}`", symbol.data())
+            }
             LnItemDefnData::Group { defns, ref meta } => format!("group: `{}`", meta),
-            LnItemDefnData::Def { symbol, ty, body } => format!("def: `{}`", symbol.data(db)),
+            LnItemDefnData::Def { symbol, ty, body } => format!("def: `{}`", symbol.data()),
         };
         let children = defn_data.children();
         DisplayTree::new(
@@ -108,7 +104,6 @@ impl<'a> LnMirExprDisplayTreeBuilder<'a> {
     }
 
     pub fn render_tactics_together(&self, tactics: LnMirTacticIdxRange) -> DisplayTree {
-        let db = self.db;
         let children = self.render_tactics(tactics);
         DisplayTree::new("tactics".to_string(), children)
     }
@@ -121,14 +116,12 @@ impl<'a> LnMirExprDisplayTreeBuilder<'a> {
     }
 
     pub fn render_tactic(&self, tactic: LnMirTacticIdx) -> DisplayTree {
-        let db = self.db;
         let value = format!("tactic: `{:?}`", self.tactic_arena[tactic]);
         let children = vec![];
         DisplayTree::new(value, children)
     }
 
     pub fn render_stmts_together(&self, stmts: LnMirStmtIdxRange) -> DisplayTree {
-        let db = self.db;
         let children = self.render_stmts(stmts);
         DisplayTree::new("stmts".to_string(), children)
     }
@@ -141,7 +134,6 @@ impl<'a> LnMirExprDisplayTreeBuilder<'a> {
     }
 
     pub fn render_stmt(&self, stmt: LnMirStmtIdx) -> DisplayTree {
-        let db = self.db;
         let value = format!("stmt: `{:?}`", self.stmt_arena[stmt]);
         let children = vec![];
         DisplayTree::new(value, children)

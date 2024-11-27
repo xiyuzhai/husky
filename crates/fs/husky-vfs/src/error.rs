@@ -1,5 +1,6 @@
 use crate::*;
 use husky_fs_specs::FsSpecsError;
+use husky_io_utils::error::IoError;
 use husky_minimal_toml_utils::MinimalTomlError;
 use husky_path_utils::PathUtilsError;
 use maybe_result::MaybeResult;
@@ -12,10 +13,12 @@ pub enum VfsError {
     #[error("file {0:?} not found")]
     FileNotExists(VirtualPath),
     #[error("IO Error: ???")]
-    IO {
+    Io {
         path: PathBuf,
         error_message: String,
     },
+    #[error("io error: {0}")]
+    Io2(#[from] IoError),
     #[error("not source file")]
     NotSourceFile(PathBuf),
     #[error("fail to absolutize {path:?} due to IO `{error_message}")]
@@ -56,7 +59,7 @@ pub type VfsMaybeResult<T> = MaybeResult<T, VfsError>;
 
 impl VfsError {
     pub(crate) fn new_io_error(path: PathBuf, e: std::io::Error) -> VfsError {
-        VfsError::IO {
+        VfsError::Io {
             path,
             error_message: e.to_string(),
         }

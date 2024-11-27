@@ -2,7 +2,7 @@ use super::*;
 use latex_command::path::LxCommandPath;
 use latex_math_letter::letter::LxMathLetter;
 use rustc_hash::FxHashMap;
-use visored_item_path::path::VdItemPath;
+use visored_entity_path::path::VdItemPath;
 use visored_opr::{opr::VdBaseOpr, separator::VdBaseSeparator};
 use visored_prelude::division::VdDivisionLevel;
 
@@ -62,8 +62,6 @@ impl VdCompleteCommandGlobalResolution {
     pub const INT: Self = VdCompleteCommandGlobalResolution::Opr(VdBaseOpr::INTEGRAL);
     pub const SUM: Self = VdCompleteCommandGlobalResolution::Opr(VdBaseOpr::SUM);
     pub const PROD: Self = VdCompleteCommandGlobalResolution::Opr(VdBaseOpr::PROD);
-    pub const TIMES: Self = VdCompleteCommandGlobalResolution::Opr(VdBaseOpr::TIMES);
-    pub const OTIMES: Self = VdCompleteCommandGlobalResolution::Opr(VdBaseOpr::OTIMES);
     pub const LOWER_ALPHA: Self =
         VdCompleteCommandGlobalResolution::Letter(LxMathLetter::LOWER_ALPHA);
     pub const LOWER_BETA: Self =

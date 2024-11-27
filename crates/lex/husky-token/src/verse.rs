@@ -78,7 +78,7 @@ pub struct TokenVerses {
 
 /// # constructor
 impl TokenVerses {
-    pub(crate) fn new(tokens_data: &[TokenData], token_ranges: &[TextRange]) -> Self {
+    pub(crate) fn new(tokens_data: &[TokenData], token_ranges: &[TextPositionRange]) -> Self {
         let line_starts = produce_line_starts(token_ranges);
         TokenVersesBuilder::new(tokens_data, token_ranges, &line_starts).build_all()
     }

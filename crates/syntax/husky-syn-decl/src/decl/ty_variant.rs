@@ -10,7 +10,7 @@ use husky_entity_path::path::ty_variant::TypeVariantPath;
 use husky_entity_tree::node::ty_variant::TypeVariantSynNodePath;
 use husky_token_data::Punctuation;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum TypeVariantSynNodeDecl {
@@ -117,7 +117,7 @@ impl<'a> ItemSynNodeDeclParser<'a> {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum TypeVariantSynDecl {

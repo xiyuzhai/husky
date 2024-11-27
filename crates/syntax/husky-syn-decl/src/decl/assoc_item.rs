@@ -11,7 +11,7 @@ use super::*;
 use husky_entity_path::path::assoc_item::AssocItemPath;
 use husky_entity_tree::node::assoc_item::AssocItemSynNodePath;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum AssocItemSynNodeDecl {
@@ -56,7 +56,7 @@ impl HasSynNodeDecl for AssocItemSynNodePath {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[salsa::derive_debug_with_db]
 #[enum_class::from_variants]
 pub enum AssocItemSynDecl {

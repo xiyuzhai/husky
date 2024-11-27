@@ -7,10 +7,20 @@ use latex_vfs::path::LxFilePath;
 use std::path::PathBuf;
 
 fn t(content: &str, expect: &Expect) {
-    let db = &DB::default();
-    let file_path = LxFilePath::new(db, PathBuf::from(file!()));
-    let tracker = VdMirExprTracker::new(LxFormulaInput { file_path, content }, &[], &[], db);
-    expect.assert_eq(&tracker.show_display_tree(db));
+    use husky_path_utils::HuskyLangDevPaths;
+
+    let dev_paths = HuskyLangDevPaths::new();
+    let file_path = LxFilePath::new(PathBuf::from(file!()));
+    let tracker = VdMirExprTracker::new(
+        LxFormulaInput {
+            specs_dir: dev_paths.specs_dir(),
+            file_path,
+            content,
+        },
+        &[],
+        &[],
+    );
+    expect.assert_eq(&tracker.show_display_tree());
 }
 
 #[test]
@@ -18,7 +28,7 @@ fn basic_to_vd_mir_works() {
     t(
         "1 + 1",
         &expect![[r#"
-            separator
+            folding separated list
             ├─ 1
             └─ 1
         "#]],
@@ -39,7 +49,7 @@ fn basic_to_vd_mir_works() {
     t(
         "1<2",
         &expect![[r#"
-            separator
+            folding separated list
             ├─ 1
             └─ 2
         "#]],

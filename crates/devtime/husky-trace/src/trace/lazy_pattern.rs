@@ -23,7 +23,7 @@ pub enum LazyPatternEssence {
 }
 
 #[salsa::derive_debug_with_db]
-#[derive(Debug, PartialEq, Eq, Clone, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct LazyPatternTraceData {
     path: TracePath,
     biological_parent: Trace,

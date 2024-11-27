@@ -1,6 +1,8 @@
 use super::*;
 use pattern::VdSynPattern;
-use symbol::local_defn::{VdSynSymbolLocalDefnBody, VdSynSymbolLocalDefnHead};
+use symbol::local_defn::{
+    VdSynSymbolLocalDefnBody, VdSynSymbolLocalDefnHead, VdSynSymbolLocalDefnSrc,
+};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdSynLetPlaceholderResolution {
@@ -63,7 +65,7 @@ impl<'db> VdSynSymbolBuilder<'db> {
                         letter,
                     },
                     VdSynSymbolLocalDefnBody::Placeholder,
-                    clause.into(),
+                    VdSynSymbolLocalDefnSrc::LetPlaceholder(clause),
                 );
             }
         }

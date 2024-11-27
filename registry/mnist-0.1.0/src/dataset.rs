@@ -59,7 +59,7 @@ fn load_mnist_inputs_and_labels() -> (Vec<BinaryImage28>, Vec<MnistLabel>) {
     while dir.file_name().unwrap().to_str().unwrap() != "husky" {
         dir = dir.parent().unwrap();
     }
-    let file_content: Vec<u8> = match std::fs::read(dir.join("data/mnist-binary-images")) {
+    let file_content: Vec<u8> = match std::fs::read(dir.join("data/cv/mnist-binary-images")) {
         Ok(file_content) => file_content,
         Err(_e) => {
             println!(

@@ -1,8 +1,8 @@
-use crate::menu::{ln_term_menu, LnTermMenu};
-use lean_item_path::menu::{ln_item_path_menu, LnItemPathMenu};
-use smallvec::*;
-
 use super::LnInstantiation;
+use crate::menu::{ln_term_menu, LnTermMenu};
+use lazy_static::lazy_static;
+use lean_entity_path::menu::{ln_item_path_menu, LnItemPathMenu};
+use smallvec::*;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct LnInstantiationMenu {
@@ -65,7 +65,7 @@ pub struct LnInstantiationMenu {
 }
 
 impl LnInstantiationMenu {
-    pub fn new(db: &::salsa::Db) -> Self {
+    pub fn new() -> Self {
         let LnItemPathMenu {
             ring_add,
             ring_mul,
@@ -76,7 +76,7 @@ impl LnInstantiationMenu {
             le,
             ge,
             ..
-        } = *ln_item_path_menu(db);
+        } = *ln_item_path_menu;
         let LnTermMenu {
             nat,
             int,
@@ -84,8 +84,8 @@ impl LnInstantiationMenu {
             real,
             complex,
             ..
-        } = *ln_term_menu(db);
-        let t = |path, arguments| LnInstantiation::new(db, path, arguments);
+        } = *ln_term_menu;
+        let t = |path, arguments| LnInstantiation::new(path, arguments);
         Self {
             int_pos: t(ring_pos, smallvec![int]),
             rat_pos: t(ring_pos, smallvec![rat]),
@@ -147,7 +147,6 @@ impl LnInstantiationMenu {
     }
 }
 
-#[salsa::tracked(return_ref)]
-pub fn ln_instantiation_menu(db: &::salsa::Db) -> LnInstantiationMenu {
-    LnInstantiationMenu::new(db)
+lazy_static! {
+    pub static ref ln_instantiation_menu: LnInstantiationMenu = LnInstantiationMenu::new();
 }

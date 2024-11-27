@@ -117,13 +117,13 @@ impl<'a> TextCharIter<'a> {
     pub fn next_numeric_str_slice(&mut self) -> &'a str {
         let slice = self.iter.as_slice();
         let start = self.current_raw_offset;
-        self.eat_chars_while(|c| c.is_numeric());
+        self.eat_chars_while(|c| c.is_ascii_digit());
         if self.eat_char_if(|c| c == '.') {
-            self.eat_chars_while(|c| c.is_numeric());
+            self.eat_chars_while(|c| c.is_ascii_digit());
         }
         if self.eat_char_if(|c| matches!(c, 'E' | 'e')) {
             self.eat_char_if(|c| matches!(c, '+' | '-'));
-            self.eat_chars_while(|c| c.is_numeric());
+            self.eat_chars_while(|c| c.is_ascii_digit());
         }
         let end = self.current_raw_offset;
         unsafe { std::str::from_utf8_unchecked(&slice[..(end - start)]) }
@@ -164,6 +164,11 @@ impl<'a> TextCharIter<'a> {
         let mut text_char_iter = self.clone();
         let fst = text_char_iter.next()?;
         Some((fst, text_char_iter.next()))
+    }
+
+    pub fn remaining_text(&self) -> &'a str {
+        let slice = self.iter.as_slice();
+        unsafe { std::str::from_utf8_unchecked(slice) }
     }
 }
 

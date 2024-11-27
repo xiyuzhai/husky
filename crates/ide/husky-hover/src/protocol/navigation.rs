@@ -1,5 +1,5 @@
 use husky_documentation::Documentation;
-use husky_text_protocol::range::TextRange;
+use husky_text_protocol::range::TextPositionRange;
 use std::path::PathBuf;
 
 /// `NavigationTarget` represents an element in the editor's UI which you can
@@ -16,14 +16,14 @@ pub struct NavigationTarget {
     ///
     /// Clients should use this range to answer "is the cursor inside the
     /// element?" question.
-    pub full_range: TextRange,
+    pub full_range: TextPositionRange,
     /// A "most interesting" range within the `full_range`.
     ///
     /// Typically, `full_range` is the whole syntax node, including doc
     /// comments, and `focus_range` is the range of the identifier.
     ///
     /// Clients should place the cursor on this range when navigating to this target.
-    pub focus_range: Option<TextRange>,
+    pub focus_range: Option<TextPositionRange>,
     pub name: String,
     pub kind: Option<Symbol>,
     pub container_name: Option<String>,

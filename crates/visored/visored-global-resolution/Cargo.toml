@@ -22,7 +22,7 @@ latex-environment.workspace = true
 latex-math-letter.workspace = true
 latex-math-punctuation.workspace = true
 # visored
-visored-item-path.workspace = true
+visored-entity-path.workspace = true
 visored-opr.workspace = true
 visored-prelude.workspace = true
 

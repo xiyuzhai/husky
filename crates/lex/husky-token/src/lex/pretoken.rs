@@ -7,7 +7,7 @@ use husky_term_prelude::literal::{
 use std::sync::Arc;
 
 pub(crate) struct RangedPretoken {
-    pub(crate) range: TextRange,
+    pub(crate) range: TextPositionRange,
     pub(crate) pretoken: Pretoken,
 }
 

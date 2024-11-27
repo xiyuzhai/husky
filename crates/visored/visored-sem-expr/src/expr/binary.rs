@@ -41,7 +41,7 @@ impl<'a> VdSemExprBuilder<'a> {
         let ropd = self.build_expr_entry(syn_ropd);
         if let Some(dispatch) = self
             .default_global_dispatch_table()
-            .base_binary_opr_default_dispatch(base_opr, lopd.ty, ropd.ty)
+            .base_binary_opr_default_dispatch(lopd.ty, base_opr, ropd.ty)
         {
             let expr_ty = dispatch.expr_ty();
             let lopd = self.alloc_expr(syn_lopd, lopd);
@@ -56,12 +56,11 @@ impl<'a> VdSemExprBuilder<'a> {
                 expr_ty,
             )
         } else {
-            use salsa::DebugWithDb;
             todo!(
                 "no default dispatch for lopd_ty = {:?}, base_opr = {:?}, ropd_ty = {:?}",
-                lopd.ty.debug(self.db()),
+                lopd.ty,
                 base_opr,
-                ropd.ty.debug(self.db())
+                ropd.ty
             )
         }
     }

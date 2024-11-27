@@ -65,7 +65,7 @@ impl Diagnose for OriginalEntityTreeError {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, ctx: &Self::Context<'_>) -> TextRange {
+    fn range(&self, ctx: &Self::Context<'_>) -> TextPositionRange {
         let db = ctx.db();
         match self {
             OriginalEntityTreeError::UnresolvedRootIdent(ident_token) => {
@@ -153,7 +153,7 @@ impl Diagnose for ImplBlockIllForm {
         DiagnosticSeverity::Error
     }
 
-    fn range(&self, ctx: &Self::Context<'_>) -> TextRange {
+    fn range(&self, ctx: &Self::Context<'_>) -> TextPositionRange {
         match self {
             ImplBlockIllForm::UnmatchedAngleBras => todo!(),
             ImplBlockIllForm::TokenData(_) => todo!(),

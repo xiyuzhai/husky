@@ -1,0 +1,28 @@
+[package]
+name = "lisp-csv"
+version.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme.workspace = true
+license.workspace = true
+categories.workspace = true
+keywords.workspace = true
+
+[dependencies]
+either.workspace = true
+maybe-result.workspace = true
+ordered-float.workspace = true
+thiserror.workspace = true
+# protocols
+husky-text-protocol.workspace = true
+# utils
+husky-print-utils.workspace = true
+
+[dev-dependencies]
+expect-test.workspace = true
+
+[lints]
+workspace = true

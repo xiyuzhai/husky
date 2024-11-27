@@ -1,0 +1,47 @@
+//! Format:
+//!
+//! <command-ident>, [<allowed-modes>,...], [<parameter-modes>,...]
+# complete commands
+## root
+usepackage, [root], [name]
+documentclass, [root], [name]
+newtheorem, [root], [name, name]
+## divisions
+part, [root], [rose]
+chapter, [root], [rose]
+section, [root], [rose]
+subsection, [root], [rose]
+subsubsection, [root], [rose]
+## operators
+### relations
+eq, [math], []
+ne, [math], []
+le, [math], []
+ge, [math], []
+in, [math], []
+subset, [math], []
+supset, [math], []
+subseteq, [math], []
+supseteq, [math], []
+subseteqq, [math], []
+supseteqq, [math], []
+subsetneq, [math], []
+supsetneq, [math], []
+### arithmetic
+int, [math], []
+sum, [math], []
+prod, [math], []
+times, [math], []
+otimes, [math], []
+### extended letters
+alpha, [math], []
+beta, [math], []
+gamma, [math], []
+pi, [math], []
+### functions
+sqrt, [math], [math]
+sin, [math], []
+cos, [math], []
+### layouts
+frac, [math], [math, math]
+text, [math], [rose]

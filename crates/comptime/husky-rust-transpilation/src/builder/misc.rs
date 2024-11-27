@@ -49,7 +49,9 @@ impl<'a, 'b, E> RustTranspilationBuilder<'a, 'b, E> {
         match ty_path.hir_defn(self.db).unwrap() {
             TypeHirDefn::PropsStruct(_) => self.write_str("::__constructor"),
             TypeHirDefn::TupleStruct(_) => (),
-            _ => unreachable!(),
+            TypeHirDefn::UnitStruct(_) => todo!(),
+            TypeHirDefn::Extern(_) => todo!(),
+            defn => unreachable!("{:?}", defn),
         }
     }
 
