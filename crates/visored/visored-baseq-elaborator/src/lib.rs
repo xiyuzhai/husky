@@ -5,6 +5,7 @@
 pub mod call;
 pub mod coercion;
 pub mod config;
+pub mod derivation;
 mod elabm;
 pub mod elaborator;
 pub mod expr;

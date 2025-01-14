@@ -5,6 +5,7 @@ use crate::{
     stmt::{VdMirStmtArena, VdMirStmtIdxRange},
     *,
 };
+use derivation::VdMirDerivationArena;
 use either::*;
 use eterned::db::EternerDb;
 use expr::{application::VdMirFunc, VdMirExprData};
@@ -38,6 +39,7 @@ pub struct VdMirExprTracker<'a, Input: IsVdMirExprInput<'a>> {
     pub stmt_arena: VdMirStmtArena,
     pub hint_arena: VdMirHintArena,
     pub hypothesis_arena: VdMirHypothesisArena,
+    pub derivation_arena: VdMirDerivationArena,
     pub symbol_local_defn_storage: VdMirSymbolLocalDefnStorage,
     pub source_map: VdMirRegionSourceMap,
     pub sem_expr_range_map: VdSemExprTokenIdxRangeMap,
@@ -149,8 +151,14 @@ where
             symbol_local_defn_storage,
         );
         output.elaborate_self(elaborator, &mut hypothesis_constructor);
-        let (expr_arena, stmt_arena, hint_arena, hypothesis_arena, symbol_local_defn_storage) =
-            hypothesis_constructor.finish();
+        let (
+            expr_arena,
+            stmt_arena,
+            hint_arena,
+            hypothesis_arena,
+            derivation_arena,
+            symbol_local_defn_storage,
+        ) = hypothesis_constructor.finish();
         Self {
             input,
             root_module_path,
@@ -158,6 +166,7 @@ where
             stmt_arena,
             hint_arena,
             hypothesis_arena,
+            derivation_arena,
             symbol_local_defn_storage,
             source_map,
             sem_expr_range_map,

@@ -3,6 +3,10 @@ use super::{
     VdMirHypothesisIdx,
 };
 use crate::{
+    derivation::{
+        construction::VdMirDerivationConstruction, VdMirDerivationArena, VdMirDerivationEntry,
+        VdMirDerivationIdxRange,
+    },
     expr::{VdMirExprArena, VdMirExprArenaRef, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
     hint::VdMirHintArena,
     hypothesis::{VdMirHypothesisEntry, VdMirHypothesisIdxRange},
@@ -20,6 +24,7 @@ pub struct VdMirHypothesisConstructor<'db, Src> {
     stmt_arena: VdMirStmtArena,
     hint_arena: VdMirHintArena,
     hypothesis_arena: VdMirHypothesisArena,
+    derivation_arena: VdMirDerivationArena,
     symbol_local_defn_storage: VdMirSymbolLocalDefnStorage,
     current_stmt_and_hypothesis_chunk_start: Option<(VdMirStmtIdx, VdMirHypothesisIdx)>,
     cache: FxHashMap<Src, VdMirHypothesisIdx>,
@@ -40,6 +45,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             hint_arena,
             symbol_local_defn_storage,
             hypothesis_arena: Default::default(),
+            derivation_arena: Default::default(),
             current_stmt_and_hypothesis_chunk_start: None,
             cache: FxHashMap::default(),
         }
@@ -125,6 +131,13 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             .alloc_one(VdMirExprEntry::new(data, ty, expected_ty))
     }
 
+    pub fn alloc_derivations(
+        &mut self,
+        derivation_entriess: impl IntoIterator<Item = VdMirDerivationEntry>,
+    ) -> VdMirDerivationIdxRange {
+        self.derivation_arena.alloc_batch(derivation_entriess)
+    }
+
     pub(crate) fn finish(
         self,
     ) -> (
@@ -132,6 +145,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         VdMirStmtArena,
         VdMirHintArena,
         VdMirHypothesisArena,
+        VdMirDerivationArena,
         VdMirSymbolLocalDefnStorage,
     ) {
         (
@@ -139,6 +153,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             self.stmt_arena,
             self.hint_arena,
             self.hypothesis_arena,
+            self.derivation_arena,
             self.symbol_local_defn_storage,
         )
     }

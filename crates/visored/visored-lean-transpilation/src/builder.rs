@@ -18,6 +18,7 @@ use lean_mir_expr::{
 use std::ops::{Deref, DerefMut};
 use visored_entity_path::module::VdModulePath;
 use visored_mir_expr::{
+    derivation::VdMirDerivationArenaRef,
     expr::VdMirExprArenaRef,
     hint::VdMirHintArenaRef,
     hypothesis::VdMirHypothesisArenaRef,
@@ -99,6 +100,7 @@ where
             vd_mir_expr_region_data.stmt_arena(),
             vd_mir_expr_region_data.hint_arena(),
             vd_mir_expr_region_data.hypothesis_arena(),
+            vd_mir_expr_region_data.derivation_arena(),
             vd_mir_expr_region_data.symbol_local_defn_storage(),
             source_map,
             dictionary,
@@ -121,6 +123,7 @@ where
         stmt_arena: VdMirStmtArenaRef<'a>,
         hint_arena: VdMirHintArenaRef<'a>,
         hypothesis_arena: VdMirHypothesisArenaRef<'a>,
+        derivation_arena: VdMirDerivationArenaRef<'a>,
         symbol_local_defn_storage: &'a VdMirSymbolLocalDefnStorage,
         source_map: &'a VdMirRegionSourceMap,
         dictionary: &'a VdLeanDictionary,

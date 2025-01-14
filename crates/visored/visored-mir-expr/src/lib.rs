@@ -1,5 +1,6 @@
 pub mod builder;
 pub mod coercion;
+pub mod derivation;
 pub mod division;
 pub mod elaborator;
 pub mod expr;

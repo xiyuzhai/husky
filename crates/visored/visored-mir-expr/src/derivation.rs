@@ -1,0 +1,17 @@
+pub mod construction;
+
+use self::construction::VdMirDerivationConstruction;
+use crate::*;
+use expr::VdMirExprIdx;
+use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct VdMirDerivationEntry {
+    prop: VdMirExprIdx,
+    construction: VdMirDerivationConstruction,
+}
+
+pub type VdMirDerivationIdx = ArenaIdx<VdMirDerivationEntry>;
+pub type VdMirDerivationIdxRange = ArenaIdxRange<VdMirDerivationEntry>;
+pub type VdMirDerivationArena = Arena<VdMirDerivationEntry>;
+pub type VdMirDerivationArenaRef<'a> = ArenaRef<'a, VdMirDerivationEntry>;

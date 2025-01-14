@@ -69,15 +69,20 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     .transcribe_coercion(is_real_coercion, hypothesis_constructor),
             },
             VdBsqHypothesisConstruction::Assume => VdMirHypothesisConstruction::Assume,
-            VdBsqHypothesisConstruction::TermEquivalent { hypothesis } => {
-                VdMirHypothesisConstruction::TermEquivalent {
-                    hypothesis: self.transcribe_hypothesis(
-                        hypothesis,
-                        None,
-                        hypothesis_constructor,
-                    ),
-                }
-            }
+            VdBsqHypothesisConstruction::TermEquivalent {
+                hypothesis: src_hypothesis,
+            } => VdMirHypothesisConstruction::TermEquivalent {
+                hypothesis: self.transcribe_hypothesis(
+                    src_hypothesis,
+                    None,
+                    hypothesis_constructor,
+                ),
+                derivations: self.transcribe_term_derivation(
+                    src_hypothesis,
+                    hypothesis,
+                    hypothesis_constructor,
+                ),
+            },
             VdBsqHypothesisConstruction::CommRing => VdMirHypothesisConstruction::CommRing,
             VdBsqHypothesisConstruction::LetAssigned => VdMirHypothesisConstruction::LetAssigned,
             VdBsqHypothesisConstruction::LitnumReduce => VdMirHypothesisConstruction::LitnumReduce,

@@ -13,6 +13,7 @@ pub enum VdMirHypothesisConstruction {
     Sorry,
     TermEquivalent {
         hypothesis: VdMirHypothesisIdx,
+        derivations: VdMirDerivationIdxRange,
     },
     TermTrivial(bool),
     CommRing,

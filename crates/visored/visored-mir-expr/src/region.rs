@@ -1,6 +1,7 @@
 use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
 
 use crate::{
+    derivation::{VdMirDerivationArena, VdMirDerivationArenaRef},
     expr::{VdMirExprArena, VdMirExprArenaRef},
     hint::{VdMirHintArena, VdMirHintArenaRef, VdMirHintIdx},
     hypothesis::{VdMirHypothesisArena, VdMirHypothesisArenaRef, VdMirHypothesisIdx},
@@ -13,6 +14,7 @@ pub struct VdMirExprRegionData {
     stmt_arena: VdMirStmtArena,
     hint_arena: VdMirHintArena,
     hypothesis_arena: VdMirHypothesisArena,
+    derivation_arena: VdMirDerivationArena,
     symbol_local_defn_storage: VdMirSymbolLocalDefnStorage,
 }
 
@@ -31,6 +33,7 @@ impl VdMirExprRegionData {
         stmt_arena: VdMirStmtArena,
         hint_arena: VdMirHintArena,
         hypothesis_arena: VdMirHypothesisArena,
+        derivation_arena: VdMirDerivationArena,
         symbol_local_defn_storage: VdMirSymbolLocalDefnStorage,
     ) -> Self {
         Self {
@@ -38,6 +41,7 @@ impl VdMirExprRegionData {
             stmt_arena,
             hint_arena,
             hypothesis_arena,
+            derivation_arena,
             symbol_local_defn_storage,
         }
     }
@@ -58,6 +62,10 @@ impl VdMirExprRegionData {
 
     pub fn hypothesis_arena(&self) -> VdMirHypothesisArenaRef {
         self.hypothesis_arena.as_arena_ref()
+    }
+
+    pub fn derivation_arena(&self) -> VdMirDerivationArenaRef {
+        self.derivation_arena.as_arena_ref()
     }
 
     pub fn symbol_local_defn_storage(&self) -> &VdMirSymbolLocalDefnStorage {

@@ -33,7 +33,13 @@ where
                 }])
             }
             VdMirHypothesisConstruction::Assume => return,
-            VdMirHypothesisConstruction::TermEquivalent { hypothesis } => {
+            VdMirHypothesisConstruction::TermEquivalent {
+                hypothesis,
+                derivations,
+            } => {
+                for _ in derivations {
+                    todo!("handle derivations");
+                }
                 let ad_hoc_tactic_data = self.ad_hoc_tactic_data("term_equivalent");
                 self.alloc_tactics([ad_hoc_tactic_data])
             }

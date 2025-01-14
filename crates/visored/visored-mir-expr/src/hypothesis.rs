@@ -6,8 +6,8 @@ pub mod region;
 pub mod stack;
 
 use self::construction::VdMirHypothesisConstruction;
-use crate::expr::VdMirExprIdx;
-use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
+use crate::{derivation::VdMirDerivationIdxRange, expr::VdMirExprIdx};
+use idx_arena::{map::ArenaMap, Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
 
 pub struct VdMirHypothesisEntry {
     expr: VdMirExprIdx,
