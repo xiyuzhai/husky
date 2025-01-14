@@ -25,6 +25,7 @@ impl<'sess> VdBsqExprFld<'sess> {
                 VdItemPath::Function(vd_function_path) => todo!(),
                 VdItemPath::Trait(vd_trait_path) => todo!(),
                 VdItemPath::TraitItem(vd_trait_item_path) => todo!(),
+                VdItemPath::Prop(vd_prop_path) => todo!(),
             },
             _ => todo!(),
         }

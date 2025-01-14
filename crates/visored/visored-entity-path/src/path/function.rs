@@ -22,7 +22,7 @@ impl VdFunctionPath {
 }
 
 impl VdFunctionPath {
-    pub fn show_aux(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             VdFunctionPath::Prelude(path) => path.show_aux(f),
         }

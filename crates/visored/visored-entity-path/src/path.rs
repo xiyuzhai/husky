@@ -1,16 +1,18 @@
 pub mod category;
 pub mod function;
+pub mod prop;
 pub mod set;
 pub mod trai;
 pub mod trai_item;
 
-use self::{category::*, function::*, set::*, trai::*, trai_item::*};
+use self::{category::*, function::*, prop::*, set::*, trai::*, trai_item::*};
 use eterned::db::EternerDb;
 use lisp_csv::expr::{LpCsvExpr, LpCsvExprData};
 
 #[enum_class::from_variants]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum VdItemPath {
+    Prop(VdPropPath),
     Category(VdCategoryPath),
     Set(VdSetPath),
     Function(VdFunctionPath),
@@ -19,6 +21,9 @@ pub enum VdItemPath {
 }
 
 impl VdItemPath {
+    // # prop
+    pub const TRUE: Self = VdItemPath::Prop(VdPropPath::TRUE);
+    pub const FALSE: Self = VdItemPath::Prop(VdPropPath::FALSE);
     // # categories
     pub const SET: Self = VdItemPath::Category(VdCategoryPath::SET);
     pub const PROP: Self = VdItemPath::Category(VdCategoryPath::PROP);
@@ -86,11 +91,12 @@ impl std::fmt::Debug for VdItemPath {
 impl VdItemPath {
     pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            VdItemPath::Category(category_path) => category_path.show_aux(f),
+            VdItemPath::Prop(prop_path) => prop_path.show_fmt(f),
+            VdItemPath::Category(category_path) => category_path.show_fmt(f),
             VdItemPath::Set(set_path) => set_path.show_fmt(f),
-            VdItemPath::Function(function_path) => function_path.show_aux(f),
-            VdItemPath::Trait(trait_path) => trait_path.show_aux(f),
-            VdItemPath::TraitItem(trait_item_path) => trait_item_path.show_aux(f),
+            VdItemPath::Function(function_path) => function_path.show_fmt(f),
+            VdItemPath::Trait(trait_path) => trait_path.show_fmt(f),
+            VdItemPath::TraitItem(trait_item_path) => trait_item_path.show_fmt(f),
         }
     }
 }

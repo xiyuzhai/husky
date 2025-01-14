@@ -315,6 +315,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 VdItemPath::Function(path) => todo!(),
                 VdItemPath::Trait(path) => todo!(),
                 VdItemPath::TraitItem(path) => todo!(),
+                VdItemPath::Prop(vd_prop_path) => todo!(),
             },
         }
     }
@@ -327,6 +328,8 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let data = self.transcribe_term_data(term, hypothesis_constructor);
+        let ty = todo!();
+        let expected_ty = todo!();
         // let ty = term.ty();
         // let expected_ty = term.expected_ty();
         // hypothesis_constructor.construct_new_expr(data, ty, expected_ty)

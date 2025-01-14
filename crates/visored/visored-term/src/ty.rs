@@ -84,6 +84,7 @@ fn is_vd_ty_function_like(ty: VdTermId, db: &EternerDb) -> bool {
 fn is_vd_ty_numeric(ty: VdTermId, db: &EternerDb) -> bool {
     match *ty.data() {
         VdTermData::ItemPath(ref data) => match data.item_path() {
+            VdItemPath::Prop(vd_prop_path) => todo!(),
             VdItemPath::Category(vd_category_path) => todo!(),
             VdItemPath::Set(vd_set_path) => match vd_set_path {
                 VdSetPath::Prelude(vd_prelude_set_path) => match vd_prelude_set_path {

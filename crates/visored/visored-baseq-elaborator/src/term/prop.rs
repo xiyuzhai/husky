@@ -49,7 +49,13 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdBsqPropTerm::NumChain(num_chain) => {
                 self.transcribe_num_chain_data(num_chain, hypothesis_constructor)
             }
-            VdBsqPropTerm::Trivial(b) => todo!(),
+            VdBsqPropTerm::Trivial(b) => {
+                let path = match b {
+                    true => VdItemPath::TRUE,
+                    false => todo!(),
+                };
+                VdMirExprData::ItemPath(path)
+            }
             VdBsqPropTerm::InSet => todo!(),
         }
     }

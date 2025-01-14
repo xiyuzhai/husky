@@ -12,7 +12,7 @@ impl VdCategoryPath {
 }
 
 impl VdCategoryPath {
-    pub fn show_aux(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             VdCategoryPath::Set => write!(f, "Set"),
             VdCategoryPath::Prop => write!(f, "Prop"),
