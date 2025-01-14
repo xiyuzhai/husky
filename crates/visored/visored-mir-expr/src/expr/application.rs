@@ -18,6 +18,7 @@ pub enum VdMirFunc {
     Power(VdPowerSignature),
     InSet,
     NormalBaseSqrt(VdBaseSqrtSignature),
+    // TODO: expr as func
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

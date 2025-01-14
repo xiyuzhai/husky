@@ -75,7 +75,7 @@ impl<'a> HirLazyExprBuilder<'a> {
         hir_eager_stmts: Vec<HirLazyStmtData>,
     ) -> HirLazyStmtIdxRange {
         debug_assert_eq!(sem_stmt_indices.len(), hir_eager_stmts.len());
-        let hir_stmt_idx_range = self.hir_lazy_stmt_arena.alloc_batch(hir_eager_stmts);
+        let hir_stmt_idx_range = self.hir_lazy_stmt_arena.alloc_many(hir_eager_stmts);
         for (sem_stmt_idx, hir_lazy_stmt_idx) in
             std::iter::zip(sem_stmt_indices, hir_stmt_idx_range)
         {

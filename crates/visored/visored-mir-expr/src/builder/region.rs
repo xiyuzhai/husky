@@ -109,7 +109,7 @@ impl<'db> VdMirExprRegionBuilder<'db> {
         &mut self,
         entries: impl IntoIterator<Item = VdMirExprEntry>,
     ) -> VdMirExprIdxRange {
-        self.expr_arena.alloc_batch(entries)
+        self.expr_arena.alloc_many(entries)
     }
 
     pub(crate) fn alloc_stmts(&mut self, stmt_batch: VdMirStmtBatch) -> VdMirStmtIdxRange {
@@ -126,7 +126,7 @@ impl<'db> VdMirExprRegionBuilder<'db> {
                 }
             }
         }
-        let stmts = self.stmt_arena.alloc_batch(entries);
+        let stmts = self.stmt_arena.alloc_many(entries);
         self.source_map.set_stmts(stmts, sources);
         stmts
     }
@@ -136,7 +136,7 @@ impl<'db> VdMirExprRegionBuilder<'db> {
         entries: impl IntoIterator<Item = VdMirHintEntry>,
         sources: impl IntoIterator<Item = VdMirHintSource>,
     ) -> VdMirHintIdxRange {
-        let tactics = self.hint_arena.alloc_batch(entries);
+        let tactics = self.hint_arena.alloc_many(entries);
         self.source_map.set_tactics(tactics, sources);
         tactics
     }

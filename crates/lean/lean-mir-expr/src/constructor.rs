@@ -61,7 +61,7 @@ impl LnMirExprConstructor {
         &mut self,
         entries: impl IntoIterator<Item = LnMirExprEntry>,
     ) -> LnMirExprIdxRange {
-        self.expr_arena.alloc_batch(entries)
+        self.expr_arena.alloc_many(entries)
     }
 
     pub fn alloc_stmt(&mut self, data: LnMirStmtData) -> LnMirStmtIdx {
@@ -72,7 +72,7 @@ impl LnMirExprConstructor {
         &mut self,
         data: impl IntoIterator<Item = LnMirStmtData>,
     ) -> LnMirStmtIdxRange {
-        self.stmt_arena.alloc_batch(data)
+        self.stmt_arena.alloc_many(data)
     }
 
     pub fn alloc_tactic(&mut self, data: LnMirTacticData) -> LnMirTacticIdx {
@@ -83,7 +83,7 @@ impl LnMirExprConstructor {
         &mut self,
         data: impl IntoIterator<Item = LnMirTacticData>,
     ) -> LnMirTacticIdxRange {
-        self.tactic_arena.alloc_batch(data)
+        self.tactic_arena.alloc_many(data)
     }
 
     pub fn alloc_item_defn(
@@ -101,7 +101,7 @@ impl LnMirExprConstructor {
         item_defns: impl IntoIterator<Item = LnItemDefnData>,
         comments: impl IntoIterator<Item = LnItemDefnComment>,
     ) -> LnItemDefnIdxRange {
-        let item_defns = self.item_defn_arena.alloc_batch(item_defns);
+        let item_defns = self.item_defn_arena.alloc_many(item_defns);
         self.item_defn_comments
             .insert_next_batch(item_defns, comments);
         item_defns

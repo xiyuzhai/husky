@@ -26,7 +26,7 @@ impl LxAstSheet {
         &mut self,
         asts: impl IntoIterator<Item = LxMathAstData>,
     ) -> LxMathAstIdxRange {
-        self.arena.math.alloc_batch(asts)
+        self.arena.math.alloc_many(asts)
     }
 
     pub fn arena(&self) -> &LxAstArena {

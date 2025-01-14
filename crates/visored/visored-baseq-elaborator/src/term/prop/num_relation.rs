@@ -74,3 +74,13 @@ impl<'sess> VdBsqNumRelation<'sess> {
         f.write_str(" 0")
     }
 }
+
+impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
+    pub(super) fn transcribe_num_relation_data(
+        &self,
+        num_relation: VdBsqNumRelation<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
+        todo!()
+    }
+}

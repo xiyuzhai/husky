@@ -269,7 +269,7 @@ impl<'db> VdSemExprBuilder<'db> {
         &mut self,
         exprs: impl IntoIterator<Item = VdSemExprEntry>,
     ) -> VdSemExprIdxRange {
-        self.expr_arena.alloc_batch(exprs)
+        self.expr_arena.alloc_many(exprs)
     }
 
     pub(crate) fn alloc_phrase(
@@ -281,18 +281,18 @@ impl<'db> VdSemExprBuilder<'db> {
     }
 
     pub(crate) fn alloc_clauses(&mut self, clauses: Vec<VdSemClauseEntry>) -> VdSemClauseIdxRange {
-        self.clause_arena.alloc_batch(clauses)
+        self.clause_arena.alloc_many(clauses)
     }
 
     pub(crate) fn alloc_sentences(
         &mut self,
         sentences: Vec<VdSemSentenceData>,
     ) -> VdSemSentenceIdxRange {
-        self.sentence_arena.alloc_batch(sentences)
+        self.sentence_arena.alloc_many(sentences)
     }
 
     pub(crate) fn alloc_stmts(&mut self, stmts: Vec<VdSemBlockEntry>) -> VdSemBlockIdxRange {
-        self.stmt_arena.alloc_batch(stmts)
+        self.stmt_arena.alloc_many(stmts)
     }
 
     pub(crate) fn alloc_division(
@@ -309,7 +309,7 @@ impl<'db> VdSemExprBuilder<'db> {
         &mut self,
         divisions: Vec<VdSemDivisionEntry>,
     ) -> VdSemDivisionIdxRange {
-        self.division_arena.alloc_batch(divisions)
+        self.division_arena.alloc_many(divisions)
     }
 
     pub(crate) fn infer_expr_term(&mut self, expr: VdSemExprIdx) -> VdTerm {

@@ -7,7 +7,10 @@ use crate::{
         chunk::VdMirDerivationChunk, construction::VdMirDerivationConstruction,
         VdMirDerivationArena, VdMirDerivationEntry, VdMirDerivationIdx, VdMirDerivationIdxRange,
     },
-    expr::{VdMirExprArena, VdMirExprArenaRef, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
+    expr::{
+        VdMirExprArena, VdMirExprArenaRef, VdMirExprData, VdMirExprEntry, VdMirExprIdx,
+        VdMirExprIdxRange,
+    },
     hint::VdMirHintArena,
     hypothesis::{VdMirHypothesisEntry, VdMirHypothesisIdxRange},
     region::VdMirExprRegionDataRef,
@@ -125,14 +128,15 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         hypothesis
     }
 
-    pub fn construct_new_expr(
+    pub fn construct_expr(&mut self, entry: VdMirExprEntry) -> VdMirExprIdx {
+        self.expr_arena.alloc_one(entry)
+    }
+
+    pub fn construct_exprs(
         &mut self,
-        data: VdMirExprData,
-        ty: VdType,
-        expected_ty: Option<VdType>,
-    ) -> VdMirExprIdx {
-        self.expr_arena
-            .alloc_one(VdMirExprEntry::new(data, ty, expected_ty))
+        exprs: impl IntoIterator<Item = VdMirExprEntry>,
+    ) -> VdMirExprIdxRange {
+        self.expr_arena.alloc_many(exprs)
     }
 
     pub fn obtain_derivation_chunk_within_hypothesis(

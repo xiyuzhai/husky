@@ -46,7 +46,7 @@ impl<T> Arena<T> {
 
 impl<T> Arena<T> {
     #[inline]
-    pub fn alloc_batch(&mut self, items: impl IntoIterator<Item = T>) -> ArenaIdxRange<T> {
+    pub fn alloc_many(&mut self, items: impl IntoIterator<Item = T>) -> ArenaIdxRange<T> {
         let start = ArenaIdx::new(self.data.len());
         self.data.extend(items);
         let end = ArenaIdx::new(self.data.len());

@@ -18,7 +18,7 @@ impl VdPipelineInstanceStorage {
         &mut self,
         instances: impl IntoIterator<Item = VdPipelineInstance>,
     ) -> VdPipelineInstanceIdxRange {
-        self.arena.alloc_batch(instances)
+        self.arena.alloc_many(instances)
     }
 
     pub fn all_instances(&self) -> &[VdPipelineInstance] {

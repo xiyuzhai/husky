@@ -92,7 +92,7 @@ impl<'a> LxAstParser<'a> {
 /// # actions
 impl<'a> LxAstParser<'a> {
     pub(crate) fn alloc_math_asts(&mut self, asts: Vec<LxMathAstData>) -> LxMathAstIdxRange {
-        self.arena.math.alloc_batch(asts)
+        self.arena.math.alloc_many(asts)
     }
 
     pub(crate) fn alloc_math_ast(&mut self, ast: LxMathAstData) -> LxMathAstIdx {
@@ -104,15 +104,15 @@ impl<'a> LxAstParser<'a> {
     }
 
     pub(crate) fn alloc_rose_asts(&mut self, asts: Vec<LxRoseAstData>) -> LxRoseAstIdxRange {
-        self.arena.rose.alloc_batch(asts)
+        self.arena.rose.alloc_many(asts)
     }
 
     pub(crate) fn alloc_lisp_asts(&mut self, asts: Vec<LxLispAstData>) -> LxLispAstIdxRange {
-        self.arena.lisp.alloc_batch(asts)
+        self.arena.lisp.alloc_many(asts)
     }
 
     pub(crate) fn alloc_root_asts(&mut self, asts: Vec<LxRootAstData>) -> LxRootAstIdxRange {
-        self.arena.root.alloc_batch(asts)
+        self.arena.root.alloc_many(asts)
     }
 
     pub(crate) fn next_lisp_token(&mut self) -> Option<(LxLispTokenIdx, LxLispTokenData)> {

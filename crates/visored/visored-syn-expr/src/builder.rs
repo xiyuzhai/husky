@@ -160,7 +160,7 @@ impl<'db> VdSynExprBuilder<'db> {
         &mut self,
         data: impl IntoIterator<Item = VdSynExprData>,
     ) -> VdSynExprIdxRange {
-        self.expr_arena.alloc_batch(data)
+        self.expr_arena.alloc_many(data)
     }
 
     pub(crate) fn alloc_phrase(&mut self, data: VdSynPhraseData) -> VdSynPhraseIdx {
@@ -168,7 +168,7 @@ impl<'db> VdSynExprBuilder<'db> {
     }
 
     pub(crate) fn alloc_phrases(&mut self, data: Vec<VdSynPhraseData>) -> VdSynPhraseIdxRange {
-        self.phrase_arena.alloc_batch(data)
+        self.phrase_arena.alloc_many(data)
     }
 
     pub(crate) fn alloc_clause(&mut self, entry: VdSynClauseEntry) -> VdSynClauseIdx {
@@ -176,7 +176,7 @@ impl<'db> VdSynExprBuilder<'db> {
     }
 
     pub(crate) fn alloc_clauses(&mut self, data: Vec<VdSynClauseEntry>) -> VdSynClauseIdxRange {
-        self.clause_arena.alloc_batch(data)
+        self.clause_arena.alloc_many(data)
     }
 
     pub(crate) fn alloc_sentence(&mut self, data: VdSynSentenceEntry) -> VdSynSentenceIdx {
@@ -187,7 +187,7 @@ impl<'db> VdSynExprBuilder<'db> {
         &mut self,
         data: Vec<VdSynSentenceEntry>,
     ) -> VdSynSentenceIdxRange {
-        self.sentence_arena.alloc_batch(data)
+        self.sentence_arena.alloc_many(data)
     }
 
     pub(crate) fn alloc_stmt(&mut self, data: VdSynBlockData) -> VdSynBlockIdx {
@@ -195,14 +195,14 @@ impl<'db> VdSynExprBuilder<'db> {
     }
 
     pub(crate) fn alloc_stmts(&mut self, data: Vec<VdSynBlockData>) -> VdSynBlockIdxRange {
-        self.stmt_arena.alloc_batch(data)
+        self.stmt_arena.alloc_many(data)
     }
 
     pub(crate) fn alloc_divisions(
         &mut self,
         data: Vec<VdSynDivisionData>,
     ) -> VdSynDivisionIdxRange {
-        self.division_arena.alloc_batch(data)
+        self.division_arena.alloc_many(data)
     }
 
     // pub fn finish_to_region_data(self) -> VdSynExprRegionData {

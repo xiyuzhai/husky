@@ -139,8 +139,8 @@ impl SemStmtBatch {
 pub struct SemStmtArena(Arena<SemStmtEntry>);
 
 impl SemStmtArena {
-    pub(crate) fn alloc_batch(&mut self, batch: SemStmtBatch) -> SemStmtIdxRange {
-        SemStmtIdxRange(self.0.alloc_batch(batch.entries))
+    pub(crate) fn alloc_many(&mut self, batch: SemStmtBatch) -> SemStmtIdxRange {
+        SemStmtIdxRange(self.0.alloc_many(batch.entries))
     }
 
     pub fn arena_ref<'a>(&'a self) -> SemStmtArenaRef<'a> {

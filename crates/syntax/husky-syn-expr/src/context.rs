@@ -185,7 +185,7 @@ impl<'a> SynExprContext<'a> {
     }
 
     pub(super) fn alloc_stmts(&mut self, syn_stmts: Vec<SynStmtData>) -> SynStmtIdxRange {
-        self.syn_stmt_arena.alloc_batch(syn_stmts)
+        self.syn_stmt_arena.alloc_many(syn_stmts)
     }
 
     pub(crate) fn alloc_pattern(&mut self, expr: SynPatternData) -> SynPatternIdx {

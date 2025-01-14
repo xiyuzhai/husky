@@ -472,7 +472,7 @@ impl<'a> SemExprBuilder<'a> {
     }
 
     pub(crate) fn alloc_stmt_batch(&mut self, batch: SemStmtBatch) -> SemStmtIdxRange {
-        self.sem_stmt_arena.alloc_batch(batch)
+        self.sem_stmt_arena.alloc_many(batch)
     }
 
     pub(crate) fn add_symbol_ty(&mut self, symbol_idx: CurrentVariableIdx, symbol_ty: SymbolType) {

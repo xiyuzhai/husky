@@ -134,7 +134,7 @@ impl<'db, Linktime: IsLinktime> VmirBuilder<'db, Linktime> {
         hir_eager_exprs: &[HirEagerExprIdx],
         exprs: Vec<VmirExprData<Linktime::LinketImpl>>,
     ) -> VmirExprIdxRange<Linktime::LinketImpl> {
-        let exprs = self.vmir_expr_arena.alloc_batch(exprs);
+        let exprs = self.vmir_expr_arena.alloc_many(exprs);
         for (hir_eager_expr, expr) in hir_eager_exprs.iter().copied().zip(exprs) {
             self.hir_eager_to_vmir_expr_map
                 .insert_new(hir_eager_expr, VmirExprIdx(expr));
@@ -147,7 +147,7 @@ impl<'db, Linktime: IsLinktime> VmirBuilder<'db, Linktime> {
         hir_eager_stmts: HirEagerStmtIdxRange,
         stmts: Vec<VmirStmtData<Linktime::LinketImpl>>,
     ) -> ArenaIdxRange<VmirStmtData<Linktime::LinketImpl>> {
-        let stmts = self.vmir_stmt_arena.alloc_batch(stmts);
+        let stmts = self.vmir_stmt_arena.alloc_many(stmts);
         for (hir_eager_stmt, stmt) in hir_eager_stmts.into_iter().zip(stmts) {
             self.hir_eager_to_vmir_stmt_map
                 .insert_new(hir_eager_stmt, VmirStmtIdx(stmt));
@@ -166,7 +166,7 @@ impl<'db, Linktime: IsLinktime> VmirBuilder<'db, Linktime> {
         &mut self,
         patterns: Vec<VmirRestructivePatternData<Linktime::LinketImpl>>,
     ) -> VmirRestructivePatternIdxRange<Linktime::LinketImpl> {
-        self.vmir_restructive_pattern_arena.alloc_batch(patterns)
+        self.vmir_restructive_pattern_arena.alloc_many(patterns)
     }
 
     pub(crate) fn alloc_destructive_pattern(
@@ -180,14 +180,14 @@ impl<'db, Linktime: IsLinktime> VmirBuilder<'db, Linktime> {
         &mut self,
         patterns: Vec<VmirDestructivePatternData<Linktime::LinketImpl>>,
     ) -> VmirDestructivePatternIdxRange<Linktime::LinketImpl> {
-        self.vmir_destructive_pattern_arena.alloc_batch(patterns)
+        self.vmir_destructive_pattern_arena.alloc_many(patterns)
     }
 
     pub(crate) fn alloc_destroyers(
         &mut self,
         destroyer_datas: Vec<VmirDestroyerData>,
     ) -> VmirDestroyerIdxRange {
-        self.vmir_destroyer_arena.alloc_batch(destroyer_datas)
+        self.vmir_destroyer_arena.alloc_many(destroyer_datas)
     }
 
     pub(crate) fn finish(

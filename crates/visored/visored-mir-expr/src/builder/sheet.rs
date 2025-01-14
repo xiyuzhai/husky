@@ -60,7 +60,7 @@ impl<'db> VdMirExprSheetBuilder<'db> {
         &mut self,
         entries: impl IntoIterator<Item = VdMirDivisionEntry>,
     ) -> VdMirDivisionIdxRange {
-        self.division_arena.alloc_batch(entries)
+        self.division_arena.alloc_many(entries)
     }
 
     pub fn finish(self) -> (VdMirExprRegionArena, VdMirDivisionArena) {

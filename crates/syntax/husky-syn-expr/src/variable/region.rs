@@ -126,7 +126,7 @@ impl VariableRegionData {
         variables: impl IntoIterator<Item = CurrentVariableEntry>,
         ty_constraint: Option<SyndicateTypeConstraint>,
     ) -> CurrentVariableIdxRange {
-        let symbols = self.current_variable_arena.alloc_batch(variables);
+        let symbols = self.current_variable_arena.alloc_many(variables);
         self.pattern_ty_constraints.extend(
             ty_constraint
                 .into_iter()

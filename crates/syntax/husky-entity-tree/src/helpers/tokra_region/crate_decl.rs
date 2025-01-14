@@ -208,7 +208,7 @@ impl<'a> CrateDeclTokraRegionBuilder<'a> {
                 regional_asts.push(regional_ast)
             }
         }
-        let regional_ast_idx_range = self.defn_ast_arena.alloc_batch(regional_asts);
+        let regional_ast_idx_range = self.defn_ast_arena.alloc_many(regional_asts);
         debug_assert_eq!(
             regional_ast_idx_range.start().index(),
             self.ast_idx_map.len()

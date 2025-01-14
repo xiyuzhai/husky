@@ -35,3 +35,22 @@ impl<'sess> VdBsqPropTerm<'sess> {
         }
     }
 }
+
+impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
+    pub(super) fn transcribe_prop_data(
+        &self,
+        prop: VdBsqPropTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
+        match prop {
+            VdBsqPropTerm::NumRelation(num_relation) => {
+                self.transcribe_num_relation_data(num_relation, hypothesis_constructor)
+            }
+            VdBsqPropTerm::NumChain(num_chain) => {
+                self.transcribe_num_chain_data(num_chain, hypothesis_constructor)
+            }
+            VdBsqPropTerm::Trivial(b) => todo!(),
+            VdBsqPropTerm::InSet => todo!(),
+        }
+    }
+}

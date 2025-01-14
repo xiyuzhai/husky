@@ -303,10 +303,19 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         expr: VdBsqExprFld<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
+        let entry = self.transcribe_expr_entry(expr, hypothesis_constructor);
+        hypothesis_constructor.construct_expr(entry)
+    }
+
+    fn transcribe_expr_entry(
+        &self,
+        expr: VdBsqExprFld<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprEntry {
         let data = self.transcribe_expr_data(expr.data(), hypothesis_constructor);
         let ty = expr.ty();
         let expected_ty = expr.expected_ty();
-        hypothesis_constructor.construct_new_expr(data, ty, expected_ty)
+        VdMirExprEntry::new(data, ty, expected_ty)
     }
 
     fn transcribe_expr_data(
@@ -320,11 +329,28 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdBsqExprFldData::Application {
                 function,
                 ref arguments,
-            } => todo!(),
+            } => {
+                let exprs = arguments
+                    .iter()
+                    .map(|arg| self.transcribe_expr_entry(*arg, hypothesis_constructor))
+                    .collect::<Vec<_>>();
+                VdMirExprData::Application {
+                    function,
+                    arguments: hypothesis_constructor.construct_exprs(exprs),
+                }
+            }
             VdBsqExprFldData::FoldingSeparatedList {
                 leader,
                 ref followers,
-            } => todo!(),
+            } => VdMirExprData::FoldingSeparatedList {
+                leader: self.transcribe_expr(leader, hypothesis_constructor),
+                followers: followers
+                    .iter()
+                    .map(|&(func, follower)| {
+                        (func, self.transcribe_expr(follower, hypothesis_constructor))
+                    })
+                    .collect(),
+            },
             VdBsqExprFldData::ChainingSeparatedList {
                 leader,
                 ref followers,

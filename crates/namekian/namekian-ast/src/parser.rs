@@ -38,7 +38,7 @@ impl<'a> NamParser<'a> {
     }
 
     pub(crate) fn alloc_asts(&mut self, asts: Vec<crate::data::NamAstData>) -> NamAstIdxRange {
-        self.arena.alloc_batch(asts)
+        self.arena.alloc_many(asts)
     }
 
     pub(crate) fn finish(self) -> NamAstArena {

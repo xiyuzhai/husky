@@ -86,7 +86,7 @@ impl<'a> AstParser<'a> {
     }
 
     fn alloc_asts(&mut self, asts: Vec<AstData>) -> AstIdxRange {
-        self.ast_arena.alloc_batch(asts)
+        self.ast_arena.alloc_many(asts)
     }
 
     fn alloc_ast(&mut self, ast: AstData) -> AstIdx {

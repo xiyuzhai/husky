@@ -132,7 +132,7 @@ impl<'db> HirEagerExprBuilder<'db> {
         hir_eager_stmts: Vec<HirEagerStmtData>,
     ) -> HirEagerStmtIdxRange {
         debug_assert_eq!(sem_stmt_indices.len(), hir_eager_stmts.len());
-        let hir_stmt_idx_range = self.hir_eager_stmt_arena.alloc_batch(hir_eager_stmts);
+        let hir_stmt_idx_range = self.hir_eager_stmt_arena.alloc_many(hir_eager_stmts);
         for (sem_stmt_idx, hir_eager_stmt_idx) in
             std::iter::zip(sem_stmt_indices, hir_stmt_idx_range)
         {
@@ -179,7 +179,7 @@ impl<'db> HirEagerExprBuilder<'db> {
                 );
                 HirEagerPatternEntry::new(pattern, contract)
             });
-        let patterns = self.hir_eager_pattern_arena.alloc_batch(entries);
+        let patterns = self.hir_eager_pattern_arena.alloc_many(entries);
         for (pattern, syn_pattern) in std::iter::zip(patterns, syn_patterns) {
             self.syn_to_hir_eager_pattern_idx_map
                 .insert_new(syn_pattern, pattern);

@@ -338,6 +338,39 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         term: VdBsqTerm<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
+        match term {
+            VdBsqTerm::Litnum(litnum) => {
+                self.transcribe_litnum_data(litnum, hypothesis_constructor)
+            }
+            VdBsqTerm::Comnum(comnum) => {
+                self.transcribe_comnum_data(comnum, hypothesis_constructor)
+            }
+            VdBsqTerm::Prop(prop) => self.transcribe_prop_data(prop, hypothesis_constructor),
+            VdBsqTerm::Set(set) => self.transcribe_set_data(set, hypothesis_constructor),
+        }
+    }
+
+    fn transcribe_litnum_data(
+        &self,
+        litnum: VdBsqLitnumTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
+        todo!()
+    }
+
+    fn transcribe_comnum_data(
+        &self,
+        comnum: VdBsqComnumTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
+        todo!()
+    }
+
+    fn transcribe_set_data(
+        &self,
+        set: VdBsqSetTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
         todo!()
     }
 }
