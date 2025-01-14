@@ -77,9 +77,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     None,
                     hypothesis_constructor,
                 ),
-                derivations: self.transcribe_term_derivation(
-                    src_hypothesis,
+                derivation_chunk: self.transcribe_term_derivation(
                     hypothesis,
+                    src_hypothesis,
                     hypothesis_constructor,
                 ),
             },

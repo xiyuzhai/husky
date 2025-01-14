@@ -35,10 +35,11 @@ where
             VdMirHypothesisConstruction::Assume => return,
             VdMirHypothesisConstruction::TermEquivalent {
                 hypothesis,
-                derivations,
+                derivation_chunk: derivations,
             } => {
                 let construction = {
-                    for _ in derivations {
+                    todo!();
+                    for _ in derivations.new_derivations() {
                         todo!("handle derivations");
                     }
                     None

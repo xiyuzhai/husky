@@ -1,6 +1,5 @@
-use crate::coercion::VdMirCoercion;
-
 use super::*;
+use crate::{coercion::VdMirCoercion, derivation::chunk::VdMirDerivationChunk};
 use visored_entity_path::theorem::VdTheoremPath;
 
 #[derive(Debug, PartialEq, Eq)]
@@ -13,7 +12,7 @@ pub enum VdMirHypothesisConstruction {
     Sorry,
     TermEquivalent {
         hypothesis: VdMirHypothesisIdx,
-        derivations: VdMirDerivationIdxRange,
+        derivation_chunk: VdMirDerivationChunk,
     },
     TermTrivial(bool),
     CommRing,

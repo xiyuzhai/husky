@@ -4,8 +4,8 @@ use super::{
 };
 use crate::{
     derivation::{
-        construction::VdMirDerivationConstruction, VdMirDerivationArena, VdMirDerivationEntry,
-        VdMirDerivationIdxRange,
+        chunk::VdMirDerivationChunk, construction::VdMirDerivationConstruction,
+        VdMirDerivationArena, VdMirDerivationEntry, VdMirDerivationIdx, VdMirDerivationIdxRange,
     },
     expr::{VdMirExprArena, VdMirExprArenaRef, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
     hint::VdMirHintArena,
@@ -27,6 +27,7 @@ pub struct VdMirHypothesisConstructor<'db, Src> {
     derivation_arena: VdMirDerivationArena,
     symbol_local_defn_storage: VdMirSymbolLocalDefnStorage,
     current_stmt_and_hypothesis_chunk_start: Option<(VdMirStmtIdx, VdMirHypothesisIdx)>,
+    current_derivation_chunk_start: Option<VdMirDerivationIdx>,
     cache: FxHashMap<Src, VdMirHypothesisIdx>,
 }
 
@@ -47,6 +48,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             hypothesis_arena: Default::default(),
             derivation_arena: Default::default(),
             current_stmt_and_hypothesis_chunk_start: None,
+            current_derivation_chunk_start: None,
             cache: FxHashMap::default(),
         }
     }
@@ -82,6 +84,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         f: impl FnOnce(&mut Self) -> VdMirHypothesisIdx,
     ) -> VdMirHypothesisChunk {
         assert!(self.current_stmt_and_hypothesis_chunk_start.is_none());
+        assert!(self.current_derivation_chunk_start.is_none());
         self.current_stmt_and_hypothesis_chunk_start = Some((stmt, unsafe {
             VdMirHypothesisIdx::new_ext(self.hypothesis_arena.len())
         }));
@@ -91,6 +94,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         };
         self.current_stmt_and_hypothesis_chunk_start = None;
         VdMirHypothesisChunk::new(
+            stmt,
             unsafe {
                 VdMirHypothesisIdxRange::new(chunk_start, unsafe {
                     VdMirHypothesisIdx::new_ext(self.hypothesis_arena.len())
@@ -131,11 +135,36 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             .alloc_one(VdMirExprEntry::new(data, ty, expected_ty))
     }
 
-    pub fn alloc_derivations(
+    pub fn obtain_derivation_chunk_within_hypothesis(
         &mut self,
-        derivation_entriess: impl IntoIterator<Item = VdMirDerivationEntry>,
-    ) -> VdMirDerivationIdxRange {
-        self.derivation_arena.alloc_batch(derivation_entriess)
+        f: impl FnOnce(&mut Self) -> VdMirDerivationIdx,
+    ) -> VdMirDerivationChunk {
+        assert!(self.current_stmt_and_hypothesis_chunk_start.is_some());
+        assert!(self.current_derivation_chunk_start.is_none());
+        self.current_derivation_chunk_start =
+            Some(unsafe { VdMirDerivationIdx::new_ext(self.derivation_arena.len()) });
+        let result = f(self);
+        let Some(chunk_start) = self.current_derivation_chunk_start else {
+            unreachable!()
+        };
+        self.current_derivation_chunk_start = None;
+        VdMirDerivationChunk::new(
+            unsafe {
+                VdMirDerivationIdxRange::new(chunk_start, unsafe {
+                    VdMirDerivationIdx::new_ext(self.derivation_arena.len())
+                })
+            },
+            result,
+        )
+    }
+
+    pub fn alloc_derivation(
+        &mut self,
+        prop: VdMirExprIdx,
+        construction: VdMirDerivationConstruction,
+    ) -> VdMirDerivationIdx {
+        self.derivation_arena
+            .alloc_one(VdMirDerivationEntry::new(prop, construction))
     }
 
     pub(crate) fn finish(

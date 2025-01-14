@@ -1,3 +1,4 @@
+pub mod chunk;
 pub mod construction;
 
 use self::construction::VdMirDerivationConstruction;
@@ -15,3 +16,9 @@ pub type VdMirDerivationIdx = ArenaIdx<VdMirDerivationEntry>;
 pub type VdMirDerivationIdxRange = ArenaIdxRange<VdMirDerivationEntry>;
 pub type VdMirDerivationArena = Arena<VdMirDerivationEntry>;
 pub type VdMirDerivationArenaRef<'a> = ArenaRef<'a, VdMirDerivationEntry>;
+
+impl VdMirDerivationEntry {
+    pub fn new(prop: VdMirExprIdx, construction: VdMirDerivationConstruction) -> Self {
+        Self { prop, construction }
+    }
+}
