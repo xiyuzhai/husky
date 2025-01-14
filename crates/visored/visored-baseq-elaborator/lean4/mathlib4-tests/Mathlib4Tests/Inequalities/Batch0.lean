@@ -1,5 +1,6 @@
 import Mathlib
 
+
 macro "term_trivial": tactic =>`(tactic|
   first
   | simp; done
@@ -49,6 +50,7 @@ macro "litnum_bound": tactic =>`(tactic|
   | linarith; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
+
 
 namespace Example1
 def h := by

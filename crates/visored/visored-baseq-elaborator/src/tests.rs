@@ -21,6 +21,7 @@ use crate::{
 fn visored_tactic_basic_elaborator_works() {
     use husky_case_utils::{Case, ToCase};
     use husky_path_utils::HuskyLangDevPaths;
+    use lean_helpers::hypothesis::HYPOTHESIS_HEADER;
 
     fn t(
         dev_paths: &HuskyLangDevPaths,
@@ -57,56 +58,7 @@ fn visored_tactic_basic_elaborator_works() {
             );
             let lean4_code: String = format!(
                 r#"import Mathlib
-
-macro "term_trivial": tactic =>`(tactic|
-  first
-  | simp; done
-  | ring; done
-  | ring_nf; done
-  | linarith; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "old_main_hypothesis": tactic =>`(tactic|
-  first
-  | assumption; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "let_assigned": tactic =>`(tactic|
-  first
-  | dsimp; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_equivalent": tactic =>`(tactic|
-  first
-  | simp; done
-  | ring; done
-  | ring_nf; done
-  | linarith; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "comm_ring": tactic =>`(tactic|
-  first
-  | ring; done
-  | ring_nf; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "litnum_reduce": tactic =>`(tactic|
-  first
-  | simp; done
-  | simp [*]; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "litnum_bound": tactic =>`(tactic|
-  first
-  | linarith; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
+{HYPOTHESIS_HEADER}
 
 {}"#,
                 tracker.show_fmt(db)

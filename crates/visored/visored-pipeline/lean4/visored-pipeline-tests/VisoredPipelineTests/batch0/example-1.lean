@@ -24,6 +24,58 @@ macro "obvious": tactic =>`(tactic|
 
 macro "in_set" : term => `(true)
 
+
+
+macro "term_trivial": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "old_main_hypothesis": tactic =>`(tactic|
+  first
+  | assumption; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "let_assigned": tactic =>`(tactic|
+  first
+  | dsimp; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_equivalent": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "comm_ring": tactic =>`(tactic|
+  first
+  | ring; done
+  | ring_nf; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_reduce": tactic =>`(tactic|
+  first
+  | simp; done
+  | simp [*]; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_bound": tactic =>`(tactic|
+  first
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
 def h (a b : ℝ) : (a + b) ^ 2 ≥ (0 : ℝ) := by
   have h1 : (a + b) ^ 2 ≥ (0 : ℝ) := by apply sq_nonneg
   obvious

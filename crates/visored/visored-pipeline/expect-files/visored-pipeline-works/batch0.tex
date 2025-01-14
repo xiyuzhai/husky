@@ -101,6 +101,58 @@ macro "obvious": tactic =>`(tactic|
 
 macro "in_set" : term => `(true)
 
+
+
+macro "term_trivial": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "old_main_hypothesis": tactic =>`(tactic|
+  first
+  | assumption; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "let_assigned": tactic =>`(tactic|
+  first
+  | dsimp; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_equivalent": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "comm_ring": tactic =>`(tactic|
+  first
+  | ring; done
+  | ring_nf; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_reduce": tactic =>`(tactic|
+  first
+  | simp; done
+  | simp [*]; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_bound": tactic =>`(tactic|
+  first
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
 def h (a b : ℝ) : (a + b) ^ 2 ≥ (0 : ℝ) := by
   have h1 : (a + b) ^ 2 ≥ (0 : ℝ) := by apply sq_nonneg
   obvious
@@ -168,6 +220,58 @@ macro "obvious": tactic =>`(tactic|
 )
 
 macro "in_set" : term => `(true)
+
+
+
+macro "term_trivial": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "old_main_hypothesis": tactic =>`(tactic|
+  first
+  | assumption; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "let_assigned": tactic =>`(tactic|
+  first
+  | dsimp; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_equivalent": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "comm_ring": tactic =>`(tactic|
+  first
+  | ring; done
+  | ring_nf; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_reduce": tactic =>`(tactic|
+  first
+  | simp; done
+  | simp [*]; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_bound": tactic =>`(tactic|
+  first
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
 
 def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y) / (2 : ℝ) ≥ √ (x * y) := by
   have h3 : (√ x - √ y) ^ 2 = √ x ^ 2 - (2 : ℝ) * √ x * √ y + √ y ^ 2 := by obvious
@@ -241,6 +345,58 @@ macro "obvious": tactic =>`(tactic|
 )
 
 macro "in_set" : term => `(true)
+
+
+
+macro "term_trivial": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "old_main_hypothesis": tactic =>`(tactic|
+  first
+  | assumption; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "let_assigned": tactic =>`(tactic|
+  first
+  | dsimp; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_equivalent": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "comm_ring": tactic =>`(tactic|
+  first
+  | ring; done
+  | ring_nf; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_reduce": tactic =>`(tactic|
+  first
+  | simp; done
+  | simp [*]; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_bound": tactic =>`(tactic|
+  first
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
 
 def h (a b c : ℝ) : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by
   first
@@ -317,6 +473,58 @@ macro "obvious": tactic =>`(tactic|
 )
 
 macro "in_set" : term => `(true)
+
+
+
+macro "term_trivial": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "old_main_hypothesis": tactic =>`(tactic|
+  first
+  | assumption; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "let_assigned": tactic =>`(tactic|
+  first
+  | dsimp; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_equivalent": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "comm_ring": tactic =>`(tactic|
+  first
+  | ring; done
+  | ring_nf; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_reduce": tactic =>`(tactic|
+  first
+  | simp; done
+  | simp [*]; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_bound": tactic =>`(tactic|
+  first
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
 
 def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
   first
@@ -400,6 +608,58 @@ macro "obvious": tactic =>`(tactic|
 )
 
 macro "in_set" : term => `(true)
+
+
+
+macro "term_trivial": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "old_main_hypothesis": tactic =>`(tactic|
+  first
+  | assumption; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "let_assigned": tactic =>`(tactic|
+  first
+  | dsimp; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_equivalent": tactic =>`(tactic|
+  first
+  | simp; done
+  | ring; done
+  | ring_nf; done
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "comm_ring": tactic =>`(tactic|
+  first
+  | ring; done
+  | ring_nf; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_reduce": tactic =>`(tactic|
+  first
+  | simp; done
+  | simp [*]; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "litnum_bound": tactic =>`(tactic|
+  first
+  | linarith; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
 
 def h (a b : ℝ) : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by
   first

@@ -59,6 +59,8 @@ visored-baseq-elaborator-macros.workspace = true
 
 [dev-dependencies]
 relative-path.workspace = true
+# lean
+lean-helpers.workspace = true
 # utils
 husky-case-utils = { workspace = true, features = ["relative_path"] }
 

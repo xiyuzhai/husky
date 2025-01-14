@@ -13446,6 +13446,7 @@ dependencies = [
  "latex-math-letter",
  "latex-prelude",
  "latex-vfs",
+ "lean-helpers",
  "miracle",
  "num-bigint",
  "num-integer",
