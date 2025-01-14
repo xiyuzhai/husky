@@ -205,3 +205,21 @@ where
 ```
 
 in `crates/abstractions/miracle/src/foldm.rs`.
+
+## lean
+
+any errors related to Mathlib4
+
+try
+
+```
+lake update
+```
+
+or
+
+```
+lake update mathlib
+```
+
+Let's see when they can write the proper documentation about these basic things.
