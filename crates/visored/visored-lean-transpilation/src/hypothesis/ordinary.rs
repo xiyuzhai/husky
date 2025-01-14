@@ -15,8 +15,8 @@ where
                 self.alloc_tactics([default_tactic_data])
             }
             VdMirHypothesisConstruction::TermTrivial(b) => {
-                let ad_hoc_tactic_data = self.ad_hoc_tactic_data("term_trivial");
-                self.alloc_tactics([ad_hoc_tactic_data])
+                let custom_tactic_data = self.custom_tactic_data("term_trivial");
+                self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::Apply {
                 path,
@@ -40,24 +40,24 @@ where
                 for _ in derivations {
                     todo!("handle derivations");
                 }
-                let ad_hoc_tactic_data = self.ad_hoc_tactic_data("term_equivalent");
-                self.alloc_tactics([ad_hoc_tactic_data])
+                let custom_tactic_data = self.custom_tactic_data("term_equivalent");
+                self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::CommRing => {
-                let ad_hoc_tactic_data = self.ad_hoc_tactic_data("comm_ring");
-                self.alloc_tactics([ad_hoc_tactic_data])
+                let custom_tactic_data = self.custom_tactic_data("comm_ring");
+                self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::LetAssigned => {
-                let ad_hoc_tactic_data = self.ad_hoc_tactic_data("let_assigned");
-                self.alloc_tactics([ad_hoc_tactic_data])
+                let custom_tactic_data = self.custom_tactic_data("let_assigned");
+                self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::LitnumReduce => {
-                let ad_hoc_tactic_data = self.ad_hoc_tactic_data("litnum_reduce");
-                self.alloc_tactics([ad_hoc_tactic_data])
+                let custom_tactic_data = self.custom_tactic_data("litnum_reduce");
+                self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::LitnumBound => {
-                let ad_hoc_tactic_data = self.ad_hoc_tactic_data("litnum_bound");
-                self.alloc_tactics([ad_hoc_tactic_data])
+                let custom_tactic_data = self.custom_tactic_data("litnum_bound");
+                self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::Kurapika => todo!(),
         };

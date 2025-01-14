@@ -19,8 +19,8 @@ where
         LnMirTacticData::Obvious
     }
 
-    pub fn ad_hoc_tactic_data(&mut self, name: &'static str) -> LnMirTacticData {
-        LnMirTacticData::AdHoc { name }
+    pub fn custom_tactic_data(&mut self, name: &'static str) -> LnMirTacticData {
+        LnMirTacticData::Custom { name }
     }
 
     pub fn exact_unit(&mut self) -> LnMirTacticData {

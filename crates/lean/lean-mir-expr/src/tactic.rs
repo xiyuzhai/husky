@@ -44,7 +44,7 @@ pub enum LnMirTacticData {
         path: LnTheoremPath,
     },
     Obvious,
-    AdHoc {
+    Custom {
         name: &'static str,
     },
 }
