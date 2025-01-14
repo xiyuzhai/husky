@@ -46,6 +46,7 @@ pub enum LnMirTacticData {
     Obvious,
     Custom {
         name: &'static str,
+        construction: Option<LnMirExprIdx>,
     },
 }
 

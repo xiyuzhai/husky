@@ -434,8 +434,12 @@ impl<'a> LnMirExprFormatter<'a> {
                 self.result += "apply ";
                 self.result += path.code();
             }
-            LnMirTacticData::Custom { name } => {
+            LnMirTacticData::Custom { name, construction } => {
                 self.result += name;
+                if let Some(construction) = construction {
+                    self.result += " := ";
+                    self.format_expr_ext(construction);
+                }
             }
         }
     }
