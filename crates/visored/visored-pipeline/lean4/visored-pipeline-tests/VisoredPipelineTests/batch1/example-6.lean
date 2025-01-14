@@ -47,7 +47,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done

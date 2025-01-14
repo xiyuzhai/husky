@@ -1,11 +1,16 @@
-use crate::derivation::VdMirDerivationIdx;
+use crate::derivation::{VdMirDerivationIdx, VdMirDerivationIdxRange};
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdMirTermDerivationConstruction {
-    Sum,
-    Product,
+    Obvious,
+    Sum {
+        summand_term_equivalences: VdMirDerivationIdxRange,
+    },
+    Product {
+        factor_term_equivalences: VdMirDerivationIdxRange,
+    },
     Finalize {
-        src_term_equivalent: VdMirDerivationIdx,
-        dst_term_equivalent: VdMirDerivationIdx,
+        src_term_equivalence: VdMirDerivationIdx,
+        dst_term_equivalence: VdMirDerivationIdx,
     },
 }

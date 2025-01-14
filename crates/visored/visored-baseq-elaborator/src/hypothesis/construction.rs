@@ -12,7 +12,7 @@ pub enum VdBsqHypothesisConstruction<'sess> {
         is_real_coercion: VdBsqCoercion<'sess>,
     },
     CommRing,
-    TermEquivalent {
+    TermEquivalence {
         hypothesis: VdBsqHypothesisIdx<'sess>,
     },
     Sorry,

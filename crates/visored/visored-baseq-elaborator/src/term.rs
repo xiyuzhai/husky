@@ -10,6 +10,7 @@ use crate::{
     elaborator::VdBsqElaboratorInner,
     expr::{VdBsqExprFld, VdBsqExprFldData},
     foundations::opr::separator::relation::comparison::VdBsqComparisonOpr,
+    hypothesis::VdBsqHypothesisIdx,
 };
 use bigint::VdBsqBigInt;
 use builder::{product::VdBsqProductBuilder, sum::VdBsqSumBuilder};
@@ -22,7 +23,8 @@ use product::VdBsqProductStem;
 use vec_like::ordered_small_vec_map::OrderedSmallVecPairMap;
 use visored_entity_path::path::VdItemPath;
 use visored_mir_expr::{
-    expr::{application::VdMirFunc, VdMirExprData, VdMirExprEntry},
+    expr::{application::VdMirFunc, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
+    hypothesis::constructor::VdMirHypothesisConstructor,
     symbol::local_defn::{
         storage::VdMirSymbolLocalDefnStorage, VdMirSymbolLocalDefnHead, VdMirSymbolLocalDefnIdx,
     },
@@ -315,5 +317,27 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 VdItemPath::TraitItem(path) => todo!(),
             },
         }
+    }
+}
+
+impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
+    pub fn transcribe_term(
+        &self,
+        term: VdBsqTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprIdx {
+        let data = self.transcribe_term_data(term, hypothesis_constructor);
+        // let ty = term.ty();
+        // let expected_ty = term.expected_ty();
+        // hypothesis_constructor.construct_new_expr(data, ty, expected_ty)
+        todo!()
+    }
+
+    fn transcribe_term_data(
+        &self,
+        term: VdBsqTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
+        todo!()
     }
 }

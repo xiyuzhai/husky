@@ -69,9 +69,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     .transcribe_coercion(is_real_coercion, hypothesis_constructor),
             },
             VdBsqHypothesisConstruction::Assume => VdMirHypothesisConstruction::Assume,
-            VdBsqHypothesisConstruction::TermEquivalent {
+            VdBsqHypothesisConstruction::TermEquivalence {
                 hypothesis: src_hypothesis,
-            } => VdMirHypothesisConstruction::TermEquivalent {
+            } => VdMirHypothesisConstruction::TermEquivalence {
                 hypothesis: self.transcribe_hypothesis(
                     src_hypothesis,
                     None,

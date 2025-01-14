@@ -67,7 +67,7 @@ impl<'db, 'sess> VdBsqHypothesisConstructor<'db, 'sess> {
         } else if let Some(hypothesis) = self.stack.get_active_hypothesis_with_term(expr.term()) {
             let hypothesis = self.construct_new_hypothesis(
                 expr,
-                VdBsqHypothesisConstruction::TermEquivalent { hypothesis },
+                VdBsqHypothesisConstruction::TermEquivalence { hypothesis },
             );
             Some(hypothesis)
         } else {

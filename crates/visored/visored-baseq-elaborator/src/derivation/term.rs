@@ -21,11 +21,11 @@ where
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
         hypothesis_constructor.obtain_derivation_chunk_within_hypothesis(|hypothesis_constructor| {
-            let src_term_equivalent = self.transcribe_expr_term_derivation(
+            let src_term_equivalence = self.transcribe_expr_term_derivation(
                 self.hypothesis_constructor.arena()[src].expr(),
                 hypothesis_constructor,
             );
-            let dst_term_equivalent = self.transcribe_expr_term_derivation(
+            let dst_term_equivalence = self.transcribe_expr_term_derivation(
                 self.hypothesis_constructor.arena()[dst].expr(),
                 hypothesis_constructor,
             );
@@ -34,8 +34,8 @@ where
             hypothesis_constructor.alloc_derivation(
                 prop,
                 VdMirDerivationConstruction::Term(VdMirTermDerivationConstruction::Finalize {
-                    src_term_equivalent,
-                    dst_term_equivalent,
+                    src_term_equivalence,
+                    dst_term_equivalence,
                 }),
             )
         })
@@ -46,19 +46,32 @@ where
         expr: VdBsqExprFld<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationIdx {
-        let (expr, construction) =
-            self.transcribe_expr_term_derivation_inner(expr, hypothesis_constructor);
-        hypothesis_constructor.alloc_derivation(expr, construction)
+        let prop = self.transcribe_expr_term_derivation_prop(expr, hypothesis_constructor);
+        let construction =
+            self.transcribe_expr_term_derivation_construction(expr, hypothesis_constructor);
+        hypothesis_constructor.alloc_derivation(prop, construction.into())
     }
 
-    fn transcribe_expr_term_derivation_inner(
+    fn transcribe_expr_term_derivation_prop(
         &self,
         expr: VdBsqExprFld<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprIdx, VdMirDerivationConstruction) {
+    ) -> VdMirExprIdx {
+        let term = expr.term();
+        let expr_transcription = self.transcribe_expr(expr, hypothesis_constructor);
+        let term_transcription = self.transcribe_term(term, hypothesis_constructor);
+        todo!()
+    }
+
+    fn transcribe_expr_term_derivation_construction(
+        &self,
+        expr: VdBsqExprFld<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirTermDerivationConstruction {
         match expr.data() {
-            VdBsqExprFldData::Literal(vd_literal) => todo!(),
-            VdBsqExprFldData::Variable(lx_math_letter, arena_idx) => todo!(),
+            VdBsqExprFldData::Literal(_)
+            | VdBsqExprFldData::Variable(_, _)
+            | VdBsqExprFldData::ItemPath(_) => VdMirTermDerivationConstruction::Obvious,
             VdBsqExprFldData::Application {
                 function,
                 arguments,
@@ -69,7 +82,6 @@ where
                 followers,
                 joined_signature,
             } => todo!(),
-            VdBsqExprFldData::ItemPath(vd_item_path) => todo!(),
         }
     }
 }

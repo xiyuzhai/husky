@@ -121,7 +121,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -234,7 +234,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -348,7 +348,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -467,7 +467,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -506,7 +506,7 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     x ^ 2 - (2 : ℝ) * x + (1 : ℝ) = (x - (1 : ℝ)) ^ 2 := by obvious
     _ ≥ (0 : ℝ) := by obvious
   have h5 : x ^ 2 - (2 : ℝ) * x + (1 : ℝ) ≥ (0 : ℝ) := by obvious
-  have h6 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x := by term_equivalent
+  have h6 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x := by term_equivalence
   have h7 : x > (0 : ℝ) := by old_main_hypothesis
   have h8 : x + (1 : ℝ) / x ≥ (2 : ℝ) := by obvious
   obvious
@@ -592,7 +592,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -714,7 +714,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -848,7 +848,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -880,7 +880,7 @@ macro "litnum_bound": tactic =>`(tactic|
 def h (x : ℝ) (h1 : x > (0 : ℝ)) (y : ℝ) (h2 : y > (0 : ℝ)) : (1 : ℝ) / x + (1 : ℝ) / y ≥ (4 : ℝ) / (x + y) := by
   have h3 : in_set := by obvious
   have h4 : x > (0 : ℝ) := by old_main_hypothesis
-  have h5 : in_set := by term_equivalent
+  have h5 : in_set := by term_equivalence
   have h6 : y > (0 : ℝ) := by old_main_hypothesis
   have h15 : (1 : ℝ) / x + (1 : ℝ) / y ≥ (4 : ℝ) / (x + y) := by
     have h7 : (x - y) ^ 2 ≥ (0 : ℝ) := by apply sq_nonneg
@@ -1004,7 +1004,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -1046,7 +1046,7 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     _ = (√ (a / b) - √ (b / a)) ^ 2 := by obvious
     _ ≥ (0 : ℝ) := by obvious
   have h7 : a / b - (2 : ℝ) + b / a ≥ (0 : ℝ) := by obvious
-  have h8 : a / b + b / a ≥ (2 : ℝ) := by term_equivalent
+  have h8 : a / b + b / a ≥ (2 : ℝ) := by term_equivalence
   obvious
 
 \end{lstlisting}
@@ -1132,7 +1132,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done

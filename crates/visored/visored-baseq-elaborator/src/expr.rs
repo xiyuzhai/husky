@@ -303,7 +303,18 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         expr: VdBsqExprFld<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
-        let data = match *expr.data() {
+        let data = self.transcribe_expr_data(expr.data(), hypothesis_constructor);
+        let ty = expr.ty();
+        let expected_ty = expr.expected_ty();
+        hypothesis_constructor.construct_new_expr(data, ty, expected_ty)
+    }
+
+    fn transcribe_expr_data(
+        &self,
+        expr_data: &VdBsqExprFldData<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
+        match *expr_data {
             VdBsqExprFldData::Literal(lit) => VdMirExprData::Literal(lit),
             VdBsqExprFldData::Variable(_, symbol) => VdMirExprData::Variable(symbol),
             VdBsqExprFldData::Application {
@@ -329,9 +340,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 joined_signature,
             },
             VdBsqExprFldData::ItemPath(vd_item_path) => todo!(),
-        };
-        let ty = expr.ty();
-        let expected_ty = expr.expected_ty();
-        hypothesis_constructor.construct_new_expr(data, ty, expected_ty)
+        }
     }
 }

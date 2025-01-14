@@ -33,7 +33,7 @@ where
                 }])
             }
             VdMirHypothesisConstruction::Assume => return,
-            VdMirHypothesisConstruction::TermEquivalent {
+            VdMirHypothesisConstruction::TermEquivalence {
                 hypothesis,
                 derivation_chunk: derivations,
             } => {
@@ -44,7 +44,7 @@ where
                     }
                     None
                 };
-                let custom_tactic_data = self.custom_tactic_data("term_equivalent", construction);
+                let custom_tactic_data = self.custom_tactic_data("term_equivalence", construction);
                 self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::CommRing => {

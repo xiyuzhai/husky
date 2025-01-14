@@ -47,7 +47,7 @@ macro "let_assigned": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_equivalent": tactic =>`(tactic|
+macro "term_equivalence": tactic =>`(tactic|
   first
   | simp; done
   | ring; done
@@ -89,5 +89,5 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     _ = (√ (a / b) - √ (b / a)) ^ 2 := by obvious
     _ ≥ (0 : ℝ) := by obvious
   have h7 : a / b - (2 : ℝ) + b / a ≥ (0 : ℝ) := by obvious
-  have h8 : a / b + b / a ≥ (2 : ℝ) := by term_equivalent
+  have h8 : a / b + b / a ≥ (2 : ℝ) := by term_equivalence
   obvious

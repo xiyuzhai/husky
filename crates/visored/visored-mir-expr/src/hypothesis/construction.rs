@@ -10,7 +10,7 @@ pub enum VdMirHypothesisConstruction {
     },
     Assume,
     Sorry,
-    TermEquivalent {
+    TermEquivalence {
         hypothesis: VdMirHypothesisIdx,
         derivation_chunk: VdMirDerivationChunk,
     },
