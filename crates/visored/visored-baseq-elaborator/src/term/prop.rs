@@ -37,7 +37,17 @@ impl<'sess> VdBsqPropTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(super) fn transcribe_prop_data(
+    pub(super) fn transcribe_prop_data_and_ty(
+        &self,
+        prop: VdBsqPropTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprData, VdType) {
+        let data = self.transcribe_prop_data(prop, hypothesis_constructor);
+        let ty = self.ty_menu().prop;
+        (data, ty)
+    }
+
+    fn transcribe_prop_data(
         &self,
         prop: VdBsqPropTerm<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,

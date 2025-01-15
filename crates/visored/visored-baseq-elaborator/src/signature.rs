@@ -8,8 +8,19 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let ty_menu = self.ty_menu();
         if ty == ty_menu.nat {
             self.signature_menu().nat_eq
+        } else if ty == ty_menu.int {
+            self.signature_menu().int_eq
+        } else if ty == ty_menu.rat {
+            self.signature_menu().rat_eq
+        } else if ty == ty_menu.real {
+            self.signature_menu().real_eq
+        } else if ty == ty_menu.complex {
+            self.signature_menu().complex_eq
+        } else if ty == ty_menu.prop {
+            todo!("prop equivalence")
+            // self.signature_menu().vec_eq
         } else {
-            todo!()
+            todo!("unsupported type: {:?}", ty)
         }
     }
 }

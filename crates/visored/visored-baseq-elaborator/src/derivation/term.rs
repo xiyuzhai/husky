@@ -1,12 +1,13 @@
 use super::*;
 use expr::{VdBsqExprFld, VdBsqExprFldData};
+use smallvec::*;
 use visored_mir_expr::{
     derivation::{
         chunk::VdMirDerivationChunk,
         construction::{term::VdMirTermDerivationConstruction, VdMirDerivationConstruction},
         VdMirDerivationIdx, VdMirDerivationIdxRange,
     },
-    expr::VdMirExprIdx,
+    expr::{application::VdMirFunc, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
     hypothesis::{constructor::VdMirHypothesisConstructor, VdMirHypothesisIdx},
 };
 
@@ -59,8 +60,20 @@ where
     ) -> VdMirExprIdx {
         let term = expr.term();
         let expr_transcription = self.transcribe_expr(expr, hypothesis_constructor);
-        let term_transcription = self.transcribe_term(term, hypothesis_constructor);
-        todo!()
+        let term_transcription =
+            self.transcribe_term(term, expr.expected_ty(), hypothesis_constructor);
+        let eq_func = VdMirFunc::NormalBaseSeparator(self.eq_signature(expr.ty()));
+        let prop_expr_data = VdMirExprData::ChainingSeparatedList {
+            leader: expr_transcription,
+            followers: smallvec![(eq_func, term_transcription)],
+            joined_signature: None,
+        };
+        let prop_expr_ty = self.ty_menu().prop;
+        hypothesis_constructor.construct_expr(VdMirExprEntry::new(
+            prop_expr_data,
+            prop_expr_ty,
+            None,
+        ))
     }
 
     fn transcribe_expr_term_derivation_construction(
