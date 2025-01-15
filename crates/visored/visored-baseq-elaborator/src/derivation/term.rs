@@ -70,11 +70,7 @@ where
             joined_signature: None,
         };
         let prop_expr_ty = self.ty_menu().prop;
-        hypothesis_constructor.construct_expr(VdMirExprEntry::new(
-            prop_expr_data,
-            prop_expr_ty,
-            None,
-        ))
+        hypothesis_constructor.mk_expr(VdMirExprEntry::new(prop_expr_data, prop_expr_ty, None))
     }
 
     fn transcribe_expr_term_derivation_construction(

@@ -1,4 +1,5 @@
 use visored_mir_opr::separator::VdMirBaseSeparator;
+use visored_opr::separator::VdBaseSeparator;
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub enum VdBsqComparisonOpr {
@@ -66,6 +67,27 @@ impl VdBsqBoundOpr {
             VdBsqBoundOpr::Gt => VdBsqBoundBoundaryKind::Open,
             VdBsqBoundOpr::Le => VdBsqBoundBoundaryKind::Closed,
             VdBsqBoundOpr::Ge => VdBsqBoundBoundaryKind::Closed,
+        }
+    }
+}
+
+impl Into<VdBaseSeparator> for VdBsqComparisonOpr {
+    fn into(self) -> VdBaseSeparator {
+        match self {
+            VdBsqComparisonOpr::Eq => VdBaseSeparator::Eq,
+            VdBsqComparisonOpr::Ne => VdBaseSeparator::Ne,
+            VdBsqComparisonOpr::Bound(bound_opr) => bound_opr.into(),
+        }
+    }
+}
+
+impl Into<VdBaseSeparator> for VdBsqBoundOpr {
+    fn into(self) -> VdBaseSeparator {
+        match self {
+            VdBsqBoundOpr::Lt => VdBaseSeparator::Lt,
+            VdBsqBoundOpr::Gt => VdBaseSeparator::Gt,
+            VdBsqBoundOpr::Le => VdBaseSeparator::Le,
+            VdBsqBoundOpr::Ge => VdBaseSeparator::Ge,
         }
     }
 }

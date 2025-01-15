@@ -1,3 +1,5 @@
+mod signature;
+
 use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
 use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 

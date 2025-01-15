@@ -1,4 +1,6 @@
 use crate::foundations::opr::separator::relation::comparison::VdBsqComparisonOpr;
+use smallvec::*;
+use visored_opr::separator::VdBaseSeparator;
 
 use super::*;
 
@@ -84,6 +86,21 @@ impl<'db, 'sess> VdBsqNumRelation<'sess> {
         let (lhs_minus_rhs_data, lhs_minus_rhs_ty) = self
             .lhs_minus_rhs()
             .transcribe_data_and_ty(elaborator, hypothesis_constructor);
-        todo!()
+        let signature = hypothesis_constructor.infer_base_separator_signature(
+            lhs_minus_rhs_ty,
+            self.opr().into(),
+            lhs_minus_rhs_ty,
+        );
+        let leader = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
+            lhs_minus_rhs_data,
+            lhs_minus_rhs_ty,
+            None,
+        ));
+        let zero = hypothesis_constructor.mk_zero(Some(signature.item_ty()));
+        VdMirExprData::ChainingSeparatedList {
+            leader,
+            followers: smallvec![(VdMirFunc::NormalBaseSeparator(signature), zero)],
+            joined_signature: None,
+        }
     }
 }

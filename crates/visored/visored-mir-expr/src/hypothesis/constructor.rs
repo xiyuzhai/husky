@@ -1,3 +1,7 @@
+mod signature;
+
+use std::any::Any;
+
 use super::{
     chunk::VdMirHypothesisChunk, construction::VdMirHypothesisConstruction, VdMirHypothesisArena,
     VdMirHypothesisIdx,
@@ -20,10 +24,15 @@ use crate::{
 use eterned::db::EternerDb;
 use rustc_hash::FxHashMap;
 use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
-use visored_term::ty::VdType;
+use visored_term::{
+    menu::{vd_ty_menu, VdTypeMenu},
+    term::literal::VdLiteral,
+    ty::VdType,
+};
 
 pub struct VdMirHypothesisConstructor<'db, Src> {
     db: &'db EternerDb,
+    ty_menu: &'db VdTypeMenu,
     default_global_dispatch_table: VdDefaultGlobalDispatchTable,
     expr_arena: VdMirExprArena,
     stmt_arena: VdMirStmtArena,
@@ -47,6 +56,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     ) -> Self {
         Self {
             db,
+            ty_menu: vd_ty_menu(db),
             default_global_dispatch_table,
             expr_arena,
             stmt_arena,
@@ -62,6 +72,10 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
 }
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
+    pub fn default_global_dispatch_table(&self) -> &VdDefaultGlobalDispatchTable {
+        &self.default_global_dispatch_table
+    }
+
     pub fn expr_arena(&self) -> VdMirExprArenaRef {
         self.expr_arena.as_arena_ref()
     }
@@ -133,11 +147,20 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         hypothesis
     }
 
-    pub fn construct_expr(&mut self, entry: VdMirExprEntry) -> VdMirExprIdx {
+    pub fn mk_expr(&mut self, entry: VdMirExprEntry) -> VdMirExprIdx {
         self.expr_arena.alloc_one(entry)
     }
 
-    pub fn construct_exprs(
+    pub fn mk_zero(&mut self, expected_ty: Option<VdType>) -> VdMirExprIdx {
+        let db = self.db;
+        self.expr_arena.alloc_one(VdMirExprEntry::new(
+            VdMirExprData::Literal(VdLiteral::new_int128(0, db)),
+            self.ty_menu.nat,
+            expected_ty,
+        ))
+    }
+
+    pub fn mk_exprs(
         &mut self,
         exprs: impl IntoIterator<Item = VdMirExprEntry>,
     ) -> VdMirExprIdxRange {

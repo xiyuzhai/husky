@@ -304,7 +304,7 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let entry = self.transcribe_entry(elaborator, hypothesis_constructor);
-        hypothesis_constructor.construct_expr(entry)
+        hypothesis_constructor.mk_expr(entry)
     }
 
     fn transcribe_entry(
@@ -336,7 +336,7 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                     .collect::<Vec<_>>();
                 VdMirExprData::Application {
                     function,
-                    arguments: hypothesis_constructor.construct_exprs(exprs),
+                    arguments: hypothesis_constructor.mk_exprs(exprs),
                 }
             }
             VdBsqExprFldData::FoldingSeparatedList {

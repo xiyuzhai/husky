@@ -537,7 +537,7 @@ impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
             VdBsqLitnumTerm::Frac128(f) => {
                 let a = VdMirExprData::Application {
                     function: VdMirFunc::NormalBaseBinaryOpr(elaborator.signature_menu().rat_div),
-                    arguments: hypothesis_constructor.construct_exprs([
+                    arguments: hypothesis_constructor.mk_exprs([
                         VdMirExprEntry::new(
                             VdMirExprData::Literal(VdLiteral::new_int128(f.numerator(), db)),
                             if f.numerator() >= 0 {

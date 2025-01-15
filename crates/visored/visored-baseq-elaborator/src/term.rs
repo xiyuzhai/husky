@@ -335,7 +335,7 @@ impl<'db, 'sess> VdBsqTerm<'sess> {
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let (data, ty) = self.transcribe_data_and_ty(elaborator, hypothesis_constructor);
-        hypothesis_constructor.construct_expr(VdMirExprEntry::new(data, ty, expected_ty))
+        hypothesis_constructor.mk_expr(VdMirExprEntry::new(data, ty, expected_ty))
     }
 
     pub(crate) fn transcribe_data_and_ty(

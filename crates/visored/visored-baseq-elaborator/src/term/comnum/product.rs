@@ -375,14 +375,14 @@ fn transcribe_factors_data_and_ty<'db, 'sess>(
         transcribe_factor_data_and_ty(elaborator, factors.next().unwrap(), hypothesis_constructor);
     let (fst_follower_data, fst_follower_ty) =
         transcribe_factor_data_and_ty(elaborator, factors.next().unwrap(), hypothesis_constructor);
-    let fst_signature = elaborator.mul_signature(leader_ty, fst_follower_ty);
+    let fst_signature = hypothesis_constructor.infer_mul_signature(leader_ty, fst_follower_ty);
     let mut acc_ty = fst_signature.expr_ty();
-    let leader = hypothesis_constructor.construct_expr(VdMirExprEntry::new(
+    let leader = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
         leader_data,
         leader_ty,
         Some(fst_signature.item_ty()),
     ));
-    let fst_follower = hypothesis_constructor.construct_expr(VdMirExprEntry::new(
+    let fst_follower = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
         fst_follower_data,
         fst_follower_ty,
         Some(fst_signature.item_ty()),
@@ -392,7 +392,7 @@ fn transcribe_factors_data_and_ty<'db, 'sess>(
     for factor in factors {
         let (follower_data, follower_ty) =
             transcribe_factor_data_and_ty(elaborator, factor, hypothesis_constructor);
-        let signature = elaborator.mul_signature(acc_ty, follower_ty);
+        let signature = hypothesis_constructor.infer_mul_signature(acc_ty, follower_ty);
         acc_ty = signature.expr_ty();
         todo!()
     }

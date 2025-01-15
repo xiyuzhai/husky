@@ -173,7 +173,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
                     assignment.ty(),
                     None,
                 );
-                let signature = self.eq_signature(assignment.ty());
+                let signature = region_data.infer_eq_signature(assignment.ty(), assignment.ty());
                 let eq_expr_data = VdBsqExprFldData::ChainingSeparatedList {
                     leader: variable,
                     followers: smallvec![(VdMirFunc::NormalBaseSeparator(signature), assignment)],
