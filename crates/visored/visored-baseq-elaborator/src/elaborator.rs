@@ -319,7 +319,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         prop: VdMirExprIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirHypothesisIdx {
-        self.transcribe_hypothesis(hypothesis, Some(prop), hypothesis_constructor)
+        hypothesis.transcribe(self, Some(prop), hypothesis_constructor)
     }
 
     fn transcribe_implicit_hypothesis(
@@ -327,7 +327,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         hypothesis: VdBsqHypothesisIdx<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirHypothesisIdx {
-        self.transcribe_hypothesis(hypothesis, None, hypothesis_constructor)
+        hypothesis.transcribe(self, None, hypothesis_constructor)
     }
 }
 

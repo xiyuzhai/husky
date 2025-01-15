@@ -65,26 +65,26 @@ impl<'sess> VdBsqHypothesisEntry<'sess> {
     }
 }
 
-impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn transcribe_hypothesis(
-        &self,
-        hypothesis: VdBsqHypothesisIdx<'sess>,
+impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
+    pub(crate) fn transcribe(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         explicit_prop: Option<VdMirExprIdx>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirHypothesisIdx {
-        hypothesis_constructor.construct_new_hypothesis(hypothesis, |hypothesis_constructor| {
-            self.transcribe_hypothesis_inner(hypothesis, explicit_prop, hypothesis_constructor)
+        hypothesis_constructor.construct_new_hypothesis(self, |hypothesis_constructor| {
+            self.transcribe_inner(explicit_prop, elaborator, hypothesis_constructor)
         })
     }
 
-    fn transcribe_hypothesis_inner(
-        &self,
-        hypothesis: VdBsqHypothesisIdx<'sess>,
+    fn transcribe_inner(
+        self,
         explicit_prop: Option<VdMirExprIdx>,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprIdx, VdMirHypothesisConstruction) {
-        let hypothesis_entry = &self.hypothesis_constructor.arena()[hypothesis];
-        let construction = match *self.hypothesis_constructor.arena()[hypothesis].construction() {
+        let hypothesis_entry = &elaborator.hypothesis_constructor.arena()[self];
+        let construction = match *elaborator.hypothesis_constructor.arena()[self].construction() {
             VdBsqHypothesisConstruction::Sorry => VdMirHypothesisConstruction::Sorry,
             VdBsqHypothesisConstruction::TermTrivial(b) => {
                 VdMirHypothesisConstruction::TermTrivial(b)
@@ -94,21 +94,17 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 is_real_coercion,
             } => VdMirHypothesisConstruction::Apply {
                 path,
-                is_real_coercion: self
+                is_real_coercion: elaborator
                     .transcribe_coercion(is_real_coercion, hypothesis_constructor),
             },
             VdBsqHypothesisConstruction::Assume => VdMirHypothesisConstruction::Assume,
             VdBsqHypothesisConstruction::TermEquivalence {
                 hypothesis: src_hypothesis,
             } => VdMirHypothesisConstruction::TermEquivalence {
-                hypothesis: self.transcribe_hypothesis(
+                hypothesis: src_hypothesis.transcribe(elaborator, None, hypothesis_constructor),
+                derivation_chunk: elaborator.transcribe_term_derivation(
                     src_hypothesis,
-                    None,
-                    hypothesis_constructor,
-                ),
-                derivation_chunk: self.transcribe_term_derivation(
-                    hypothesis,
-                    src_hypothesis,
+                    self,
                     hypothesis_constructor,
                 ),
             },
@@ -121,7 +117,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             Some(prop) => prop,
             None => hypothesis_entry
                 .expr()
-                .transcribe(self, hypothesis_constructor),
+                .transcribe(elaborator, hypothesis_constructor),
         };
         (prop, construction)
     }
