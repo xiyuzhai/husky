@@ -274,8 +274,8 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     match func {
                         VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
                         VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
-                            VdMirBaseSeparator::CommRingAdd => todo!(),
-                            VdMirBaseSeparator::CommRingMul => todo!(),
+                            VdMirBaseSeparator::CommRingAdd => unreachable!(),
+                            VdMirBaseSeparator::CommRingMul => unreachable!(),
                             VdMirBaseSeparator::Eq => {
                                 num_relationship(self, VdBsqComparisonOpr::EQ)
                             }
