@@ -133,3 +133,30 @@ impl<'sess> VdBsqNumTerm<'sess> {
         todo!()
     }
 }
+
+impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
+    pub(super) fn transcribe_num_term(
+        &self,
+        num: VdBsqNumTerm<'sess>,
+        expected_ty: Option<VdType>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprIdx {
+        let (data, ty) = self.transcribe_num_term_data_and_ty(num, hypothesis_constructor);
+        hypothesis_constructor.construct_expr(VdMirExprEntry::new(data, ty, expected_ty))
+    }
+
+    fn transcribe_num_term_data_and_ty(
+        &self,
+        num: VdBsqNumTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprData, VdType) {
+        match num {
+            VdBsqNumTerm::Litnum(term) => {
+                self.transcribe_litnum_data_and_ty(term, hypothesis_constructor)
+            }
+            VdBsqNumTerm::Comnum(term) => {
+                self.transcribe_comnum_data_and_ty(term, hypothesis_constructor)
+            }
+        }
+    }
+}

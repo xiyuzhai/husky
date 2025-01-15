@@ -197,3 +197,89 @@ impl<'sess> VdBsqSumTerm<'sess> {
         todo!()
     }
 }
+
+impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
+    pub(super) fn transcribe_sum_data_and_ty(
+        &self,
+        sum: VdBsqSumTerm<'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprData, VdType) {
+        let monomials = sum.monomials().iter().cloned().map(Right);
+        match sum.constant_term().is_nonzero() {
+            true => self.transcribe_summands_data_and_ty(
+                [Left(sum.constant_term())].into_iter().chain(monomials),
+                hypothesis_constructor,
+            ),
+            false => self.transcribe_summands_data_and_ty(monomials, hypothesis_constructor),
+        }
+    }
+
+    fn transcribe_summands_data_and_ty(
+        &self,
+        summands: impl IntoIterator<
+            Item = Either<
+                VdBsqLitnumTerm<'sess>,
+                (VdBsqProductStem<'sess>, VdBsqLitnumTerm<'sess>),
+            >,
+        >,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprData, VdType) {
+        let mut summands = summands.into_iter();
+        let leader = summands.next().unwrap();
+        let (leader_data, leader_ty) =
+            self.transcribe_summand_data_and_ty(leader, hypothesis_constructor);
+        let fst_follower = summands.next().unwrap();
+        let (fst_follower_data, fst_follower_ty) =
+            self.transcribe_summand_data_and_ty(fst_follower, hypothesis_constructor);
+        let fst_signature = self.add_signature(leader_ty, fst_follower_ty);
+        let fst_func = VdMirFunc::NormalBaseSeparator(fst_signature);
+        let leader = hypothesis_constructor.construct_expr(VdMirExprEntry::new(
+            leader_data,
+            leader_ty,
+            Some(fst_signature.item_ty()),
+        ));
+        let mut followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]> = SmallVec::with_capacity(2);
+        followers.push((
+            fst_func,
+            hypothesis_constructor.construct_expr(VdMirExprEntry::new(
+                fst_follower_data,
+                fst_follower_ty,
+                Some(fst_signature.item_ty()),
+            )),
+        ));
+        let mut acc_ty = fst_signature.expr_ty();
+        for follower in summands {
+            let (follower_data, follower_ty) =
+                self.transcribe_summand_data_and_ty(follower, hypothesis_constructor);
+            let signature = self.add_signature(acc_ty, follower_ty);
+            let func = VdMirFunc::NormalBaseSeparator(signature);
+            followers.push((
+                func,
+                hypothesis_constructor.construct_expr(VdMirExprEntry::new(
+                    follower_data,
+                    follower_ty,
+                    Some(signature.item_ty()),
+                )),
+            ));
+        }
+        (
+            VdMirExprData::FoldingSeparatedList { leader, followers },
+            acc_ty,
+        )
+    }
+
+    fn transcribe_summand_data_and_ty(
+        &self,
+        either: Either<VdBsqLitnumTerm<'sess>, (VdBsqProductStem<'sess>, VdBsqLitnumTerm<'sess>)>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprData, VdType) {
+        match either {
+            Left(litnum) => self.transcribe_litnum_data_and_ty(litnum, hypothesis_constructor),
+            Right((stem, coeff)) => self.transcribe_product_stem_and_coeff_data_and_ty(
+                stem,
+                coeff,
+                hypothesis_constructor,
+            ),
+        }
+    }
+}

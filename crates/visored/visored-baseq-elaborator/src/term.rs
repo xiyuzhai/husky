@@ -130,6 +130,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         VdBsqTerm::new_numeric_variable(
                             lx_math_letter,
                             local_defn_idx,
+                            ty,
                             self.floater_db(),
                         )
                     }
@@ -347,7 +348,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 self.transcribe_litnum_data_and_ty(litnum, hypothesis_constructor)
             }
             VdBsqTerm::Comnum(comnum) => {
-                self.transcribe_comnum_data(comnum, hypothesis_constructor)
+                self.transcribe_comnum_data_and_ty(comnum, hypothesis_constructor)
             }
             VdBsqTerm::Prop(prop) => self.transcribe_prop_data_and_ty(prop, hypothesis_constructor),
             VdBsqTerm::Set(set) => self.transcribe_set_data_and_ty(set, hypothesis_constructor),
@@ -398,14 +399,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 (a, self.ty_menu().rat)
             }
         }
-    }
-
-    fn transcribe_comnum_data(
-        &self,
-        comnum: VdBsqComnumTerm<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        todo!()
     }
 
     fn transcribe_set_data_and_ty(
