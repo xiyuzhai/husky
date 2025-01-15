@@ -36,6 +36,7 @@ husky-tree-utils.workspace = true
 # visored
 visored-annotation.workspace = true
 visored-entity-path.workspace = true
+visored-global-dispatch.workspace = true
 visored-models.workspace = true
 visored-syn-expr.workspace = true
 visored-sem-expr.workspace = true

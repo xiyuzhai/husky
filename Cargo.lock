@@ -13460,6 +13460,7 @@ dependencies = [
  "visored-annotation",
  "visored-baseq-elaborator-macros",
  "visored-entity-path",
+ "visored-global-dispatch",
  "visored-lean-transpilation",
  "visored-mir-expr",
  "visored-mir-opr",

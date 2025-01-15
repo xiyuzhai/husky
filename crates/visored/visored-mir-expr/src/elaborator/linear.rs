@@ -93,6 +93,13 @@ pub trait IsVdMirSequentialElaboratorInner<'db>: Sized {
         hypothesis: Self::HypothesisIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx;
+
+    fn run<R>(
+        db: &'db EternerDb,
+        global_dispatch_table: &VdDefaultGlobalDispatchTable,
+        hypothesis_constructor: VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Self::HypothesisIdx>) -> R,
+    ) -> R;
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -212,6 +219,15 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
             (todo!(), VdMirHypothesisConstruction::Sorry)
         })
     }
+
+    fn run<R>(
+        db: &'db EternerDb,
+        global_dispatch_table: &VdDefaultGlobalDispatchTable,
+        hypothesis_constructor: VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Self::HypothesisIdx>) -> R,
+    ) -> R {
+        f((), hypothesis_constructor)
+    }
 }
 
 impl<'db, Inner> VdMirSequentialElaborator<'db, Inner>
@@ -255,6 +271,20 @@ where
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
         self.elaborate_expr(expr, hypothesis_constructor);
+    }
+
+    fn run<R>(
+        db: &'db EternerDb,
+        global_dispatch_table: &VdDefaultGlobalDispatchTable,
+        hypothesis_constructor: VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>) -> R,
+    ) -> R {
+        Inner::run(
+            db,
+            global_dispatch_table,
+            hypothesis_constructor,
+            |inner, hypothesis_constructor| f(Self::new(inner), hypothesis_constructor),
+        )
     }
 }
 

@@ -3,6 +3,7 @@ use crate::*;
 use config::VdBsqElaboratorConfig;
 use floated_sequential::db::FloaterDb;
 use strategy::obvious::load_obvious_tactics;
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 use visored_mir_expr::expr::VdMirExprIdx;
 
 type SuperVarsContext = ();

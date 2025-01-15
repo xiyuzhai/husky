@@ -21,6 +21,7 @@ use lean_mir_expr::{
     tactic::LnMirTacticArena,
 };
 use visored_annotation::annotation::{space::VdSpaceAnnotation, token::VdTokenAnnotation};
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 use visored_mir_expr::{
     elaborator::IsVdMirTacticElaborator,
     expr::VdMirExprIdx,
@@ -87,12 +88,12 @@ where
         vibe: VdSynExprVibe,
         db: &'db EternerDb,
         scheme: &'db Scheme,
-        gen_elaborator: impl Fn(VdMirExprRegionDataRef) -> Elaborator,
     ) -> Self {
         let content = input.content();
         let VdMirExprTracker {
             input,
             root_module_path,
+            default_global_dispatch_table,
             expr_arena: vd_mir_expr_arena,
             stmt_arena: vd_mir_stmt_arena,
             hint_arena: vd_mir_hint_arena,
@@ -108,7 +109,7 @@ where
             sem_division_range_map,
             token_storage,
             output,
-        } = VdMirExprTracker::new(input, &[], &[], models, vibe, db, gen_elaborator);
+        } = VdMirExprTracker::new::<Elaborator>(input, &[], &[], models, vibe, db);
         let dictionary = &VdLeanDictionary::new_standard(db);
         let mut builder = VdLeanTranspilationBuilder::new(
             db,

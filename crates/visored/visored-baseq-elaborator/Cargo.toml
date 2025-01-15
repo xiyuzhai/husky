@@ -47,6 +47,7 @@ husky-unicode-symbols.workspace = true
 # visored
 visored-annotation.workspace = true
 visored-entity-path.workspace = true
+visored-global-dispatch.workspace = true
 visored-lean-transpilation.workspace = true
 visored-mir-expr.workspace = true
 visored-models.workspace = true

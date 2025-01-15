@@ -1,5 +1,8 @@
 pub mod linear;
 
+use eterned::db::EternerDb;
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
+
 use crate::{
     expr::VdMirExprIdx,
     hypothesis::constructor::VdMirHypothesisConstructor,
@@ -8,7 +11,7 @@ use crate::{
     *,
 };
 
-pub trait IsVdMirTacticElaborator<'db> {
+pub trait IsVdMirTacticElaborator<'db>: Sized {
     type HypothesisIdx;
 
     fn elaborate_stmts_ext(
@@ -26,6 +29,13 @@ pub trait IsVdMirTacticElaborator<'db> {
         expr: VdMirExprIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     );
+
+    fn run<R>(
+        db: &'db EternerDb,
+        global_dispatch_table: &VdDefaultGlobalDispatchTable,
+        hypothesis_constructor: VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Self::HypothesisIdx>) -> R,
+    ) -> R;
 }
 
 pub type VdMirTrivialElaborator<'db> = self::linear::VdMirSequentialElaborator<'db, ()>;

@@ -23,6 +23,8 @@ use source_map::VdMirRegionSourceMap;
 use symbol::local_defn::storage::VdMirSymbolLocalDefnStorage;
 use visored_annotation::annotation::{space::VdSpaceAnnotation, token::VdTokenAnnotation};
 use visored_entity_path::module::VdModulePath;
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
+use visored_global_resolution::default_table::VdDefaultGlobalResolutionTable;
 use visored_sem_expr::{
     helpers::tracker::{IsVdSemExprInput, VdSemExprTracker},
     range::{
@@ -35,6 +37,7 @@ use visored_syn_expr::vibe::VdSynExprVibe;
 pub struct VdMirExprTracker<'a, Input: IsVdMirExprInput<'a>> {
     pub input: Input,
     pub root_module_path: VdModulePath,
+    pub default_global_dispatch_table: VdDefaultGlobalDispatchTable,
     pub expr_arena: VdMirExprArena,
     pub stmt_arena: VdMirStmtArena,
     pub hint_arena: VdMirHintArena,
@@ -91,13 +94,12 @@ where
         models: &VdModels,
         vibe: VdSynExprVibe,
         db: &'db EternerDb,
-        gen_elaborator: impl Fn(VdMirExprRegionDataRef) -> Elaborator,
     ) -> Self {
         let VdSemExprTracker {
             root_module_path,
             input,
             annotations,
-            default_resolution_table,
+            default_global_dispatch_table,
             token_storage,
             ast_arena,
             ast_token_idx_range_map,
@@ -136,13 +138,6 @@ where
         let output: Input::VdMirExprOutput = FromToVdMir::from_to_vd_mir(output, &mut builder);
         let (mut expr_arena, mut stmt_arena, mut hint_arena, symbol_local_defn_storage, source_map) =
             builder.finish();
-        let region_data = VdMirExprRegionDataRef {
-            expr_arena: expr_arena.as_arena_ref(),
-            stmt_arena: stmt_arena.as_arena_ref(),
-            hint_arena: hint_arena.as_arena_ref(),
-            symbol_local_defn_storage: &symbol_local_defn_storage,
-        };
-        let elaborator = gen_elaborator(region_data);
         let mut hypothesis_constructor = VdMirHypothesisConstructor::new(
             db,
             expr_arena,
@@ -150,7 +145,6 @@ where
             hint_arena,
             symbol_local_defn_storage,
         );
-        output.elaborate_self(elaborator, &mut hypothesis_constructor);
         let (
             expr_arena,
             stmt_arena,
@@ -158,10 +152,19 @@ where
             hypothesis_arena,
             derivation_arena,
             symbol_local_defn_storage,
-        ) = hypothesis_constructor.finish();
+        ) = Elaborator::run(
+            db,
+            &default_global_dispatch_table,
+            hypothesis_constructor,
+            |elaborator, mut hypothesis_constructor| {
+                output.elaborate_self(elaborator, &mut hypothesis_constructor);
+                hypothesis_constructor.finish()
+            },
+        );
         Self {
             input,
             root_module_path,
+            default_global_dispatch_table,
             expr_arena,
             stmt_arena,
             hint_arena,

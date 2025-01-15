@@ -9,7 +9,7 @@ fn t(models: &VdModels, content: &str, expected_display_tree: &Expect, expected_
     let db = &EternerDb::default();
     let dev_paths = HuskyLangDevPaths::new();
     let file_path = LxFilePath::new(PathBuf::from(file!()), db);
-    let tracker = VdLeanTranspilationTracker::new(
+    let tracker = VdLeanTranspilationTracker::new::<VdMirTrivialElaborator>(
         LxDocumentInput {
             specs_dir: dev_paths.specs_dir().to_path_buf(),
             file_path,
@@ -21,7 +21,6 @@ fn t(models: &VdModels, content: &str, expected_display_tree: &Expect, expected_
         VdSynExprVibe::ROOT_CNL,
         db,
         &VdLeanTranspilationSparseScheme,
-        |_| VdMirTrivialElaborator::default(),
     );
     expected_display_tree.assert_eq(&tracker.show_display_tree(db));
     expected_fmt.assert_eq(&tracker.show_fmt(db));
