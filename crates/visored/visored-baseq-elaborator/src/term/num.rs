@@ -133,3 +133,14 @@ impl<'sess> VdBsqNumTerm<'sess> {
         todo!()
     }
 }
+
+impl<'db, 'sess> VdBsqNumTerm<'sess> {
+    pub(crate) fn transcribe(
+        self,
+        expected_ty: Option<VdType>,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirExprData {
+        todo!()
+    }
+}

@@ -21,3 +21,13 @@ impl<'sess> VdBsqSetTerm<'sess> {
         }
     }
 }
+
+impl<'db, 'sess> VdBsqSetTerm<'sess> {
+    pub(crate) fn transcribe_data_and_ty(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprData, VdType) {
+        todo!()
+    }
+}

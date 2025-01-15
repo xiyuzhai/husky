@@ -36,28 +36,28 @@ impl<'sess> VdBsqPropTerm<'sess> {
     }
 }
 
-impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(super) fn transcribe_prop_data_and_ty(
-        &self,
-        prop: VdBsqPropTerm<'sess>,
+impl<'db, 'sess> VdBsqPropTerm<'sess> {
+    pub(crate) fn transcribe_data_and_ty(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
-        let data = self.transcribe_prop_data(prop, hypothesis_constructor);
-        let ty = self.ty_menu().prop;
+        let data = self.transcribe_data(elaborator, hypothesis_constructor);
+        let ty = elaborator.ty_menu().prop;
         (data, ty)
     }
 
-    fn transcribe_prop_data(
-        &self,
-        prop: VdBsqPropTerm<'sess>,
+    fn transcribe_data(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
-        match prop {
+        match self {
             VdBsqPropTerm::NumRelation(num_relation) => {
-                self.transcribe_num_relation_data(num_relation, hypothesis_constructor)
+                num_relation.transcribe(elaborator, hypothesis_constructor)
             }
             VdBsqPropTerm::NumChain(num_chain) => {
-                self.transcribe_num_chain_data(num_chain, hypothesis_constructor)
+                num_chain.transcribe(elaborator, hypothesis_constructor)
             }
             VdBsqPropTerm::Trivial(b) => {
                 let path = match b {

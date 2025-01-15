@@ -13,10 +13,10 @@ impl<'sess> From<VdBsqNumChain<'sess>> for VdBsqTerm<'sess> {
     }
 }
 
-impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(super) fn transcribe_num_chain_data(
-        &self,
-        num_chain: VdBsqNumChain<'sess>,
+impl<'db, 'sess> VdBsqNumChain<'sess> {
+    pub(crate) fn transcribe(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
         todo!()

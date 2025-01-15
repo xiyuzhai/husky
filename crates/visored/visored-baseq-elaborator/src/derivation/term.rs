@@ -31,8 +31,9 @@ where
                 self.hypothesis_constructor.arena()[dst].expr(),
                 hypothesis_constructor,
             );
-            let prop = self.hypothesis_constructor.arena()[dst].expr();
-            let prop = self.transcribe_expr(prop, hypothesis_constructor);
+            let prop = self.hypothesis_constructor.arena()[dst]
+                .expr()
+                .transcribe(self, hypothesis_constructor);
             hypothesis_constructor.alloc_derivation(
                 prop,
                 VdMirDerivationConstruction::Term(VdMirTermDerivationConstruction::Finalize {
@@ -60,9 +61,8 @@ where
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let term = expr.term();
-        let expr_transcription = self.transcribe_expr(expr, hypothesis_constructor);
-        let term_transcription =
-            self.transcribe_term(term, expr.expected_ty(), hypothesis_constructor);
+        let expr_transcription = expr.transcribe(self, hypothesis_constructor);
+        let term_transcription = term.transcribe(self, expr.expected_ty(), hypothesis_constructor);
         let eq_func = VdMirFunc::NormalBaseSeparator(self.signature_menu().nat_eq);
         let prop_expr_data = VdMirExprData::ChainingSeparatedList {
             leader: expr_transcription,

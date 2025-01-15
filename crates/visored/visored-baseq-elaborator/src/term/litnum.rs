@@ -511,3 +511,51 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
         }
     }
 }
+
+impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
+    pub(crate) fn transcribe_data_and_ty(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprData, VdType) {
+        let db = elaborator.eterner_db();
+        match self {
+            VdBsqLitnumTerm::Int128(i) => {
+                if i >= 0 {
+                    (
+                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
+                        elaborator.ty_menu().nat,
+                    )
+                } else {
+                    (
+                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
+                        elaborator.ty_menu().int,
+                    )
+                }
+            }
+            VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
+            VdBsqLitnumTerm::Frac128(f) => {
+                let a = VdMirExprData::Application {
+                    function: VdMirFunc::NormalBaseBinaryOpr(elaborator.signature_menu().rat_div),
+                    arguments: hypothesis_constructor.construct_exprs([
+                        VdMirExprEntry::new(
+                            VdMirExprData::Literal(VdLiteral::new_int128(f.numerator(), db)),
+                            if f.numerator() >= 0 {
+                                elaborator.ty_menu().nat
+                            } else {
+                                elaborator.ty_menu().int
+                            },
+                            Some(elaborator.ty_menu().rat),
+                        ),
+                        VdMirExprEntry::new(
+                            VdMirExprData::Literal(VdLiteral::new_int128(f.denominator(), db)),
+                            elaborator.ty_menu().nat,
+                            Some(elaborator.ty_menu().rat),
+                        ),
+                    ]),
+                };
+                (a, elaborator.ty_menu().rat)
+            }
+        }
+    }
+}

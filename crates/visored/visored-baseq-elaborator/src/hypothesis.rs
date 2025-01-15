@@ -90,7 +90,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         };
         let prop = match explicit_prop {
             Some(prop) => prop,
-            None => self.transcribe_expr(hypothesis_entry.expr(), hypothesis_constructor),
+            None => hypothesis_entry
+                .expr()
+                .transcribe(self, hypothesis_constructor),
         };
         (prop, construction)
     }

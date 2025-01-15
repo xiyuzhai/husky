@@ -297,33 +297,33 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 }
 
-impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub fn transcribe_expr(
+impl<'db, 'sess> VdBsqExprFld<'sess> {
+    pub fn transcribe(
         &self,
-        expr: VdBsqExprFld<'sess>,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
-        let entry = self.transcribe_expr_entry(expr, hypothesis_constructor);
+        let entry = self.transcribe_entry(elaborator, hypothesis_constructor);
         hypothesis_constructor.construct_expr(entry)
     }
 
-    fn transcribe_expr_entry(
+    fn transcribe_entry(
         &self,
-        expr: VdBsqExprFld<'sess>,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprEntry {
-        let data = self.transcribe_expr_data(expr.data(), hypothesis_constructor);
-        let ty = expr.ty();
-        let expected_ty = expr.expected_ty();
+        let data = self.transcribe_expr_data(elaborator, hypothesis_constructor);
+        let ty = self.ty();
+        let expected_ty = self.expected_ty();
         VdMirExprEntry::new(data, ty, expected_ty)
     }
 
     fn transcribe_expr_data(
         &self,
-        expr_data: &VdBsqExprFldData<'sess>,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
-        match *expr_data {
+        match *self.data() {
             VdBsqExprFldData::Literal(lit) => VdMirExprData::Literal(lit),
             VdBsqExprFldData::Variable(_, symbol) => VdMirExprData::Variable(symbol),
             VdBsqExprFldData::Application {
@@ -332,7 +332,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             } => {
                 let exprs = arguments
                     .iter()
-                    .map(|arg| self.transcribe_expr_entry(*arg, hypothesis_constructor))
+                    .map(|arg| arg.transcribe_entry(elaborator, hypothesis_constructor))
                     .collect::<Vec<_>>();
                 VdMirExprData::Application {
                     function,
@@ -343,11 +343,14 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 leader,
                 ref followers,
             } => VdMirExprData::FoldingSeparatedList {
-                leader: self.transcribe_expr(leader, hypothesis_constructor),
+                leader: leader.transcribe(elaborator, hypothesis_constructor),
                 followers: followers
                     .iter()
                     .map(|&(func, follower)| {
-                        (func, self.transcribe_expr(follower, hypothesis_constructor))
+                        (
+                            func,
+                            follower.transcribe(elaborator, hypothesis_constructor),
+                        )
                     })
                     .collect(),
             },
@@ -356,11 +359,14 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 ref followers,
                 joined_signature,
             } => VdMirExprData::ChainingSeparatedList {
-                leader: self.transcribe_expr(leader, hypothesis_constructor),
+                leader: leader.transcribe(elaborator, hypothesis_constructor),
                 followers: followers
                     .iter()
                     .map(|&(func, follower)| {
-                        (func, self.transcribe_expr(follower, hypothesis_constructor))
+                        (
+                            func,
+                            follower.transcribe(elaborator, hypothesis_constructor),
+                        )
                     })
                     .collect(),
                 joined_signature,

@@ -75,12 +75,15 @@ impl<'sess> VdBsqNumRelation<'sess> {
     }
 }
 
-impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(super) fn transcribe_num_relation_data(
-        &self,
-        num_relation: VdBsqNumRelation<'sess>,
+impl<'db, 'sess> VdBsqNumRelation<'sess> {
+    pub(crate) fn transcribe(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
+        let a = self
+            .lhs_minus_rhs()
+            .transcribe(None, elaborator, hypothesis_constructor);
         todo!()
     }
 }

@@ -326,93 +326,33 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 }
 
-impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub fn transcribe_term(
+impl<'db, 'sess> VdBsqTerm<'sess> {
+    pub fn transcribe(
         &self,
-        term: VdBsqTerm<'sess>,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         expected_ty: Option<VdType>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
-        let (data, ty) = self.transcribe_term_data_and_ty(term, hypothesis_constructor);
+        let (data, ty) = self.transcribe_data_and_ty(elaborator, hypothesis_constructor);
         hypothesis_constructor.construct_expr(VdMirExprEntry::new(data, ty, expected_ty))
     }
 
-    fn transcribe_term_data_and_ty(
-        &self,
-        term: VdBsqTerm<'sess>,
+    pub(crate) fn transcribe_data_and_ty(
+        self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
-        match term {
+        match self {
             VdBsqTerm::Litnum(litnum) => {
-                self.transcribe_litnum_data_and_ty(litnum, hypothesis_constructor)
+                litnum.transcribe_data_and_ty(elaborator, hypothesis_constructor)
             }
             VdBsqTerm::Comnum(comnum) => {
-                self.transcribe_comnum_data(comnum, hypothesis_constructor)
+                comnum.transcribe_data_and_ty(elaborator, hypothesis_constructor)
             }
-            VdBsqTerm::Prop(prop) => self.transcribe_prop_data_and_ty(prop, hypothesis_constructor),
-            VdBsqTerm::Set(set) => self.transcribe_set_data_and_ty(set, hypothesis_constructor),
+            VdBsqTerm::Prop(prop) => {
+                prop.transcribe_data_and_ty(elaborator, hypothesis_constructor)
+            }
+            VdBsqTerm::Set(set) => set.transcribe_data_and_ty(elaborator, hypothesis_constructor),
         }
-    }
-
-    fn transcribe_litnum_data_and_ty(
-        &self,
-        litnum: VdBsqLitnumTerm<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        let db = self.eterner_db();
-        match litnum {
-            VdBsqLitnumTerm::Int128(i) => {
-                if i >= 0 {
-                    (
-                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
-                        self.ty_menu().nat,
-                    )
-                } else {
-                    (
-                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
-                        self.ty_menu().int,
-                    )
-                }
-            }
-            VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
-            VdBsqLitnumTerm::Frac128(f) => {
-                let a = VdMirExprData::Application {
-                    function: VdMirFunc::NormalBaseBinaryOpr(self.signature_menu().rat_div),
-                    arguments: hypothesis_constructor.construct_exprs([
-                        VdMirExprEntry::new(
-                            VdMirExprData::Literal(VdLiteral::new_int128(f.numerator(), db)),
-                            if f.numerator() >= 0 {
-                                self.ty_menu().nat
-                            } else {
-                                self.ty_menu().int
-                            },
-                            Some(self.ty_menu().rat),
-                        ),
-                        VdMirExprEntry::new(
-                            VdMirExprData::Literal(VdLiteral::new_int128(f.denominator(), db)),
-                            self.ty_menu().nat,
-                            Some(self.ty_menu().rat),
-                        ),
-                    ]),
-                };
-                (a, self.ty_menu().rat)
-            }
-        }
-    }
-
-    fn transcribe_comnum_data(
-        &self,
-        comnum: VdBsqComnumTerm<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        todo!()
-    }
-
-    fn transcribe_set_data_and_ty(
-        &self,
-        set: VdBsqSetTerm<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        todo!()
     }
 }
