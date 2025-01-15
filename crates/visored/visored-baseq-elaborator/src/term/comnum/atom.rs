@@ -19,11 +19,7 @@ impl<'sess> std::fmt::Debug for VdBsqAtomTerm<'sess> {
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub enum VdBsqComnumAtomTermData {
-    Variable {
-        lx_math_letter: LxMathLetter,
-        local_defn_idx: VdMirSymbolLocalDefnIdx,
-        ty: VdType,
-    },
+    Variable(LxMathLetter, VdMirSymbolLocalDefnIdx),
 }
 
 impl<'sess> From<VdBsqAtomTerm<'sess>> for VdBsqNumTerm<'sess> {
@@ -42,15 +38,10 @@ impl<'sess> VdBsqTerm<'sess> {
     pub fn new_numeric_variable(
         lx_math_letter: LxMathLetter,
         local_defn_idx: VdMirSymbolLocalDefnIdx,
-        ty: VdType,
         db: &'sess FloaterDb,
     ) -> Self {
         VdBsqTerm::Comnum(VdBsqComnumTerm::Atom(VdBsqAtomTerm::new_inner(
-            VdBsqComnumAtomTermData::Variable {
-                lx_math_letter,
-                local_defn_idx,
-                ty,
-            },
+            VdBsqComnumAtomTermData::Variable(lx_math_letter, local_defn_idx),
             db,
         )))
     }
@@ -77,7 +68,7 @@ impl<'sess> VdBsqComnumAtomTermData {
         f: &mut std::fmt::Formatter<'_>,
     ) -> std::fmt::Result {
         match self {
-            VdBsqComnumAtomTermData::Variable { lx_math_letter, .. } => {
+            VdBsqComnumAtomTermData::Variable(lx_math_letter, _) => {
                 write!(f, "{}", lx_math_letter.unicode())
             }
         }
@@ -85,7 +76,7 @@ impl<'sess> VdBsqComnumAtomTermData {
 
     pub fn outer_precedence(&self) -> VdPrecedence {
         match self {
-            VdBsqComnumAtomTermData::Variable { .. } => VdPrecedence::ATOM,
+            VdBsqComnumAtomTermData::Variable(_, _) => VdPrecedence::ATOM,
         }
     }
 }
@@ -127,22 +118,6 @@ impl<'sess> VdBsqAtomTerm<'sess> {
         match VdBsqProductTerm::new(rhs.inverse().unwrap(), self) {
             VdBsqNumTerm::Litnum(_) => unreachable!(),
             VdBsqNumTerm::Comnum(comnum) => Some(comnum),
-        }
-    }
-}
-
-impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(super) fn transcribe_atom_data_and_ty(
-        &self,
-        atom: VdBsqAtomTerm<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        match *atom.data() {
-            VdBsqComnumAtomTermData::Variable {
-                lx_math_letter,
-                local_defn_idx,
-                ty,
-            } => (VdMirExprData::Variable(local_defn_idx), ty),
         }
     }
 }
