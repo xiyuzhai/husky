@@ -46,7 +46,6 @@ use visored_term::{
 
 pub struct VdBsqElaboratorInner<'db, 'sess> {
     session: &'sess VdBsqSession<'db>,
-    global_dispatch_table: &'db VdDefaultGlobalDispatchTable,
     term_menu: &'db VdTermMenu,
     ty_menu: &'db VdTypeMenu,
     signature_menu: &'db VdSignatureMenu,
@@ -71,7 +70,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub fn new(session: &'sess VdBsqSession<'db>, region_data: VdMirExprRegionDataRef) -> Self {
         Self {
             session,
-            global_dispatch_table: todo!(),
             term_menu: vd_term_menu(session.eterner_db()),
             ty_menu: vd_ty_menu(session.eterner_db()),
             signature_menu: vd_signature_menu(session.eterner_db()),
@@ -330,16 +328,6 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirHypothesisIdx {
         self.transcribe_hypothesis(hypothesis, None, hypothesis_constructor)
-    }
-
-    fn run<R>(
-        db: &'db EternerDb,
-        hypothesis_constructor: VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-        f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>) -> R,
-    ) -> R {
-        let session = VdBsqSession::new(db);
-        let slf = Self::new(&session, hypothesis_constructor.region_data());
-        todo!()
     }
 }
 

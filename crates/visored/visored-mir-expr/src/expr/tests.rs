@@ -16,7 +16,7 @@ fn t(content: &str, expect: &Expect) {
     let db = &EternerDb::default();
     let dev_paths = HuskyLangDevPaths::new();
     let file_path = LxFilePath::new(PathBuf::from(file!()), db);
-    let tracker = VdMirExprTracker::new::<VdMirTrivialElaborator>(
+    let tracker = VdMirExprTracker::new(
         LxFormulaInput {
             specs_dir: dev_paths.specs_dir(),
             file_path,
@@ -27,6 +27,7 @@ fn t(content: &str, expect: &Expect) {
         &VdModels::new(),
         VdSynExprVibe::ROOT_CNL,
         db,
+        |_| VdMirTrivialElaborator::new(()),
     );
     expect.assert_eq(&tracker.show_display_tree(db));
 }

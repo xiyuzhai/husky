@@ -29,12 +29,6 @@ pub trait IsVdMirTacticElaborator<'db>: Sized {
         expr: VdMirExprIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     );
-
-    fn run<R>(
-        db: &'db EternerDb,
-        hypothesis_constructor: VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
-        f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Self::HypothesisIdx>) -> R,
-    ) -> R;
 }
 
 pub type VdMirTrivialElaborator<'db> = self::linear::VdMirSequentialElaborator<'db, ()>;

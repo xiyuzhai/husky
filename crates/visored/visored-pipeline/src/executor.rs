@@ -198,7 +198,8 @@ We have $x^2 \ge 0$ because these are real numbers.
         let regularized_proof = extract_proof(&regularized_proof);
         self.regularized_proof = Some((transformations, regularized_proof.clone()));
         let file_path = LxFilePath::new(PathBuf::from(file!()), self.db);
-        let tracker = VdLeanTranspilationTracker::new::<VdBsqElaborator>(
+        let session = &VdBsqSession::new(self.db);
+        let tracker = VdLeanTranspilationTracker::new(
             LxDocumentBodyInput {
                 specs_dir: self.specs_dir,
                 file_path,
@@ -209,6 +210,7 @@ We have $x^2 \ge 0$ because these are real numbers.
             &VdModels {},
             VdSynExprVibe::ROOT_CNL,
             self.db,
+            |region_data| VdBsqElaborator::new(VdBsqElaboratorInner::new(session, region_data)),
             &VdLeanTranspilationDenseScheme,
         );
         self.lean4_code = Some(format!(

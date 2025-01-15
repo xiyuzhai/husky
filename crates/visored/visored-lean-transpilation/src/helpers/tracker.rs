@@ -87,6 +87,7 @@ where
         models: &'a VdModels,
         vibe: VdSynExprVibe,
         db: &'db EternerDb,
+        gen_elaborator: impl FnOnce(VdMirExprRegionDataRef) -> Elaborator,
         scheme: &'db Scheme,
     ) -> Self {
         let content = input.content();
@@ -109,7 +110,7 @@ where
             sem_division_range_map,
             token_storage,
             output,
-        } = VdMirExprTracker::new::<Elaborator>(input, &[], &[], models, vibe, db);
+        } = VdMirExprTracker::new(input, &[], &[], models, vibe, db, gen_elaborator);
         let dictionary = &VdLeanDictionary::new_standard(db);
         let mut builder = VdLeanTranspilationBuilder::new(
             db,

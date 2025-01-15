@@ -41,7 +41,8 @@ fn visored_tactic_basic_elaborator_works() {
                 .to_case(Case::Pascal)
                 .with_extension("lean");
             let content = std::fs::read_to_string(&src_file_path).unwrap();
-            let tracker = VdBsqElaboratorTracker::new::<VdBsqElaborator>(
+            let session = &VdBsqSession::new(db);
+            let tracker = VdBsqElaboratorTracker::new(
                 LxDocumentInput {
                     specs_dir: dev_paths.specs_dir().to_path_buf(),
                     file_path: LxFilePath::new(src_file_path, db),
@@ -52,6 +53,7 @@ fn visored_tactic_basic_elaborator_works() {
                 &VdModels {},
                 VdSynExprVibe::ROOT_CNL,
                 db,
+                |region_data| VdBsqElaborator::new(VdBsqElaboratorInner::new(session, region_data)),
                 &VdLeanTranspilationDenseScheme,
             );
             let lean4_code: String = format!(

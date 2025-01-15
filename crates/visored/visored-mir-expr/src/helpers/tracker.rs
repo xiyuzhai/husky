@@ -94,6 +94,7 @@ where
         models: &VdModels,
         vibe: VdSynExprVibe,
         db: &'db EternerDb,
+        gen_elaborator: impl FnOnce(VdMirExprRegionDataRef) -> Elaborator,
     ) -> Self {
         let VdSemExprTracker {
             root_module_path,
@@ -146,6 +147,8 @@ where
             hint_arena,
             symbol_local_defn_storage,
         );
+        let elaborator = gen_elaborator(hypothesis_constructor.region_data());
+        output.elaborate_self(elaborator, &mut hypothesis_constructor);
         let (
             default_global_dispatch_table,
             expr_arena,
@@ -154,14 +157,7 @@ where
             hypothesis_arena,
             derivation_arena,
             symbol_local_defn_storage,
-        ) = Elaborator::run(
-            db,
-            hypothesis_constructor,
-            |elaborator, mut hypothesis_constructor| {
-                output.elaborate_self(elaborator, &mut hypothesis_constructor);
-                hypothesis_constructor.finish()
-            },
-        );
+        ) = hypothesis_constructor.finish();
         Self {
             input,
             root_module_path,

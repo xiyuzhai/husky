@@ -10,7 +10,7 @@ fn t(models: &VdModels, content: &str, expected_display_tree: &Expect, expected_
     let db = &EternerDb::default();
     let dev_paths = HuskyLangDevPaths::new();
     let file_path = LxFilePath::new(PathBuf::from(file!()), db);
-    let tracker = VdLeanTranspilationTracker::new::<VdMirTrivialElaborator>(
+    let tracker = VdLeanTranspilationTracker::new(
         LxDocumentInput {
             specs_dir: dev_paths.specs_dir().to_path_buf(),
             file_path,
@@ -21,6 +21,7 @@ fn t(models: &VdModels, content: &str, expected_display_tree: &Expect, expected_
         models,
         VdSynExprVibe::ROOT_CNL,
         db,
+        |_| VdMirTrivialElaborator::new(()),
         &VdLeanTranspilationDenseScheme,
     );
     expected_display_tree.assert_eq(&tracker.show_display_tree(db));
@@ -147,7 +148,7 @@ fn latex_shorts_to_lean_works() {
         let content = &fs::read_to_string(&file_path).unwrap();
         let filestem = file_path.file_stem().unwrap().to_str().unwrap();
         let file_path = LxFilePath::new(file_path.clone(), db);
-        let tracker = VdLeanTranspilationTracker::new::<VdMirTrivialElaborator>(
+        let tracker = VdLeanTranspilationTracker::new(
             LxDocumentInput {
                 specs_dir: dev_paths.specs_dir().to_path_buf(),
                 file_path,
@@ -158,6 +159,7 @@ fn latex_shorts_to_lean_works() {
             models,
             VdSynExprVibe::ROOT_CNL,
             db,
+            |_| VdMirTrivialElaborator::new(()),
             &VdLeanTranspilationDenseScheme,
         );
         expect_file![projects_dir.join(format!(
