@@ -89,7 +89,16 @@ where
                 VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
                 VdMirFunc::NormalBaseSeparator(vd_base_separator_signature) => todo!(),
                 VdMirFunc::NormalBaseBinaryOpr(signature) => match signature.opr {
-                    VdMirBaseBinaryOpr::CommRingSub => todo!(),
+                    VdMirBaseBinaryOpr::CommRingSub => {
+                        let &[lopd, ropd] = arguments.as_slice() else {
+                            unreachable!()
+                        };
+                        let lopd =
+                            self.transcribe_expr_term_derivation(lopd, hypothesis_constructor);
+                        let ropd =
+                            self.transcribe_expr_term_derivation(ropd, hypothesis_constructor);
+                        VdMirTermDerivationConstruction::Sub { lopd, ropd }
+                    }
                     VdMirBaseBinaryOpr::CommFieldDiv => {
                         let &[numerator, denominator] = arguments.as_slice() else {
                             unreachable!()

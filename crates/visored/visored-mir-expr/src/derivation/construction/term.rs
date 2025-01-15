@@ -9,6 +9,10 @@ pub enum VdMirTermDerivationConstruction {
     Sum {
         summand_term_equivalences: VdMirDerivationIdxRange,
     },
+    Sub {
+        lopd: VdMirDerivationIdx,
+        ropd: VdMirDerivationIdx,
+    },
     Product {
         leader_equivalence: VdMirDerivationIdx,
         // TODO: Replace VdMirFunc with VdMirFuncEquivalence
