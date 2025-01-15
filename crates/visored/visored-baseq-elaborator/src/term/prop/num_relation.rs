@@ -81,9 +81,9 @@ impl<'db, 'sess> VdBsqNumRelation<'sess> {
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
-        let a = self
+        let (lhs_minus_rhs_data, lhs_minus_rhs_ty) = self
             .lhs_minus_rhs()
-            .transcribe(None, elaborator, hypothesis_constructor);
+            .transcribe_data_and_ty(elaborator, hypothesis_constructor);
         todo!()
     }
 }

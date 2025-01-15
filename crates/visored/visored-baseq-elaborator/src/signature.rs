@@ -23,4 +23,48 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             todo!("unsupported type: {:?}", ty)
         }
     }
+
+    pub(crate) fn add_signature(
+        &self,
+        leader_ty: VdType,
+        follower_ty: VdType,
+    ) -> VdBaseSeparatorSignature {
+        let ty_menu = self.ty_menu();
+        let signature_menu = self.signature_menu();
+        if leader_ty == ty_menu.nat && follower_ty == ty_menu.nat {
+            signature_menu.nat_add
+        } else if leader_ty == ty_menu.int && follower_ty == ty_menu.int {
+            signature_menu.int_add
+        } else if leader_ty == ty_menu.rat && follower_ty == ty_menu.rat {
+            signature_menu.rat_add
+        } else if leader_ty == ty_menu.real && follower_ty == ty_menu.real {
+            signature_menu.real_add
+        } else if leader_ty == ty_menu.complex && follower_ty == ty_menu.complex {
+            signature_menu.complex_add
+        } else {
+            todo!("unsupported type: {:?} {:?}", leader_ty, follower_ty)
+        }
+    }
+
+    pub(crate) fn mul_signature(
+        &self,
+        leader_ty: VdType,
+        follower_ty: VdType,
+    ) -> VdBaseSeparatorSignature {
+        let ty_menu = self.ty_menu();
+        let signature_menu = self.signature_menu();
+        if leader_ty == ty_menu.nat && follower_ty == ty_menu.nat {
+            signature_menu.nat_mul
+        } else if leader_ty == ty_menu.int && follower_ty == ty_menu.int {
+            signature_menu.int_mul
+        } else if leader_ty == ty_menu.rat && follower_ty == ty_menu.rat {
+            signature_menu.rat_mul
+        } else if leader_ty == ty_menu.real && follower_ty == ty_menu.real {
+            signature_menu.real_mul
+        } else if leader_ty == ty_menu.complex && follower_ty == ty_menu.complex {
+            signature_menu.complex_mul
+        } else {
+            todo!("unsupported type: {:?} {:?}", leader_ty, follower_ty)
+        }
+    }
 }

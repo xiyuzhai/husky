@@ -130,6 +130,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         VdBsqTerm::new_numeric_variable(
                             lx_math_letter,
                             local_defn_idx,
+                            ty,
                             self.floater_db(),
                         )
                     }

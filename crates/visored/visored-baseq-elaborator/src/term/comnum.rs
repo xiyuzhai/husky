@@ -105,6 +105,14 @@ impl<'db, 'sess> VdBsqComnumTerm<'sess> {
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
-        todo!()
+        match self {
+            VdBsqComnumTerm::Atom(slf) => {
+                slf.transcribe_data_and_ty(elaborator, hypothesis_constructor)
+            }
+            VdBsqComnumTerm::Sum(slf) => {
+                slf.transcribe_data_and_ty(elaborator, hypothesis_constructor)
+            }
+            VdBsqComnumTerm::Product(slf) => todo!(),
+        }
     }
 }
