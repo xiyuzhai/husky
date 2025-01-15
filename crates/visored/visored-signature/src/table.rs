@@ -106,6 +106,7 @@ fn vd_signature_table_from_lp_csv_rows_works() {
         rat_div,
         real_div,
         complex_div,
+        iff,
         nat_add,
         int_add,
         rat_add,

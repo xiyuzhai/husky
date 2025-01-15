@@ -5,6 +5,7 @@ use visored_opr::{
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdMirBaseSeparator {
+    Iff,
     CommRingAdd,
     CommRingMul,
     Eq,
@@ -28,6 +29,7 @@ pub enum VdMirBaseSeparator {
 }
 
 impl VdMirBaseSeparator {
+    pub const IFF: Self = VdMirBaseSeparator::Iff;
     pub const COMM_RING_ADD: Self = VdMirBaseSeparator::CommRingAdd;
     pub const COMM_RING_MUL: Self = VdMirBaseSeparator::CommRingMul;
     pub const EQ: Self = VdMirBaseSeparator::Eq;
@@ -49,6 +51,7 @@ impl VdMirBaseSeparator {
 impl VdMirBaseSeparator {
     pub fn precedence(self) -> VdPrecedence {
         match self {
+            VdMirBaseSeparator::Iff => VdPrecedence::DEDUCTION,
             VdMirBaseSeparator::CommRingAdd => VdPrecedence::ADD_SUB,
             VdMirBaseSeparator::CommRingMul => VdPrecedence::MUL_DIV,
             VdMirBaseSeparator::SetTimes => VdPrecedence::MUL_DIV,
@@ -82,6 +85,7 @@ impl VdMirBaseSeparator {
 
     pub fn class(self) -> VdSeparatorClass {
         match self {
+            VdMirBaseSeparator::Iff => VdSeparatorClass::Deduction,
             VdMirBaseSeparator::CommRingAdd => VdSeparatorClass::Add,
             VdMirBaseSeparator::CommRingMul => VdSeparatorClass::Mul,
             VdMirBaseSeparator::SetTimes => VdSeparatorClass::Mul,
@@ -109,6 +113,7 @@ impl VdMirBaseSeparator {
 impl VdMirBaseSeparator {
     pub fn unicode(self) -> &'static str {
         match self {
+            VdMirBaseSeparator::Iff => "⟺",
             VdMirBaseSeparator::CommRingAdd => "+",
             VdMirBaseSeparator::CommRingMul => "*",
             VdMirBaseSeparator::Eq => "=",

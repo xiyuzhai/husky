@@ -1,4 +1,5 @@
 pub mod bigint;
+pub mod frac;
 pub mod special_constant;
 
 use eterned::db::EternerDb;
@@ -63,6 +64,10 @@ impl std::fmt::Display for VdLiteralData {
 impl VdLiteral {
     pub fn new(data: VdLiteralData, db: &EternerDb) -> Self {
         Self(VdTermId::new(data.into(), db))
+    }
+
+    pub fn new_int128(i: i128, db: &EternerDb) -> Self {
+        Self(VdTermId::new(VdLiteralData::Int128(i).into(), db))
     }
 
     pub fn data(self) -> &'static VdLiteralData {

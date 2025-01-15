@@ -134,6 +134,7 @@ impl VdGlobalDispatchMenu {
             rat_sub,
             real_sub,
             complex_sub,
+            iff,
             nat_add,
             int_add,
             rat_add,

@@ -177,6 +177,7 @@ impl VdBaseSeparator {
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum VdSeparatorClass {
+    Deduction,
     Relation,
     Space,
     Comma,
@@ -197,6 +198,7 @@ impl VdSeparatorClass {
 impl VdSeparatorClass {
     pub fn precedence(self) -> VdPrecedence {
         match self {
+            VdSeparatorClass::Deduction => VdPrecedence::DEDUCTION,
             VdSeparatorClass::Space => VdPrecedence::SPACE,
             VdSeparatorClass::Comma => VdPrecedence::COMMA,
             VdSeparatorClass::Semicolon => VdPrecedence::SEMICOLON,
@@ -212,6 +214,7 @@ impl VdSeparatorClass {
 
     pub fn left_precedence_range(self) -> VdPrecedenceRange {
         match self {
+            VdSeparatorClass::Deduction => VdPrecedenceRange::NoLess(VdPrecedence::DEDUCTION),
             VdSeparatorClass::Space => VdPrecedenceRange::NoLess(VdPrecedence::SPACE),
             VdSeparatorClass::Comma => VdPrecedenceRange::NoLess(VdPrecedence::COMMA),
             VdSeparatorClass::Semicolon => VdPrecedenceRange::NoLess(VdPrecedence::SEMICOLON),
@@ -223,6 +226,7 @@ impl VdSeparatorClass {
 
     pub fn right_precedence_range(self) -> VdPrecedenceRange {
         match self {
+            VdSeparatorClass::Deduction => VdPrecedenceRange::NoLess(VdPrecedence::DEDUCTION),
             VdSeparatorClass::Space => VdPrecedenceRange::Greater(VdPrecedence::SPACE),
             VdSeparatorClass::Comma => VdPrecedenceRange::Greater(VdPrecedence::COMMA),
             VdSeparatorClass::Semicolon => VdPrecedenceRange::Greater(VdPrecedence::SEMICOLON),

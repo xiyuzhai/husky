@@ -34,6 +34,7 @@ impl VdItemPathZfcTypeTable {
             cos: cos_path,
             group: group_path,
             ring: ring_path,
+            iff: iff_path,
             group_mul: group_mul_path,
             abelian_group_add: abelian_group_add_path,
             nat_add: nat_add_path,

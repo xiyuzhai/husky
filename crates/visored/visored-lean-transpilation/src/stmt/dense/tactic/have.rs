@@ -188,6 +188,7 @@ fn is_equivalence(func: &VdMirFunc) -> bool {
             VdMirBaseSeparator::Notin => false,
             VdMirBaseSeparator::SetTimes => todo!(),
             VdMirBaseSeparator::TensorOtimes => todo!(),
+            VdMirBaseSeparator::Iff => true,
         },
         VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
         VdMirFunc::Power(signature) => todo!(),

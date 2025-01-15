@@ -30,6 +30,7 @@ impl VdBaseBinaryOprSignature {
             unreachable!()
         };
         let opr = match path {
+            VdTraitItemPath::Iff => todo!(),
             VdTraitItemPath::GroupMul => todo!(),
             VdTraitItemPath::AbelianGroupAdd => todo!(),
             VdTraitItemPath::NatAdd => todo!(),

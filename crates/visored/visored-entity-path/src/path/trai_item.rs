@@ -2,6 +2,7 @@
 // TODO: ad hoc implementation
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum VdTraitItemPath {
+    Iff,
     GroupMul,
     AbelianGroupAdd,
     NatAdd,
@@ -23,6 +24,7 @@ pub enum VdTraitItemPath {
 }
 
 impl VdTraitItemPath {
+    pub const IFF: Self = VdTraitItemPath::Iff;
     pub const GROUP_MUL: Self = VdTraitItemPath::GroupMul;
     pub const ABELIAN_GROUP_ADD: Self = VdTraitItemPath::AbelianGroupAdd;
     pub const NAT_ADD: Self = VdTraitItemPath::NatAdd;
@@ -46,6 +48,7 @@ impl VdTraitItemPath {
 impl VdTraitItemPath {
     pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            VdTraitItemPath::Iff => write!(f, "⟺"),
             VdTraitItemPath::GroupMul => write!(f, "*"),
             VdTraitItemPath::AbelianGroupAdd => write!(f, "+(abelian_group_add)"),
             VdTraitItemPath::NatAdd => write!(f, "+(nat_add)"),

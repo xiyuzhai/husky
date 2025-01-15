@@ -35,7 +35,10 @@ use visored_mir_opr::{
 };
 use visored_opr::precedence::VdPrecedenceRange;
 use visored_term::{
-    term::{literal::VdLiteralData, VdTermData},
+    term::{
+        literal::{VdLiteral, VdLiteralData},
+        VdTermData,
+    },
     ty::VdType,
 };
 
@@ -233,6 +236,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         VdMirBaseSeparator::Notin => todo!(),
                         VdMirBaseSeparator::SetTimes => todo!(),
                         VdMirBaseSeparator::TensorOtimes => todo!(),
+                        VdMirBaseSeparator::Iff => todo!(),
                     },
                     VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
                     VdMirFunc::Power(signature) => todo!(),
@@ -301,6 +305,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                             VdMirBaseSeparator::Notin => todo!(),
                             VdMirBaseSeparator::SetTimes => todo!(),
                             VdMirBaseSeparator::TensorOtimes => todo!(),
+                            VdMirBaseSeparator::Iff => todo!(),
                         },
                         VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
                         VdMirFunc::Power(signature) => todo!(),
@@ -354,7 +359,45 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         litnum: VdBsqLitnumTerm<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
-        todo!()
+        let db = self.eterner_db();
+        match litnum {
+            VdBsqLitnumTerm::Int128(i) => {
+                if i >= 0 {
+                    (
+                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
+                        self.ty_menu().nat,
+                    )
+                } else {
+                    (
+                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
+                        self.ty_menu().int,
+                    )
+                }
+            }
+            VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
+            VdBsqLitnumTerm::Frac128(f) => {
+                let a = VdMirExprData::Application {
+                    function: VdMirFunc::NormalBaseBinaryOpr(self.signature_menu().rat_div),
+                    arguments: hypothesis_constructor.construct_exprs([
+                        VdMirExprEntry::new(
+                            VdMirExprData::Literal(VdLiteral::new_int128(f.numerator(), db)),
+                            if f.numerator() >= 0 {
+                                self.ty_menu().nat
+                            } else {
+                                self.ty_menu().int
+                            },
+                            Some(self.ty_menu().rat),
+                        ),
+                        VdMirExprEntry::new(
+                            VdMirExprData::Literal(VdLiteral::new_int128(f.denominator(), db)),
+                            self.ty_menu().nat,
+                            Some(self.ty_menu().rat),
+                        ),
+                    ]),
+                };
+                (a, self.ty_menu().rat)
+            }
+        }
     }
 
     fn transcribe_comnum_data(

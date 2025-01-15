@@ -295,6 +295,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
             VdMirBaseSeparator::Notin => todo!(),
             VdMirBaseSeparator::SetTimes => todo!(),
             VdMirBaseSeparator::TensorOtimes => todo!(),
+            VdMirBaseSeparator::Iff => todo!(),
         }
     }
 

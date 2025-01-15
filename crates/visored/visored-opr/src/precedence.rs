@@ -44,6 +44,7 @@ impl std::fmt::Display for VdPrecedence {
 impl VdPrecedence {
     pub const MIN: Self = VdPrecedence(0);
     pub const INCOMPLTE_DELIMITED: Self = VdPrecedence(10);
+    pub const DEDUCTION: Self = VdPrecedence(400);
     pub const RELATION: Self = VdPrecedence(500);
     pub const SEMICOLON: Self = VdPrecedence(1000);
     pub const COMMA: Self = VdPrecedence(5000);

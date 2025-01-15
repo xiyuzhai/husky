@@ -24,6 +24,7 @@ impl VdBaseSeparatorSignature {
             unreachable!()
         };
         let opr = match path {
+            VdTraitItemPath::Iff => VdMirBaseSeparator::IFF,
             VdTraitItemPath::GroupMul => todo!(),
             VdTraitItemPath::AbelianGroupAdd => todo!(),
             VdTraitItemPath::NatAdd => VdMirBaseSeparator::COMM_RING_ADD,

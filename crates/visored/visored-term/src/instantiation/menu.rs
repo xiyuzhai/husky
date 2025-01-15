@@ -32,6 +32,7 @@ pub struct VdInstantiationMenu {
     pub real_div: VdInstantiation,
     pub complex_div: VdInstantiation,
     /// # separators
+    pub iff: VdInstantiation,
     /// ## add
     pub nat_add: VdInstantiation,
     pub int_add: VdInstantiation,
@@ -100,6 +101,7 @@ impl VdInstantiationMenu {
             cos,
             group,
             ring,
+            iff,
             group_mul,
             abelian_group_add,
             nat_add,
@@ -156,6 +158,8 @@ impl VdInstantiationMenu {
         let real_div = ins!(field_div, real);
         let complex_div = ins!(field_div, complex);
         // # separators
+        // ## iff
+        let iff = ins!(iff);
         // ## add
         let nat_add = ins!(nat_add);
         let int_add = ins!(ring_add, int);
@@ -231,6 +235,9 @@ impl VdInstantiationMenu {
             rat_div,
             real_div,
             complex_div,
+            // # separators
+            // ## iff
+            iff,
             // ## add
             nat_add,
             int_add,

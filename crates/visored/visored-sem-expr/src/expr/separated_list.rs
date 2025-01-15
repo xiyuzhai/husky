@@ -129,6 +129,7 @@ impl<'db> VdSemExprBuilder<'db> {
                     followers,
                 }
             }
+            VdSeparatorClass::Deduction => todo!(),
         };
         VdSemExprEntry::new(data, ty)
     }

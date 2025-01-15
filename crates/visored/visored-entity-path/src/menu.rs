@@ -24,6 +24,7 @@ pub struct VdItemPathMenu {
     // # trait items
     pub group_mul: VdTraitItemPath,
     pub abelian_group_add: VdTraitItemPath,
+    pub iff: VdTraitItemPath,
     pub nat_add: VdTraitItemPath,
     pub nat_mul: VdTraitItemPath,
     pub ring_sub: VdTraitItemPath,
@@ -61,6 +62,7 @@ impl VdItemPathMenu {
             group: VdTraitPath::GROUP,
             ring: VdTraitPath::RING,
             // # trait items
+            iff: VdTraitItemPath::IFF,
             group_mul: VdTraitItemPath::GROUP_MUL,
             abelian_group_add: VdTraitItemPath::ABELIAN_GROUP_ADD,
             nat_add: VdTraitItemPath::NAT_ADD,

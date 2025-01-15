@@ -34,6 +34,9 @@ pub struct VdSignatureMenu {
     pub rat_div: VdBaseBinaryOprSignature,
     pub real_div: VdBaseBinaryOprSignature,
     pub complex_div: VdBaseBinaryOprSignature,
+    /// # separators
+    /// iff
+    pub iff: VdBaseSeparatorSignature,
     /// ## add
     pub nat_add: VdBaseSeparatorSignature,
     pub int_add: VdBaseSeparatorSignature,
@@ -115,6 +118,7 @@ impl VdSignatureMenu {
             rat_div,
             real_div,
             complex_div,
+            iff,
             nat_add,
             int_add,
             rat_add,
@@ -188,6 +192,8 @@ impl VdSignatureMenu {
             // TODO: use nzcomplex, i.e., non-zero complex numbers
             complex_div: bin(complex_div, complex, complex, complex),
             // # separators
+            // ## iff
+            iff: sep(iff, prop, prop),
             // ## add
             nat_add: sep(nat_add, nat, nat),
             int_add: sep(int_add, int, int),

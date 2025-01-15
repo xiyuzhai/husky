@@ -36,6 +36,7 @@ impl VdTermMenu {
             nat_add,
             nat_mul,
             ring_sub,
+            iff,
             ring_add,
             ring_mul,
             ring_power,

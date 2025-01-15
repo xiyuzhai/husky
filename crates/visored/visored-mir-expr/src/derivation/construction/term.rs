@@ -1,4 +1,7 @@
-use crate::derivation::{VdMirDerivationIdx, VdMirDerivationIdxRange};
+use crate::{
+    derivation::{VdMirDerivationIdx, VdMirDerivationIdxRange},
+    expr::application::VdMirFunc,
+};
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdMirTermDerivationConstruction {
@@ -7,10 +10,21 @@ pub enum VdMirTermDerivationConstruction {
         summand_term_equivalences: VdMirDerivationIdxRange,
     },
     Product {
-        factor_term_equivalences: VdMirDerivationIdxRange,
+        leader_equivalence: VdMirDerivationIdx,
+        // TODO: Replace VdMirFunc with VdMirFuncEquivalence
+        follower_equivalences: Vec<(VdMirFunc, VdMirDerivationIdx)>,
+    },
+    Div {
+        numerator: VdMirDerivationIdx,
+        denominator: VdMirDerivationIdx,
     },
     Finalize {
         src_term_equivalence: VdMirDerivationIdx,
         dst_term_equivalence: VdMirDerivationIdx,
+    },
+    ChainingSeparatedList {
+        leader_equivalence: VdMirDerivationIdx,
+        // TODO: Replace VdMirFunc with VdMirFuncEquivalence
+        follower_equivalences: Vec<(VdMirFunc, VdMirDerivationIdx)>,
     },
 }
