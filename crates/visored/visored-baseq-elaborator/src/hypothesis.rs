@@ -17,14 +17,43 @@ use visored_mir_expr::{
     },
 };
 
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct VdBsqHypothesisEntry<'sess> {
     prop: VdBsqExprFld<'sess>,
     construction: VdBsqHypothesisConstruction<'sess>,
 }
 
-pub type VdBsqHypothesisIdx<'sess> = ArenaIdx<VdBsqHypothesisEntry<'sess>>;
-pub type VdBsqHypothesisArena<'sess> = Arena<VdBsqHypothesisEntry<'sess>>;
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
+pub struct VdBsqHypothesisIdx<'sess>(ArenaIdx<VdBsqHypothesisEntry<'sess>>);
+
+#[derive(Debug, Default, Eq, PartialEq)]
+pub struct VdBsqHypothesisArena<'sess>(Arena<VdBsqHypothesisEntry<'sess>>);
+
+impl<'sess> std::ops::Index<VdBsqHypothesisIdx<'sess>> for VdBsqHypothesisArena<'sess> {
+    type Output = VdBsqHypothesisEntry<'sess>;
+
+    fn index(&self, index: VdBsqHypothesisIdx<'sess>) -> &Self::Output {
+        &self.0[index.0]
+    }
+}
+
+impl<'sess> std::ops::Index<&VdBsqHypothesisIdx<'sess>> for VdBsqHypothesisArena<'sess> {
+    type Output = VdBsqHypothesisEntry<'sess>;
+
+    fn index(&self, index: &VdBsqHypothesisIdx<'sess>) -> &Self::Output {
+        &self.0[index.0]
+    }
+}
+
+impl<'sess> VdBsqHypothesisArena<'sess> {
+    pub(crate) fn alloc_one(
+        &mut self,
+        entry: VdBsqHypothesisEntry<'sess>,
+    ) -> VdBsqHypothesisIdx<'sess> {
+        let idx = self.0.alloc_one(entry);
+        VdBsqHypothesisIdx(idx)
+    }
+}
 
 impl<'sess> VdBsqHypothesisEntry<'sess> {
     pub fn expr(&self) -> VdBsqExprFld<'sess> {
