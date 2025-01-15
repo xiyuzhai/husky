@@ -334,7 +334,6 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
 
     fn run<R>(
         db: &'db EternerDb,
-        global_dispatch_table: &VdDefaultGlobalDispatchTable,
         hypothesis_constructor: VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
         f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>) -> R,
     ) -> R {

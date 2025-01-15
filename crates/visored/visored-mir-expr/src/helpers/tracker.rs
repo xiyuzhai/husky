@@ -140,12 +140,14 @@ where
             builder.finish();
         let mut hypothesis_constructor = VdMirHypothesisConstructor::new(
             db,
+            default_global_dispatch_table,
             expr_arena,
             stmt_arena,
             hint_arena,
             symbol_local_defn_storage,
         );
         let (
+            default_global_dispatch_table,
             expr_arena,
             stmt_arena,
             hint_arena,
@@ -154,7 +156,6 @@ where
             symbol_local_defn_storage,
         ) = Elaborator::run(
             db,
-            &default_global_dispatch_table,
             hypothesis_constructor,
             |elaborator, mut hypothesis_constructor| {
                 output.elaborate_self(elaborator, &mut hypothesis_constructor);

@@ -32,7 +32,6 @@ pub trait IsVdMirTacticElaborator<'db>: Sized {
 
     fn run<R>(
         db: &'db EternerDb,
-        global_dispatch_table: &VdDefaultGlobalDispatchTable,
         hypothesis_constructor: VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
         f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Self::HypothesisIdx>) -> R,
     ) -> R;

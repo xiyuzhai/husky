@@ -19,10 +19,12 @@ use crate::{
 };
 use eterned::db::EternerDb;
 use rustc_hash::FxHashMap;
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 use visored_term::ty::VdType;
 
 pub struct VdMirHypothesisConstructor<'db, Src> {
     db: &'db EternerDb,
+    default_global_dispatch_table: VdDefaultGlobalDispatchTable,
     expr_arena: VdMirExprArena,
     stmt_arena: VdMirStmtArena,
     hint_arena: VdMirHintArena,
@@ -37,6 +39,7 @@ pub struct VdMirHypothesisConstructor<'db, Src> {
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub fn new(
         db: &'db EternerDb,
+        default_global_dispatch_table: VdDefaultGlobalDispatchTable,
         expr_arena: VdMirExprArena,
         stmt_arena: VdMirStmtArena,
         hint_arena: VdMirHintArena,
@@ -44,6 +47,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     ) -> Self {
         Self {
             db,
+            default_global_dispatch_table,
             expr_arena,
             stmt_arena,
             hint_arena,
@@ -72,6 +76,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
 
     pub fn region_data(&self) -> VdMirExprRegionDataRef {
         VdMirExprRegionDataRef {
+            default_global_dispatch_table: &self.default_global_dispatch_table,
             expr_arena: self.expr_arena.as_arena_ref(),
             stmt_arena: self.stmt_arena.as_arena_ref(),
             hint_arena: self.hint_arena.as_arena_ref(),
@@ -174,6 +179,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub(crate) fn finish(
         self,
     ) -> (
+        VdDefaultGlobalDispatchTable,
         VdMirExprArena,
         VdMirStmtArena,
         VdMirHintArena,
@@ -182,6 +188,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         VdMirSymbolLocalDefnStorage,
     ) {
         (
+            self.default_global_dispatch_table,
             self.expr_arena,
             self.stmt_arena,
             self.hint_arena,

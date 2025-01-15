@@ -96,7 +96,6 @@ pub trait IsVdMirSequentialElaboratorInner<'db>: Sized {
 
     fn run<R>(
         db: &'db EternerDb,
-        global_dispatch_table: &VdDefaultGlobalDispatchTable,
         hypothesis_constructor: VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
         f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Self::HypothesisIdx>) -> R,
     ) -> R;
@@ -222,7 +221,6 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
 
     fn run<R>(
         db: &'db EternerDb,
-        global_dispatch_table: &VdDefaultGlobalDispatchTable,
         hypothesis_constructor: VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
         f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Self::HypothesisIdx>) -> R,
     ) -> R {
@@ -275,13 +273,11 @@ where
 
     fn run<R>(
         db: &'db EternerDb,
-        global_dispatch_table: &VdDefaultGlobalDispatchTable,
         hypothesis_constructor: VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
         f: impl FnOnce(Self, VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>) -> R,
     ) -> R {
         Inner::run(
             db,
-            global_dispatch_table,
             hypothesis_constructor,
             |inner, hypothesis_constructor| f(Self::new(inner), hypothesis_constructor),
         )

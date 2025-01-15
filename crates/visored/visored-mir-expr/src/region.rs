@@ -1,4 +1,5 @@
 use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 
 use crate::{
     derivation::{VdMirDerivationArena, VdMirDerivationArenaRef},
@@ -75,6 +76,7 @@ impl VdMirExprRegionData {
 
 #[derive(Clone, Copy)]
 pub struct VdMirExprRegionDataRef<'a> {
+    pub default_global_dispatch_table: &'a VdDefaultGlobalDispatchTable,
     pub expr_arena: VdMirExprArenaRef<'a>,
     pub stmt_arena: VdMirStmtArenaRef<'a>,
     pub hint_arena: VdMirHintArenaRef<'a>,
