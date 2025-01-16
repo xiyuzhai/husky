@@ -6,6 +6,12 @@ pub enum VdBaseContainmentSeparatorSignature {
     InSet { instantiation: VdInstantiation },
 }
 
+impl From<VdBaseContainmentSeparatorSignature> for VdBaseChainingSeparatorSignature {
+    fn from(signature: VdBaseContainmentSeparatorSignature) -> Self {
+        VdBaseChainingSeparatorSignature::Relation(signature.into())
+    }
+}
+
 impl VdBaseContainmentSeparatorSignature {
     pub fn new(
         separator: VdMirBaseContainmentSeparator,

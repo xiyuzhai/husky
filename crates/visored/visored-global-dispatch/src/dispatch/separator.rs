@@ -14,8 +14,12 @@ use visored_signature::{
     signature::{
         separator::{
             base::{
-                chaining::VdBaseChainingSeparatorSignature,
-                folding::VdBaseFoldingSeparatorSignature, VdBaseSeparatorSignature,
+                chaining::{
+                    relation::containment::VdBaseContainmentSeparatorSignature,
+                    VdBaseChainingSeparatorSignature,
+                },
+                folding::VdBaseFoldingSeparatorSignature,
+                VdBaseSeparatorSignature,
             },
             VdSeparatorSignature,
         },
@@ -433,7 +437,13 @@ impl VdSeparatorGlobalDispatch {
                     signature,
                 }
             }
-            "in_set" => todo!(),
+            "in_set" => VdSeparatorGlobalDispatch::Chaining {
+                base_separator,
+                signature: VdBaseContainmentSeparatorSignature::InSet {
+                    instantiation: todo!(),
+                }
+                .into(),
+            },
             ident => todo!("ident: {ident} not handled"),
         };
         (key, dispatch)
