@@ -37,12 +37,26 @@ impl VdBaseRelationSeparatorSignature {
 }
 
 impl VdBaseRelationSeparatorSignature {
-    pub fn separator(&self) -> VdMirBaseRelationSeparator {
+    pub fn separator(self) -> VdMirBaseRelationSeparator {
         match self {
             VdBaseRelationSeparatorSignature::Containment(signature) => {
                 signature.separator().into()
             }
             VdBaseRelationSeparatorSignature::Comparison(signature) => signature.separator().into(),
+        }
+    }
+
+    pub fn expr_ty(self) -> VdType {
+        match self {
+            VdBaseRelationSeparatorSignature::Containment(slf) => todo!(),
+            VdBaseRelationSeparatorSignature::Comparison(slf) => slf.expr_ty(),
+        }
+    }
+
+    pub fn item_ty(self) -> VdType {
+        match self {
+            VdBaseRelationSeparatorSignature::Containment(slf) => todo!(),
+            VdBaseRelationSeparatorSignature::Comparison(slf) => slf.item_ty(),
         }
     }
 }

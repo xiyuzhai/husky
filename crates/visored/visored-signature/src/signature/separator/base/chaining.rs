@@ -36,7 +36,7 @@ impl VdBaseChainingSeparatorSignature {
         expr_ty: VdType,
     ) -> Self {
         match separator {
-            VdMirBaseChainingSeparator::Iff => todo!(),
+            VdMirBaseChainingSeparator::Iff => VdBaseChainingSeparatorSignature::Iff,
             VdMirBaseChainingSeparator::Relation(separator) => {
                 VdBaseRelationSeparatorSignature::new(separator, instantiation, item_ty, expr_ty)
                     .into()
@@ -46,18 +46,24 @@ impl VdBaseChainingSeparatorSignature {
 }
 
 impl VdBaseChainingSeparatorSignature {
-    pub fn separator(&self) -> VdMirBaseChainingSeparator {
+    pub fn separator(self) -> VdMirBaseChainingSeparator {
         match self {
             VdBaseChainingSeparatorSignature::Iff => todo!(),
             VdBaseChainingSeparatorSignature::Relation(slf) => slf.separator().into(),
         }
     }
 
-    pub fn expr_ty(&self) -> VdType {
-        todo!()
+    pub fn expr_ty(self) -> VdType {
+        match self {
+            VdBaseChainingSeparatorSignature::Iff => todo!(),
+            VdBaseChainingSeparatorSignature::Relation(slf) => slf.expr_ty(),
+        }
     }
 
-    pub fn item_ty(&self) -> VdType {
-        todo!()
+    pub fn item_ty(self) -> VdType {
+        match self {
+            VdBaseChainingSeparatorSignature::Iff => todo!(),
+            VdBaseChainingSeparatorSignature::Relation(slf) => slf.item_ty(),
+        }
     }
 }
