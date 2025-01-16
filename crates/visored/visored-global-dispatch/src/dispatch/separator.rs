@@ -12,7 +12,13 @@ use lisp_csv::{
 use visored_opr::{menu::VdOprMenu, separator::VdBaseSeparator};
 use visored_signature::{
     signature::{
-        separator::{base::VdBaseSeparatorSignature, VdSeparatorSignature},
+        separator::{
+            base::{
+                chaining::VdBaseChainingSeparatorSignature,
+                folding::VdBaseFoldingSeparatorSignature, VdBaseSeparatorSignature,
+            },
+            VdSeparatorSignature,
+        },
         VdSignature,
     },
     table::VdSignatureTable,
@@ -26,11 +32,11 @@ use visored_term::{
 pub enum VdSeparatorGlobalDispatch {
     Folding {
         base_separator: VdBaseSeparator,
-        signature: VdBaseSeparatorSignature,
+        signature: VdBaseFoldingSeparatorSignature,
     },
     Chaining {
         base_separator: VdBaseSeparator,
-        signature: VdBaseSeparatorSignature,
+        signature: VdBaseChainingSeparatorSignature,
     },
     InSet {
         expr_ty: VdType,
@@ -402,8 +408,9 @@ impl VdSeparatorGlobalDispatch {
                 let LpCsvExprData::Ident(ref signature_ident) = signature.data else {
                     todo!()
                 };
-                let VdSignature::Separator(VdSeparatorSignature::Base(signature)) =
-                    signature_table[signature_ident]
+                let VdSignature::Separator(VdSeparatorSignature::Base(
+                    VdBaseSeparatorSignature::Folding(signature),
+                )) = signature_table[signature_ident]
                 else {
                     todo!()
                 };
@@ -419,8 +426,9 @@ impl VdSeparatorGlobalDispatch {
                 let LpCsvExprData::Ident(ref signature_ident) = signature.data else {
                     todo!()
                 };
-                let VdSignature::Separator(VdSeparatorSignature::Base(signature)) =
-                    signature_table[signature_ident]
+                let VdSignature::Separator(VdSeparatorSignature::Base(
+                    VdBaseSeparatorSignature::Chaining(signature),
+                )) = signature_table[signature_ident]
                 else {
                     todo!()
                 };

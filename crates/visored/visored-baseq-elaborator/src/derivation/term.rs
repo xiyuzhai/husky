@@ -66,7 +66,7 @@ where
         let term = expr.term();
         let expr_transcription = expr.transcribe(self, hypothesis_constructor);
         let term_transcription = term.transcribe(self, expr.expected_ty(), hypothesis_constructor);
-        let eq_func = VdMirFunc::NormalBaseSeparator(self.signature_menu().nat_eq);
+        let eq_func = self.signature_menu().nat_eq;
         let prop_expr_data = VdMirExprData::ChainingSeparatedList {
             leader: expr_transcription,
             followers: smallvec![(eq_func, term_transcription)],

@@ -13,6 +13,10 @@ pub enum VdBaseRelationSeparatorSignature {
 }
 
 impl VdBaseRelationSeparatorSignature {
+    pub const IN_SET: Self = Self::Containment(VdBaseContainmentSeparatorSignature::InSet);
+}
+
+impl VdBaseRelationSeparatorSignature {
     pub fn new(
         separator: VdMirBaseRelationSeparator,
         instantiation: VdInstantiation,
@@ -28,6 +32,17 @@ impl VdBaseRelationSeparatorSignature {
                 VdBaseComparisonSeparatorSignature::new(separator, instantiation, item_ty, expr_ty)
                     .into()
             }
+        }
+    }
+}
+
+impl VdBaseRelationSeparatorSignature {
+    pub fn separator(&self) -> VdMirBaseRelationSeparator {
+        match self {
+            VdBaseRelationSeparatorSignature::Containment(signature) => {
+                signature.separator().into()
+            }
+            VdBaseRelationSeparatorSignature::Comparison(signature) => signature.separator().into(),
         }
     }
 }

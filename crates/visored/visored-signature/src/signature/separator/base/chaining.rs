@@ -11,6 +11,23 @@ pub enum VdBaseChainingSeparatorSignature {
     Relation(VdBaseRelationSeparatorSignature),
 }
 
+impl From<VdBaseChainingSeparatorSignature> for VdSeparatorSignature {
+    fn from(signature: VdBaseChainingSeparatorSignature) -> Self {
+        VdSeparatorSignature::Base(signature.into())
+    }
+}
+
+impl From<VdBaseChainingSeparatorSignature> for VdSignature {
+    fn from(signature: VdBaseChainingSeparatorSignature) -> Self {
+        VdSignature::Separator(signature.into())
+    }
+}
+
+impl VdBaseChainingSeparatorSignature {
+    pub const IN_SET: Self =
+        VdBaseChainingSeparatorSignature::Relation(VdBaseRelationSeparatorSignature::IN_SET);
+}
+
 impl VdBaseChainingSeparatorSignature {
     pub fn new(
         separator: VdMirBaseChainingSeparator,
@@ -25,5 +42,22 @@ impl VdBaseChainingSeparatorSignature {
                     .into()
             }
         }
+    }
+}
+
+impl VdBaseChainingSeparatorSignature {
+    pub fn separator(&self) -> VdMirBaseChainingSeparator {
+        match self {
+            VdBaseChainingSeparatorSignature::Iff => todo!(),
+            VdBaseChainingSeparatorSignature::Relation(slf) => slf.separator().into(),
+        }
+    }
+
+    pub fn expr_ty(&self) -> VdType {
+        todo!()
+    }
+
+    pub fn item_ty(&self) -> VdType {
+        todo!()
     }
 }

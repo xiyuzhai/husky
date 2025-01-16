@@ -33,4 +33,20 @@ impl VdMirBaseFoldingSeparator {
             VdMirBaseFoldingSeparator::TensorOtimes => "⊗",
         }
     }
+
+    pub fn outer_precedence(&self) -> VdPrecedence {
+        self.class().precedence()
+    }
+
+    pub fn left_precedence_range(&self) -> VdPrecedenceRange {
+        self.class().left_precedence_range()
+    }
+
+    pub fn right_precedence_range(&self) -> VdPrecedenceRange {
+        self.class().right_precedence_range()
+    }
+
+    pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(self.unicode())
+    }
 }

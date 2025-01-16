@@ -14,7 +14,7 @@ impl VdBaseContainmentSeparatorSignature {
         expr_ty: VdType,
     ) -> Self {
         match separator {
-            VdMirBaseContainmentSeparator::In => todo!(),
+            VdMirBaseContainmentSeparator::InSet => todo!(),
             VdMirBaseContainmentSeparator::Notin => todo!(),
             VdMirBaseContainmentSeparator::Subset => todo!(),
             VdMirBaseContainmentSeparator::Supset => todo!(),
@@ -24,6 +24,14 @@ impl VdBaseContainmentSeparatorSignature {
             VdMirBaseContainmentSeparator::Supseteqq => todo!(),
             VdMirBaseContainmentSeparator::Subsetneq => todo!(),
             VdMirBaseContainmentSeparator::Supsetneq => todo!(),
+        }
+    }
+}
+
+impl VdBaseContainmentSeparatorSignature {
+    pub fn separator(self) -> VdMirBaseContainmentSeparator {
+        match self {
+            VdBaseContainmentSeparatorSignature::InSet => VdMirBaseContainmentSeparator::IN_SET,
         }
     }
 }

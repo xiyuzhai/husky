@@ -1,4 +1,5 @@
 use lean_mir_expr::expr::LnMirExprEntry;
+use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
 
 use super::*;
 
@@ -46,8 +47,8 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
     fn build_show_nontrivial_chaining_separated_list(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: VdBaseSeparatorSignature,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: VdBaseChainingSeparatorSignature,
     ) -> LnMirTacticData {
         todo!()
         // debug_assert!(followers.len() >= 2);

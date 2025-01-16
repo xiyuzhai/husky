@@ -21,8 +21,7 @@ impl<'a> VdMirExprRegionBuilder<'a> {
                     else {
                         unreachable!()
                     };
-                    let func = VdMirFunc::NormalBaseSeparator(signature);
-                    (func, follower.expr.to_vd_mir(self))
+                    (signature, follower.expr.to_vd_mir(self))
                 })
                 .collect(),
         }
@@ -32,7 +31,10 @@ impl<'a> VdMirExprRegionBuilder<'a> {
         &mut self,
         leader: VdSemExprIdx,
         followers: &[VdSemSeparatedListFollower],
-        joined_separator_and_signature: Option<(VdBaseSeparator, VdBaseSeparatorSignature)>,
+        joined_chaining_separator_and_signature: Option<(
+            VdBaseSeparator,
+            VdBaseChainingSeparatorSignature,
+        )>,
     ) -> VdMirExprData {
         VdMirExprData::ChainingSeparatedList {
             leader: leader.to_vd_mir(self),
@@ -43,20 +45,19 @@ impl<'a> VdMirExprRegionBuilder<'a> {
                     VdSemSeparatedListFollowerDispatch::Chaining {
                         base_separator,
                         signature,
-                    } => (
-                        VdMirFunc::NormalBaseSeparator(signature),
+                    } => (signature, follower.expr.to_vd_mir(self)),
+                    VdSemSeparatedListFollowerDispatch::InSet { expr_ty } => (
+                        VdBaseChainingSeparatorSignature::IN_SET,
                         follower.expr.to_vd_mir(self),
                     ),
-                    VdSemSeparatedListFollowerDispatch::InSet { expr_ty } => {
-                        (VdMirFunc::InSet, follower.expr.to_vd_mir(self))
-                    }
                     VdSemSeparatedListFollowerDispatch::Folding {
                         base_separator,
                         signature,
                     } => unreachable!("follower.dispatch = {:?}", follower.dispatch),
                 })
                 .collect(),
-            joined_signature: joined_separator_and_signature.map(|(_, signature)| signature),
+            joined_signature: joined_chaining_separator_and_signature
+                .map(|(_, signature)| signature),
         }
     }
 }

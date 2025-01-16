@@ -1,5 +1,7 @@
 use visored_mir_expr::expr::{application::VdMirFunc, VdMirExprIdx};
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
+use visored_signature::signature::separator::base::{
+    chaining::VdBaseChainingSeparatorSignature, VdBaseSeparatorSignature,
+};
 
 use super::*;
 
@@ -11,8 +13,8 @@ where
         &mut self,
         hypothesis_entry: &VdMirHypothesisEntry,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: VdBaseSeparatorSignature,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: VdBaseChainingSeparatorSignature,
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) {
         match hypothesis_entry.construction() {

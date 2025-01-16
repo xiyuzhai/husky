@@ -1,11 +1,13 @@
 use super::*;
 
+#[enum_class::from_variants]
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdMirBaseChainingSeparator {
     Iff,
     Relation(VdMirBaseRelationSeparator),
 }
 
+#[enum_class::from_variants]
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdMirBaseRelationSeparator {
     Comparison(VdMirBaseComparisonSeparator),
@@ -24,7 +26,7 @@ pub enum VdMirBaseComparisonSeparator {
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdMirBaseContainmentSeparator {
-    In,
+    InSet,
     Notin,
     Subset,
     Supset,
@@ -37,6 +39,8 @@ pub enum VdMirBaseContainmentSeparator {
 }
 
 impl VdMirBaseContainmentSeparator {
+    pub const IN_SET: Self = VdMirBaseContainmentSeparator::InSet;
+    pub const NOT_IN_SET: Self = VdMirBaseContainmentSeparator::Notin;
     pub const SUBSET: Self = VdMirBaseContainmentSeparator::Subset;
     pub const SUPSET: Self = VdMirBaseContainmentSeparator::Supset;
     pub const SUBSETEQ: Self = VdMirBaseContainmentSeparator::Subseteq;
@@ -128,6 +132,10 @@ impl VdMirBaseChainingSeparator {
             VdMirBaseChainingSeparator::Relation(slf) => slf.is_equivalence(),
         }
     }
+
+    pub fn outer_precedence(&self) -> VdPrecedence {
+        self.class().precedence()
+    }
 }
 
 impl VdMirBaseRelationSeparator {
@@ -169,7 +177,7 @@ impl VdMirBaseComparisonSeparator {
 impl VdMirBaseContainmentSeparator {
     pub fn unicode(self) -> &'static str {
         match self {
-            VdMirBaseContainmentSeparator::In => "∈",
+            VdMirBaseContainmentSeparator::InSet => "∈",
             VdMirBaseContainmentSeparator::Notin => "∉",
             VdMirBaseContainmentSeparator::Subset => "⊂",
             VdMirBaseContainmentSeparator::Supset => "⊃",

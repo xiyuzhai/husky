@@ -4,6 +4,7 @@ use visored_mir_expr::{
     hint::VdMirHintIdxRange,
     hypothesis::{chunk::VdMirHypothesisChunk, VdMirHypothesisIdx},
 };
+use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
 
 impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
     pub(super) fn build_ln_tactic_from_vd_have(
@@ -37,8 +38,8 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
     fn build_have_nontrivial_chaining_separated_list(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: VdBaseSeparatorSignature,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: VdBaseChainingSeparatorSignature,
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) {
         let n = calc_number_of_foremost_equivalences(followers);
@@ -63,8 +64,8 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
     fn build_have_nontrivial_chaining_separated_list_with_foremost_equivalences(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: VdBaseSeparatorSignature,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: VdBaseChainingSeparatorSignature,
         number_of_foremost_equivalences: usize,
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) -> LnMirTacticData {
@@ -106,8 +107,8 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
     fn build_have_nontrivial_chaining_separated_list_aux(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: VdBaseSeparatorSignature,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: VdBaseChainingSeparatorSignature,
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) -> LnMirTacticData {
         debug_assert!(followers.len() >= 2);
@@ -129,7 +130,8 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
                 })
                 .collect(),
         };
-        let ultimate_prop_function = VdMirFunc::NormalBaseSeparator(joined_signature).to_lean(self);
+        let ultimate_prop_function =
+            VdMirFunc::NormalBaseSeparator(joined_signature.into()).to_lean(self);
         let ultimate_prop_arguments = [leader, followers.last().unwrap().1].to_lean(self);
         let construction_tactics = self.alloc_tactics(vec![tactic_data]);
         let construction = self.alloc_expr(LnMirExprEntry::new(
@@ -157,10 +159,12 @@ enum NontrivialChainingSeparatedListKind {
     WithForemostEquivalences,
 }
 
-fn calc_number_of_foremost_equivalences(followers: &[(VdMirFunc, VdMirExprIdx)]) -> usize {
+fn calc_number_of_foremost_equivalences(
+    followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+) -> usize {
     followers
         .iter()
-        .position(|(func, _)| !is_equivalence(func))
+        .position(|(func, _)| !func.separator().is_equivalence())
         .unwrap_or(followers.len())
 }
 

@@ -15,7 +15,10 @@ use visored_mir_opr::{
     opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
     separator::VdMirBaseSeparator,
 };
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
+use visored_signature::signature::separator::base::{
+    chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
+    VdBaseSeparatorSignature,
+};
 
 #[derive(Default)]
 pub struct VdMirSequentialElaborator<'db, Inner>
@@ -71,13 +74,13 @@ pub trait IsVdMirSequentialElaboratorInner<'db>: Sized {
     fn elaborate_folding_separated_list_expr(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
+        followers: &[(VdBaseFoldingSeparatorSignature, VdMirExprIdx)],
     );
     fn elaborate_chaining_separated_list_expr(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: Option<VdBaseSeparatorSignature>,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: Option<VdBaseChainingSeparatorSignature>,
     );
     fn cache_expr(&mut self, expr: VdMirExprIdx, region_data: VdMirExprRegionDataRef);
 
@@ -175,7 +178,7 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
     fn elaborate_folding_separated_list_expr(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
+        followers: &[(VdBaseFoldingSeparatorSignature, VdMirExprIdx)],
     ) {
         ()
     }
@@ -183,8 +186,8 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
     fn elaborate_chaining_separated_list_expr(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: Option<VdBaseSeparatorSignature>,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: Option<VdBaseChainingSeparatorSignature>,
     ) {
         ()
     }
@@ -500,8 +503,8 @@ where
             } => {
                 // need to do this to avoid rustc complaining
                 // we could also unsafe this
-                let followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]> = followers.to_smallvec();
-                let followers: &[(VdMirFunc, VdMirExprIdx)] = &followers;
+                let followers: SmallVec<[_; 4]> = followers.to_smallvec();
+                let followers: &[_] = &followers;
                 self.elaborate_expr(leader, hypothesis_constructor);
                 for &(_, follower) in followers {
                     self.elaborate_expr(follower, hypothesis_constructor);
@@ -516,8 +519,8 @@ where
             } => {
                 // need to do this to avoid rustc complaining
                 // we could also unsafe this
-                let followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]> = followers.to_smallvec();
-                let followers: &[(VdMirFunc, VdMirExprIdx)] = &followers;
+                let followers: SmallVec<[_; 4]> = followers.to_smallvec();
+                let followers: &[_] = &followers;
                 self.elaborate_expr(leader, hypothesis_constructor);
                 for &(_, follower) in followers {
                     self.elaborate_expr(follower, hypothesis_constructor);

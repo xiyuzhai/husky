@@ -40,7 +40,9 @@ use visored_opr::{
     },
     separator::{VdBaseSeparator, VdSeparatorClass},
 };
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
+use visored_signature::signature::separator::base::{
+    chaining::VdBaseChainingSeparatorSignature, VdBaseSeparatorSignature,
+};
 use visored_syn_expr::expr::{VdSynExprData, VdSynSeparator};
 use visored_term::{
     term::{literal::VdLiteral, VdTerm},
@@ -94,7 +96,8 @@ pub enum VdSemExprData {
         separator_class: VdSeparatorClass,
         leader: VdSemExprIdx,
         followers: VdSemSeparatedListFollowers,
-        joined_separator_and_signature: Option<(VdBaseSeparator, VdBaseSeparatorSignature)>,
+        joined_chaining_separator_and_signature:
+            Option<(VdBaseSeparator, VdBaseChainingSeparatorSignature)>,
     },
     // TODO: maybe these two are just separated lists?
     UniadicChain,

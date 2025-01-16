@@ -4,15 +4,15 @@ use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct VdBaseChainingSeparatorJoinKey {
-    pub prev: VdBaseSeparatorSignature,
-    pub next: VdBaseSeparatorSignature,
+    pub prev: VdBaseChainingSeparatorSignature,
+    pub next: VdBaseChainingSeparatorSignature,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VdBaseChainingSeparatorJoinDispatch {
     Ok {
         base_separator: VdBaseSeparator,
-        signature: VdBaseSeparatorSignature,
+        signature: VdBaseChainingSeparatorSignature,
     },
     Err,
 }
@@ -40,16 +40,18 @@ impl VdBaseChainingSeparatorJoinDispatch {
         let LpCsvExprData::Ident(ref prev_signature_ident) = prev_signature.data else {
             todo!()
         };
-        let VdSignature::Separator(VdSeparatorSignature::Base(prev_signature)) =
-            signature_table[prev_signature_ident]
+        let VdSignature::Separator(VdSeparatorSignature::Base(VdBaseSeparatorSignature::Chaining(
+            prev_signature,
+        ))) = signature_table[prev_signature_ident]
         else {
             todo!()
         };
         let LpCsvExprData::Ident(ref next_signature_ident) = next_signature.data else {
             todo!()
         };
-        let VdSignature::Separator(VdSeparatorSignature::Base(next_signature)) =
-            signature_table[next_signature_ident]
+        let VdSignature::Separator(VdSeparatorSignature::Base(VdBaseSeparatorSignature::Chaining(
+            next_signature,
+        ))) = signature_table[next_signature_ident]
         else {
             todo!()
         };
@@ -66,8 +68,9 @@ impl VdBaseChainingSeparatorJoinDispatch {
                 let LpCsvExprData::Ident(ref signature_ident) = signature.data else {
                     todo!()
                 };
-                let VdSignature::Separator(VdSeparatorSignature::Base(signature)) =
-                    signature_table[signature_ident]
+                let VdSignature::Separator(VdSeparatorSignature::Base(
+                    VdBaseSeparatorSignature::Chaining(signature),
+                )) = signature_table[signature_ident]
                 else {
                     todo!()
                 };

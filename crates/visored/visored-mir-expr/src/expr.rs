@@ -29,7 +29,10 @@ use visored_sem_expr::expr::{
     sqrt::VdSemSqrtDispatch,
     VdSemExprData, VdSemExprIdx, VdSemExprIdxRange,
 };
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
+use visored_signature::signature::separator::base::{
+    chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
+    VdBaseSeparatorSignature,
+};
 use visored_term::{term::literal::VdLiteral, ty::VdType};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -43,12 +46,12 @@ pub enum VdMirExprData {
     FoldingSeparatedList {
         leader: VdMirExprIdx,
         /// TODO: should we use VdBaseSeparatorSignature instead?
-        followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]>,
+        followers: SmallVec<[(VdBaseFoldingSeparatorSignature, VdMirExprIdx); 4]>,
     },
     ChainingSeparatedList {
         leader: VdMirExprIdx,
-        followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]>,
-        joined_signature: Option<VdBaseSeparatorSignature>,
+        followers: SmallVec<[(VdBaseChainingSeparatorSignature, VdMirExprIdx); 4]>,
+        joined_signature: Option<VdBaseChainingSeparatorSignature>,
     },
     ItemPath(VdItemPath),
 }
@@ -206,11 +209,11 @@ impl<'db> VdMirExprRegionBuilder<'db> {
                 separator_class,
                 leader,
                 ref followers,
-                joined_separator_and_signature,
+                joined_chaining_separator_and_signature,
             } => self.build_chaining_separated_list(
                 leader,
                 followers,
-                joined_separator_and_signature,
+                joined_chaining_separator_and_signature,
             ),
             VdSemExprData::LxDelimited { item, .. } | VdSemExprData::Delimited { item, .. } => {
                 self.build_expr_data(item)

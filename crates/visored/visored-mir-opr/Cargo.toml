@@ -12,6 +12,7 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+enum-class.workspace = true
 # visored
 visored-opr.workspace = true
 

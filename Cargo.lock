@@ -13642,6 +13642,7 @@ dependencies = [
 name = "visored-mir-opr"
 version = "0.1.0"
 dependencies = [
+ "enum-class",
  "visored-opr",
 ]
 

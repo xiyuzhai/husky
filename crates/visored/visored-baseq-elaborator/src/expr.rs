@@ -17,7 +17,10 @@ use visored_mir_expr::{
 };
 use visored_mir_opr::separator::VdMirBaseSeparator;
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
+use visored_signature::signature::separator::base::{
+    chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
+    VdBaseSeparatorSignature,
+};
 use visored_term::{
     term::literal::{VdLiteral, VdLiteralData},
     ty::VdType,
@@ -108,15 +111,10 @@ impl<'sess> VdBsqExprFld<'sess> {
                 VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
             },
             VdBsqExprFldData::FoldingSeparatedList { leader, followers } => {
-                let VdMirFunc::NormalBaseSeparator(signature) = followers.first().unwrap().0 else {
-                    todo!("maybe non base separator?")
-                };
+                let signature = followers.first().unwrap().0;
                 let precedence_range = signature.separator().left_precedence_range();
                 leader.show_fmt(precedence_range, f)?;
                 for (func, follower) in followers {
-                    let VdMirFunc::NormalBaseSeparator(signature) = func else {
-                        todo!("maybe non base separator?")
-                    };
                     f.write_str(" ")?;
                     signature.separator().show_fmt(f)?;
                     f.write_str(" ")?;
@@ -161,12 +159,12 @@ pub enum VdBsqExprFldData<'sess> {
     FoldingSeparatedList {
         leader: VdBsqExprFld<'sess>,
         /// TODO: should we use VdBaseSeparatorSignature instead?
-        followers: SmallVec<[(VdMirFunc, VdBsqExprFld<'sess>); 4]>,
+        followers: SmallVec<[(VdBaseFoldingSeparatorSignature, VdBsqExprFld<'sess>); 4]>,
     },
     ChainingSeparatedList {
         leader: VdBsqExprFld<'sess>,
-        followers: SmallVec<[(VdMirFunc, VdBsqExprFld<'sess>); 4]>,
-        joined_signature: Option<VdBaseSeparatorSignature>,
+        followers: SmallVec<[(VdBaseChainingSeparatorSignature, VdBsqExprFld<'sess>); 4]>,
+        joined_signature: Option<VdBaseChainingSeparatorSignature>,
     },
     ItemPath(VdItemPath),
 }
@@ -180,13 +178,13 @@ impl<'sess> VdBsqExprFldData<'sess> {
             VdBsqExprFldData::Variable(_, _) => VdPrecedence::ATOM,
             VdBsqExprFldData::Application { function, .. } => function.outer_precedence(),
             VdBsqExprFldData::FoldingSeparatedList { leader, followers } => {
-                followers[0].0.outer_precedence()
+                followers[0].0.separator().outer_precedence()
             }
             VdBsqExprFldData::ChainingSeparatedList {
                 leader,
                 followers,
                 joined_signature,
-            } => followers.first().unwrap().0.outer_precedence(),
+            } => followers.first().unwrap().0.separator().outer_precedence(),
             VdBsqExprFldData::ItemPath(vd_item_path) => todo!(),
         }
     }

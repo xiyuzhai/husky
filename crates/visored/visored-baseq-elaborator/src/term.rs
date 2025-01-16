@@ -236,9 +236,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdBsqExprFldData::ChainingSeparatedList {
                 leader,
                 ref followers,
-                joined_signature: joined_separator_and_signature,
-            } => match joined_separator_and_signature {
-                Some(joined_separator_and_signature) => VdBsqNumChain::new(
+                joined_signature: joined_chaining_separator_and_signature,
+            } => match joined_chaining_separator_and_signature {
+                Some(joined_chaining_separator_and_signature) => VdBsqNumChain::new(
                     leader.term().num().unwrap(),
                     followers
                         .iter()

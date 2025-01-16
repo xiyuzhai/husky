@@ -14,7 +14,9 @@ use visored_mir_expr::{
     hypothesis::{chunk::VdMirHypothesisChunk, VdMirHypothesisIdx},
 };
 use visored_mir_opr::{opr::binary::VdMirBaseBinaryOpr, separator::VdMirBaseSeparator};
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
+use visored_signature::signature::separator::base::{
+    chaining::VdBaseChainingSeparatorSignature, VdBaseSeparatorSignature,
+};
 
 impl<'a> VdLeanTranspilationBuilder<'a, Sparse> {
     pub(super) fn build_have_stmt(
@@ -52,8 +54,8 @@ impl<'a> VdLeanTranspilationBuilder<'a, Sparse> {
     fn build_then_nontrivial_chaining_separated_list(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: VdBaseSeparatorSignature,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: VdBaseChainingSeparatorSignature,
     ) -> LnItemDefnData {
         debug_assert!(followers.len() >= 2);
         let ident = self.mangle_hypothesis();
@@ -74,7 +76,8 @@ impl<'a> VdLeanTranspilationBuilder<'a, Sparse> {
                 })
                 .collect(),
         };
-        let ultimate_prop_function = VdMirFunc::NormalBaseSeparator(joined_signature).to_lean(self);
+        let ultimate_prop_function =
+            VdMirFunc::NormalBaseSeparator(joined_signature.into()).to_lean(self);
         let ultimate_prop_arguments = [leader, followers.last().unwrap().1].to_lean(self);
         LnItemDefnData::Def {
             ident,

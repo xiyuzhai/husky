@@ -15,8 +15,11 @@ use lean_mir_expr::expr::{
 use lean_opr::opr::binary::LnBinaryOpr;
 use lean_term::term::literal::{LnLiteral, LnLiteralData};
 use visored_mir_expr::expr::{
-    application::VdMirFunc, VdMirExprData, VdMirExprIdx, VdMirExprIdxRange,
+    application::{VdMirFunc, VdMirFuncKey},
+    VdMirExprData, VdMirExprIdx, VdMirExprIdxRange,
 };
+use visored_mir_opr::separator::chaining::VdMirBaseChainingSeparator;
+use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
 use visored_term::term::literal::{VdLiteral, VdLiteralData};
 
 impl<'db, S> VdTranspileToLean<S, LnMirExprIdx> for VdMirExprIdx
@@ -147,6 +150,35 @@ where
                 }
             }
             Right(_) => todo!(),
+        }
+    }
+}
+
+impl<'db, S> VdTranspileToLean<S, LnMirFunc> for VdBaseChainingSeparatorSignature
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirFunc {
+        builder.build_func_from_vd_key(self.into())
+    }
+}
+
+impl<'db, S> VdLeanTranspilationBuilder<'db, S>
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn build_func_from_vd_key(&mut self, key: VdMirFuncKey) -> LnMirFunc {
+        let Some(translation) = self.dictionary().func_key_translation(key) else {
+            todo!()
+        };
+        match *translation {
+            VdFuncKeyTranslation::PrefixOpr(func_key)
+            | VdFuncKeyTranslation::FoldingBinaryOpr(func_key)
+            | VdFuncKeyTranslation::ChainingBinaryOpr(func_key)
+            | VdFuncKeyTranslation::Power(func_key)
+            | VdFuncKeyTranslation::Function(func_key)
+            | VdFuncKeyTranslation::JustBinaryOpr(func_key) => self.build_func_from_key(func_key),
+            VdFuncKeyTranslation::InSet => LnMirFunc::InSet,
         }
     }
 }

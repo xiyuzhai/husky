@@ -1,14 +1,24 @@
 use crate::signature::{
-    attach::VdPowerSignature, binary_opr::base::VdBaseBinaryOprSignature,
-    frac::VdBaseFracSignature, prefix_opr::VdBasePrefixOprSignature,
-    separator::base::VdBaseSeparatorSignature, sqrt::VdBaseSqrtSignature,
+    attach::VdPowerSignature,
+    binary_opr::base::VdBaseBinaryOprSignature,
+    frac::VdBaseFracSignature,
+    prefix_opr::VdBasePrefixOprSignature,
+    separator::base::{
+        chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
+        VdBaseSeparatorSignature,
+    },
+    sqrt::VdBaseSqrtSignature,
 };
 use eterned::{db::EternerDb, memo};
 use lazy_static::lazy_static;
 use visored_mir_opr::opr::prefix::VdMirBasePrefixOpr;
 use visored_term::{
-    instantiation::menu::{vd_instantiation_menu, VdInstantiationMenu},
+    instantiation::{
+        menu::{vd_instantiation_menu, VdInstantiationMenu},
+        VdInstantiation,
+    },
     menu::{vd_ty_menu, VdTypeMenu},
+    ty::VdType,
 };
 
 #[derive(Debug, PartialEq, Eq)]
@@ -36,19 +46,19 @@ pub struct VdSignatureMenu {
     pub complex_div: VdBaseBinaryOprSignature,
     /// # separators
     /// iff
-    pub iff: VdBaseSeparatorSignature,
+    pub iff: VdBaseChainingSeparatorSignature,
     /// ## add
-    pub nat_add: VdBaseSeparatorSignature,
-    pub int_add: VdBaseSeparatorSignature,
-    pub rat_add: VdBaseSeparatorSignature,
-    pub real_add: VdBaseSeparatorSignature,
-    pub complex_add: VdBaseSeparatorSignature,
+    pub nat_add: VdBaseFoldingSeparatorSignature,
+    pub int_add: VdBaseFoldingSeparatorSignature,
+    pub rat_add: VdBaseFoldingSeparatorSignature,
+    pub real_add: VdBaseFoldingSeparatorSignature,
+    pub complex_add: VdBaseFoldingSeparatorSignature,
     /// ## mul
-    pub nat_mul: VdBaseSeparatorSignature,
-    pub int_mul: VdBaseSeparatorSignature,
-    pub rat_mul: VdBaseSeparatorSignature,
-    pub real_mul: VdBaseSeparatorSignature,
-    pub complex_mul: VdBaseSeparatorSignature,
+    pub nat_mul: VdBaseFoldingSeparatorSignature,
+    pub int_mul: VdBaseFoldingSeparatorSignature,
+    pub rat_mul: VdBaseFoldingSeparatorSignature,
+    pub real_mul: VdBaseFoldingSeparatorSignature,
+    pub complex_mul: VdBaseFoldingSeparatorSignature,
     /// ## power
     pub nat_to_the_power_of_nat: VdPowerSignature,
     pub int_to_the_power_of_nat: VdPowerSignature,
@@ -56,37 +66,37 @@ pub struct VdSignatureMenu {
     pub real_to_the_power_of_nat: VdPowerSignature,
     pub complex_to_the_power_of_nat: VdPowerSignature,
     /// ## eq
-    pub nat_eq: VdBaseSeparatorSignature,
-    pub int_eq: VdBaseSeparatorSignature,
-    pub rat_eq: VdBaseSeparatorSignature,
-    pub real_eq: VdBaseSeparatorSignature,
-    pub complex_eq: VdBaseSeparatorSignature,
+    pub nat_eq: VdBaseChainingSeparatorSignature,
+    pub int_eq: VdBaseChainingSeparatorSignature,
+    pub rat_eq: VdBaseChainingSeparatorSignature,
+    pub real_eq: VdBaseChainingSeparatorSignature,
+    pub complex_eq: VdBaseChainingSeparatorSignature,
     /// ## ne
-    pub nat_ne: VdBaseSeparatorSignature,
-    pub int_ne: VdBaseSeparatorSignature,
-    pub rat_ne: VdBaseSeparatorSignature,
-    pub real_ne: VdBaseSeparatorSignature,
-    pub complex_ne: VdBaseSeparatorSignature,
+    pub nat_ne: VdBaseChainingSeparatorSignature,
+    pub int_ne: VdBaseChainingSeparatorSignature,
+    pub rat_ne: VdBaseChainingSeparatorSignature,
+    pub real_ne: VdBaseChainingSeparatorSignature,
+    pub complex_ne: VdBaseChainingSeparatorSignature,
     /// ## lt
-    pub nat_lt: VdBaseSeparatorSignature,
-    pub int_lt: VdBaseSeparatorSignature,
-    pub rat_lt: VdBaseSeparatorSignature,
-    pub real_lt: VdBaseSeparatorSignature,
+    pub nat_lt: VdBaseChainingSeparatorSignature,
+    pub int_lt: VdBaseChainingSeparatorSignature,
+    pub rat_lt: VdBaseChainingSeparatorSignature,
+    pub real_lt: VdBaseChainingSeparatorSignature,
     /// ## gt
-    pub nat_gt: VdBaseSeparatorSignature,
-    pub int_gt: VdBaseSeparatorSignature,
-    pub rat_gt: VdBaseSeparatorSignature,
-    pub real_gt: VdBaseSeparatorSignature,
+    pub nat_gt: VdBaseChainingSeparatorSignature,
+    pub int_gt: VdBaseChainingSeparatorSignature,
+    pub rat_gt: VdBaseChainingSeparatorSignature,
+    pub real_gt: VdBaseChainingSeparatorSignature,
     /// ## le
-    pub nat_le: VdBaseSeparatorSignature,
-    pub int_le: VdBaseSeparatorSignature,
-    pub rat_le: VdBaseSeparatorSignature,
-    pub real_le: VdBaseSeparatorSignature,
+    pub nat_le: VdBaseChainingSeparatorSignature,
+    pub int_le: VdBaseChainingSeparatorSignature,
+    pub rat_le: VdBaseChainingSeparatorSignature,
+    pub real_le: VdBaseChainingSeparatorSignature,
     /// ## ge
-    pub nat_ge: VdBaseSeparatorSignature,
-    pub int_ge: VdBaseSeparatorSignature,
-    pub rat_ge: VdBaseSeparatorSignature,
-    pub real_ge: VdBaseSeparatorSignature,
+    pub nat_ge: VdBaseChainingSeparatorSignature,
+    pub int_ge: VdBaseChainingSeparatorSignature,
+    pub rat_ge: VdBaseChainingSeparatorSignature,
+    pub real_ge: VdBaseChainingSeparatorSignature,
     // # sqrt
     pub real_sqrt: VdBaseSqrtSignature,
 }
@@ -164,7 +174,18 @@ impl VdSignatureMenu {
         } = *vd_instantiation_menu(db);
         let pre = VdBasePrefixOprSignature::new;
         let bin = VdBaseBinaryOprSignature::new;
-        let sep = VdBaseSeparatorSignature::new;
+        let fsep = |instantiation: VdInstantiation, item_ty: VdType, expr_ty: VdType| {
+            match VdBaseSeparatorSignature::new(instantiation, item_ty, expr_ty) {
+                VdBaseSeparatorSignature::Chaining(_) => unreachable!(),
+                VdBaseSeparatorSignature::Folding(signature) => signature,
+            }
+        };
+        let csep = |instantiation: VdInstantiation, item_ty: VdType, expr_ty: VdType| {
+            match VdBaseSeparatorSignature::new(instantiation, item_ty, expr_ty) {
+                VdBaseSeparatorSignature::Chaining(signature) => signature,
+                VdBaseSeparatorSignature::Folding(_) => unreachable!(),
+            }
+        };
         let pow = VdPowerSignature::new;
         Self {
             // # prefix operators
@@ -193,51 +214,51 @@ impl VdSignatureMenu {
             complex_div: bin(complex_div, complex, complex, complex),
             // # separators
             // ## iff
-            iff: sep(iff, prop, prop),
+            iff: csep(iff, prop, prop),
             // ## add
-            nat_add: sep(nat_add, nat, nat),
-            int_add: sep(int_add, int, int),
-            rat_add: sep(rat_add, rat, rat),
-            real_add: sep(real_add, real, real),
-            complex_add: sep(complex_add, complex, complex),
+            nat_add: fsep(nat_add, nat, nat),
+            int_add: fsep(int_add, int, int),
+            rat_add: fsep(rat_add, rat, rat),
+            real_add: fsep(real_add, real, real),
+            complex_add: fsep(complex_add, complex, complex),
             // ## mul
-            nat_mul: sep(nat_mul, nat, nat),
-            int_mul: sep(int_mul, int, int),
-            rat_mul: sep(rat_mul, rat, rat),
-            real_mul: sep(real_mul, real, real),
-            complex_mul: sep(complex_mul, complex, complex),
+            nat_mul: fsep(nat_mul, nat, nat),
+            int_mul: fsep(int_mul, int, int),
+            rat_mul: fsep(rat_mul, rat, rat),
+            real_mul: fsep(real_mul, real, real),
+            complex_mul: fsep(complex_mul, complex, complex),
             // ## eq
-            nat_eq: sep(nat_eq, nat, prop),
-            int_eq: sep(int_eq, int, prop),
-            rat_eq: sep(rat_eq, rat, prop),
-            real_eq: sep(real_eq, real, prop),
-            complex_eq: sep(complex_eq, complex, prop),
+            nat_eq: csep(nat_eq, nat, prop),
+            int_eq: csep(int_eq, int, prop),
+            rat_eq: csep(rat_eq, rat, prop),
+            real_eq: csep(real_eq, real, prop),
+            complex_eq: csep(complex_eq, complex, prop),
             // ## ne
-            nat_ne: sep(nat_ne, nat, prop),
-            int_ne: sep(int_ne, int, prop),
-            rat_ne: sep(rat_ne, rat, prop),
-            real_ne: sep(real_ne, real, prop),
-            complex_ne: sep(complex_ne, complex, prop),
+            nat_ne: csep(nat_ne, nat, prop),
+            int_ne: csep(int_ne, int, prop),
+            rat_ne: csep(rat_ne, rat, prop),
+            real_ne: csep(real_ne, real, prop),
+            complex_ne: csep(complex_ne, complex, prop),
             // ## lt
-            nat_lt: sep(nat_lt, nat, prop),
-            int_lt: sep(int_lt, int, prop),
-            rat_lt: sep(rat_lt, rat, prop),
-            real_lt: sep(real_lt, real, prop),
+            nat_lt: csep(nat_lt, nat, prop),
+            int_lt: csep(int_lt, int, prop),
+            rat_lt: csep(rat_lt, rat, prop),
+            real_lt: csep(real_lt, real, prop),
             // ## gt
-            nat_gt: sep(nat_gt, nat, prop),
-            int_gt: sep(int_gt, int, prop),
-            rat_gt: sep(rat_gt, rat, prop),
-            real_gt: sep(real_gt, real, prop),
+            nat_gt: csep(nat_gt, nat, prop),
+            int_gt: csep(int_gt, int, prop),
+            rat_gt: csep(rat_gt, rat, prop),
+            real_gt: csep(real_gt, real, prop),
             // ## le
-            nat_le: sep(nat_le, nat, prop),
-            int_le: sep(int_le, int, prop),
-            rat_le: sep(rat_le, rat, prop),
-            real_le: sep(real_le, real, prop),
+            nat_le: csep(nat_le, nat, prop),
+            int_le: csep(int_le, int, prop),
+            rat_le: csep(rat_le, rat, prop),
+            real_le: csep(real_le, real, prop),
             // ## ge
-            nat_ge: sep(nat_ge, nat, prop),
-            int_ge: sep(int_ge, int, prop),
-            rat_ge: sep(rat_ge, rat, prop),
-            real_ge: sep(real_ge, real, prop),
+            nat_ge: csep(nat_ge, nat, prop),
+            int_ge: csep(int_ge, int, prop),
+            rat_ge: csep(rat_ge, rat, prop),
+            real_ge: csep(real_ge, real, prop),
             // # sqrt
             // TODO: use nnreal, i.e., non-negative real numbers
             real_sqrt: VdBaseSqrtSignature::new(real_sqrt, real, real),

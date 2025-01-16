@@ -31,6 +31,23 @@ pub enum VdMirFuncKey {
     NormalBaseSqrt(VdInstantiation),
 }
 
+impl From<VdBaseFoldingSeparatorSignature> for VdMirFuncKey {
+    fn from(signature: VdBaseFoldingSeparatorSignature) -> Self {
+        VdMirFuncKey::NormalBaseSeparator(signature.instantiation())
+    }
+}
+
+impl From<VdBaseChainingSeparatorSignature> for VdMirFuncKey {
+    fn from(signature: VdBaseChainingSeparatorSignature) -> Self {
+        match signature {
+            VdBaseChainingSeparatorSignature::Iff => todo!(),
+            VdBaseChainingSeparatorSignature::Relation(vd_base_relation_separator_signature) => {
+                todo!()
+            }
+        }
+    }
+}
+
 impl VdMirFunc {
     pub fn key_or_expr(self) -> Either<VdMirFuncKey, VdMirExprIdx> {
         match self {

@@ -19,7 +19,10 @@ use visored_opr::{
     separator::VdBaseSeparator,
 };
 use visored_signature::{
-    menu::vd_signature_menu, signature::separator::base::VdBaseSeparatorSignature,
+    menu::vd_signature_menu,
+    signature::separator::base::{
+        chaining::VdBaseChainingSeparatorSignature, VdBaseSeparatorSignature,
+    },
     table::VdSignatureTable,
 };
 use visored_term::{menu::vd_ty_menu, ty::VdType};
@@ -151,8 +154,8 @@ impl VdDefaultGlobalDispatchTable {
 
     pub fn base_chaining_separator_join_default_dispatch(
         &self,
-        prev: VdBaseSeparatorSignature,
-        next: VdBaseSeparatorSignature,
+        prev: VdBaseChainingSeparatorSignature,
+        next: VdBaseChainingSeparatorSignature,
     ) -> Option<VdBaseChainingSeparatorJoinDispatch> {
         self.base_chaining_separator_join_dispatch_table
             .get(&VdBaseChainingSeparatorJoinKey { prev, next })
