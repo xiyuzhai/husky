@@ -4,7 +4,10 @@ use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
 use visored_opr::separator::VdBaseSeparator;
 use visored_signature::signature::separator::base::{
     chaining::{
-        relation::comparison::VdBaseComparisonSeparatorSignature, VdBaseChainingSeparatorSignature,
+        relation::{
+            comparison::VdBaseComparisonSeparatorSignature, VdBaseRelationSeparatorSignature,
+        },
+        VdBaseChainingSeparatorSignature,
     },
     folding::VdBaseFoldingSeparatorSignature,
     VdBaseSeparatorSignature,
@@ -103,6 +106,28 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         base_separator: VdMirBaseComparisonSeparator,
         next_item_ty: VdType,
     ) -> VdBaseComparisonSeparatorSignature {
-        todo!()
+        match self
+            .default_global_dispatch_table()
+            .base_separator_default_dispatch(prev_item_ty, base_separator.into(), next_item_ty)
+        {
+            Some(dispatch) => match dispatch {
+                VdSeparatorGlobalDispatch::Folding {
+                    base_separator,
+                    signature,
+                } => todo!(),
+                VdSeparatorGlobalDispatch::Chaining {
+                    base_separator,
+                    signature,
+                } => match signature {
+                    VdBaseChainingSeparatorSignature::Iff => todo!(),
+                    VdBaseChainingSeparatorSignature::Relation(signature) => match signature {
+                        VdBaseRelationSeparatorSignature::Containment(signature) => todo!(),
+                        VdBaseRelationSeparatorSignature::Comparison(signature) => signature,
+                    },
+                },
+                VdSeparatorGlobalDispatch::InSet { expr_ty } => todo!(),
+            },
+            None => todo!(),
+        }
     }
 }

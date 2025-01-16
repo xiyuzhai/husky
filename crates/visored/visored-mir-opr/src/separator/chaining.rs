@@ -1,3 +1,5 @@
+use visored_opr::separator::VdBaseSeparator;
+
 use super::*;
 
 #[enum_class::from_variants]
@@ -24,6 +26,27 @@ pub enum VdMirBaseComparisonSeparator {
     Ge,
 }
 
+impl From<VdMirBaseComparisonSeparator> for VdMirBaseSeparator {
+    fn from(separator: VdMirBaseComparisonSeparator) -> Self {
+        VdMirBaseSeparator::Chaining(VdMirBaseChainingSeparator::Relation(
+            VdMirBaseRelationSeparator::Comparison(separator),
+        ))
+    }
+}
+
+impl From<VdMirBaseComparisonSeparator> for VdBaseSeparator {
+    fn from(separator: VdMirBaseComparisonSeparator) -> Self {
+        match separator {
+            VdMirBaseComparisonSeparator::Eq => VdBaseSeparator::Eq,
+            VdMirBaseComparisonSeparator::Ne => VdBaseSeparator::Ne,
+            VdMirBaseComparisonSeparator::Lt => VdBaseSeparator::Lt,
+            VdMirBaseComparisonSeparator::Gt => VdBaseSeparator::Gt,
+            VdMirBaseComparisonSeparator::Le => VdBaseSeparator::Le,
+            VdMirBaseComparisonSeparator::Ge => VdBaseSeparator::Ge,
+        }
+    }
+}
+
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdMirBaseContainmentSeparator {
     InSet,
@@ -36,6 +59,23 @@ pub enum VdMirBaseContainmentSeparator {
     Supseteqq,
     Subsetneq,
     Supsetneq,
+}
+
+impl From<VdMirBaseContainmentSeparator> for VdBaseSeparator {
+    fn from(separator: VdMirBaseContainmentSeparator) -> Self {
+        match separator {
+            VdMirBaseContainmentSeparator::InSet => VdBaseSeparator::In,
+            VdMirBaseContainmentSeparator::Notin => VdBaseSeparator::Notin,
+            VdMirBaseContainmentSeparator::Subset => VdBaseSeparator::Subset,
+            VdMirBaseContainmentSeparator::Supset => VdBaseSeparator::Supset,
+            VdMirBaseContainmentSeparator::Subseteq => VdBaseSeparator::Subseteq,
+            VdMirBaseContainmentSeparator::Supseteq => VdBaseSeparator::Supseteq,
+            VdMirBaseContainmentSeparator::Subseteqq => VdBaseSeparator::Subseteqq,
+            VdMirBaseContainmentSeparator::Supseteqq => VdBaseSeparator::Supseteqq,
+            VdMirBaseContainmentSeparator::Subsetneq => VdBaseSeparator::Subsetneq,
+            VdMirBaseContainmentSeparator::Supsetneq => VdBaseSeparator::Supsetneq,
+        }
+    }
 }
 
 impl VdMirBaseContainmentSeparator {
