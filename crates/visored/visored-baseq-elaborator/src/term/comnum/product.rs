@@ -415,13 +415,18 @@ fn transcribe_factors_data_and_ty<'db, 'sess>(
         fst_follower_ty,
         Some(fst_signature.item_ty()),
     ));
-    let followers: SmallVec<[_; 4]> = smallvec![(fst_signature, fst_follower)];
+    let mut followers: SmallVec<[_; 4]> = smallvec![(fst_signature, fst_follower)];
     for factor in factors {
         let (follower_data, follower_ty) =
             transcribe_factor_data_and_ty(elaborator, factor, hypothesis_constructor);
         let signature = hypothesis_constructor.infer_mul_signature(acc_ty, follower_ty);
         acc_ty = signature.expr_ty();
-        todo!()
+        let follower = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
+            follower_data,
+            follower_ty,
+            Some(signature.item_ty()),
+        ));
+        followers.push((signature, follower));
     }
     (
         VdMirExprData::FoldingSeparatedList { leader, followers },
