@@ -1,3 +1,7 @@
+use visored_signature::signature::separator::base::{
+    chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
+};
+
 use crate::{
     derivation::{VdMirDerivationIdx, VdMirDerivationIdxRange},
     expr::application::VdMirFunc,
@@ -16,7 +20,7 @@ pub enum VdMirTermDerivationConstruction {
     Product {
         leader_equivalence: VdMirDerivationIdx,
         // TODO: Replace VdMirFunc with VdMirFuncEquivalence
-        follower_equivalences: Vec<(VdMirFunc, VdMirDerivationIdx)>,
+        follower_equivalences: Vec<(VdBaseFoldingSeparatorSignature, VdMirDerivationIdx)>,
     },
     Div {
         numerator: VdMirDerivationIdx,
@@ -28,7 +32,6 @@ pub enum VdMirTermDerivationConstruction {
     },
     ChainingSeparatedList {
         leader_equivalence: VdMirDerivationIdx,
-        // TODO: Replace VdMirFunc with VdMirFuncEquivalence
-        follower_equivalences: Vec<(VdMirFunc, VdMirDerivationIdx)>,
+        follower_equivalences: Vec<(VdBaseChainingSeparatorSignature, VdMirDerivationIdx)>,
     },
 }

@@ -40,7 +40,10 @@ use visored_mir_opr::{
 };
 use visored_signature::{
     menu::{vd_signature_menu, VdSignatureMenu},
-    signature::separator::base::VdBaseSeparatorSignature,
+    signature::separator::base::{
+        chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
+        VdBaseSeparatorSignature,
+    },
 };
 use visored_term::{
     menu::{vd_ty_menu, VdTypeMenu},
@@ -179,7 +182,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
                 let signature = region_data.infer_eq_signature(assignment.ty(), assignment.ty());
                 let eq_expr_data = VdBsqExprFldData::ChainingSeparatedList {
                     leader: variable,
-                    followers: smallvec![(VdMirFunc::NormalBaseSeparator(signature), assignment)],
+                    followers: smallvec![(signature, assignment)],
                     joined_signature: None,
                 };
                 let prop = self.mk_expr(eq_expr_data, self.ty_menu().prop, None);
@@ -257,10 +260,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         let prop = self.mk_expr(
             VdBsqExprFldData::ChainingSeparatedList {
                 leader: divisor,
-                followers: smallvec![(
-                    VdMirFunc::NormalBaseSeparator(signature),
-                    self.mk_zero(Some(divisor.ty()))
-                )],
+                followers: smallvec![(signature, self.mk_zero(Some(divisor.ty())))],
                 joined_signature: None,
             },
             self.ty_menu().prop,
@@ -272,30 +272,22 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
     fn elaborate_folding_separated_list_expr(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
+        followers: &[(VdBaseFoldingSeparatorSignature, VdMirExprIdx)],
     ) {
-        let (fst_func, fst) = followers[0];
-        let VdMirFunc::NormalBaseSeparator(fst_signature) = fst_func else {
-            unreachable!()
-        };
+        let (fst_signature, fst) = followers[0];
         match fst_signature.separator() {
-            VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
-                match vd_mir_base_folding_separator {
-                    VdMirBaseFoldingSeparator::CommRingAdd => (),
-                    VdMirBaseFoldingSeparator::CommRingMul => (),
-                    VdMirBaseFoldingSeparator::SetTimes => todo!(),
-                    VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
-                }
-            }
-            VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
+            VdMirBaseFoldingSeparator::CommRingAdd => (),
+            VdMirBaseFoldingSeparator::CommRingMul => (),
+            VdMirBaseFoldingSeparator::SetTimes => todo!(),
+            VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
         }
     }
 
     fn elaborate_chaining_separated_list_expr(
         &mut self,
         leader: VdMirExprIdx,
-        followers: &[(VdMirFunc, VdMirExprIdx)],
-        joined_signature: Option<VdBaseSeparatorSignature>,
+        followers: &[(VdBaseChainingSeparatorSignature, VdMirExprIdx)],
+        joined_signature: Option<VdBaseChainingSeparatorSignature>,
     ) {
         // todo!()
     }

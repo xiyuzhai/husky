@@ -136,28 +136,16 @@ where
                         )
                     })
                     .collect::<Vec<_>>();
-                match fst_func {
-                    VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
-                    VdMirFunc::NormalBaseSeparator(signature) => match signature.separator() {
-                        VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
-                            match vd_mir_base_folding_separator {
-                                VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
-                                VdMirBaseFoldingSeparator::CommRingMul => {
-                                    VdMirTermDerivationConstruction::Product {
-                                        leader_equivalence,
-                                        follower_equivalences,
-                                    }
-                                }
-                                VdMirBaseFoldingSeparator::SetTimes => todo!(),
-                                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
-                            }
+                match fst_func.separator() {
+                    VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
+                    VdMirBaseFoldingSeparator::CommRingMul => {
+                        VdMirTermDerivationConstruction::Product {
+                            leader_equivalence,
+                            follower_equivalences,
                         }
-                        VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
-                    },
-                    VdMirFunc::NormalBaseBinaryOpr(vd_base_binary_opr_signature) => todo!(),
-                    VdMirFunc::Power(vd_power_signature) => todo!(),
-                    VdMirFunc::InSet => todo!(),
-                    VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
+                    }
+                    VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                    VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
                 }
             }
             VdBsqExprFldData::ChainingSeparatedList {
