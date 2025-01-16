@@ -169,7 +169,7 @@ where
 {
     fn build_func_from_vd_key(&mut self, key: VdMirFuncKey) -> LnMirFunc {
         let Some(translation) = self.dictionary().func_key_translation(key) else {
-            todo!()
+            todo!("key = {:?}", key)
         };
         match *translation {
             VdFuncKeyTranslation::PrefixOpr(func_key)
