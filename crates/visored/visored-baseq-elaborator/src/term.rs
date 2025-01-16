@@ -31,7 +31,10 @@ use visored_mir_expr::{
 };
 use visored_mir_opr::{
     opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
-    separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
+    separator::{
+        chaining::VdMirBaseChainingSeparator, folding::VdMirBaseFoldingSeparator,
+        VdMirBaseSeparator,
+    },
 };
 use visored_opr::precedence::VdPrecedenceRange;
 use visored_term::{
@@ -238,7 +241,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 None => {
                     use VdBsqComparisonOpr::*;
 
-                    let (func, follower) = *followers.first().unwrap();
+                    let (signature, follower) = *followers.first().unwrap();
                     let num_relationship = |slf: &Self, kind| {
                         VdBsqTerm::new_num_relationship(
                             leader.term().num().unwrap(),
@@ -247,35 +250,26 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                             self.floater_db(),
                         )
                     };
-                    match func {
-                        VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
-                        VdMirFunc::NormalBaseSeparator(signature) => match signature.separator() {
-                            VdMirBaseSeparator::COMM_RING_ADD => unreachable!(),
-                            VdMirBaseSeparator::COMM_RING_MUL => unreachable!(),
-                            VdMirBaseSeparator::EQ => {
-                                num_relationship(self, VdBsqComparisonOpr::EQ)
-                            }
-                            VdMirBaseSeparator::NE => {
-                                num_relationship(self, VdBsqComparisonOpr::NE)
-                            }
-                            VdMirBaseSeparator::LT => {
-                                num_relationship(self, VdBsqComparisonOpr::LT)
-                            }
-                            VdMirBaseSeparator::GT => {
-                                num_relationship(self, VdBsqComparisonOpr::GT)
-                            }
-                            VdMirBaseSeparator::LE => {
-                                num_relationship(self, VdBsqComparisonOpr::LE)
-                            }
-                            VdMirBaseSeparator::GE => {
-                                num_relationship(self, VdBsqComparisonOpr::GE)
-                            }
-                            _ => todo!(),
-                        },
-                        VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
-                        VdMirFunc::Power(signature) => todo!(),
-                        VdMirFunc::InSet => VdBsqPropTerm::InSet.into(),
-                        VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
+                    match signature.separator() {
+                        VdMirBaseChainingSeparator::EQ => {
+                            num_relationship(self, VdBsqComparisonOpr::EQ)
+                        }
+                        VdMirBaseChainingSeparator::NE => {
+                            num_relationship(self, VdBsqComparisonOpr::NE)
+                        }
+                        VdMirBaseChainingSeparator::LT => {
+                            num_relationship(self, VdBsqComparisonOpr::LT)
+                        }
+                        VdMirBaseChainingSeparator::GT => {
+                            num_relationship(self, VdBsqComparisonOpr::GT)
+                        }
+                        VdMirBaseChainingSeparator::LE => {
+                            num_relationship(self, VdBsqComparisonOpr::LE)
+                        }
+                        VdMirBaseChainingSeparator::GE => {
+                            num_relationship(self, VdBsqComparisonOpr::GE)
+                        }
+                        _ => todo!(),
                     }
                 }
             },
