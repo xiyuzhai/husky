@@ -26,6 +26,7 @@ impl VdBaseSeparatorSignature {
         };
         let separator = match path {
             VdTraitItemPath::Iff => VdMirBaseSeparator::IFF,
+            VdTraitItemPath::InSet => todo!(),
             VdTraitItemPath::GroupMul => todo!(),
             VdTraitItemPath::AbelianGroupAdd => todo!(),
             VdTraitItemPath::NatAdd => VdMirBaseSeparator::COMM_RING_ADD,

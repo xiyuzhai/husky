@@ -12,6 +12,18 @@ impl From<VdBaseContainmentSeparatorSignature> for VdBaseChainingSeparatorSignat
     }
 }
 
+impl From<VdBaseContainmentSeparatorSignature> for VdBaseSeparatorSignature {
+    fn from(signature: VdBaseContainmentSeparatorSignature) -> Self {
+        VdBaseSeparatorSignature::Chaining(signature.into())
+    }
+}
+
+impl From<VdBaseContainmentSeparatorSignature> for VdSignature {
+    fn from(signature: VdBaseContainmentSeparatorSignature) -> Self {
+        VdSignature::Separator(VdSeparatorSignature::Base(signature.into()))
+    }
+}
+
 impl VdBaseContainmentSeparatorSignature {
     pub fn new(
         separator: VdMirBaseContainmentSeparator,
@@ -32,6 +44,10 @@ impl VdBaseContainmentSeparatorSignature {
             VdMirBaseContainmentSeparator::Supsetneq => todo!(),
         }
     }
+
+    pub fn new_in_set(instantiation: VdInstantiation) -> Self {
+        VdBaseContainmentSeparatorSignature::InSet { instantiation }
+    }
 }
 
 impl VdBaseContainmentSeparatorSignature {
@@ -39,6 +55,14 @@ impl VdBaseContainmentSeparatorSignature {
         match self {
             VdBaseContainmentSeparatorSignature::InSet { instantiation } => instantiation,
         }
+    }
+
+    pub fn item_ty(self) -> VdType {
+        todo!()
+    }
+
+    pub fn expr_ty(self) -> VdType {
+        todo!()
     }
 
     pub fn separator(self) -> VdMirBaseContainmentSeparator {

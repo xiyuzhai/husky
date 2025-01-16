@@ -19,7 +19,9 @@ use self::{
 use crate::*;
 use eterned::db::EternerDb;
 use lisp_csv::expr::{LpCsvExpr, LpCsvExprData};
-use separator::base::VdBaseSeparatorSignature;
+use separator::base::{
+    chaining::relation::containment::VdBaseContainmentSeparatorSignature, VdBaseSeparatorSignature,
+};
 
 #[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
@@ -108,6 +110,10 @@ impl VdSignature {
                     VdType::from_lp_csv_expr(&args[2], db),
                 )
                 .into()
+            }
+            "in_set" => {
+                assert_eq!(args.len(), 0);
+                VdBaseContainmentSeparatorSignature::new_in_set(instantiation).into()
             }
             s => todo!("s = {s:?} not handled"),
         }

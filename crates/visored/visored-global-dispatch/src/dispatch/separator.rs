@@ -437,13 +437,6 @@ impl VdSeparatorGlobalDispatch {
                     signature,
                 }
             }
-            "in_set" => VdSeparatorGlobalDispatch::Chaining {
-                base_separator,
-                signature: VdBaseContainmentSeparatorSignature::InSet {
-                    instantiation: todo!(),
-                }
-                .into(),
-            },
             ident => todo!("ident: {ident} not handled"),
         };
         (key, dispatch)

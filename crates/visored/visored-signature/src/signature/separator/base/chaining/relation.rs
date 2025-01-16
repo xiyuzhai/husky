@@ -58,7 +58,7 @@ impl VdBaseRelationSeparatorSignature {
 
     pub fn item_ty(self) -> VdType {
         match self {
-            VdBaseRelationSeparatorSignature::Containment(slf) => todo!(),
+            VdBaseRelationSeparatorSignature::Containment(slf) => slf.item_ty(),
             VdBaseRelationSeparatorSignature::Comparison(slf) => slf.item_ty(),
         }
     }

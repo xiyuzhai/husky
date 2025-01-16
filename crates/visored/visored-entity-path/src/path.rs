@@ -53,6 +53,7 @@ impl VdItemPath {
     pub const RING_SUB: Self = VdItemPath::TraitItem(VdTraitItemPath::RING_SUB);
     pub const FIELD_DIV: Self = VdItemPath::TraitItem(VdTraitItemPath::FIELD_DIV);
     pub const REAL_SQRT: Self = VdItemPath::TraitItem(VdTraitItemPath::REAL_SQRT);
+    pub const IN_SET: Self = VdItemPath::TraitItem(VdTraitItemPath::IN_SET);
 }
 
 impl VdItemPath {
@@ -77,6 +78,7 @@ impl VdItemPath {
             "ring_power" => VdItemPath::RING_POWER,
             "field_div" => VdItemPath::FIELD_DIV,
             "real_sqrt" => VdItemPath::REAL_SQRT,
+            "in_set" => VdItemPath::IN_SET,
             s => todo!("s = {s:?} not handled"),
         }
     }

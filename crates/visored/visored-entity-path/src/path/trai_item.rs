@@ -3,6 +3,7 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum VdTraitItemPath {
     Iff,
+    InSet,
     GroupMul,
     AbelianGroupAdd,
     NatAdd,
@@ -37,6 +38,7 @@ impl VdTraitItemPath {
     pub const RING_NEG: Self = VdTraitItemPath::CommRingNeg;
     pub const FIELD_DIV: Self = VdTraitItemPath::FieldDiv;
     pub const REAL_SQRT: Self = VdTraitItemPath::RealSqrt;
+    pub const IN_SET: Self = VdTraitItemPath::InSet;
     pub const EQ: Self = VdTraitItemPath::Eq;
     pub const NE: Self = VdTraitItemPath::Ne;
     pub const LT: Self = VdTraitItemPath::Lt;
@@ -49,6 +51,7 @@ impl VdTraitItemPath {
     pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             VdTraitItemPath::Iff => write!(f, "⟺"),
+            VdTraitItemPath::InSet => write!(f, "∈"),
             VdTraitItemPath::GroupMul => write!(f, "*"),
             VdTraitItemPath::AbelianGroupAdd => write!(f, "+(abelian_group_add)"),
             VdTraitItemPath::NatAdd => write!(f, "+(nat_add)"),

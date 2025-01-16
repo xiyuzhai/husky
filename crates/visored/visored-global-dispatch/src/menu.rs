@@ -122,6 +122,7 @@ impl VdGlobalDispatchMenu {
             prop,
         } = *vd_ty_menu(db);
         let VdSignatureMenu {
+            in_set,
             int_pos,
             rat_pos,
             real_pos,
