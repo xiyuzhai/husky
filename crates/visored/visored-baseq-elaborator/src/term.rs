@@ -184,7 +184,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     //     Right(base) => VdBsqTerm::new_power(base, exponent, self.floater_db()),
                     // }
                 }
-                VdMirFunc::InSet => todo!(),
                 VdMirFunc::NormalBaseSqrt(signature) => {
                     let radicand = arguments[0].term().num().unwrap();
                     let exponent = VdBsqFrac128::new128(1, 2).unwrap();

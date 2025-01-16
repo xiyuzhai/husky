@@ -49,7 +49,6 @@ impl<'a> VdMirExprDisplayTreeBuilder<'a> {
                     }
                     VdMirFunc::NormalBaseSeparator { .. } => "separator".to_string(),
                     VdMirFunc::NormalBaseBinaryOpr { .. } => "binary opr".to_string(),
-                    VdMirFunc::InSet => "in set".to_string(),
                     VdMirFunc::Power(vd_power_signature) => {
                         format!("power")
                     }

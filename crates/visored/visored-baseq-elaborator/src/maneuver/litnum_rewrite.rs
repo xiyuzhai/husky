@@ -79,7 +79,6 @@ where
                 | VdMirFunc::NormalBaseSeparator(_)
                 | VdMirFunc::NormalBaseBinaryOpr(_)
                 | VdMirFunc::Power(_)
-                | VdMirFunc::InSet
                 | VdMirFunc::NormalBaseSqrt(_) => mapm_collect(arguments, |&argument| f(argument))
                     .map(|elr, arguments| {
                         elr.mk_expr(

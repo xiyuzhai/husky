@@ -174,7 +174,6 @@ fn is_equivalence(func: &VdMirFunc) -> bool {
         VdMirFunc::NormalBaseSeparator(signature) => signature.separator().is_equivalence(),
         VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
         VdMirFunc::Power(signature) => todo!(),
-        VdMirFunc::InSet => todo!(),
         VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
     }
 }

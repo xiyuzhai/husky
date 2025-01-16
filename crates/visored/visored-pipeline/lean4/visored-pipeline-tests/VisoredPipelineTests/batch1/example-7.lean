@@ -79,10 +79,10 @@ macro "litnum_bound": tactic =>`(tactic|
 def h (x : ℝ) (h1 : x > (0 : ℝ)) (y : ℝ) (h2 : y > (0 : ℝ)) : (1 : ℝ) / x + (1 : ℝ) / y ≥ (4 : ℝ) / (x + y) := by
   have h3 : in_set := by obvious
   have h4 : x > (0 : ℝ) := by old_main_hypothesis
-  have h5 : in_set := by term_equivalence
+  have h5 : in_set := by obvious
   have h6 : y > (0 : ℝ) := by old_main_hypothesis
   have h15 : (1 : ℝ) / x + (1 : ℝ) / y ≥ (4 : ℝ) / (x + y) := by
-    have h7 : (x - y) ^ 2 ≥ (0 : ℝ) := by apply sq_nonneg
+    have h7 : (x - y) ^ 2 ≥ (0 : ℝ) := by apply square_nonnegative
     first
     | have h8 : (x - y) ^ 2 ≥ (0 : ℝ) := by calc
       (x - y) ^ 2 = x ^ 2 - (2 : ℝ) * x * y + y ^ 2 := by obvious

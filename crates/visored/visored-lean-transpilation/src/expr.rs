@@ -14,6 +14,7 @@ use lean_mir_expr::expr::{
 };
 use lean_opr::opr::binary::LnBinaryOpr;
 use lean_term::term::literal::{LnLiteral, LnLiteralData};
+use visored_entity_path::path::{trai_item::VdTraitItemPath, VdItemPath};
 use visored_mir_expr::expr::{
     application::{VdMirFunc, VdMirFuncKey},
     VdMirExprData, VdMirExprIdx, VdMirExprIdxRange,
@@ -169,7 +170,7 @@ where
 {
     fn build_func_from_vd_key(&mut self, key: VdMirFuncKey) -> LnMirFunc {
         let Some(translation) = self.dictionary().func_key_translation(key) else {
-            todo!("key = {:?}", key)
+            return self.build_func_from_vd_key_by_rule(key);
         };
         match *translation {
             VdFuncKeyTranslation::PrefixOpr(func_key)
@@ -179,6 +180,46 @@ where
             | VdFuncKeyTranslation::Function(func_key)
             | VdFuncKeyTranslation::JustBinaryOpr(func_key) => self.build_func_from_key(func_key),
             VdFuncKeyTranslation::InSet => LnMirFunc::InSet,
+        }
+    }
+
+    fn build_func_from_vd_key_by_rule(&mut self, key: VdMirFuncKey) -> LnMirFunc {
+        match key {
+            VdMirFuncKey::NormalBasePrefixOpr(vd_instantiation) => todo!(),
+            VdMirFuncKey::NormalBaseSeparator(instantiation) => match instantiation.path() {
+                VdItemPath::Prop(vd_prop_path) => todo!(),
+                VdItemPath::Category(vd_category_path) => todo!(),
+                VdItemPath::Set(vd_set_path) => todo!(),
+                VdItemPath::Function(vd_function_path) => todo!(),
+                VdItemPath::Trait(vd_trait_path) => todo!(),
+                VdItemPath::TraitItem(trait_item_path) => match trait_item_path {
+                    VdTraitItemPath::Iff => todo!(),
+                    VdTraitItemPath::InSet => LnMirFunc::InSet,
+                    VdTraitItemPath::GroupMul => todo!(),
+                    VdTraitItemPath::AbelianGroupAdd => {
+                        todo!()
+                    }
+                    VdTraitItemPath::NatAdd => todo!(),
+                    VdTraitItemPath::NatMul => todo!(),
+                    VdTraitItemPath::CommRingAdd => todo!(),
+                    VdTraitItemPath::CommRingSub => todo!(),
+                    VdTraitItemPath::CommRingMul => todo!(),
+                    VdTraitItemPath::CommRingPower => todo!(),
+                    VdTraitItemPath::CommRingPos => todo!(),
+                    VdTraitItemPath::CommRingNeg => todo!(),
+                    VdTraitItemPath::Eq => todo!(),
+                    VdTraitItemPath::Ne => todo!(),
+                    VdTraitItemPath::Lt => todo!(),
+                    VdTraitItemPath::Gt => todo!(),
+                    VdTraitItemPath::Le => todo!(),
+                    VdTraitItemPath::Ge => todo!(),
+                    VdTraitItemPath::FieldDiv => todo!(),
+                    VdTraitItemPath::RealSqrt => todo!(),
+                },
+            },
+            VdMirFuncKey::NormalBaseBinaryOpr(vd_instantiation) => todo!(),
+            VdMirFuncKey::Power(vd_instantiation) => todo!(),
+            VdMirFuncKey::NormalBaseSqrt(vd_instantiation) => todo!(),
         }
     }
 }

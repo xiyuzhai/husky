@@ -107,7 +107,6 @@ impl<'sess> VdBsqExprFld<'sess> {
                     arguments[1].show_fmt(VdPrecedenceRange::ANY, f)?;
                     f.write_str("}}")
                 }
-                VdMirFunc::InSet => todo!(),
                 VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
             },
             VdBsqExprFldData::FoldingSeparatedList { leader, followers } => {

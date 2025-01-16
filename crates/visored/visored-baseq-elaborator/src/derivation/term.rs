@@ -122,7 +122,6 @@ where
                     exponent: self
                         .transcribe_expr_term_derivation(arguments[1], hypothesis_constructor),
                 },
-                VdMirFunc::InSet => todo!(),
                 VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => {
                     let radicand =
                         self.transcribe_expr_term_derivation(arguments[0], hypothesis_constructor);

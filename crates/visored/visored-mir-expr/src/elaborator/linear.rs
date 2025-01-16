@@ -568,7 +568,6 @@ where
             // - the exponent is a positive integer
             // - the base is nonzero and the exponent is zero
             VdMirFunc::Power(signature) => (),
-            VdMirFunc::InSet => todo!(),
             VdMirFunc::NormalBaseSqrt(signature) => (), // ad hoc, should be merged with power
         }
     }

@@ -75,8 +75,6 @@ pub struct VdMirFuncKeyMenu {
     pub int_ge: VdMirFuncKey,
     pub rat_ge: VdMirFuncKey,
     pub real_ge: VdMirFuncKey,
-    /// ## in
-    pub in_set: VdMirFuncKey,
     /// ## sqrt
     pub real_sqrt: VdMirFuncKey,
 }
@@ -200,7 +198,6 @@ impl VdMirFuncKeyMenu {
             int_ge: VdMirFuncKey::NormalBaseSeparator(int_ge),
             rat_ge: VdMirFuncKey::NormalBaseSeparator(rat_ge),
             real_ge: VdMirFuncKey::NormalBaseSeparator(real_ge),
-            in_set: VdMirFuncKey::InSet,
             real_sqrt: VdMirFuncKey::NormalBaseSqrt(real_sqrt),
         }
     }

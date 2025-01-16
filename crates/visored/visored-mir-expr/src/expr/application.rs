@@ -16,7 +16,6 @@ pub enum VdMirFunc {
     NormalBaseSeparator(VdBaseSeparatorSignature),
     NormalBaseBinaryOpr(VdBaseBinaryOprSignature),
     Power(VdPowerSignature),
-    InSet,
     NormalBaseSqrt(VdBaseSqrtSignature),
     // TODO: expr as func
 }
@@ -26,7 +25,6 @@ pub enum VdMirFuncKey {
     NormalBasePrefixOpr(VdInstantiation),
     NormalBaseSeparator(VdInstantiation),
     NormalBaseBinaryOpr(VdInstantiation),
-    InSet,
     Power(VdInstantiation),
     NormalBaseSqrt(VdInstantiation),
 }
@@ -61,7 +59,6 @@ impl VdMirFunc {
                 Left(VdMirFuncKey::NormalBasePrefixOpr(signature.instantiation()))
             }
             VdMirFunc::Power(signature) => Left(VdMirFuncKey::Power(signature.instantiation())),
-            VdMirFunc::InSet => Left(VdMirFuncKey::InSet),
             VdMirFunc::NormalBaseSqrt(signature) => {
                 Left(VdMirFuncKey::NormalBaseSqrt(signature.instantiation()))
             }
@@ -78,7 +75,6 @@ impl VdMirFunc {
             VdMirFunc::NormalBaseSeparator(signature) => signature.separator().precedence(),
             VdMirFunc::NormalBaseBinaryOpr(signature) => signature.opr.precedence(),
             VdMirFunc::Power(signature) => VdPrecedence::ATOM,
-            VdMirFunc::InSet => todo!(),
             VdMirFunc::NormalBaseSqrt(signature) => VdPrecedence::ATOM,
         }
     }
