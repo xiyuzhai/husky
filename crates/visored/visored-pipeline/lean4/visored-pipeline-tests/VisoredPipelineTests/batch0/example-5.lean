@@ -89,5 +89,43 @@ def h (a b : ℝ) : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 :=
     _ = (a ^ 2 + b ^ 2) / (2 : ℝ) - ((a + b) / (2 : ℝ)) ^ 2 := by obvious
     _ ≥ (0 : ℝ) := by obvious
   have h3 : (a ^ 2 + b ^ 2) / (2 : ℝ) - ((a + b) / (2 : ℝ)) ^ 2 ≥ (0 : ℝ) := by obvious
-  have h4 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by term_equivalence
+  have h4 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by
+    have d : a = a := by term_derivation_variable
+    have d1 : 2 = 2 := by term_derivation_literal
+    have d2 : a ^ 2 = a ^ 2 := by term_derivation_power
+    have d3 : b = b := by term_derivation_variable
+    have d4 : 2 = 2 := by term_derivation_literal
+    have d5 : b ^ 2 = b ^ 2 := by term_derivation_power
+    have d6 : a ^ 2 + b ^ 2 = b ^ 2 + a ^ 2 := by term_derivation_sum
+    have d7 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d8 : (a ^ 2 + b ^ 2) / (2 : ℝ) = ((1 : ℚ) / (2 : ℚ) : ℝ) + b ^ 2 + (((1 : ℚ) / (2 : ℚ) : ℝ) + a ^ 2) := by term_derivation_div
+    have d9 : a = a := by term_derivation_variable
+    have d10 : b = b := by term_derivation_variable
+    have d11 : a + b = b + a := by term_derivation_sum
+    have d12 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d13 : (a + b) / (2 : ℝ) = ((1 : ℚ) / (2 : ℚ) : ℝ) + b + (((1 : ℚ) / (2 : ℚ) : ℝ) + a) := by term_derivation_div
+    have d14 : 2 = 2 := by term_derivation_literal
+    have d15 : ((a + b) / (2 : ℝ)) ^ 2 = (((1 : ℚ) / (2 : ℚ) : ℝ) + b + (((1 : ℚ) / (2 : ℚ) : ℝ) + a)) ^ 2 := by term_derivation_power
+    have d16 : (a ^ 2 + b ^ 2) / (2 : ℝ) - ((a + b) / (2 : ℝ)) ^ 2 = ((1 : ℚ) / (2 : ℚ) : ℝ) + b ^ 2 + ((-1 : ℝ) + (((1 : ℚ) / (2 : ℚ) : ℝ) + b + (((1 : ℚ) / (2 : ℚ) : ℝ) + a)) ^ 2) + (((1 : ℚ) / (2 : ℚ) : ℝ) + a ^ 2) := by term_derivation_sub
+    have d17 : (0 : ℝ) = (0 : ℝ) := by term_derivation_literal
+    have d18 : (a ^ 2 + b ^ 2) / (2 : ℝ) - ((a + b) / (2 : ℝ)) ^ 2 ≥ (0 : ℝ) = (((1 : ℚ) / (2 : ℚ) : ℝ) + b ^ 2 + ((-1 : ℝ) + (((1 : ℚ) / (2 : ℚ) : ℝ) + b + (((1 : ℚ) / (2 : ℚ) : ℝ) + a)) ^ 2) + (((1 : ℚ) / (2 : ℚ) : ℝ) + a ^ 2) ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d19 : a = a := by term_derivation_variable
+    have d20 : 2 = 2 := by term_derivation_literal
+    have d21 : a ^ 2 = a ^ 2 := by term_derivation_power
+    have d22 : b = b := by term_derivation_variable
+    have d23 : 2 = 2 := by term_derivation_literal
+    have d24 : b ^ 2 = b ^ 2 := by term_derivation_power
+    have d25 : a ^ 2 + b ^ 2 = b ^ 2 + a ^ 2 := by term_derivation_sum
+    have d26 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d27 : (a ^ 2 + b ^ 2) / (2 : ℝ) = ((1 : ℚ) / (2 : ℚ) : ℝ) + b ^ 2 + (((1 : ℚ) / (2 : ℚ) : ℝ) + a ^ 2) := by term_derivation_div
+    have d28 : a = a := by term_derivation_variable
+    have d29 : b = b := by term_derivation_variable
+    have d30 : a + b = b + a := by term_derivation_sum
+    have d31 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d32 : (a + b) / (2 : ℝ) = ((1 : ℚ) / (2 : ℚ) : ℝ) + b + (((1 : ℚ) / (2 : ℚ) : ℝ) + a) := by term_derivation_div
+    have d33 : 2 = 2 := by term_derivation_literal
+    have d34 : ((a + b) / (2 : ℝ)) ^ 2 = (((1 : ℚ) / (2 : ℚ) : ℝ) + b + (((1 : ℚ) / (2 : ℚ) : ℝ) + a)) ^ 2 := by term_derivation_power
+    have d35 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 = (((1 : ℚ) / (2 : ℚ) : ℝ) + b ^ 2 + ((-1 : ℝ) + (((1 : ℚ) / (2 : ℚ) : ℝ) + b + (((1 : ℚ) / (2 : ℚ) : ℝ) + a)) ^ 2) + (((1 : ℚ) / (2 : ℚ) : ℝ) + a ^ 2) ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d36 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by term_derivation_finalize
+    term_derivation_finalize
   obvious

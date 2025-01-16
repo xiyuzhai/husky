@@ -107,6 +107,8 @@ impl VdMirBaseRelationSeparator {
     pub const GT: Self = VdMirBaseRelationSeparator::Comparison(VdMirBaseComparisonSeparator::GT);
     pub const LE: Self = VdMirBaseRelationSeparator::Comparison(VdMirBaseComparisonSeparator::LE);
     pub const GE: Self = VdMirBaseRelationSeparator::Comparison(VdMirBaseComparisonSeparator::GE);
+    pub const IN_SET: Self =
+        VdMirBaseRelationSeparator::Containment(VdMirBaseContainmentSeparator::IN_SET);
     pub const SUBSET: Self =
         VdMirBaseRelationSeparator::Containment(VdMirBaseContainmentSeparator::SUBSET);
     pub const SUPSET: Self =
@@ -133,6 +135,8 @@ impl VdMirBaseChainingSeparator {
     pub const GT: Self = VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::GT);
     pub const LE: Self = VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::LE);
     pub const GE: Self = VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::GE);
+    pub const IN_SET: Self =
+        VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::IN_SET);
     pub const SUBSET: Self =
         VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::SUBSET);
     pub const SUPSET: Self =

@@ -131,7 +131,7 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
             },
             VdBsqLitnumTerm::BigInt(i) => todo!(),
             VdBsqLitnumTerm::Frac128(slf) => match rhs {
-                VdBsqLitnumTerm::Int128(_) => todo!(),
+                VdBsqLitnumTerm::Int128(rhs) => slf.add_i128(rhs, db),
                 VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
                 VdBsqLitnumTerm::Frac128(rhs) => slf.add(rhs, db),
             },

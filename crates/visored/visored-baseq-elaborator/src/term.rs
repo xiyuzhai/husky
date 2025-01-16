@@ -269,7 +269,8 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         VdMirBaseChainingSeparator::GE => {
                             num_relationship(self, VdBsqComparisonOpr::GE)
                         }
-                        _ => todo!(),
+                        VdMirBaseChainingSeparator::IN_SET => VdBsqPropTerm::InSet.into(),
+                        separator => todo!("unsupported separator: {separator:?}"),
                     }
                 }
             },
