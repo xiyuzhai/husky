@@ -26,6 +26,14 @@ impl VdItemPathDictionary {
     pub fn new_standard(db: &EternerDb) -> Self {
         Self::new([
             (
+                VdItemPath::TRUE,
+                VdItemPathTranslation::ItemPath(LnItemPath::TRUE),
+            ),
+            (
+                VdItemPath::FALSE,
+                VdItemPathTranslation::ItemPath(LnItemPath::FALSE),
+            ),
+            (
                 VdItemPath::NAT,
                 VdItemPathTranslation::ItemPath(LnItemPath::NAT),
             ),

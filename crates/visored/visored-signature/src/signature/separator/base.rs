@@ -60,8 +60,10 @@ impl VdBaseSeparatorSignature {
 
 impl VdBaseSeparatorSignature {
     pub fn instantiation(self) -> VdInstantiation {
-        todo!()
-        // self.instantiation
+        match self {
+            VdBaseSeparatorSignature::Chaining(slf) => slf.instantiation(),
+            VdBaseSeparatorSignature::Folding(slf) => slf.instantiation(),
+        }
     }
 
     pub fn separator(self) -> VdMirBaseSeparator {

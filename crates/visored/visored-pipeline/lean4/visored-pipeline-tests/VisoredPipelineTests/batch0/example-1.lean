@@ -77,5 +77,5 @@ macro "litnum_bound": tactic =>`(tactic|
 )
 
 def h (a b : ℝ) : (a + b) ^ 2 ≥ (0 : ℝ) := by
-  have h1 : (a + b) ^ 2 ≥ (0 : ℝ) := by apply sq_nonneg
+  have h1 : (a + b) ^ 2 ≥ (0 : ℝ) := by apply square_nonnegative
   obvious

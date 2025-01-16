@@ -46,6 +46,13 @@ impl VdBaseChainingSeparatorSignature {
 }
 
 impl VdBaseChainingSeparatorSignature {
+    pub fn instantiation(self) -> VdInstantiation {
+        match self {
+            VdBaseChainingSeparatorSignature::Iff => todo!(),
+            VdBaseChainingSeparatorSignature::Relation(slf) => slf.instantiation(),
+        }
+    }
+
     pub fn separator(self) -> VdMirBaseChainingSeparator {
         match self {
             VdBaseChainingSeparatorSignature::Iff => todo!(),

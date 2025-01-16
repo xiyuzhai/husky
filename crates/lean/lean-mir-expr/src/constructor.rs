@@ -57,6 +57,19 @@ impl LnMirExprConstructor {
         self.expr_arena.alloc_one(entry)
     }
 
+    pub fn alloc_by(&mut self, tactics: impl IntoIterator<Item = LnMirTacticData>) -> LnMirExprIdx {
+        let tactics = self.alloc_tactics(tactics);
+        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }, None))
+    }
+
+    pub fn alloc_by_custom(&mut self, name: &'static str) -> LnMirExprIdx {
+        let tactics = self.alloc_tactics([LnMirTacticData::Custom {
+            name,
+            construction: None,
+        }]);
+        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }, None))
+    }
+
     pub fn alloc_exprs(
         &mut self,
         entries: impl IntoIterator<Item = LnMirExprEntry>,

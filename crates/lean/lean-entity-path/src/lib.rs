@@ -13,6 +13,8 @@ use crate::tests::*;
 // TODO: ad hoc
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum LnItemPath {
+    True,
+    False,
     Unit,
     Nat,
     Rat,
@@ -40,6 +42,8 @@ impl From<LnTheoremPath> for LnItemPath {
 
 // TODO: maybe use menu?
 impl LnItemPath {
+    pub const TRUE: Self = LnItemPath::True;
+    pub const FALSE: Self = LnItemPath::False;
     pub const UNIT: Self = LnItemPath::Unit;
     pub const NAT: Self = LnItemPath::Nat;
     pub const RAT: Self = LnItemPath::Rat;
@@ -61,6 +65,8 @@ impl LnItemPath {
 impl LnItemPath {
     pub fn show(&self, db: &EternerDb) -> String {
         match self {
+            LnItemPath::True => "true".to_string(),
+            LnItemPath::False => "false".to_string(),
             LnItemPath::Unit => "()".to_string(),
             LnItemPath::Nat => "ℕ".to_string(),
             LnItemPath::Rat => "ℚ".to_string(),
@@ -77,7 +83,7 @@ impl LnItemPath {
             LnItemPath::Eq => "=".to_string(),
             LnItemPath::RealSqrt => "√".to_string(),
             LnItemPath::Prop => "Prop".to_string(),
-            LnItemPath::Theorem(ln_theorem_path) => todo!(),
+            LnItemPath::Theorem(ln_theorem_path) => ln_theorem_path.show(db),
         }
     }
 }

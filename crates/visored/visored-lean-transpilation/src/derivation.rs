@@ -1,5 +1,8 @@
 use crate::*;
-use lean_mir_expr::tactic::{LnMirTacticData, LnMirTacticIdxRange};
+use lean_mir_expr::{
+    expr::{LnMirExprData, LnMirExprEntry},
+    tactic::{LnMirTacticData, LnMirTacticIdxRange},
+};
 use visored_mir_expr::{
     derivation::{
         chunk::VdMirDerivationChunk,
@@ -34,29 +37,37 @@ where
         let construction = match entry.construction() {
             VdMirDerivationConstruction::Ring(vd_mir_ring_derivation_construction) => todo!(),
             VdMirDerivationConstruction::Term(construction) => match construction {
-                VdMirTermDerivationConstruction::Literal => todo!(),
-                VdMirTermDerivationConstruction::Variable => todo!(),
-                VdMirTermDerivationConstruction::ItemPath => todo!(),
+                VdMirTermDerivationConstruction::Literal => {
+                    self.alloc_by_custom("term_derivation_literal")
+                }
+                VdMirTermDerivationConstruction::Variable => {
+                    self.alloc_by_custom("term_derivation_variable")
+                }
+                VdMirTermDerivationConstruction::ItemPath => {
+                    self.alloc_by_custom("term_derivation_item_path")
+                }
                 VdMirTermDerivationConstruction::Sum {
                     summand_term_equivalences,
-                } => todo!(),
-                VdMirTermDerivationConstruction::Sub { lopd, ropd } => todo!(),
+                } => self.alloc_by_custom("term_derivation_sum"),
+                VdMirTermDerivationConstruction::Sub { lopd, ropd } => {
+                    self.alloc_by_custom("term_derivation_sub")
+                }
                 VdMirTermDerivationConstruction::Product {
                     leader_equivalence,
                     follower_equivalences,
-                } => todo!(),
+                } => self.alloc_by_custom("term_derivation_product"),
                 VdMirTermDerivationConstruction::Div {
                     numerator,
                     denominator,
-                } => todo!(),
+                } => self.alloc_by_custom("term_derivation_div"),
                 VdMirTermDerivationConstruction::Finalize {
                     src_term_equivalence,
                     dst_term_equivalence,
-                } => todo!(),
+                } => self.alloc_by_custom("term_derivation_finalize"),
                 VdMirTermDerivationConstruction::ChainingSeparatedList {
                     leader_equivalence,
                     follower_equivalences,
-                } => todo!(),
+                } => self.alloc_by_custom("term_derivation_chaining_separated_list"),
             },
         };
         LnMirTacticData::Have {
@@ -78,12 +89,15 @@ where
                 VdMirTermDerivationConstruction::Finalize {
                     src_term_equivalence,
                     dst_term_equivalence,
-                } => todo!(),
+                } => LnMirTacticData::Custom {
+                    name: "term_derivation_finalize",
+                    construction: None,
+                },
                 _ => unreachable!(),
             },
         }
-        LnMirTacticData::Apply {
-            hypothesis: todo!(),
-        }
+        // LnMirTacticData::Apply {
+        //     hypothesis: todo!(),
+        // }
     }
 }

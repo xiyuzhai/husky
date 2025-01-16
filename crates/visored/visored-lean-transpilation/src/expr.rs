@@ -75,7 +75,7 @@ where
             }
             VdMirExprData::ItemPath(item_path) => {
                 let Some(translation) = self.dictionary().item_path_translation(item_path) else {
-                    todo!()
+                    todo!("item path not found, `{:?}`", item_path)
                 };
                 match *translation {
                     VdItemPathTranslation::ItemPath(item_path) => {

@@ -26,14 +26,13 @@ where
                     VdMirCoercion::Trivial => (),
                     VdMirCoercion::Obvious(arena_idx) => todo!("handle this properly."),
                 }
-                self.alloc_tactics([LnMirTacticData::Apply {
-                    hypothesis: match path {
-                        VdTheoremPath::SquareNonnegative => self.alloc_expr(LnMirExprEntry::new(
-                            LnMirExprData::ItemPath(LnTheoremPath::SquareNonnegative.into()),
-                            todo!(),
-                        )),
-                    },
-                }])
+                let hypothesis = match path {
+                    VdTheoremPath::SquareNonnegative => self.alloc_expr(LnMirExprEntry::new(
+                        LnMirExprData::ItemPath(LnTheoremPath::SquareNonnegative.into()),
+                        None,
+                    )),
+                };
+                self.alloc_tactics([LnMirTacticData::Apply { hypothesis }])
             }
             VdMirHypothesisConstruction::Assume => return,
             VdMirHypothesisConstruction::TermEquivalence {
