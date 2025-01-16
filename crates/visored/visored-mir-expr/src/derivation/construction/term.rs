@@ -28,12 +28,15 @@ pub enum VdMirTermDerivationConstruction {
         numerator: VdMirDerivationIdx,
         denominator: VdMirDerivationIdx,
     },
-    Finalize {
-        src_term_equivalence: VdMirDerivationIdx,
-        dst_term_equivalence: VdMirDerivationIdx,
-    },
     ChainingSeparatedList {
         leader_equivalence: VdMirDerivationIdx,
         follower_equivalences: Vec<(VdBaseChainingSeparatorSignature, VdMirDerivationIdx)>,
+    },
+    Square {
+        radicand: VdMirDerivationIdx,
+    },
+    Finalize {
+        src_term_equivalence: VdMirDerivationIdx,
+        dst_term_equivalence: VdMirDerivationIdx,
     },
 }

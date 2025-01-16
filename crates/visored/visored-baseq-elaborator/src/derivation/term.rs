@@ -118,7 +118,11 @@ where
                 },
                 VdMirFunc::Power(vd_power_signature) => todo!(),
                 VdMirFunc::InSet => todo!(),
-                VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
+                VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => {
+                    let radicand =
+                        self.transcribe_expr_term_derivation(arguments[0], hypothesis_constructor);
+                    VdMirTermDerivationConstruction::Square { radicand }
+                }
             },
             VdBsqExprFldData::FoldingSeparatedList {
                 leader,

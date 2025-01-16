@@ -68,6 +68,9 @@ where
                     leader_equivalence,
                     follower_equivalences,
                 } => self.alloc_by_custom("term_derivation_chaining_separated_list"),
+                VdMirTermDerivationConstruction::Square { radicand } => {
+                    self.alloc_by_custom("term_derivation_square")
+                }
             },
         };
         LnMirTacticData::Have {
