@@ -67,7 +67,6 @@ impl<'a> VdMirExprRegionDataRef<'a> {
                     base_separator,
                     signature,
                 } => signature,
-                VdSeparatorGlobalDispatch::InSet { expr_ty } => todo!(),
             },
             None => todo!(),
         }
@@ -92,7 +91,6 @@ impl<'a> VdMirExprRegionDataRef<'a> {
                     base_separator,
                     signature,
                 } => todo!(),
-                VdSeparatorGlobalDispatch::InSet { expr_ty } => todo!(),
             },
             None => todo!(),
         }

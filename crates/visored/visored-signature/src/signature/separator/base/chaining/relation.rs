@@ -13,10 +13,6 @@ pub enum VdBaseRelationSeparatorSignature {
 }
 
 impl VdBaseRelationSeparatorSignature {
-    pub const IN_SET: Self = Self::Containment(VdBaseContainmentSeparatorSignature::InSet);
-}
-
-impl VdBaseRelationSeparatorSignature {
     pub fn new(
         separator: VdMirBaseRelationSeparator,
         instantiation: VdInstantiation,

@@ -38,9 +38,6 @@ pub enum VdSeparatorGlobalDispatch {
         base_separator: VdBaseSeparator,
         signature: VdBaseChainingSeparatorSignature,
     },
-    InSet {
-        expr_ty: VdType,
-    },
 }
 
 impl VdSeparatorGlobalDispatch {
@@ -48,7 +45,6 @@ impl VdSeparatorGlobalDispatch {
         match self {
             VdSeparatorGlobalDispatch::Folding { signature, .. } => signature.item_ty(),
             VdSeparatorGlobalDispatch::Chaining { signature, .. } => signature.item_ty(),
-            VdSeparatorGlobalDispatch::InSet { expr_ty, .. } => ty_menu.set,
         }
     }
 }
@@ -437,9 +433,7 @@ impl VdSeparatorGlobalDispatch {
                     signature,
                 }
             }
-            "in_set" => VdSeparatorGlobalDispatch::InSet {
-                expr_ty: vd_ty_menu(db).prop,
-            },
+            "in_set" => todo!(),
             ident => todo!("ident: {ident} not handled"),
         };
         (key, dispatch)

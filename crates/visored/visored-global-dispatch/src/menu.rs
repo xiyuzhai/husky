@@ -274,7 +274,7 @@ impl VdGlobalDispatchMenu {
             rat_ge: chain(VdBaseSeparator::Ge, rat_ge),
             real_ge: chain(VdBaseSeparator::Ge, real_ge),
             // ## in
-            in_set: VdSeparatorGlobalDispatch::InSet { expr_ty: prop },
+            in_set: todo!(),
             // # sqrt
             real_sqrt: VdSqrtGlobalDispatch::Base {
                 signature: real_sqrt,

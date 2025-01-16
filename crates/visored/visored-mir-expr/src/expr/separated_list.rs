@@ -46,10 +46,9 @@ impl<'a> VdMirExprRegionBuilder<'a> {
                         base_separator,
                         signature,
                     } => (signature, follower.expr.to_vd_mir(self)),
-                    VdSemSeparatedListFollowerDispatch::InSet { expr_ty } => (
-                        VdBaseChainingSeparatorSignature::IN_SET,
-                        follower.expr.to_vd_mir(self),
-                    ),
+                    VdSemSeparatedListFollowerDispatch::InSet { signature } => {
+                        (signature, follower.expr.to_vd_mir(self))
+                    }
                     VdSemSeparatedListFollowerDispatch::Folding {
                         base_separator,
                         signature,

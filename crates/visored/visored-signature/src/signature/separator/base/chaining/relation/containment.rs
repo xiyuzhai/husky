@@ -3,7 +3,7 @@ use visored_mir_opr::separator::chaining::VdMirBaseContainmentSeparator;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdBaseContainmentSeparatorSignature {
-    InSet,
+    InSet { instantiation: VdInstantiation },
 }
 
 impl VdBaseContainmentSeparatorSignature {
@@ -30,12 +30,16 @@ impl VdBaseContainmentSeparatorSignature {
 
 impl VdBaseContainmentSeparatorSignature {
     pub fn instantiation(self) -> VdInstantiation {
-        todo!()
+        match self {
+            VdBaseContainmentSeparatorSignature::InSet { instantiation } => instantiation,
+        }
     }
 
     pub fn separator(self) -> VdMirBaseContainmentSeparator {
         match self {
-            VdBaseContainmentSeparatorSignature::InSet => VdMirBaseContainmentSeparator::IN_SET,
+            VdBaseContainmentSeparatorSignature::InSet { .. } => {
+                VdMirBaseContainmentSeparator::IN_SET
+            }
         }
     }
 }

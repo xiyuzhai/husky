@@ -76,7 +76,6 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     base_separator,
                     signature,
                 } => signature,
-                VdSeparatorGlobalDispatch::InSet { expr_ty } => todo!(),
             },
             None => todo!(),
         }
@@ -101,7 +100,6 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     base_separator,
                     signature,
                 } => todo!(),
-                VdSeparatorGlobalDispatch::InSet { expr_ty } => todo!(),
             },
             None => todo!(),
         }
@@ -132,7 +130,6 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                         VdBaseRelationSeparatorSignature::Comparison(signature) => signature,
                     },
                 },
-                VdSeparatorGlobalDispatch::InSet { expr_ty } => todo!(),
             },
             None => todo!(),
         }

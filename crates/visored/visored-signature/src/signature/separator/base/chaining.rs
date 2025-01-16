@@ -24,11 +24,6 @@ impl From<VdBaseChainingSeparatorSignature> for VdSignature {
 }
 
 impl VdBaseChainingSeparatorSignature {
-    pub const IN_SET: Self =
-        VdBaseChainingSeparatorSignature::Relation(VdBaseRelationSeparatorSignature::IN_SET);
-}
-
-impl VdBaseChainingSeparatorSignature {
     pub fn new(
         separator: VdMirBaseChainingSeparator,
         instantiation: VdInstantiation,

@@ -35,7 +35,7 @@ pub enum VdSemSeparatedListFollowerDispatch {
         signature: VdBaseChainingSeparatorSignature,
     },
     InSet {
-        expr_ty: VdType,
+        signature: VdBaseChainingSeparatorSignature,
     },
 }
 impl VdSemSeparatedListFollowerDispatch {
@@ -49,9 +49,7 @@ impl VdSemSeparatedListFollowerDispatch {
                 base_separator,
                 signature,
             } => signature.item_ty(),
-            VdSemSeparatedListFollowerDispatch::InSet { expr_ty, .. } => {
-                mk_ty_from_right_item_term()
-            }
+            VdSemSeparatedListFollowerDispatch::InSet { .. } => mk_ty_from_right_item_term(),
         }
     }
 
@@ -65,7 +63,7 @@ impl VdSemSeparatedListFollowerDispatch {
                 base_separator,
                 ref signature,
             } => signature.expr_ty(),
-            VdSemSeparatedListFollowerDispatch::InSet { expr_ty } => expr_ty,
+            VdSemSeparatedListFollowerDispatch::InSet { ref signature } => signature.expr_ty(),
         }
     }
 
@@ -85,9 +83,6 @@ impl VdSemSeparatedListFollowerDispatch {
                 base_separator,
                 signature,
             },
-            VdSeparatorGlobalDispatch::InSet { expr_ty } => {
-                VdSemSeparatedListFollowerDispatch::InSet { expr_ty }
-            }
         }
     }
 }
