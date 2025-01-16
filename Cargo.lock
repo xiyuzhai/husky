@@ -182,6 +182,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4aa90d7ce82d4be67b64039a3d588d38dbcc6736577de4a847025ce5b0c468d1"
 
 [[package]]
+name = "all-knowing"
+version = "0.1.0"
+
+[[package]]
 name = "all-llms"
 version = "0.1.0"
 dependencies = [

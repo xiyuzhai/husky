@@ -1,10 +1,12 @@
 use super::*;
 use visored_global_dispatch::dispatch::{
-    separator::VdSeparatorGlobalDispatch, sqrt::VdSqrtGlobalDispatch,
+    attach::VdAttachGlobalDispatch, separator::VdSeparatorGlobalDispatch,
+    sqrt::VdSqrtGlobalDispatch,
 };
 use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
 use visored_opr::separator::VdBaseSeparator;
 use visored_signature::signature::{
+    attach::{VdAttachSignature, VdPowerSignature},
     separator::base::{
         chaining::{
             relation::{
@@ -143,6 +145,18 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             .unwrap()
         {
             VdSqrtGlobalDispatch::Base { signature } => signature,
+        }
+    }
+
+    pub fn infer_power_signature(&self, base_ty: VdType, exponent_ty: VdType) -> VdPowerSignature {
+        match self
+            .default_global_dispatch_table
+            .power_default_dispatch(base_ty, exponent_ty)
+            .unwrap()
+        {
+            VdAttachGlobalDispatch::Normal { signature } => match signature {
+                VdAttachSignature::Power(signature) => signature,
+            },
         }
     }
 }

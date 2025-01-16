@@ -480,7 +480,22 @@ fn transcribe_exponential_data_and_ty<'db, 'sess>(
             signature.expr_ty(),
         );
     }
-    use husky_print_utils::*;
-    p!(exponent);
-    todo!()
+    let (base_data, base_ty) = base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
+    let (exponent_data, exponent_ty) =
+        exponent.transcribe_data_and_ty(elaborator, hypothesis_constructor);
+    let power_signature = hypothesis_constructor.infer_power_signature(base_ty, exponent_ty);
+    let base_entry = VdMirExprEntry::new(base_data, base_ty, Some(power_signature.base_ty()));
+    let exponent_entry = VdMirExprEntry::new(
+        exponent_data,
+        exponent_ty,
+        Some(power_signature.exponent_ty()),
+    );
+    let arguments = hypothesis_constructor.mk_exprs([base_entry, exponent_entry]);
+    (
+        VdMirExprData::Application {
+            function: VdMirFunc::Power(power_signature),
+            arguments,
+        },
+        power_signature.expr_ty(),
+    )
 }
