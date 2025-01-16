@@ -1,3 +1,5 @@
+use std::iter::once;
+
 use super::*;
 use either::*;
 use smallvec::*;
@@ -361,13 +363,28 @@ pub(super) fn transcribe_product_stem_and_factor_data_and_ty<'db, 'sess>(
             VdBsqProductStem::NonTrivial(vd_bsq_non_trivial_product_stem) => todo!(),
         }
     } else {
-        todo!()
+        match stem {
+            VdBsqProductStem::Atom(stem) => transcribe_factors_data_and_ty(
+                elaborator,
+                [Factor::Litnum(factor), Factor::Atom(stem)],
+                hypothesis_constructor,
+            ),
+            VdBsqProductStem::NonTrivial(stem) => transcribe_factors_data_and_ty(
+                elaborator,
+                once(Factor::Litnum(factor)).chain(
+                    stem.exponentials()
+                        .iter()
+                        .map(|&(base, exponent)| Factor::Exponential(base, exponent)),
+                ),
+                hypothesis_constructor,
+            ),
+        }
     }
 }
 
 fn transcribe_factors_data_and_ty<'db, 'sess>(
     elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-    factors: impl IntoIterator<Item = (VdBsqNumTerm<'sess>, VdBsqNumTerm<'sess>)>,
+    factors: impl IntoIterator<Item = Factor<'sess>>,
     hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirExprData, VdType) {
     let mut factors = factors.into_iter();
@@ -401,15 +418,35 @@ fn transcribe_factors_data_and_ty<'db, 'sess>(
     )
 }
 
+enum Factor<'sess> {
+    Litnum(VdBsqLitnumTerm<'sess>),
+    Atom(VdBsqAtomTerm<'sess>),
+    Exponential(VdBsqNumTerm<'sess>, VdBsqNumTerm<'sess>),
+}
+
 fn transcribe_factor_data_and_ty<'db, 'sess>(
     elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-    (base, exponent): (VdBsqNumTerm<'sess>, VdBsqNumTerm<'sess>),
+    factor: Factor<'sess>,
+    hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+) -> (VdMirExprData, VdType) {
+    match factor {
+        Factor::Litnum(litnum) => litnum.transcribe_data_and_ty(elaborator, hypothesis_constructor),
+        Factor::Atom(atom) => atom.transcribe_data_and_ty(elaborator, hypothesis_constructor),
+        Factor::Exponential(base, exponent) => {
+            transcribe_exponential_data_and_ty(elaborator, base, exponent, hypothesis_constructor)
+        }
+    }
+}
+
+fn transcribe_exponential_data_and_ty<'db, 'sess>(
+    elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+    base: VdBsqNumTerm<'sess>,
+    exponent: VdBsqNumTerm<'sess>,
     hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirExprData, VdType) {
     assert!(!exponent.is_zero_trivially());
     if exponent.is_one_trivially() {
-        base.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-    } else {
-        todo!()
+        return base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
     }
+    todo!()
 }
