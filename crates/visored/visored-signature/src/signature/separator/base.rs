@@ -23,7 +23,7 @@ impl VdBaseSeparatorSignature {
         let VdItemPath::TraitItem(path) = instantiation.path() else {
             unreachable!()
         };
-        let opr = match path {
+        let separator = match path {
             VdTraitItemPath::Iff => VdMirBaseSeparator::IFF,
             VdTraitItemPath::GroupMul => todo!(),
             VdTraitItemPath::AbelianGroupAdd => todo!(),
@@ -44,6 +44,10 @@ impl VdBaseSeparatorSignature {
             VdTraitItemPath::FieldDiv => todo!(),
             VdTraitItemPath::RealSqrt => todo!(),
         };
+        match separator {
+            VdMirBaseSeparator::Chaining(separator) => todo!(),
+            VdMirBaseSeparator::Folding(separator) => todo!(),
+        }
         todo!()
         // Self {
         //     instantiation,
