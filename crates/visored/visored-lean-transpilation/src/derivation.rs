@@ -47,7 +47,8 @@ where
                     self.alloc_by_custom("term_derivation_item_path")
                 }
                 VdMirTermDerivationConstruction::Sum {
-                    summand_term_equivalences,
+                    leader_equivalence,
+                    follower_equivalences,
                 } => self.alloc_by_custom("term_derivation_sum"),
                 VdMirTermDerivationConstruction::Sub { lopd, ropd } => {
                     self.alloc_by_custom("term_derivation_sub")

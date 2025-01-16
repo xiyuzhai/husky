@@ -141,7 +141,12 @@ where
                     })
                     .collect::<Vec<_>>();
                 match fst_func.separator() {
-                    VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
+                    VdMirBaseFoldingSeparator::CommRingAdd => {
+                        VdMirTermDerivationConstruction::Sum {
+                            leader_equivalence,
+                            follower_equivalences,
+                        }
+                    }
                     VdMirBaseFoldingSeparator::CommRingMul => {
                         VdMirTermDerivationConstruction::Product {
                             leader_equivalence,

@@ -80,7 +80,31 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
   have h3 : (√ x - √ y) ^ 2 = √ x ^ 2 - (2 : ℝ) * √ x * √ y + √ y ^ 2 := by obvious
   have h4 : √ x ^ 2 - (2 : ℝ) * √ x * √ y + √ y ^ 2 = x - (2 : ℝ) * √ (x * y) + y := by obvious
   have h5 : x - (2 : ℝ) * √ (x * y) + y ≥ (0 : ℝ) := by obvious
-  have h6 : (√ x - √ y) ^ 2 ≥ (0 : ℝ) := by apply sq_nonneg
-  have h7 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_equivalence
+  have h6 : (√ x - √ y) ^ 2 ≥ (0 : ℝ) := by apply square_nonnegative
+  have h7 : x + y ≥ (2 : ℝ) * √ (x * y) := by
+    have d : x = x := by term_derivation_variable
+    have d1 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d2 : x = x := by term_derivation_variable
+    have d3 : y = y := by term_derivation_variable
+    have d4 : x * y = x + y := by term_derivation_product
+    have d5 : √ (x * y) = √ (x + y) := by term_derivation_square
+    have d6 : (2 : ℝ) * √ (x * y) = (2 : ℝ) + √ (x + y) := by term_derivation_product
+    have d7 : x - (2 : ℝ) * √ (x * y) = x + ((-2 : ℝ) + √ (x + y)) := by term_derivation_sub
+    have d8 : y = y := by term_derivation_variable
+    have d9 : x - (2 : ℝ) * √ (x * y) + y = x + y + ((-2 : ℝ) + √ (x + y)) := by term_derivation_sum
+    have d10 : (0 : ℝ) = (0 : ℝ) := by term_derivation_literal
+    have d11 : x - (2 : ℝ) * √ (x * y) + y ≥ (0 : ℝ) = (x + y + ((-2 : ℝ) + √ (x + y)) ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d12 : x = x := by term_derivation_variable
+    have d13 : y = y := by term_derivation_variable
+    have d14 : x + y = x + y := by term_derivation_sum
+    have d15 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d16 : x = x := by term_derivation_variable
+    have d17 : y = y := by term_derivation_variable
+    have d18 : x * y = x + y := by term_derivation_product
+    have d19 : √ (x * y) = √ (x + y) := by term_derivation_square
+    have d20 : (2 : ℝ) * √ (x * y) = (2 : ℝ) + √ (x + y) := by term_derivation_product
+    have d21 : x + y ≥ (2 : ℝ) * √ (x * y) = (x + y + ((-2 : ℝ) + √ (x + y)) ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d22 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_derivation_finalize
+    term_derivation_finalize
   have h8 : (x + y) / (2 : ℝ) ≥ √ (x * y) := by obvious
   obvious

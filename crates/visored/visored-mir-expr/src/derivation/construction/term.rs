@@ -13,7 +13,8 @@ pub enum VdMirTermDerivationConstruction {
     Variable,
     ItemPath,
     Sum {
-        summand_term_equivalences: VdMirDerivationIdxRange,
+        leader_equivalence: VdMirDerivationIdx,
+        follower_equivalences: Vec<(VdBaseFoldingSeparatorSignature, VdMirDerivationIdx)>,
     },
     Sub {
         lopd: VdMirDerivationIdx,
@@ -21,7 +22,6 @@ pub enum VdMirTermDerivationConstruction {
     },
     Product {
         leader_equivalence: VdMirDerivationIdx,
-        // TODO: Replace VdMirFunc with VdMirFuncEquivalence
         follower_equivalences: Vec<(VdBaseFoldingSeparatorSignature, VdMirDerivationIdx)>,
     },
     Div {
