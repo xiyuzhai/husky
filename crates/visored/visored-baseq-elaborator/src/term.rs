@@ -18,6 +18,7 @@ use either::*;
 use floated_sequential::db::FloaterDb;
 use floated_sequential::floated;
 use frac128::VdBsqFrac128;
+use in_set::VdBsqInSet;
 use num_chain::VdBsqNumChain;
 use product::VdBsqProductStem;
 use vec_like::ordered_small_vec_map::OrderedSmallVecPairMap;
@@ -269,7 +270,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         VdMirBaseChainingSeparator::GE => {
                             num_relationship(self, VdBsqComparisonOpr::GE)
                         }
-                        VdMirBaseChainingSeparator::IN_SET => VdBsqPropTerm::InSet.into(),
+                        VdMirBaseChainingSeparator::IN_SET => {
+                            VdBsqInSet::new(leader.term(), follower.term(), self.floater_db())
+                                .into()
+                        }
                         separator => todo!("unsupported separator: {separator:?}"),
                     }
                 }

@@ -1,7 +1,8 @@
+pub mod in_set;
 pub mod num_chain;
 pub mod num_relation;
 
-use self::{num_chain::*, num_relation::*};
+use self::{in_set::*, num_chain::*, num_relation::*};
 use super::*;
 
 #[enum_class::from_variants]
@@ -10,7 +11,7 @@ pub enum VdBsqPropTerm<'sess> {
     NumRelation(VdBsqNumRelation<'sess>),
     NumChain(VdBsqNumChain<'sess>),
     Trivial(bool),
-    InSet,
+    InSet(VdBsqInSet<'sess>),
 }
 
 impl<'sess> std::fmt::Debug for VdBsqPropTerm<'sess> {
@@ -31,7 +32,7 @@ impl<'sess> VdBsqPropTerm<'sess> {
             VdBsqPropTerm::NumRelation(term) => term.show_fmt(precedence_range, f),
             VdBsqPropTerm::NumChain(_) => todo!(),
             VdBsqPropTerm::Trivial(b) => write!(f, "{}", b),
-            VdBsqPropTerm::InSet => todo!(),
+            VdBsqPropTerm::InSet(_) => todo!(),
         }
     }
 }
@@ -66,7 +67,7 @@ impl<'db, 'sess> VdBsqPropTerm<'sess> {
                 };
                 VdMirExprData::ItemPath(path)
             }
-            VdBsqPropTerm::InSet => todo!(),
+            VdBsqPropTerm::InSet(_) => todo!(),
         }
     }
 }
