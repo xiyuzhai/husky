@@ -2,7 +2,11 @@
 //! <instance-ident> = <instantiation>, <signature-data-variant-path> <arg0> <arg1> ...
 //! <instantiation> = <item-path> <arg0> <arg1> ...
 # instances of lisp-csv
-in_set = in_set, in_set
+nat_in_set = in_set nat, in_set nat set prop
+int_in_set = in_set int, in_set int set prop
+rat_in_set = in_set rat, in_set rat set prop
+real_in_set = in_set real, in_set real set prop
+complex_in_set = in_set complex, in_set complex set prop
 ## prefix operators
 ### pos
 int_pos = ring_pos int, base_prefix_opr int int

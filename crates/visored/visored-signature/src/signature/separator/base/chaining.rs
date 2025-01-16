@@ -62,10 +62,17 @@ impl VdBaseChainingSeparatorSignature {
         }
     }
 
-    pub fn item_ty(self) -> VdType {
+    pub fn left_item_ty(self) -> VdType {
         match self {
             VdBaseChainingSeparatorSignature::Iff => todo!(),
-            VdBaseChainingSeparatorSignature::Relation(slf) => slf.item_ty(),
+            VdBaseChainingSeparatorSignature::Relation(slf) => slf.left_item_ty(),
+        }
+    }
+
+    pub fn right_item_ty(self) -> VdType {
+        match self {
+            VdBaseChainingSeparatorSignature::Iff => todo!(),
+            VdBaseChainingSeparatorSignature::Relation(slf) => slf.right_item_ty(),
         }
     }
 }

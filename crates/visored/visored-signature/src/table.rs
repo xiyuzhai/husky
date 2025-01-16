@@ -91,7 +91,6 @@ fn vd_signature_table_from_lp_csv_rows_works() {
     let table = VdSignatureTable::from_lp_csv_file(&file, db);
     expect_file!["../expect-files/signature_table.debug.txt"].assert_debug_eq(&table);
     let VdSignatureMenu {
-        in_set,
         int_pos,
         rat_pos,
         real_pos,
@@ -152,7 +151,6 @@ fn vd_signature_table_from_lp_csv_rows_works() {
         real_sqrt,
     } = *vd_signature_menu(db);
     let entries: Vec<(&str, VdSignature)> = vec![
-        ("in_set", in_set.into()),
         ("int_pos", int_pos.into()),
         ("rat_pos", rat_pos.into()),
         ("real_pos", real_pos.into()),

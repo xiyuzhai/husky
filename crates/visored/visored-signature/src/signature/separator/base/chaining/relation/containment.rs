@@ -3,7 +3,12 @@ use visored_mir_opr::separator::chaining::VdMirBaseContainmentSeparator;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdBaseContainmentSeparatorSignature {
-    InSet { instantiation: VdInstantiation },
+    InSet {
+        instantiation: VdInstantiation,
+        element_ty: VdType,
+        set_ty: VdType,
+        expr_ty: VdType,
+    },
 }
 
 impl From<VdBaseContainmentSeparatorSignature> for VdBaseChainingSeparatorSignature {
@@ -45,24 +50,44 @@ impl VdBaseContainmentSeparatorSignature {
         }
     }
 
-    pub fn new_in_set(instantiation: VdInstantiation) -> Self {
-        VdBaseContainmentSeparatorSignature::InSet { instantiation }
+    pub fn new_in_set(
+        instantiation: VdInstantiation,
+        element_ty: VdType,
+        set_ty: VdType,
+        expr_ty: VdType,
+    ) -> Self {
+        VdBaseContainmentSeparatorSignature::InSet {
+            instantiation,
+            element_ty,
+            set_ty,
+            expr_ty,
+        }
     }
 }
 
 impl VdBaseContainmentSeparatorSignature {
     pub fn instantiation(self) -> VdInstantiation {
         match self {
-            VdBaseContainmentSeparatorSignature::InSet { instantiation } => instantiation,
+            VdBaseContainmentSeparatorSignature::InSet { instantiation, .. } => instantiation,
         }
     }
 
-    pub fn item_ty(self) -> VdType {
-        todo!()
+    pub fn left_item_ty(self) -> VdType {
+        match self {
+            VdBaseContainmentSeparatorSignature::InSet { element_ty, .. } => element_ty,
+        }
+    }
+
+    pub fn right_item_ty(self) -> VdType {
+        match self {
+            VdBaseContainmentSeparatorSignature::InSet { set_ty, .. } => set_ty,
+        }
     }
 
     pub fn expr_ty(self) -> VdType {
-        todo!()
+        match self {
+            VdBaseContainmentSeparatorSignature::InSet { expr_ty, .. } => expr_ty,
+        }
     }
 
     pub fn separator(self) -> VdMirBaseContainmentSeparator {

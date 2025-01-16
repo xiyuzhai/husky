@@ -272,8 +272,8 @@ real, ge, int, chaining real_ge
 real, ge, rat, chaining real_ge
 real, ge, real, chaining real_ge
 // ## in
-nat, in, set, chaining in_set
-int, in, set, chaining in_set
-rat, in, set, chaining in_set
-real, in, set, chaining in_set
-complex, in, set, chaining in_set
+nat, in, set, chaining nat_in_set
+int, in, set, chaining int_in_set
+rat, in, set, chaining rat_in_set
+real, in, set, chaining real_in_set
+complex, in, set, chaining complex_in_set

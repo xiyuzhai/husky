@@ -27,7 +27,6 @@ use visored_term::{
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdSignatureMenu {
-    pub in_set: VdBaseContainmentSeparatorSignature,
     /// # prefix
     /// ## pos
     pub int_pos: VdBasePrefixOprSignature,
@@ -193,7 +192,6 @@ impl VdSignatureMenu {
         };
         let pow = VdPowerSignature::new;
         Self {
-            in_set: todo!(),
             // # prefix operators
             // ## pos
             int_pos: pre(int_pos, int, int),

@@ -48,7 +48,7 @@ impl VdSemSeparatedListFollowerDispatch {
             VdSemSeparatedListFollowerDispatch::Chaining {
                 base_separator,
                 signature,
-            } => signature.item_ty(),
+            } => signature.left_item_ty(),
             VdSemSeparatedListFollowerDispatch::InSet { .. } => mk_ty_from_right_item_term(),
         }
     }

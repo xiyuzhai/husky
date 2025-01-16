@@ -51,14 +51,21 @@ impl VdBaseRelationSeparatorSignature {
 
     pub fn expr_ty(self) -> VdType {
         match self {
-            VdBaseRelationSeparatorSignature::Containment(slf) => todo!(),
+            VdBaseRelationSeparatorSignature::Containment(slf) => slf.expr_ty(),
             VdBaseRelationSeparatorSignature::Comparison(slf) => slf.expr_ty(),
         }
     }
 
-    pub fn item_ty(self) -> VdType {
+    pub fn left_item_ty(self) -> VdType {
         match self {
-            VdBaseRelationSeparatorSignature::Containment(slf) => slf.item_ty(),
+            VdBaseRelationSeparatorSignature::Containment(slf) => slf.left_item_ty(),
+            VdBaseRelationSeparatorSignature::Comparison(slf) => slf.item_ty(),
+        }
+    }
+
+    pub fn right_item_ty(self) -> VdType {
+        match self {
+            VdBaseRelationSeparatorSignature::Containment(slf) => slf.right_item_ty(),
             VdBaseRelationSeparatorSignature::Comparison(slf) => slf.item_ty(),
         }
     }

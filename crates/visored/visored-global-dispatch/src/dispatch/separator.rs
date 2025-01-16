@@ -48,7 +48,7 @@ impl VdSeparatorGlobalDispatch {
     pub fn right_item_ty(&self, ty_menu: &VdTypeMenu) -> VdType {
         match self {
             VdSeparatorGlobalDispatch::Folding { signature, .. } => signature.item_ty(),
-            VdSeparatorGlobalDispatch::Chaining { signature, .. } => signature.item_ty(),
+            VdSeparatorGlobalDispatch::Chaining { signature, .. } => signature.right_item_ty(),
         }
     }
 }

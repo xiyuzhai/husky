@@ -112,8 +112,14 @@ impl VdSignature {
                 .into()
             }
             "in_set" => {
-                assert_eq!(args.len(), 0);
-                VdBaseContainmentSeparatorSignature::new_in_set(instantiation).into()
+                assert_eq!(args.len(), 3);
+                VdBaseContainmentSeparatorSignature::new_in_set(
+                    instantiation,
+                    VdType::from_lp_csv_expr(&args[0], db),
+                    VdType::from_lp_csv_expr(&args[1], db),
+                    VdType::from_lp_csv_expr(&args[2], db),
+                )
+                .into()
             }
             s => todo!("s = {s:?} not handled"),
         }
