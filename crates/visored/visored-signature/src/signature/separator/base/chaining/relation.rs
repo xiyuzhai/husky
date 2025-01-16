@@ -46,6 +46,13 @@ impl VdBaseRelationSeparatorSignature {
         }
     }
 
+    pub fn instantiation(self) -> VdInstantiation {
+        match self {
+            VdBaseRelationSeparatorSignature::Containment(signature) => signature.instantiation(),
+            VdBaseRelationSeparatorSignature::Comparison(signature) => signature.instantiation(),
+        }
+    }
+
     pub fn expr_ty(self) -> VdType {
         match self {
             VdBaseRelationSeparatorSignature::Containment(slf) => todo!(),

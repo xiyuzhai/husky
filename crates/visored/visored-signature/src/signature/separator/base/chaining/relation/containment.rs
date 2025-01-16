@@ -29,6 +29,10 @@ impl VdBaseContainmentSeparatorSignature {
 }
 
 impl VdBaseContainmentSeparatorSignature {
+    pub fn instantiation(self) -> VdInstantiation {
+        todo!()
+    }
+
     pub fn separator(self) -> VdMirBaseContainmentSeparator {
         match self {
             VdBaseContainmentSeparatorSignature::InSet => VdMirBaseContainmentSeparator::IN_SET,

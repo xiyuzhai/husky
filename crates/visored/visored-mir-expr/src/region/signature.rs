@@ -56,13 +56,13 @@ impl<'a> VdMirExprRegionDataRef<'a> {
     ) -> VdBaseChainingSeparatorSignature {
         match self
             .default_global_dispatch_table
-            .base_separator_default_dispatch(prev_item_ty, VdBaseSeparator::Add, next_item_ty)
+            .base_separator_default_dispatch(prev_item_ty, base_separator, next_item_ty)
         {
             Some(dispatch) => match dispatch {
                 VdSeparatorGlobalDispatch::Folding {
                     base_separator,
                     signature,
-                } => unreachable!(),
+                } => unreachable!("base_separator: {:?}", base_separator),
                 VdSeparatorGlobalDispatch::Chaining {
                     base_separator,
                     signature,
@@ -81,7 +81,7 @@ impl<'a> VdMirExprRegionDataRef<'a> {
     ) -> VdBaseFoldingSeparatorSignature {
         match self
             .default_global_dispatch_table
-            .base_separator_default_dispatch(prev_item_ty, VdBaseSeparator::Add, next_item_ty)
+            .base_separator_default_dispatch(prev_item_ty, base_separator, next_item_ty)
         {
             Some(dispatch) => match dispatch {
                 VdSeparatorGlobalDispatch::Folding {

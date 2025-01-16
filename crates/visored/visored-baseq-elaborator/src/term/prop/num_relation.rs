@@ -97,11 +97,10 @@ impl<'db, 'sess> VdBsqNumRelation<'sess> {
             None,
         ));
         let zero = hypothesis_constructor.mk_zero(Some(signature.item_ty()));
-        todo!()
-        // VdMirExprData::ChainingSeparatedList {
-        //     leader,
-        //     followers: smallvec![(VdMirFunc::NormalBaseSeparator(signature), zero)],
-        //     joined_signature: None,
-        // }
+        VdMirExprData::ChainingSeparatedList {
+            leader,
+            followers: smallvec![(signature.into(), zero)],
+            joined_signature: None,
+        }
     }
 }

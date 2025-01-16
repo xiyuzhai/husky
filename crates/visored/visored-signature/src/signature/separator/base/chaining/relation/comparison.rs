@@ -9,6 +9,12 @@ pub struct VdBaseComparisonSeparatorSignature {
     expr_ty: VdType,
 }
 
+impl From<VdBaseComparisonSeparatorSignature> for VdBaseChainingSeparatorSignature {
+    fn from(signature: VdBaseComparisonSeparatorSignature) -> Self {
+        VdBaseChainingSeparatorSignature::Relation(signature.into())
+    }
+}
+
 impl VdBaseComparisonSeparatorSignature {
     pub fn new(
         separator: VdMirBaseComparisonSeparator,
