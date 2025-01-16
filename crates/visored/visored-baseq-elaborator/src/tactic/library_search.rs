@@ -43,7 +43,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let VdMirFunc::NormalBaseSeparator(ge) = ge else {
             return AltNothing;
         };
-        require!(ge.opr() == VdMirBaseSeparator::GE);
+        require!(ge.separator() == VdMirBaseSeparator::GE);
         require!(rhs.is_zero());
         require!(let VdBsqExprFldData::Application {
             function: pow,

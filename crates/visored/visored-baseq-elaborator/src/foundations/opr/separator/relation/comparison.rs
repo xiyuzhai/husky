@@ -103,3 +103,24 @@ impl Into<VdBaseSeparator> for VdBsqBoundOpr {
         }
     }
 }
+
+impl Into<VdMirBaseComparisonSeparator> for VdBsqComparisonOpr {
+    fn into(self) -> VdMirBaseComparisonSeparator {
+        match self {
+            VdBsqComparisonOpr::Bound(bound_opr) => bound_opr.into(),
+            VdBsqComparisonOpr::Eq => VdMirBaseComparisonSeparator::Eq,
+            VdBsqComparisonOpr::Ne => VdMirBaseComparisonSeparator::Ne,
+        }
+    }
+}
+
+impl Into<VdMirBaseComparisonSeparator> for VdBsqBoundOpr {
+    fn into(self) -> VdMirBaseComparisonSeparator {
+        match self {
+            VdBsqBoundOpr::Lt => VdMirBaseComparisonSeparator::Lt,
+            VdBsqBoundOpr::Gt => VdMirBaseComparisonSeparator::Gt,
+            VdBsqBoundOpr::Le => VdMirBaseComparisonSeparator::Le,
+            VdBsqBoundOpr::Ge => VdMirBaseComparisonSeparator::Ge,
+        }
+    }
+}

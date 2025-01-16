@@ -278,7 +278,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         let VdMirFunc::NormalBaseSeparator(fst_signature) = fst_func else {
             unreachable!()
         };
-        match fst_signature.opr() {
+        match fst_signature.separator() {
             VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
                 match vd_mir_base_folding_separator {
                     VdMirBaseFoldingSeparator::CommRingAdd => (),

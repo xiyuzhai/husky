@@ -138,7 +138,7 @@ where
                     .collect::<Vec<_>>();
                 match fst_func {
                     VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
-                    VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
+                    VdMirFunc::NormalBaseSeparator(signature) => match signature.separator() {
                         VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
                             match vd_mir_base_folding_separator {
                                 VdMirBaseFoldingSeparator::CommRingAdd => todo!(),

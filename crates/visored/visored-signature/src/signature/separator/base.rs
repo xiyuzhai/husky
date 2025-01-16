@@ -1,11 +1,12 @@
-mod chaining;
-mod folding;
+pub mod chaining;
+pub mod folding;
 
 use self::{chaining::*, folding::*};
 use super::*;
 use visored_entity_path::path::{trai_item::VdTraitItemPath, VdItemPath};
 use visored_mir_opr::separator::VdMirBaseSeparator;
 
+#[enum_class::from_variants]
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdBaseSeparatorSignature {
     Chaining(VdBaseChainingSeparatorSignature),
@@ -45,16 +46,15 @@ impl VdBaseSeparatorSignature {
             VdTraitItemPath::RealSqrt => todo!(),
         };
         match separator {
-            VdMirBaseSeparator::Chaining(separator) => todo!(),
-            VdMirBaseSeparator::Folding(separator) => todo!(),
+            VdMirBaseSeparator::Chaining(separator) => {
+                VdBaseChainingSeparatorSignature::new(separator, instantiation, item_ty, expr_ty)
+                    .into()
+            }
+            VdMirBaseSeparator::Folding(separator) => {
+                VdBaseFoldingSeparatorSignature::new(separator, instantiation, item_ty, expr_ty)
+                    .into()
+            }
         }
-        todo!()
-        // Self {
-        //     instantiation,
-        //     opr,
-        //     item_ty,
-        //     expr_ty,
-        // }
     }
 }
 
@@ -64,7 +64,7 @@ impl VdBaseSeparatorSignature {
         // self.instantiation
     }
 
-    pub fn opr(self) -> VdMirBaseSeparator {
+    pub fn separator(self) -> VdMirBaseSeparator {
         todo!()
         // self.opr
     }

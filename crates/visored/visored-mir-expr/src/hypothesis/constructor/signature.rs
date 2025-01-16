@@ -1,7 +1,10 @@
 use super::*;
 use visored_global_dispatch::dispatch::separator::VdSeparatorGlobalDispatch;
+use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
 use visored_opr::separator::VdBaseSeparator;
-use visored_signature::signature::separator::base::VdBaseSeparatorSignature;
+use visored_signature::signature::separator::base::{
+    chaining::relation::comparison::VdBaseComparisonSeparatorSignature, VdBaseSeparatorSignature,
+};
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub fn infer_eq_signature(
@@ -51,5 +54,14 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             },
             None => todo!(),
         }
+    }
+
+    pub fn infer_base_comparison_separator_signature(
+        &self,
+        prev_item_ty: VdType,
+        base_separator: VdMirBaseComparisonSeparator,
+        next_item_ty: VdType,
+    ) -> VdBaseComparisonSeparatorSignature {
+        todo!()
     }
 }

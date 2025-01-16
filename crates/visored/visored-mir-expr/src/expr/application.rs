@@ -58,7 +58,7 @@ impl VdMirFunc {
     pub fn outer_precedence(&self) -> VdPrecedence {
         match self {
             VdMirFunc::NormalBasePrefixOpr(signature) => signature.opr.precedence(),
-            VdMirFunc::NormalBaseSeparator(signature) => signature.opr().precedence(),
+            VdMirFunc::NormalBaseSeparator(signature) => signature.separator().precedence(),
             VdMirFunc::NormalBaseBinaryOpr(signature) => signature.opr.precedence(),
             VdMirFunc::Power(signature) => VdPrecedence::ATOM,
             VdMirFunc::InSet => todo!(),

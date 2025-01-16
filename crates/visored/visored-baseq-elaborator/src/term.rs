@@ -202,7 +202,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 };
                 match func {
                     VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
-                    VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
+                    VdMirFunc::NormalBaseSeparator(signature) => match signature.separator() {
                         VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
                             match vd_mir_base_folding_separator {
                                 VdMirBaseFoldingSeparator::CommRingAdd => {
@@ -261,7 +261,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     };
                     match func {
                         VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
-                        VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
+                        VdMirFunc::NormalBaseSeparator(signature) => match signature.separator() {
                             VdMirBaseSeparator::COMM_RING_ADD => unreachable!(),
                             VdMirBaseSeparator::COMM_RING_MUL => unreachable!(),
                             VdMirBaseSeparator::EQ => {

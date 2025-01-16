@@ -41,7 +41,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         }
         let opr = match followers[0].0 {
             VdMirFunc::NormalBaseSeparator(signature) => {
-                VdBsqBoundOpr::from_mir_base_separator(signature.opr())?
+                VdBsqBoundOpr::from_mir_base_separator(signature.separator())?
             }
             _ => return AltNothing,
         };

@@ -167,7 +167,7 @@ fn calc_number_of_foremost_equivalences(followers: &[(VdMirFunc, VdMirExprIdx)])
 fn is_equivalence(func: &VdMirFunc) -> bool {
     match func {
         VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
-        VdMirFunc::NormalBaseSeparator(signature) => signature.opr().is_equivalence(),
+        VdMirFunc::NormalBaseSeparator(signature) => signature.separator().is_equivalence(),
         VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
         VdMirFunc::Power(signature) => todo!(),
         VdMirFunc::InSet => todo!(),

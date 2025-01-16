@@ -111,14 +111,14 @@ impl<'sess> VdBsqExprFld<'sess> {
                 let VdMirFunc::NormalBaseSeparator(signature) = followers.first().unwrap().0 else {
                     todo!("maybe non base separator?")
                 };
-                let precedence_range = signature.opr().left_precedence_range();
+                let precedence_range = signature.separator().left_precedence_range();
                 leader.show_fmt(precedence_range, f)?;
                 for (func, follower) in followers {
                     let VdMirFunc::NormalBaseSeparator(signature) = func else {
                         todo!("maybe non base separator?")
                     };
                     f.write_str(" ")?;
-                    signature.opr().show_fmt(f)?;
+                    signature.separator().show_fmt(f)?;
                     f.write_str(" ")?;
                     follower.show_fmt(precedence_range, f)?;
                 }
@@ -132,14 +132,14 @@ impl<'sess> VdBsqExprFld<'sess> {
                 let VdMirFunc::NormalBaseSeparator(signature) = followers.first().unwrap().0 else {
                     todo!("maybe non base separator?")
                 };
-                let precedence_range = signature.opr().left_precedence_range();
+                let precedence_range = signature.separator().left_precedence_range();
                 leader.show_fmt(precedence_range, f)?;
                 for (func, follower) in followers {
                     let VdMirFunc::NormalBaseSeparator(signature) = func else {
                         todo!("maybe non base separator?")
                     };
                     f.write_str(" ")?;
-                    signature.opr().show_fmt(f)?;
+                    signature.separator().show_fmt(f)?;
                     f.write_str(" ")?;
                     follower.show_fmt(precedence_range, f)?;
                 }
