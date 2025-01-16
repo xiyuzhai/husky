@@ -1,4 +1,10 @@
-use visored_mir_opr::separator::VdMirBaseSeparator;
+use husky_control_flow_utils::require;
+use visored_mir_opr::separator::{
+    chaining::{
+        VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
+    },
+    VdMirBaseSeparator,
+};
 use visored_opr::separator::VdBaseSeparator;
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
@@ -27,11 +33,17 @@ impl VdBsqComparisonOpr {
 
 impl VdBsqBoundOpr {
     pub fn from_mir_base_separator(separator: VdMirBaseSeparator) -> Option<Self> {
+        require!(let VdMirBaseSeparator::Chaining(separator) = separator );
+        Self::from_mir_base_chaining_separator(separator)
+    }
+
+    pub fn from_mir_base_chaining_separator(separator: VdMirBaseChainingSeparator) -> Option<Self> {
+        require!(let VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::Comparison(separator)) = separator);
         match separator {
-            VdMirBaseSeparator::Lt => Some(Self::Lt),
-            VdMirBaseSeparator::Gt => Some(Self::Gt),
-            VdMirBaseSeparator::Le => Some(Self::Le),
-            VdMirBaseSeparator::Ge => Some(Self::Ge),
+            VdMirBaseComparisonSeparator::Lt => Some(Self::Lt),
+            VdMirBaseComparisonSeparator::Gt => Some(Self::Gt),
+            VdMirBaseComparisonSeparator::Le => Some(Self::Le),
+            VdMirBaseComparisonSeparator::Ge => Some(Self::Ge),
             _ => None,
         }
     }

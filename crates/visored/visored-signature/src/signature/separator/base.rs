@@ -1,3 +1,6 @@
+mod chaining;
+mod folding;
+
 use super::*;
 use visored_entity_path::path::{trai_item::VdTraitItemPath, VdItemPath};
 use visored_mir_opr::separator::VdMirBaseSeparator;

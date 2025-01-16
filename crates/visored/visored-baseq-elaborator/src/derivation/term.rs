@@ -136,7 +136,6 @@ where
                 match fst_func {
                     VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
                     VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
-                        VdMirBaseSeparator::Iff => todo!(),
                         VdMirBaseSeparator::CommRingAdd => todo!(),
                         VdMirBaseSeparator::CommRingMul => {
                             VdMirTermDerivationConstruction::Product {
@@ -144,24 +143,9 @@ where
                                 follower_equivalences,
                             }
                         }
-                        VdMirBaseSeparator::Eq => todo!(),
-                        VdMirBaseSeparator::Ne => todo!(),
-                        VdMirBaseSeparator::Lt => todo!(),
-                        VdMirBaseSeparator::Gt => todo!(),
-                        VdMirBaseSeparator::Le => todo!(),
-                        VdMirBaseSeparator::Ge => todo!(),
-                        VdMirBaseSeparator::Subset => todo!(),
-                        VdMirBaseSeparator::Supset => todo!(),
-                        VdMirBaseSeparator::Subseteq => todo!(),
-                        VdMirBaseSeparator::Supseteq => todo!(),
-                        VdMirBaseSeparator::Subseteqq => todo!(),
-                        VdMirBaseSeparator::Supseteqq => todo!(),
-                        VdMirBaseSeparator::Subsetneq => todo!(),
-                        VdMirBaseSeparator::Supsetneq => todo!(),
-                        VdMirBaseSeparator::In => todo!(),
-                        VdMirBaseSeparator::Notin => todo!(),
                         VdMirBaseSeparator::SetTimes => todo!(),
                         VdMirBaseSeparator::TensorOtimes => todo!(),
+                        VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
                     },
                     VdMirFunc::NormalBaseBinaryOpr(vd_base_binary_opr_signature) => todo!(),
                     VdMirFunc::Power(vd_power_signature) => todo!(),

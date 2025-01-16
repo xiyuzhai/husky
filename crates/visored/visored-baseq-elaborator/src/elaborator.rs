@@ -278,25 +278,9 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         match fst_signature.opr() {
             VdMirBaseSeparator::CommRingAdd => (),
             VdMirBaseSeparator::CommRingMul => (),
-            VdMirBaseSeparator::Eq => todo!(),
-            VdMirBaseSeparator::Ne => todo!(),
-            VdMirBaseSeparator::Lt => todo!(),
-            VdMirBaseSeparator::Gt => todo!(),
-            VdMirBaseSeparator::Le => todo!(),
-            VdMirBaseSeparator::Ge => todo!(),
-            VdMirBaseSeparator::Subset => todo!(),
-            VdMirBaseSeparator::Supset => todo!(),
-            VdMirBaseSeparator::Subseteq => todo!(),
-            VdMirBaseSeparator::Supseteq => todo!(),
-            VdMirBaseSeparator::Subseteqq => todo!(),
-            VdMirBaseSeparator::Supseteqq => todo!(),
-            VdMirBaseSeparator::Subsetneq => todo!(),
-            VdMirBaseSeparator::Supsetneq => todo!(),
-            VdMirBaseSeparator::In => todo!(),
-            VdMirBaseSeparator::Notin => todo!(),
             VdMirBaseSeparator::SetTimes => todo!(),
             VdMirBaseSeparator::TensorOtimes => todo!(),
-            VdMirBaseSeparator::Iff => todo!(),
+            VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
         }
     }
 

@@ -219,25 +219,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                             }
                             builder.finish().into()
                         }
-                        VdMirBaseSeparator::Eq => todo!(),
-                        VdMirBaseSeparator::Ne => todo!(),
-                        VdMirBaseSeparator::Lt => todo!(),
-                        VdMirBaseSeparator::Gt => todo!(),
-                        VdMirBaseSeparator::Le => todo!(),
-                        VdMirBaseSeparator::Ge => todo!(),
-                        VdMirBaseSeparator::Subset => todo!(),
-                        VdMirBaseSeparator::Supset => todo!(),
-                        VdMirBaseSeparator::Subseteq => todo!(),
-                        VdMirBaseSeparator::Supseteq => todo!(),
-                        VdMirBaseSeparator::Subseteqq => todo!(),
-                        VdMirBaseSeparator::Supseteqq => todo!(),
-                        VdMirBaseSeparator::Subsetneq => todo!(),
-                        VdMirBaseSeparator::Supsetneq => todo!(),
-                        VdMirBaseSeparator::In => todo!(),
-                        VdMirBaseSeparator::Notin => todo!(),
                         VdMirBaseSeparator::SetTimes => todo!(),
                         VdMirBaseSeparator::TensorOtimes => todo!(),
-                        VdMirBaseSeparator::Iff => todo!(),
+                        VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
                     },
                     VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
                     VdMirFunc::Power(signature) => todo!(),
@@ -276,37 +260,25 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
                             VdMirBaseSeparator::CommRingAdd => unreachable!(),
                             VdMirBaseSeparator::CommRingMul => unreachable!(),
-                            VdMirBaseSeparator::Eq => {
+                            VdMirBaseSeparator::EQ => {
                                 num_relationship(self, VdBsqComparisonOpr::EQ)
                             }
-                            VdMirBaseSeparator::Ne => {
+                            VdMirBaseSeparator::NE => {
                                 num_relationship(self, VdBsqComparisonOpr::NE)
                             }
-                            VdMirBaseSeparator::Lt => {
+                            VdMirBaseSeparator::LT => {
                                 num_relationship(self, VdBsqComparisonOpr::LT)
                             }
-                            VdMirBaseSeparator::Gt => {
+                            VdMirBaseSeparator::GT => {
                                 num_relationship(self, VdBsqComparisonOpr::GT)
                             }
-                            VdMirBaseSeparator::Le => {
+                            VdMirBaseSeparator::LE => {
                                 num_relationship(self, VdBsqComparisonOpr::LE)
                             }
-                            VdMirBaseSeparator::Ge => {
+                            VdMirBaseSeparator::GE => {
                                 num_relationship(self, VdBsqComparisonOpr::GE)
                             }
-                            VdMirBaseSeparator::Subset => todo!(),
-                            VdMirBaseSeparator::Supset => todo!(),
-                            VdMirBaseSeparator::Subseteq => todo!(),
-                            VdMirBaseSeparator::Supseteq => todo!(),
-                            VdMirBaseSeparator::Subseteqq => todo!(),
-                            VdMirBaseSeparator::Supseteqq => todo!(),
-                            VdMirBaseSeparator::Subsetneq => todo!(),
-                            VdMirBaseSeparator::Supsetneq => todo!(),
-                            VdMirBaseSeparator::In => todo!(),
-                            VdMirBaseSeparator::Notin => todo!(),
-                            VdMirBaseSeparator::SetTimes => todo!(),
-                            VdMirBaseSeparator::TensorOtimes => todo!(),
-                            VdMirBaseSeparator::Iff => todo!(),
+                            _ => todo!(),
                         },
                         VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
                         VdMirFunc::Power(signature) => todo!(),
