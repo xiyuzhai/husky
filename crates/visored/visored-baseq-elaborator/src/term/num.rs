@@ -50,9 +50,20 @@ impl<'sess> VdBsqNumTerm<'sess> {
         self.eqs_i128_trivially(1)
     }
 
+    pub fn is_one_half_trivially(self) -> bool {
+        self.eqs_frac128_trivially(1, 2)
+    }
+
     pub fn eqs_i128_trivially(self, rhs: i128) -> bool {
         match self {
             VdBsqNumTerm::Litnum(term) => term.eqs_i128(rhs),
+            VdBsqNumTerm::Comnum(term) => false,
+        }
+    }
+
+    pub fn eqs_frac128_trivially(self, numerator: i128, denominator: i128) -> bool {
+        match self {
+            VdBsqNumTerm::Litnum(term) => term.eqs_frac128(numerator, denominator),
             VdBsqNumTerm::Comnum(term) => false,
         }
     }

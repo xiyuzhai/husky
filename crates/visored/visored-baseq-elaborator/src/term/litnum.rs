@@ -68,6 +68,13 @@ fn vd_bsq_litnum_term_ord_works() {
 }
 
 impl<'sess> VdBsqLitnumTerm<'sess> {
+    pub fn eqs_frac128(self, numerator: i128, denominator: i128) -> bool {
+        match self {
+            VdBsqLitnumTerm::Int128(_) | VdBsqLitnumTerm::BigInt(_) => false,
+            VdBsqLitnumTerm::Frac128(frac128) => frac128.eqs_frac128(numerator, denominator),
+        }
+    }
+
     pub fn neg(self, db: &FloaterDb) -> Self {
         match self {
             VdBsqLitnumTerm::Int128(i) => VdBsqLitnumTerm::Int128(-i),

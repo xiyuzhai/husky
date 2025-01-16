@@ -4,6 +4,7 @@ use super::*;
 use either::*;
 use smallvec::*;
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
+use visored_signature::signature::sqrt::{VdBaseSqrtSignature, VdSqrtSignature};
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub struct VdBsqProductTerm<'sess> {
@@ -448,5 +449,22 @@ fn transcribe_exponential_data_and_ty<'db, 'sess>(
     if exponent.is_one_trivially() {
         return base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
     }
+    if exponent.is_one_half_trivially() {
+        let (data, ty) = base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
+        let signature: VdBaseSqrtSignature = todo!();
+        return (
+            VdMirExprData::Application {
+                function: VdMirFunc::NormalBaseSqrt(signature),
+                arguments: hypothesis_constructor.mk_exprs([VdMirExprEntry::new(
+                    data,
+                    ty,
+                    Some(signature.radicand_ty()),
+                )]),
+            },
+            signature.expr_ty(),
+        );
+    }
+    use husky_print_utils::*;
+    p!(exponent);
     todo!()
 }

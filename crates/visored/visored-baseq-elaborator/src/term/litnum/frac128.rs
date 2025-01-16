@@ -110,6 +110,10 @@ impl VdBsqFrac128 {
         }
     }
 
+    pub fn eqs_frac128(self, numerator: i128, denominator: i128) -> bool {
+        self.numerator == numerator && self.denominator == denominator
+    }
+
     pub fn add<'sess>(self, rhs: Self, db: &'sess FloaterDb) -> VdBsqLitnumTerm<'sess> {
         // First multiply denominators to get common denominator
         let Some(common_denominator) = self.denominator.checked_mul(rhs.denominator) else {
