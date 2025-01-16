@@ -72,6 +72,9 @@ where
                 VdMirTermDerivationConstruction::Square { radicand } => {
                     self.alloc_by_custom("term_derivation_square")
                 }
+                VdMirTermDerivationConstruction::Power { base, exponent } => {
+                    self.alloc_by_custom("term_derivation_power")
+                }
             },
         };
         LnMirTacticData::Have {

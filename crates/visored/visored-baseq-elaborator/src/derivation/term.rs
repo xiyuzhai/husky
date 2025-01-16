@@ -116,7 +116,12 @@ where
                         }
                     }
                 },
-                VdMirFunc::Power(vd_power_signature) => todo!(),
+                VdMirFunc::Power(vd_power_signature) => VdMirTermDerivationConstruction::Power {
+                    base: self
+                        .transcribe_expr_term_derivation(arguments[0], hypothesis_constructor),
+                    exponent: self
+                        .transcribe_expr_term_derivation(arguments[1], hypothesis_constructor),
+                },
                 VdMirFunc::InSet => todo!(),
                 VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => {
                     let radicand =

@@ -39,4 +39,8 @@ pub enum VdMirTermDerivationConstruction {
         src_term_equivalence: VdMirDerivationIdx,
         dst_term_equivalence: VdMirDerivationIdx,
     },
+    Power {
+        base: VdMirDerivationIdx,
+        exponent: VdMirDerivationIdx,
+    },
 }
