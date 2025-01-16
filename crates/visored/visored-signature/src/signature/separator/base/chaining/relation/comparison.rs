@@ -1,10 +1,10 @@
 use super::*;
-use visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator;
+use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
-pub struct VdBaseFoldingSeparatorSignature {
+pub struct VdBaseComparisonSignature {
     instantiation: VdInstantiation,
-    opr: VdMirBaseFoldingSeparator,
+    opr: VdMirBaseComparisonSeparator,
     item_ty: VdType,
     expr_ty: VdType,
 }

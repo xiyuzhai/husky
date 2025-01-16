@@ -1,2 +1,4 @@
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
-pub enum VdMirBaseFoldingSeparator {}
+pub enum VdBaseContainmentSignature {
+    InSet,
+}

@@ -1,18 +1,15 @@
 mod chaining;
 mod folding;
 
+use self::{chaining::*, folding::*};
 use super::*;
 use visored_entity_path::path::{trai_item::VdTraitItemPath, VdItemPath};
 use visored_mir_opr::separator::VdMirBaseSeparator;
 
-#[salsa::derive_debug_with_db]
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
-pub struct VdBaseSeparatorSignature {
-    instantiation: VdInstantiation,
-    // TODO: replace this with something more ethereal
-    opr: VdMirBaseSeparator,
-    item_ty: VdType,
-    expr_ty: VdType,
+pub enum VdBaseSeparatorSignature {
+    Chaining(VdBaseChainingSeparatorSignature),
+    Folding(VdBaseFoldingSeparatorSignature),
 }
 
 impl From<VdBaseSeparatorSignature> for VdSignature {
@@ -47,29 +44,34 @@ impl VdBaseSeparatorSignature {
             VdTraitItemPath::FieldDiv => todo!(),
             VdTraitItemPath::RealSqrt => todo!(),
         };
-        Self {
-            instantiation,
-            opr,
-            item_ty,
-            expr_ty,
-        }
+        todo!()
+        // Self {
+        //     instantiation,
+        //     opr,
+        //     item_ty,
+        //     expr_ty,
+        // }
     }
 }
 
 impl VdBaseSeparatorSignature {
     pub fn instantiation(self) -> VdInstantiation {
-        self.instantiation
+        todo!()
+        // self.instantiation
     }
 
     pub fn opr(self) -> VdMirBaseSeparator {
-        self.opr
+        todo!()
+        // self.opr
     }
 
     pub fn item_ty(self) -> VdType {
-        self.item_ty
+        todo!()
+        // self.item_ty
     }
 
     pub fn expr_ty(self) -> VdType {
-        self.expr_ty
+        todo!()
+        // self.expr_ty
     }
 }
