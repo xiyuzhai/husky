@@ -112,7 +112,9 @@ impl<'db, 'sess> VdBsqComnumTerm<'sess> {
             VdBsqComnumTerm::Sum(slf) => {
                 slf.transcribe_data_and_ty(elaborator, hypothesis_constructor)
             }
-            VdBsqComnumTerm::Product(slf) => todo!(),
+            VdBsqComnumTerm::Product(slf) => {
+                slf.transcribe_data_and_ty(elaborator, hypothesis_constructor)
+            }
         }
     }
 }

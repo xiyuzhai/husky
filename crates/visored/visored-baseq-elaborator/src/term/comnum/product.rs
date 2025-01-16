@@ -361,7 +361,13 @@ pub(super) fn transcribe_product_stem_and_factor_data_and_ty<'db, 'sess>(
             VdBsqProductStem::Atom(atom) => {
                 atom.transcribe_data_and_ty(elaborator, hypothesis_constructor)
             }
-            VdBsqProductStem::NonTrivial(vd_bsq_non_trivial_product_stem) => todo!(),
+            VdBsqProductStem::NonTrivial(stem) => transcribe_factors_data_and_ty(
+                elaborator,
+                stem.exponentials()
+                    .iter()
+                    .map(|&(base, exponent)| Factor::Exponential(base, exponent)),
+                hypothesis_constructor,
+            ),
         }
     } else {
         match stem {
@@ -389,10 +395,14 @@ fn transcribe_factors_data_and_ty<'db, 'sess>(
     hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirExprData, VdType) {
     let mut factors = factors.into_iter();
+    let leader = factors.next().unwrap();
+    let Some(fst_follower) = factors.next() else {
+        return transcribe_factor_data_and_ty(elaborator, leader, hypothesis_constructor);
+    };
     let (leader_data, leader_ty) =
-        transcribe_factor_data_and_ty(elaborator, factors.next().unwrap(), hypothesis_constructor);
+        transcribe_factor_data_and_ty(elaborator, leader, hypothesis_constructor);
     let (fst_follower_data, fst_follower_ty) =
-        transcribe_factor_data_and_ty(elaborator, factors.next().unwrap(), hypothesis_constructor);
+        transcribe_factor_data_and_ty(elaborator, fst_follower, hypothesis_constructor);
     let fst_signature = hypothesis_constructor.infer_mul_signature(leader_ty, fst_follower_ty);
     let mut acc_ty = fst_signature.expr_ty();
     let leader = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
@@ -419,6 +429,7 @@ fn transcribe_factors_data_and_ty<'db, 'sess>(
     )
 }
 
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
 enum Factor<'sess> {
     Litnum(VdBsqLitnumTerm<'sess>),
     Atom(VdBsqAtomTerm<'sess>),
@@ -451,7 +462,7 @@ fn transcribe_exponential_data_and_ty<'db, 'sess>(
     }
     if exponent.is_one_half_trivially() {
         let (data, ty) = base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
-        let signature: VdBaseSqrtSignature = todo!();
+        let signature: VdBaseSqrtSignature = hypothesis_constructor.infer_base_sqrt_signature(ty);
         return (
             VdMirExprData::Application {
                 function: VdMirFunc::NormalBaseSqrt(signature),

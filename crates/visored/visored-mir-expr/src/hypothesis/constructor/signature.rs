@@ -1,16 +1,21 @@
 use super::*;
-use visored_global_dispatch::dispatch::separator::VdSeparatorGlobalDispatch;
+use visored_global_dispatch::dispatch::{
+    separator::VdSeparatorGlobalDispatch, sqrt::VdSqrtGlobalDispatch,
+};
 use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
 use visored_opr::separator::VdBaseSeparator;
-use visored_signature::signature::separator::base::{
-    chaining::{
-        relation::{
-            comparison::VdBaseComparisonSeparatorSignature, VdBaseRelationSeparatorSignature,
+use visored_signature::signature::{
+    separator::base::{
+        chaining::{
+            relation::{
+                comparison::VdBaseComparisonSeparatorSignature, VdBaseRelationSeparatorSignature,
+            },
+            VdBaseChainingSeparatorSignature,
         },
-        VdBaseChainingSeparatorSignature,
+        folding::VdBaseFoldingSeparatorSignature,
+        VdBaseSeparatorSignature,
     },
-    folding::VdBaseFoldingSeparatorSignature,
-    VdBaseSeparatorSignature,
+    sqrt::VdBaseSqrtSignature,
 };
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
@@ -128,6 +133,16 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                 VdSeparatorGlobalDispatch::InSet { expr_ty } => todo!(),
             },
             None => todo!(),
+        }
+    }
+
+    pub fn infer_base_sqrt_signature(&self, radicand_ty: VdType) -> VdBaseSqrtSignature {
+        match self
+            .default_global_dispatch_table
+            .base_sqrt_default_dispatch(radicand_ty)
+            .unwrap()
+        {
+            VdSqrtGlobalDispatch::Base { signature } => signature,
         }
     }
 }
