@@ -1,10 +1,11 @@
 use super::*;
+use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
 
 #[floated(constructor = pub new)]
 pub struct VdBsqNumChain<'sess> {
     pub leader: VdBsqNumTerm<'sess>,
     #[return_ref]
-    pub followers: Vec<(VdMirFunc, VdBsqNumTerm<'sess>)>,
+    pub followers: Vec<(VdBaseChainingSeparatorSignature, VdBsqNumTerm<'sess>)>,
 }
 
 impl<'sess> From<VdBsqNumChain<'sess>> for VdBsqTerm<'sess> {

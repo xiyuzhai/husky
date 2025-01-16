@@ -39,12 +39,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         if followers.len() != 1 {
             return AltNothing;
         }
-        let opr = match followers[0].0 {
-            VdMirFunc::NormalBaseSeparator(signature) => {
-                VdBsqBoundOpr::from_mir_base_separator(signature.separator())?
-            }
-            _ => return AltNothing,
-        };
+        let opr = VdBsqBoundOpr::from_mir_base_chaining_separator(followers[0].0.separator())?;
         let VdBsqTerm::Litnum(rhs) = followers[0].1.term() else {
             return AltNothing;
         };

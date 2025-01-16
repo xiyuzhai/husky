@@ -191,7 +191,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 leader,
                 ref followers,
             } => {
-                let (func, follower) = *followers.first().unwrap();
+                let (signature, follower) = *followers.first().unwrap();
                 let num_relationship = |slf: &Self, kind| {
                     VdBsqTerm::new_num_relationship(
                         leader.term().num().unwrap(),
@@ -200,37 +200,25 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         self.floater_db(),
                     )
                 };
-                match func {
-                    VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
-                    VdMirFunc::NormalBaseSeparator(signature) => match signature.separator() {
-                        VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
-                            match vd_mir_base_folding_separator {
-                                VdMirBaseFoldingSeparator::CommRingAdd => {
-                                    let mut builder = VdBsqSumBuilder::new(self.floater_db());
-                                    builder.add_num(leader.term().num().unwrap());
-                                    for &(_, follower) in followers.iter() {
-                                        builder.add_num(follower.term().num().unwrap());
-                                    }
-                                    builder.finish().into()
-                                }
-                                VdMirBaseFoldingSeparator::CommRingMul => {
-                                    let mut builder = VdBsqProductBuilder::new(self.floater_db());
-                                    builder.mul_num(leader.term().num().unwrap());
-                                    for &(_, follower) in followers.iter() {
-                                        builder.mul_num(follower.term().num().unwrap());
-                                    }
-                                    builder.finish().into()
-                                }
-                                VdMirBaseFoldingSeparator::SetTimes => todo!(),
-                                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
-                            }
+                match signature.separator() {
+                    VdMirBaseFoldingSeparator::CommRingAdd => {
+                        let mut builder = VdBsqSumBuilder::new(self.floater_db());
+                        builder.add_num(leader.term().num().unwrap());
+                        for &(_, follower) in followers.iter() {
+                            builder.add_num(follower.term().num().unwrap());
                         }
-                        VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
-                    },
-                    VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
-                    VdMirFunc::Power(signature) => todo!(),
-                    VdMirFunc::InSet => todo!(),
-                    VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
+                        builder.finish().into()
+                    }
+                    VdMirBaseFoldingSeparator::CommRingMul => {
+                        let mut builder = VdBsqProductBuilder::new(self.floater_db());
+                        builder.mul_num(leader.term().num().unwrap());
+                        for &(_, follower) in followers.iter() {
+                            builder.mul_num(follower.term().num().unwrap());
+                        }
+                        builder.finish().into()
+                    }
+                    VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                    VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
                 }
             }
             VdBsqExprFldData::ChainingSeparatedList {

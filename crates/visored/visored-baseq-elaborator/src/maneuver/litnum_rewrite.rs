@@ -8,7 +8,7 @@ use crate::{
 };
 use alt_option::*;
 use elabm::Pure;
-use expr::VdBsqExprFollowers;
+use expr::{VdBsqExprChainingFollowers, VdBsqExprFoldingFollowers};
 use smallvec::SmallVec;
 use visored_baseq_elaborator_macros::unify_elabm;
 use visored_entity_path::{
@@ -100,7 +100,7 @@ where
             mapm_collect(followers, |&(func, follower)| {
                 f(follower).map(move |elr, follower| (func, follower))
             })
-            .map(move |elr, followers: VdBsqExprFollowers<'sess>| {
+            .map(move |elr, followers: VdBsqExprFoldingFollowers<'sess>| {
                 elr.mk_expr(
                     VdBsqExprFldData::FoldingSeparatedList { leader, followers },
                     expr.ty(),
@@ -116,7 +116,7 @@ where
             mapm_collect(followers, |&(func, follower)| {
                 f(follower).map(move |elr, follower| (func, follower))
             })
-            .map(move |elr, followers: VdBsqExprFollowers<'sess>| {
+            .map(move |elr, followers: VdBsqExprChainingFollowers<'sess>| {
                 elr.mk_expr(
                     VdBsqExprFldData::ChainingSeparatedList {
                         leader,

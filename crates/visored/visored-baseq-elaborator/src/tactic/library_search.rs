@@ -13,7 +13,7 @@ use visored_entity_path::{
     theorem::VdTheoremPath,
 };
 use visored_mir_expr::expr::application::VdMirFunc;
-use visored_mir_opr::separator::VdMirBaseSeparator;
+use visored_mir_opr::separator::{chaining::VdMirBaseChainingSeparator, VdMirBaseSeparator};
 use visored_term::term::VdTerm;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
@@ -40,10 +40,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         };
         assert!(followers.len() == 1);
         let (ge, rhs) = followers[0];
-        let VdMirFunc::NormalBaseSeparator(ge) = ge else {
-            return AltNothing;
-        };
-        require!(ge.separator() == VdMirBaseSeparator::GE);
+        require!(ge.separator() == VdMirBaseChainingSeparator::GE);
         require!(rhs.is_zero());
         require!(let VdBsqExprFldData::Application {
             function: pow,

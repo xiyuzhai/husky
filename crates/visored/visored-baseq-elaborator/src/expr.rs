@@ -127,15 +127,10 @@ impl<'sess> VdBsqExprFld<'sess> {
                 followers,
                 joined_signature,
             } => {
-                let VdMirFunc::NormalBaseSeparator(signature) = followers.first().unwrap().0 else {
-                    todo!("maybe non base separator?")
-                };
+                let signature = followers.first().unwrap().0;
                 let precedence_range = signature.separator().left_precedence_range();
                 leader.show_fmt(precedence_range, f)?;
-                for (func, follower) in followers {
-                    let VdMirFunc::NormalBaseSeparator(signature) = func else {
-                        todo!("maybe non base separator?")
-                    };
+                for (signature, follower) in followers {
                     f.write_str(" ")?;
                     signature.separator().show_fmt(f)?;
                     f.write_str(" ")?;
@@ -169,7 +164,10 @@ pub enum VdBsqExprFldData<'sess> {
     ItemPath(VdItemPath),
 }
 
-pub type VdBsqExprFollowers<'sess> = SmallVec<[(VdMirFunc, VdBsqExprFld<'sess>); 4]>;
+pub type VdBsqExprFoldingFollowers<'sess> =
+    SmallVec<[(VdBaseFoldingSeparatorSignature, VdBsqExprFld<'sess>); 4]>;
+pub type VdBsqExprChainingFollowers<'sess> =
+    SmallVec<[(VdBaseChainingSeparatorSignature, VdBsqExprFld<'sess>); 4]>;
 
 impl<'sess> VdBsqExprFldData<'sess> {
     pub fn outer_precedence(&self) -> VdPrecedence {

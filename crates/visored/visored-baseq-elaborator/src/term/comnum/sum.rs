@@ -1,4 +1,5 @@
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
+use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 
 use super::*;
 
@@ -233,15 +234,15 @@ fn transcribe_sum_data_and_ty_inner<'db, 'sess>(
     let (fst_follower_data, fst_follower_ty) =
         transcribe_summand_data_and_ty(elaborator, fst_follower, hypothesis_constructor);
     let fst_signature = hypothesis_constructor.infer_add_signature(leader_ty, fst_follower_ty);
-    let fst_func = VdMirFunc::NormalBaseSeparator(fst_signature);
     let leader = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
         leader_data,
         leader_ty,
         Some(fst_signature.item_ty()),
     ));
-    let mut followers: SmallVec<[(VdMirFunc, VdMirExprIdx); 4]> = SmallVec::with_capacity(2);
+    let mut followers: SmallVec<[(VdBaseFoldingSeparatorSignature, VdMirExprIdx); 4]> =
+        SmallVec::with_capacity(2);
     followers.push((
-        fst_func,
+        fst_signature,
         hypothesis_constructor.mk_expr(VdMirExprEntry::new(
             fst_follower_data,
             fst_follower_ty,
@@ -253,9 +254,8 @@ fn transcribe_sum_data_and_ty_inner<'db, 'sess>(
         let (follower_data, follower_ty) =
             transcribe_summand_data_and_ty(elaborator, follower, hypothesis_constructor);
         let signature = hypothesis_constructor.infer_add_signature(acc_ty, follower_ty);
-        let func = VdMirFunc::NormalBaseSeparator(signature);
         followers.push((
-            func,
+            signature,
             hypothesis_constructor.mk_expr(VdMirExprEntry::new(
                 follower_data,
                 follower_ty,
