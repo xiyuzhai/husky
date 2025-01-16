@@ -5,6 +5,7 @@ pub mod tests;
 pub mod theorem;
 
 use eterned::db::EternerDb;
+use theorem::LnTheoremPath;
 
 #[cfg(test)]
 use crate::tests::*;
@@ -28,6 +29,13 @@ pub enum LnItemPath {
     Eq,
     RealSqrt,
     Prop,
+    Theorem(LnTheoremPath),
+}
+
+impl From<LnTheoremPath> for LnItemPath {
+    fn from(path: LnTheoremPath) -> Self {
+        Self::Theorem(path)
+    }
 }
 
 // TODO: maybe use menu?
@@ -69,6 +77,7 @@ impl LnItemPath {
             LnItemPath::Eq => "=".to_string(),
             LnItemPath::RealSqrt => "√".to_string(),
             LnItemPath::Prop => "Prop".to_string(),
+            LnItemPath::Theorem(ln_theorem_path) => todo!(),
         }
     }
 }

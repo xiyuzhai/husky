@@ -41,7 +41,7 @@ pub enum LnMirTacticData {
         arms: LnMirTacticIdxRange,
     },
     Apply {
-        path: LnTheoremPath,
+        hypothesis: LnMirExprIdx,
     },
     Obvious,
     Custom {

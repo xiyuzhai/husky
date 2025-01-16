@@ -430,9 +430,9 @@ impl<'a> LnMirExprFormatter<'a> {
                     self.format_tactic(arm);
                 }
             }
-            LnMirTacticData::Apply { path } => {
+            LnMirTacticData::Apply { hypothesis } => {
                 self.result += "apply ";
-                self.result += path.code();
+                self.format_expr_ext(hypothesis);
             }
             LnMirTacticData::Custom { name, construction } => {
                 self.result += name;

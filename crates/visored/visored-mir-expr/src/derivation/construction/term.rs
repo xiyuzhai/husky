@@ -9,7 +9,9 @@ use crate::{
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdMirTermDerivationConstruction {
-    Obvious,
+    Literal,
+    Variable,
+    ItemPath,
     Sum {
         summand_term_equivalences: VdMirDerivationIdxRange,
     },

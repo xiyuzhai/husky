@@ -22,3 +22,13 @@ impl VdMirDerivationEntry {
         Self { prop, construction }
     }
 }
+
+impl VdMirDerivationEntry {
+    pub fn prop(&self) -> VdMirExprIdx {
+        self.prop
+    }
+
+    pub fn construction(&self) -> &VdMirDerivationConstruction {
+        &self.construction
+    }
+}

@@ -82,9 +82,9 @@ where
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         match *expr.data() {
-            VdBsqExprFldData::Literal(_)
-            | VdBsqExprFldData::Variable(_, _)
-            | VdBsqExprFldData::ItemPath(_) => VdMirTermDerivationConstruction::Obvious,
+            VdBsqExprFldData::Literal(_) => VdMirTermDerivationConstruction::Literal,
+            VdBsqExprFldData::Variable(_, _) => VdMirTermDerivationConstruction::Variable,
+            VdBsqExprFldData::ItemPath(_) => VdMirTermDerivationConstruction::ItemPath,
             VdBsqExprFldData::Application {
                 function,
                 ref arguments,

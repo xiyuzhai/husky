@@ -1,4 +1,5 @@
 mod builder;
+pub mod derivation;
 pub mod dictionary;
 mod expr;
 pub mod helpers;

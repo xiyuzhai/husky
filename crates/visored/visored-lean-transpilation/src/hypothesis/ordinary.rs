@@ -9,7 +9,7 @@ where
         hypothesis_entry: &VdMirHypothesisEntry,
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) {
-        let construction_tactics = match hypothesis_entry.construction() {
+        let construction_tactics = match *hypothesis_entry.construction() {
             VdMirHypothesisConstruction::Sorry => {
                 let default_tactic_data = self.default_tactic_data();
                 self.alloc_tactics([default_tactic_data])
@@ -27,26 +27,19 @@ where
                     VdMirCoercion::Obvious(arena_idx) => todo!("handle this properly."),
                 }
                 self.alloc_tactics([LnMirTacticData::Apply {
-                    path: match path {
-                        VdTheoremPath::SquareNonnegative => LnTheoremPath::SquareNonnegative,
+                    hypothesis: match path {
+                        VdTheoremPath::SquareNonnegative => self.alloc_expr(LnMirExprEntry::new(
+                            LnMirExprData::ItemPath(LnTheoremPath::SquareNonnegative.into()),
+                            todo!(),
+                        )),
                     },
                 }])
             }
             VdMirHypothesisConstruction::Assume => return,
             VdMirHypothesisConstruction::TermEquivalence {
                 hypothesis,
-                derivation_chunk: derivations,
-            } => {
-                let construction = {
-                    todo!();
-                    for _ in derivations.new_derivations() {
-                        todo!("handle derivations");
-                    }
-                    None
-                };
-                let custom_tactic_data = self.custom_tactic_data("term_equivalence", construction);
-                self.alloc_tactics([custom_tactic_data])
-            }
+                derivation_chunk,
+            } => self.build_derivation_tactics(derivation_chunk, ln_tactics),
             VdMirHypothesisConstruction::CommRing => {
                 let custom_tactic_data = self.custom_tactic_data("comm_ring", None);
                 self.alloc_tactics([custom_tactic_data])

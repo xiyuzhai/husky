@@ -49,6 +49,7 @@ pub struct VdLeanTranspilationBuilder<'a, S: IsVdLeanTranspilationScheme> {
     stmt_arena: VdMirStmtArenaRef<'a>,
     hint_arena: VdMirHintArenaRef<'a>,
     hypothesis_arena: VdMirHypothesisArenaRef<'a>,
+    derivation_arena: VdMirDerivationArenaRef<'a>,
     dictionary: &'a VdLeanDictionary,
     mangler: VdLeanTranspilationMangler,
     current_module_path: VdModulePath,
@@ -145,6 +146,7 @@ where
             stmt_arena,
             hint_arena,
             hypothesis_arena,
+            derivation_arena,
             source_map,
             dictionary,
             mangler: VdLeanTranspilationMangler::new(symbol_local_defn_storage, db),
@@ -202,6 +204,14 @@ where
         )
     }
 
+    pub(crate) fn mangle_derivation(&mut self) -> LnIdent {
+        let db = self.db();
+        self.mangler.mangle_derivation(
+            vd_module_path_to_ln_namespace_or_inherited(self.current_module_path, db),
+            db,
+        )
+    }
+
     pub(crate) fn sorry(&mut self) -> LnMirDefBody {
         LnMirDefBody::Expr(self.alloc_expr(LnMirExprEntry::new(LnMirExprData::Sorry, todo!())))
     }
@@ -229,6 +239,10 @@ where
 
     pub fn hypothesis_arena(&self) -> VdMirHypothesisArenaRef<'db> {
         self.hypothesis_arena
+    }
+
+    pub fn derivation_arena(&self) -> VdMirDerivationArenaRef<'db> {
+        self.derivation_arena
     }
 
     pub fn source_map(&self) -> &'db VdMirRegionSourceMap {

@@ -65,6 +65,23 @@ impl VdLeanTranspilationMangler {
             }
         }
     }
+
+    pub(crate) fn mangle_derivation(&mut self, namespace: LnNamespace, db: &EternerDb) -> LnIdent {
+        match self
+            .disambiguator_map
+            .get_mut(&(namespace, "d".to_string()))
+        {
+            Some(count) => {
+                *count += 1;
+                LnIdent::from_ref(&format!("d{}", count), db)
+            }
+            None => {
+                self.disambiguator_map
+                    .insert((namespace, "d".to_string()), 0);
+                LnIdent::from_ref("d", db)
+            }
+        }
+    }
 }
 
 fn naive_ident(head: &VdMirSymbolLocalDefnHead) -> String {
