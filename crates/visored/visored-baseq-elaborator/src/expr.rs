@@ -367,7 +367,7 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                     .collect(),
                 joined_signature,
             },
-            VdBsqExprFldData::ItemPath(vd_item_path) => todo!(),
+            VdBsqExprFldData::ItemPath(vd_item_path) => VdMirExprData::ItemPath(vd_item_path),
         }
     }
 }
