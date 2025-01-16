@@ -9,16 +9,15 @@ use visored_opr::{
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash, PartialOrd, Ord)]
 pub enum VdMirBaseSeparator {
-    CommRingAdd,
-    CommRingMul,
-    SetTimes,
-    TensorOtimes,
     Chaining(VdMirBaseChainingSeparator),
+    Folding(VdMirBaseFoldingSeparator),
 }
 
 impl VdMirBaseSeparator {
-    pub const COMM_RING_ADD: Self = VdMirBaseSeparator::CommRingAdd;
-    pub const COMM_RING_MUL: Self = VdMirBaseSeparator::CommRingMul;
+    pub const COMM_RING_ADD: Self =
+        VdMirBaseSeparator::Folding(VdMirBaseFoldingSeparator::COMM_RING_ADD);
+    pub const COMM_RING_MUL: Self =
+        VdMirBaseSeparator::Folding(VdMirBaseFoldingSeparator::COMM_RING_MUL);
     pub const IFF: Self = VdMirBaseSeparator::Chaining(VdMirBaseChainingSeparator::IFF);
     pub const EQ: Self = VdMirBaseSeparator::Chaining(VdMirBaseChainingSeparator::EQ);
     pub const NE: Self = VdMirBaseSeparator::Chaining(VdMirBaseChainingSeparator::NE);
@@ -51,10 +50,7 @@ impl VdMirBaseSeparator {
 
     pub fn class(self) -> VdSeparatorClass {
         match self {
-            VdMirBaseSeparator::CommRingAdd => VdSeparatorClass::Add,
-            VdMirBaseSeparator::CommRingMul => VdSeparatorClass::Mul,
-            VdMirBaseSeparator::SetTimes => VdSeparatorClass::Mul,
-            VdMirBaseSeparator::TensorOtimes => VdSeparatorClass::Mul,
+            VdMirBaseSeparator::Folding(slf) => slf.class(),
             VdMirBaseSeparator::Chaining(slf) => slf.class(),
         }
     }
@@ -70,10 +66,7 @@ impl VdMirBaseSeparator {
 impl VdMirBaseSeparator {
     pub fn unicode(self) -> &'static str {
         match self {
-            VdMirBaseSeparator::CommRingAdd => "+",
-            VdMirBaseSeparator::CommRingMul => "*",
-            VdMirBaseSeparator::SetTimes => "×",
-            VdMirBaseSeparator::TensorOtimes => "⊗",
+            VdMirBaseSeparator::Folding(slf) => slf.unicode(),
             VdMirBaseSeparator::Chaining(slf) => slf.unicode(),
         }
     }

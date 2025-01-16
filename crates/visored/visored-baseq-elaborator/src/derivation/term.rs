@@ -10,7 +10,10 @@ use visored_mir_expr::{
     expr::{application::VdMirFunc, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
     hypothesis::{constructor::VdMirHypothesisConstructor, VdMirHypothesisIdx},
 };
-use visored_mir_opr::{opr::binary::VdMirBaseBinaryOpr, separator::VdMirBaseSeparator};
+use visored_mir_opr::{
+    opr::binary::VdMirBaseBinaryOpr,
+    separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
+};
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess>
 where
@@ -136,15 +139,19 @@ where
                 match fst_func {
                     VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
                     VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
-                        VdMirBaseSeparator::CommRingAdd => todo!(),
-                        VdMirBaseSeparator::CommRingMul => {
-                            VdMirTermDerivationConstruction::Product {
-                                leader_equivalence,
-                                follower_equivalences,
+                        VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
+                            match vd_mir_base_folding_separator {
+                                VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
+                                VdMirBaseFoldingSeparator::CommRingMul => {
+                                    VdMirTermDerivationConstruction::Product {
+                                        leader_equivalence,
+                                        follower_equivalences,
+                                    }
+                                }
+                                VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
                             }
                         }
-                        VdMirBaseSeparator::SetTimes => todo!(),
-                        VdMirBaseSeparator::TensorOtimes => todo!(),
                         VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
                     },
                     VdMirFunc::NormalBaseBinaryOpr(vd_base_binary_opr_signature) => todo!(),

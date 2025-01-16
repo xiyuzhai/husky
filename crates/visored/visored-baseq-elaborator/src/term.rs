@@ -31,7 +31,7 @@ use visored_mir_expr::{
 };
 use visored_mir_opr::{
     opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
-    separator::VdMirBaseSeparator,
+    separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
 };
 use visored_opr::precedence::VdPrecedenceRange;
 use visored_term::{
@@ -203,24 +203,28 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 match func {
                     VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
                     VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
-                        VdMirBaseSeparator::CommRingAdd => {
-                            let mut builder = VdBsqSumBuilder::new(self.floater_db());
-                            builder.add_num(leader.term().num().unwrap());
-                            for &(_, follower) in followers.iter() {
-                                builder.add_num(follower.term().num().unwrap());
+                        VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
+                            match vd_mir_base_folding_separator {
+                                VdMirBaseFoldingSeparator::CommRingAdd => {
+                                    let mut builder = VdBsqSumBuilder::new(self.floater_db());
+                                    builder.add_num(leader.term().num().unwrap());
+                                    for &(_, follower) in followers.iter() {
+                                        builder.add_num(follower.term().num().unwrap());
+                                    }
+                                    builder.finish().into()
+                                }
+                                VdMirBaseFoldingSeparator::CommRingMul => {
+                                    let mut builder = VdBsqProductBuilder::new(self.floater_db());
+                                    builder.mul_num(leader.term().num().unwrap());
+                                    for &(_, follower) in followers.iter() {
+                                        builder.mul_num(follower.term().num().unwrap());
+                                    }
+                                    builder.finish().into()
+                                }
+                                VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
                             }
-                            builder.finish().into()
                         }
-                        VdMirBaseSeparator::CommRingMul => {
-                            let mut builder = VdBsqProductBuilder::new(self.floater_db());
-                            builder.mul_num(leader.term().num().unwrap());
-                            for &(_, follower) in followers.iter() {
-                                builder.mul_num(follower.term().num().unwrap());
-                            }
-                            builder.finish().into()
-                        }
-                        VdMirBaseSeparator::SetTimes => todo!(),
-                        VdMirBaseSeparator::TensorOtimes => todo!(),
                         VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
                     },
                     VdMirFunc::NormalBaseBinaryOpr(signature) => todo!(),
@@ -258,8 +262,8 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     match func {
                         VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
                         VdMirFunc::NormalBaseSeparator(signature) => match signature.opr() {
-                            VdMirBaseSeparator::CommRingAdd => unreachable!(),
-                            VdMirBaseSeparator::CommRingMul => unreachable!(),
+                            VdMirBaseSeparator::COMM_RING_ADD => unreachable!(),
+                            VdMirBaseSeparator::COMM_RING_MUL => unreachable!(),
                             VdMirBaseSeparator::EQ => {
                                 num_relationship(self, VdBsqComparisonOpr::EQ)
                             }

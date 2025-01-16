@@ -34,7 +34,10 @@ use visored_mir_expr::{
     region::VdMirExprRegionDataRef,
     stmt::{block::VdMirBlockKind, VdMirStmtData, VdMirStmtIdx},
 };
-use visored_mir_opr::{opr::binary::VdMirBaseBinaryOpr, separator::VdMirBaseSeparator};
+use visored_mir_opr::{
+    opr::binary::VdMirBaseBinaryOpr,
+    separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
+};
 use visored_signature::{
     menu::{vd_signature_menu, VdSignatureMenu},
     signature::separator::base::VdBaseSeparatorSignature,
@@ -276,10 +279,14 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
             unreachable!()
         };
         match fst_signature.opr() {
-            VdMirBaseSeparator::CommRingAdd => (),
-            VdMirBaseSeparator::CommRingMul => (),
-            VdMirBaseSeparator::SetTimes => todo!(),
-            VdMirBaseSeparator::TensorOtimes => todo!(),
+            VdMirBaseSeparator::Folding(vd_mir_base_folding_separator) => {
+                match vd_mir_base_folding_separator {
+                    VdMirBaseFoldingSeparator::CommRingAdd => (),
+                    VdMirBaseFoldingSeparator::CommRingMul => (),
+                    VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                    VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
+                }
+            }
             VdMirBaseSeparator::Chaining(vd_mir_base_chaining_separator) => todo!(),
         }
     }
