@@ -249,79 +249,79 @@ end Example17
 
 namespace Example18
 def h (x y : ℝ) := by
-  have h1 : (x + y) ^ 3 = x ^ 3 + (3 : ℝ) * (x ^ 2) * y + (3 : ℝ) * x * (y ^ 2) + y ^ 3 := by comm_ring
+  have h1 : (x + y) ^ 3 = x ^ 3 + (3 : ℝ) * x ^ 2 * y + (3 : ℝ) * x * y ^ 2 + y ^ 3 := by comm_ring
   exact ()
 end Example18
 
 namespace Example19
 def h (x y : ℝ) := by
-  have h1 : (x + y) ^ 4 = x ^ 4 + (4 : ℝ) * (x ^ 3) * y + (6 : ℝ) * (x ^ 2) * (y ^ 2) + (4 : ℝ) * x * (y ^ 3) + y ^ 4 := by comm_ring
+  have h1 : (x + y) ^ 4 = x ^ 4 + (4 : ℝ) * x ^ 3 * y + (6 : ℝ) * x ^ 2 * y ^ 2 + (4 : ℝ) * x * y ^ 3 + y ^ 4 := by comm_ring
   exact ()
 end Example19
 
 namespace Example20
 def h (x y : ℝ) := by
-  have h1 : (x + y) ^ 5 = x ^ 5 + (5 : ℝ) * (x ^ 4) * y + (10 : ℝ) * (x ^ 3) * (y ^ 2) + (10 : ℝ) * (x ^ 2) * (y ^ 3) + (5 : ℝ) * x * (y ^ 4) + y ^ 5 := by comm_ring
+  have h1 : (x + y) ^ 5 = x ^ 5 + (5 : ℝ) * x ^ 4 * y + (10 : ℝ) * x ^ 3 * y ^ 2 + (10 : ℝ) * x ^ 2 * y ^ 3 + (5 : ℝ) * x * y ^ 4 + y ^ 5 := by comm_ring
   exact ()
 end Example20
 
 namespace Example21
 def h (x y : ℝ) := by
-  have h1 : (x + y) ^ 6 = x ^ 6 + (6 : ℝ) * (x ^ 5) * y + (15 : ℝ) * (x ^ 4) * (y ^ 2) + (20 : ℝ) * (x ^ 3) * (y ^ 3) + (15 : ℝ) * (x ^ 2) * (y ^ 4) + (6 : ℝ) * x * (y ^ 5) + y ^ 6 := by comm_ring
+  have h1 : (x + y) ^ 6 = x ^ 6 + (6 : ℝ) * x ^ 5 * y + (15 : ℝ) * x ^ 4 * y ^ 2 + (20 : ℝ) * x ^ 3 * y ^ 3 + (15 : ℝ) * x ^ 2 * y ^ 4 + (6 : ℝ) * x * y ^ 5 + y ^ 6 := by comm_ring
   exact ()
 end Example21
 
 namespace Example22
 def h (x y : ℝ) := by
-  have h1 : (x + y) ^ 7 = x ^ 7 + (7 : ℝ) * (x ^ 6) * y + (21 : ℝ) * (x ^ 5) * (y ^ 2) + (35 : ℝ) * (x ^ 4) * (y ^ 3) + (35 : ℝ) * (x ^ 3) * (y ^ 4) + (21 : ℝ) * (x ^ 2) * (y ^ 5) + (7 : ℝ) * x * (y ^ 6) + y ^ 7 := by comm_ring
+  have h1 : (x + y) ^ 7 = x ^ 7 + (7 : ℝ) * x ^ 6 * y + (21 : ℝ) * x ^ 5 * y ^ 2 + (35 : ℝ) * x ^ 4 * y ^ 3 + (35 : ℝ) * x ^ 3 * y ^ 4 + (21 : ℝ) * x ^ 2 * y ^ 5 + (7 : ℝ) * x * y ^ 6 + y ^ 7 := by comm_ring
   exact ()
 end Example22
 
 namespace Example23
 def h (x y : ℝ) := by
-  have h1 : (x + y) ^ 8 = x ^ 8 + (8 : ℝ) * (x ^ 7) * y + (28 : ℝ) * (x ^ 6) * (y ^ 2) + (56 : ℝ) * (x ^ 5) * (y ^ 3) + (70 : ℝ) * (x ^ 4) * (y ^ 4) + (56 : ℝ) * (x ^ 3) * (y ^ 5) + (28 : ℝ) * (x ^ 2) * (y ^ 6) + (8 : ℝ) * x * (y ^ 7) + y ^ 8 := by comm_ring
+  have h1 : (x + y) ^ 8 = x ^ 8 + (8 : ℝ) * x ^ 7 * y + (28 : ℝ) * x ^ 6 * y ^ 2 + (56 : ℝ) * x ^ 5 * y ^ 3 + (70 : ℝ) * x ^ 4 * y ^ 4 + (56 : ℝ) * x ^ 3 * y ^ 5 + (28 : ℝ) * x ^ 2 * y ^ 6 + (8 : ℝ) * x * y ^ 7 + y ^ 8 := by comm_ring
   exact ()
 end Example23
 
 namespace Example24
 def h (x y : ℝ) := by
-  have h1 : (x + y) ^ 9 = x ^ 9 + (9 : ℝ) * (x ^ 8) * y + (36 : ℝ) * (x ^ 7) * (y ^ 2) + (84 : ℝ) * (x ^ 6) * (y ^ 3) + (126 : ℝ) * (x ^ 5) * (y ^ 4) + (126 : ℝ) * (x ^ 4) * (y ^ 5) + (84 : ℝ) * (x ^ 3) * (y ^ 6) + (36 : ℝ) * (x ^ 2) * (y ^ 7) + (9 : ℝ) * x * (y ^ 8) + y ^ 9 := by comm_ring
+  have h1 : (x + y) ^ 9 = x ^ 9 + (9 : ℝ) * x ^ 8 * y + (36 : ℝ) * x ^ 7 * y ^ 2 + (84 : ℝ) * x ^ 6 * y ^ 3 + (126 : ℝ) * x ^ 5 * y ^ 4 + (126 : ℝ) * x ^ 4 * y ^ 5 + (84 : ℝ) * x ^ 3 * y ^ 6 + (36 : ℝ) * x ^ 2 * y ^ 7 + (9 : ℝ) * x * y ^ 8 + y ^ 9 := by comm_ring
   exact ()
 end Example24
 
 namespace Example25
 def h (x : ℝ) := by
-  have h1 : (x ^ 2 + (1 : ℝ)) ^ 2 = x ^ 4 + (2 : ℝ) * (x ^ 2) + (1 : ℝ) := by comm_ring
+  have h1 : (x ^ 2 + (1 : ℝ)) ^ 2 = x ^ 4 + (2 : ℝ) * x ^ 2 + (1 : ℝ) := by comm_ring
   exact ()
 end Example25
 
 namespace Example26
 def h (x y : ℝ) := by
-  have h1 : (x ^ 2 + y ^ 2) ^ 2 = x ^ 4 + (2 : ℝ) * (x ^ 2) * (y ^ 2) + y ^ 4 := by comm_ring
+  have h1 : (x ^ 2 + y ^ 2) ^ 2 = x ^ 4 + (2 : ℝ) * x ^ 2 * y ^ 2 + y ^ 4 := by comm_ring
   exact ()
 end Example26
 
 namespace Example27
 def h (x : ℝ) (n : ℕ) := by
-  have h1 : (x ^ n + (1 : ℝ)) ^ 2 = x ^ (2 * n) + (2 : ℝ) * (x ^ n) + (1 : ℝ) := by comm_ring
+  have h1 : (x ^ n + (1 : ℝ)) ^ 2 = x ^ (2 * n) + (2 : ℝ) * x ^ n + (1 : ℝ) := by comm_ring
   exact ()
 end Example27
 
 namespace Example28
 def h (x y : ℝ) (n : ℕ) := by
-  have h1 : (x ^ n + y ^ n) ^ 2 = x ^ (2 * n) + (2 : ℝ) * (x ^ n) * (y ^ n) + y ^ (2 * n) := by comm_ring
+  have h1 : (x ^ n + y ^ n) ^ 2 = x ^ (2 * n) + (2 : ℝ) * x ^ n * y ^ n + y ^ (2 * n) := by comm_ring
   exact ()
 end Example28
 
 namespace Example29
 def h (x : ℝ) (n : ℕ) := by
-  have h1 : (x ^ (n ^ 2) + (1 : ℝ)) ^ 2 = x ^ (2 * (n ^ 2)) + (2 : ℝ) * (x ^ (n ^ 2)) + (1 : ℝ) := by comm_ring
+  have h1 : (x ^ n ^ 2 + (1 : ℝ)) ^ 2 = x ^ (2 * n ^ 2) + (2 : ℝ) * x ^ n ^ 2 + (1 : ℝ) := by comm_ring
   exact ()
 end Example29
 
 namespace Example30
 def h (x : ℝ) (n : ℕ) := by
-  have h1 : (x ^ (2 * n) + (1 : ℝ)) ^ 2 = x ^ (4 * n) + (2 : ℝ) * (x ^ (2 * n)) + (1 : ℝ) := by comm_ring
+  have h1 : (x ^ (2 * n) + (1 : ℝ)) ^ 2 = x ^ (4 * n) + (2 : ℝ) * x ^ (2 * n) + (1 : ℝ) := by comm_ring
   exact ()
 end Example30
 

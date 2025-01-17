@@ -9,7 +9,7 @@ use crate::{
     tactic::{LnMirTacticArenaRef, LnMirTacticData, LnMirTacticIdx, LnMirTacticIdxRange},
 };
 use eterned::db::EternerDb;
-use lean_opr::precedence::LnPrecedenceRange;
+use lean_opr::precedence::{LnPrecedence, LnPrecedenceRange};
 use lean_term::term::literal::LnLiteralData;
 use std::fmt::Write;
 
@@ -85,6 +85,11 @@ impl<'a> LnMirExprFormatter<'a> {
         let expr_data = expr_entry.data();
         let needs_bracket = (!precedence_range.include(expr_data.outer_precedence()))
             || expr_entry.ty_ascription().is_some();
+        if expr_data.outer_precedence() == LnPrecedence::NEG
+            && precedence_range == LnPrecedenceRange::POW_EXPONENT
+        {
+            todo!()
+        }
         if needs_bracket {
             // TODO: consider multiline
             self.result += "(";
