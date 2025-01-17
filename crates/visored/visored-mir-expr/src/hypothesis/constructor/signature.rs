@@ -152,11 +152,13 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     }
 
     pub fn infer_power_signature(&self, base_ty: VdType, exponent_ty: VdType) -> VdPowerSignature {
-        match self
+        let Some(dispatch) = self
             .default_global_dispatch_table
             .power_default_dispatch(base_ty, exponent_ty)
-            .unwrap()
-        {
+        else {
+            todo!("base_ty: `{:?}`, exponent_ty: `{:?}`", base_ty, exponent_ty)
+        };
+        match dispatch {
             VdAttachGlobalDispatch::Normal { signature } => match signature {
                 VdAttachSignature::Power(signature) => signature,
             },

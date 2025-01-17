@@ -56,6 +56,7 @@ pub enum VdMirExprData {
     ItemPath(VdItemPath),
 }
 
+#[derive(Debug, PartialEq, Eq)]
 pub struct VdMirExprEntry {
     data: VdMirExprData,
     ty: VdType,

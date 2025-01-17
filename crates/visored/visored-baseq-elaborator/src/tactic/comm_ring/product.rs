@@ -59,7 +59,10 @@ fn multiply_with_expanding<'db, 'sess>(
     if exponent > exponential_expansion_limit as i128 {
         return None;
     }
-    debug_assert!(exponent > 0);
+    debug_assert_ne!(exponent, 0);
+    if exponent < 0 {
+        return None;
+    }
     let VdBsqNumTerm::Comnum(VdBsqComnumTerm::Sum(sum)) = base else {
         return None;
     };

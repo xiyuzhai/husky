@@ -163,8 +163,9 @@ impl<'sess> VdBsqProductBuilder<'sess> {
     ) {
         let base = base.into();
         let exponent = exponent.into();
+        let neg_exponent = exponent.neg(self.db);
         self.unpruned_exponentials
-            .insert_or_update((base, exponent), |(_, old_coeff)| {
+            .insert_or_update((base, neg_exponent), |(_, old_coeff)| {
                 old_coeff.sub_assign(exponent, self.db)
             });
     }
