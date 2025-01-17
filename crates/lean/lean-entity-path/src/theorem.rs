@@ -18,7 +18,7 @@ impl LnTheoremPath {
 
     pub fn show(&self, db: &EternerDb) -> String {
         match self {
-            Self::SquareNonnegative => "square_nonnegative".to_string(),
+            Self::SquareNonnegative => "sq_nonneg".to_string(),
         }
     }
 }
