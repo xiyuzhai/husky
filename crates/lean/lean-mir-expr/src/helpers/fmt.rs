@@ -178,7 +178,14 @@ impl<'a> LnMirExprFormatter<'a> {
                     }
                     // ad hoc
                     LnMirFunc::InSet => self.result += "in_set",
-                    LnMirFunc::Iff => todo!(),
+                    LnMirFunc::Iff => {
+                        let mut args = arguments.into_iter();
+                        let a = args.next().unwrap();
+                        let b = args.next().unwrap();
+                        self.format_expr(a, subexpr_try_multiline, LnPrecedenceRange::IFF_LEFT);
+                        self.result += " ↔ ";
+                        self.format_expr(b, subexpr_try_multiline, LnPrecedenceRange::IFF_RIGHT);
+                    }
                 }
             }
             LnMirExprData::Literal(lit) => {

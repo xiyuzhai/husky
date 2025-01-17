@@ -180,8 +180,8 @@ def h (a b c : ℝ) : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by
     have d19 : a = a := by term_derivation_variable
     have d20 : c * a = c * a := by term_derivation_product
     have d21 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c - c * a = (-1 : ℝ) * b * a + (-1 : ℝ) * c * a + b ^ 2 + c ^ 2 + a ^ 2 + (-1 : ℝ) * c * b := by term_derivation_sub
-    have d22 : (0 : ℝ) = (0 : ℝ) := by term_derivation_literal
-    have d23 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c - c * a ≥ (0 : ℝ) = ((-1 : ℝ) * b * a + (-1 : ℝ) * c * a + b ^ 2 + c ^ 2 + a ^ 2 + (-1 : ℝ) * c * b ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d22 : (0 : ℝ) = 0 := by term_derivation_literal
+    have d23 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c - c * a ≥ (0 : ℝ) ↔ (-1 : ℝ) * b * a + (-1 : ℝ) * c * a + b ^ 2 + c ^ 2 + a ^ 2 + (-1 : ℝ) * c * b ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
     have d24 : a = a := by term_derivation_variable
     have d25 : 2 = 2 := by term_derivation_literal
     have d26 : a ^ 2 = a ^ 2 := by term_derivation_power
@@ -202,7 +202,7 @@ def h (a b c : ℝ) : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by
     have d41 : a = a := by term_derivation_variable
     have d42 : c * a = c * a := by term_derivation_product
     have d43 : a * b + b * c + c * a = b * a + c * a + c * b := by term_derivation_sum
-    have d44 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a = ((-1 : ℝ) * b * a + (-1 : ℝ) * c * a + b ^ 2 + c ^ 2 + a ^ 2 + (-1 : ℝ) * c * b ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d44 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a ↔ (-1 : ℝ) * b * a + (-1 : ℝ) * c * a + b ^ 2 + c ^ 2 + a ^ 2 + (-1 : ℝ) * c * b ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
     have d45 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by term_derivation_finalize
     term_derivation_finalize
   obvious

@@ -50,7 +50,7 @@ impl LnMirFunc {
             LnMirFunc::SuffixOpr { opr, instantiation } => opr.outer_precedence(),
             LnMirFunc::Expr(expr) => LnPrecedence::Application,
             LnMirFunc::InSet => LnPrecedence::Application,
-            LnMirFunc::Iff => todo!(),
+            LnMirFunc::Iff => LnPrecedence::Iff,
         }
     }
 }

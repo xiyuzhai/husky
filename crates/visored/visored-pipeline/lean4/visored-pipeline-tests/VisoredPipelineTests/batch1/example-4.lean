@@ -158,23 +158,23 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d : x = x := by term_derivation_variable
     have d1 : 2 = 2 := by term_derivation_literal
     have d2 : x ^ 2 = x ^ 2 := by term_derivation_power
-    have d3 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d3 : (2 : ℝ) = 2 := by term_derivation_literal
     have d4 : x = x := by term_derivation_variable
     have d5 : (2 : ℝ) * x = (2 : ℝ) * x := by term_derivation_product
     have d6 : x ^ 2 - (2 : ℝ) * x = (-2 : ℝ) * x + x ^ 2 := by term_derivation_sub
-    have d7 : (1 : ℝ) = (1 : ℝ) := by term_derivation_literal
+    have d7 : (1 : ℝ) = 1 := by term_derivation_literal
     have d8 : x ^ 2 - (2 : ℝ) * x + (1 : ℝ) = (1 : ℝ) + (-2 : ℝ) * x + x ^ 2 := by term_derivation_sum
-    have d9 : (0 : ℝ) = (0 : ℝ) := by term_derivation_literal
-    have d10 : x ^ 2 - (2 : ℝ) * x + (1 : ℝ) ≥ (0 : ℝ) = ((1 : ℝ) + (-2 : ℝ) * x + x ^ 2 ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d9 : (0 : ℝ) = 0 := by term_derivation_literal
+    have d10 : x ^ 2 - (2 : ℝ) * x + (1 : ℝ) ≥ (0 : ℝ) ↔ (1 : ℝ) + (-2 : ℝ) * x + x ^ 2 ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
     have d11 : x = x := by term_derivation_variable
     have d12 : 2 = 2 := by term_derivation_literal
     have d13 : x ^ 2 = x ^ 2 := by term_derivation_power
-    have d14 : (1 : ℝ) = (1 : ℝ) := by term_derivation_literal
+    have d14 : (1 : ℝ) = 1 := by term_derivation_literal
     have d15 : x ^ 2 + (1 : ℝ) = (1 : ℝ) + x ^ 2 := by term_derivation_sum
-    have d16 : (2 : ℝ) = (2 : ℝ) := by term_derivation_literal
+    have d16 : (2 : ℝ) = 2 := by term_derivation_literal
     have d17 : x = x := by term_derivation_variable
     have d18 : (2 : ℝ) * x = (2 : ℝ) * x := by term_derivation_product
-    have d19 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x = ((1 : ℝ) + (-2 : ℝ) * x + x ^ 2 ≥ (0 : ℝ)) := by term_derivation_chaining_separated_list
+    have d19 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x ↔ (1 : ℝ) + (-2 : ℝ) * x + x ^ 2 ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
     have d20 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x := by term_derivation_finalize
     term_derivation_finalize
   have h7 : x > (0 : ℝ) := by old_main_hypothesis
