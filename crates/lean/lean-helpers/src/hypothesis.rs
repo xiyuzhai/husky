@@ -49,4 +49,64 @@ macro "litnum_bound": tactic =>`(tactic|
   | linarith; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
+
+macro "term_derivation_variable": tactic =>`(tactic|
+  first
+  | rfl; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_literal": tactic =>`(tactic|
+  first
+  | rfl; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_item_path": tactic =>`(tactic|
+  first
+  | rfl; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_sum": tactic =>`(tactic|
+  first
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_sub": tactic =>`(tactic|
+  first
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_product": tactic =>`(tactic|
+  first
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_div": tactic =>`(tactic|
+  first
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_finalize": tactic =>`(tactic|
+  first
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_chaining_separated_list": tactic =>`(tactic|
+  first
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_square": tactic =>`(tactic|
+  first
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
+
+macro "term_derivation_power": tactic =>`(tactic|
+  first
+  | rfl; done
+  | ring; done
+  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+)
 "#;
