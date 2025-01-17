@@ -193,8 +193,11 @@ impl<'sess> VdBsqProductBuilder<'sess> {
         match self.litnum_factor {
             VdBsqLitnumTerm::ZERO => VdBsqNumTerm::ZERO,
             litn_coefficient => {
-                let exponentials: VdBsqExponentialPowers<'sess> =
-                    self.unpruned_exponentials.into_iter().collect();
+                let exponentials: VdBsqExponentialPowers<'sess> = self
+                    .unpruned_exponentials
+                    .into_iter()
+                    .filter(|(_, exponent)| !exponent.is_zero_trivially())
+                    .collect();
                 if exponentials.is_empty() {
                     return VdBsqNumTerm::Litnum(self.litnum_factor);
                 }

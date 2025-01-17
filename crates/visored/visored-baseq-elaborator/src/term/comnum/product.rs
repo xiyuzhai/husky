@@ -174,6 +174,7 @@ impl<'sess> std::fmt::Debug for VdBsqNonTrivialProductStem<'sess> {
 }
 
 impl<'sess> VdBsqProductStem<'sess> {
+    #[track_caller]
     pub fn new(
         exponentials: VdBsqExponentialPowers<'sess>,
         db: &'sess FloaterDb,
@@ -218,6 +219,7 @@ impl<'sess> VdBsqProductStem<'sess> {
 }
 
 impl<'sess> VdBsqNonTrivialProductStem<'sess> {
+    #[track_caller]
     pub fn new_guaranteed(
         exponentials: VdBsqExponentialPowers<'sess>,
         db: &'sess FloaterDb,
@@ -234,6 +236,9 @@ impl<'sess> VdBsqNonTrivialProductStem<'sess> {
                         VdBsqNumTerm::Comnum(_) => unreachable!(),
                     }
                 }
+            }
+            for &(base, exponent) in &exponentials {
+                debug_assert!(!exponent.is_zero_trivially());
             }
         }
         Self::new_inner(exponentials, db)
