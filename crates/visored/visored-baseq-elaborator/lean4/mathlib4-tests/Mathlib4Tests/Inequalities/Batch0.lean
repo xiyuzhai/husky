@@ -97,18 +97,20 @@ macro "term_derivation_div": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_derivation_finalize": tactic =>`(tactic|
-  first
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
+macro "term_derivation_finalize" d1:term:1024 d2:term:1024 : tactic =>`(tactic|
+  (apply (Iff.mpr $d2); apply (Iff.mp $d1); assumption)
 )
 
 macro "term_derivation_chaining_separated_list": tactic =>`(tactic|
   first
+  | ring; done
+  | (constructor; repeat (intro h; linarith))
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
 macro "term_derivation_square": tactic =>`(tactic|
   first
+  | ring; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 

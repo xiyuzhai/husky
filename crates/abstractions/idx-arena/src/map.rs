@@ -154,6 +154,17 @@ impl<T, V> ArenaMap<T, V> {
         }
     }
 
+    pub fn get_or_insert_with(&mut self, idx: ArenaIdx<T>, f: impl FnOnce() -> V) -> &V {
+        let v = &mut self.data[idx.index()];
+        match v {
+            Some(v) => v,
+            None => {
+                *v = Some(f());
+                v.as_ref().unwrap()
+            }
+        }
+    }
+
     pub fn map<R>(&self, f: impl Fn(&V) -> R) -> ArenaMap<T, R> {
         ArenaMap {
             data: self

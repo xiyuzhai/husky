@@ -4,7 +4,7 @@ pub mod construction;
 use self::construction::VdMirDerivationConstruction;
 use crate::*;
 use expr::VdMirExprIdx;
-use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
+use idx_arena::{map::ArenaMap, Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdMirDerivationEntry {
@@ -16,6 +16,7 @@ pub type VdMirDerivationIdx = ArenaIdx<VdMirDerivationEntry>;
 pub type VdMirDerivationIdxRange = ArenaIdxRange<VdMirDerivationEntry>;
 pub type VdMirDerivationArena = Arena<VdMirDerivationEntry>;
 pub type VdMirDerivationArenaRef<'a> = ArenaRef<'a, VdMirDerivationEntry>;
+pub type VdMirDerivationMap<T> = ArenaMap<VdMirDerivationEntry, T>;
 
 impl VdMirDerivationEntry {
     pub fn new(prop: VdMirExprIdx, construction: VdMirDerivationConstruction) -> Self {

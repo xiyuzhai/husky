@@ -62,7 +62,11 @@ impl LnMirExprConstructor {
         self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }, None))
     }
 
-    pub fn alloc_by_custom(&mut self, name: &'static str) -> LnMirExprIdx {
+    pub fn alloc_by_custom(
+        &mut self,
+        name: &'static str,
+        arguments: impl Into<Option<LnMirExprIdxRange>>,
+    ) -> LnMirExprIdx {
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name,
             construction: None,

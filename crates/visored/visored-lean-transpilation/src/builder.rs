@@ -18,7 +18,7 @@ use lean_mir_expr::{
 use std::ops::{Deref, DerefMut};
 use visored_entity_path::module::VdModulePath;
 use visored_mir_expr::{
-    derivation::VdMirDerivationArenaRef,
+    derivation::{VdMirDerivationArenaRef, VdMirDerivationIdx},
     expr::VdMirExprArenaRef,
     hint::VdMirHintArenaRef,
     hypothesis::VdMirHypothesisArenaRef,
@@ -149,7 +149,11 @@ where
             derivation_arena,
             source_map,
             dictionary,
-            mangler: VdLeanTranspilationMangler::new(symbol_local_defn_storage, db),
+            mangler: VdLeanTranspilationMangler::new(
+                derivation_arena,
+                symbol_local_defn_storage,
+                db,
+            ),
             current_module_path: root_module_path,
             sem_expr_range_map,
             sem_phrase_range_map,
@@ -204,9 +208,10 @@ where
         )
     }
 
-    pub(crate) fn mangle_derivation(&mut self) -> LnIdent {
+    pub(crate) fn mangle_derivation(&mut self, derivation: VdMirDerivationIdx) -> LnIdent {
         let db = self.db();
         self.mangler.mangle_derivation(
+            derivation,
             vd_module_path_to_ln_namespace_or_inherited(self.current_module_path, db),
             db,
         )

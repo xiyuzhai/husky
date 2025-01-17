@@ -29,7 +29,6 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
                 )
             }
             _ => {
-                let ty = prop.to_lean(self);
                 self.build_have_tactics(stmt, hypothesis_chunk, ln_tactics);
             }
         }

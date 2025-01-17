@@ -32,48 +32,51 @@ where
 
     fn build_derivation_tactic_data(&mut self, derivation: VdMirDerivationIdx) -> LnMirTacticData {
         let entry = &self.derivation_arena()[derivation];
-        let ident = self.mangle_derivation();
+        let ident = self.mangle_derivation(derivation);
         let ty = entry.prop().to_lean(self);
         let construction = match entry.construction() {
             VdMirDerivationConstruction::Ring(vd_mir_ring_derivation_construction) => todo!(),
-            VdMirDerivationConstruction::Term(construction) => match construction {
+            VdMirDerivationConstruction::Term(construction) => match *construction {
                 VdMirTermDerivationConstruction::Literal => {
-                    self.alloc_by_custom("term_derivation_literal")
+                    self.alloc_by_custom("term_derivation_literal", None)
                 }
                 VdMirTermDerivationConstruction::Variable => {
-                    self.alloc_by_custom("term_derivation_variable")
+                    self.alloc_by_custom("term_derivation_variable", None)
                 }
                 VdMirTermDerivationConstruction::ItemPath => {
-                    self.alloc_by_custom("term_derivation_item_path")
+                    self.alloc_by_custom("term_derivation_item_path", None)
                 }
                 VdMirTermDerivationConstruction::Sum {
                     leader_equivalence,
-                    follower_equivalences,
-                } => self.alloc_by_custom("term_derivation_sum"),
+                    ref follower_equivalences,
+                } => self.alloc_by_custom("term_derivation_sum", None),
                 VdMirTermDerivationConstruction::Sub { lopd, ropd } => {
-                    self.alloc_by_custom("term_derivation_sub")
+                    self.alloc_by_custom("term_derivation_sub", None)
                 }
                 VdMirTermDerivationConstruction::Product {
                     leader_equivalence,
-                    follower_equivalences,
-                } => self.alloc_by_custom("term_derivation_product"),
+                    ref follower_equivalences,
+                } => self.alloc_by_custom("term_derivation_product", None),
                 VdMirTermDerivationConstruction::Div {
                     numerator,
                     denominator,
-                } => self.alloc_by_custom("term_derivation_div"),
+                } => self.alloc_by_custom("term_derivation_div", None),
                 VdMirTermDerivationConstruction::Finalize {
                     src_term_equivalence,
                     dst_term_equivalence,
-                } => self.alloc_by_custom("term_derivation_finalize"),
+                } => {
+                    let arguments = [src_term_equivalence, dst_term_equivalence].to_lean(self);
+                    self.alloc_by_custom("term_derivation_finalize", arguments)
+                }
                 VdMirTermDerivationConstruction::ChainingSeparatedList {
                     leader_equivalence,
-                    follower_equivalences,
-                } => self.alloc_by_custom("term_derivation_chaining_separated_list"),
+                    ref follower_equivalences,
+                } => self.alloc_by_custom("term_derivation_chaining_separated_list", None),
                 VdMirTermDerivationConstruction::Square { radicand } => {
-                    self.alloc_by_custom("term_derivation_square")
+                    self.alloc_by_custom("term_derivation_square", None)
                 }
                 VdMirTermDerivationConstruction::Power { base, exponent } => {
-                    self.alloc_by_custom("term_derivation_power")
+                    self.alloc_by_custom("term_derivation_power", None)
                 }
             },
         };

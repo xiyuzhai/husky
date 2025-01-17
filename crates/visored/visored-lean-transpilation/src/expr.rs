@@ -15,9 +15,12 @@ use lean_mir_expr::expr::{
 use lean_opr::opr::binary::LnBinaryOpr;
 use lean_term::term::literal::{LnLiteral, LnLiteralData};
 use visored_entity_path::path::{trai_item::VdTraitItemPath, VdItemPath};
-use visored_mir_expr::expr::{
-    application::{VdMirFunc, VdMirFuncKey},
-    VdMirExprData, VdMirExprIdx, VdMirExprIdxRange,
+use visored_mir_expr::{
+    derivation::VdMirDerivationIdx,
+    expr::{
+        application::{VdMirFunc, VdMirFuncKey},
+        VdMirExprData, VdMirExprIdx, VdMirExprIdxRange,
+    },
 };
 use visored_mir_opr::separator::chaining::VdMirBaseChainingSeparator;
 use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
@@ -36,14 +39,35 @@ where
 impl<'db, S, I> VdTranspileToLean<S, LnMirExprIdxRange> for I
 where
     S: IsVdLeanTranspilationScheme,
-    I: Copy + IntoIterator<Item = VdMirExprIdx>,
+    I: Copy + IntoIterator,
+    I::Item: VdTranspileToLean<S, LnMirExprEntry>,
 {
     fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprIdxRange {
         let mut exprs = vec![];
         for expr in self {
-            exprs.push(builder.build_expr_entry(expr));
+            let entry = expr.to_lean(builder);
+            exprs.push(entry);
         }
         builder.alloc_exprs(exprs)
+    }
+}
+
+impl<'db, S> VdTranspileToLean<S, LnMirExprEntry> for VdMirExprIdx
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
+        builder.build_expr_entry(self)
+    }
+}
+
+impl<'db, S> VdTranspileToLean<S, LnMirExprEntry> for VdMirDerivationIdx
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
+        let ident = builder.mangle_derivation(self);
+        LnMirExprEntry::new(LnMirExprData::Variable { ident }, None)
     }
 }
 
