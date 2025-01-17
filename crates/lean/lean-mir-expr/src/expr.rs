@@ -69,7 +69,7 @@ impl LnMirExprData {
             LnMirExprData::ItemPath(_)
             | LnMirExprData::Variable { .. }
             | LnMirExprData::Literal(_)
-            | LnMirExprData::Sorry => LnPrecedence::Atom,
+            | LnMirExprData::Sorry => LnPrecedence::ATOM,
             // LnMirExprData::Prefix { opr, opd } => todo!(),
             // LnMirExprData::Suffix { opd, opr } => todo!(),
             // LnMirExprData::Binary { lopd, opr, ropd } => opr.outer_precedence(),

@@ -48,8 +48,8 @@ impl LnMirFunc {
             LnMirFunc::PrefixOpr { opr, instantiation } => opr.outer_precedence(),
             LnMirFunc::BinaryOpr { opr, instantiation } => opr.outer_precedence(),
             LnMirFunc::SuffixOpr { opr, instantiation } => opr.outer_precedence(),
-            LnMirFunc::Expr(expr) => LnPrecedence::Application,
-            LnMirFunc::InSet => LnPrecedence::Application,
+            LnMirFunc::Expr(expr) => LnPrecedence::Arg,
+            LnMirFunc::InSet => LnPrecedence::Arg,
             LnMirFunc::Iff => LnPrecedence::Iff,
         }
     }
@@ -95,10 +95,6 @@ impl LnMirExprConstructor {
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct LnMirFuncKeyMenu {
-    pub int_pos: LnMirFuncKey,
-    pub rat_pos: LnMirFuncKey,
-    pub real_pos: LnMirFuncKey,
-    pub complex_pos: LnMirFuncKey,
     pub int_neg: LnMirFuncKey,
     pub rat_neg: LnMirFuncKey,
     pub real_neg: LnMirFuncKey,
@@ -222,10 +218,6 @@ impl LnMirFuncKeyMenu {
         let p = |opr, instantiation| LnMirFuncKey::PrefixOpr { opr, instantiation };
         let b = |opr, instantiation| LnMirFuncKey::BinaryOpr { opr, instantiation };
         Self {
-            int_pos: p(Pos, int_pos),
-            rat_pos: p(Pos, rat_pos),
-            real_pos: p(Pos, real_pos),
-            complex_pos: p(Pos, complex_pos),
             int_neg: p(Neg, int_neg),
             rat_neg: p(Neg, rat_neg),
             real_neg: p(Neg, real_neg),

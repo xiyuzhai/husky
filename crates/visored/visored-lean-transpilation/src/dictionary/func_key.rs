@@ -86,10 +86,6 @@ impl VdFuncKeyDictionary {
             real_sqrt,
         } = *vd_mir_func_key_menu(db);
         let LnMirFuncKeyMenu {
-            int_pos: ln_int_pos,
-            rat_pos: ln_rat_pos,
-            real_pos: ln_real_pos,
-            complex_pos: ln_complex_pos,
             int_neg: ln_int_neg,
             rat_neg: ln_rat_neg,
             real_neg: ln_real_neg,
@@ -145,10 +141,6 @@ impl VdFuncKeyDictionary {
             real_sqrt: ln_real_sqrt,
         } = *ln_mir_func_key_menu(db);
         Self::new([
-            (int_pos, PrefixOpr(ln_int_pos)),
-            (rat_pos, PrefixOpr(ln_rat_pos)),
-            (real_pos, PrefixOpr(ln_real_pos)),
-            (complex_pos, PrefixOpr(ln_complex_pos)),
             (int_neg, PrefixOpr(ln_int_neg)),
             (rat_neg, PrefixOpr(ln_rat_neg)),
             (real_neg, PrefixOpr(ln_real_neg)),

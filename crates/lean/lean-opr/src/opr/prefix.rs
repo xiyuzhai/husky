@@ -2,29 +2,25 @@ use crate::precedence::{LnPrecedence, LnPrecedenceRange};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
 pub enum LnPrefixOpr {
-    Pos,
     Neg,
 }
 
 impl LnPrefixOpr {
     pub fn fmt_str(self) -> &'static str {
         match self {
-            Self::Pos => "+",
-            Self::Neg => "-",
+            LnPrefixOpr::Neg => "-",
         }
     }
 
     pub fn outer_precedence(self) -> LnPrecedence {
         match self {
-            Self::Pos => LnPrecedence::Sign,
-            Self::Neg => LnPrecedence::Sign,
+            LnPrefixOpr::Neg => LnPrecedence::Neg,
         }
     }
 
     pub fn precedence_range(self) -> LnPrecedenceRange {
         match self {
-            Self::Pos => LnPrecedenceRange::Greater(LnPrecedence::Sign),
-            Self::Neg => LnPrecedenceRange::Greater(LnPrecedence::Sign),
+            LnPrefixOpr::Neg => LnPrecedenceRange::Greater(LnPrecedence::Neg),
         }
     }
 }

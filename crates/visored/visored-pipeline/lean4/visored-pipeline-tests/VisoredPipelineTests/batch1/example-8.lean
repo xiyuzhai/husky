@@ -162,9 +162,9 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
   have h8 : a / b + b / a ≥ (2 : ℝ) := by
     have d : a = a := by term_derivation_variable
     have d1 : b = b := by term_derivation_variable
-    have d2 : a / b = b ^ (-1) * a := by term_derivation_div
+    have d2 : a / b = b ^ -1 * a := by term_derivation_div
     have d3 : (2 : ℝ) = 2 := by term_derivation_literal
-    have d4 : a / b - (2 : ℝ) = (-2 : ℝ) + b ^ (-1) * a := by term_derivation_sub
+    have d4 : a / b - (2 : ℝ) = (-2 : ℝ) + b ^ -1 * a := by term_derivation_sub
     have d5 : b = b := by term_derivation_variable
     have d6 : a = a := by term_derivation_variable
     have d7 : b / a = b * (a ^ -1) := by term_derivation_div
