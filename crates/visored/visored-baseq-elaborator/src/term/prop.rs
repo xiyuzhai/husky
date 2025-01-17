@@ -29,10 +29,10 @@ impl<'sess> VdBsqPropTerm<'sess> {
         f: &mut std::fmt::Formatter<'_>,
     ) -> std::fmt::Result {
         match self {
-            VdBsqPropTerm::NumRelation(term) => term.show_fmt(precedence_range, f),
-            VdBsqPropTerm::NumChain(_) => todo!(),
-            VdBsqPropTerm::Trivial(b) => write!(f, "{}", b),
-            VdBsqPropTerm::InSet(_) => todo!(),
+            VdBsqPropTerm::NumRelation(slf) => slf.show_fmt(precedence_range, f),
+            VdBsqPropTerm::NumChain(slf) => slf.show_fmt(precedence_range, f),
+            VdBsqPropTerm::Trivial(slf) => write!(f, "{}", slf),
+            VdBsqPropTerm::InSet(slf) => slf.show_fmt(precedence_range, f),
         }
     }
 }

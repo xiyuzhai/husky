@@ -15,7 +15,7 @@ use visored_mir_expr::{
         storage::VdMirSymbolLocalDefnStorage, VdMirSymbolLocalDefnHead, VdMirSymbolLocalDefnIdx,
     },
 };
-use visored_mir_opr::separator::VdMirBaseSeparator;
+use visored_mir_opr::{opr::prefix::VdMirBasePrefixOpr, separator::VdMirBaseSeparator};
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
 use visored_signature::signature::separator::base::{
     chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
@@ -75,7 +75,17 @@ impl<'sess> VdBsqExprFld<'sess> {
                 function,
                 arguments,
             } => match function {
-                VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
+                VdMirFunc::NormalBasePrefixOpr(signature) => match signature.opr {
+                    VdMirBasePrefixOpr::RingPos => {
+                        f.write_str("+")?;
+                        arguments[0].show_fmt(VdPrecedenceRange::ATOM, f)
+                    }
+                    VdMirBasePrefixOpr::RingNeg => {
+                        f.write_str("-")?;
+                        arguments[0].show_fmt(VdPrecedenceRange::ATOM, f)
+                    }
+                    _ => todo!(),
+                },
                 VdMirFunc::NormalBaseSeparator(signature) => todo!(),
                 VdMirFunc::NormalBaseBinaryOpr(signature) => {
                     let opr = signature.opr;
@@ -107,7 +117,10 @@ impl<'sess> VdBsqExprFld<'sess> {
                     arguments[1].show_fmt(VdPrecedenceRange::ANY, f)?;
                     f.write_str("}}")
                 }
-                VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => todo!(),
+                VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => {
+                    f.write_str("√")?;
+                    arguments[0].show_fmt(VdPrecedenceRange::ATOM, f)
+                }
             },
             VdBsqExprFldData::FoldingSeparatedList { leader, followers } => {
                 let signature = followers.first().unwrap().0;
@@ -137,7 +150,7 @@ impl<'sess> VdBsqExprFld<'sess> {
                 }
                 Ok(())
             }
-            VdBsqExprFldData::ItemPath(vd_item_path) => todo!(),
+            VdBsqExprFldData::ItemPath(path) => path.show_fmt(f),
         }
     }
 }
@@ -182,7 +195,7 @@ impl<'sess> VdBsqExprFldData<'sess> {
                 followers,
                 joined_signature,
             } => followers.first().unwrap().0.separator().outer_precedence(),
-            VdBsqExprFldData::ItemPath(vd_item_path) => todo!(),
+            VdBsqExprFldData::ItemPath(vd_item_path) => VdPrecedence::ATOM,
         }
     }
 }
@@ -202,6 +215,11 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let db = self.session().floater_db();
         let expected_ty = expr_entry.expected_ty();
         let expr_fld = VdBsqExprFld::new_inner(expr_data, ty, term, expected_ty, db);
+        use husky_print_utils::p;
+        p!("{:?}", expr_fld, term);
+        if format!("{:?}", expr_fld).contains("a / b") {
+            todo!()
+        }
         self.save_expr_fld(expr_idx, expr_fld);
     }
 

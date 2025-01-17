@@ -55,7 +55,7 @@ pub const CARTESIAN_PRODUCT: char = '×';
 pub const PLUS: char = '+';
 pub const MINUS: char = '-';
 pub const TIMES: char = '×'; // Often '*' in programming
-pub const DIVIDE: char = '÷'; // Often '/' in programming
+pub const DIVIDE: char = '/'; // Often '/' in programming
 pub const PLUS_MINUS: char = '±';
 pub const MINUS_PLUS: char = '∓';
 

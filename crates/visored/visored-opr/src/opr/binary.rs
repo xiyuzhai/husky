@@ -60,7 +60,7 @@ impl VdBaseBinaryOpr {
     pub fn unicode(self) -> &'static str {
         match self {
             VdBaseBinaryOpr::Sub => "−",
-            VdBaseBinaryOpr::Div => "÷",
+            VdBaseBinaryOpr::Div => "/",
         }
     }
 

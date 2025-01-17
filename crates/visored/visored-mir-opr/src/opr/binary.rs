@@ -39,7 +39,7 @@ impl VdMirBaseBinaryOpr {
     pub fn unicode(self) -> &'static str {
         match self {
             VdMirBaseBinaryOpr::CommRingSub => "-",
-            VdMirBaseBinaryOpr::CommFieldDiv => "÷",
+            VdMirBaseBinaryOpr::CommFieldDiv => "/",
         }
     }
 }
