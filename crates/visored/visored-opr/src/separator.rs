@@ -8,7 +8,6 @@ pub enum VdBaseSeparator {
     Comma,
     Semicolon,
     Add,
-    Mul,
     Cdot,
     Eq,
     Ne,
@@ -35,7 +34,6 @@ impl VdBaseSeparator {
     pub const COMMA: Self = Self::Comma;
     pub const SEMICOLON: Self = Self::Semicolon;
     pub const ADD: Self = Self::Add;
-    pub const MUL: Self = Self::Mul;
     pub const CDOT: Self = Self::Cdot;
     pub const EQ: Self = Self::Eq;
     pub const NE: Self = Self::Ne;
@@ -54,10 +52,9 @@ impl VdBaseSeparator {
             VdBaseSeparator::Comma => VdSeparatorClass::Comma,
             VdBaseSeparator::Semicolon => VdSeparatorClass::Space,
             VdBaseSeparator::Add => VdSeparatorClass::Add,
-            VdBaseSeparator::Mul
-            | VdBaseSeparator::Times
-            | VdBaseSeparator::Otimes
-            | VdBaseSeparator::Cdot => VdSeparatorClass::Mul,
+            VdBaseSeparator::Times | VdBaseSeparator::Otimes | VdBaseSeparator::Cdot => {
+                VdSeparatorClass::Mul
+            }
             VdBaseSeparator::Eq
             | VdBaseSeparator::Ne
             | VdBaseSeparator::Lt
@@ -93,9 +90,7 @@ impl VdBaseSeparator {
             VdBaseSeparator::Comma => todo!(),
             VdBaseSeparator::Semicolon => VdPrecedence::SEMICOLON,
             VdBaseSeparator::Add => VdPrecedence::ADD_SUB,
-            VdBaseSeparator::Mul | VdBaseSeparator::Times | VdBaseSeparator::Otimes => {
-                VdPrecedence::MUL_DIV
-            }
+            VdBaseSeparator::Times | VdBaseSeparator::Otimes => VdPrecedence::MUL_DIV,
             VdBaseSeparator::Cdot => VdPrecedence::MUL_DIV,
             VdBaseSeparator::Eq
             | VdBaseSeparator::Ne
@@ -122,7 +117,7 @@ impl VdBaseSeparator {
             VdBaseSeparator::Comma => ",",
             VdBaseSeparator::Semicolon => ";",
             VdBaseSeparator::Add => "+",
-            VdBaseSeparator::Mul => "\\times",
+            VdBaseSeparator::Times => "\\times",
             VdBaseSeparator::Cdot => "\\cdot",
             VdBaseSeparator::Eq => "=",
             VdBaseSeparator::Ne => "\\neq",
@@ -151,7 +146,7 @@ impl VdBaseSeparator {
             VdBaseSeparator::Comma => ",",
             VdBaseSeparator::Semicolon => ";",
             VdBaseSeparator::Add => "+",
-            VdBaseSeparator::Mul => "×",
+            VdBaseSeparator::Times => "×",
             VdBaseSeparator::Cdot => "·",
             VdBaseSeparator::Eq => "=",
             VdBaseSeparator::Ne => "≠",
@@ -247,7 +242,6 @@ impl VdBaseSeparator {
             "comma" => VdBaseSeparator::Comma,
             "semicolon" => VdBaseSeparator::Semicolon,
             "add" => VdBaseSeparator::Add,
-            "mul" => VdBaseSeparator::Mul,
             "dot" => VdBaseSeparator::Cdot,
             "eq" => VdBaseSeparator::Eq,
             "ne" => VdBaseSeparator::Ne,

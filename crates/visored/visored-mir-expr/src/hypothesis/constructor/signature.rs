@@ -52,7 +52,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     ) -> VdBaseFoldingSeparatorSignature {
         self.infer_base_folding_separator_signature(
             prev_item_ty,
-            VdBaseSeparator::Mul,
+            VdBaseSeparator::Times,
             next_item_ty,
         )
     }
@@ -65,7 +65,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     ) -> VdBaseChainingSeparatorSignature {
         match self
             .default_global_dispatch_table()
-            .base_separator_default_dispatch(prev_item_ty, VdBaseSeparator::Add, next_item_ty)
+            .base_separator_default_dispatch(prev_item_ty, base_separator, next_item_ty)
         {
             Some(dispatch) => match dispatch {
                 VdSeparatorGlobalDispatch::Folding {
@@ -89,7 +89,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     ) -> VdBaseFoldingSeparatorSignature {
         match self
             .default_global_dispatch_table()
-            .base_separator_default_dispatch(prev_item_ty, VdBaseSeparator::Add, next_item_ty)
+            .base_separator_default_dispatch(prev_item_ty, base_separator, next_item_ty)
         {
             Some(dispatch) => match dispatch {
                 VdSeparatorGlobalDispatch::Folding {
@@ -101,7 +101,12 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     signature,
                 } => todo!(),
             },
-            None => todo!(),
+            None => todo!(
+                "prev_item_ty: `{:?}`, base_separator: `{:?}`, next_item_ty: `{:?}`",
+                prev_item_ty,
+                base_separator,
+                next_item_ty
+            ),
         }
     }
 

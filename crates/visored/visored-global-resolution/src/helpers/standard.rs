@@ -190,7 +190,7 @@ fn lx_math_punctuation_standard_resolution(
     match punctuation {
         LxMathPunctuation::Add => Some(VdPunctuationGlobalResolution::ADD),
         LxMathPunctuation::Sub => Some(VdPunctuationGlobalResolution::SUB),
-        LxMathPunctuation::Mul => Some(VdPunctuationGlobalResolution::SEPARATOR_MUL),
+        LxMathPunctuation::Cdot => Some(VdPunctuationGlobalResolution::SEPARATOR_MUL),
         LxMathPunctuation::Div => Some(VdPunctuationGlobalResolution::DIV),
         LxMathPunctuation::In => Some(VdPunctuationGlobalResolution::Todo),
         LxMathPunctuation::NotIn => Some(VdPunctuationGlobalResolution::Todo),

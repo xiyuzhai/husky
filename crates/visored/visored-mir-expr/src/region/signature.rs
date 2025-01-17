@@ -43,7 +43,7 @@ impl<'a> VdMirExprRegionDataRef<'a> {
     ) -> VdBaseFoldingSeparatorSignature {
         self.infer_base_folding_separator_signature(
             prev_item_ty,
-            VdBaseSeparator::Mul,
+            VdBaseSeparator::Times,
             next_item_ty,
         )
     }

@@ -8,7 +8,7 @@ pub enum LxMathPunctuation {
     /// Subtraction `-`
     Sub,
     /// Multiplication `\cdot`
-    Mul,
+    Cdot,
     /// Division `/`
     Div,
     /// Element of `\in` or `∈`
@@ -69,7 +69,7 @@ impl LxMathPunctuation {
         match self {
             LxMathPunctuation::Add => "+",
             LxMathPunctuation::Sub => "-",
-            LxMathPunctuation::Mul => "·",
+            LxMathPunctuation::Cdot => "·",
             LxMathPunctuation::Div => "/",
             LxMathPunctuation::In => "∈",
             LxMathPunctuation::NotIn => "∉",
@@ -103,7 +103,7 @@ impl LxMathPunctuation {
         match c {
             '+' => Some(LxMathPunctuation::Add),
             '-' => Some(LxMathPunctuation::Sub),
-            '·' => Some(LxMathPunctuation::Mul),
+            '·' => Some(LxMathPunctuation::Cdot),
             '/' => Some(LxMathPunctuation::Div),
             '∈' => Some(LxMathPunctuation::In),
             '∉' => Some(LxMathPunctuation::NotIn),

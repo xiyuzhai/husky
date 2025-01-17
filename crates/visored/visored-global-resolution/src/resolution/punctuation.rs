@@ -22,7 +22,7 @@ pub type VdPunctuationGlobalResolutionMap =
 impl VdPunctuationGlobalResolution {
     pub const ADD: Self = Self::PrefixOprOrSeparator(VdBasePrefixOpr::POS, VdBaseSeparator::ADD);
     pub const SUB: Self = Self::PrefixOrBinaryOpr(VdBasePrefixOpr::NEG, VdBaseBinaryOpr::SUB);
-    pub const SEPARATOR_MUL: Self = Self::Separator(VdBaseSeparator::MUL);
+    pub const SEPARATOR_MUL: Self = Self::Separator(VdBaseSeparator::CDOT);
     pub const DIV: Self = Self::Opr(VdBaseOpr::DIV);
     pub const EQ: Self = Self::Separator(VdBaseSeparator::EQ);
     pub const NE: Self = Self::Separator(VdBaseSeparator::NE);
