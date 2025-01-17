@@ -174,7 +174,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d19 : √ (x * y) = √ (x * y) := by term_derivation_square
     have d20 : (2 : ℝ) * √ (x * y) = (2 : ℝ) * √ (x * y) := by term_derivation_product
     have d21 : x + y ≥ (2 : ℝ) * √ (x * y) ↔ x + y + (-2 : ℝ) * √ (x * y) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d22 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_derivation_finalize
-    term_derivation_finalize
+    have d22 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_derivation_finalize d11 d21
+    assumption
   have h8 : (x + y) / (2 : ℝ) ≥ √ (x * y) := by obvious
   obvious

@@ -441,8 +441,8 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d19 : √ (x * y) = √ (x * y) := by term_derivation_square
     have d20 : (2 : ℝ) * √ (x * y) = (2 : ℝ) * √ (x * y) := by term_derivation_product
     have d21 : x + y ≥ (2 : ℝ) * √ (x * y) ↔ x + y + (-2 : ℝ) * √ (x * y) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d22 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_derivation_finalize
-    term_derivation_finalize
+    have d22 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_derivation_finalize d11 d21
+    assumption
   have h8 : (x + y) / (2 : ℝ) ≥ √ (x * y) := by obvious
   obvious
 
@@ -691,8 +691,8 @@ def h (a b c : ℝ) : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by
     have d42 : c * a = c * a := by term_derivation_product
     have d43 : a * b + b * c + c * a = b * a + c * a + c * b := by term_derivation_sum
     have d44 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a ↔ (-1 : ℝ) * b * a + (-1 : ℝ) * c * a + b ^ 2 + c ^ 2 + a ^ 2 + (-1 : ℝ) * c * b ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d45 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by term_derivation_finalize
-    term_derivation_finalize
+    have d45 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by term_derivation_finalize d23 d44
+    assumption
   obvious
 
 \end{lstlisting}
@@ -1132,8 +1132,8 @@ def h (a b : ℝ) : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 :=
     have d33 : 2 = 2 := by term_derivation_literal
     have d34 : ((a + b) / (2 : ℝ)) ^ 2 = (((1 : ℚ) / (2 : ℚ) : ℝ) * b + ((1 : ℚ) / (2 : ℚ) : ℝ) * a) ^ 2 := by term_derivation_power
     have d35 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 ↔ ((1 : ℚ) / (2 : ℚ) : ℝ) * (b ^ 2) + (-1 : ℝ) * ((((1 : ℚ) / (2 : ℚ) : ℝ) * b + ((1 : ℚ) / (2 : ℚ) : ℝ) * a) ^ 2) + ((1 : ℚ) / (2 : ℚ) : ℝ) * (a ^ 2) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d36 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by term_derivation_finalize
-    term_derivation_finalize
+    have d36 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by term_derivation_finalize d18 d35
+    assumption
   obvious
 
 \end{lstlisting}

@@ -205,6 +205,6 @@ def h (a b c : ℝ) : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by
     have d42 : c * a = c * a := by term_derivation_product
     have d43 : a * b + b * c + c * a = b * a + c * a + c * b := by term_derivation_sum
     have d44 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a ↔ (-1 : ℝ) * b * a + (-1 : ℝ) * c * a + b ^ 2 + c ^ 2 + a ^ 2 + (-1 : ℝ) * c * b ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d45 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by term_derivation_finalize
-    term_derivation_finalize
+    have d45 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by term_derivation_finalize d23 d44
+    assumption
   obvious

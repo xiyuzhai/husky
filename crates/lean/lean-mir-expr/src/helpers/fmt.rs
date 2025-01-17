@@ -442,12 +442,25 @@ impl<'a> LnMirExprFormatter<'a> {
                 self.result += "apply ";
                 self.format_expr_ext(hypothesis);
             }
-            LnMirTacticData::Custom { name, construction } => {
+            LnMirTacticData::Custom {
+                name,
+                arguments,
+                construction,
+            } => {
                 self.result += name;
+                if let Some(arguments) = arguments {
+                    for arg in arguments {
+                        self.result += " ";
+                        self.format_expr_ext(arg);
+                    }
+                }
                 if let Some(construction) = construction {
                     self.result += " := ";
                     self.format_expr_ext(construction);
                 }
+            }
+            LnMirTacticData::Assumption => {
+                self.result += "assumption";
             }
         }
     }

@@ -1,7 +1,7 @@
 use super::*;
 use lean_entity_path::LnItemPath;
 use lean_mir_expr::{
-    expr::{LnMirExprEntry, LnMirExprIdx},
+    expr::{LnMirExprEntry, LnMirExprIdx, LnMirExprIdxRange},
     tactic::{LnMirTacticData, LnMirTacticIdxRange},
 };
 
@@ -22,9 +22,14 @@ where
     pub fn custom_tactic_data(
         &mut self,
         name: &'static str,
+        arguments: Option<LnMirExprIdxRange>,
         construction: Option<LnMirExprIdx>,
     ) -> LnMirTacticData {
-        LnMirTacticData::Custom { name, construction }
+        LnMirTacticData::Custom {
+            name,
+            arguments,
+            construction,
+        }
     }
 
     pub fn exact_unit(&mut self) -> LnMirTacticData {

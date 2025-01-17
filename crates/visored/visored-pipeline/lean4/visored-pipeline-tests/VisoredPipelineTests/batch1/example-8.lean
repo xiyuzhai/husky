@@ -180,6 +180,6 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d17 : a / b + b / a = (2 : ℝ) * b * a := by term_derivation_sum
     have d18 : (2 : ℝ) = 2 := by term_derivation_literal
     have d19 : a / b + b / a ≥ (2 : ℝ) ↔ (-2 : ℝ) + (2 : ℝ) * b * a ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d20 : a / b + b / a ≥ (2 : ℝ) := by term_derivation_finalize
-    term_derivation_finalize
+    have d20 : a / b + b / a ≥ (2 : ℝ) := by term_derivation_finalize d10 d19
+    assumption
   obvious

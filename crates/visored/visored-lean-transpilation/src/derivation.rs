@@ -99,15 +99,9 @@ where
                 VdMirTermDerivationConstruction::Finalize {
                     src_term_equivalence,
                     dst_term_equivalence,
-                } => LnMirTacticData::Custom {
-                    name: "term_derivation_finalize",
-                    construction: None,
-                },
+                } => LnMirTacticData::Assumption,
                 _ => unreachable!(),
             },
         }
-        // LnMirTacticData::Apply {
-        //     hypothesis: todo!(),
-        // }
     }
 }

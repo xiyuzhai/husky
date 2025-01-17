@@ -69,6 +69,7 @@ impl LnMirExprConstructor {
     ) -> LnMirExprIdx {
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name,
+            arguments: arguments.into(),
             construction: None,
         }]);
         self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }, None))

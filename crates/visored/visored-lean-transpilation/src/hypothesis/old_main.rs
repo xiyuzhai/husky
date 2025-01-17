@@ -9,7 +9,7 @@ where
         main_hypothesis: VdMirHypothesisIdx,
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) {
-        let custom_tactic_data = self.custom_tactic_data("old_main_hypothesis", None);
+        let custom_tactic_data = self.custom_tactic_data("old_main_hypothesis", None, None);
         let construction_tactics = self.alloc_tactics([custom_tactic_data]);
         let construction = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::By {

@@ -196,6 +196,6 @@ def h (a b : ℝ) : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 :=
     have d33 : 2 = 2 := by term_derivation_literal
     have d34 : ((a + b) / (2 : ℝ)) ^ 2 = (((1 : ℚ) / (2 : ℚ) : ℝ) * b + ((1 : ℚ) / (2 : ℚ) : ℝ) * a) ^ 2 := by term_derivation_power
     have d35 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 ↔ ((1 : ℚ) / (2 : ℚ) : ℝ) * (b ^ 2) + (-1 : ℝ) * ((((1 : ℚ) / (2 : ℚ) : ℝ) * b + ((1 : ℚ) / (2 : ℚ) : ℝ) * a) ^ 2) + ((1 : ℚ) / (2 : ℚ) : ℝ) * (a ^ 2) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d36 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by term_derivation_finalize
-    term_derivation_finalize
+    have d36 : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 := by term_derivation_finalize d18 d35
+    assumption
   obvious

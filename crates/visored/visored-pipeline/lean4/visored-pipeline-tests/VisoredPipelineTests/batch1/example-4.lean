@@ -177,8 +177,8 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d17 : x = x := by term_derivation_variable
     have d18 : (2 : ℝ) * x = (2 : ℝ) * x := by term_derivation_product
     have d19 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x ↔ (1 : ℝ) + (-2 : ℝ) * x + x ^ 2 ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d20 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x := by term_derivation_finalize
-    term_derivation_finalize
+    have d20 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x := by term_derivation_finalize d10 d19
+    assumption
   have h7 : x > (0 : ℝ) := by old_main_hypothesis
   have h8 : x + (1 : ℝ) / x ≥ (2 : ℝ) := by obvious
   obvious

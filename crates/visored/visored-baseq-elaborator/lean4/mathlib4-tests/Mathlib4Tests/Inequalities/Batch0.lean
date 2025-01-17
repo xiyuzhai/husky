@@ -160,8 +160,8 @@ def h := by
     have d7 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) := by term_derivation_product
     have d8 : (1 : ℚ) = 1 := by term_derivation_literal
     have d9 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) ↔ true := by term_derivation_chaining_separated_list
-    have d10 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) := by term_derivation_finalize
-    term_derivation_finalize
+    have d10 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) := by term_derivation_finalize d2 d9
+    assumption
   exact ()
 end Example5
 
@@ -212,8 +212,8 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d5 : x - (1 : ℝ) = (-1 : ℝ) + x := by term_derivation_sub
     have d6 : (0 : ℝ) = 0 := by term_derivation_literal
     have d7 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + x ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d8 : x - (1 : ℝ) ≥ (0 : ℝ) := by term_derivation_finalize
-    term_derivation_finalize
+    have d8 : x - (1 : ℝ) ≥ (0 : ℝ) := by term_derivation_finalize d2 d7
+    assumption
   exact ()
 end Example12
 
@@ -354,8 +354,8 @@ def h := by
     have d3 : x = x := by term_derivation_variable
     have d4 : 1 = 1 := by term_derivation_literal
     have d5 : x = 1 ↔ -1 + (x : ℤ) = (0 : ℤ) := by term_derivation_chaining_separated_list
-    have d6 : x = 1 := by term_derivation_finalize
-    term_derivation_finalize
+    have d6 : x = 1 := by term_derivation_finalize d2 d5
+    assumption
   exact ()
 end Example34
 

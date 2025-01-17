@@ -16,7 +16,7 @@ where
                 self.alloc_tactics([default_tactic_data])
             }
             VdMirHypothesisConstruction::TermTrivial(b) => {
-                let custom_tactic_data = self.custom_tactic_data("term_trivial", None);
+                let custom_tactic_data = self.custom_tactic_data("term_trivial", None, None);
                 self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::Apply {
@@ -41,19 +41,19 @@ where
                 derivation_chunk,
             } => self.build_derivation_tactics(derivation_chunk, ln_tactics),
             VdMirHypothesisConstruction::CommRing => {
-                let custom_tactic_data = self.custom_tactic_data("comm_ring", None);
+                let custom_tactic_data = self.custom_tactic_data("comm_ring", None, None);
                 self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::LetAssigned => {
-                let custom_tactic_data = self.custom_tactic_data("let_assigned", None);
+                let custom_tactic_data = self.custom_tactic_data("let_assigned", None, None);
                 self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::LitnumReduce => {
-                let custom_tactic_data = self.custom_tactic_data("litnum_reduce", None);
+                let custom_tactic_data = self.custom_tactic_data("litnum_reduce", None, None);
                 self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::LitnumBound => {
-                let custom_tactic_data = self.custom_tactic_data("litnum_bound", None);
+                let custom_tactic_data = self.custom_tactic_data("litnum_bound", None, None);
                 self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::Kurapika => todo!(),
