@@ -8,7 +8,10 @@ use lean_opr::{
     opr::{binary::LnBinaryOpr, prefix::LnPrefixOpr, suffix::LnSuffixOpr},
     precedence::LnPrecedence,
 };
-use lean_term::{term::literal::LnLiteral, ty::LnType};
+use lean_term::{
+    term::literal::{LnLiteral, LnLiteralData},
+    ty::LnType,
+};
 use smallvec::SmallVec;
 
 use crate::tactic::LnMirTacticIdxRange;
@@ -66,13 +69,20 @@ impl LnMirExprEntry {
 impl LnMirExprData {
     pub(crate) fn outer_precedence(&self) -> LnPrecedence {
         match self {
-            LnMirExprData::ItemPath(_)
-            | LnMirExprData::Variable { .. }
-            | LnMirExprData::Literal(_)
-            | LnMirExprData::Sorry => LnPrecedence::ATOM,
-            // LnMirExprData::Prefix { opr, opd } => todo!(),
-            // LnMirExprData::Suffix { opd, opr } => todo!(),
-            // LnMirExprData::Binary { lopd, opr, ropd } => opr.outer_precedence(),
+            LnMirExprData::ItemPath(_) | LnMirExprData::Variable { .. } | LnMirExprData::Sorry => {
+                LnPrecedence::ATOM
+            }
+            LnMirExprData::Literal(lit) => match lit.data() {
+                LnLiteralData::Nat(_) => LnPrecedence::ATOM,
+                LnLiteralData::Int(i) => {
+                    if i.starts_with("-") {
+                        LnPrecedence::NEG
+                    } else {
+                        LnPrecedence::ATOM
+                    }
+                }
+                LnLiteralData::Float(_) => todo!(),
+            },
             LnMirExprData::Lambda { parameters, body } => todo!(),
             LnMirExprData::Application {
                 function,
