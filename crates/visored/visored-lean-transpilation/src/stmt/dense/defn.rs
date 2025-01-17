@@ -96,7 +96,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
     }
 
     fn build_ln_item_defn_from_vd_stmts(&mut self, stmts: VdMirStmtIdxRange) -> LnItemDefnData {
-        let ident = self.mangle_hypothesis();
+        let ident = self.mangle_stmts_item_defn();
         let mut parameters: Vec<LnDefParameter> = vec![];
         let mut goal = None;
         for stmt in stmts {
@@ -123,7 +123,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
         module_path: VdModulePath,
     ) -> LnItemDefnData {
         // ad hoc
-        let ident = self.mangle_hypothesis();
+        let ident = self.mangle_stmts_item_defn();
         let mut parameters: Vec<LnDefParameter> = vec![];
         let mut goal: Option<VdMirExprIdx> = None;
         for stmt in stmts {
@@ -164,7 +164,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
             }
             VdMirStmtData::Assume { prop, .. } => {
                 parameters.push(LnDefParameter {
-                    ident: self.mangle_hypothesis(),
+                    ident: self.mangle_assume(),
                     ty: prop.to_lean(self),
                 });
                 std::ops::ControlFlow::Continue(())

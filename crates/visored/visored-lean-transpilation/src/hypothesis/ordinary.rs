@@ -6,6 +6,7 @@ where
 {
     pub(super) fn build_ordinary_hypothesis_tactics(
         &mut self,
+        hypothesis: VdMirHypothesisIdx,
         hypothesis_entry: &VdMirHypothesisEntry,
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) {
@@ -63,7 +64,7 @@ where
             },
             None,
         ));
-        let ident = self.mangle_hypothesis();
+        let ident = self.mangle_hypothesis(hypothesis);
         ln_tactics.push(LnMirTacticData::Have {
             ident,
             ty: Some(hypothesis_entry.expr().to_lean(self)),

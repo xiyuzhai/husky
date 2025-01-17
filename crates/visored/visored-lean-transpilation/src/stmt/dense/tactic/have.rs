@@ -111,7 +111,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
         ln_tactics: &mut Vec<LnMirTacticData>,
     ) -> LnMirTacticData {
         debug_assert!(followers.len() >= 2);
-        let ident = self.mangle_hypothesis();
+        let ident = self.new_hypothesis_ident();
         // TODO: Maye use to_lean trait method?
         let tactic_data = LnMirTacticData::Calc {
             leader: leader.to_lean(self),

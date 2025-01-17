@@ -36,7 +36,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Sparse> {
                 joined_signature,
             ),
             _ => {
-                let ident = self.mangle_hypothesis();
+                let ident = self.new_hypothesis_ident();
                 let mut ln_tactics = vec![];
                 self.build_have_tactics(stmt, hypothesis_chunk, &mut ln_tactics);
                 let ln_tactics = self.alloc_tactics(ln_tactics);
@@ -58,7 +58,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Sparse> {
         joined_signature: VdBaseChainingSeparatorSignature,
     ) -> LnItemDefnData {
         debug_assert!(followers.len() >= 2);
-        let ident = self.mangle_hypothesis();
+        let ident = self.new_hypothesis_ident();
         // TODO: Maye use to_lean trait method?
         let tactic_data = LnMirTacticData::Calc {
             leader: leader.to_lean(self),

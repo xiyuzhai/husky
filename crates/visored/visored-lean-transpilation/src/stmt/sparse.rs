@@ -101,7 +101,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Sparse> {
     }
 
     fn build_ln_item_from_assume_stmt(&mut self, prop: VdMirExprIdx) -> LnItemDefnData {
-        let ident = self.mangle_hypothesis();
+        let ident = self.new_hypothesis_ident();
         LnItemDefnData::Variable {
             ident,
             ty: prop.to_lean(self),

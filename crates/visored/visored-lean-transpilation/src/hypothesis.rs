@@ -55,7 +55,7 @@ where
                 joined_signature,
                 ln_tactics,
             ),
-            _ => self.build_ordinary_hypothesis_tactics(hypothesis_entry, ln_tactics),
+            _ => self.build_ordinary_hypothesis_tactics(hypothesis, hypothesis_entry, ln_tactics),
         }
     }
 }

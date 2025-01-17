@@ -21,7 +21,7 @@ use visored_mir_expr::{
     derivation::{VdMirDerivationArenaRef, VdMirDerivationIdx},
     expr::VdMirExprArenaRef,
     hint::VdMirHintArenaRef,
-    hypothesis::VdMirHypothesisArenaRef,
+    hypothesis::{VdMirHypothesisArenaRef, VdMirHypothesisIdx},
     region::VdMirExprRegionData,
     source_map::VdMirRegionSourceMap,
     stmt::VdMirStmtArenaRef,
@@ -150,6 +150,7 @@ where
             source_map,
             dictionary,
             mangler: VdLeanTranspilationMangler::new(
+                hypothesis_arena,
                 derivation_arena,
                 symbol_local_defn_storage,
                 db,
@@ -200,9 +201,30 @@ where
         self.mangler.mangle_symbol(symbol_local_defn)
     }
 
-    pub(crate) fn mangle_hypothesis(&mut self) -> LnIdent {
+    pub(crate) fn mangle_hypothesis(&mut self, hypothesis: VdMirHypothesisIdx) -> LnIdent {
         let db = self.db();
         self.mangler.mangle_hypothesis(
+            hypothesis,
+            vd_module_path_to_ln_namespace_or_inherited(self.current_module_path, db),
+            db,
+        )
+    }
+
+    pub(crate) fn mangle_old_main_hypothesis(&mut self) -> LnIdent {
+        self.new_hypothesis_ident()
+    }
+
+    pub(crate) fn mangle_stmts_item_defn(&mut self) -> LnIdent {
+        self.new_hypothesis_ident()
+    }
+
+    pub(crate) fn mangle_assume(&mut self) -> LnIdent {
+        self.new_hypothesis_ident()
+    }
+
+    pub(crate) fn new_hypothesis_ident(&mut self) -> LnIdent {
+        let db = self.db();
+        self.mangler.new_hypothesis_ident(
             vd_module_path_to_ln_namespace_or_inherited(self.current_module_path, db),
             db,
         )

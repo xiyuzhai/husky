@@ -6,6 +6,7 @@ use namespace::vd_module_path_to_ln_namespace_or_inherited;
 use rustc_hash::FxHashMap;
 use visored_mir_expr::{
     derivation::{VdMirDerivationArenaRef, VdMirDerivationIdx, VdMirDerivationMap},
+    hypothesis::{VdMirHypothesisArenaRef, VdMirHypothesisIdx, VdMirHypothesisMap},
     symbol::local_defn::{
         storage::VdMirSymbolLocalDefnStorage, VdMirSymbolLocalDefnHead, VdMirSymbolLocalDefnIdx,
         VdMirSymbolLocalDefnOrderedMap,
@@ -16,6 +17,7 @@ type DisambiguatorMap = FxHashMap<(LnNamespace, String), usize>;
 
 pub struct VdLeanTranspilationMangler {
     local_defn_mangled_symbols: VdMirSymbolLocalDefnOrderedMap<LnIdent>,
+    hypothesis_mangled_symbols: VdMirHypothesisMap<LnIdent>,
     derivation_mangled_symbols: VdMirDerivationMap<LnIdent>,
     ident_to_source_map: FxHashMap<(LnNamespace, LnIdent), VdLeanMangleSrc>,
     disambiguator_map: DisambiguatorMap,
@@ -28,6 +30,7 @@ pub enum VdLeanMangleSrc {
 
 impl VdLeanTranspilationMangler {
     pub(crate) fn new(
+        hypothesis_arena: VdMirHypothesisArenaRef,
         derivation_arena: VdMirDerivationArenaRef,
         storage: &VdMirSymbolLocalDefnStorage,
         db: &EternerDb,
@@ -50,6 +53,7 @@ impl VdLeanTranspilationMangler {
         }
         Self {
             local_defn_mangled_symbols,
+            hypothesis_mangled_symbols: VdMirHypothesisMap::new2(hypothesis_arena),
             derivation_mangled_symbols: VdMirDerivationMap::new2(derivation_arena),
             ident_to_source_map,
             disambiguator_map,
@@ -60,21 +64,25 @@ impl VdLeanTranspilationMangler {
         self.local_defn_mangled_symbols[symbol_local_defn]
     }
 
-    pub(crate) fn mangle_hypothesis(&mut self, namespace: LnNamespace, db: &EternerDb) -> LnIdent {
-        match self
-            .disambiguator_map
-            .get_mut(&(namespace, "h".to_string()))
-        {
-            Some(count) => {
-                *count += 1;
-                LnIdent::from_ref(&format!("h{}", count), db)
-            }
-            None => {
-                self.disambiguator_map
-                    .insert((namespace, "h".to_string()), 0);
-                LnIdent::from_ref("h", db)
-            }
-        }
+    pub(crate) fn mangle_hypothesis(
+        &mut self,
+        hypothesis: VdMirHypothesisIdx,
+        namespace: LnNamespace,
+        db: &EternerDb,
+    ) -> LnIdent {
+        *self
+            .hypothesis_mangled_symbols
+            .get_or_insert_with(hypothesis, || {
+                new_hypothesis_ident(&mut self.disambiguator_map, namespace, db)
+            })
+    }
+
+    pub(crate) fn new_hypothesis_ident(
+        &mut self,
+        namespace: LnNamespace,
+        db: &EternerDb,
+    ) -> LnIdent {
+        new_hypothesis_ident(&mut self.disambiguator_map, namespace, db)
     }
 
     pub(crate) fn mangle_derivation(
@@ -86,12 +94,29 @@ impl VdLeanTranspilationMangler {
         *self
             .derivation_mangled_symbols
             .get_or_insert_with(derivation, || {
-                mangle_derivation(&mut self.disambiguator_map, namespace, db)
+                new_derivation_ident(&mut self.disambiguator_map, namespace, db)
             })
     }
 }
 
-fn mangle_derivation(
+fn new_hypothesis_ident(
+    disambiguator_map: &mut DisambiguatorMap,
+    namespace: LnNamespace,
+    db: &EternerDb,
+) -> LnIdent {
+    match disambiguator_map.get_mut(&(namespace, "h".to_string())) {
+        Some(count) => {
+            *count += 1;
+            LnIdent::from_ref(&format!("h{}", count), db)
+        }
+        None => {
+            disambiguator_map.insert((namespace, "h".to_string()), 0);
+            LnIdent::from_ref("h", db)
+        }
+    }
+}
+
+fn new_derivation_ident(
     disambiguator_map: &mut DisambiguatorMap,
     namespace: LnNamespace,
     db: &EternerDb,

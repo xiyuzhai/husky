@@ -36,7 +36,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
                     None,
                 ));
                 LnMirTacticData::Have {
-                    ident: self.mangle_hypothesis(),
+                    ident: self.new_hypothesis_ident(),
                     ty: Some(ty),
                     construction,
                 }
@@ -52,7 +52,7 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
     ) -> LnMirTacticData {
         todo!()
         // debug_assert!(followers.len() >= 2);
-        // let ident = self.mangle_hypothesis();
+        // let ident = self.new_hypothesis_ident();
         // // TODO: Maye use to_lean trait method?
         // let tactic_data = LnMirTacticData::Calc {
         //     leader: leader.to_lean(self),

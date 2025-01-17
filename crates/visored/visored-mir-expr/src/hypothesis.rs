@@ -18,6 +18,7 @@ pub type VdMirHypothesisIdx = ArenaIdx<VdMirHypothesisEntry>;
 pub type VdMirHypothesisIdxRange = ArenaIdxRange<VdMirHypothesisEntry>;
 pub type VdMirHypothesisArena = Arena<VdMirHypothesisEntry>;
 pub type VdMirHypothesisArenaRef<'a> = ArenaRef<'a, VdMirHypothesisEntry>;
+pub type VdMirHypothesisMap<T> = ArenaMap<VdMirHypothesisEntry, T>;
 
 impl VdMirHypothesisEntry {
     pub fn new(expr: VdMirExprIdx, construction: VdMirHypothesisConstruction) -> Self {
