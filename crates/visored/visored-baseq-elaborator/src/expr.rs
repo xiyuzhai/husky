@@ -216,8 +216,20 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let expected_ty = expr_entry.expected_ty();
         let expr_fld = VdBsqExprFld::new_inner(expr_data, ty, term, expected_ty, db);
         use husky_print_utils::p;
-        p!("{:?}", expr_fld, term);
+        p!(expr_fld, term);
         if format!("{:?}", expr_fld).contains("a / b") {
+            use crate::term::comnum::product::VdBsqProductStem;
+            use crate::term::comnum::VdBsqComnumTerm;
+
+            let VdBsqTerm::Comnum(VdBsqComnumTerm::Product(term)) = term else {
+                unreachable!()
+            };
+            match term.stem() {
+                VdBsqProductStem::Atom(vd_bsq_atom_term) => todo!(),
+                VdBsqProductStem::NonTrivial(stem) => {
+                    p!(stem.exponentials());
+                }
+            };
             todo!()
         }
         self.save_expr_fld(expr_idx, expr_fld);
