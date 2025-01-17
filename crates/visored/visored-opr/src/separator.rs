@@ -27,6 +27,7 @@ pub enum VdBaseSeparator {
     Notin,
     Times,
     Otimes,
+    Leftrightarrow,
 }
 
 impl VdBaseSeparator {
@@ -71,6 +72,7 @@ impl VdBaseSeparator {
             | VdBaseSeparator::Supsetneq
             | VdBaseSeparator::In
             | VdBaseSeparator::Notin => VdSeparatorClass::Relation,
+            VdBaseSeparator::Leftrightarrow => todo!(),
         }
     }
 
@@ -108,6 +110,7 @@ impl VdBaseSeparator {
             | VdBaseSeparator::Supsetneq
             | VdBaseSeparator::In
             | VdBaseSeparator::Notin => VdPrecedence::RELATION,
+            VdBaseSeparator::Leftrightarrow => VdPrecedence::DEDUCTION,
         }
     }
 
@@ -137,6 +140,7 @@ impl VdBaseSeparator {
             VdBaseSeparator::Notin => "\\notin",
             VdBaseSeparator::Times => "\\times",
             VdBaseSeparator::Otimes => "\\otimes",
+            VdBaseSeparator::Leftrightarrow => "\\Leftrightarrow",
         }
     }
 
@@ -166,6 +170,7 @@ impl VdBaseSeparator {
             VdBaseSeparator::Notin => "∉",
             VdBaseSeparator::Times => "×",
             VdBaseSeparator::Otimes => "⊗",
+            VdBaseSeparator::Leftrightarrow => todo!(),
         }
     }
 }
@@ -256,6 +261,7 @@ impl VdBaseSeparator {
             "times" => VdBaseSeparator::Times,
             "otimes" => VdBaseSeparator::Otimes,
             "cdot" => VdBaseSeparator::Cdot,
+            "leftrightarrow" => VdBaseSeparator::Leftrightarrow,
             _ => todo!(),
         }
     }

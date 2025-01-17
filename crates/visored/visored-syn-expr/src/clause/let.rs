@@ -128,6 +128,7 @@ impl<'db> VdSynSymbolBuilder<'db> {
                 VdBaseSeparator::Times => todo!(),
                 VdBaseSeparator::Otimes => todo!(),
                 VdBaseSeparator::Ne => todo!(),
+                VdBaseSeparator::Leftrightarrow => todo!(),
             },
             VdSynSeparator::Composite(_, separator_class) => todo!(),
         }

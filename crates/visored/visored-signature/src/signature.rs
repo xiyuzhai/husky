@@ -121,6 +121,15 @@ impl VdSignature {
                 )
                 .into()
             }
+            "iff" => {
+                assert_eq!(args.len(), 2);
+                VdBaseSeparatorSignature::new(
+                    instantiation,
+                    VdType::from_lp_csv_expr(&args[0], db),
+                    VdType::from_lp_csv_expr(&args[1], db),
+                )
+                .into()
+            }
             s => todo!("s = {s:?} not handled"),
         }
     }

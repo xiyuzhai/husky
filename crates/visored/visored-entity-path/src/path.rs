@@ -54,6 +54,7 @@ impl VdItemPath {
     pub const FIELD_DIV: Self = VdItemPath::TraitItem(VdTraitItemPath::FIELD_DIV);
     pub const REAL_SQRT: Self = VdItemPath::TraitItem(VdTraitItemPath::REAL_SQRT);
     pub const IN_SET: Self = VdItemPath::TraitItem(VdTraitItemPath::IN_SET);
+    pub const IFF: Self = VdItemPath::TraitItem(VdTraitItemPath::IFF);
 }
 
 impl VdItemPath {
@@ -79,6 +80,7 @@ impl VdItemPath {
             "field_div" => VdItemPath::FIELD_DIV,
             "real_sqrt" => VdItemPath::REAL_SQRT,
             "in_set" => VdItemPath::IN_SET,
+            "iff" => VdItemPath::IFF,
             s => todo!("s = {s:?} not handled"),
         }
     }

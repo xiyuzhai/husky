@@ -21,16 +21,17 @@ use visored_signature::signature::{
 };
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
-    pub fn infer_eq_signature(
+    pub fn infer_equivalence_signature(
         &self,
         prev_item_ty: VdType,
         next_item_ty: VdType,
     ) -> VdBaseChainingSeparatorSignature {
-        self.infer_base_chaining_separator_signature(
-            prev_item_ty,
-            VdBaseSeparator::Eq,
-            next_item_ty,
-        )
+        let separator = if prev_item_ty == self.ty_menu.prop {
+            VdBaseSeparator::Leftrightarrow
+        } else {
+            VdBaseSeparator::Eq
+        };
+        self.infer_base_chaining_separator_signature(prev_item_ty, separator, next_item_ty)
     }
 
     pub fn infer_add_signature(
@@ -129,7 +130,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     base_separator,
                     signature,
                 } => match signature {
-                    VdBaseChainingSeparatorSignature::Iff => todo!(),
+                    VdBaseChainingSeparatorSignature::Iff { .. } => todo!(),
                     VdBaseChainingSeparatorSignature::Relation(signature) => match signature {
                         VdBaseRelationSeparatorSignature::Containment(signature) => todo!(),
                         VdBaseRelationSeparatorSignature::Comparison(signature) => signature,

@@ -193,7 +193,7 @@ where
                 VdItemPath::Function(vd_function_path) => todo!(),
                 VdItemPath::Trait(vd_trait_path) => todo!(),
                 VdItemPath::TraitItem(trait_item_path) => match trait_item_path {
-                    VdTraitItemPath::Iff => todo!(),
+                    VdTraitItemPath::Iff => LnMirFunc::Iff,
                     VdTraitItemPath::InSet => LnMirFunc::InSet,
                     VdTraitItemPath::GroupMul => todo!(),
                     VdTraitItemPath::AbelianGroupAdd => {

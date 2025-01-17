@@ -1,6 +1,8 @@
 //! Format:
 //!
 //! <lopd-type>, <operator>, <ropd-type>, <signature-ident>
+// ## deduction
+prop, leftrightarrow, prop, chaining prop_iff
 // ## add
 // ### nat
 nat, add, nat, folding nat_add

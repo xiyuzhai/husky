@@ -302,6 +302,16 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
         hypothesis_constructor.mk_expr(entry)
     }
 
+    pub fn transcribe_with_ty(
+        &self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprIdx, VdType) {
+        let entry = self.transcribe_entry(elaborator, hypothesis_constructor);
+        let ty = entry.ty();
+        (hypothesis_constructor.mk_expr(entry), ty)
+    }
+
     fn transcribe_entry(
         &self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,

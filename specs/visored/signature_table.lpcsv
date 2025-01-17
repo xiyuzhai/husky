@@ -2,6 +2,7 @@
 //! <instance-ident> = <instantiation>, <signature-data-variant-path> <arg0> <arg1> ...
 //! <instantiation> = <item-path> <arg0> <arg1> ...
 # instances of lisp-csv
+prop_iff = iff, iff prop prop
 nat_in_set = in_set nat, in_set nat set prop
 int_in_set = in_set int, in_set int set prop
 rat_in_set = in_set rat, in_set rat set prop

@@ -300,6 +300,19 @@ impl<'db, 'sess> VdBsqTerm<'sess> {
         hypothesis_constructor.mk_expr(VdMirExprEntry::new(data, ty, expected_ty))
     }
 
+    pub fn transcribe_with_ty(
+        &self,
+        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        expected_ty: Option<VdType>,
+        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdMirExprIdx, VdType) {
+        let (data, ty) = self.transcribe_data_and_ty(elaborator, hypothesis_constructor);
+        (
+            hypothesis_constructor.mk_expr(VdMirExprEntry::new(data, ty, expected_ty)),
+            ty,
+        )
+    }
+
     pub(crate) fn transcribe_data_and_ty(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,

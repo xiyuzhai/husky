@@ -38,7 +38,9 @@ impl From<VdBaseFoldingSeparatorSignature> for VdMirFuncKey {
 impl From<VdBaseChainingSeparatorSignature> for VdMirFuncKey {
     fn from(signature: VdBaseChainingSeparatorSignature) -> Self {
         match signature {
-            VdBaseChainingSeparatorSignature::Iff => todo!(),
+            VdBaseChainingSeparatorSignature::Iff { instantiation, .. } => {
+                VdMirFuncKey::NormalBaseSeparator(instantiation)
+            }
             VdBaseChainingSeparatorSignature::Relation(signature) => {
                 VdMirFuncKey::NormalBaseSeparator(signature.instantiation())
             }

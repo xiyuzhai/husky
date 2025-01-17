@@ -64,12 +64,13 @@ where
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let term = expr.term();
-        let expr_transcription = expr.transcribe(self, hypothesis_constructor);
-        let term_transcription = term.transcribe(self, expr.expected_ty(), hypothesis_constructor);
-        let eq_func = self.signature_menu().nat_eq;
+        let (expr_transcription, expr_ty) = expr.transcribe_with_ty(self, hypothesis_constructor);
+        let (term_transcription, term_ty) =
+            term.transcribe_with_ty(self, Some(expr_ty), hypothesis_constructor);
+        let signature = hypothesis_constructor.infer_equivalence_signature(expr_ty, term_ty);
         let prop_expr_data = VdMirExprData::ChainingSeparatedList {
             leader: expr_transcription,
-            followers: smallvec![(eq_func, term_transcription)],
+            followers: smallvec![(signature, term_transcription)],
             joined_signature: None,
         };
         let prop_expr_ty = self.ty_menu().prop;
