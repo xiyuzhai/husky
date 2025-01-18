@@ -27,9 +27,6 @@ pub enum LnMirExprData {
         parameters: LnMirLambdaParameters,
         body: LnMirExprIdx,
     },
-    Bracketed {
-        inner_expr: LnMirExprIdx,
-    },
     Application {
         function: LnMirFunc,
         arguments: LnMirExprIdxRange,
@@ -92,7 +89,6 @@ impl LnMirExprData {
                 arguments,
             } => function.outer_precedence(),
             LnMirExprData::By { tactics } => LnPrecedence::Min,
-            LnMirExprData::Bracketed { inner_expr: expr } => LnPrecedence::ATOM,
         }
     }
 
@@ -111,7 +107,6 @@ impl LnMirExprData {
                 arguments,
             } => function.expr().into_iter().chain(arguments).collect(),
             LnMirExprData::By { tactics } => todo!(),
-            LnMirExprData::Bracketed { inner_expr: expr } => vec![expr],
         }
     }
 }

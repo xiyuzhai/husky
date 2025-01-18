@@ -159,11 +159,11 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d4 : x * y = x * y := by term_derivation_product
     have d5 : √ (x * y) = √ (x * y) := by term_derivation_square
     have d6 : (2 : ℝ) * √ (x * y) = (2 : ℝ) * √ (x * y) := by term_derivation_product
-    have d7 : x - (2 : ℝ) * √ (x * y) = x + (((-2 : ℤ)) : ℝ) * √ (x * y) := by term_derivation_sub
+    have d7 : x - (2 : ℝ) * √ (x * y) = x + (-2 : ℝ) * √ (x * y) := by term_derivation_sub
     have d8 : y = y := by term_derivation_variable
-    have d9 : x - (2 : ℝ) * √ (x * y) + y = x + y + (((-2 : ℤ)) : ℝ) * √ (x * y) := by term_derivation_sum
+    have d9 : x - (2 : ℝ) * √ (x * y) + y = x + y + (-2 : ℝ) * √ (x * y) := by term_derivation_sum
     have d10 : (0 : ℝ) = 0 := by term_derivation_literal
-    have d11 : x - (2 : ℝ) * √ (x * y) + y ≥ (0 : ℝ) ↔ x + y + (((-2 : ℤ)) : ℝ) * √ (x * y) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
+    have d11 : x - (2 : ℝ) * √ (x * y) + y ≥ (0 : ℝ) ↔ x + y + (-2 : ℝ) * √ (x * y) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
     have d12 : x = x := by term_derivation_variable
     have d13 : y = y := by term_derivation_variable
     have d14 : x + y = x + y := by term_derivation_sum
@@ -173,7 +173,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d18 : x * y = x * y := by term_derivation_product
     have d19 : √ (x * y) = √ (x * y) := by term_derivation_square
     have d20 : (2 : ℝ) * √ (x * y) = (2 : ℝ) * √ (x * y) := by term_derivation_product
-    have d21 : x + y ≥ (2 : ℝ) * √ (x * y) ↔ x + y + (((-2 : ℤ)) : ℝ) * √ (x * y) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
+    have d21 : x + y ≥ (2 : ℝ) * √ (x * y) ↔ x + y + (-2 : ℝ) * √ (x * y) ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
     have d22 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_derivation_finalize d11 d21
     assumption
   have h8 : (x + y) / (2 : ℝ) ≥ √ (x * y) := by obvious

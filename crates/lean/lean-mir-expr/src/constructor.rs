@@ -1,6 +1,9 @@
 //! TODO: put this under helpers
 use crate::{
-    expr::{LnMirExprArena, LnMirExprData, LnMirExprEntry, LnMirExprIdx, LnMirExprIdxRange},
+    expr::{
+        LnMirExprArena, LnMirExprArenaRef, LnMirExprData, LnMirExprEntry, LnMirExprIdx,
+        LnMirExprIdxRange,
+    },
     helpers::fmt::{LnMirExprFormatter, LnMirExprFormatterConfig},
     item_defn::{
         LnItemDefnArena, LnItemDefnComment, LnItemDefnCommentMap, LnItemDefnData, LnItemDefnIdx,
@@ -35,6 +38,10 @@ impl LnMirExprConstructor {
 }
 
 impl LnMirExprConstructor {
+    pub fn ln_expr_arena(&self) -> LnMirExprArenaRef {
+        self.expr_arena.as_arena_ref()
+    }
+
     pub fn formatter<'a>(
         &'a self,
         config: &'a LnMirExprFormatterConfig,

@@ -76,11 +76,11 @@ where
     S: IsVdLeanTranspilationScheme,
 {
     pub(crate) fn build_expr_entry(&mut self, expr: VdMirExprIdx) -> LnMirExprEntry {
-        let data = self.build_expr_data(expr);
+        let (data, needs_ty_ascription) = self.build_expr_data(expr);
         let entry = &self.expr_arena()[expr];
         let ty = entry.ty();
         let ty_ascription = if let Some(expected_ty) = entry.expected_ty() {
-            if ty != expected_ty {
+            if needs_ty_ascription || ty != expected_ty {
                 match expected_ty.to_lean(self) {
                     VdTypeLeanTranspilation::Type(expected_ty) => Some(expected_ty),
                 }
@@ -93,7 +93,7 @@ where
         LnMirExprEntry::new(data, ty_ascription)
     }
 
-    fn build_expr_data(&mut self, expr: VdMirExprIdx) -> LnMirExprData {
+    fn build_expr_data(&mut self, expr: VdMirExprIdx) -> (LnMirExprData, bool) {
         match *self.expr_arena()[expr].data() {
             VdMirExprData::Literal(literal) => {
                 let needs_ty_ascription = match *literal.data() {
@@ -102,18 +102,10 @@ where
                     VdLiteralData::Float(_) => todo!(),
                     VdLiteralData::SpecialConstant(_) => todo!(),
                 };
-                if needs_ty_ascription {
-                    let inner_expr_data =
-                        LnMirExprData::Literal(to_lean_literal(literal, self.db()));
-                    let ty_ascription = match self.expr_arena()[expr].ty().to_lean(self) {
-                        VdTypeLeanTranspilation::Type(ty) => ty,
-                    };
-                    let inner_expr =
-                        self.alloc_expr(LnMirExprEntry::new(inner_expr_data, Some(ty_ascription)));
-                    LnMirExprData::Bracketed { inner_expr }
-                } else {
-                    LnMirExprData::Literal(to_lean_literal(literal, self.db()))
-                }
+                (
+                    LnMirExprData::Literal(to_lean_literal(literal, self.db())),
+                    needs_ty_ascription,
+                )
             }
             VdMirExprData::ItemPath(item_path) => {
                 let Some(translation) = self.dictionary().item_path_translation(item_path) else {
@@ -121,14 +113,17 @@ where
                 };
                 match *translation {
                     VdItemPathTranslation::ItemPath(item_path) => {
-                        LnMirExprData::ItemPath(item_path)
+                        (LnMirExprData::ItemPath(item_path), false)
                     }
                 }
             }
             // TODO: consider variable deps
-            VdMirExprData::Variable(local_defn) => LnMirExprData::Variable {
-                ident: self.mangle_symbol(local_defn),
-            },
+            VdMirExprData::Variable(local_defn) => (
+                LnMirExprData::Variable {
+                    ident: self.mangle_symbol(local_defn),
+                },
+                false,
+            ),
             VdMirExprData::Application {
                 function,
                 arguments,
@@ -136,12 +131,15 @@ where
             VdMirExprData::FoldingSeparatedList {
                 leader,
                 ref followers,
-            } => self.build_folding_separated_list(leader, followers),
+            } => (self.build_folding_separated_list(leader, followers), false),
             VdMirExprData::ChainingSeparatedList {
                 leader,
                 ref followers,
                 joined_signature,
-            } => self.build_chaining_separated_list(leader, followers, joined_signature),
+            } => (
+                self.build_chaining_separated_list(leader, followers, joined_signature),
+                false,
+            ),
         }
     }
 }
