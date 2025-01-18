@@ -200,80 +200,79 @@ impl<'sess> VdBsqSumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqSumTerm<'sess> {
-    pub(crate) fn transcribe_data_and_ty(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        let monomials = self.monomials().iter().cloned().map(Right);
-        match self.constant_term().is_nonzero() {
-            true => transcribe_sum_data_and_ty_inner(
-                elaborator,
-                [Left(self.constant_term())].into_iter().chain(monomials),
-                hc,
-            ),
-            false => transcribe_sum_data_and_ty_inner(elaborator, monomials, hc),
-        }
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        todo!()
+        // let monomials = self.monomials().iter().cloned().map(Right);
+        // match self.constant_term().is_nonzero() {
+        //     true => sum_expr_data_and_ty_inner(
+        //         elr,
+        //         [Left(self.constant_term())].into_iter().chain(monomials),
+        //         hc,
+        //     ),
+        //     false => sum_expr_data_and_ty_inner(elr, monomials, hc),
+        // }
     }
 }
 
-fn transcribe_sum_data_and_ty_inner<'db, 'sess>(
-    elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-    summands: impl IntoIterator<
-        Item = Either<VdBsqLitnumTerm<'sess>, (VdBsqProductStem<'sess>, VdBsqLitnumTerm<'sess>)>,
-    >,
-    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> (VdMirExprData, VdType) {
-    let mut summands = summands.into_iter();
-    let leader = summands.next().unwrap();
-    let (leader_data, leader_ty) = transcribe_summand_data_and_ty(elaborator, leader, hc);
-    let fst_follower = summands.next().unwrap();
-    let (fst_follower_data, fst_follower_ty) =
-        transcribe_summand_data_and_ty(elaborator, fst_follower, hc);
-    let fst_signature = hc.infer_add_signature(leader_ty, fst_follower_ty);
-    let leader = hc.mk_expr(VdMirExprEntry::new(
-        leader_data,
-        leader_ty,
-        Some(fst_signature.item_ty()),
-    ));
-    let mut followers: SmallVec<[(VdBaseFoldingSeparatorSignature, VdMirExprIdx); 4]> =
-        SmallVec::with_capacity(2);
-    followers.push((
-        fst_signature,
-        hc.mk_expr(VdMirExprEntry::new(
-            fst_follower_data,
-            fst_follower_ty,
-            Some(fst_signature.item_ty()),
-        )),
-    ));
-    let mut acc_ty = fst_signature.expr_ty();
-    for follower in summands {
-        let (follower_data, follower_ty) = transcribe_summand_data_and_ty(elaborator, follower, hc);
-        let signature = hc.infer_add_signature(acc_ty, follower_ty);
-        followers.push((
-            signature,
-            hc.mk_expr(VdMirExprEntry::new(
-                follower_data,
-                follower_ty,
-                Some(signature.item_ty()),
-            )),
-        ));
-    }
-    (
-        VdMirExprData::FoldingSeparatedList { leader, followers },
-        acc_ty,
-    )
-}
+// fn sum_expr_data_and_ty_inner<'db, 'sess>(
+//     elr: &VdBsqElaboratorInner<'db, 'sess>,
+//     summands: impl IntoIterator<
+//         Item = Either<VdBsqLitnumTerm<'sess>, (VdBsqProductStem<'sess>, VdBsqLitnumTerm<'sess>)>,
+//     >,
+//     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+// ) -> VdBsqExprFld<'sess> {
+//     let mut summands = summands.into_iter();
+//     let leader = summands.next().unwrap();
+//     let (leader_data, leader_ty) = summand_expr_data_and_ty(elr, leader, hc);
+//     let fst_follower = summands.next().unwrap();
+//     let (fst_follower_data, fst_follower_ty) = summand_expr_data_and_ty(elr, fst_follower, hc);
+//     let fst_signature = hc.infer_add_signature(leader_ty, fst_follower_ty);
+//     let leader = hc.mk_expr(VdMirExprEntry::new(
+//         leader_data,
+//         leader_ty,
+//         Some(fst_signature.item_ty()),
+//     ));
+//     let mut followers: SmallVec<[(VdBaseFoldingSeparatorSignature, VdMirExprIdx); 4]> =
+//         SmallVec::with_capacity(2);
+//     followers.push((
+//         fst_signature,
+//         hc.mk_expr(VdMirExprEntry::new(
+//             fst_follower_data,
+//             fst_follower_ty,
+//             Some(fst_signature.item_ty()),
+//         )),
+//     ));
+//     let mut acc_ty = fst_signature.expr_ty();
+//     for follower in summands {
+//         let (follower_data, follower_ty) = summand_expr_data_and_ty(elaborator, follower, hc);
+//         let signature = hc.infer_add_signature(acc_ty, follower_ty);
+//         followers.push((
+//             signature,
+//             hc.mk_expr(VdMirExprEntry::new(
+//                 follower_data,
+//                 follower_ty,
+//                 Some(signature.item_ty()),
+//             )),
+//         ));
+//     }
+//     (
+//         VdMirExprData::FoldingSeparatedList { leader, followers },
+//         acc_ty,
+//     )
+// }
 
-fn transcribe_summand_data_and_ty<'db, 'sess>(
-    elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-    summand: Either<VdBsqLitnumTerm<'sess>, (VdBsqProductStem<'sess>, VdBsqLitnumTerm<'sess>)>,
-    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> (VdMirExprData, VdType) {
-    match summand {
-        Left(litnum) => litnum.transcribe_data_and_ty(elaborator, hc),
-        Right((stem, coeff)) => {
-            transcribe_product_stem_and_factor_data_and_ty(elaborator, stem, coeff, hc)
-        }
-    }
-}
+// fn summand_expr_data_and_ty<'db, 'sess>(
+//     summand: Either<VdBsqLitnumTerm<'sess>, (VdBsqProductStem<'sess>, VdBsqLitnumTerm<'sess>)>,
+//     elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+//     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+// ) -> (VdMirExprData, VdType) {
+//     match summand {
+//         Left(litnum) => litnum.expr_data_and_ty(elaborator, hc),
+//         Right((stem, coeff)) => product_expr(elaborator, stem, coeff, hc),
+//     }
+// }

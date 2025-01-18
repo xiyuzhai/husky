@@ -356,6 +356,24 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             expected_ty,
         )
     }
+
+    pub(crate) fn mk_mul(
+        &self,
+        lopd: VdBsqExprFld<'sess>,
+        ropd: VdBsqExprFld<'sess>,
+        expected_ty: Option<VdType>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        let signature = hc.infer_mul_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprFldData::FoldingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
+            },
+            signature.expr_ty(),
+            expected_ty,
+        )
+    }
 }
 
 impl<'db, 'sess> VdBsqExprFld<'sess> {

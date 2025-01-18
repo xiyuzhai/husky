@@ -292,36 +292,17 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 }
 
 impl<'db, 'sess> VdBsqTerm<'sess> {
-    pub fn transcribe(
-        &self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        expected_ty: Option<VdType>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirExprIdx {
-        let (data, ty) = self.transcribe_data_and_ty(elaborator, hc);
-        hc.mk_expr(VdMirExprEntry::new(data, ty, expected_ty))
-    }
-
-    pub fn transcribe_with_ty(
-        &self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        expected_ty: Option<VdType>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprIdx, VdType) {
-        let (data, ty) = self.transcribe_data_and_ty(elaborator, hc);
-        (hc.mk_expr(VdMirExprEntry::new(data, ty, expected_ty)), ty)
-    }
-
-    pub(crate) fn transcribe_data_and_ty(
+    pub fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqTerm::Litnum(litnum) => litnum.transcribe_data_and_ty(elaborator, hc),
-            VdBsqTerm::Comnum(comnum) => comnum.transcribe_data_and_ty(elaborator, hc),
-            VdBsqTerm::Prop(prop) => prop.transcribe_data_and_ty(elaborator, hc),
-            VdBsqTerm::Set(set) => set.transcribe_data_and_ty(elaborator, hc),
+            VdBsqTerm::Litnum(litnum) => litnum.expr(expected_ty, elr, hc),
+            VdBsqTerm::Comnum(comnum) => comnum.expr(expected_ty, elr, hc),
+            VdBsqTerm::Prop(prop) => prop.expr(expected_ty, elr, hc),
+            VdBsqTerm::Set(set) => set.expr(expected_ty, elr, hc),
         }
     }
 }

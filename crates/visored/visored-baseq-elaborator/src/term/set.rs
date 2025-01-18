@@ -23,11 +23,12 @@ impl<'sess> VdBsqSetTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqSetTerm<'sess> {
-    pub(crate) fn transcribe_data_and_ty(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
         todo!()
     }
 }

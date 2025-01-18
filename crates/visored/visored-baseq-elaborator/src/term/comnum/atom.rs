@@ -132,17 +132,30 @@ impl<'sess> VdBsqAtomTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqAtomTerm<'sess> {
-    pub(crate) fn transcribe_data_and_ty(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
+        elr.mk_expr(expr_data, ty, expected_ty)
+    }
+
+    fn expr_data_and_ty(
+        self,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdBsqExprFldData<'sess>, VdType) {
         match *self.data() {
             VdBsqComnumAtomTermData::Variable {
                 lx_math_letter,
                 local_defn_idx,
                 ty,
-            } => (VdMirExprData::Variable(local_defn_idx), ty),
+            } => (
+                VdBsqExprFldData::Variable(lx_math_letter, local_defn_idx),
+                ty,
+            ),
         }
     }
 }

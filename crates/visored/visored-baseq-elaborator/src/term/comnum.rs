@@ -100,15 +100,25 @@ impl<'sess> VdBsqComnumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqComnumTerm<'sess> {
-    pub(crate) fn transcribe_data_and_ty(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        self.expr_data_and_ty(expected_ty, elr, hc)
+    }
+
+    fn expr_data_and_ty(
+        self,
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqComnumTerm::Atom(slf) => slf.transcribe_data_and_ty(elaborator, hc),
-            VdBsqComnumTerm::Sum(slf) => slf.transcribe_data_and_ty(elaborator, hc),
-            VdBsqComnumTerm::Product(slf) => slf.transcribe_data_and_ty(elaborator, hc),
+            VdBsqComnumTerm::Atom(slf) => slf.expr(expected_ty, elr, hc),
+            VdBsqComnumTerm::Sum(slf) => slf.expr(expected_ty, elr, hc),
+            VdBsqComnumTerm::Product(slf) => slf.expr(expected_ty, elr, hc),
         }
     }
 }

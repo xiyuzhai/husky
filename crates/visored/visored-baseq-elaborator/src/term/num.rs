@@ -146,23 +146,15 @@ impl<'sess> VdBsqNumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqNumTerm<'sess> {
-    pub(crate) fn transcribe(
+    pub(crate) fn expr(
         self,
         expected_ty: Option<VdType>,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirExprIdx {
-        todo!()
-    }
-
-    pub(crate) fn transcribe_data_and_ty(
-        self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqNumTerm::Litnum(slf) => slf.transcribe_data_and_ty(elaborator, hc),
-            VdBsqNumTerm::Comnum(slf) => slf.transcribe_data_and_ty(elaborator, hc),
+            VdBsqNumTerm::Litnum(slf) => slf.expr(expected_ty, elr, hc),
+            VdBsqNumTerm::Comnum(slf) => slf.expr(expected_ty, elr, hc),
         }
     }
 }

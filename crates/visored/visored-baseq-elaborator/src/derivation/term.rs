@@ -61,7 +61,9 @@ where
     ) -> VdMirExprIdx {
         let term = expr.term();
         let (expr_transcription, expr_ty) = expr.transcribe_with_ty(self, hc);
-        let (term_transcription, term_ty) = term.transcribe_with_ty(self, Some(expr_ty), hc);
+        let (term_transcription, term_ty) = term
+            .expr(expr.expected_ty(), self, hc)
+            .transcribe_with_ty(self, hc);
         let signature = hc.infer_equivalence_signature(expr_ty, term_ty);
         let prop_expr_data = VdMirExprData::ChainingSeparatedList {
             leader: expr_transcription,

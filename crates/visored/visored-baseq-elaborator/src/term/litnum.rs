@@ -10,6 +10,7 @@ use super::*;
 use crate::foundations::num::VdBsqSign;
 use num_bigint::Sign;
 use product::VdBsqProductTerm;
+use smallvec::*;
 use std::num::NonZeroU128;
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
 
@@ -520,48 +521,58 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
-    pub(crate) fn transcribe_data_and_ty(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        let db = elaborator.eterner_db();
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
+        elr.mk_expr(expr_data, ty, expected_ty)
+    }
+
+    fn expr_data_and_ty(
+        self,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdBsqExprFldData<'sess>, VdType) {
+        let db = elr.eterner_db();
         match self {
             VdBsqLitnumTerm::Int128(i) => {
                 if i >= 0 {
                     (
-                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
-                        elaborator.ty_menu().nat,
+                        VdBsqExprFldData::Literal(VdLiteral::new_int128(i, db)),
+                        elr.ty_menu().nat,
                     )
                 } else {
                     (
-                        VdMirExprData::Literal(VdLiteral::new_int128(i, db)),
-                        elaborator.ty_menu().int,
+                        VdBsqExprFldData::Literal(VdLiteral::new_int128(i, db)),
+                        elr.ty_menu().int,
                     )
                 }
             }
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
             VdBsqLitnumTerm::Frac128(f) => {
-                let a = VdMirExprData::Application {
-                    function: VdMirFunc::NormalBaseBinaryOpr(elaborator.signature_menu().rat_div),
-                    arguments: hc.mk_exprs([
-                        VdMirExprEntry::new(
-                            VdMirExprData::Literal(VdLiteral::new_int128(f.numerator(), db)),
+                let a = VdBsqExprFldData::Application {
+                    function: VdMirFunc::NormalBaseBinaryOpr(elr.signature_menu().rat_div),
+                    arguments: smallvec![
+                        elr.mk_expr(
+                            VdBsqExprFldData::Literal(VdLiteral::new_int128(f.numerator(), db)),
                             if f.numerator() >= 0 {
-                                elaborator.ty_menu().nat
+                                elr.ty_menu().nat
                             } else {
-                                elaborator.ty_menu().int
+                                elr.ty_menu().int
                             },
-                            Some(elaborator.ty_menu().rat),
+                            Some(elr.ty_menu().rat),
                         ),
-                        VdMirExprEntry::new(
-                            VdMirExprData::Literal(VdLiteral::new_int128(f.denominator(), db)),
-                            elaborator.ty_menu().nat,
-                            Some(elaborator.ty_menu().rat),
+                        elr.mk_expr(
+                            VdBsqExprFldData::Literal(VdLiteral::new_int128(f.denominator(), db)),
+                            elr.ty_menu().nat,
+                            Some(elr.ty_menu().rat),
                         ),
-                    ]),
+                    ],
                 };
-                (a, elaborator.ty_menu().rat)
+                (a, elr.ty_menu().rat)
             }
         }
     }

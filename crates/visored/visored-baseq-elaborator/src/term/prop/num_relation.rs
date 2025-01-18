@@ -78,28 +78,25 @@ impl<'sess> VdBsqNumRelation<'sess> {
 }
 
 impl<'db, 'sess> VdBsqNumRelation<'sess> {
-    pub(crate) fn transcribe(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirExprData {
-        let (lhs_minus_rhs_data, lhs_minus_rhs_ty) =
-            self.lhs_minus_rhs().transcribe_data_and_ty(elaborator, hc);
-        let signature = hc.infer_base_comparison_separator_signature(
-            lhs_minus_rhs_ty,
-            self.opr().into(),
-            lhs_minus_rhs_ty,
-        );
-        let leader = hc.mk_expr(VdMirExprEntry::new(
-            lhs_minus_rhs_data,
-            lhs_minus_rhs_ty,
-            None,
-        ));
-        let zero = hc.mk_zero(Some(signature.item_ty()));
-        VdMirExprData::ChainingSeparatedList {
-            leader,
-            followers: smallvec![(signature.into(), zero)],
-            joined_signature: None,
-        }
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        todo!()
+        // let (lhs_minus_rhs_data, lhs_minus_rhs_ty) = self.lhs_minus_rhs().expr_data_and_ty(elr, hc);
+        // let signature = hc.infer_base_comparison_separator_signature(
+        //     lhs_minus_rhs_ty,
+        //     self.opr().into(),
+        //     lhs_minus_rhs_ty,
+        // );
+        // let leader = elr.mk_expr(lhs_minus_rhs_data, lhs_minus_rhs_ty, None);
+        // let zero = elr.mk_zero(Some(signature.item_ty()));
+        // VdBsqExprFldData::ChainingSeparatedList {
+        //     leader,
+        //     followers: smallvec![(signature.into(), zero)],
+        //     joined_signature: None,
+        // }
     }
 }

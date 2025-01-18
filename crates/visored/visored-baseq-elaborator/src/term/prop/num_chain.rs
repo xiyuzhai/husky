@@ -45,11 +45,12 @@ impl<'db, 'sess> VdBsqNumChain<'sess> {
 }
 
 impl<'db, 'sess> VdBsqNumChain<'sess> {
-    pub(crate) fn transcribe(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirExprData {
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
         todo!()
     }
 }

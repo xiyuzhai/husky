@@ -38,30 +38,25 @@ impl<'sess> VdBsqPropTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqPropTerm<'sess> {
-    pub(crate) fn transcribe_data_and_ty(
+    pub(crate) fn expr(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdMirExprData, VdType) {
-        let data = self.transcribe_data(elaborator, hc);
-        let ty = elaborator.ty_menu().prop;
-        (data, ty)
-    }
-
-    fn transcribe_data(
-        self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirExprData {
+        expected_ty: Option<VdType>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqPropTerm::NumRelation(num_relation) => num_relation.transcribe(elaborator, hc),
-            VdBsqPropTerm::NumChain(num_chain) => num_chain.transcribe(elaborator, hc),
+            VdBsqPropTerm::NumRelation(num_relation) => num_relation.expr(expected_ty, elr, hc),
+            VdBsqPropTerm::NumChain(num_chain) => num_chain.expr(expected_ty, elr, hc),
             VdBsqPropTerm::Trivial(b) => {
                 let path = match b {
                     true => VdItemPath::TRUE,
                     false => todo!(),
                 };
-                VdMirExprData::ItemPath(path)
+                elr.mk_expr(
+                    VdBsqExprFldData::ItemPath(path),
+                    elr.ty_menu().prop,
+                    expected_ty,
+                )
             }
             VdBsqPropTerm::InSet(_) => todo!(),
         }
