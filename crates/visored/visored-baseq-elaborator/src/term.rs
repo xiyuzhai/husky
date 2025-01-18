@@ -22,7 +22,7 @@ use in_set::VdBsqInSet;
 use num_chain::VdBsqNumChain;
 use product::VdBsqProductStem;
 use vec_like::ordered_small_vec_map::OrderedSmallVecPairMap;
-use visored_entity_path::path::VdItemPath;
+use visored_entity_path::path::{prop::VdPropPath, VdItemPath};
 use visored_mir_expr::{
     expr::{application::VdMirFunc, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
     hypothesis::constructor::VdMirHypothesisConstructor,
@@ -285,7 +285,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 VdItemPath::Function(path) => todo!(),
                 VdItemPath::Trait(path) => todo!(),
                 VdItemPath::TraitItem(path) => todo!(),
-                VdItemPath::Prop(vd_prop_path) => todo!(),
+                VdItemPath::Prop(path) => match path {
+                    VdPropPath::True => VdBsqPropTerm::Trivial(true).into(),
+                    VdPropPath::False => VdBsqPropTerm::Trivial(false).into(),
+                },
             },
         }
     }
