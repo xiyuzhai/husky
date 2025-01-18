@@ -1,6 +1,6 @@
 use crate::expr::{LnMirExprArenaRef, LnMirExprData, LnMirExprIdx};
 
-pub fn deep_expr_eq(a: LnMirExprIdx, b: LnMirExprIdx, arena: LnMirExprArenaRef) -> bool {
+pub fn ln_mir_expr_deep_eq(a: LnMirExprIdx, b: LnMirExprIdx, arena: LnMirExprArenaRef) -> bool {
     match (arena[a].data(), arena[b].data()) {
         (LnMirExprData::Literal(a), LnMirExprData::Literal(b)) => a == b,
         (LnMirExprData::ItemPath(a), LnMirExprData::ItemPath(b)) => a == b,
@@ -14,7 +14,7 @@ pub fn deep_expr_eq(a: LnMirExprIdx, b: LnMirExprIdx, arena: LnMirExprArenaRef) 
                 parameters: ref b_params,
                 body: b_body,
             },
-        ) => a_params == b_params && deep_expr_eq(a_body, b_body, arena),
+        ) => a_params == b_params && ln_mir_expr_deep_eq(a_body, b_body, arena),
         (
             LnMirExprData::Application {
                 function: a_fn,

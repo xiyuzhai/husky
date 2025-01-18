@@ -1,6 +1,6 @@
 use crate::{
     expr::{application::LnMirFunc, LnMirExprArenaRef, LnMirExprData, LnMirExprIdx},
-    helpers::compare::deep_expr_eq,
+    helpers::compare::ln_mir_expr_deep_eq,
     item_defn::{
         def::LnMirDefBody, LnItemDefnArenaRef, LnItemDefnComment, LnItemDefnData, LnItemDefnIdx,
         LnItemDefnIdxRange, LnItemDefnOrderedMap, LnMirItemDefnGroupMeta,
@@ -283,7 +283,7 @@ impl<'a> LnMirExprFormatter<'a> {
 
                 for param in parameters {
                     if let Some(ty) = current_ty {
-                        if deep_expr_eq(ty, param.ty, self.expr_arena) {
+                        if ln_mir_expr_deep_eq(ty, param.ty, self.expr_arena) {
                             current_group.push(param.ident.data());
                         } else {
                             // Print current group
