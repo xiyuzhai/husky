@@ -98,12 +98,16 @@ macro "term_derivation_sum": tactic =>`(tactic|
   first
   | rfl; done
   | ring; done
+  | field_simp; done
+  | field_simp; ring; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
 macro "term_derivation_sub": tactic =>`(tactic|
   first
   | rfl; done
+  | field_simp; done
+  | field_simp; ring; done
   | ring; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
@@ -119,6 +123,8 @@ macro "term_derivation_div": tactic =>`(tactic|
   first
   | rfl; done
   | ring; done
+  | field_simp; ring; done
+  | field_simp; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 

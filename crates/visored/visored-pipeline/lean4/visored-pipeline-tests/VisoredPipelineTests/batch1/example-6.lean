@@ -119,6 +119,7 @@ macro "term_derivation_div": tactic =>`(tactic|
   first
   | rfl; done
   | ring; done
+  | field_simp; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
