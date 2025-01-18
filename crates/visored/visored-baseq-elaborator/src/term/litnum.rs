@@ -523,7 +523,7 @@ impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
     pub(crate) fn transcribe_data_and_ty(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
         let db = elaborator.eterner_db();
         match self {
@@ -544,7 +544,7 @@ impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
             VdBsqLitnumTerm::Frac128(f) => {
                 let a = VdMirExprData::Application {
                     function: VdMirFunc::NormalBaseBinaryOpr(elaborator.signature_menu().rat_div),
-                    arguments: hypothesis_constructor.mk_exprs([
+                    arguments: hc.mk_exprs([
                         VdMirExprEntry::new(
                             VdMirExprData::Literal(VdLiteral::new_int128(f.numerator(), db)),
                             if f.numerator() >= 0 {

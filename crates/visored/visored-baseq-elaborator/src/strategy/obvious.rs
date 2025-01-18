@@ -19,7 +19,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         for tactic in self.session().obvious_tactics() {
             tactic.run(prop, self)?
         }
-        AltJustOk(Ok(self.hypothesis_constructor.construct_new_hypothesis(
+        AltJustOk(Ok(self.hc.construct_new_hypothesis(
             prop,
             VdBsqHypothesisConstruction::Sorry,
         )))

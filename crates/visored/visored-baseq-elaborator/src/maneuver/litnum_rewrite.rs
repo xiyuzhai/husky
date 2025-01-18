@@ -40,11 +40,7 @@ where
     move |elaborator: &mut Elr<'db, 'sess>,
           heuristic: &Heuristic<'_, 'db, 'sess, VdBsqExprFld<'sess>>| {
         let db = elaborator.floater_db();
-        match elaborator
-            .hypothesis_constructor
-            .stack()
-            .get_active_litnum_equality(expr, db)
-        {
+        match elaborator.hc.stack().get_active_litnum_equality(expr, db) {
             Some(litnum) => {
                 let litnum = elaborator.mk_lit(litnum, expr.ty(), expr.expected_ty());
                 Pure(litnum).eval(elaborator, heuristic)

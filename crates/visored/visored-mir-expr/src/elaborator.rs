@@ -17,17 +17,17 @@ pub trait IsVdMirTacticElaborator<'db>: Sized {
     fn elaborate_stmts_ext(
         self,
         stmts: VdMirStmtIdxRange,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     );
     fn elaborate_stmt_ext(
         self,
         stmt: VdMirStmtIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     );
     fn elaborate_expr_ext(
         self,
         expr: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     );
 }
 

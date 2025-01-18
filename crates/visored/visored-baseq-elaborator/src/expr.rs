@@ -327,28 +327,28 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
     pub fn transcribe(
         &self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
-        let entry = self.transcribe_entry(elaborator, hypothesis_constructor);
-        hypothesis_constructor.mk_expr(entry)
+        let entry = self.transcribe_entry(elaborator, hc);
+        hc.mk_expr(entry)
     }
 
     pub fn transcribe_with_ty(
         &self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprIdx, VdType) {
-        let entry = self.transcribe_entry(elaborator, hypothesis_constructor);
+        let entry = self.transcribe_entry(elaborator, hc);
         let ty = entry.ty();
-        (hypothesis_constructor.mk_expr(entry), ty)
+        (hc.mk_expr(entry), ty)
     }
 
     fn transcribe_entry(
         &self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprEntry {
-        let data = self.transcribe_expr_data(elaborator, hypothesis_constructor);
+        let data = self.transcribe_expr_data(elaborator, hc);
         let ty = self.ty();
         let expected_ty = self.expected_ty();
         VdMirExprEntry::new(data, ty, expected_ty)
@@ -357,7 +357,7 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
     fn transcribe_expr_data(
         &self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
         match *self.data() {
             VdBsqExprFldData::Literal(lit) => VdMirExprData::Literal(lit),
@@ -368,26 +368,21 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
             } => {
                 let exprs = arguments
                     .iter()
-                    .map(|arg| arg.transcribe_entry(elaborator, hypothesis_constructor))
+                    .map(|arg| arg.transcribe_entry(elaborator, hc))
                     .collect::<Vec<_>>();
                 VdMirExprData::Application {
                     function,
-                    arguments: hypothesis_constructor.mk_exprs(exprs),
+                    arguments: hc.mk_exprs(exprs),
                 }
             }
             VdBsqExprFldData::FoldingSeparatedList {
                 leader,
                 ref followers,
             } => VdMirExprData::FoldingSeparatedList {
-                leader: leader.transcribe(elaborator, hypothesis_constructor),
+                leader: leader.transcribe(elaborator, hc),
                 followers: followers
                     .iter()
-                    .map(|&(func, follower)| {
-                        (
-                            func,
-                            follower.transcribe(elaborator, hypothesis_constructor),
-                        )
-                    })
+                    .map(|&(func, follower)| (func, follower.transcribe(elaborator, hc)))
                     .collect(),
             },
             VdBsqExprFldData::ChainingSeparatedList {
@@ -395,15 +390,10 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                 ref followers,
                 joined_signature,
             } => VdMirExprData::ChainingSeparatedList {
-                leader: leader.transcribe(elaborator, hypothesis_constructor),
+                leader: leader.transcribe(elaborator, hc),
                 followers: followers
                     .iter()
-                    .map(|&(func, follower)| {
-                        (
-                            func,
-                            follower.transcribe(elaborator, hypothesis_constructor),
-                        )
-                    })
+                    .map(|&(func, follower)| (func, follower.transcribe(elaborator, hc)))
                     .collect(),
                 joined_signature,
             },

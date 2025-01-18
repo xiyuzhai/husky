@@ -81,22 +81,21 @@ impl<'db, 'sess> VdBsqNumRelation<'sess> {
     pub(crate) fn transcribe(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
-        let (lhs_minus_rhs_data, lhs_minus_rhs_ty) = self
-            .lhs_minus_rhs()
-            .transcribe_data_and_ty(elaborator, hypothesis_constructor);
-        let signature = hypothesis_constructor.infer_base_comparison_separator_signature(
+        let (lhs_minus_rhs_data, lhs_minus_rhs_ty) =
+            self.lhs_minus_rhs().transcribe_data_and_ty(elaborator, hc);
+        let signature = hc.infer_base_comparison_separator_signature(
             lhs_minus_rhs_ty,
             self.opr().into(),
             lhs_minus_rhs_ty,
         );
-        let leader = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
+        let leader = hc.mk_expr(VdMirExprEntry::new(
             lhs_minus_rhs_data,
             lhs_minus_rhs_ty,
             None,
         ));
-        let zero = hypothesis_constructor.mk_zero(Some(signature.item_ty()));
+        let zero = hc.mk_zero(Some(signature.item_ty()));
         VdMirExprData::ChainingSeparatedList {
             leader,
             followers: smallvec![(signature.into(), zero)],

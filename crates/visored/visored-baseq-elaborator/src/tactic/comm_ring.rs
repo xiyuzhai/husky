@@ -37,7 +37,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             match litnum.cmp_with_zero(opr) {
                 true => {
                     let hypothesis = slf
-                        .hypothesis_constructor
+                        .hc
                         .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::CommRing);
                     AltJustOk(Ok(hypothesis))
                 }

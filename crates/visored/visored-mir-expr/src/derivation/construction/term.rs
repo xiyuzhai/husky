@@ -10,9 +10,8 @@ use visored_signature::signature::separator::base::chaining::VdBaseChainingSepar
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdMirTermDerivationConstruction {
     Reflection,
-    NumComparison {
-        lhs_minus_rhs_equivalence: VdMirDerivationIdx,
-    },
+    NumComparison { lhs_minus_rhs: VdMirDerivationIdx },
+    SubEqsAddNeg { add_neg: VdMirDerivationIdx },
     AdditionInterchange,
     AdditionAssociativity,
     AdditionIdentity,
@@ -37,8 +36,11 @@ impl VdMirTermDerivationConstruction {
                 check_reflection(leader, signature, follower, hc)
             }
             VdMirTermDerivationConstruction::NumComparison {
-                lhs_minus_rhs_equivalence,
+                lhs_minus_rhs: lhs_minus_rhs_equivalence,
             } => check_num_comparison(leader, signature, follower, hc),
+            VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => {
+                check_sub_eqs_add_neg(leader, signature, follower, hc)
+            }
             VdMirTermDerivationConstruction::AdditionInterchange => {
                 check_add_interchange(leader, signature, follower, hc)
             }
@@ -54,7 +56,7 @@ fn check_reflection<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,
-    hypothesis_constructor: &VdMirHypothesisConstructor<'db, Src>,
+    hc: &VdMirHypothesisConstructor<'db, Src>,
 ) {
     match signature.separator() {
         VdMirBaseChainingSeparator::Iff => (),
@@ -70,18 +72,24 @@ fn check_reflection<'db, Src>(
             VdMirBaseRelationSeparator::Containment(_) => panic!(),
         },
     }
-    assert!(vd_mir_expr_deep_eq(
-        leader,
-        follower,
-        hypothesis_constructor.expr_arena()
-    ))
+    assert!(vd_mir_expr_deep_eq(leader, follower, hc.expr_arena()))
 }
 
 fn check_num_comparison<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,
-    hypothesis_constructor: &VdMirHypothesisConstructor<'db, Src>,
+    hc: &VdMirHypothesisConstructor<'db, Src>,
+) {
+    todo!()
+}
+
+/// obtain `a - b = term` from `a + (-b) = term`
+fn check_sub_eqs_add_neg<'db, Src>(
+    leader: VdMirExprIdx,
+    signature: VdBaseChainingSeparatorSignature,
+    follower: VdMirExprIdx,
+    hc: &VdMirHypothesisConstructor<'db, Src>,
 ) {
     todo!()
 }
@@ -91,10 +99,10 @@ fn check_add_interchange<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,
-    hypothesis_constructor: &VdMirHypothesisConstructor<'db, Src>,
+    hc: &VdMirHypothesisConstructor<'db, Src>,
 ) {
     todo!()
-    // let expr_arena = hypothesis_constructor.expr_arena();
+    // let expr_arena = hc.expr_arena();
 }
 
 /// obtain `a + b = term` from `a_term + b_term = term` where `a_term` and `b_term` are term reductions of `a` and `b`
@@ -102,7 +110,7 @@ fn check_add_eq<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,
-    hypothesis_constructor: &VdMirHypothesisConstructor<'db, Src>,
+    hc: &VdMirHypothesisConstructor<'db, Src>,
 ) {
     todo!()
 }

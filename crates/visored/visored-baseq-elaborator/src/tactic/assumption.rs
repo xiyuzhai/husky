@@ -8,6 +8,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 
     fn assumption_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
-        AltJustOk(Ok(self.hypothesis_constructor.assumption(prop)?))
+        AltJustOk(Ok(self.hc.assumption(prop)?))
     }
 }

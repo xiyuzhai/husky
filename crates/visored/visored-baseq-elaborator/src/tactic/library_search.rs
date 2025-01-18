@@ -53,9 +53,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             path: VdTheoremPath::SquareNonnegative,
             is_real_coercion,
         };
-        let hypothesis = self
-            .hypothesis_constructor
-            .construct_new_hypothesis(prop, construction);
+        let hypothesis = self.hc.construct_new_hypothesis(prop, construction);
         AltJustOk(Ok(hypothesis))
     }
 }

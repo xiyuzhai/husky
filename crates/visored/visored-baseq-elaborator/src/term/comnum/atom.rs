@@ -135,7 +135,7 @@ impl<'db, 'sess> VdBsqAtomTerm<'sess> {
     pub(crate) fn transcribe_data_and_ty(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
         match *self.data() {
             VdBsqComnumAtomTermData::Variable {

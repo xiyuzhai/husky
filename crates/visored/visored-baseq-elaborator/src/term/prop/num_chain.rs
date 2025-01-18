@@ -48,7 +48,7 @@ impl<'db, 'sess> VdBsqNumChain<'sess> {
     pub(crate) fn transcribe(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
         todo!()
     }

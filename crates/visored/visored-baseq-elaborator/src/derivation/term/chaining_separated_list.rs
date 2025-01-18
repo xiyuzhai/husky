@@ -99,7 +99,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdMirTermDerivationConstruction {
         let lhs_minus_rhs = self.mk_sub(lhs, rhs, None, hc);
         VdMirTermDerivationConstruction::NumComparison {
-            lhs_minus_rhs_equivalence: self.transcribe_expr_term_derivation(lhs_minus_rhs, hc),
+            lhs_minus_rhs: self.transcribe_expr_term_derivation(lhs_minus_rhs, hc),
         }
     }
 }

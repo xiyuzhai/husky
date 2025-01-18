@@ -66,7 +66,7 @@ pub trait IsVdMirExprOutput: std::fmt::Debug + Copy {
     fn elaborate_self<'db, Elaborator: IsVdMirTacticElaborator<'db>>(
         self,
         elaborator: Elaborator,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Elaborator::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Elaborator::HypothesisIdx>,
     );
 }
 
@@ -139,7 +139,7 @@ where
         let output: Input::VdMirExprOutput = FromToVdMir::from_to_vd_mir(output, &mut builder);
         let (mut expr_arena, mut stmt_arena, mut hint_arena, symbol_local_defn_storage, source_map) =
             builder.finish();
-        let mut hypothesis_constructor = VdMirHypothesisConstructor::new(
+        let mut hc = VdMirHypothesisConstructor::new(
             db,
             default_global_dispatch_table,
             expr_arena,
@@ -147,8 +147,8 @@ where
             hint_arena,
             symbol_local_defn_storage,
         );
-        let elaborator = gen_elaborator(hypothesis_constructor.region_data());
-        output.elaborate_self(elaborator, &mut hypothesis_constructor);
+        let elaborator = gen_elaborator(hc.region_data());
+        output.elaborate_self(elaborator, &mut hc);
         let (
             default_global_dispatch_table,
             expr_arena,
@@ -157,7 +157,7 @@ where
             hypothesis_arena,
             derivation_arena,
             symbol_local_defn_storage,
-        ) = hypothesis_constructor.finish();
+        ) = hc.finish();
         Self {
             input,
             root_module_path,
@@ -218,9 +218,9 @@ impl IsVdMirExprOutput for VdMirStmtIdxRange {
     fn elaborate_self<'db, Elaborator: IsVdMirTacticElaborator<'db>>(
         self,
         elaborator: Elaborator,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Elaborator::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Elaborator::HypothesisIdx>,
     ) {
-        elaborator.elaborate_stmts_ext(self, hypothesis_constructor)
+        elaborator.elaborate_stmts_ext(self, hc)
     }
 }
 
@@ -232,8 +232,8 @@ impl IsVdMirExprOutput for VdMirExprIdx {
     fn elaborate_self<'db, Elaborator: IsVdMirTacticElaborator<'db>>(
         self,
         elaborator: Elaborator,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Elaborator::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Elaborator::HypothesisIdx>,
     ) {
-        elaborator.elaborate_expr_ext(self, hypothesis_constructor)
+        elaborator.elaborate_expr_ext(self, hc)
     }
 }

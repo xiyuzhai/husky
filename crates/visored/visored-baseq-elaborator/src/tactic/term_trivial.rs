@@ -14,7 +14,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn term_trivial_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
         debug_assert!(
-            self.hypothesis_constructor
+            self.hc
                 .stack()
                 .get_active_hypothesis_with_expr(prop)
                 .is_none(),
@@ -24,7 +24,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             return AltNothing;
         };
         match b {
-            true => AltJustOk(Ok(self.hypothesis_constructor.construct_new_hypothesis(
+            true => AltJustOk(Ok(self.hc.construct_new_hypothesis(
                 prop,
                 VdBsqHypothesisConstruction::TermTrivial(b),
             ))),

@@ -69,7 +69,7 @@ pub trait IsVdMirSequentialElaboratorInner<'db>: Sized {
     fn elaborate_field_div_expr(
         &mut self,
         divisor: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> Result<Self::HypothesisIdx, Self::Contradiction>;
     fn elaborate_folding_separated_list_expr(
         &mut self,
@@ -88,13 +88,13 @@ pub trait IsVdMirSequentialElaboratorInner<'db>: Sized {
         &mut self,
         hypothesis: Self::HypothesisIdx,
         expr: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx;
 
     fn transcribe_implicit_hypothesis(
         &mut self,
         hypothesis: Self::HypothesisIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx;
 }
 
@@ -170,7 +170,7 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
     fn elaborate_field_div_expr(
         &mut self,
         divisor: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> Result<Self::HypothesisIdx, Self::Contradiction> {
         Ok(TrivialHypothesisIdx::FieldDiv { divisor })
     }
@@ -200,18 +200,17 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
         &mut self,
         hypothesis: TrivialHypothesisIdx,
         expr: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx {
-        hypothesis_constructor
-            .construct_new_hypothesis(hypothesis, |_| (expr, VdMirHypothesisConstruction::Sorry))
+        hc.construct_new_hypothesis(hypothesis, |_| (expr, VdMirHypothesisConstruction::Sorry))
     }
 
     fn transcribe_implicit_hypothesis(
         &mut self,
         hypothesis: TrivialHypothesisIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx {
-        hypothesis_constructor.construct_new_hypothesis(hypothesis, |_| {
+        hc.construct_new_hypothesis(hypothesis, |_| {
             (todo!(), VdMirHypothesisConstruction::Sorry)
         })
     }
@@ -239,25 +238,25 @@ where
     fn elaborate_stmts_ext(
         mut self,
         stmts: VdMirStmtIdxRange,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
-        self.elaborate_stmts(stmts, hypothesis_constructor);
+        self.elaborate_stmts(stmts, hc);
     }
 
     fn elaborate_stmt_ext(
         mut self,
         stmt: VdMirStmtIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
-        self.elaborate_stmt(stmt, hypothesis_constructor);
+        self.elaborate_stmt(stmt, hc);
     }
 
     fn elaborate_expr_ext(
         mut self,
         expr: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
-        self.elaborate_expr(expr, hypothesis_constructor);
+        self.elaborate_expr(expr, hc);
     }
 }
 
@@ -268,25 +267,25 @@ where
     fn elaborate_stmts(
         &mut self,
         stmts: VdMirStmtIdxRange,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
         for stmt in stmts {
-            self.elaborate_stmt(stmt, hypothesis_constructor);
+            self.elaborate_stmt(stmt, hc);
         }
     }
 
     fn elaborate_stmt(
         &mut self,
         stmt: VdMirStmtIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
-        match *hypothesis_constructor.stmt_arena()[stmt].data() {
+        match *hc.stmt_arena()[stmt].data() {
             VdMirStmtData::Block {
                 stmts, ref meta, ..
             } => {
                 let kind = meta.kind();
                 self.inner.enter_block(kind);
-                self.elaborate_stmts(stmts, hypothesis_constructor);
+                self.elaborate_stmts(stmts, hc);
                 self.inner.exit_block(kind);
             }
             VdMirStmtData::LetPlaceholder { .. } => {
@@ -295,30 +294,25 @@ where
                     .expect("handle contradiction");
             }
             VdMirStmtData::Assume { prop, .. } => {
-                self.elaborate_expr(prop, hypothesis_constructor);
+                self.elaborate_expr(prop, hc);
                 let hypothesis = self
                     .inner
                     .elaborate_assume_stmt(prop)
                     .expect("handle contradiction");
                 let hypothesis_chunk = self
                     .obtain_hypothesis_chunk_within_stmt_from_explicit_hypothesis(
-                        stmt,
-                        hypothesis,
-                        prop,
-                        hypothesis_constructor,
+                        stmt, hypothesis, prop, hc,
                     );
-                hypothesis_constructor
-                    .stmt_arena_mut()
-                    .update(stmt, |entry| {
-                        let VdMirStmtData::Assume {
-                            hypothesis_chunk_place,
-                            ..
-                        } = entry.data_mut()
-                        else {
-                            unreachable!()
-                        };
-                        hypothesis_chunk_place.set(Ok(hypothesis_chunk));
-                    });
+                hc.stmt_arena_mut().update(stmt, |entry| {
+                    let VdMirStmtData::Assume {
+                        hypothesis_chunk_place,
+                        ..
+                    } = entry.data_mut()
+                    else {
+                        unreachable!()
+                    };
+                    hypothesis_chunk_place.set(Ok(hypothesis_chunk));
+                });
             }
             VdMirStmtData::LetAssigned {
                 ref pattern,
@@ -326,33 +320,25 @@ where
                 ..
             } => {
                 let pattern = pattern.clone();
-                self.elaborate_expr(assignment, hypothesis_constructor);
+                self.elaborate_expr(assignment, hc);
                 let hypothesis = self
                     .inner
-                    .elaborate_let_assigned_stmt(
-                        &pattern,
-                        assignment,
-                        hypothesis_constructor.region_data(),
-                    )
+                    .elaborate_let_assigned_stmt(&pattern, assignment, hc.region_data())
                     .expect("handle contradiction");
                 let hypothesis_chunk = self
                     .obtain_hypothesis_chunk_within_stmt_from_implicit_hypothesis(
-                        stmt,
-                        hypothesis,
-                        hypothesis_constructor,
+                        stmt, hypothesis, hc,
                     );
-                hypothesis_constructor
-                    .stmt_arena_mut()
-                    .update(stmt, |entry| {
-                        let VdMirStmtData::LetAssigned {
-                            hypothesis_chunk_place,
-                            ..
-                        } = entry.data_mut()
-                        else {
-                            unreachable!()
-                        };
-                        hypothesis_chunk_place.set(Ok(hypothesis_chunk));
-                    });
+                hc.stmt_arena_mut().update(stmt, |entry| {
+                    let VdMirStmtData::LetAssigned {
+                        hypothesis_chunk_place,
+                        ..
+                    } = entry.data_mut()
+                    else {
+                        unreachable!()
+                    };
+                    hypothesis_chunk_place.set(Ok(hypothesis_chunk));
+                });
             }
             VdMirStmtData::Goal { .. } => {
                 self.inner
@@ -360,23 +346,43 @@ where
                     .expect("handle contradiction");
             }
             VdMirStmtData::Have { prop, hint, .. } => {
-                self.elaborate_expr(prop, hypothesis_constructor);
+                self.elaborate_expr(prop, hc);
                 let hypothesis = self
                     .inner
-                    .elaborate_have_stmt(stmt, prop, hint, hypothesis_constructor.region_data())
+                    .elaborate_have_stmt(stmt, prop, hint, hc.region_data())
                     .expect("handle contradiction");
                 let hypothesis_chunk = self
                     .obtain_hypothesis_chunk_within_stmt_from_explicit_hypothesis(
-                        stmt,
-                        hypothesis,
-                        prop,
-                        hypothesis_constructor,
+                        stmt, hypothesis, prop, hc,
                     );
-                hypothesis_constructor
-                    .stmt_arena_mut()
-                    .update(stmt, |entry| {
-                        let VdMirStmtData::Have {
-                            hypothesis_chunk_place,
+                hc.stmt_arena_mut().update(stmt, |entry| {
+                    let VdMirStmtData::Have {
+                        hypothesis_chunk_place,
+                        ..
+                    } = entry.data_mut()
+                    else {
+                        unreachable!()
+                    };
+                    hypothesis_chunk_place.set(Ok(hypothesis_chunk));
+                });
+            }
+            VdMirStmtData::Show {
+                goal_and_hypothesis_chunk_place,
+                ..
+            } => {
+                if let Some((goal, _)) = goal_and_hypothesis_chunk_place {
+                    self.elaborate_expr(goal, hc);
+                    let hypothesis = self
+                        .inner
+                        .elaborate_show_stmt(goal)
+                        .expect("handle contradiction");
+                    let hypothesis_chunk = hc.obtain_hypothesis_chunk_within_stmt(stmt, |hc| {
+                        self.inner
+                            .transcribe_explicit_hypothesis(hypothesis, goal, hc)
+                    });
+                    hc.stmt_arena_mut().update(stmt, |entry| {
+                        let VdMirStmtData::Show {
+                            goal_and_hypothesis_chunk_place: Some((_, hypothesis_chunk_place)),
                             ..
                         } = entry.data_mut()
                         else {
@@ -384,68 +390,31 @@ where
                         };
                         hypothesis_chunk_place.set(Ok(hypothesis_chunk));
                     });
-            }
-            VdMirStmtData::Show {
-                goal_and_hypothesis_chunk_place,
-                ..
-            } => {
-                if let Some((goal, _)) = goal_and_hypothesis_chunk_place {
-                    self.elaborate_expr(goal, hypothesis_constructor);
-                    let hypothesis = self
-                        .inner
-                        .elaborate_show_stmt(goal)
-                        .expect("handle contradiction");
-                    let hypothesis_chunk = hypothesis_constructor
-                        .obtain_hypothesis_chunk_within_stmt(stmt, |hypothesis_constructor| {
-                            self.inner.transcribe_explicit_hypothesis(
-                                hypothesis,
-                                goal,
-                                hypothesis_constructor,
-                            )
-                        });
-                    hypothesis_constructor
-                        .stmt_arena_mut()
-                        .update(stmt, |entry| {
-                            let VdMirStmtData::Show {
-                                goal_and_hypothesis_chunk_place: Some((_, hypothesis_chunk_place)),
-                                ..
-                            } = entry.data_mut()
-                            else {
-                                unreachable!()
-                            };
-                            hypothesis_chunk_place.set(Ok(hypothesis_chunk));
-                        });
                 }
             }
             VdMirStmtData::Qed {
                 goal_and_hypothesis_chunk_place,
             } => {
                 if let Some((goal, _)) = goal_and_hypothesis_chunk_place {
-                    self.elaborate_expr(goal, hypothesis_constructor);
+                    self.elaborate_expr(goal, hc);
                     let hypothesis = self
                         .inner
                         .elaborate_qed_stmt(goal)
                         .expect("handle contradiction");
-                    let hypothesis_chunk = hypothesis_constructor
-                        .obtain_hypothesis_chunk_within_stmt(stmt, |hypothesis_constructor| {
-                            self.inner.transcribe_explicit_hypothesis(
-                                hypothesis,
-                                goal,
-                                hypothesis_constructor,
-                            )
-                        });
-                    hypothesis_constructor
-                        .stmt_arena_mut()
-                        .update(stmt, |entry| {
-                            let VdMirStmtData::Qed {
-                                goal_and_hypothesis_chunk_place: Some((_, hypothesis_chunk_place)),
-                                ..
-                            } = entry.data_mut()
-                            else {
-                                unreachable!()
-                            };
-                            hypothesis_chunk_place.set(Ok(hypothesis_chunk));
-                        });
+                    let hypothesis_chunk = hc.obtain_hypothesis_chunk_within_stmt(stmt, |hc| {
+                        self.inner
+                            .transcribe_explicit_hypothesis(hypothesis, goal, hc)
+                    });
+                    hc.stmt_arena_mut().update(stmt, |entry| {
+                        let VdMirStmtData::Qed {
+                            goal_and_hypothesis_chunk_place: Some((_, hypothesis_chunk_place)),
+                            ..
+                        } = entry.data_mut()
+                        else {
+                            unreachable!()
+                        };
+                        hypothesis_chunk_place.set(Ok(hypothesis_chunk));
+                    });
                 }
             }
         }
@@ -456,11 +425,11 @@ where
         stmt: VdMirStmtIdx,
         hypothesis: Inner::HypothesisIdx,
         prop: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) -> VdMirHypothesisChunk {
-        hypothesis_constructor.obtain_hypothesis_chunk_within_stmt(stmt, |hypothesis_constructor| {
+        hc.obtain_hypothesis_chunk_within_stmt(stmt, |hc| {
             self.inner
-                .transcribe_explicit_hypothesis(hypothesis, prop, hypothesis_constructor)
+                .transcribe_explicit_hypothesis(hypothesis, prop, hc)
         })
     }
 
@@ -468,34 +437,33 @@ where
         &mut self,
         stmt: VdMirStmtIdx,
         hypothesis: Inner::HypothesisIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) -> VdMirHypothesisChunk {
-        hypothesis_constructor.obtain_hypothesis_chunk_within_stmt(stmt, |hypothesis_constructor| {
-            self.inner
-                .transcribe_implicit_hypothesis(hypothesis, hypothesis_constructor)
+        hc.obtain_hypothesis_chunk_within_stmt(stmt, |hc| {
+            self.inner.transcribe_implicit_hypothesis(hypothesis, hc)
         })
     }
 
     fn elaborate_expr(
         &mut self,
         expr: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
         // ad hoc
         // TODO: store expr elaboration in expr arena
-        match *hypothesis_constructor.expr_arena()[expr].data() {
+        match *hc.expr_arena()[expr].data() {
             VdMirExprData::Literal(_) | VdMirExprData::Variable(_) => (),
             VdMirExprData::Application {
                 function,
                 arguments,
             } => {
                 if let Some(function) = function.expr() {
-                    self.elaborate_expr(function, hypothesis_constructor);
+                    self.elaborate_expr(function, hc);
                 }
                 for arg in arguments {
-                    self.elaborate_expr(arg, hypothesis_constructor);
+                    self.elaborate_expr(arg, hc);
                 }
-                self.elaborate_application_expr(expr, function, arguments, hypothesis_constructor);
+                self.elaborate_application_expr(expr, function, arguments, hc);
             }
             VdMirExprData::FoldingSeparatedList {
                 leader,
@@ -505,9 +473,9 @@ where
                 // we could also unsafe this
                 let followers: SmallVec<[_; 4]> = followers.to_smallvec();
                 let followers: &[_] = &followers;
-                self.elaborate_expr(leader, hypothesis_constructor);
+                self.elaborate_expr(leader, hc);
                 for &(_, follower) in followers {
-                    self.elaborate_expr(follower, hypothesis_constructor);
+                    self.elaborate_expr(follower, hc);
                 }
                 self.inner
                     .elaborate_folding_separated_list_expr(leader, followers)
@@ -521,9 +489,9 @@ where
                 // we could also unsafe this
                 let followers: SmallVec<[_; 4]> = followers.to_smallvec();
                 let followers: &[_] = &followers;
-                self.elaborate_expr(leader, hypothesis_constructor);
+                self.elaborate_expr(leader, hc);
                 for &(_, follower) in followers {
-                    self.elaborate_expr(follower, hypothesis_constructor);
+                    self.elaborate_expr(follower, hc);
                 }
                 self.inner.elaborate_chaining_separated_list_expr(
                     leader,
@@ -533,8 +501,7 @@ where
             }
             VdMirExprData::ItemPath(vd_item_path) => (),
         }
-        self.inner
-            .cache_expr(expr, hypothesis_constructor.region_data());
+        self.inner.cache_expr(expr, hc.region_data());
     }
 
     fn elaborate_application_expr(
@@ -542,7 +509,7 @@ where
         expr: VdMirExprIdx,
         function: VdMirFunc,
         arguments: VdMirExprIdxRange,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
+        hc: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,
     ) {
         match function {
             VdMirFunc::NormalBasePrefixOpr(signature) => match signature.opr {
@@ -554,10 +521,9 @@ where
             VdMirFunc::NormalBaseBinaryOpr(signature) => match signature.opr {
                 VdMirBaseBinaryOpr::CommRingSub => (),
                 VdMirBaseBinaryOpr::CommFieldDiv => {
-                    let _ = self.inner.elaborate_field_div_expr(
-                        arguments.last().unwrap(),
-                        hypothesis_constructor,
-                    );
+                    let _ = self
+                        .inner
+                        .elaborate_field_div_expr(arguments.last().unwrap(), hc);
                     // ad hoc, should save this somewhere
                     // todo!()
                 }

@@ -30,8 +30,8 @@ fn check_add_interchange<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,
-    hypothesis_constructor: &VdMirHypothesisConstructor<'db, Src>,
+    hc: &VdMirHypothesisConstructor<'db, Src>,
 ) {
     todo!()
-    // let expr_arena = hypothesis_constructor.expr_arena();
+    // let expr_arena = hc.expr_arena();
 }

@@ -103,18 +103,12 @@ impl<'db, 'sess> VdBsqComnumTerm<'sess> {
     pub(crate) fn transcribe_data_and_ty(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
         match self {
-            VdBsqComnumTerm::Atom(slf) => {
-                slf.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-            }
-            VdBsqComnumTerm::Sum(slf) => {
-                slf.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-            }
-            VdBsqComnumTerm::Product(slf) => {
-                slf.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-            }
+            VdBsqComnumTerm::Atom(slf) => slf.transcribe_data_and_ty(elaborator, hc),
+            VdBsqComnumTerm::Sum(slf) => slf.transcribe_data_and_ty(elaborator, hc),
+            VdBsqComnumTerm::Product(slf) => slf.transcribe_data_and_ty(elaborator, hc),
         }
     }
 }

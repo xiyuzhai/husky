@@ -57,15 +57,13 @@ pub struct VdBsqElaboratorInner<'db, 'sess> {
     signature_menu: &'db VdSignatureMenu,
     expr_to_fld_map: VdMirExprMap<VdBsqExprFld<'sess>>,
     miracle: Miracle,
-    pub(crate) hypothesis_constructor: VdBsqHypothesisConstructor<'db, 'sess>,
+    pub(crate) hc: VdBsqHypothesisConstructor<'db, 'sess>,
     pub(crate) call_stack: VdBsqCallStack,
 }
 
 impl<'db, 'sess> std::fmt::Debug for VdBsqElaboratorInner<'db, 'sess> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("VdBsqElaboratorInner")
-            .field("hypothesis_constructor", &self.hypothesis_constructor)
-            .finish()
+        f.debug_struct("VdBsqElaboratorInner").finish()
     }
 }
 
@@ -79,7 +77,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             term_menu: vd_term_menu(session.eterner_db()),
             ty_menu: vd_ty_menu(session.eterner_db()),
             signature_menu: vd_signature_menu(session.eterner_db()),
-            hypothesis_constructor: VdBsqHypothesisConstructor::new(session),
+            hc: VdBsqHypothesisConstructor::new(session),
             expr_to_fld_map: VdMirExprMap::new2(region_data.expr_arena),
             miracle: Miracle::new_uninitialized(),
             call_stack: VdBsqCallStack::new(),
@@ -148,17 +146,13 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
 
     fn enter_block(&mut self, kind: VdMirBlockKind) {
         match kind {
-            VdMirBlockKind::Environment | VdMirBlockKind::Division => {
-                self.hypothesis_constructor.enter_block()
-            }
+            VdMirBlockKind::Environment | VdMirBlockKind::Division => self.hc.enter_block(),
         }
     }
 
     fn exit_block(&mut self, kind: VdMirBlockKind) {
         match kind {
-            VdMirBlockKind::Environment | VdMirBlockKind::Division => {
-                self.hypothesis_constructor.exit_block()
-            }
+            VdMirBlockKind::Environment | VdMirBlockKind::Division => self.hc.exit_block(),
         }
     }
 
@@ -187,7 +181,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
                 };
                 let prop = self.mk_expr(eq_expr_data, self.ty_menu().prop, None);
                 Ok(self
-                    .hypothesis_constructor
+                    .hc
                     .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LetAssigned))
             }
         }
@@ -202,7 +196,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         prop: VdMirExprIdx,
     ) -> VdBsqHypothesisResult<'sess, VdBsqHypothesisIdx<'sess>> {
         Ok(self
-            .hypothesis_constructor
+            .hc
             .construct_new_hypothesis(self.expr_fld(prop), VdBsqHypothesisConstruction::Assume))
     }
 
@@ -243,7 +237,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
     fn elaborate_field_div_expr(
         &mut self,
         divisor: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqHypothesisResult<'sess, VdBsqHypothesisIdx<'sess>> {
         let divisor = self.expr_fld(divisor);
         let signature = if divisor.ty() == self.ty_menu().nat {
@@ -300,17 +294,17 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         &mut self,
         hypothesis: Self::HypothesisIdx,
         prop: VdMirExprIdx,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirHypothesisIdx {
-        hypothesis.transcribe(self, Some(prop), hypothesis_constructor)
+        hypothesis.transcribe(self, Some(prop), hc)
     }
 
     fn transcribe_implicit_hypothesis(
         &mut self,
         hypothesis: VdBsqHypothesisIdx<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirHypothesisIdx {
-        hypothesis.transcribe(self, None, hypothesis_constructor)
+        hypothesis.transcribe(self, None, hc)
     }
 }
 

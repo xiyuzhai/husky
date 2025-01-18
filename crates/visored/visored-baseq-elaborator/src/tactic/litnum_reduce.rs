@@ -31,7 +31,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdBsqTerm::Prop(VdBsqPropTerm::Trivial(b)) => match b {
                 true => {
                     let hypothesis = elr
-                        .hypothesis_constructor
+                        .hc
                         .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumReduce);
                     AltJustOk(Ok(hypothesis))
                 }

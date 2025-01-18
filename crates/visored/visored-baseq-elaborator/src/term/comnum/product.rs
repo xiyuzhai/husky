@@ -343,13 +343,13 @@ impl<'db, 'sess> VdBsqProductTerm<'sess> {
     pub fn transcribe_data_and_ty(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
         transcribe_product_stem_and_factor_data_and_ty(
             elaborator,
             self.stem(),
             self.litnum_factor(),
-            hypothesis_constructor,
+            hc,
         )
     }
 }
@@ -358,20 +358,18 @@ pub(super) fn transcribe_product_stem_and_factor_data_and_ty<'db, 'sess>(
     elaborator: &VdBsqElaboratorInner<'db, 'sess>,
     stem: VdBsqProductStem<'sess>,
     factor: VdBsqLitnumTerm<'sess>,
-    hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirExprData, VdType) {
     assert!(!factor.is_zero());
     if factor.is_one() {
         match stem {
-            VdBsqProductStem::Atom(atom) => {
-                atom.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-            }
+            VdBsqProductStem::Atom(atom) => atom.transcribe_data_and_ty(elaborator, hc),
             VdBsqProductStem::NonTrivial(stem) => transcribe_factors_data_and_ty(
                 elaborator,
                 stem.exponentials()
                     .iter()
                     .map(|&(base, exponent)| Factor::Exponential(base, exponent)),
-                hypothesis_constructor,
+                hc,
             ),
         }
     } else {
@@ -379,7 +377,7 @@ pub(super) fn transcribe_product_stem_and_factor_data_and_ty<'db, 'sess>(
             VdBsqProductStem::Atom(stem) => transcribe_factors_data_and_ty(
                 elaborator,
                 [Factor::Litnum(factor), Factor::Atom(stem)],
-                hypothesis_constructor,
+                hc,
             ),
             VdBsqProductStem::NonTrivial(stem) => transcribe_factors_data_and_ty(
                 elaborator,
@@ -388,7 +386,7 @@ pub(super) fn transcribe_product_stem_and_factor_data_and_ty<'db, 'sess>(
                         .iter()
                         .map(|&(base, exponent)| Factor::Exponential(base, exponent)),
                 ),
-                hypothesis_constructor,
+                hc,
             ),
         }
     }
@@ -397,36 +395,34 @@ pub(super) fn transcribe_product_stem_and_factor_data_and_ty<'db, 'sess>(
 fn transcribe_factors_data_and_ty<'db, 'sess>(
     elaborator: &VdBsqElaboratorInner<'db, 'sess>,
     factors: impl IntoIterator<Item = Factor<'sess>>,
-    hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirExprData, VdType) {
     let mut factors = factors.into_iter();
     let leader = factors.next().unwrap();
     let Some(fst_follower) = factors.next() else {
-        return transcribe_factor_data_and_ty(elaborator, leader, hypothesis_constructor);
+        return transcribe_factor_data_and_ty(elaborator, leader, hc);
     };
-    let (leader_data, leader_ty) =
-        transcribe_factor_data_and_ty(elaborator, leader, hypothesis_constructor);
+    let (leader_data, leader_ty) = transcribe_factor_data_and_ty(elaborator, leader, hc);
     let (fst_follower_data, fst_follower_ty) =
-        transcribe_factor_data_and_ty(elaborator, fst_follower, hypothesis_constructor);
-    let fst_signature = hypothesis_constructor.infer_mul_signature(leader_ty, fst_follower_ty);
+        transcribe_factor_data_and_ty(elaborator, fst_follower, hc);
+    let fst_signature = hc.infer_mul_signature(leader_ty, fst_follower_ty);
     let mut acc_ty = fst_signature.expr_ty();
-    let leader = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
+    let leader = hc.mk_expr(VdMirExprEntry::new(
         leader_data,
         leader_ty,
         Some(fst_signature.item_ty()),
     ));
-    let fst_follower = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
+    let fst_follower = hc.mk_expr(VdMirExprEntry::new(
         fst_follower_data,
         fst_follower_ty,
         Some(fst_signature.item_ty()),
     ));
     let mut followers: SmallVec<[_; 4]> = smallvec![(fst_signature, fst_follower)];
     for factor in factors {
-        let (follower_data, follower_ty) =
-            transcribe_factor_data_and_ty(elaborator, factor, hypothesis_constructor);
-        let signature = hypothesis_constructor.infer_mul_signature(acc_ty, follower_ty);
+        let (follower_data, follower_ty) = transcribe_factor_data_and_ty(elaborator, factor, hc);
+        let signature = hc.infer_mul_signature(acc_ty, follower_ty);
         acc_ty = signature.expr_ty();
-        let follower = hypothesis_constructor.mk_expr(VdMirExprEntry::new(
+        let follower = hc.mk_expr(VdMirExprEntry::new(
             follower_data,
             follower_ty,
             Some(signature.item_ty()),
@@ -449,13 +445,13 @@ enum Factor<'sess> {
 fn transcribe_factor_data_and_ty<'db, 'sess>(
     elaborator: &VdBsqElaboratorInner<'db, 'sess>,
     factor: Factor<'sess>,
-    hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirExprData, VdType) {
     match factor {
-        Factor::Litnum(litnum) => litnum.transcribe_data_and_ty(elaborator, hypothesis_constructor),
-        Factor::Atom(atom) => atom.transcribe_data_and_ty(elaborator, hypothesis_constructor),
+        Factor::Litnum(litnum) => litnum.transcribe_data_and_ty(elaborator, hc),
+        Factor::Atom(atom) => atom.transcribe_data_and_ty(elaborator, hc),
         Factor::Exponential(base, exponent) => {
-            transcribe_exponential_data_and_ty(elaborator, base, exponent, hypothesis_constructor)
+            transcribe_exponential_data_and_ty(elaborator, base, exponent, hc)
         }
     }
 }
@@ -464,19 +460,19 @@ fn transcribe_exponential_data_and_ty<'db, 'sess>(
     elaborator: &VdBsqElaboratorInner<'db, 'sess>,
     base: VdBsqNumTerm<'sess>,
     exponent: VdBsqNumTerm<'sess>,
-    hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirExprData, VdType) {
     assert!(!exponent.is_zero_trivially());
     if exponent.is_one_trivially() {
-        return base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
+        return base.transcribe_data_and_ty(elaborator, hc);
     }
     if exponent.is_one_half_trivially() {
-        let (data, ty) = base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
-        let signature: VdBaseSqrtSignature = hypothesis_constructor.infer_base_sqrt_signature(ty);
+        let (data, ty) = base.transcribe_data_and_ty(elaborator, hc);
+        let signature: VdBaseSqrtSignature = hc.infer_base_sqrt_signature(ty);
         return (
             VdMirExprData::Application {
                 function: VdMirFunc::NormalBaseSqrt(signature),
-                arguments: hypothesis_constructor.mk_exprs([VdMirExprEntry::new(
+                arguments: hc.mk_exprs([VdMirExprEntry::new(
                     data,
                     ty,
                     Some(signature.radicand_ty()),
@@ -485,17 +481,16 @@ fn transcribe_exponential_data_and_ty<'db, 'sess>(
             signature.expr_ty(),
         );
     }
-    let (base_data, base_ty) = base.transcribe_data_and_ty(elaborator, hypothesis_constructor);
-    let (exponent_data, exponent_ty) =
-        exponent.transcribe_data_and_ty(elaborator, hypothesis_constructor);
-    let power_signature = hypothesis_constructor.infer_power_signature(base_ty, exponent_ty);
+    let (base_data, base_ty) = base.transcribe_data_and_ty(elaborator, hc);
+    let (exponent_data, exponent_ty) = exponent.transcribe_data_and_ty(elaborator, hc);
+    let power_signature = hc.infer_power_signature(base_ty, exponent_ty);
     let base_entry = VdMirExprEntry::new(base_data, base_ty, Some(power_signature.base_ty()));
     let exponent_entry = VdMirExprEntry::new(
         exponent_data,
         exponent_ty,
         Some(power_signature.exponent_ty()),
     );
-    let arguments = hypothesis_constructor.mk_exprs([base_entry, exponent_entry]);
+    let arguments = hc.mk_exprs([base_entry, exponent_entry]);
     (
         VdMirExprData::Application {
             function: VdMirFunc::Power(power_signature),

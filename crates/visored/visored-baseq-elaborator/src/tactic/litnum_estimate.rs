@@ -69,13 +69,10 @@ fn try_one_shot<'db, 'sess>(
     let VdBsqTerm::Comnum(leader) = leader.term() else {
         todo!()
     };
-    let bound = elr
-        .hypothesis_constructor
-        .stack()
-        .get_active_litnum_bound(leader, opr, db)?;
+    let bound = elr.hc.stack().get_active_litnum_bound(leader, opr, db)?;
     require!(bound.finalize(rhs, db));
     let hypothesis = elr
-        .hypothesis_constructor
+        .hc
         .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound);
     AltJustOk(Ok(hypothesis))
 }

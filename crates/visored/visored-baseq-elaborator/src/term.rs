@@ -294,41 +294,32 @@ impl<'db, 'sess> VdBsqTerm<'sess> {
         &self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         expected_ty: Option<VdType>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
-        let (data, ty) = self.transcribe_data_and_ty(elaborator, hypothesis_constructor);
-        hypothesis_constructor.mk_expr(VdMirExprEntry::new(data, ty, expected_ty))
+        let (data, ty) = self.transcribe_data_and_ty(elaborator, hc);
+        hc.mk_expr(VdMirExprEntry::new(data, ty, expected_ty))
     }
 
     pub fn transcribe_with_ty(
         &self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         expected_ty: Option<VdType>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprIdx, VdType) {
-        let (data, ty) = self.transcribe_data_and_ty(elaborator, hypothesis_constructor);
-        (
-            hypothesis_constructor.mk_expr(VdMirExprEntry::new(data, ty, expected_ty)),
-            ty,
-        )
+        let (data, ty) = self.transcribe_data_and_ty(elaborator, hc);
+        (hc.mk_expr(VdMirExprEntry::new(data, ty, expected_ty)), ty)
     }
 
     pub(crate) fn transcribe_data_and_ty(
         self,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprData, VdType) {
         match self {
-            VdBsqTerm::Litnum(litnum) => {
-                litnum.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-            }
-            VdBsqTerm::Comnum(comnum) => {
-                comnum.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-            }
-            VdBsqTerm::Prop(prop) => {
-                prop.transcribe_data_and_ty(elaborator, hypothesis_constructor)
-            }
-            VdBsqTerm::Set(set) => set.transcribe_data_and_ty(elaborator, hypothesis_constructor),
+            VdBsqTerm::Litnum(litnum) => litnum.transcribe_data_and_ty(elaborator, hc),
+            VdBsqTerm::Comnum(comnum) => comnum.transcribe_data_and_ty(elaborator, hc),
+            VdBsqTerm::Prop(prop) => prop.transcribe_data_and_ty(elaborator, hc),
+            VdBsqTerm::Set(set) => set.transcribe_data_and_ty(elaborator, hc),
         }
     }
 }
