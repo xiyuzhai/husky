@@ -195,8 +195,8 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         prop: VdMirExprIdx,
         construction: VdMirDerivationConstruction,
     ) -> VdMirDerivationIdx {
-        self.derivation_arena
-            .alloc_one(VdMirDerivationEntry::new(prop, construction))
+        let entry = VdMirDerivationEntry::new(prop, construction, self);
+        self.derivation_arena.alloc_one(entry)
     }
 
     pub(crate) fn finish(
