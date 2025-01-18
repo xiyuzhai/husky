@@ -24,6 +24,28 @@ use visored_mir_opr::{
     separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
 };
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct Nf<'sess> {
+    derivation: VdMirDerivationIdx,
+    expr: VdBsqExprFld<'sess>,
+}
+
+impl<'sess> Nf<'sess> {
+    fn new(derivation: VdMirDerivationIdx, expr: VdBsqExprFld<'sess>) -> Self {
+        Self { derivation, expr }
+    }
+}
+
+impl<'sess> Nf<'sess> {
+    fn expr(self) -> VdBsqExprFld<'sess> {
+        self.expr
+    }
+
+    fn derivation(self) -> VdMirDerivationIdx {
+        self.derivation
+    }
+}
+
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess>
 where
     'db: 'sess,
