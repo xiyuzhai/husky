@@ -1,5 +1,7 @@
 use super::*;
-use crate::{expr::VdMirExprData, helpers::compare::vd_mir_expr_deep_eq};
+use crate::{
+    derivation::VdMirDerivationIdx, expr::VdMirExprData, helpers::compare::vd_mir_expr_deep_eq,
+};
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
 };
@@ -8,6 +10,9 @@ use visored_signature::signature::separator::base::chaining::VdBaseChainingSepar
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdMirTermDerivationConstruction {
     Reflection,
+    NumComparison {
+        lhs_minus_rhs_equivalence: VdMirDerivationIdx,
+    },
     AdditionInterchange,
     AdditionAssociativity,
     AdditionIdentity,
@@ -31,6 +36,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::Reflection => {
                 check_reflection(leader, signature, follower, hc)
             }
+            VdMirTermDerivationConstruction::NumComparison {
+                lhs_minus_rhs_equivalence,
+            } => check_num_comparison(leader, signature, follower, hc),
             VdMirTermDerivationConstruction::AdditionInterchange => {
                 check_add_interchange(leader, signature, follower, hc)
             }
@@ -67,6 +75,15 @@ fn check_reflection<'db, Src>(
         follower,
         hypothesis_constructor.expr_arena()
     ))
+}
+
+fn check_num_comparison<'db, Src>(
+    leader: VdMirExprIdx,
+    signature: VdBaseChainingSeparatorSignature,
+    follower: VdMirExprIdx,
+    hypothesis_constructor: &VdMirHypothesisConstructor<'db, Src>,
+) {
+    todo!()
 }
 
 /// obtain `a + (b + c) = term` from `a + b + c = term`

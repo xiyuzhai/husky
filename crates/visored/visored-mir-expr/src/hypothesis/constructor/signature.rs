@@ -1,12 +1,13 @@
 use super::*;
 use visored_global_dispatch::dispatch::{
-    attach::VdAttachGlobalDispatch, separator::VdSeparatorGlobalDispatch,
-    sqrt::VdSqrtGlobalDispatch,
+    attach::VdAttachGlobalDispatch, binary_opr::VdBinaryOprGlobalDispatch,
+    separator::VdSeparatorGlobalDispatch, sqrt::VdSqrtGlobalDispatch,
 };
 use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
-use visored_opr::separator::VdBaseSeparator;
+use visored_opr::{opr::binary::VdBaseBinaryOpr, separator::VdBaseSeparator};
 use visored_signature::signature::{
     attach::{VdAttachSignature, VdPowerSignature},
+    binary_opr::base::VdBaseBinaryOprSignature,
     separator::base::{
         chaining::{
             relation::{
@@ -46,6 +47,14 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         )
     }
 
+    pub fn infer_sub_signature(
+        &self,
+        prev_item_ty: VdType,
+        next_item_ty: VdType,
+    ) -> VdBaseBinaryOprSignature {
+        self.infer_base_binary_opr_signature(prev_item_ty, VdBaseBinaryOpr::Sub, next_item_ty)
+    }
+
     pub fn infer_mul_signature(
         &self,
         prev_item_ty: VdType,
@@ -56,6 +65,24 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             VdBaseSeparator::Times,
             next_item_ty,
         )
+    }
+
+    pub fn infer_base_binary_opr_signature(
+        &self,
+        lopd_ty: VdType,
+        opr: VdBaseBinaryOpr,
+        ropd_ty: VdType,
+    ) -> VdBaseBinaryOprSignature {
+        match self
+            .default_global_dispatch_table
+            .base_binary_opr_default_dispatch(lopd_ty, opr, ropd_ty)
+            .unwrap()
+        {
+            VdBinaryOprGlobalDispatch::Normal {
+                base_binary_opr,
+                signature,
+            } => signature,
+        }
     }
 
     pub fn infer_base_chaining_separator_signature(

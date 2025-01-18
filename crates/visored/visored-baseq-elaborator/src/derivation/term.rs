@@ -31,9 +31,9 @@ where
         &mut self,
         src: VdBsqHypothesisIdx<'sess>,
         dst: VdBsqHypothesisIdx<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
-        hypothesis_constructor.obtain_derivation_chunk_within_hypothesis(|hypothesis_constructor| {
+        hc.obtain_derivation_chunk_within_hypothesis(|hypothesis_constructor| {
             let src_term_equivalence = self.transcribe_expr_term_derivation(
                 self.hypothesis_constructor.arena()[src].expr(),
                 hypothesis_constructor,
@@ -52,31 +52,29 @@ where
     fn transcribe_expr_term_derivation(
         &mut self,
         expr: VdBsqExprFld<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationIdx {
-        let prop = self.transcribe_expr_term_derivation_prop(expr, hypothesis_constructor);
-        let construction =
-            self.transcribe_expr_term_derivation_construction(expr, hypothesis_constructor);
-        hypothesis_constructor.alloc_derivation(prop, construction.into())
+        let prop = self.transcribe_expr_term_derivation_prop(expr, hc);
+        let construction = self.transcribe_expr_term_derivation_construction(expr, hc);
+        hc.alloc_derivation(prop, construction.into())
     }
 
     fn transcribe_expr_term_derivation_prop(
         &mut self,
         expr: VdBsqExprFld<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let term = expr.term();
-        let (expr_transcription, expr_ty) = expr.transcribe_with_ty(self, hypothesis_constructor);
-        let (term_transcription, term_ty) =
-            term.transcribe_with_ty(self, Some(expr_ty), hypothesis_constructor);
-        let signature = hypothesis_constructor.infer_equivalence_signature(expr_ty, term_ty);
+        let (expr_transcription, expr_ty) = expr.transcribe_with_ty(self, hc);
+        let (term_transcription, term_ty) = term.transcribe_with_ty(self, Some(expr_ty), hc);
+        let signature = hc.infer_equivalence_signature(expr_ty, term_ty);
         let prop_expr_data = VdMirExprData::ChainingSeparatedList {
             leader: expr_transcription,
             followers: smallvec![(signature, term_transcription)],
             joined_signature: None,
         };
         let prop_expr_ty = self.ty_menu().prop;
-        hypothesis_constructor.mk_expr(VdMirExprEntry::new(prop_expr_data, prop_expr_ty, None))
+        hc.mk_expr(VdMirExprEntry::new(prop_expr_data, prop_expr_ty, None))
     }
 
     fn transcribe_expr_term_derivation_construction(

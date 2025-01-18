@@ -303,6 +303,24 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         };
         self.mk_expr(VdBsqExprFldData::Literal(lit), ty, expected_ty)
     }
+
+    pub(crate) fn mk_sub(
+        &self,
+        lhs: VdBsqExprFld<'sess>,
+        rhs: VdBsqExprFld<'sess>,
+        expected_ty: Option<VdType>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        let signature = hc.infer_sub_signature(lhs.ty(), rhs.ty());
+        self.mk_expr(
+            VdBsqExprFldData::Application {
+                function: VdMirFunc::NormalBaseBinaryOpr(signature),
+                arguments: smallvec![lhs, rhs],
+            },
+            signature.expr_ty,
+            expected_ty,
+        )
+    }
 }
 
 impl<'db, 'sess> VdBsqExprFld<'sess> {
