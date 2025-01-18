@@ -1,6 +1,9 @@
 use crate::expr::{LnMirExprArenaRef, LnMirExprData, LnMirExprIdx};
 
 pub fn ln_mir_expr_deep_eq(a: LnMirExprIdx, b: LnMirExprIdx, arena: LnMirExprArenaRef) -> bool {
+    if a == b {
+        return true;
+    }
     match (arena[a].data(), arena[b].data()) {
         (LnMirExprData::Literal(a), LnMirExprData::Literal(b)) => a == b,
         (LnMirExprData::ItemPath(a), LnMirExprData::ItemPath(b)) => a == b,
