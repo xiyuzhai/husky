@@ -313,9 +313,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_add_signature(lopd.ty(), ropd.ty());
         self.mk_expr(
-            VdBsqExprFldData::Application {
-                function: VdMirFunc::NormalBaseSeparator(signature.into()),
-                arguments: smallvec![lopd, ropd],
+            VdBsqExprFldData::FoldingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
             },
             signature.expr_ty(),
             expected_ty,

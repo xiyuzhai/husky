@@ -84,8 +84,8 @@ where
                 function,
                 ref arguments,
             } => match function {
-                VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
-                VdMirFunc::NormalBaseSeparator(vd_base_separator_signature) => todo!(),
+                VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
+                VdMirFunc::NormalBaseSeparator(signature) => todo!(),
                 VdMirFunc::NormalBaseBinaryOpr(signature) => match signature.opr {
                     VdMirBaseBinaryOpr::CommRingSub => {
                         let &[lopd, ropd] = arguments.as_slice() else {
@@ -100,7 +100,7 @@ where
                         self.transcribe_div_term_derivation_construction(numerator, denominator, hc)
                     }
                 },
-                VdMirFunc::Power(vd_power_signature) => {
+                VdMirFunc::Power(signature) => {
                     let &[base, exponent] = arguments.as_slice() else {
                         unreachable!()
                     };

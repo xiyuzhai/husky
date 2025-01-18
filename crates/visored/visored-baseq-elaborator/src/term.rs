@@ -156,7 +156,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         .into(),
                     _ => todo!(),
                 },
-                VdMirFunc::NormalBaseSeparator(signature) => todo!(),
+                VdMirFunc::NormalBaseSeparator(signature) => {
+                    unreachable!("should be chaining or folding")
+                }
                 VdMirFunc::NormalBaseBinaryOpr(signature) => match signature.opr {
                     VdMirBaseBinaryOpr::CommRingSub => {
                         let lopd = arguments[0].term().num().unwrap();
