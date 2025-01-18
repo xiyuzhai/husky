@@ -304,6 +304,24 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         self.mk_expr(VdBsqExprFldData::Literal(lit), ty, expected_ty)
     }
 
+    pub(crate) fn mk_add(
+        &self,
+        lopd: VdBsqExprFld<'sess>,
+        ropd: VdBsqExprFld<'sess>,
+        expected_ty: Option<VdType>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        let signature = hc.infer_add_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprFldData::Application {
+                function: VdMirFunc::NormalBaseSeparator(signature.into()),
+                arguments: smallvec![lopd, ropd],
+            },
+            signature.expr_ty(),
+            expected_ty,
+        )
+    }
+
     pub(crate) fn mk_sub(
         &self,
         lhs: VdBsqExprFld<'sess>,
@@ -316,6 +334,23 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdBsqExprFldData::Application {
                 function: VdMirFunc::NormalBaseBinaryOpr(signature),
                 arguments: smallvec![lhs, rhs],
+            },
+            signature.expr_ty,
+            expected_ty,
+        )
+    }
+
+    pub(crate) fn mk_neg(
+        &self,
+        expr: VdBsqExprFld<'sess>,
+        expected_ty: Option<VdType>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprFld<'sess> {
+        let signature = hc.infer_neg_signature(expr.ty());
+        self.mk_expr(
+            VdBsqExprFldData::Application {
+                function: VdMirFunc::NormalBasePrefixOpr(signature),
+                arguments: smallvec![expr],
             },
             signature.expr_ty,
             expected_ty,

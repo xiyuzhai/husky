@@ -1,13 +1,18 @@
 use super::*;
 use visored_global_dispatch::dispatch::{
     attach::VdAttachGlobalDispatch, binary_opr::VdBinaryOprGlobalDispatch,
-    separator::VdSeparatorGlobalDispatch, sqrt::VdSqrtGlobalDispatch,
+    prefix_opr::VdPrefixOprGlobalDispatch, separator::VdSeparatorGlobalDispatch,
+    sqrt::VdSqrtGlobalDispatch,
 };
 use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
-use visored_opr::{opr::binary::VdBaseBinaryOpr, separator::VdBaseSeparator};
+use visored_opr::{
+    opr::{binary::VdBaseBinaryOpr, prefix::VdBasePrefixOpr},
+    separator::VdBaseSeparator,
+};
 use visored_signature::signature::{
     attach::{VdAttachSignature, VdPowerSignature},
     binary_opr::base::VdBaseBinaryOprSignature,
+    prefix_opr::VdBasePrefixOprSignature,
     separator::base::{
         chaining::{
             relation::{
@@ -53,6 +58,24 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         next_item_ty: VdType,
     ) -> VdBaseBinaryOprSignature {
         self.infer_base_binary_opr_signature(prev_item_ty, VdBaseBinaryOpr::Sub, next_item_ty)
+    }
+
+    pub fn infer_neg_signature(&self, item_ty: VdType) -> VdBasePrefixOprSignature {
+        self.infer_base_prefix_opr_signature(item_ty, VdBasePrefixOpr::Neg)
+    }
+
+    pub fn infer_base_prefix_opr_signature(
+        &self,
+        opd_ty: VdType,
+        opr: VdBasePrefixOpr,
+    ) -> VdBasePrefixOprSignature {
+        match self
+            .default_global_dispatch_table
+            .base_prefix_opr_default_dispatch(opr, opd_ty)
+            .unwrap()
+        {
+            VdPrefixOprGlobalDispatch::Base { signature, .. } => signature,
+        }
     }
 
     pub fn infer_mul_signature(
