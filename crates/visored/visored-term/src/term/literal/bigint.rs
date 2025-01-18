@@ -66,6 +66,10 @@ impl VdBigIntData {
     pub fn is_nonnegative(&self) -> bool {
         self.sign() != Sign::Minus
     }
+
+    pub fn is_negative(&self) -> bool {
+        self.sign() == Sign::Minus
+    }
 }
 
 impl VdBigIntData {

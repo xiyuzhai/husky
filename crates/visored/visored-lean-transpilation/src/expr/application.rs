@@ -3,7 +3,7 @@ use crate::dictionary::func_key::VdFuncKeyTranslation;
 use either::*;
 use lean_mir_expr::expr::application::LnMirFuncKey;
 use smallvec::*;
-use visored_mir_expr::expr::VdMirExprIdxRange;
+use visored_mir_expr::expr::{VdMirExprEntry, VdMirExprIdxRange};
 
 impl<'db, S> VdLeanTranspilationBuilder<'db, S>
 where
@@ -21,10 +21,18 @@ where
                     todo!("no translation for func key `{:?}`", func_key)
                 };
                 match *translation {
-                    VdFuncKeyTranslation::PrefixOpr(func_key) => LnMirExprData::Application {
-                        function: self.build_func_from_key(func_key),
-                        arguments: arguments.to_lean(self),
-                    },
+                    VdFuncKeyTranslation::PrefixOpr(func_key) => {
+                        let inner_expr_data = LnMirExprData::Application {
+                            function: self.build_func_from_key(func_key),
+                            arguments: arguments.to_lean(self),
+                        };
+                        let ty_ascription = match self.expr_arena()[expr].ty().to_lean(self) {
+                            VdTypeLeanTranspilation::Type(ty) => ty,
+                        };
+                        let inner_expr = self
+                            .alloc_expr(LnMirExprEntry::new(inner_expr_data, Some(ty_ascription)));
+                        LnMirExprData::Bracketed { inner_expr }
+                    }
                     VdFuncKeyTranslation::FoldingBinaryOpr(func_key) => {
                         todo!()
                         // self.build_folding_separated_list(expr, func_key, arguments)

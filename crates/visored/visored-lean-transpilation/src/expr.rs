@@ -96,7 +96,24 @@ where
     fn build_expr_data(&mut self, expr: VdMirExprIdx) -> LnMirExprData {
         match *self.expr_arena()[expr].data() {
             VdMirExprData::Literal(literal) => {
-                LnMirExprData::Literal(to_lean_literal(literal, self.db()))
+                let needs_ty_ascription = match *literal.data() {
+                    VdLiteralData::Int128(i) => i < 0,
+                    VdLiteralData::BigInt(ref i) => i.is_negative(),
+                    VdLiteralData::Float(_) => todo!(),
+                    VdLiteralData::SpecialConstant(_) => todo!(),
+                };
+                if needs_ty_ascription {
+                    let inner_expr_data =
+                        LnMirExprData::Literal(to_lean_literal(literal, self.db()));
+                    let ty_ascription = match self.expr_arena()[expr].ty().to_lean(self) {
+                        VdTypeLeanTranspilation::Type(ty) => ty,
+                    };
+                    let inner_expr =
+                        self.alloc_expr(LnMirExprEntry::new(inner_expr_data, Some(ty_ascription)));
+                    LnMirExprData::Bracketed { inner_expr }
+                } else {
+                    LnMirExprData::Literal(to_lean_literal(literal, self.db()))
+                }
             }
             VdMirExprData::ItemPath(item_path) => {
                 let Some(translation) = self.dictionary().item_path_translation(item_path) else {

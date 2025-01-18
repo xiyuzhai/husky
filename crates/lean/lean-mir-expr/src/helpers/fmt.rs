@@ -209,6 +209,11 @@ impl<'a> LnMirExprFormatter<'a> {
                     self.indented(|slf| slf.format_tactics(tactics));
                 }
             }
+            LnMirExprData::Bracketed { inner_expr } => {
+                self.result += "(";
+                self.format_expr(inner_expr, multiline, LnPrecedenceRange::Any);
+                self.result += ")";
+            }
         }
     }
 
