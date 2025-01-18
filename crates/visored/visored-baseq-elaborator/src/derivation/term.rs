@@ -1,5 +1,6 @@
 pub mod chaining_separated_list;
 pub mod division;
+mod neg;
 pub mod power;
 mod product;
 pub mod square_root;
@@ -19,7 +20,7 @@ use visored_mir_expr::{
     hypothesis::{constructor::VdMirHypothesisConstructor, VdMirHypothesisIdx},
 };
 use visored_mir_opr::{
-    opr::binary::VdMirBaseBinaryOpr,
+    opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
     separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
 };
 
@@ -84,7 +85,16 @@ where
                 function,
                 ref arguments,
             } => match function {
-                VdMirFunc::NormalBasePrefixOpr(signature) => todo!(),
+                VdMirFunc::NormalBasePrefixOpr(signature) => {
+                    let opd = arguments[0];
+                    match signature.opr {
+                        VdMirBasePrefixOpr::RingPos => todo!(),
+                        VdMirBasePrefixOpr::RingNeg => {
+                            self.transcribe_neg_term_derivation_construction(opd, hc)
+                        }
+                        _ => todo!(),
+                    }
+                }
                 VdMirFunc::NormalBaseSeparator(signature) => todo!(),
                 VdMirFunc::NormalBaseBinaryOpr(signature) => match signature.opr {
                     VdMirBaseBinaryOpr::CommRingSub => {
