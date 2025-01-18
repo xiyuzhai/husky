@@ -6,13 +6,7 @@ use crate::{
 };
 
 #[derive(Debug, PartialEq, Eq)]
-pub enum VdMirRingDerivationConstruction {
-    AdditionInterchange,
-    AdditionAssociativity,
-    AdditionIdentity,
-    AdditionInverse,
-    AdditionDistributivity,
-}
+pub enum VdMirRingDerivationConstruction {}
 
 impl VdMirRingDerivationConstruction {
     pub fn check<'db, Src>(&self, prop: VdMirExprIdx, hc: &VdMirHypothesisConstructor<'db, Src>) {
@@ -27,13 +21,7 @@ impl VdMirRingDerivationConstruction {
         };
         let (signature, follower) = followers[0];
         match self {
-            VdMirRingDerivationConstruction::AdditionInterchange => {
-                check_add_interchange(leader, signature, follower, hc)
-            }
-            VdMirRingDerivationConstruction::AdditionAssociativity => todo!(),
-            VdMirRingDerivationConstruction::AdditionIdentity => todo!(),
-            VdMirRingDerivationConstruction::AdditionInverse => todo!(),
-            VdMirRingDerivationConstruction::AdditionDistributivity => todo!(),
+            _ => todo!(),
         }
     }
 }

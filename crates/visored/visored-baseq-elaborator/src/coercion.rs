@@ -55,7 +55,7 @@ impl<'sess> VdBsqCoercionOutcome<'sess> {
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub(crate) fn transcribe_coercion(
-        &self,
+        &mut self,
         coercion: VdBsqCoercion<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirCoercion {

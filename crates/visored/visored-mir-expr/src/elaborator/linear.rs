@@ -85,14 +85,14 @@ pub trait IsVdMirSequentialElaboratorInner<'db>: Sized {
     fn cache_expr(&mut self, expr: VdMirExprIdx, region_data: VdMirExprRegionDataRef);
 
     fn transcribe_explicit_hypothesis(
-        &self,
+        &mut self,
         hypothesis: Self::HypothesisIdx,
         expr: VdMirExprIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx;
 
     fn transcribe_implicit_hypothesis(
-        &self,
+        &mut self,
         hypothesis: Self::HypothesisIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx;
@@ -197,7 +197,7 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
     }
 
     fn transcribe_explicit_hypothesis(
-        &self,
+        &mut self,
         hypothesis: TrivialHypothesisIdx,
         expr: VdMirExprIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
@@ -207,7 +207,7 @@ impl<'db> IsVdMirSequentialElaboratorInner<'db> for () {
     }
 
     fn transcribe_implicit_hypothesis(
-        &self,
+        &mut self,
         hypothesis: TrivialHypothesisIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Self::HypothesisIdx>,
     ) -> VdMirHypothesisIdx {
@@ -465,7 +465,7 @@ where
     }
 
     fn obtain_hypothesis_chunk_within_stmt_from_implicit_hypothesis(
-        &self,
+        &mut self,
         stmt: VdMirStmtIdx,
         hypothesis: Inner::HypothesisIdx,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, Inner::HypothesisIdx>,

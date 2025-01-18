@@ -34,6 +34,7 @@ where
         let ty = entry.prop().to_lean(self);
         let construction = match entry.construction() {
             VdMirDerivationConstruction::Ring(construction) => todo!(),
+            VdMirDerivationConstruction::Term(construction) => todo!(),
         };
         LnMirTacticData::Have {
             ident,
@@ -48,6 +49,9 @@ where
     ) -> LnMirTacticData {
         match self.derivation_arena()[main_derivation].construction() {
             VdMirDerivationConstruction::Ring(construction) => match construction {
+                _ => todo!(),
+            },
+            VdMirDerivationConstruction::Term(construction) => match construction {
                 _ => todo!(),
             },
         }

@@ -130,7 +130,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub fn construct_new_hypothesis(
         &mut self,
         src: Src,
-        f: impl Fn(&mut Self) -> (VdMirExprIdx, VdMirHypothesisConstruction),
+        f: impl FnOnce(&mut Self) -> (VdMirExprIdx, VdMirHypothesisConstruction),
     ) -> VdMirHypothesisIdx
     where
         Src: std::hash::Hash + Eq,

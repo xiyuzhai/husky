@@ -68,7 +68,7 @@ impl<'sess> VdBsqHypothesisEntry<'sess> {
 impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
     pub(crate) fn transcribe(
         self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        elaborator: &mut VdBsqElaboratorInner<'db, 'sess>,
         explicit_prop: Option<VdMirExprIdx>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirHypothesisIdx {
@@ -80,10 +80,9 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
     fn transcribe_inner(
         self,
         explicit_prop: Option<VdMirExprIdx>,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        elaborator: &mut VdBsqElaboratorInner<'db, 'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprIdx, VdMirHypothesisConstruction) {
-        let hypothesis_entry = &elaborator.hypothesis_constructor.arena()[self];
         let construction = match *elaborator.hypothesis_constructor.arena()[self].construction() {
             VdBsqHypothesisConstruction::Sorry => VdMirHypothesisConstruction::Sorry,
             VdBsqHypothesisConstruction::TermTrivial(b) => {
@@ -113,6 +112,7 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
             VdBsqHypothesisConstruction::LitnumReduce => VdMirHypothesisConstruction::LitnumReduce,
             VdBsqHypothesisConstruction::LitnumBound => VdMirHypothesisConstruction::LitnumBound,
         };
+        let hypothesis_entry = &elaborator.hypothesis_constructor.arena()[self];
         let prop = match explicit_prop {
             Some(prop) => prop,
             None => hypothesis_entry

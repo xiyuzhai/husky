@@ -1,10 +1,19 @@
+pub mod chaining_separated_list;
+pub mod division;
+pub mod power;
+mod product;
+pub mod square_root;
+mod subtraction;
+mod sum;
+
 use super::*;
 use expr::{VdBsqExprFld, VdBsqExprFldData};
 use smallvec::*;
 use visored_mir_expr::{
     derivation::{
-        chunk::VdMirDerivationChunk, construction::VdMirDerivationConstruction, VdMirDerivationIdx,
-        VdMirDerivationIdxRange,
+        chunk::VdMirDerivationChunk,
+        construction::{term::VdMirTermDerivationConstruction, VdMirDerivationConstruction},
+        VdMirDerivationIdx, VdMirDerivationIdxRange,
     },
     expr::{application::VdMirFunc, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
     hypothesis::{constructor::VdMirHypothesisConstructor, VdMirHypothesisIdx},
@@ -19,7 +28,7 @@ where
     'db: 'sess,
 {
     pub fn transcribe_term_derivation(
-        &self,
+        &mut self,
         src: VdBsqHypothesisIdx<'sess>,
         dst: VdBsqHypothesisIdx<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
@@ -41,7 +50,7 @@ where
     }
 
     fn transcribe_expr_term_derivation(
-        &self,
+        &mut self,
         expr: VdBsqExprFld<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationIdx {
@@ -52,7 +61,7 @@ where
     }
 
     fn transcribe_expr_term_derivation_prop(
-        &self,
+        &mut self,
         expr: VdBsqExprFld<'sess>,
         hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
@@ -71,112 +80,65 @@ where
     }
 
     fn transcribe_expr_term_derivation_construction(
-        &self,
+        &mut self,
         expr: VdBsqExprFld<'sess>,
-        hypothesis_constructor: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirDerivationConstruction {
-        todo!()
-        // match *expr.data() {
-        //     VdBsqExprFldData::Literal(_) => VdMirTermDerivationConstruction::Literal,
-        //     VdBsqExprFldData::Variable(_, _) => VdMirTermDerivationConstruction::Variable,
-        //     VdBsqExprFldData::ItemPath(_) => VdMirTermDerivationConstruction::ItemPath,
-        //     VdBsqExprFldData::Application {
-        //         function,
-        //         ref arguments,
-        //     } => match function {
-        //         VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
-        //         VdMirFunc::NormalBaseSeparator(vd_base_separator_signature) => todo!(),
-        //         VdMirFunc::NormalBaseBinaryOpr(signature) => match signature.opr {
-        //             VdMirBaseBinaryOpr::CommRingSub => {
-        //                 let &[lopd, ropd] = arguments.as_slice() else {
-        //                     unreachable!()
-        //                 };
-        //                 let lopd =
-        //                     self.transcribe_expr_term_derivation(lopd, hypothesis_constructor);
-        //                 let ropd =
-        //                     self.transcribe_expr_term_derivation(ropd, hypothesis_constructor);
-        //                 VdMirTermDerivationConstruction::Sub { lopd, ropd }
-        //             }
-        //             VdMirBaseBinaryOpr::CommFieldDiv => {
-        //                 let &[numerator, denominator] = arguments.as_slice() else {
-        //                     unreachable!()
-        //                 };
-        //                 let numerator =
-        //                     self.transcribe_expr_term_derivation(numerator, hypothesis_constructor);
-        //                 let denominator = self
-        //                     .transcribe_expr_term_derivation(denominator, hypothesis_constructor);
-        //                 VdMirTermDerivationConstruction::Div {
-        //                     numerator,
-        //                     denominator,
-        //                 }
-        //             }
-        //         },
-        //         VdMirFunc::Power(vd_power_signature) => VdMirTermDerivationConstruction::Power {
-        //             base: self
-        //                 .transcribe_expr_term_derivation(arguments[0], hypothesis_constructor),
-        //             exponent: self
-        //                 .transcribe_expr_term_derivation(arguments[1], hypothesis_constructor),
-        //         },
-        //         VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => {
-        //             let radicand =
-        //                 self.transcribe_expr_term_derivation(arguments[0], hypothesis_constructor);
-        //             VdMirTermDerivationConstruction::Square { radicand }
-        //         }
-        //     },
-        //     VdBsqExprFldData::FoldingSeparatedList {
-        //         leader,
-        //         ref followers,
-        //     } => {
-        //         let (fst_func, fst) = followers[0];
-        //         let leader_equivalence =
-        //             self.transcribe_expr_term_derivation(leader, hypothesis_constructor);
-        //         let follower_equivalences = followers
-        //             .iter()
-        //             .map(|&(func, follower)| {
-        //                 (
-        //                     func,
-        //                     self.transcribe_expr_term_derivation(follower, hypothesis_constructor),
-        //                 )
-        //             })
-        //             .collect::<Vec<_>>();
-        //         match fst_func.separator() {
-        //             VdMirBaseFoldingSeparator::CommRingAdd => {
-        //                 VdMirTermDerivationConstruction::Sum {
-        //                     leader_equivalence,
-        //                     follower_equivalences,
-        //                 }
-        //             }
-        //             VdMirBaseFoldingSeparator::CommRingMul => {
-        //                 VdMirTermDerivationConstruction::Product {
-        //                     leader_equivalence,
-        //                     follower_equivalences,
-        //                 }
-        //             }
-        //             VdMirBaseFoldingSeparator::SetTimes => todo!(),
-        //             VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
-        //         }
-        //     }
-        //     VdBsqExprFldData::ChainingSeparatedList {
-        //         leader,
-        //         ref followers,
-        //         joined_signature,
-        //     } => {
-        //         let leader_equivalence =
-        //             self.transcribe_expr_term_derivation(leader, hypothesis_constructor);
-        //         let follower_equivalences = followers
-        //             .iter()
-        //             .map(|&(func, follower)| {
-        //                 (
-        //                     func,
-        //                     self.transcribe_expr_term_derivation(follower, hypothesis_constructor),
-        //                 )
-        //             })
-        //             .collect::<Vec<_>>();
-        //         VdMirTermDerivationConstruction::ChainingSeparatedList {
-        //             leader_equivalence,
-        //             follower_equivalences,
-        //         }
-        //     }
-        // }
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirTermDerivationConstruction {
+        match *expr.data() {
+            VdBsqExprFldData::Literal(_) => VdMirTermDerivationConstruction::Reflection,
+            VdBsqExprFldData::Variable(_, _) => VdMirTermDerivationConstruction::Reflection,
+            VdBsqExprFldData::ItemPath(_) => VdMirTermDerivationConstruction::Reflection,
+            VdBsqExprFldData::Application {
+                function,
+                ref arguments,
+            } => match function {
+                VdMirFunc::NormalBasePrefixOpr(vd_base_prefix_opr_signature) => todo!(),
+                VdMirFunc::NormalBaseSeparator(vd_base_separator_signature) => todo!(),
+                VdMirFunc::NormalBaseBinaryOpr(signature) => match signature.opr {
+                    VdMirBaseBinaryOpr::CommRingSub => {
+                        let &[lopd, ropd] = arguments.as_slice() else {
+                            unreachable!()
+                        };
+                        self.transcribe_sub_term_derivation_construction(lopd, ropd, hc)
+                    }
+                    VdMirBaseBinaryOpr::CommFieldDiv => {
+                        let &[numerator, denominator] = arguments.as_slice() else {
+                            unreachable!()
+                        };
+                        self.transcribe_div_term_derivation_construction(numerator, denominator, hc)
+                    }
+                },
+                VdMirFunc::Power(vd_power_signature) => {
+                    let &[base, exponent] = arguments.as_slice() else {
+                        unreachable!()
+                    };
+                    self.transcribe_pow_term_derivation_construction(base, exponent, hc)
+                }
+                VdMirFunc::NormalBaseSqrt(vd_base_sqrt_signature) => {
+                    let radicand = arguments[0];
+                    self.transcribe_sqrt_term_derivation_construction(radicand, hc)
+                }
+            },
+            VdBsqExprFldData::FoldingSeparatedList {
+                leader,
+                ref followers,
+            } => match followers[0].0.separator() {
+                VdMirBaseFoldingSeparator::CommRingAdd => {
+                    self.transcribe_sum_term_derivation_construction(leader, followers, hc)
+                }
+                VdMirBaseFoldingSeparator::CommRingMul => {
+                    self.transcribe_product_term_derivation_construction(leader, followers, hc)
+                }
+                VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
+            },
+            VdBsqExprFldData::ChainingSeparatedList {
+                leader,
+                ref followers,
+                joined_signature,
+            } => self.transcribe_chaining_separated_list_term_derivation_construction(
+                leader, followers, hc,
+            ),
+        }
     }
 }
