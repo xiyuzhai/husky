@@ -11,23 +11,17 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         followers: &[(VdBaseChainingSeparatorSignature, VdBsqExprFld<'sess>)],
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let leader_equivalence = self.transcribe_expr_term_derivation(leader, hc);
-        let follower_equivalences = followers
+        let leader = self.transcribe_expr_term_derivation(leader, hc);
+        let followers = followers
             .iter()
             .map(|&(func, follower)| (func, self.transcribe_expr_term_derivation(follower, hc)))
             .collect::<Vec<_>>();
-        match follower_equivalences.len() {
+        match followers.len() {
             0 => unreachable!(),
             1 => {
-                let follower = followers[0].1;
-                let (signature, follower_equivalence) = follower_equivalences[0];
+                let (signature, follower) = followers[0];
                 self.transcribe_trivial_chaining_separated_list_term_derivation_construction(
-                    leader,
-                    leader_equivalence,
-                    signature,
-                    follower,
-                    follower_equivalence,
-                    hc,
+                    leader, signature, follower, hc,
                 )
             }
             _ => todo!(),
@@ -36,11 +30,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_trivial_chaining_separated_list_term_derivation_construction(
         &mut self,
-        leader: VdBsqExprFld<'sess>,
-        leader_equivalence: VdMirDerivationIdx,
+        leader: VdBsqExprNf<'sess>,
         signature: VdBaseChainingSeparatorSignature,
-        follower: VdBsqExprFld<'sess>,
-        follower_equivalence: VdMirDerivationIdx,
+        follower: VdBsqExprNf<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         match signature.separator() {
@@ -48,13 +40,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdMirBaseChainingSeparator::Relation(separator) => match separator {
                 VdMirBaseRelationSeparator::Comparison(separator) => self
                     .transcribe_comparison_chaining_separated_list_term_derivation_construction(
-                        leader,
-                        leader_equivalence,
-                        signature,
-                        separator,
-                        follower,
-                        follower_equivalence,
-                        hc,
+                        leader, signature, separator, follower, hc,
                     ),
                 VdMirBaseRelationSeparator::Containment(separator) => todo!(),
             },
@@ -63,24 +49,16 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_comparison_chaining_separated_list_term_derivation_construction(
         &mut self,
-        leader: VdBsqExprFld<'sess>,
-        leader_equivalence: VdMirDerivationIdx,
+        leader: VdBsqExprNf<'sess>,
         signature: VdBaseChainingSeparatorSignature,
         separator: VdMirBaseComparisonSeparator,
-        follower: VdBsqExprFld<'sess>,
-        follower_equivalence: VdMirDerivationIdx,
+        follower: VdBsqExprNf<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         let db = self.eterner_db();
         if leader.ty().is_numeric(db) {
             self.transcribe_num_comparison_chaining_separated_list_term_derivation_construction(
-                leader,
-                leader_equivalence,
-                signature,
-                separator,
-                follower,
-                follower_equivalence,
-                hc,
+                leader, signature, separator, follower, hc,
             )
         } else {
             todo!()
@@ -89,17 +67,17 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_num_comparison_chaining_separated_list_term_derivation_construction(
         &mut self,
-        lhs: VdBsqExprFld<'sess>,
-        leader_equivalence: VdMirDerivationIdx,
+        leader: VdBsqExprNf<'sess>,
         signature: VdBaseChainingSeparatorSignature,
         separator: VdMirBaseComparisonSeparator,
-        rhs: VdBsqExprFld<'sess>,
-        follower_equivalence: VdMirDerivationIdx,
+        follower: VdBsqExprNf<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let lhs_minus_rhs = self.mk_sub(lhs, rhs, None, hc);
+        let leader_minus_follower = self.mk_sub(*leader, *follower, None, hc);
         VdMirTermDerivationConstruction::NumComparison {
-            lhs_minus_rhs: self.transcribe_expr_term_derivation(lhs_minus_rhs, hc),
+            lhs_minus_rhs: self
+                .transcribe_expr_term_derivation(leader_minus_follower, hc)
+                .derivation(),
         }
     }
 }

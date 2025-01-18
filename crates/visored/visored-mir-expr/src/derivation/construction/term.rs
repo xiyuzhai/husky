@@ -10,13 +10,39 @@ use visored_signature::signature::separator::base::chaining::VdBaseChainingSepar
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdMirTermDerivationConstruction {
     Reflection,
-    NumComparison { lhs_minus_rhs: VdMirDerivationIdx },
-    SubEqsAddNeg { add_neg: VdMirDerivationIdx },
+    NumComparison {
+        lhs_minus_rhs: VdMirTermDerivationIdx,
+    },
+    SubEqsAddNeg {
+        add_neg: VdMirTermDerivationIdx,
+    },
     AdditionInterchange,
     AdditionAssociativity,
     AdditionIdentity,
     AdditionInverse,
     AdditionDistributivity,
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+pub struct VdMirTermDerivationIdx(VdMirDerivationIdx);
+
+impl std::ops::Deref for VdMirTermDerivationIdx {
+    type Target = VdMirDerivationIdx;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
+    pub fn alloc_term_derivation(
+        &mut self,
+        prop: VdMirExprIdx,
+        construction: VdMirTermDerivationConstruction,
+    ) -> VdMirTermDerivationIdx {
+        let idx = self.alloc_derivation(prop, construction.into());
+        VdMirTermDerivationIdx(idx)
+    }
 }
 
 impl VdMirTermDerivationConstruction {

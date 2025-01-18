@@ -9,7 +9,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdMirTermDerivationConstruction {
         let add_neg = self.mk_add(lopd, self.mk_neg(ropd, None, hc), None, hc);
         VdMirTermDerivationConstruction::SubEqsAddNeg {
-            add_neg: self.transcribe_expr_term_derivation(add_neg, hc),
+            add_neg: self
+                .transcribe_expr_term_derivation(add_neg, hc)
+                .derivation(),
         }
     }
 }

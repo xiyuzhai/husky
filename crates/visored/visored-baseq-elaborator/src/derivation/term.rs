@@ -1,5 +1,6 @@
 pub mod chaining_separated_list;
 pub mod division;
+mod expr_nf;
 mod neg;
 pub mod power;
 mod product;
@@ -7,13 +8,17 @@ pub mod square_root;
 mod subtraction;
 mod sum;
 
+use self::expr_nf::*;
 use super::*;
 use expr::{VdBsqExprFld, VdBsqExprFldData};
 use smallvec::*;
 use visored_mir_expr::{
     derivation::{
         chunk::VdMirDerivationChunk,
-        construction::{term::VdMirTermDerivationConstruction, VdMirDerivationConstruction},
+        construction::{
+            term::{VdMirTermDerivationConstruction, VdMirTermDerivationIdx},
+            VdMirDerivationConstruction,
+        },
         VdMirDerivationIdx, VdMirDerivationIdxRange,
     },
     expr::{application::VdMirFunc, VdMirExprData, VdMirExprEntry, VdMirExprIdx},
@@ -23,28 +28,6 @@ use visored_mir_opr::{
     opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
     separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
 };
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-struct Nf<'sess> {
-    derivation: VdMirDerivationIdx,
-    expr: VdBsqExprFld<'sess>,
-}
-
-impl<'sess> Nf<'sess> {
-    fn new(derivation: VdMirDerivationIdx, expr: VdBsqExprFld<'sess>) -> Self {
-        Self { derivation, expr }
-    }
-}
-
-impl<'sess> Nf<'sess> {
-    fn expr(self) -> VdBsqExprFld<'sess> {
-        self.expr
-    }
-
-    fn derivation(self) -> VdMirDerivationIdx {
-        self.derivation
-    }
-}
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess>
 where
@@ -70,10 +53,10 @@ where
         &mut self,
         expr: VdBsqExprFld<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirDerivationIdx {
+    ) -> VdBsqExprNf<'sess> {
         let prop = self.transcribe_expr_term_derivation_prop(expr, hc);
         let construction = self.transcribe_expr_term_derivation_construction(expr, hc);
-        hc.alloc_derivation(prop, construction.into())
+        VdBsqExprNf::new(hc.alloc_term_derivation(prop, construction), expr)
     }
 
     fn transcribe_expr_term_derivation_prop(
