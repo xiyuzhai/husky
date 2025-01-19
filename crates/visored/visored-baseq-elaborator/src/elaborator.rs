@@ -239,6 +239,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqHypothesisResult<'sess, VdBsqHypothesisIdx<'sess>> {
         let divisor = self.expr_fld(divisor);
+        // TODO: use dispatch table
         let signature = if divisor.ty() == self.ty_menu().nat {
             self.signature_menu().nat_ne
         } else if divisor.ty() == self.ty_menu().int {
@@ -253,7 +254,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         let prop = self.mk_expr(
             VdBsqExprData::ChainingSeparatedList {
                 leader: divisor,
-                followers: smallvec![(signature, self.mk_zero(Some(divisor.ty())))],
+                followers: smallvec![(signature, self.mk_zero())],
                 joined_signature: None,
             },
             self.ty_menu().prop,

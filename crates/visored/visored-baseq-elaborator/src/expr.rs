@@ -280,7 +280,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         VdBsqExpr::new_inner(expr_data, ty, term, db)
     }
 
-    pub(crate) fn mk_zero(&self, expected_ty: Option<VdType>) -> VdBsqExpr<'sess> {
+    pub(crate) fn mk_zero(&self) -> VdBsqExpr<'sess> {
         self.mk_expr(
             VdBsqExprData::Literal(self.term_menu().zero),
             self.ty_menu().nat,

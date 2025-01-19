@@ -148,7 +148,6 @@ impl<'sess> VdBsqNumTerm<'sess> {
 impl<'db, 'sess> VdBsqNumTerm<'sess> {
     pub(crate) fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
