@@ -1,4 +1,5 @@
 use super::*;
+use visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator;
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 
 pub(super) fn check_literal_sum<'db, Src>(
@@ -17,6 +18,10 @@ pub(super) fn check_literal_sum<'db, Src>(
     let &[(signature, follower)] = followers.as_slice() else {
         panic!()
     };
+    assert_eq!(
+        signature.separator(),
+        VdMirBaseFoldingSeparator::CommRingAdd
+    );
     let ropd = hc.literal(follower);
     let rhs = hc.literal(rhs);
     assert_eq!(&lopd.data().add(ropd.data()), rhs.data());
