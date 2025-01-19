@@ -8959,6 +8959,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "lisp-expr"
+version = "0.1.0"
+
+[[package]]
 name = "lisp-prelude"
 version = "0.1.0"
 

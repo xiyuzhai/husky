@@ -1,11 +1,10 @@
-use eterned::db::EternerDb;
-use husky_tree_utils::display::DisplayTree;
-
 use crate::{
     expr::{application::VdMirFunc, VdMirExprArenaRef, VdMirExprData, VdMirExprIdx},
     hint::{VdMirHintIdx, VdMirHintIdxRange},
     stmt::{VdMirStmtArenaRef, VdMirStmtData, VdMirStmtIdx, VdMirStmtIdxRange},
 };
+use eterned::db::EternerDb;
+use husky_tree_utils::display::DisplayTree;
 
 pub struct VdMirExprDisplayTreeBuilder<'a> {
     db: &'a EternerDb,
