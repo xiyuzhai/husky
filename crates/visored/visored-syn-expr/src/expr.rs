@@ -430,9 +430,8 @@ impl VdSynExprData {
                 token_idx_range,
                 literal,
             } => match literal.data() {
-                VdLiteralData::Integer(n) => n.to_string(),
-                VdLiteralData::Float(n) => n.to_string(),
-                VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
+                VdLiteralData::Int(n) => n.to_string(),
+                VdLiteralData::Frac(n) => n.to_string(),
             },
             VdSynExprData::Letter { letter, .. } => letter.latex_code().to_string(),
             VdSynExprData::BaseOpr { opr } => opr.latex_code().to_string(),

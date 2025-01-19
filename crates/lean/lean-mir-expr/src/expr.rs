@@ -81,7 +81,6 @@ impl LnMirExprData {
                         LnPrecedence::ATOM
                     }
                 }
-                LnLiteralData::Float(_) => todo!(),
             },
             LnMirExprData::Lambda { parameters, body } => todo!(),
             LnMirExprData::Application {

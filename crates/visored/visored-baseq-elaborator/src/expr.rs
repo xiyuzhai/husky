@@ -101,7 +101,7 @@ impl<'sess> VdBsqExprFld<'sess> {
 
                     match arguments[1].data() {
                         VdBsqExprFldData::Literal(literal) => match *literal.data() {
-                            VdLiteralData::Integer(ref i)
+                            VdLiteralData::Int(ref i)
                                 if let Some(i) = i.to_i128()
                                     && i >= 0
                                     && i < 10 =>
@@ -303,7 +303,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdBsqExprFld<'sess> {
         let db = self.session().eterner_db();
         let lit = match litnum {
-            VdBsqLitnumTerm::Int128(i) => VdLiteral::new(VdLiteralData::Integer(i.into()), db),
+            VdBsqLitnumTerm::Int128(i) => VdLiteral::new(VdLiteralData::Int(i.into()), db),
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
             VdBsqLitnumTerm::Frac128(vd_bsq_frac128) => todo!(),
         };

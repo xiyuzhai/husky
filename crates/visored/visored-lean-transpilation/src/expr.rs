@@ -97,12 +97,11 @@ where
         match *self.expr_arena()[expr].data() {
             VdMirExprData::Literal(literal) => {
                 let needs_ty_ascription = match *literal.data() {
-                    VdLiteralData::Integer(ref i) => match i.sign() {
+                    VdLiteralData::Int(ref i) => match i.sign() {
                         VdSign::Minus => true,
                         VdSign::Plus | VdSign::NoSign => false,
                     },
-                    VdLiteralData::Float(_) => todo!(),
-                    VdLiteralData::SpecialConstant(_) => todo!(),
+                    VdLiteralData::Frac(_) => todo!(),
                 };
                 (
                     LnMirExprData::Literal(to_lean_literal(literal, self.db())),
@@ -149,12 +148,11 @@ where
 #[eterned::memo]
 fn to_lean_literal(literal: VdLiteral, db: &EternerDb) -> LnLiteral {
     let data = match *literal.data() {
-        VdLiteralData::Integer(ref i) => match i.sign() {
+        VdLiteralData::Int(ref i) => match i.sign() {
             VdSign::Minus => LnLiteralData::Int(i.to_string()),
             VdSign::Plus | VdSign::NoSign => LnLiteralData::Nat(i.to_string()),
         },
-        VdLiteralData::Float(ref lit) => LnLiteralData::Float(lit.to_string()),
-        VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
+        VdLiteralData::Frac(ref lit) => todo!(),
     };
     LnLiteral::new(data, db)
 }

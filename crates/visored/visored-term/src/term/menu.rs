@@ -52,9 +52,9 @@ impl VdTermMenu {
             real_sqrt,
         } = *VD_ITEM_PATH_MENU;
 
-        let zero = VdLiteral::new(VdLiteralData::Integer(0.into()), db);
-        let one = VdLiteral::new(VdLiteralData::Integer(1.into()), db);
-        let two = VdLiteral::new(VdLiteralData::Integer(2.into()), db);
+        let zero = VdLiteral::new(VdLiteralData::Int(0.into()), db);
+        let one = VdLiteral::new(VdLiteralData::Int(1.into()), db);
+        let two = VdLiteral::new(VdLiteralData::Int(2.into()), db);
         let nat = VdTerm::new_item_path(nat.into(), db);
         let int = VdTerm::new_item_path(int.into(), db);
         let rat = VdTerm::new_item_path(rat.into(), db);

@@ -119,9 +119,8 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let db = self.floater_db();
         match *expr {
             VdBsqExprFldData::Literal(vd_literal) => match *vd_literal.data() {
-                VdLiteralData::Integer(ref n) => VdBsqBigInt::new_or_i128_ref(n, db).into(),
-                VdLiteralData::Float(_) => todo!(),
-                VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
+                VdLiteralData::Int(ref n) => VdBsqBigInt::new_or_i128_ref(n, db).into(),
+                VdLiteralData::Frac(ref frac) => todo!(),
             },
             VdBsqExprFldData::Variable(lx_math_letter, local_defn_idx) => {
                 if ty.is_numeric(self.eterner_db()) {

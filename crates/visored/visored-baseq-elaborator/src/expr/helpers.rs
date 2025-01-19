@@ -15,7 +15,7 @@ impl<'sess> VdBsqExprFld<'sess> {
         let VdBsqExprFldData::Literal(lit) = self.data() else {
             return false;
         };
-        let VdLiteralData::Integer(ref i1) = *lit.data() else {
+        let VdLiteralData::Int(ref i1) = *lit.data() else {
             return false;
         };
         i1.to_i128() == Some(i)

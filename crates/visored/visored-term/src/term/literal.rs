@@ -1,13 +1,11 @@
-pub mod bigint;
 pub mod frac;
-pub mod special_constant;
+pub mod int;
 
-use eterned::db::EternerDb;
-use num_bigint::Sign;
-
-use self::special_constant::VdSpecialConstant;
+use self::{frac::VdFrac, int::VdInt};
 use super::*;
 use crate::{menu::vd_ty_menu, ty::VdType};
+use eterned::db::EternerDb;
+use num_bigint::Sign;
 
 // #[salsa::derive_debug_with_db]
 // #[salsa::as_id]
@@ -34,29 +32,25 @@ impl std::fmt::Debug for VdLiteral {
 impl VdLiteral {
     pub fn show(self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.data() {
-            VdLiteralData::Integer(n) => write!(f, "{}", n),
-            VdLiteralData::Float(s) => write!(f, "{}", s),
-            VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
+            VdLiteralData::Int(n) => write!(f, "{}", n),
+            VdLiteralData::Frac(frac) => write!(f, "{}", frac),
         }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum VdLiteralData {
-    Integer(VdInteger),
-    Float(String),
-    SpecialConstant(VdSpecialConstant),
+    Int(VdInt),
+    Frac(VdFrac),
 }
 
-pub type VdInteger = num_bigint::BigInt;
 pub type VdSign = num_bigint::Sign;
 
 impl std::fmt::Display for VdLiteralData {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            VdLiteralData::Integer(n) => write!(f, "{}", n),
-            VdLiteralData::Float(n) => write!(f, "{}", n),
-            VdLiteralData::SpecialConstant(n) => todo!(),
+            VdLiteralData::Int(n) => write!(f, "{}", n),
+            VdLiteralData::Frac(frac) => write!(f, "{}", frac),
         }
     }
 }
@@ -67,7 +61,7 @@ impl VdLiteral {
     }
 
     pub fn new_int128(i: i128, db: &EternerDb) -> Self {
-        Self(VdTermId::new(VdLiteralData::Integer(i.into()).into(), db))
+        Self(VdTermId::new(VdLiteralData::Int(i.into()).into(), db))
     }
 
     pub fn data(self) -> &'static VdLiteralData {
@@ -86,11 +80,10 @@ fn zfc_literal_ty(literal: VdLiteral, db: &EternerDb) -> VdType {
     let data = literal.data();
     let menu = vd_ty_menu(db);
     match *data {
-        VdLiteralData::Integer(ref i) => match i.sign() {
+        VdLiteralData::Int(ref i) => match i.sign() {
             Sign::Minus => menu.int,
             Sign::NoSign | Sign::Plus => menu.nat,
         },
-        VdLiteralData::Float(_) => menu.rat,
-        VdLiteralData::SpecialConstant(special_constant) => todo!(),
+        VdLiteralData::Frac(_) => menu.rat,
     }
 }

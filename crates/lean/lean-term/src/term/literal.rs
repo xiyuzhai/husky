@@ -16,7 +16,6 @@ impl std::fmt::Debug for LnLiteral {
 pub enum LnLiteralData {
     Nat(String),
     Int(String),
-    Float(String),
 }
 
 impl LnLiteral {
@@ -43,7 +42,6 @@ impl LnLiteralData {
         match self {
             LnLiteralData::Nat(s) => s,
             LnLiteralData::Int(s) => s,
-            LnLiteralData::Float(s) => s,
         }
     }
 }

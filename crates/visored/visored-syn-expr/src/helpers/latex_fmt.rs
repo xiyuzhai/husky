@@ -106,13 +106,12 @@ impl<'a> VdSynExprLaTeXFormatter<'a> {
         let db = self.db();
         match self.expr_arena[expr_idx] {
             VdSynExprData::Literal { literal, .. } => match literal.data() {
-                VdLiteralData::Integer(n) => {
+                VdLiteralData::Int(n) => {
                     self.result.push_str(&n.to_string());
                 }
-                VdLiteralData::Float(_) => {
+                VdLiteralData::Frac(_) => {
                     todo!()
                 }
-                VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
             },
             VdSynExprData::Letter { letter, .. } => {
                 self.result += &letter.latex_code();
