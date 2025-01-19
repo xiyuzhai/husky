@@ -34,6 +34,8 @@ pub enum VdMirTermDerivationConstruction {
     AdditionInverse,
     AdditionDistributivity,
     NegLiteral,
+    /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a constant
+    AtomAddConstant,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -114,6 +116,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(lhs, signature, rhs, lopd, ropd, merge, hc),
+            VdMirTermDerivationConstruction::AtomAddConstant => todo!(),
         }
     }
 }
