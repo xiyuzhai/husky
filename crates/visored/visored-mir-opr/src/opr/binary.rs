@@ -43,3 +43,9 @@ impl VdMirBaseBinaryOpr {
         }
     }
 }
+
+impl std::fmt::Display for VdMirBaseBinaryOpr {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.unicode())
+    }
+}

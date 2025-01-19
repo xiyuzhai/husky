@@ -66,6 +66,10 @@ impl VdBaseBinaryOprSignature {
         self.instantiation
     }
 
+    pub fn opr(self) -> VdMirBaseBinaryOpr {
+        self.opr
+    }
+
     pub fn lopd_ty(self) -> VdType {
         self.lopd_ty
     }

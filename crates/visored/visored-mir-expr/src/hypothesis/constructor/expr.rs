@@ -77,12 +77,13 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         }
     }
 
+    #[track_caller]
     pub fn split_trivial_chaining_separated_list(
         &mut self,
-        lhs: VdMirExprIdx,
+        expr: VdMirExprIdx,
         separator: VdMirBaseChainingSeparator,
     ) -> (VdMirExprIdx, VdMirExprIdx) {
-        match *self.expr_arena[lhs].data() {
+        match *self.expr_arena[expr].data() {
             VdMirExprData::ChainingSeparatedList {
                 leader,
                 ref followers,
@@ -97,7 +98,11 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     _ => todo!(),
                 }
             }
-            _ => unreachable!(),
+            _ => unreachable!(
+                "try to split non-separated list: `{:?}` with lisp form: `{}`",
+                self.expr_arena[expr].data(),
+                self.show_expr_lisp(expr)
+            ),
         }
     }
 }

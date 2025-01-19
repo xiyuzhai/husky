@@ -75,3 +75,9 @@ impl VdMirBaseSeparator {
         f.write_str(self.unicode())
     }
 }
+
+impl std::fmt::Display for VdMirBaseSeparator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.show_fmt(f)
+    }
+}

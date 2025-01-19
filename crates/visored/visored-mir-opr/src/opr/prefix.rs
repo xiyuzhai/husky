@@ -19,4 +19,17 @@ impl VdMirBasePrefixOpr {
             _ => todo!(),
         }
     }
+
+    pub fn unicode(self) -> &'static str {
+        match self {
+            VdMirBasePrefixOpr::RING_POS => "+",
+            VdMirBasePrefixOpr::RING_NEG => "-",
+        }
+    }
+}
+
+impl std::fmt::Display for VdMirBasePrefixOpr {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.unicode())
+    }
 }

@@ -46,7 +46,7 @@ impl<'a> VdMirExprLispShowExprBuilder<'a> {
                 function,
                 arguments,
             } => {
-                let mut args = Vec::new();
+                let mut args = vec![self.render_func(function)];
                 for arg in arguments {
                     args.push(self.render_expr(arg));
                 }
@@ -76,6 +76,22 @@ impl<'a> VdMirExprLispShowExprBuilder<'a> {
                 LispShowExpr::List(args)
             }
             VdMirExprData::ItemPath(vd_item_path) => LispShowExpr::String(vd_item_path.to_string()),
+        }
+    }
+
+    fn render_func(&self, func: VdMirFunc) -> LispShowExpr {
+        match func {
+            VdMirFunc::NormalBasePrefixOpr(signature) => {
+                LispShowExpr::String(signature.opr().to_string())
+            }
+            VdMirFunc::NormalBaseSeparator(signature) => {
+                LispShowExpr::String(signature.separator().to_string())
+            }
+            VdMirFunc::NormalBaseBinaryOpr(signature) => {
+                LispShowExpr::String(signature.opr().to_string())
+            }
+            VdMirFunc::Power(signature) => LispShowExpr::String("**".to_string()),
+            VdMirFunc::NormalBaseSqrt(signature) => LispShowExpr::String("√".to_string()),
         }
     }
 }
