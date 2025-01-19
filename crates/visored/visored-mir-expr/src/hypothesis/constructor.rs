@@ -5,18 +5,19 @@ use std::any::Any;
 
 use super::{
     chunk::VdMirHypothesisChunk, construction::VdMirHypothesisConstruction, VdMirHypothesisArena,
-    VdMirHypothesisIdx,
+    VdMirHypothesisArenaRef, VdMirHypothesisIdx,
 };
 use crate::{
     derivation::{
         chunk::VdMirDerivationChunk, construction::VdMirDerivationConstruction,
-        VdMirDerivationArena, VdMirDerivationEntry, VdMirDerivationIdx, VdMirDerivationIdxRange,
+        VdMirDerivationArena, VdMirDerivationArenaRef, VdMirDerivationEntry, VdMirDerivationIdx,
+        VdMirDerivationIdxRange,
     },
     expr::{
         VdMirExprArena, VdMirExprArenaRef, VdMirExprData, VdMirExprEntry, VdMirExprIdx,
         VdMirExprIdxRange,
     },
-    hint::VdMirHintArena,
+    hint::{VdMirHintArena, VdMirHintArenaRef},
     hypothesis::{VdMirHypothesisEntry, VdMirHypothesisIdxRange},
     region::VdMirExprRegionDataRef,
     stmt::{VdMirStmtArena, VdMirStmtArenaRef, VdMirStmtIdx},
@@ -99,6 +100,22 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
 
     pub fn stmt_arena_mut(&mut self) -> &mut VdMirStmtArena {
         &mut self.stmt_arena
+    }
+
+    pub fn hint_arena(&self) -> VdMirHintArenaRef {
+        self.hint_arena.as_arena_ref()
+    }
+
+    pub fn hypothesis_arena(&self) -> VdMirHypothesisArenaRef {
+        self.hypothesis_arena.as_arena_ref()
+    }
+
+    pub fn derivation_arena(&self) -> &VdMirDerivationArena {
+        &self.derivation_arena
+    }
+
+    pub fn derivation_arena_ref(&self) -> VdMirDerivationArenaRef {
+        self.derivation_arena.as_arena_ref()
     }
 
     pub fn region_data(&self) -> VdMirExprRegionDataRef {

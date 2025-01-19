@@ -57,8 +57,28 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     }
 }
 
+impl VdMirTermDerivationIdx {
+    pub fn prop<'db, 'a, Src>(self, hc: &'a VdMirHypothesisConstructor<'db, Src>) -> VdMirExprIdx {
+        hc.derivation_arena()[*self].prop()
+    }
+
+    pub fn construction<'db, 'a, Src>(
+        self,
+        hc: &'a VdMirHypothesisConstructor<'db, Src>,
+    ) -> &'a VdMirTermDerivationConstruction {
+        match hc.derivation_arena()[*self].construction() {
+            VdMirDerivationConstruction::Ring(_) => unreachable!(),
+            VdMirDerivationConstruction::Term(construction) => construction,
+        }
+    }
+}
+
 impl VdMirTermDerivationConstruction {
-    pub fn check<'db, Src>(&self, prop: VdMirExprIdx, hc: &VdMirHypothesisConstructor<'db, Src>) {
+    pub fn check<'db, Src>(
+        &self,
+        prop: VdMirExprIdx,
+        hc: &mut VdMirHypothesisConstructor<'db, Src>,
+    ) {
         let expr_arena = hc.expr_arena();
         let VdMirExprData::ChainingSeparatedList {
             leader: lhs,

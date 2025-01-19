@@ -1,3 +1,7 @@
+use visored_mir_opr::separator::{
+    chaining::VdMirBaseChainingSeparator, folding::VdMirBaseFoldingSeparator,
+};
+
 use super::*;
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
@@ -28,5 +32,53 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         expected_ty: Option<VdType>,
     ) -> VdMirExprIdx {
         todo!()
+    }
+
+    #[track_caller]
+    pub fn split_folding_separated_list(
+        &mut self,
+        lhs: VdMirExprIdx,
+        separator: VdMirBaseFoldingSeparator,
+    ) -> (VdMirExprIdx, VdMirExprIdx) {
+        match *self.expr_arena[lhs].data() {
+            VdMirExprData::FoldingSeparatedList {
+                leader,
+                ref followers,
+            } => {
+                for (signature, _) in followers {
+                    assert_eq!(separator, signature.separator());
+                }
+                match followers.len() {
+                    0 => unreachable!(),
+                    1 => (leader, followers[0].1),
+                    _ => todo!(),
+                }
+            }
+            _ => unreachable!(),
+        }
+    }
+
+    pub fn split_trivial_chaining_separated_list(
+        &mut self,
+        lhs: VdMirExprIdx,
+        separator: VdMirBaseChainingSeparator,
+    ) -> (VdMirExprIdx, VdMirExprIdx) {
+        match *self.expr_arena[lhs].data() {
+            VdMirExprData::ChainingSeparatedList {
+                leader,
+                ref followers,
+                joined_signature: None,
+            } => {
+                for (signature, _) in followers {
+                    assert_eq!(separator, signature.separator());
+                }
+                match followers.len() {
+                    0 => unreachable!(),
+                    1 => (leader, followers[0].1),
+                    _ => todo!(),
+                }
+            }
+            _ => unreachable!(),
+        }
     }
 }

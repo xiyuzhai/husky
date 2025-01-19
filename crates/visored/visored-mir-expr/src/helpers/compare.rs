@@ -1,5 +1,18 @@
 use crate::expr::{VdMirExprArenaRef, VdMirExprData, VdMirExprIdx};
 
+#[macro_use]
+macro_rules! assert_deep_eq {
+    ($a:expr, $b:expr, $hc:expr) => {
+        assert!($crate::helpers::compare::vd_mir_expr_deep_eq(
+            $a,
+            $b,
+            $hc.expr_arena()
+        ));
+    };
+}
+
+pub(crate) use assert_deep_eq;
+
 pub fn vd_mir_expr_deep_eq(a: VdMirExprIdx, b: VdMirExprIdx, arena: VdMirExprArenaRef) -> bool {
     if a == b {
         return true;

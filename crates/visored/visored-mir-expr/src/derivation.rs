@@ -23,7 +23,7 @@ impl VdMirDerivationEntry {
     pub fn new<'db, Src>(
         prop: VdMirExprIdx,
         construction: VdMirDerivationConstruction,
-        hc: &VdMirHypothesisConstructor<'db, Src>,
+        hc: &mut VdMirHypothesisConstructor<'db, Src>,
     ) -> Self {
         construction.check(prop, hc);
         Self { prop, construction }

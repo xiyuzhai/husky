@@ -13,7 +13,11 @@ pub enum VdMirDerivationConstruction {
 }
 
 impl VdMirDerivationConstruction {
-    pub fn check<'db, Src>(&self, prop: VdMirExprIdx, hc: &VdMirHypothesisConstructor<'db, Src>) {
+    pub fn check<'db, Src>(
+        &self,
+        prop: VdMirExprIdx,
+        hc: &mut VdMirHypothesisConstructor<'db, Src>,
+    ) {
         match self {
             VdMirDerivationConstruction::Ring(construction) => construction.check(prop, hc),
             VdMirDerivationConstruction::Term(construction) => construction.check(prop, hc),
