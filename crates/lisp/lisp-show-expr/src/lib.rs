@@ -1,13 +1,13 @@
-pub enum LispExpr {
+pub enum LispShowExpr {
     String(String),
-    List(Vec<LispExpr>),
+    List(Vec<LispShowExpr>),
 }
 
-impl LispExpr {
+impl LispShowExpr {
     pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            LispExpr::String(s) => write!(f, "{}", s),
-            LispExpr::List(list) => {
+            LispShowExpr::String(s) => write!(f, "{}", s),
+            LispShowExpr::List(list) => {
                 write!(f, "(")?;
                 let mut first = true;
                 for e in list {
@@ -23,7 +23,7 @@ impl LispExpr {
     }
 }
 
-impl std::fmt::Display for LispExpr {
+impl std::fmt::Display for LispShowExpr {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.show_fmt(f)
     }
@@ -35,33 +35,33 @@ mod tests {
 
     #[test]
     fn test_string_display() {
-        let expr = LispExpr::String("hello".to_string());
+        let expr = LispShowExpr::String("hello".to_string());
         assert_eq!(expr.to_string(), "hello");
     }
 
     #[test]
     fn test_empty_list_display() {
-        let expr = LispExpr::List(vec![]);
+        let expr = LispShowExpr::List(vec![]);
         assert_eq!(expr.to_string(), "()");
     }
 
     #[test]
     fn test_simple_list_display() {
-        let expr = LispExpr::List(vec![
-            LispExpr::String("a".to_string()),
-            LispExpr::String("b".to_string()),
-            LispExpr::String("c".to_string()),
+        let expr = LispShowExpr::List(vec![
+            LispShowExpr::String("a".to_string()),
+            LispShowExpr::String("b".to_string()),
+            LispShowExpr::String("c".to_string()),
         ]);
         assert_eq!(expr.to_string(), "(a b c)");
     }
 
     #[test]
     fn test_nested_list_display() {
-        let expr = LispExpr::List(vec![
-            LispExpr::String("define".to_string()),
-            LispExpr::List(vec![
-                LispExpr::String("x".to_string()),
-                LispExpr::String("42".to_string()),
+        let expr = LispShowExpr::List(vec![
+            LispShowExpr::String("define".to_string()),
+            LispShowExpr::List(vec![
+                LispShowExpr::String("x".to_string()),
+                LispShowExpr::String("42".to_string()),
             ]),
         ]);
         assert_eq!(expr.to_string(), "(define (x 42))");

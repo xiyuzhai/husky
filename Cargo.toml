@@ -406,6 +406,7 @@ husky-mono-linktime = { path = "crates/linktime/husky-mono-linktime" }
 husky-virtual-linktime = { path = "crates/linktime/husky-virtual-linktime" }
 # lisp
 lisp-csv = { path = "crates/lisp/lisp-csv" }
+lisp-show-expr = { path = "crates/lisp/lisp-show-expr" }
 # llms
 llm-prelude = { path = "crates/llms/llm-prelude" }
 all-llms = { path = "crates/llms/all-llms" }

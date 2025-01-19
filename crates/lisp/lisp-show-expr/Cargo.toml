@@ -1,5 +1,5 @@
 [package]
-name = "lisp-expr"
+name = "lisp-show-expr"
 version.workspace = true
 rust-version.workspace = true
 authors.workspace = true

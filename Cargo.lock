@@ -8959,11 +8959,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "lisp-expr"
+name = "lisp-prelude"
 version = "0.1.0"
 
 [[package]]
-name = "lisp-prelude"
+name = "lisp-show-expr"
 version = "0.1.0"
 
 [[package]]
@@ -13628,6 +13628,7 @@ dependencies = [
  "latex-token",
  "latex-vfs",
  "lazy_static 1.5.0",
+ "lisp-show-expr",
  "once-place",
  "rustc-hash 2.0.0",
  "salsa",

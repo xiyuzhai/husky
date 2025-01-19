@@ -21,6 +21,12 @@ impl std::ops::Deref for VdLiteral {
     }
 }
 
+impl std::fmt::Display for VdLiteral {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.show(f)
+    }
+}
+
 impl std::fmt::Debug for VdLiteral {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("VdLiteral(")?;

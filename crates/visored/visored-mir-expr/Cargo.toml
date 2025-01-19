@@ -28,6 +28,8 @@ latex-environment.workspace = true
 latex-math-letter.workspace = true
 latex-prelude.workspace = true
 latex-token.workspace = true
+# lisp
+lisp-show-expr.workspace = true
 # utils
 husky-print-utils.workspace = true
 husky-tree-utils.workspace = true

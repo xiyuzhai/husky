@@ -20,6 +20,12 @@ pub enum VdItemPath {
     TraitItem(VdTraitItemPath),
 }
 
+impl std::fmt::Display for VdItemPath {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.show_fmt(f)
+    }
+}
+
 impl VdItemPath {
     // # prop
     pub const TRUE: Self = VdItemPath::Prop(VdPropPath::TRUE);

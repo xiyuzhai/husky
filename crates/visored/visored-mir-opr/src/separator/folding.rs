@@ -8,6 +8,12 @@ pub enum VdMirBaseFoldingSeparator {
     TensorOtimes,
 }
 
+impl std::fmt::Display for VdMirBaseFoldingSeparator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(self.unicode())
+    }
+}
+
 impl VdMirBaseFoldingSeparator {
     pub const COMM_RING_ADD: Self = VdMirBaseFoldingSeparator::CommRingAdd;
     pub const COMM_RING_MUL: Self = VdMirBaseFoldingSeparator::CommRingMul;
