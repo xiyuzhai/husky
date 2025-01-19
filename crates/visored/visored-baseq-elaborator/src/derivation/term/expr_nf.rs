@@ -14,9 +14,17 @@ impl<'sess> std::ops::Deref for VdBsqExprNf<'sess> {
     }
 }
 
-impl<'sess> VdBsqExprNf<'sess> {
-    pub(super) fn new(derivation: VdMirTermDerivationIdx, expr: VdBsqExpr<'sess>) -> Self {
-        Self { derivation, expr }
+impl<'db, 'sess> VdBsqExprNf<'sess> {
+    pub(super) fn new(
+        derivation: VdMirTermDerivationIdx,
+        expr: VdBsqExpr<'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> Self {
+        Self {
+            derivation,
+            expr: expr.term().expr(elr, hc),
+        }
     }
 }
 

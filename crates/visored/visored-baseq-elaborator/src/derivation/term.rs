@@ -56,7 +56,7 @@ where
     ) -> VdBsqExprNf<'sess> {
         let prop = self.transcribe_expr_term_derivation_prop(expr, hc);
         let construction = self.transcribe_expr_term_derivation_construction(expr, hc);
-        VdBsqExprNf::new(hc.alloc_term_derivation(prop, construction), expr)
+        VdBsqExprNf::new(hc.alloc_term_derivation(prop, construction), expr, self, hc)
     }
 
     fn transcribe_expr_term_derivation_prop(

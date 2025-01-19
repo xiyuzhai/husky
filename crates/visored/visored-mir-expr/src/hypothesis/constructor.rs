@@ -89,7 +89,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub fn literal(&self, idx: VdMirExprIdx) -> &VdLiteral {
         match self.expr_arena[idx].data() {
             VdMirExprData::Literal(vd_literal) => vd_literal,
-            _ => panic!(),
+            _ => panic!("expected literal, got `{:?}`", self.expr_arena[idx].data()),
         }
     }
 

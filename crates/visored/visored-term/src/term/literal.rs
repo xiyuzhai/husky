@@ -87,3 +87,15 @@ fn zfc_literal_ty(literal: VdLiteral, db: &EternerDb) -> VdType {
         VdLiteralData::Frac(_) => menu.rat,
     }
 }
+
+impl VdLiteralData {
+    pub fn add(&self, other: &Self) -> Self {
+        match self {
+            VdLiteralData::Int(slf) => match other {
+                VdLiteralData::Int(other) => VdLiteralData::Int(slf + other),
+                VdLiteralData::Frac(vd_frac) => todo!(),
+            },
+            VdLiteralData::Frac(vd_frac) => todo!(),
+        }
+    }
+}
