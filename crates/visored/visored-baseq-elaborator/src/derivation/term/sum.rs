@@ -8,17 +8,19 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         followers: &[(VdBaseFoldingSeparatorSignature, VdBsqExprFld<'sess>)],
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        for (signature, _) in followers {
-            assert_eq!(
-                signature.separator(),
-                VdMirBaseFoldingSeparator::CommRingAdd.into()
-            );
-        }
-        let leader_equivalence = self.transcribe_expr_term_derivation(leader, hc);
-        let follower_equivalences = followers
-            .iter()
-            .map(|&(func, follower)| (func, self.transcribe_expr_term_derivation(follower, hc)))
-            .collect::<Vec<_>>();
+        use husky_print_utils::*;
+        p!(leader, followers);
+        // for (signature, _) in followers {
+        //     assert_eq!(
+        //         signature.separator(),
+        //         VdMirBaseFoldingSeparator::CommRingAdd.into()
+        //     );
+        // }
+        // let leader_equivalence = self.transcribe_expr_term_derivation(leader, hc);
+        // let follower_equivalences = followers
+        //     .iter()
+        //     .map(|&(func, follower)| (func, self.transcribe_expr_term_derivation(follower, hc)))
+        //     .collect::<Vec<_>>();
         todo!()
     }
 }
