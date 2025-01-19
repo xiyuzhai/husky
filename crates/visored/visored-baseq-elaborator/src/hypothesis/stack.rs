@@ -1,5 +1,5 @@
 use super::*;
-use crate::term::{num::VdBsqNumTerm, VdBsqTerm};
+use crate::term::{num::VdBsqNumTerm, prop::VdBsqPropTerm, VdBsqTerm};
 use crate::{hypothesis::stashes::VdBsqHypothesisStashes, term::litnum::VdBsqLitnumTerm};
 use floated_sequential::db::FloaterDb;
 use rustc_hash::FxHashMap;
@@ -119,10 +119,12 @@ impl<'sess> VdBsqHypothesisStack<'sess> {
             .then_some(record.hypothesis_idx)
     }
 
-    pub(crate) fn get_active_hypothesis_with_term(
+    #[track_caller]
+    pub(crate) fn get_active_hypothesis_with_nontrivial_term(
         &self,
         term: VdBsqTerm<'sess>,
     ) -> Option<VdBsqHypothesisIdx<'sess>> {
+        assert!(term.is_nontrivial());
         let record = self.term_to_hypothesis_map.get(&term).copied()?;
         self.is_record_valid(record)
             .then_some(record.hypothesis_idx)
@@ -171,7 +173,11 @@ impl<'sess> VdBsqHypothesisStack<'sess> {
     ) {
         let term = entry.expr().term();
         // only add the hypothesis to the term map if the term is not already present
-        if self.get_active_hypothesis_with_term(term).is_none() {
+        if term.is_nontrivial()
+            && self
+                .get_active_hypothesis_with_nontrivial_term(term)
+                .is_none()
+        {
             self.term_to_hypothesis_map.insert(term, record);
         }
     }

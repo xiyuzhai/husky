@@ -1,10 +1,9 @@
-pub mod assumption;
+pub mod assumption_or_trivial;
 pub mod comm_ring;
 pub mod kurapika;
 pub mod library_search;
 pub mod litnum_estimate;
 pub mod litnum_reduce;
-pub mod term_trivial;
 
 use crate::{
     elaborator::VdBsqElaboratorInner,
@@ -17,8 +16,7 @@ use miracle::HasMiracleFull;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdBsqTactic {
-    Assumption,
-    TermTrivial,
+    AssumptionOrTrivial,
     Kurapika,
     LibrarySearch,
     CommRing,
@@ -45,8 +43,7 @@ impl VdBsqTactic {
         elaborator: &mut VdBsqElaboratorInner<'db, 'sess>,
     ) -> Mhr<'sess> {
         match self {
-            VdBsqTactic::Assumption => elaborator.assumption(prop),
-            VdBsqTactic::TermTrivial => elaborator.term_trivial(prop),
+            VdBsqTactic::AssumptionOrTrivial => elaborator.assumption_or_trivial(prop),
             VdBsqTactic::Kurapika => elaborator.kurapika(prop),
             VdBsqTactic::LibrarySearch => elaborator.library_search(prop),
             VdBsqTactic::CommRing => elaborator.comm_ring(prop),

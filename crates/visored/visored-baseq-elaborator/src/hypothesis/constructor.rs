@@ -1,5 +1,8 @@
 use super::{stack::VdBsqHypothesisStack, *};
-use crate::{session::VdBsqSession, term::VdBsqTerm};
+use crate::{
+    session::VdBsqSession,
+    term::{prop::VdBsqPropTerm, VdBsqTerm},
+};
 use floated_sequential::db::FloaterDb;
 
 pub struct VdBsqHypothesisConstructor<'db, 'sess> {
@@ -58,15 +61,28 @@ impl<'db, 'sess> VdBsqHypothesisConstructor<'db, 'sess> {
     /// If an existing hypothesis is found with the same expression, return it directly.
     ///
     /// Otherwise, if an existing hypothesis is found with the same term, return a new hypothesis derived from it.
-    pub(crate) fn assumption(
+    pub(crate) fn assumption_or_trivial(
         &mut self,
-        expr: VdBsqExpr<'sess>,
+        prop: VdBsqExpr<'sess>,
     ) -> Option<VdBsqHypothesisIdx<'sess>> {
-        if let Some(hypothesis) = self.stack.get_active_hypothesis_with_expr(expr) {
+        if let Some(hypothesis) = self.stack.get_active_hypothesis_with_expr(prop) {
             Some(hypothesis)
-        } else if let Some(hypothesis) = self.stack.get_active_hypothesis_with_term(expr.term()) {
+        } else if let VdBsqTerm::Prop(VdBsqPropTerm::Trivial(b)) = prop.term() {
+            match b {
+                true => {
+                    Some(self.construct_new_hypothesis(
+                        prop,
+                        VdBsqHypothesisConstruction::TermTrivial(b),
+                    ))
+                }
+                false => todo!("raise error"),
+            }
+        } else if let Some(hypothesis) = self
+            .stack
+            .get_active_hypothesis_with_nontrivial_term(prop.term())
+        {
             let hypothesis = self.construct_new_hypothesis(
-                expr,
+                prop,
                 VdBsqHypothesisConstruction::TermEquivalence { hypothesis },
             );
             Some(hypothesis)

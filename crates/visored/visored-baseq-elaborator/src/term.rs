@@ -73,6 +73,21 @@ impl<'sess> VdBsqNumTerm<'sess> {
 }
 
 impl<'sess> VdBsqTerm<'sess> {
+    pub fn trivial(self) -> Option<bool> {
+        match self {
+            VdBsqTerm::Prop(VdBsqPropTerm::Trivial(b)) => Some(b),
+            _ => None,
+        }
+    }
+
+    pub fn is_trivial(self) -> bool {
+        self.trivial().is_some()
+    }
+
+    pub fn is_nontrivial(self) -> bool {
+        !self.is_trivial()
+    }
+
     pub fn num(self) -> Option<VdBsqNumTerm<'sess>> {
         match self {
             VdBsqTerm::Litnum(litnum) => Some(VdBsqNumTerm::Litnum(litnum)),

@@ -31,8 +31,7 @@ pub fn load_obvious_tactics() -> Vec<VdBsqTactic> {
     vec![
         // order matters!!!
         // assumption should always be the first tactic
-        VdBsqTactic::Assumption,
-        VdBsqTactic::TermTrivial,
+        VdBsqTactic::AssumptionOrTrivial,
         VdBsqTactic::Kurapika,
         VdBsqTactic::LitnumReduce,
         VdBsqTactic::LitnumEstimate,
