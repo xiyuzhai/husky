@@ -1,7 +1,8 @@
 mod neg;
+mod sub;
 pub mod sum;
 
-use self::{neg::*, sum::*};
+use self::{neg::*, sub::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx, expr::VdMirExprData, helpers::compare::vd_mir_expr_deep_eq,
@@ -141,16 +142,6 @@ fn check_reflection<'db, Src>(
 }
 
 fn check_num_comparison<'db, Src>(
-    leader: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    follower: VdMirExprIdx,
-    hc: &VdMirHypothesisConstructor<'db, Src>,
-) {
-    todo!()
-}
-
-/// obtain `a - b = term` from `a + (-b) = term`
-fn check_sub_eqs_add_neg<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,

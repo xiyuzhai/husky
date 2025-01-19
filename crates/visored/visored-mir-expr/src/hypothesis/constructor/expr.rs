@@ -15,6 +15,10 @@ macro_rules! ds {
         let ($lopd, $ropd) =
             $hc.split_trivial_chaining_separated_list($merge, VdMirBaseChainingSeparator::EQ);
     };
+    (let ($lopd: ident => $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) =
+            $hc.split_trivial_chaining_separated_list($merge, VdMirBaseChainingSeparator::EQ);
+    };
 }
 
 pub(crate) use ds;

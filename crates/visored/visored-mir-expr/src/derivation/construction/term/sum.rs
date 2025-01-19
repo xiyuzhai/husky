@@ -47,11 +47,11 @@ pub(super) fn check_add_eq<'db, Src>(
 ) {
     assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
     ds!(let (a + b) = lhs, hc);
-    ds!(let (a1 = term_a) = lopd.prop(hc), hc);
+    ds!(let (a1 => term_a) = lopd.prop(hc), hc);
     eq!(a1, a, hc);
-    ds!(let (b1 = term_b) = ropd.prop(hc), hc);
+    ds!(let (b1 => term_b) = ropd.prop(hc), hc);
     eq!(b1, b, hc);
-    ds!(let (merge_lhs = term1) = merge.prop(hc), hc);
+    ds!(let (merge_lhs => term1) = merge.prop(hc), hc);
     eq!(term1, term, hc);
     ds!(let (term_a1 + term_b1) = merge_lhs, hc);
     eq!(term_a1, term_a, hc);
