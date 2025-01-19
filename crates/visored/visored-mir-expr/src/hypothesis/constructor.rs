@@ -1,5 +1,5 @@
-mod expr;
-mod signature;
+pub mod expr;
+pub mod signature;
 
 use std::any::Any;
 

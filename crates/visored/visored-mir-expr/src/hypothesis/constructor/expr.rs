@@ -1,11 +1,23 @@
+use super::*;
+use crate::helpers::show::lisp_show_expr::VdMirExprLispShowExprBuilder;
 use lisp_show_expr::LispShowExpr;
 use visored_mir_opr::separator::{
     chaining::VdMirBaseChainingSeparator, folding::VdMirBaseFoldingSeparator,
 };
 
-use crate::helpers::show::lisp_show_expr::VdMirExprLispShowExprBuilder;
+#[macro_use]
+macro_rules! ds {
+    (let ($lopd: ident + $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) =
+            $hc.split_folding_separated_list($merge, VdMirBaseFoldingSeparator::COMM_RING_ADD);
+    };
+    (let ($lopd: ident = $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) =
+            $hc.split_trivial_chaining_separated_list($merge, VdMirBaseChainingSeparator::EQ);
+    };
+}
 
-use super::*;
+pub(crate) use ds;
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub fn mk_expr(&mut self, entry: VdMirExprEntry) -> VdMirExprIdx {

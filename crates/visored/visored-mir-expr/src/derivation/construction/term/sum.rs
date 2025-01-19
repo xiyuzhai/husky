@@ -1,4 +1,4 @@
-use crate::helpers::compare::assert_deep_eq;
+use crate::{helpers::compare::eq, hypothesis::constructor::expr::ds};
 
 use super::*;
 use visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator;
@@ -36,7 +36,7 @@ pub(super) fn check_add_eq<'db, Src>(
     lhs: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     // `term`
-    rhs: VdMirExprIdx,
+    term: VdMirExprIdx,
     // `a => term_a`
     lopd: VdMirTermDerivationIdx,
     // `b => term_b`
@@ -46,26 +46,14 @@ pub(super) fn check_add_eq<'db, Src>(
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
-    let (a, b) = hc.split_folding_separated_list(lhs, VdMirBaseFoldingSeparator::COMM_RING_ADD);
-    let term = rhs;
-    let (a1, term_a) =
-        hc.split_trivial_chaining_separated_list(lopd.prop(hc), VdMirBaseChainingSeparator::EQ);
-    assert_deep_eq!(a1, a, hc);
-    let (b1, term_b) =
-        hc.split_trivial_chaining_separated_list(ropd.prop(hc), VdMirBaseChainingSeparator::EQ);
-    assert_deep_eq!(
-        b1,
-        b,
-        hc,
-        "b1 = `{}`, b = `{}`",
-        hc.show_expr_lisp(b1),
-        hc.show_expr_lisp(b)
-    );
-    let (merge_lhs, term1) =
-        hc.split_trivial_chaining_separated_list(merge.prop(hc), VdMirBaseChainingSeparator::EQ);
-    assert_deep_eq!(term1, term, hc);
-    let (term_a1, term_b1) =
-        hc.split_folding_separated_list(merge_lhs, VdMirBaseFoldingSeparator::COMM_RING_ADD);
-    assert_deep_eq!(term_a1, term_a, hc);
-    assert_deep_eq!(term_b1, term_b, hc);
+    ds!(let (a + b) = lhs, hc);
+    ds!(let (a1 = term_a) = lopd.prop(hc), hc);
+    eq!(a1, a, hc);
+    ds!(let (b1 = term_b) = ropd.prop(hc), hc);
+    eq!(b1, b, hc);
+    ds!(let (merge_lhs = term1) = merge.prop(hc), hc);
+    eq!(term1, term, hc);
+    ds!(let (term_a1 + term_b1) = merge_lhs, hc);
+    eq!(term_a1, term_a, hc);
+    eq!(term_b1, term_b, hc);
 }
