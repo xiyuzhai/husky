@@ -1,6 +1,6 @@
 use crate::{
     call::stack::VdBsqCallStack,
-    expr::{VdBsqExprData, VdBsqExprFld},
+    expr::{VdBsqExprData, VdBsqExpr},
     hypothesis::{
         construction::VdBsqHypothesisConstruction,
         constructor::VdBsqHypothesisConstructor,
@@ -55,7 +55,7 @@ pub struct VdBsqElaboratorInner<'db, 'sess> {
     term_menu: &'db VdTermMenu,
     ty_menu: &'db VdTypeMenu,
     signature_menu: &'db VdSignatureMenu,
-    expr_to_fld_map: VdMirExprMap<VdBsqExprFld<'sess>>,
+    expr_to_fld_map: VdMirExprMap<VdBsqExpr<'sess>>,
     miracle: Miracle,
     pub(crate) hc: VdBsqHypothesisConstructor<'db, 'sess>,
     pub(crate) call_stack: VdBsqCallStack,
@@ -125,17 +125,17 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 
     #[track_caller]
-    pub fn expr_fld(&self, expr: VdMirExprIdx) -> VdBsqExprFld<'sess> {
+    pub fn expr_fld(&self, expr: VdMirExprIdx) -> VdBsqExpr<'sess> {
         self.expr_to_fld_map[expr]
     }
 
-    pub(crate) fn expr_to_fld_map(&self) -> &VdMirExprMap<VdBsqExprFld<'sess>> {
+    pub(crate) fn expr_to_fld_map(&self) -> &VdMirExprMap<VdBsqExpr<'sess>> {
         &self.expr_to_fld_map
     }
 }
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn save_expr_fld(&mut self, expr: VdMirExprIdx, fld: VdBsqExprFld<'sess>) {
+    pub(crate) fn save_expr_fld(&mut self, expr: VdMirExprIdx, fld: VdBsqExpr<'sess>) {
         self.expr_to_fld_map.insert_new(expr, fld);
     }
 }
@@ -318,7 +318,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         }
     }
 
-    pub fn run_obvious(&mut self, prop: VdBsqExprFld<'sess>) -> Hr<'sess> {
+    pub fn run_obvious(&mut self, prop: VdBsqExpr<'sess>) -> Hr<'sess> {
         self.run(|slf| slf.obvious(prop))
     }
 }

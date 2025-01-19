@@ -60,7 +60,7 @@ impl<'db, 'sess> VdBsqHypothesisConstructor<'db, 'sess> {
     /// Otherwise, if an existing hypothesis is found with the same term, return a new hypothesis derived from it.
     pub(crate) fn assumption(
         &mut self,
-        expr: VdBsqExprFld<'sess>,
+        expr: VdBsqExpr<'sess>,
     ) -> Option<VdBsqHypothesisIdx<'sess>> {
         if let Some(hypothesis) = self.stack.get_active_hypothesis_with_expr(expr) {
             Some(hypothesis)
@@ -77,7 +77,7 @@ impl<'db, 'sess> VdBsqHypothesisConstructor<'db, 'sess> {
 
     pub(crate) fn construct_new_hypothesis(
         &mut self,
-        prop: VdBsqExprFld<'sess>,
+        prop: VdBsqExpr<'sess>,
         construction: VdBsqHypothesisConstruction<'sess>,
     ) -> VdBsqHypothesisIdx<'sess> {
         let hypothesis_idx = self

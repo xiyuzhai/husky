@@ -3,7 +3,7 @@ use crate::tactic::VdBsqTactic;
 use alt_maybe_result::*;
 use alt_option::*;
 use elaborator::VdBsqElaboratorInner;
-use expr::VdBsqExprFld;
+use expr::VdBsqExpr;
 use hypothesis::{
     construction::VdBsqHypothesisConstruction, contradiction::VdBsqHypothesisResult,
     VdBsqHypothesisIdx,
@@ -11,11 +11,11 @@ use hypothesis::{
 use visored_mir_expr::{expr::VdMirExprIdx, hint::VdMirHintIdx, stmt::VdMirStmtIdx};
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub fn obvious(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    pub fn obvious(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         self.with_call(VdBsqStrategyCall::Obvious, |slf| slf.obvious_inner(prop))
     }
 
-    fn obvious_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    fn obvious_inner(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         for tactic in self.session().obvious_tactics() {
             tactic.run(prop, self)?
         }

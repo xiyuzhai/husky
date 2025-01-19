@@ -34,14 +34,14 @@ use crate::{
 };
 
 #[floated]
-pub struct VdBsqExprFld<'sess> {
+pub struct VdBsqExpr<'sess> {
     #[return_ref]
     pub data: VdBsqExprData<'sess>,
     pub ty: VdType,
     pub term: VdBsqTerm<'sess>,
 }
 
-impl<'sess> std::fmt::Debug for VdBsqExprFld<'sess> {
+impl<'sess> std::fmt::Debug for VdBsqExpr<'sess> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("VdMirExprFld(`")?;
         self.show_fmt(VdPrecedenceRange::ANY, f)?;
@@ -49,7 +49,7 @@ impl<'sess> std::fmt::Debug for VdBsqExprFld<'sess> {
     }
 }
 
-impl<'sess> VdBsqExprFld<'sess> {
+impl<'sess> VdBsqExpr<'sess> {
     pub fn show_fmt(
         self,
         precedence_range: VdPrecedenceRange,
@@ -169,22 +169,22 @@ pub enum VdBsqExprData<'sess> {
         arguments: VdMirExprFlds<'sess>,
     },
     FoldingSeparatedList {
-        leader: VdBsqExprFld<'sess>,
+        leader: VdBsqExpr<'sess>,
         /// TODO: should we use VdBaseSeparatorSignature instead?
-        followers: SmallVec<[(VdBaseFoldingSeparatorSignature, VdBsqExprFld<'sess>); 4]>,
+        followers: SmallVec<[(VdBaseFoldingSeparatorSignature, VdBsqExpr<'sess>); 4]>,
     },
     ChainingSeparatedList {
-        leader: VdBsqExprFld<'sess>,
-        followers: SmallVec<[(VdBaseChainingSeparatorSignature, VdBsqExprFld<'sess>); 4]>,
+        leader: VdBsqExpr<'sess>,
+        followers: SmallVec<[(VdBaseChainingSeparatorSignature, VdBsqExpr<'sess>); 4]>,
         joined_signature: Option<VdBaseChainingSeparatorSignature>,
     },
     ItemPath(VdItemPath),
 }
 
 pub type VdBsqExprFoldingFollowers<'sess> =
-    SmallVec<[(VdBaseFoldingSeparatorSignature, VdBsqExprFld<'sess>); 4]>;
+    SmallVec<[(VdBaseFoldingSeparatorSignature, VdBsqExpr<'sess>); 4]>;
 pub type VdBsqExprChainingFollowers<'sess> =
-    SmallVec<[(VdBaseChainingSeparatorSignature, VdBsqExprFld<'sess>); 4]>;
+    SmallVec<[(VdBaseChainingSeparatorSignature, VdBsqExpr<'sess>); 4]>;
 
 impl<'sess> VdBsqExprData<'sess> {
     pub fn outer_precedence(&self) -> VdPrecedence {
@@ -205,7 +205,7 @@ impl<'sess> VdBsqExprData<'sess> {
     }
 }
 
-pub type VdMirExprFlds<'sess> = SmallVec<[VdBsqExprFld<'sess>; 4]>;
+pub type VdMirExprFlds<'sess> = SmallVec<[VdBsqExpr<'sess>; 4]>;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub fn cache_expr_fld(&mut self, expr_idx: VdMirExprIdx, region_data: VdMirExprRegionDataRef) {
@@ -218,7 +218,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let ty = expr_entry.ty();
         let term = self.calc_expr_term(&expr_data, ty);
         let db = self.session().floater_db();
-        let expr_fld = VdBsqExprFld::new_inner(expr_data, ty, term, db);
+        let expr_fld = VdBsqExpr::new_inner(expr_data, ty, term, db);
         self.save_expr_fld(expr_idx, expr_fld);
     }
 
@@ -278,20 +278,20 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         expr_data: VdBsqExprData<'sess>,
         ty: VdType,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         let term = self.calc_expr_term(&expr_data, ty);
         let db = self.session().floater_db();
-        VdBsqExprFld::new_inner(expr_data, ty, term, db)
+        VdBsqExpr::new_inner(expr_data, ty, term, db)
     }
 
-    pub(crate) fn mk_zero(&self, expected_ty: Option<VdType>) -> VdBsqExprFld<'sess> {
+    pub(crate) fn mk_zero(&self, expected_ty: Option<VdType>) -> VdBsqExpr<'sess> {
         self.mk_expr(
             VdBsqExprData::Literal(self.term_menu().zero),
             self.ty_menu().nat,
         )
     }
 
-    pub(crate) fn mk_lit(&self, litnum: VdBsqLitnumTerm<'sess>, ty: VdType) -> VdBsqExprFld<'sess> {
+    pub(crate) fn mk_lit(&self, litnum: VdBsqLitnumTerm<'sess>, ty: VdType) -> VdBsqExpr<'sess> {
         let db = self.session().eterner_db();
         let lit = match litnum {
             VdBsqLitnumTerm::Int128(i) => VdLiteral::new(VdLiteralData::Int(i.into()), db),
@@ -303,10 +303,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     pub(crate) fn mk_add(
         &self,
-        lopd: VdBsqExprFld<'sess>,
-        ropd: VdBsqExprFld<'sess>,
+        lopd: VdBsqExpr<'sess>,
+        ropd: VdBsqExpr<'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         let signature = hc.infer_add_signature(lopd.ty(), ropd.ty());
         self.mk_expr(
             VdBsqExprData::FoldingSeparatedList {
@@ -319,10 +319,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     pub(crate) fn mk_sub(
         &self,
-        lhs: VdBsqExprFld<'sess>,
-        rhs: VdBsqExprFld<'sess>,
+        lhs: VdBsqExpr<'sess>,
+        rhs: VdBsqExpr<'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         let signature = hc.infer_sub_signature(lhs.ty(), rhs.ty());
         self.mk_expr(
             VdBsqExprData::Application {
@@ -335,9 +335,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     pub(crate) fn mk_neg(
         &self,
-        expr: VdBsqExprFld<'sess>,
+        expr: VdBsqExpr<'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         let signature = hc.infer_neg_signature(expr.ty());
         self.mk_expr(
             VdBsqExprData::Application {
@@ -350,10 +350,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     pub(crate) fn mk_mul(
         &self,
-        lopd: VdBsqExprFld<'sess>,
-        ropd: VdBsqExprFld<'sess>,
+        lopd: VdBsqExpr<'sess>,
+        ropd: VdBsqExpr<'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         let signature = hc.infer_mul_signature(lopd.ty(), ropd.ty());
         self.mk_expr(
             VdBsqExprData::FoldingSeparatedList {
@@ -365,7 +365,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 }
 
-impl<'db, 'sess> VdBsqExprFld<'sess> {
+impl<'db, 'sess> VdBsqExpr<'sess> {
     pub fn transcribe(
         &self,
         expected_ty: Option<VdType>,

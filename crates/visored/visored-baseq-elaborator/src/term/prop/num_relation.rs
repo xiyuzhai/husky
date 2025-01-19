@@ -82,7 +82,7 @@ impl<'db, 'sess> VdBsqNumRelation<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         todo!()
         // let (lhs_minus_rhs_data, lhs_minus_rhs_ty) = self.lhs_minus_rhs().expr_data_and_ty(elr, hc);
         // let signature = hc.infer_base_comparison_separator_signature(

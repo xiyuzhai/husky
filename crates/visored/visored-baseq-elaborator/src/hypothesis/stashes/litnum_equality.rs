@@ -1,6 +1,6 @@
 use super::*;
 use crate::{
-    expr::VdBsqExprFld,
+    expr::VdBsqExpr,
     foundations::opr::separator::relation::comparison::VdBsqComparisonOpr,
     hypothesis::{
         stack::VdBsqHypothesisStack,
@@ -103,7 +103,7 @@ impl<'sess> LitnumEqualityStash<'sess> {
 impl<'sess> VdBsqHypothesisStack<'sess> {
     pub(crate) fn get_active_litnum_equality(
         &self,
-        expr: VdBsqExprFld<'sess>,
+        expr: VdBsqExpr<'sess>,
         db: &'sess FloaterDb,
     ) -> Option<VdBsqLitnumTerm<'sess>> {
         let VdBsqNumTerm::Comnum(term) = expr.term().num()? else {

@@ -2,7 +2,7 @@ use super::*;
 use crate::{
     coercion::VdBsqCoercionOutcome,
     elabm::{foldm::mapm_collect, ElabM},
-    expr::{VdBsqExprData, VdBsqExprFld},
+    expr::{VdBsqExprData, VdBsqExpr},
     hypothesis::construction::VdBsqHypothesisConstruction,
     Mhr,
 };
@@ -23,8 +23,8 @@ use visored_mir_opr::separator::VdMirBaseSeparator;
 use visored_term::term::VdTerm;
 
 pub(crate) fn litnum_rewritem<'db, 'sess>(
-    expr: VdBsqExprFld<'sess>,
-) -> impl ElabM<'db, 'sess, VdBsqExprFld<'sess>>
+    expr: VdBsqExpr<'sess>,
+) -> impl ElabM<'db, 'sess, VdBsqExpr<'sess>>
 where
     'db: 'sess,
 {
@@ -32,13 +32,13 @@ where
 }
 
 fn litnum_rewrite_inner<'db, 'sess>(
-    expr: VdBsqExprFld<'sess>,
-) -> impl ElabM<'db, 'sess, VdBsqExprFld<'sess>>
+    expr: VdBsqExpr<'sess>,
+) -> impl ElabM<'db, 'sess, VdBsqExpr<'sess>>
 where
     'db: 'sess,
 {
     move |elaborator: &mut Elr<'db, 'sess>,
-          heuristic: &Heuristic<'_, 'db, 'sess, VdBsqExprFld<'sess>>| {
+          heuristic: &Heuristic<'_, 'db, 'sess, VdBsqExpr<'sess>>| {
         let db = elaborator.floater_db();
         match elaborator.hc.stack().get_active_litnum_equality(expr, db) {
             Some(litnum) => {
@@ -51,13 +51,13 @@ where
 }
 
 fn rewrite_subexprs<'a, 'db, 'sess, MExpr>(
-    expr: VdBsqExprFld<'sess>,
-    f: impl Fn(VdBsqExprFld<'sess>) -> MExpr + Copy + 'a,
-) -> impl ElabM<'db, 'sess, VdBsqExprFld<'sess>> + 'a
+    expr: VdBsqExpr<'sess>,
+    f: impl Fn(VdBsqExpr<'sess>) -> MExpr + Copy + 'a,
+) -> impl ElabM<'db, 'sess, VdBsqExpr<'sess>> + 'a
 where
     'db: 'sess + 'a,
     'sess: 'a,
-    MExpr: ElabM<'db, 'sess, VdBsqExprFld<'sess>> + 'a,
+    MExpr: ElabM<'db, 'sess, VdBsqExpr<'sess>> + 'a,
 {
     #[unify_elabm]
     match *expr.data() {

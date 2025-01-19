@@ -204,7 +204,7 @@ impl<'db, 'sess> VdBsqSumTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         todo!()
         // let monomials = self.monomials().iter().cloned().map(Right);
         // match self.constant_term().is_nonzero() {

@@ -6,13 +6,13 @@ use crate::{
 use alt_maybe_result::*;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn term_trivial(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    pub(crate) fn term_trivial(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         self.with_call(VdBsqTacticCall::TermTrivial, |slf| {
             slf.term_trivial_inner(prop)
         })
     }
 
-    fn term_trivial_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    fn term_trivial_inner(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         debug_assert!(
             self.hc
                 .stack()

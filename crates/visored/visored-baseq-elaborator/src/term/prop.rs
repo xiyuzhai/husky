@@ -42,7 +42,7 @@ impl<'db, 'sess> VdBsqPropTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         match self {
             VdBsqPropTerm::NumRelation(num_relation) => num_relation.expr(elr, hc),
             VdBsqPropTerm::NumChain(num_chain) => num_chain.expr(elr, hc),

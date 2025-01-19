@@ -1,6 +1,6 @@
 use super::*;
 use crate::{
-    expr::VdBsqExprFld,
+    expr::VdBsqExpr,
     foundations::{
         num::VdBsqSign,
         opr::separator::relation::comparison::{

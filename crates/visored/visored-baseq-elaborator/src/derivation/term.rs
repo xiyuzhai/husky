@@ -10,7 +10,7 @@ mod sum;
 
 use self::expr_nf::*;
 use super::*;
-use expr::{VdBsqExprData, VdBsqExprFld};
+use expr::{VdBsqExpr, VdBsqExprData};
 use smallvec::*;
 use visored_mir_expr::{
     derivation::{
@@ -51,7 +51,7 @@ where
 
     fn transcribe_expr_term_derivation(
         &mut self,
-        expr: VdBsqExprFld<'sess>,
+        expr: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprNf<'sess> {
         let prop = self.transcribe_expr_term_derivation_prop(expr, hc);
@@ -61,7 +61,7 @@ where
 
     fn transcribe_expr_term_derivation_prop(
         &mut self,
-        expr: VdBsqExprFld<'sess>,
+        expr: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let term = expr.term();
@@ -79,7 +79,7 @@ where
 
     fn transcribe_expr_term_derivation_construction(
         &mut self,
-        expr: VdBsqExprFld<'sess>,
+        expr: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         match *expr.data() {
@@ -150,7 +150,7 @@ where
     }
 }
 
-impl<'db, 'sess> VdBsqExprFld<'sess> {
+impl<'db, 'sess> VdBsqExpr<'sess> {
     fn normalize(
         self,
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,

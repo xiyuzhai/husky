@@ -21,13 +21,13 @@ use visored_mir_opr::separator::VdMirBaseSeparator;
 use visored_term::term::VdTerm;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn litnum_estimate(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    pub(crate) fn litnum_estimate(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         self.with_call(VdBsqTacticCall::LitnumEstimate, |slf| {
             slf.litnum_estimate_inner(prop)
         })
     }
 
-    fn litnum_estimate_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    fn litnum_estimate_inner(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         let VdBsqExprData::ChainingSeparatedList {
             leader,
             ref followers,
@@ -49,8 +49,8 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
 fn try_all<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-    prop: VdBsqExprFld<'sess>,
-    leader: VdBsqExprFld<'sess>,
+    prop: VdBsqExpr<'sess>,
+    leader: VdBsqExpr<'sess>,
     opr: VdBsqBoundOpr,
     rhs: VdBsqLitnumTerm<'sess>,
 ) -> Mhr<'sess> {
@@ -60,8 +60,8 @@ fn try_all<'db, 'sess>(
 
 fn try_one_shot<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-    prop: VdBsqExprFld<'sess>,
-    leader: VdBsqExprFld<'sess>,
+    prop: VdBsqExpr<'sess>,
+    leader: VdBsqExpr<'sess>,
     opr: VdBsqBoundOpr,
     rhs: VdBsqLitnumTerm<'sess>,
 ) -> Mhr<'sess> {

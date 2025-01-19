@@ -2,7 +2,7 @@ pub mod number;
 
 use crate::{
     elaborator::VdBsqElaboratorInner,
-    expr::VdBsqExprFld,
+    expr::VdBsqExpr,
     hypothesis::{
         construction::VdBsqHypothesisConstruction, contradiction::VdBsqHypothesisContradiction,
         VdBsqHypothesisIdx,

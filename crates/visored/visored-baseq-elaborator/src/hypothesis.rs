@@ -7,7 +7,7 @@ pub mod stash;
 pub mod stashes;
 
 use self::construction::VdBsqHypothesisConstruction;
-use crate::{elaborator::VdBsqElaboratorInner, expr::VdBsqExprFld};
+use crate::{elaborator::VdBsqElaboratorInner, expr::VdBsqExpr};
 use idx_arena::{Arena, ArenaIdx};
 use visored_mir_expr::{
     expr::VdMirExprIdx,
@@ -19,7 +19,7 @@ use visored_mir_expr::{
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct VdBsqHypothesisEntry<'sess> {
-    prop: VdBsqExprFld<'sess>,
+    prop: VdBsqExpr<'sess>,
     construction: VdBsqHypothesisConstruction<'sess>,
 }
 
@@ -56,7 +56,7 @@ impl<'sess> VdBsqHypothesisArena<'sess> {
 }
 
 impl<'sess> VdBsqHypothesisEntry<'sess> {
-    pub fn expr(&self) -> VdBsqExprFld<'sess> {
+    pub fn expr(&self) -> VdBsqExpr<'sess> {
         self.prop
     }
 

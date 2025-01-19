@@ -49,7 +49,7 @@ impl<'db, 'sess> VdBsqNumChain<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         todo!()
     }
 }

@@ -151,7 +151,7 @@ impl<'db, 'sess> VdBsqNumTerm<'sess> {
         expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         match self {
             VdBsqNumTerm::Litnum(slf) => slf.expr(elr, hc),
             VdBsqNumTerm::Comnum(slf) => slf.expr(elr, hc),

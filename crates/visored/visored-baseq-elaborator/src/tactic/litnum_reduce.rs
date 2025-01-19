@@ -19,13 +19,13 @@ use visored_mir_opr::separator::VdMirBaseSeparator;
 use visored_term::term::VdTerm;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn litnum_reduce(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    pub(crate) fn litnum_reduce(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         self.with_call(VdBsqTacticCall::LitnumReduce, |slf| {
             slf.litnum_reduce_inner(prop)
         })
     }
 
-    fn litnum_reduce_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    fn litnum_reduce_inner(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         let rewritem = litnum_rewritem(prop);
         rewritem.eval(self, &|elr, expr| match expr.term() {
             VdBsqTerm::Prop(VdBsqPropTerm::Trivial(b)) => match b {

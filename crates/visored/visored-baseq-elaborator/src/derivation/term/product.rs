@@ -4,8 +4,8 @@ use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparat
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub(super) fn transcribe_product_term_derivation_construction(
         &mut self,
-        leader: VdBsqExprFld<'sess>,
-        followers: &[(VdBaseFoldingSeparatorSignature, VdBsqExprFld<'sess>)],
+        leader: VdBsqExpr<'sess>,
+        followers: &[(VdBaseFoldingSeparatorSignature, VdBsqExpr<'sess>)],
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         for (signature, _) in followers {

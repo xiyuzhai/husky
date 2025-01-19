@@ -344,7 +344,7 @@ impl<'db, 'sess> VdBsqProductTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         product_expr(self.stem(), self.litnum_factor(), elr, hc)
     }
 }
@@ -354,7 +354,7 @@ impl<'db, 'sess> VdBsqProductStem<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         match self {
             VdBsqProductStem::Atom(slf) => slf.expr(elr, hc),
             VdBsqProductStem::NonTrivial(slf) => slf.expr(elr, hc),
@@ -367,7 +367,7 @@ impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         todo!()
     }
 }
@@ -377,7 +377,7 @@ pub(super) fn product_expr<'db, 'sess>(
     factor: VdBsqLitnumTerm<'sess>,
     elr: &VdBsqElaboratorInner<'db, 'sess>,
     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> VdBsqExprFld<'sess> {
+) -> VdBsqExpr<'sess> {
     assert!(!factor.is_zero());
     elr.mk_mul(factor.expr(elr, hc), stem.expr(elr, hc), hc)
 }

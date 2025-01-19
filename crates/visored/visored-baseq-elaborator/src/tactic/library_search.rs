@@ -17,18 +17,18 @@ use visored_mir_opr::separator::{chaining::VdMirBaseChainingSeparator, VdMirBase
 use visored_term::term::VdTerm;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn library_search(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    pub(crate) fn library_search(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         self.with_call(VdBsqTacticCall::LibrarySearch, |slf| {
             slf.library_search_inner(prop)
         })
     }
 
-    fn library_search_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    fn library_search_inner(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         self.square_nonnegative(prop)?;
         AltNothing
     }
 
-    fn square_nonnegative(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    fn square_nonnegative(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         use husky_print_utils::*;
         let VdBsqExprData::ChainingSeparatedList {
             leader,

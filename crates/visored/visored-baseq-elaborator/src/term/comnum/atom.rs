@@ -136,7 +136,7 @@ impl<'db, 'sess> VdBsqAtomTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
         elr.mk_expr(expr_data, ty)
     }

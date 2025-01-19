@@ -104,7 +104,7 @@ impl<'db, 'sess> VdBsqComnumTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         match self {
             VdBsqComnumTerm::Atom(slf) => slf.expr(elr, hc),
             VdBsqComnumTerm::Sum(slf) => slf.expr(elr, hc),

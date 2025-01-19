@@ -8,7 +8,7 @@ pub mod set;
 use self::{comnum::*, litnum::*, num::*, prop::*, set::*};
 use crate::{
     elaborator::VdBsqElaboratorInner,
-    expr::{VdBsqExprData, VdBsqExprFld},
+    expr::{VdBsqExpr, VdBsqExprData},
     foundations::opr::separator::relation::comparison::VdBsqComparisonOpr,
     hypothesis::VdBsqHypothesisIdx,
 };
@@ -295,7 +295,7 @@ impl<'db, 'sess> VdBsqTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprFld<'sess> {
+    ) -> VdBsqExpr<'sess> {
         match self {
             VdBsqTerm::Litnum(litnum) => litnum.expr(elr, hc),
             VdBsqTerm::Comnum(comnum) => comnum.expr(elr, hc),

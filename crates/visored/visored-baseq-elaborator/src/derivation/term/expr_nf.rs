@@ -3,11 +3,11 @@ use super::*;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(super) struct VdBsqExprNf<'sess> {
     derivation: VdMirTermDerivationIdx,
-    expr: VdBsqExprFld<'sess>,
+    expr: VdBsqExpr<'sess>,
 }
 
 impl<'sess> std::ops::Deref for VdBsqExprNf<'sess> {
-    type Target = VdBsqExprFld<'sess>;
+    type Target = VdBsqExpr<'sess>;
 
     fn deref(&self) -> &Self::Target {
         &self.expr
@@ -15,13 +15,13 @@ impl<'sess> std::ops::Deref for VdBsqExprNf<'sess> {
 }
 
 impl<'sess> VdBsqExprNf<'sess> {
-    pub(super) fn new(derivation: VdMirTermDerivationIdx, expr: VdBsqExprFld<'sess>) -> Self {
+    pub(super) fn new(derivation: VdMirTermDerivationIdx, expr: VdBsqExpr<'sess>) -> Self {
         Self { derivation, expr }
     }
 }
 
 impl<'sess> VdBsqExprNf<'sess> {
-    pub(super) fn expr(self) -> VdBsqExprFld<'sess> {
+    pub(super) fn expr(self) -> VdBsqExpr<'sess> {
         self.expr
     }
 

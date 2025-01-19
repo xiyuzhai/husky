@@ -1,6 +1,6 @@
 use super::*;
 
-impl<'sess> VdBsqExprFld<'sess> {
+impl<'sess> VdBsqExpr<'sess> {
     pub fn is_zero(self) -> bool {
         self.eqs_nat128(0)
     }

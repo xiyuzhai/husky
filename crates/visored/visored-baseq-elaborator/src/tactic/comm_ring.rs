@@ -15,11 +15,11 @@ use alt_maybe_result::*;
 use alt_option::*;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn comm_ring(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    pub(crate) fn comm_ring(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         self.with_call(VdBsqTacticCall::CommRing, |slf| slf.comm_ring_inner(prop))
     }
 
-    fn comm_ring_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
+    fn comm_ring_inner(&mut self, prop: VdBsqExpr<'sess>) -> Mhr<'sess> {
         let VdBsqTerm::Prop(VdBsqPropTerm::NumRelation(num_relation)) = prop.term() else {
             return AltNothing;
         };
