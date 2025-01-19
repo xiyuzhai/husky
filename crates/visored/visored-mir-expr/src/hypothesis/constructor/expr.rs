@@ -1,6 +1,9 @@
+use lisp_show_expr::LispShowExpr;
 use visored_mir_opr::separator::{
     chaining::VdMirBaseChainingSeparator, folding::VdMirBaseFoldingSeparator,
 };
+
+use crate::helpers::show::lisp_show_expr::VdMirExprLispShowExprBuilder;
 
 use super::*;
 
@@ -54,7 +57,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     _ => todo!(),
                 }
             }
-            _ => unreachable!(),
+            _ => unreachable!("{:?}", self.expr_arena[lhs].data()),
         }
     }
 
@@ -80,5 +83,17 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             }
             _ => unreachable!(),
         }
+    }
+}
+
+impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
+    pub fn show_expr_lisp(&self, expr: VdMirExprIdx) -> LispShowExpr {
+        let builder = VdMirExprLispShowExprBuilder::new(
+            self.db,
+            self.expr_arena.as_arena_ref(),
+            self.stmt_arena.as_arena_ref(),
+            &self.symbol_local_defn_storage,
+        );
+        builder.render_expr(expr)
     }
 }

@@ -31,6 +31,7 @@ latex-token.workspace = true
 # lisp
 lisp-show-expr.workspace = true
 # utils
+husky-control-flow-utils.workspace = true
 husky-print-utils.workspace = true
 husky-tree-utils.workspace = true
 # visored

@@ -53,12 +53,19 @@ pub(super) fn check_add_eq<'db, Src>(
     assert_deep_eq!(a1, a, hc);
     let (b1, term_b) =
         hc.split_trivial_chaining_separated_list(ropd.prop(hc), VdMirBaseChainingSeparator::EQ);
-    assert_deep_eq!(b1, b, hc);
+    assert_deep_eq!(
+        b1,
+        b,
+        hc,
+        "b1 = `{}`, b = `{}`",
+        hc.show_expr_lisp(b1),
+        hc.show_expr_lisp(b)
+    );
     let (merge_lhs, term1) =
         hc.split_trivial_chaining_separated_list(merge.prop(hc), VdMirBaseChainingSeparator::EQ);
     assert_deep_eq!(term1, term, hc);
     let (term_a1, term_b1) =
-        hc.split_folding_separated_list(term1, VdMirBaseFoldingSeparator::COMM_RING_ADD);
+        hc.split_folding_separated_list(merge_lhs, VdMirBaseFoldingSeparator::COMM_RING_ADD);
     assert_deep_eq!(term_a1, term_a, hc);
     assert_deep_eq!(term_b1, term_b, hc);
 }
