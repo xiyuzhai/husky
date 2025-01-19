@@ -171,7 +171,6 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
                 let variable = self.mk_expr(
                     VdBsqExprData::Variable(letter, symbol_local_defn),
                     assignment.ty(),
-                    None,
                 );
                 let signature = region_data.infer_eq_signature(assignment.ty(), assignment.ty());
                 let eq_expr_data = VdBsqExprData::ChainingSeparatedList {
@@ -179,7 +178,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
                     followers: smallvec![(signature, assignment)],
                     joined_signature: None,
                 };
-                let prop = self.mk_expr(eq_expr_data, self.ty_menu().prop, None);
+                let prop = self.mk_expr(eq_expr_data, self.ty_menu().prop);
                 Ok(self
                     .hc
                     .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LetAssigned))
@@ -258,7 +257,6 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
                 joined_signature: None,
             },
             self.ty_menu().prop,
-            None,
         );
         self.run_obvious(prop)
     }

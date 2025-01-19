@@ -202,7 +202,6 @@ impl<'sess> VdBsqSumTerm<'sess> {
 impl<'db, 'sess> VdBsqSumTerm<'sess> {
     pub(crate) fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {

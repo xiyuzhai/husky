@@ -153,8 +153,8 @@ impl<'db, 'sess> VdBsqNumTerm<'sess> {
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqNumTerm::Litnum(slf) => slf.expr(expected_ty, elr, hc),
-            VdBsqNumTerm::Comnum(slf) => slf.expr(expected_ty, elr, hc),
+            VdBsqNumTerm::Litnum(slf) => slf.expr(elr, hc),
+            VdBsqNumTerm::Comnum(slf) => slf.expr(elr, hc),
         }
     }
 }

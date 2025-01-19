@@ -39,7 +39,6 @@ pub struct VdBsqExprFld<'sess> {
     pub data: VdBsqExprData<'sess>,
     pub ty: VdType,
     pub term: VdBsqTerm<'sess>,
-    pub expected_ty: Option<VdType>,
 }
 
 impl<'sess> std::fmt::Debug for VdBsqExprFld<'sess> {
@@ -219,8 +218,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let ty = expr_entry.ty();
         let term = self.calc_expr_term(&expr_data, ty);
         let db = self.session().floater_db();
-        let expected_ty = expr_entry.expected_ty();
-        let expr_fld = VdBsqExprFld::new_inner(expr_data, ty, term, expected_ty, db);
+        let expr_fld = VdBsqExprFld::new_inner(expr_data, ty, term, db);
         self.save_expr_fld(expr_idx, expr_fld);
     }
 
@@ -280,41 +278,33 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         expr_data: VdBsqExprData<'sess>,
         ty: VdType,
-        expected_ty: Option<VdType>,
     ) -> VdBsqExprFld<'sess> {
         let term = self.calc_expr_term(&expr_data, ty);
         let db = self.session().floater_db();
-        VdBsqExprFld::new_inner(expr_data, ty, term, expected_ty, db)
+        VdBsqExprFld::new_inner(expr_data, ty, term, db)
     }
 
     pub(crate) fn mk_zero(&self, expected_ty: Option<VdType>) -> VdBsqExprFld<'sess> {
         self.mk_expr(
             VdBsqExprData::Literal(self.term_menu().zero),
             self.ty_menu().nat,
-            expected_ty,
         )
     }
 
-    pub(crate) fn mk_lit(
-        &self,
-        litnum: VdBsqLitnumTerm<'sess>,
-        ty: VdType,
-        expected_ty: Option<VdType>,
-    ) -> VdBsqExprFld<'sess> {
+    pub(crate) fn mk_lit(&self, litnum: VdBsqLitnumTerm<'sess>, ty: VdType) -> VdBsqExprFld<'sess> {
         let db = self.session().eterner_db();
         let lit = match litnum {
             VdBsqLitnumTerm::Int128(i) => VdLiteral::new(VdLiteralData::Int(i.into()), db),
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
             VdBsqLitnumTerm::Frac128(vd_bsq_frac128) => todo!(),
         };
-        self.mk_expr(VdBsqExprData::Literal(lit), ty, expected_ty)
+        self.mk_expr(VdBsqExprData::Literal(lit), ty)
     }
 
     pub(crate) fn mk_add(
         &self,
         lopd: VdBsqExprFld<'sess>,
         ropd: VdBsqExprFld<'sess>,
-        expected_ty: Option<VdType>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_add_signature(lopd.ty(), ropd.ty());
@@ -324,7 +314,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 followers: smallvec![(signature, ropd)],
             },
             signature.expr_ty(),
-            expected_ty,
         )
     }
 
@@ -332,7 +321,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         lhs: VdBsqExprFld<'sess>,
         rhs: VdBsqExprFld<'sess>,
-        expected_ty: Option<VdType>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_sub_signature(lhs.ty(), rhs.ty());
@@ -342,14 +330,12 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 arguments: smallvec![lhs, rhs],
             },
             signature.expr_ty,
-            expected_ty,
         )
     }
 
     pub(crate) fn mk_neg(
         &self,
         expr: VdBsqExprFld<'sess>,
-        expected_ty: Option<VdType>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_neg_signature(expr.ty());
@@ -359,7 +345,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 arguments: smallvec![expr],
             },
             signature.expr_ty,
-            expected_ty,
         )
     }
 
@@ -367,7 +352,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         lopd: VdBsqExprFld<'sess>,
         ropd: VdBsqExprFld<'sess>,
-        expected_ty: Option<VdType>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_mul_signature(lopd.ty(), ropd.ty());
@@ -377,7 +361,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 followers: smallvec![(signature, ropd)],
             },
             signature.expr_ty(),
-            expected_ty,
         )
     }
 }
@@ -385,37 +368,39 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 impl<'db, 'sess> VdBsqExprFld<'sess> {
     pub fn transcribe(
         &self,
+        expected_ty: Option<VdType>,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
-        let entry = self.transcribe_entry(elaborator, hc);
+        let entry = self.transcribe_entry(expected_ty, elaborator, hc);
         hc.mk_expr(entry)
     }
 
     pub fn transcribe_with_ty(
         &self,
+        expected_ty: Option<VdType>,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprIdx, VdType) {
-        let entry = self.transcribe_entry(elaborator, hc);
+        let entry = self.transcribe_entry(expected_ty, elaborator, hc);
         let ty = entry.ty();
         (hc.mk_expr(entry), ty)
     }
 
     fn transcribe_entry(
         &self,
+        expected_ty: Option<VdType>,
         elaborator: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprEntry {
         let data = self.transcribe_expr_data(elaborator, hc);
         let ty = self.ty();
-        let expected_ty = self.expected_ty();
         VdMirExprEntry::new(data, ty, expected_ty)
     }
 
     fn transcribe_expr_data(
         &self,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
         match *self.data() {
@@ -425,23 +410,31 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                 function,
                 ref arguments,
             } => {
-                let exprs = arguments
+                let arguments = arguments
                     .iter()
-                    .map(|arg| arg.transcribe_entry(elaborator, hc))
+                    .enumerate()
+                    .map(|(i, arg)| {
+                        arg.transcribe_entry(Some(function.argument_expected_ty(i)), elr, hc)
+                    })
                     .collect::<Vec<_>>();
                 VdMirExprData::Application {
                     function,
-                    arguments: hc.mk_exprs(exprs),
+                    arguments: hc.mk_exprs(arguments),
                 }
             }
             VdBsqExprData::FoldingSeparatedList {
                 leader,
                 ref followers,
             } => VdMirExprData::FoldingSeparatedList {
-                leader: leader.transcribe(elaborator, hc),
+                leader: leader.transcribe(Some(followers[0].0.item_ty()), elr, hc),
                 followers: followers
                     .iter()
-                    .map(|&(func, follower)| (func, follower.transcribe(elaborator, hc)))
+                    .map(|&(func, follower)| {
+                        (
+                            func,
+                            follower.transcribe(Some(followers[0].0.item_ty()), elr, hc),
+                        )
+                    })
                     .collect(),
             },
             VdBsqExprData::ChainingSeparatedList {
@@ -449,14 +442,19 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                 ref followers,
                 joined_signature,
             } => VdMirExprData::ChainingSeparatedList {
-                leader: leader.transcribe(elaborator, hc),
+                leader: leader.transcribe(Some(followers[0].0.left_item_ty()), elr, hc),
                 followers: followers
                     .iter()
-                    .map(|&(func, follower)| (func, follower.transcribe(elaborator, hc)))
+                    .map(|&(func, follower)| {
+                        (
+                            func,
+                            follower.transcribe(Some(followers[0].0.right_item_ty()), elr, hc),
+                        )
+                    })
                     .collect(),
                 joined_signature,
             },
-            VdBsqExprData::ItemPath(vd_item_path) => VdMirExprData::ItemPath(vd_item_path),
+            VdBsqExprData::ItemPath(path) => VdMirExprData::ItemPath(path),
         }
     }
 }

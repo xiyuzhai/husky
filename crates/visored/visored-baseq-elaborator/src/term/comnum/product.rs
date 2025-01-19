@@ -342,24 +342,22 @@ impl<'sess> VdBsqNonTrivialProductStem<'sess> {
 impl<'db, 'sess> VdBsqProductTerm<'sess> {
     pub fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
-        product_expr(elr, self.stem(), self.litnum_factor(), expected_ty, hc)
+        product_expr(self.stem(), self.litnum_factor(), elr, hc)
     }
 }
 
 impl<'db, 'sess> VdBsqProductStem<'sess> {
     pub fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqProductStem::Atom(slf) => slf.expr(expected_ty, elr, hc),
-            VdBsqProductStem::NonTrivial(slf) => slf.expr(expected_ty, elr, hc),
+            VdBsqProductStem::Atom(slf) => slf.expr(elr, hc),
+            VdBsqProductStem::NonTrivial(slf) => slf.expr(elr, hc),
         }
     }
 }
@@ -367,7 +365,6 @@ impl<'db, 'sess> VdBsqProductStem<'sess> {
 impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
     pub fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
@@ -376,19 +373,13 @@ impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
 }
 
 pub(super) fn product_expr<'db, 'sess>(
-    elr: &VdBsqElaboratorInner<'db, 'sess>,
     stem: VdBsqProductStem<'sess>,
     factor: VdBsqLitnumTerm<'sess>,
-    expected_ty: Option<VdType>,
+    elr: &VdBsqElaboratorInner<'db, 'sess>,
     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprFld<'sess> {
     assert!(!factor.is_zero());
-    elr.mk_mul(
-        factor.expr(None, elr, hc),
-        stem.expr(None, elr, hc),
-        expected_ty,
-        hc,
-    )
+    elr.mk_mul(factor.expr(elr, hc), stem.expr(elr, hc), hc)
 }
 
 // fn factors_expr_data_and_ty<'db, 'sess>(

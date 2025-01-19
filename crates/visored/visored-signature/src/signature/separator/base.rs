@@ -81,4 +81,8 @@ impl VdBaseSeparatorSignature {
         todo!()
         // self.expr_ty
     }
+
+    pub fn argument_expected_ty(self, i: usize) -> VdType {
+        self.item_ty()
+    }
 }

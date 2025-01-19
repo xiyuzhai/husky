@@ -293,15 +293,14 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 impl<'db, 'sess> VdBsqTerm<'sess> {
     pub fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqTerm::Litnum(litnum) => litnum.expr(expected_ty, elr, hc),
-            VdBsqTerm::Comnum(comnum) => comnum.expr(expected_ty, elr, hc),
-            VdBsqTerm::Prop(prop) => prop.expr(expected_ty, elr, hc),
-            VdBsqTerm::Set(set) => set.expr(expected_ty, elr, hc),
+            VdBsqTerm::Litnum(litnum) => litnum.expr(elr, hc),
+            VdBsqTerm::Comnum(comnum) => comnum.expr(elr, hc),
+            VdBsqTerm::Prop(prop) => prop.expr(elr, hc),
+            VdBsqTerm::Set(set) => set.expr(elr, hc),
         }
     }
 }

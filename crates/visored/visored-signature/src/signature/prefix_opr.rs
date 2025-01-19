@@ -77,4 +77,9 @@ impl VdBasePrefixOprSignature {
     pub fn expr_ty(self) -> VdType {
         self.expr_ty
     }
+
+    pub fn argument_expected_ty(self, i: usize) -> VdType {
+        assert!(i == 0);
+        self.opd_ty
+    }
 }

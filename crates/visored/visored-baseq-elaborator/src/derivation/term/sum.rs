@@ -27,7 +27,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                         followers: followers[..followers.len() - 1].to_smallvec(),
                     },
                     followers[followers.len() - 2].0.expr_ty(),
-                    Some(last_signature.item_ty()),
                 );
                 let signature = followers.last().unwrap().0;
                 let ropd = followers.last().unwrap().1;
@@ -37,7 +36,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let expected_ty = signature.expr_ty();
         let lopd = lopd.normalize(self, hc);
         let ropd = ropd.normalize(self, hc);
-        let sum = self.mk_add(lopd.expr(), ropd.expr(), Some(expected_ty), hc);
+        let sum = self.mk_add(lopd.expr(), ropd.expr(), hc);
         // let sum = sum.normalize(self, hc);
         VdMirTermDerivationConstruction::AddEq {
             lopd: lopd.derivation(),

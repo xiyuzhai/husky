@@ -40,23 +40,18 @@ impl<'sess> VdBsqPropTerm<'sess> {
 impl<'db, 'sess> VdBsqPropTerm<'sess> {
     pub(crate) fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         match self {
-            VdBsqPropTerm::NumRelation(num_relation) => num_relation.expr(expected_ty, elr, hc),
-            VdBsqPropTerm::NumChain(num_chain) => num_chain.expr(expected_ty, elr, hc),
+            VdBsqPropTerm::NumRelation(num_relation) => num_relation.expr(elr, hc),
+            VdBsqPropTerm::NumChain(num_chain) => num_chain.expr(elr, hc),
             VdBsqPropTerm::Trivial(b) => {
                 let path = match b {
                     true => VdItemPath::TRUE,
                     false => todo!(),
                 };
-                elr.mk_expr(
-                    VdBsqExprData::ItemPath(path),
-                    elr.ty_menu().prop,
-                    expected_ty,
-                )
+                elr.mk_expr(VdBsqExprData::ItemPath(path), elr.ty_menu().prop)
             }
             VdBsqPropTerm::InSet(_) => todo!(),
         }

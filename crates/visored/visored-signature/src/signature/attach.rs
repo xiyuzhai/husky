@@ -61,4 +61,13 @@ impl VdPowerSignature {
     pub fn expr_ty(self) -> VdType {
         self.expr_ty
     }
+
+    pub fn argument_expected_ty(self, i: usize) -> VdType {
+        assert!(i == 0 || i == 1);
+        if i == 0 {
+            self.base_ty
+        } else {
+            self.exponent_ty
+        }
+    }
 }

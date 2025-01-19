@@ -80,10 +80,10 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
     fn transcribe_inner(
         self,
         explicit_prop: Option<VdMirExprIdx>,
-        elaborator: &mut VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprIdx, VdMirHypothesisConstruction) {
-        let construction = match *elaborator.hc.arena()[self].construction() {
+        let construction = match *elr.hc.arena()[self].construction() {
             VdBsqHypothesisConstruction::Sorry => VdMirHypothesisConstruction::Sorry,
             VdBsqHypothesisConstruction::TermTrivial(b) => {
                 VdMirHypothesisConstruction::TermTrivial(b)
@@ -93,24 +93,24 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
                 is_real_coercion,
             } => VdMirHypothesisConstruction::Apply {
                 path,
-                is_real_coercion: elaborator.transcribe_coercion(is_real_coercion, hc),
+                is_real_coercion: elr.transcribe_coercion(is_real_coercion, hc),
             },
             VdBsqHypothesisConstruction::Assume => VdMirHypothesisConstruction::Assume,
             VdBsqHypothesisConstruction::TermEquivalence {
                 hypothesis: src_hypothesis,
             } => VdMirHypothesisConstruction::TermEquivalence {
-                hypothesis: src_hypothesis.transcribe(elaborator, None, hc),
-                derivation_chunk: elaborator.transcribe_term_derivation(src_hypothesis, self, hc),
+                hypothesis: src_hypothesis.transcribe(elr, None, hc),
+                derivation_chunk: elr.transcribe_term_derivation(src_hypothesis, self, hc),
             },
             VdBsqHypothesisConstruction::CommRing => VdMirHypothesisConstruction::CommRing,
             VdBsqHypothesisConstruction::LetAssigned => VdMirHypothesisConstruction::LetAssigned,
             VdBsqHypothesisConstruction::LitnumReduce => VdMirHypothesisConstruction::LitnumReduce,
             VdBsqHypothesisConstruction::LitnumBound => VdMirHypothesisConstruction::LitnumBound,
         };
-        let hypothesis_entry = &elaborator.hc.arena()[self];
+        let hypothesis_entry = &elr.hc.arena()[self];
         let prop = match explicit_prop {
             Some(prop) => prop,
-            None => hypothesis_entry.expr().transcribe(elaborator, hc),
+            None => hypothesis_entry.expr().transcribe(None, elr, hc),
         };
         (prop, construction)
     }

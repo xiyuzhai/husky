@@ -77,4 +77,13 @@ impl VdBaseBinaryOprSignature {
     pub fn expr_ty(self) -> VdType {
         self.expr_ty
     }
+
+    pub fn argument_expected_ty(self, i: usize) -> VdType {
+        assert!(i == 0 || i == 1);
+        if i == 0 {
+            self.lopd_ty
+        } else {
+            self.ropd_ty
+        }
+    }
 }

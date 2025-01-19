@@ -25,7 +25,6 @@ impl<'sess> VdBsqSetTerm<'sess> {
 impl<'db, 'sess> VdBsqSetTerm<'sess> {
     pub(crate) fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {

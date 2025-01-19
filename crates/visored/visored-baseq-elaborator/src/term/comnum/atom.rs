@@ -134,12 +134,11 @@ impl<'sess> VdBsqAtomTerm<'sess> {
 impl<'db, 'sess> VdBsqAtomTerm<'sess> {
     pub(crate) fn expr(
         self,
-        expected_ty: Option<VdType>,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprFld<'sess> {
         let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
-        elr.mk_expr(expr_data, ty, expected_ty)
+        elr.mk_expr(expr_data, ty)
     }
 
     fn expr_data_and_ty(

@@ -80,4 +80,14 @@ impl VdMirFunc {
             VdMirFunc::NormalBaseSqrt(signature) => VdPrecedence::ATOM,
         }
     }
+
+    pub fn argument_expected_ty(&self, i: usize) -> VdType {
+        match self {
+            VdMirFunc::NormalBasePrefixOpr(signature) => signature.argument_expected_ty(i),
+            VdMirFunc::NormalBaseSeparator(signature) => signature.argument_expected_ty(i),
+            VdMirFunc::NormalBaseBinaryOpr(signature) => signature.argument_expected_ty(i),
+            VdMirFunc::Power(signature) => signature.argument_expected_ty(i),
+            VdMirFunc::NormalBaseSqrt(signature) => signature.argument_expected_ty(i),
+        }
+    }
 }

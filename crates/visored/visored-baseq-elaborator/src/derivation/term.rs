@@ -44,7 +44,7 @@ where
                 self.transcribe_expr_term_derivation(self.hc.arena()[src].expr(), hc);
             let dst_term_equivalence =
                 self.transcribe_expr_term_derivation(self.hc.arena()[dst].expr(), hc);
-            let prop = self.hc.arena()[dst].expr().transcribe(self, hc);
+            let prop = self.hc.arena()[dst].expr().transcribe(None, self, hc);
             hc.alloc_derivation(prop, todo!())
         })
     }
@@ -65,10 +65,8 @@ where
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
         let term = expr.term();
-        let (expr_transcription, expr_ty) = expr.transcribe_with_ty(self, hc);
-        let (term_transcription, term_ty) = term
-            .expr(expr.expected_ty(), self, hc)
-            .transcribe_with_ty(self, hc);
+        let (expr_transcription, expr_ty) = expr.transcribe_with_ty(None, self, hc);
+        let (term_transcription, term_ty) = term.expr(self, hc).transcribe_with_ty(None, self, hc);
         let signature = hc.infer_equivalence_signature(expr_ty, term_ty);
         let prop_expr_data = VdMirExprData::ChainingSeparatedList {
             leader: expr_transcription,

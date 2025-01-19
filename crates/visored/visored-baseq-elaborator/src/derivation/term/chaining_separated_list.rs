@@ -73,7 +73,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         follower: VdBsqExprNf<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let leader_minus_follower = self.mk_sub(*leader, *follower, None, hc);
+        let leader_minus_follower = self.mk_sub(*leader, *follower, hc);
         VdMirTermDerivationConstruction::NumComparison {
             lhs_minus_rhs: self
                 .transcribe_expr_term_derivation(leader_minus_follower, hc)
