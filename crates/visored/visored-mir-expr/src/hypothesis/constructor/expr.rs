@@ -1,6 +1,9 @@
 use super::*;
-use crate::helpers::show::lisp_show_expr::VdMirExprLispShowExprBuilder;
+use crate::{
+    expr::application::VdMirFunc, helpers::show::lisp_show_expr::VdMirExprLispShowExprBuilder,
+};
 use lisp_show_expr::LispShowExpr;
+use visored_mir_opr::opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr};
 use visored_mir_opr::separator::{
     chaining::VdMirBaseChainingSeparator, folding::VdMirBaseFoldingSeparator,
 };
@@ -8,16 +11,34 @@ use visored_mir_opr::separator::{
 #[macro_use]
 macro_rules! ds {
     (let ($lopd: ident + $ropd: ident) = $merge: expr, $hc: expr) => {
-        let ($lopd, $ropd) =
-            $hc.split_folding_separated_list($merge, VdMirBaseFoldingSeparator::COMM_RING_ADD);
+        let ($lopd, $ropd) = $hc.split_folding_separated_list(
+            $merge,
+            visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator::COMM_RING_ADD,
+        );
     };
     (let ($lopd: ident = $ropd: ident) = $merge: expr, $hc: expr) => {
-        let ($lopd, $ropd) =
-            $hc.split_trivial_chaining_separated_list($merge, VdMirBaseChainingSeparator::EQ);
+        let ($lopd, $ropd) = $hc.split_trivial_chaining_separated_list(
+            $merge,
+            visored_mir_opr::separator::chaining::VdMirBaseChainingSeparator::EQ,
+        );
     };
     (let ($lopd: ident => $ropd: ident) = $merge: expr, $hc: expr) => {
-        let ($lopd, $ropd) =
-            $hc.split_trivial_chaining_separated_list($merge, VdMirBaseChainingSeparator::EQ);
+        let ($lopd, $ropd) = $hc.split_trivial_chaining_separated_list(
+            $merge,
+            visored_mir_opr::separator::chaining::VdMirBaseChainingSeparator::EQ,
+        );
+    };
+    (let ($lopd: ident - $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) = $hc.split_binary(
+            $merge,
+            visored_mir_opr::opr::binary::VdMirBaseBinaryOpr::CommRingSub,
+        );
+    };
+    (let (-$opd: ident) = $merge: expr, $hc: expr) => {
+        let $opd = $hc.split_prefix(
+            $merge,
+            visored_mir_opr::opr::prefix::VdMirBasePrefixOpr::RING_NEG,
+        );
     };
 }
 
@@ -103,6 +124,44 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                 self.expr_arena[expr].data(),
                 self.show_expr_lisp(expr)
             ),
+        }
+    }
+
+    pub fn split_binary(
+        &mut self,
+        expr: VdMirExprIdx,
+        opr: VdMirBaseBinaryOpr,
+    ) -> (VdMirExprIdx, VdMirExprIdx) {
+        match *self.expr_arena[expr].data() {
+            VdMirExprData::Application {
+                function,
+                arguments,
+            } => {
+                let VdMirFunc::NormalBaseBinaryOpr(signature) = function else {
+                    unreachable!()
+                };
+                assert_eq!(signature.opr(), opr);
+                assert_eq!(arguments.len(), 2);
+                (arguments.first().unwrap(), arguments.last().unwrap())
+            }
+            _ => unreachable!("{:?}", self.expr_arena[expr].data()),
+        }
+    }
+
+    pub fn split_prefix(&mut self, expr: VdMirExprIdx, opr: VdMirBasePrefixOpr) -> VdMirExprIdx {
+        match *self.expr_arena[expr].data() {
+            VdMirExprData::Application {
+                function,
+                arguments,
+            } => {
+                let VdMirFunc::NormalBasePrefixOpr(signature) = function else {
+                    unreachable!()
+                };
+                assert_eq!(signature.opr(), opr);
+                assert_eq!(arguments.len(), 1);
+                arguments.first().unwrap()
+            }
+            _ => unreachable!("{:?}", self.expr_arena[expr].data()),
         }
     }
 }

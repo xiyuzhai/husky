@@ -99,7 +99,7 @@ impl VdMirTermDerivationConstruction {
                 lhs_minus_rhs: lhs_minus_rhs_equivalence,
             } => check_num_comparison(lhs, signature, rhs, hc),
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => {
-                check_sub_eqs_add_neg(lhs, signature, rhs, hc)
+                check_sub_eqs_add_neg(lhs, signature, rhs, add_neg, hc)
             }
             VdMirTermDerivationConstruction::AdditionInterchange => {
                 check_add_interchange(lhs, signature, rhs, hc)

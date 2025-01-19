@@ -1,13 +1,19 @@
 use super::*;
-use crate::hypothesis::constructor::expr::ds;
+use crate::{helpers::compare::eq, hypothesis::constructor::expr::ds};
 
 /// obtain `a - b => term` from `a + (-b) => term`
 pub(super) fn check_sub_eqs_add_neg<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
-    follower: VdMirExprIdx,
+    term: VdMirExprIdx,
+    add_neg: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    ds!(let (leader_lhs => term) = leader, hc);
-    todo!()
+    ds!(let (a - b) = leader, hc);
+    ds!(let (add_neg_lhs => term1) = add_neg.prop(hc), hc);
+    eq!(term1, term, hc);
+    ds!(let (a1 + neg_b) = add_neg_lhs, hc);
+    eq!(a1, a, hc);
+    ds!(let (-b1) = neg_b, hc);
+    eq!(b1, b, hc);
 }
