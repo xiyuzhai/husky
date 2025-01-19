@@ -81,6 +81,10 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         self.expr_arena.as_arena_ref()
     }
 
+    pub fn expr(&self, idx: VdMirExprIdx) -> &VdMirExprEntry {
+        &self.expr_arena[idx]
+    }
+
     pub fn stmt_arena(&self) -> VdMirStmtArenaRef {
         self.stmt_arena.as_arena_ref()
     }

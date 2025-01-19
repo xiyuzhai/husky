@@ -66,6 +66,10 @@ impl VdBasePrefixOprSignature {
         self.instantiation
     }
 
+    pub fn opr(self) -> VdMirBasePrefixOpr {
+        self.opr
+    }
+
     pub fn opd_ty(self) -> VdType {
         self.opd_ty
     }

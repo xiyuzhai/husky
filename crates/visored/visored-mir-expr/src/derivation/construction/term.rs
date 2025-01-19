@@ -1,3 +1,6 @@
+mod neg;
+
+use self::neg::*;
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx, expr::VdMirExprData, helpers::compare::vd_mir_expr_deep_eq,
@@ -21,6 +24,7 @@ pub enum VdMirTermDerivationConstruction {
     AdditionIdentity,
     AdditionInverse,
     AdditionDistributivity,
+    NegLiteral,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -74,6 +78,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AdditionIdentity => todo!(),
             VdMirTermDerivationConstruction::AdditionInverse => todo!(),
             VdMirTermDerivationConstruction::AdditionDistributivity => todo!(),
+            VdMirTermDerivationConstruction::NegLiteral => {
+                check_neg_literal(leader, signature, follower, hc)
+            }
         }
     }
 }
