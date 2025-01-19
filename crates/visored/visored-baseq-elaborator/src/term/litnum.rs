@@ -553,26 +553,7 @@ impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
             }
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
             VdBsqLitnumTerm::Frac128(f) => {
-                let a = VdBsqExprFldData::Application {
-                    function: VdMirFunc::NormalBaseBinaryOpr(elr.signature_menu().rat_div),
-                    arguments: smallvec![
-                        elr.mk_expr(
-                            VdBsqExprFldData::Literal(VdLiteral::new_int128(f.numerator(), db)),
-                            if f.numerator() >= 0 {
-                                elr.ty_menu().nat
-                            } else {
-                                elr.ty_menu().int
-                            },
-                            Some(elr.ty_menu().rat),
-                        ),
-                        elr.mk_expr(
-                            VdBsqExprFldData::Literal(VdLiteral::new_int128(f.denominator(), db)),
-                            elr.ty_menu().nat,
-                            Some(elr.ty_menu().rat),
-                        ),
-                    ],
-                };
-                (a, elr.ty_menu().rat)
+                todo!("translate to visored frac")
             }
         }
     }
