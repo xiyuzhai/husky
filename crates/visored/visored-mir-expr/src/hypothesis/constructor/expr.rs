@@ -43,6 +43,7 @@ macro_rules! ds {
 }
 
 pub(crate) use ds;
+use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub fn mk_expr(&mut self, entry: VdMirExprEntry) -> VdMirExprIdx {
@@ -119,6 +120,29 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     _ => todo!(),
                 }
             }
+            _ => unreachable!(
+                "try to split non-separated list: `{:?}` with lisp form: `{}`",
+                self.expr_arena[expr].data(),
+                self.show_expr_lisp(expr)
+            ),
+        }
+    }
+
+    #[track_caller]
+    pub fn split_any_trivial_chaining_separated_list(
+        &mut self,
+        expr: VdMirExprIdx,
+    ) -> (VdMirExprIdx, VdBaseChainingSeparatorSignature, VdMirExprIdx) {
+        match *self.expr_arena[expr].data() {
+            VdMirExprData::ChainingSeparatedList {
+                leader,
+                ref followers,
+                joined_signature: None,
+            } => match followers.len() {
+                0 => unreachable!(),
+                1 => (leader, followers[0].0, followers[0].1),
+                _ => todo!(),
+            },
             _ => unreachable!(
                 "try to split non-separated list: `{:?}` with lisp form: `{}`",
                 self.expr_arena[expr].data(),

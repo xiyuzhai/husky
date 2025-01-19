@@ -95,9 +95,9 @@ impl VdMirTermDerivationConstruction {
                 check_reflection(lhs, signature, rhs, hc)
             }
             VdMirTermDerivationConstruction::LiteralAdd => check_add_literal(lhs, rhs, hc),
-            VdMirTermDerivationConstruction::NumComparison {
-                lhs_minus_rhs: lhs_minus_rhs_equivalence,
-            } => check_num_comparison(lhs, signature, rhs, hc),
+            VdMirTermDerivationConstruction::NumComparison { lhs_minus_rhs } => {
+                check_num_comparison(lhs, signature, rhs, lhs_minus_rhs, hc)
+            }
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => {
                 check_sub_eqs_add_neg(lhs, signature, rhs, add_neg, hc)
             }
@@ -145,8 +145,20 @@ fn check_num_comparison<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,
-    hc: &VdMirHypothesisConstructor<'db, Src>,
+    lhs_minus_rhs: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
+    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::Iff);
+    let (leader_lhs, leader_signature, leader_rhs) =
+        hc.split_any_trivial_chaining_separated_list(leader);
+    let (follower_lhs, follower_signature, follower_rhs) =
+        hc.split_any_trivial_chaining_separated_list(follower);
+    assert_eq!(leader_signature.separator(), follower_signature.separator());
+    let VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::Comparison(separator)) =
+        leader_signature.separator()
+    else {
+        unreachable!()
+    };
     todo!()
 }
 
