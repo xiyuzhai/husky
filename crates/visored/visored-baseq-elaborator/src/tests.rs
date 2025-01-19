@@ -18,7 +18,7 @@ use crate::{
 };
 
 #[test]
-fn visored_tactic_basic_elaborator_works() {
+fn visored_tactic_baseq_elaborator_works() {
     use husky_case_utils::{Case, ToCase};
     use husky_path_utils::HuskyLangDevPaths;
     use lean_helpers::hypothesis::HYPOTHESIS_HEADER;

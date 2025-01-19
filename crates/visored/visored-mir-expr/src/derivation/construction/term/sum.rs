@@ -57,3 +57,15 @@ pub(super) fn check_add_eq<'db, Src>(
     eq!(term_a1, term_a, hc);
     eq!(term_b1, term_b, hc);
 }
+
+/// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a constant
+pub(super) fn check_atom_add_constant<'db, Src>(
+    lhs: VdMirExprIdx,
+    signature: VdBaseChainingSeparatorSignature,
+    rhs: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    use husky_print_utils::*;
+    p!(hc.show_expr_lisp(lhs), hc.show_expr_lisp(rhs));
+    todo!()
+}

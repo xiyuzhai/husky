@@ -116,7 +116,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(lhs, signature, rhs, lopd, ropd, merge, hc),
-            VdMirTermDerivationConstruction::AtomAddConstant => todo!(),
+            VdMirTermDerivationConstruction::AtomAddConstant => {
+                check_atom_add_constant(lhs, signature, rhs, hc)
+            }
         }
     }
 }

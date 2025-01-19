@@ -3,6 +3,14 @@ pub enum LispShowExpr {
     List(Vec<LispShowExpr>),
 }
 
+impl std::fmt::Debug for LispShowExpr {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("LispShowExpr(")?;
+        self.show_fmt(f)?;
+        f.write_str(")")
+    }
+}
+
 impl LispShowExpr {
     pub fn show_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
