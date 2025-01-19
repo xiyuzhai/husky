@@ -61,36 +61,38 @@ impl VdMirTermDerivationConstruction {
     pub fn check<'db, Src>(&self, prop: VdMirExprIdx, hc: &VdMirHypothesisConstructor<'db, Src>) {
         let expr_arena = hc.expr_arena();
         let VdMirExprData::ChainingSeparatedList {
-            leader,
+            leader: lhs,
             ref followers,
             joined_signature: None,
         } = *expr_arena[prop].data()
         else {
             unreachable!()
         };
-        let (signature, follower) = followers[0];
-        match self {
+        let (signature, rhs) = followers[0];
+        match *self {
             VdMirTermDerivationConstruction::Reflection => {
-                check_reflection(leader, signature, follower, hc)
+                check_reflection(lhs, signature, rhs, hc)
             }
-            VdMirTermDerivationConstruction::LiteralAdd => check_literal_sum(leader, follower, hc),
+            VdMirTermDerivationConstruction::LiteralAdd => check_add_literal(lhs, rhs, hc),
             VdMirTermDerivationConstruction::NumComparison {
                 lhs_minus_rhs: lhs_minus_rhs_equivalence,
-            } => check_num_comparison(leader, signature, follower, hc),
+            } => check_num_comparison(lhs, signature, rhs, hc),
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => {
-                check_sub_eqs_add_neg(leader, signature, follower, hc)
+                check_sub_eqs_add_neg(lhs, signature, rhs, hc)
             }
             VdMirTermDerivationConstruction::AdditionInterchange => {
-                check_add_interchange(leader, signature, follower, hc)
+                check_add_interchange(lhs, signature, rhs, hc)
             }
             VdMirTermDerivationConstruction::AdditionAssociativity => todo!(),
             VdMirTermDerivationConstruction::AdditionIdentity => todo!(),
             VdMirTermDerivationConstruction::AdditionInverse => todo!(),
             VdMirTermDerivationConstruction::AdditionDistributivity => todo!(),
             VdMirTermDerivationConstruction::NegLiteral => {
-                check_neg_literal(leader, signature, follower, hc)
+                check_neg_literal(lhs, signature, rhs, hc)
             }
-            VdMirTermDerivationConstruction::AddEq { .. } => todo!(),
+            VdMirTermDerivationConstruction::AddEq {
+                lopd, ropd, merge, ..
+            } => check_add_eq(lhs, signature, rhs, lopd, ropd, merge, hc),
         }
     }
 }
@@ -146,14 +148,4 @@ fn check_add_interchange<'db, Src>(
 ) {
     todo!()
     // let expr_arena = hc.expr_arena();
-}
-
-/// obtain `a + b = term` from `a_term + b_term = term` where `a_term` and `b_term` are term reductions of `a` and `b`
-fn check_add_eq<'db, Src>(
-    leader: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    follower: VdMirExprIdx,
-    hc: &VdMirHypothesisConstructor<'db, Src>,
-) {
-    todo!()
 }
