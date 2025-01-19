@@ -8,22 +8,22 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdMirTermDerivationConstruction {
         let opd = self.transcribe_expr_term_derivation(opd, hc);
         match *opd.data() {
-            VdBsqExprFldData::Literal(vd_literal) => VdMirTermDerivationConstruction::NegLiteral,
-            VdBsqExprFldData::Variable(lx_math_letter, arena_idx) => todo!(),
-            VdBsqExprFldData::Application {
+            VdBsqExprData::Literal(vd_literal) => VdMirTermDerivationConstruction::NegLiteral,
+            VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
+            VdBsqExprData::Application {
                 function,
                 ref arguments,
             } => todo!(),
-            VdBsqExprFldData::FoldingSeparatedList {
+            VdBsqExprData::FoldingSeparatedList {
                 leader,
                 ref followers,
             } => todo!(),
-            VdBsqExprFldData::ChainingSeparatedList {
+            VdBsqExprData::ChainingSeparatedList {
                 leader,
                 ref followers,
                 joined_signature,
             } => todo!(),
-            VdBsqExprFldData::ItemPath(vd_item_path) => todo!(),
+            VdBsqExprData::ItemPath(vd_item_path) => todo!(),
         }
     }
 }

@@ -36,7 +36,7 @@ use crate::{
 #[floated]
 pub struct VdBsqExprFld<'sess> {
     #[return_ref]
-    pub data: VdBsqExprFldData<'sess>,
+    pub data: VdBsqExprData<'sess>,
     pub ty: VdType,
     pub term: VdBsqTerm<'sess>,
     pub expected_ty: Option<VdType>,
@@ -67,11 +67,11 @@ impl<'sess> VdBsqExprFld<'sess> {
 
     fn show_fmt_inner(self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.data() {
-            VdBsqExprFldData::Literal(literal) => literal.show(f),
-            VdBsqExprFldData::Variable(letter, _) => {
+            VdBsqExprData::Literal(literal) => literal.show(f),
+            VdBsqExprData::Variable(letter, _) => {
                 write!(f, "{}", letter.unicode())
             }
-            VdBsqExprFldData::Application {
+            VdBsqExprData::Application {
                 function,
                 arguments,
             } => match function {
@@ -100,7 +100,7 @@ impl<'sess> VdBsqExprFld<'sess> {
                     use num_traits::cast::ToPrimitive;
 
                     match arguments[1].data() {
-                        VdBsqExprFldData::Literal(literal) => match *literal.data() {
+                        VdBsqExprData::Literal(literal) => match *literal.data() {
                             VdLiteralData::Int(ref i)
                                 if let Some(i) = i.to_i128()
                                     && i >= 0
@@ -128,7 +128,7 @@ impl<'sess> VdBsqExprFld<'sess> {
                     arguments[0].show_fmt(VdPrecedenceRange::ATOM, f)
                 }
             },
-            VdBsqExprFldData::FoldingSeparatedList { leader, followers } => {
+            VdBsqExprData::FoldingSeparatedList { leader, followers } => {
                 let signature = followers.first().unwrap().0;
                 let precedence_range = signature.separator().left_precedence_range();
                 leader.show_fmt(precedence_range, f)?;
@@ -140,7 +140,7 @@ impl<'sess> VdBsqExprFld<'sess> {
                 }
                 Ok(())
             }
-            VdBsqExprFldData::ChainingSeparatedList {
+            VdBsqExprData::ChainingSeparatedList {
                 leader,
                 followers,
                 joined_signature,
@@ -156,13 +156,13 @@ impl<'sess> VdBsqExprFld<'sess> {
                 }
                 Ok(())
             }
-            VdBsqExprFldData::ItemPath(path) => path.show_fmt(f),
+            VdBsqExprData::ItemPath(path) => path.show_fmt(f),
         }
     }
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq, PartialOrd, Ord)]
-pub enum VdBsqExprFldData<'sess> {
+pub enum VdBsqExprData<'sess> {
     Literal(VdLiteral),
     Variable(LxMathLetter, VdMirSymbolLocalDefnIdx),
     Application {
@@ -187,21 +187,21 @@ pub type VdBsqExprFoldingFollowers<'sess> =
 pub type VdBsqExprChainingFollowers<'sess> =
     SmallVec<[(VdBaseChainingSeparatorSignature, VdBsqExprFld<'sess>); 4]>;
 
-impl<'sess> VdBsqExprFldData<'sess> {
+impl<'sess> VdBsqExprData<'sess> {
     pub fn outer_precedence(&self) -> VdPrecedence {
         match self {
-            VdBsqExprFldData::Literal(_) => VdPrecedence::ATOM,
-            VdBsqExprFldData::Variable(_, _) => VdPrecedence::ATOM,
-            VdBsqExprFldData::Application { function, .. } => function.outer_precedence(),
-            VdBsqExprFldData::FoldingSeparatedList { leader, followers } => {
+            VdBsqExprData::Literal(_) => VdPrecedence::ATOM,
+            VdBsqExprData::Variable(_, _) => VdPrecedence::ATOM,
+            VdBsqExprData::Application { function, .. } => function.outer_precedence(),
+            VdBsqExprData::FoldingSeparatedList { leader, followers } => {
                 followers[0].0.separator().outer_precedence()
             }
-            VdBsqExprFldData::ChainingSeparatedList {
+            VdBsqExprData::ChainingSeparatedList {
                 leader,
                 followers,
                 joined_signature,
             } => followers.first().unwrap().0.separator().outer_precedence(),
-            VdBsqExprFldData::ItemPath(vd_item_path) => VdPrecedence::ATOM,
+            VdBsqExprData::ItemPath(vd_item_path) => VdPrecedence::ATOM,
         }
     }
 }
@@ -228,20 +228,20 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         entry: &VdMirExprEntry,
         symbol_local_defn_storage: &VdMirSymbolLocalDefnStorage,
-    ) -> VdBsqExprFldData<'sess> {
+    ) -> VdBsqExprData<'sess> {
         match *entry.data() {
-            VdMirExprData::Literal(vd_literal) => VdBsqExprFldData::Literal(vd_literal),
+            VdMirExprData::Literal(vd_literal) => VdBsqExprData::Literal(vd_literal),
             VdMirExprData::Variable(local_defn_idx) => {
                 let lx_math_letter =
                     match *symbol_local_defn_storage.defn_arena()[local_defn_idx].head() {
                         VdMirSymbolLocalDefnHead::Letter(lx_math_letter) => lx_math_letter,
                     };
-                VdBsqExprFldData::Variable(lx_math_letter, local_defn_idx)
+                VdBsqExprData::Variable(lx_math_letter, local_defn_idx)
             }
             VdMirExprData::Application {
                 function,
                 arguments,
-            } => VdBsqExprFldData::Application {
+            } => VdBsqExprData::Application {
                 function,
                 arguments: arguments
                     .into_iter()
@@ -251,7 +251,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdMirExprData::FoldingSeparatedList {
                 leader,
                 ref followers,
-            } => VdBsqExprFldData::FoldingSeparatedList {
+            } => VdBsqExprData::FoldingSeparatedList {
                 leader: self.expr_fld(leader),
                 followers: followers
                     .iter()
@@ -262,7 +262,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 leader,
                 ref followers,
                 joined_signature,
-            } => VdBsqExprFldData::ChainingSeparatedList {
+            } => VdBsqExprData::ChainingSeparatedList {
                 leader: self.expr_fld(leader),
                 followers: followers
                     .iter()
@@ -270,7 +270,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     .collect(),
                 joined_signature,
             },
-            VdMirExprData::ItemPath(vd_item_path) => VdBsqExprFldData::ItemPath(vd_item_path),
+            VdMirExprData::ItemPath(vd_item_path) => VdBsqExprData::ItemPath(vd_item_path),
         }
     }
 }
@@ -278,7 +278,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub(crate) fn mk_expr(
         &self,
-        expr_data: VdBsqExprFldData<'sess>,
+        expr_data: VdBsqExprData<'sess>,
         ty: VdType,
         expected_ty: Option<VdType>,
     ) -> VdBsqExprFld<'sess> {
@@ -289,7 +289,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     pub(crate) fn mk_zero(&self, expected_ty: Option<VdType>) -> VdBsqExprFld<'sess> {
         self.mk_expr(
-            VdBsqExprFldData::Literal(self.term_menu().zero),
+            VdBsqExprData::Literal(self.term_menu().zero),
             self.ty_menu().nat,
             expected_ty,
         )
@@ -307,7 +307,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
             VdBsqLitnumTerm::Frac128(vd_bsq_frac128) => todo!(),
         };
-        self.mk_expr(VdBsqExprFldData::Literal(lit), ty, expected_ty)
+        self.mk_expr(VdBsqExprData::Literal(lit), ty, expected_ty)
     }
 
     pub(crate) fn mk_add(
@@ -319,7 +319,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_add_signature(lopd.ty(), ropd.ty());
         self.mk_expr(
-            VdBsqExprFldData::FoldingSeparatedList {
+            VdBsqExprData::FoldingSeparatedList {
                 leader: lopd,
                 followers: smallvec![(signature, ropd)],
             },
@@ -337,7 +337,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_sub_signature(lhs.ty(), rhs.ty());
         self.mk_expr(
-            VdBsqExprFldData::Application {
+            VdBsqExprData::Application {
                 function: VdMirFunc::NormalBaseBinaryOpr(signature),
                 arguments: smallvec![lhs, rhs],
             },
@@ -354,7 +354,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_neg_signature(expr.ty());
         self.mk_expr(
-            VdBsqExprFldData::Application {
+            VdBsqExprData::Application {
                 function: VdMirFunc::NormalBasePrefixOpr(signature),
                 arguments: smallvec![expr],
             },
@@ -372,7 +372,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdBsqExprFld<'sess> {
         let signature = hc.infer_mul_signature(lopd.ty(), ropd.ty());
         self.mk_expr(
-            VdBsqExprFldData::FoldingSeparatedList {
+            VdBsqExprData::FoldingSeparatedList {
                 leader: lopd,
                 followers: smallvec![(signature, ropd)],
             },
@@ -419,9 +419,9 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprData {
         match *self.data() {
-            VdBsqExprFldData::Literal(lit) => VdMirExprData::Literal(lit),
-            VdBsqExprFldData::Variable(_, symbol) => VdMirExprData::Variable(symbol),
-            VdBsqExprFldData::Application {
+            VdBsqExprData::Literal(lit) => VdMirExprData::Literal(lit),
+            VdBsqExprData::Variable(_, symbol) => VdMirExprData::Variable(symbol),
+            VdBsqExprData::Application {
                 function,
                 ref arguments,
             } => {
@@ -434,7 +434,7 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                     arguments: hc.mk_exprs(exprs),
                 }
             }
-            VdBsqExprFldData::FoldingSeparatedList {
+            VdBsqExprData::FoldingSeparatedList {
                 leader,
                 ref followers,
             } => VdMirExprData::FoldingSeparatedList {
@@ -444,7 +444,7 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                     .map(|&(func, follower)| (func, follower.transcribe(elaborator, hc)))
                     .collect(),
             },
-            VdBsqExprFldData::ChainingSeparatedList {
+            VdBsqExprData::ChainingSeparatedList {
                 leader,
                 ref followers,
                 joined_signature,
@@ -456,7 +456,7 @@ impl<'db, 'sess> VdBsqExprFld<'sess> {
                     .collect(),
                 joined_signature,
             },
-            VdBsqExprFldData::ItemPath(vd_item_path) => VdMirExprData::ItemPath(vd_item_path),
+            VdBsqExprData::ItemPath(vd_item_path) => VdMirExprData::ItemPath(vd_item_path),
         }
     }
 }

@@ -1,6 +1,6 @@
 use crate::{
     call::stack::VdBsqCallStack,
-    expr::{VdBsqExprFld, VdBsqExprFldData},
+    expr::{VdBsqExprData, VdBsqExprFld},
     hypothesis::{
         construction::VdBsqHypothesisConstruction,
         constructor::VdBsqHypothesisConstructor,
@@ -169,12 +169,12 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
             } => {
                 let assignment = self.expr_fld(assignment);
                 let variable = self.mk_expr(
-                    VdBsqExprFldData::Variable(letter, symbol_local_defn),
+                    VdBsqExprData::Variable(letter, symbol_local_defn),
                     assignment.ty(),
                     None,
                 );
                 let signature = region_data.infer_eq_signature(assignment.ty(), assignment.ty());
-                let eq_expr_data = VdBsqExprFldData::ChainingSeparatedList {
+                let eq_expr_data = VdBsqExprData::ChainingSeparatedList {
                     leader: variable,
                     followers: smallvec![(signature, assignment)],
                     joined_signature: None,
@@ -252,7 +252,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
             todo!("divisor.ty() = {:?}", divisor.ty())
         };
         let prop = self.mk_expr(
-            VdBsqExprFldData::ChainingSeparatedList {
+            VdBsqExprData::ChainingSeparatedList {
                 leader: divisor,
                 followers: smallvec![(signature, self.mk_zero(Some(divisor.ty())))],
                 joined_signature: None,

@@ -146,16 +146,13 @@ impl<'db, 'sess> VdBsqAtomTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdBsqExprFldData<'sess>, VdType) {
+    ) -> (VdBsqExprData<'sess>, VdType) {
         match *self.data() {
             VdBsqComnumAtomTermData::Variable {
                 lx_math_letter,
                 local_defn_idx,
                 ty,
-            } => (
-                VdBsqExprFldData::Variable(lx_math_letter, local_defn_idx),
-                ty,
-            ),
+            } => (VdBsqExprData::Variable(lx_math_letter, local_defn_idx), ty),
         }
     }
 }

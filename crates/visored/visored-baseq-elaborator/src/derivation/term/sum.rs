@@ -8,19 +8,42 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         followers: &[(VdBaseFoldingSeparatorSignature, VdBsqExprFld<'sess>)],
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        use husky_print_utils::*;
-        p!(leader, followers);
-        // for (signature, _) in followers {
-        //     assert_eq!(
-        //         signature.separator(),
-        //         VdMirBaseFoldingSeparator::CommRingAdd.into()
-        //     );
-        // }
-        // let leader_equivalence = self.transcribe_expr_term_derivation(leader, hc);
-        // let follower_equivalences = followers
-        //     .iter()
-        //     .map(|&(func, follower)| (func, self.transcribe_expr_term_derivation(follower, hc)))
-        //     .collect::<Vec<_>>();
-        todo!()
+        let (lopd, signature, ropd) = match followers.len() {
+            0 => unreachable!(),
+            1 => {
+                let (signature, follower) = followers[0];
+                if let (&VdBsqExprData::Literal(leader), &VdBsqExprData::Literal(follower)) =
+                    (leader.data(), follower.data())
+                {
+                    return VdMirTermDerivationConstruction::LiteralAdd;
+                }
+                todo!();
+                (leader, signature, follower)
+            }
+            _ => {
+                let last_signature = followers.last().unwrap().0;
+                let lopd = self.mk_expr(
+                    VdBsqExprData::FoldingSeparatedList {
+                        leader,
+                        followers: followers[..followers.len() - 1].to_smallvec(),
+                    },
+                    followers[followers.len() - 2].0.expr_ty(),
+                    Some(last_signature.item_ty()),
+                );
+                let signature = followers.last().unwrap().0;
+                let ropd = followers.last().unwrap().1;
+                (lopd, signature, ropd)
+            }
+        };
+        let expected_ty = signature.expr_ty();
+        let lopd = lopd.normalize(self, hc);
+        let ropd = ropd.normalize(self, hc);
+        let sum = self.mk_add(lopd.expr(), ropd.expr(), Some(expected_ty), hc);
+        let sum = sum.normalize(self, hc);
+        VdMirTermDerivationConstruction::AddEq {
+            lopd: lopd.derivation(),
+            ropd: ropd.derivation(),
+            sum: sum.derivation(),
+        }
     }
 }

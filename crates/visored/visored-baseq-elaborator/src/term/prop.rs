@@ -53,7 +53,7 @@ impl<'db, 'sess> VdBsqPropTerm<'sess> {
                     false => todo!(),
                 };
                 elr.mk_expr(
-                    VdBsqExprFldData::ItemPath(path),
+                    VdBsqExprData::ItemPath(path),
                     elr.ty_menu().prop,
                     expected_ty,
                 )

@@ -8,7 +8,7 @@ pub mod set;
 use self::{comnum::*, litnum::*, num::*, prop::*, set::*};
 use crate::{
     elaborator::VdBsqElaboratorInner,
-    expr::{VdBsqExprFld, VdBsqExprFldData},
+    expr::{VdBsqExprData, VdBsqExprFld},
     foundations::opr::separator::relation::comparison::VdBsqComparisonOpr,
     hypothesis::VdBsqHypothesisIdx,
 };
@@ -115,14 +115,14 @@ impl<'sess> std::fmt::Debug for VdBsqNumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub fn calc_expr_term(&self, expr: &VdBsqExprFldData<'sess>, ty: VdType) -> VdBsqTerm<'sess> {
+    pub fn calc_expr_term(&self, expr: &VdBsqExprData<'sess>, ty: VdType) -> VdBsqTerm<'sess> {
         let db = self.floater_db();
         match *expr {
-            VdBsqExprFldData::Literal(vd_literal) => match *vd_literal.data() {
+            VdBsqExprData::Literal(vd_literal) => match *vd_literal.data() {
                 VdLiteralData::Int(ref n) => VdBsqBigInt::new_or_i128_ref(n, db).into(),
                 VdLiteralData::Frac(ref frac) => todo!(),
             },
-            VdBsqExprFldData::Variable(lx_math_letter, local_defn_idx) => {
+            VdBsqExprData::Variable(lx_math_letter, local_defn_idx) => {
                 if ty.is_numeric(self.eterner_db()) {
                     if let Some(_) = self.eval_variable() {
                         todo!()
@@ -138,7 +138,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     todo!()
                 }
             }
-            VdBsqExprFldData::Application {
+            VdBsqExprData::Application {
                 function,
                 ref arguments,
             } => match function {
@@ -188,7 +188,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     VdBsqTerm::new_power(radicand, exponent, self.floater_db())
                 }
             },
-            VdBsqExprFldData::FoldingSeparatedList {
+            VdBsqExprData::FoldingSeparatedList {
                 leader,
                 ref followers,
             } => {
@@ -222,7 +222,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
                 }
             }
-            VdBsqExprFldData::ChainingSeparatedList {
+            VdBsqExprData::ChainingSeparatedList {
                 leader,
                 ref followers,
                 joined_signature: joined_chaining_separator_and_signature,
@@ -275,7 +275,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                     }
                 }
             },
-            VdBsqExprFldData::ItemPath(path) => match path {
+            VdBsqExprData::ItemPath(path) => match path {
                 VdItemPath::Category(path) => todo!(),
                 VdItemPath::Set(path) => VdBsqSetTerm::Path(path).into(),
                 VdItemPath::Function(path) => todo!(),

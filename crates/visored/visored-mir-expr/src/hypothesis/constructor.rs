@@ -85,6 +85,14 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         &self.expr_arena[idx]
     }
 
+    #[track_caller]
+    pub fn literal(&self, idx: VdMirExprIdx) -> &VdLiteral {
+        match self.expr_arena[idx].data() {
+            VdMirExprData::Literal(vd_literal) => vd_literal,
+            _ => panic!(),
+        }
+    }
+
     pub fn stmt_arena(&self) -> VdMirStmtArenaRef {
         self.stmt_arena.as_arena_ref()
     }

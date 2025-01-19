@@ -10,7 +10,7 @@ mod sum;
 
 use self::expr_nf::*;
 use super::*;
-use expr::{VdBsqExprFld, VdBsqExprFldData};
+use expr::{VdBsqExprData, VdBsqExprFld};
 use smallvec::*;
 use visored_mir_expr::{
     derivation::{
@@ -85,10 +85,10 @@ where
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         match *expr.data() {
-            VdBsqExprFldData::Literal(_) => VdMirTermDerivationConstruction::Reflection,
-            VdBsqExprFldData::Variable(_, _) => VdMirTermDerivationConstruction::Reflection,
-            VdBsqExprFldData::ItemPath(_) => VdMirTermDerivationConstruction::Reflection,
-            VdBsqExprFldData::Application {
+            VdBsqExprData::Literal(_) => VdMirTermDerivationConstruction::Reflection,
+            VdBsqExprData::Variable(_, _) => VdMirTermDerivationConstruction::Reflection,
+            VdBsqExprData::ItemPath(_) => VdMirTermDerivationConstruction::Reflection,
+            VdBsqExprData::Application {
                 function,
                 ref arguments,
             } => match function {
@@ -128,7 +128,7 @@ where
                     self.transcribe_sqrt_term_derivation_construction(radicand, hc)
                 }
             },
-            VdBsqExprFldData::FoldingSeparatedList {
+            VdBsqExprData::FoldingSeparatedList {
                 leader,
                 ref followers,
             } => match followers[0].0.separator() {
@@ -141,7 +141,7 @@ where
                 VdMirBaseFoldingSeparator::SetTimes => todo!(),
                 VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
             },
-            VdBsqExprFldData::ChainingSeparatedList {
+            VdBsqExprData::ChainingSeparatedList {
                 leader,
                 ref followers,
                 joined_signature,
@@ -149,5 +149,15 @@ where
                 leader, followers, hc,
             ),
         }
+    }
+}
+
+impl<'db, 'sess> VdBsqExprFld<'sess> {
+    fn normalize(
+        self,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExprNf<'sess> {
+        elr.transcribe_expr_term_derivation(self, hc)
     }
 }

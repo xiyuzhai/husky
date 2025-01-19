@@ -1,7 +1,7 @@
 use super::*;
 use crate::maneuver::litnum_rewrite::litnum_rewritem;
 use crate::{
-    coercion::VdBsqCoercionOutcome, expr::VdBsqExprFldData,
+    coercion::VdBsqCoercionOutcome, expr::VdBsqExprData,
     hypothesis::construction::VdBsqHypothesisConstruction,
 };
 use alt_option::*;
@@ -28,7 +28,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 
     fn litnum_estimate_inner(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
-        let VdBsqExprFldData::ChainingSeparatedList {
+        let VdBsqExprData::ChainingSeparatedList {
             leader,
             ref followers,
             joined_signature,

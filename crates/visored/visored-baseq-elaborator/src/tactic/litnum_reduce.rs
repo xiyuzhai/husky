@@ -1,7 +1,7 @@
 use super::*;
 use crate::maneuver::litnum_rewrite::litnum_rewritem;
 use crate::{
-    coercion::VdBsqCoercionOutcome, expr::VdBsqExprFldData,
+    coercion::VdBsqCoercionOutcome, expr::VdBsqExprData,
     hypothesis::construction::VdBsqHypothesisConstruction,
 };
 use alt_option::*;

@@ -1,6 +1,7 @@
 mod neg;
+pub mod sum;
 
-use self::neg::*;
+use self::{neg::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx, expr::VdMirExprData, helpers::compare::vd_mir_expr_deep_eq,
@@ -18,6 +19,13 @@ pub enum VdMirTermDerivationConstruction {
     },
     SubEqsAddNeg {
         add_neg: VdMirTermDerivationIdx,
+    },
+    LiteralAdd,
+    /// derive `a + b => term` from `a => term_a`, `b => term_b` and `term_a + term_b => term`
+    AddEq {
+        lopd: VdMirTermDerivationIdx,
+        ropd: VdMirTermDerivationIdx,
+        sum: VdMirTermDerivationIdx,
     },
     AdditionInterchange,
     AdditionAssociativity,
@@ -65,6 +73,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::Reflection => {
                 check_reflection(leader, signature, follower, hc)
             }
+            VdMirTermDerivationConstruction::LiteralAdd => check_literal_sum(leader, follower, hc),
             VdMirTermDerivationConstruction::NumComparison {
                 lhs_minus_rhs: lhs_minus_rhs_equivalence,
             } => check_num_comparison(leader, signature, follower, hc),
@@ -81,6 +90,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::NegLiteral => {
                 check_neg_literal(leader, signature, follower, hc)
             }
+            VdMirTermDerivationConstruction::AddEq { .. } => todo!(),
         }
     }
 }

@@ -2,7 +2,7 @@ use super::*;
 use crate::{
     coercion::VdBsqCoercionOutcome,
     elabm::{foldm::mapm_collect, ElabM},
-    expr::{VdBsqExprFld, VdBsqExprFldData},
+    expr::{VdBsqExprData, VdBsqExprFld},
     hypothesis::construction::VdBsqHypothesisConstruction,
     Mhr,
 };
@@ -61,10 +61,10 @@ where
 {
     #[unify_elabm]
     match *expr.data() {
-        VdBsqExprFldData::Literal(_)
-        | VdBsqExprFldData::Variable(_, _)
-        | VdBsqExprFldData::ItemPath(_) => Pure(expr),
-        VdBsqExprFldData::Application {
+        VdBsqExprData::Literal(_) | VdBsqExprData::Variable(_, _) | VdBsqExprData::ItemPath(_) => {
+            Pure(expr)
+        }
+        VdBsqExprData::Application {
             function,
             ref arguments,
         } =>
@@ -78,7 +78,7 @@ where
                 | VdMirFunc::NormalBaseSqrt(_) => mapm_collect(arguments, |&argument| f(argument))
                     .map(|elr, arguments| {
                         elr.mk_expr(
-                            VdBsqExprFldData::Application {
+                            VdBsqExprData::Application {
                                 function,
                                 arguments,
                             },
@@ -88,7 +88,7 @@ where
                     }),
             }
         }
-        VdBsqExprFldData::FoldingSeparatedList {
+        VdBsqExprData::FoldingSeparatedList {
             leader,
             ref followers,
         } => f(leader).bind(|elr, leader| {
@@ -97,13 +97,13 @@ where
             })
             .map(move |elr, followers: VdBsqExprFoldingFollowers<'sess>| {
                 elr.mk_expr(
-                    VdBsqExprFldData::FoldingSeparatedList { leader, followers },
+                    VdBsqExprData::FoldingSeparatedList { leader, followers },
                     expr.ty(),
                     expr.expected_ty(),
                 )
             })
         }),
-        VdBsqExprFldData::ChainingSeparatedList {
+        VdBsqExprData::ChainingSeparatedList {
             leader,
             ref followers,
             joined_signature,
@@ -113,7 +113,7 @@ where
             })
             .map(move |elr, followers: VdBsqExprChainingFollowers<'sess>| {
                 elr.mk_expr(
-                    VdBsqExprFldData::ChainingSeparatedList {
+                    VdBsqExprData::ChainingSeparatedList {
                         leader,
                         followers,
                         joined_signature,

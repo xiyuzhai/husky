@@ -1,6 +1,6 @@
 use super::*;
 use crate::{
-    coercion::VdBsqCoercionOutcome, expr::VdBsqExprFldData,
+    coercion::VdBsqCoercionOutcome, expr::VdBsqExprData,
     hypothesis::construction::VdBsqHypothesisConstruction,
 };
 use alt_option::*;
@@ -30,7 +30,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn square_nonnegative(&mut self, prop: VdBsqExprFld<'sess>) -> Mhr<'sess> {
         use husky_print_utils::*;
-        let VdBsqExprFldData::ChainingSeparatedList {
+        let VdBsqExprData::ChainingSeparatedList {
             leader,
             followers,
             joined_signature: None,
@@ -42,7 +42,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let (ge, rhs) = followers[0];
         require!(ge.separator() == VdMirBaseChainingSeparator::GE);
         require!(rhs.is_zero());
-        require!(let VdBsqExprFldData::Application {
+        require!(let VdBsqExprData::Application {
             function: pow,
             arguments: pow_args,
         } = leader.data());

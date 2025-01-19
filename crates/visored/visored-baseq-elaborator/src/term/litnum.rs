@@ -535,18 +535,18 @@ impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> (VdBsqExprFldData<'sess>, VdType) {
+    ) -> (VdBsqExprData<'sess>, VdType) {
         let db = elr.eterner_db();
         match self {
             VdBsqLitnumTerm::Int128(i) => {
                 if i >= 0 {
                     (
-                        VdBsqExprFldData::Literal(VdLiteral::new_int128(i, db)),
+                        VdBsqExprData::Literal(VdLiteral::new_int128(i, db)),
                         elr.ty_menu().nat,
                     )
                 } else {
                     (
-                        VdBsqExprFldData::Literal(VdLiteral::new_int128(i, db)),
+                        VdBsqExprData::Literal(VdLiteral::new_int128(i, db)),
                         elr.ty_menu().int,
                     )
                 }
