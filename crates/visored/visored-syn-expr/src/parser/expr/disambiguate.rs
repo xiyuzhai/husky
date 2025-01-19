@@ -24,7 +24,7 @@ use visored_opr::{
     precedence::VdPrecedence,
     separator::VdBaseSeparator,
 };
-use visored_term::term::literal::{bigint::VdBigIntData, VdLiteral, VdLiteralData};
+use visored_term::term::literal::{VdInteger, VdLiteral, VdLiteralData};
 
 #[derive(Debug)]
 pub enum DisambiguatedAst {
@@ -204,10 +204,9 @@ impl<'a, 'db> VdSynExprParser<'a, 'db> {
                     *next += 1;
                 }
                 let data = match literal_number_kind {
-                    LiteralNumberKind::NaturalNumber => match s.parse() {
-                        Ok(i) => VdLiteralData::Int128(i),
-                        Err(_) => VdLiteralData::BigInt(VdBigIntData::from_str(&s).unwrap()),
-                    },
+                    LiteralNumberKind::NaturalNumber => {
+                        VdLiteralData::Integer(VdInteger::from_str(&s).unwrap())
+                    }
                     LiteralNumberKind::Float => VdLiteralData::Float(s),
                 };
                 let expr_data = VdSynExprData::Literal {

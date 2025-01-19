@@ -119,10 +119,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let db = self.floater_db();
         match *expr {
             VdBsqExprFldData::Literal(vd_literal) => match *vd_literal.data() {
-                VdLiteralData::Int128(i) => VdBsqTerm::Litnum(VdBsqLitnumTerm::Int128(i)),
-                VdLiteralData::BigInt(ref n) => {
-                    VdBsqTerm::Litnum(VdBsqLitnumTerm::BigInt(VdBsqBigInt::new(n.clone(), db)))
-                }
+                VdLiteralData::Integer(ref n) => VdBsqBigInt::new_or_i128_ref(n, db).into(),
                 VdLiteralData::Float(_) => todo!(),
                 VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
             },

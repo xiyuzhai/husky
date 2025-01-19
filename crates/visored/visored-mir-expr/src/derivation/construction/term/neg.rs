@@ -34,14 +34,9 @@ pub(super) fn check_neg_literal<'db, Src>(
         )
     };
     match *arg.data() {
-        VdLiteralData::Int128(arg) => {
-            if let Some(neg) = arg.checked_neg() {
-                assert_eq!(follower.data(), &VdLiteralData::Int128(neg));
-            } else {
-                todo!()
-            }
+        VdLiteralData::Integer(ref arg) => {
+            assert_eq!(follower.data(), &VdLiteralData::Integer(-arg));
         }
-        VdLiteralData::BigInt(ref arg) => todo!(),
         VdLiteralData::Float(_) => todo!(),
         VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
     }

@@ -24,7 +24,7 @@ use visored_mir_expr::{
 };
 use visored_mir_opr::separator::chaining::VdMirBaseChainingSeparator;
 use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
-use visored_term::term::literal::{VdLiteral, VdLiteralData};
+use visored_term::term::literal::{VdLiteral, VdLiteralData, VdSign};
 
 impl<'db, S> VdTranspileToLean<S, LnMirExprIdx> for VdMirExprIdx
 where
@@ -97,8 +97,10 @@ where
         match *self.expr_arena()[expr].data() {
             VdMirExprData::Literal(literal) => {
                 let needs_ty_ascription = match *literal.data() {
-                    VdLiteralData::Int128(i) => i < 0,
-                    VdLiteralData::BigInt(ref i) => i.is_negative(),
+                    VdLiteralData::Integer(ref i) => match i.sign() {
+                        VdSign::Minus => true,
+                        VdSign::Plus | VdSign::NoSign => false,
+                    },
                     VdLiteralData::Float(_) => todo!(),
                     VdLiteralData::SpecialConstant(_) => todo!(),
                 };
@@ -147,20 +149,10 @@ where
 #[eterned::memo]
 fn to_lean_literal(literal: VdLiteral, db: &EternerDb) -> LnLiteral {
     let data = match *literal.data() {
-        VdLiteralData::Int128(i) => {
-            if i >= 0 {
-                LnLiteralData::Nat(i.to_string())
-            } else {
-                LnLiteralData::Int(i.to_string())
-            }
-        }
-        VdLiteralData::BigInt(ref n) => {
-            if n.is_nonnegative() {
-                LnLiteralData::Nat(n.to_string())
-            } else {
-                LnLiteralData::Int(n.to_string())
-            }
-        }
+        VdLiteralData::Integer(ref i) => match i.sign() {
+            VdSign::Minus => LnLiteralData::Int(i.to_string()),
+            VdSign::Plus | VdSign::NoSign => LnLiteralData::Nat(i.to_string()),
+        },
         VdLiteralData::Float(ref lit) => LnLiteralData::Float(lit.to_string()),
         VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
     };

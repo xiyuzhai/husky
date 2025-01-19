@@ -430,8 +430,7 @@ impl VdSynExprData {
                 token_idx_range,
                 literal,
             } => match literal.data() {
-                VdLiteralData::Int128(n) => n.to_string(),
-                VdLiteralData::BigInt(n) => todo!(),
+                VdLiteralData::Integer(n) => n.to_string(),
                 VdLiteralData::Float(n) => n.to_string(),
                 VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
             },

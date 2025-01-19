@@ -5,7 +5,7 @@ pub mod special_constant;
 use eterned::db::EternerDb;
 use num_bigint::Sign;
 
-use self::{bigint::VdBigIntData, special_constant::VdSpecialConstant};
+use self::special_constant::VdSpecialConstant;
 use super::*;
 use crate::{menu::vd_ty_menu, ty::VdType};
 
@@ -34,8 +34,7 @@ impl std::fmt::Debug for VdLiteral {
 impl VdLiteral {
     pub fn show(self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.data() {
-            VdLiteralData::Int128(i) => write!(f, "{}", i),
-            VdLiteralData::BigInt(n) => write!(f, "{}", **n),
+            VdLiteralData::Integer(n) => write!(f, "{}", n),
             VdLiteralData::Float(s) => write!(f, "{}", s),
             VdLiteralData::SpecialConstant(vd_special_constant) => todo!(),
         }
@@ -44,17 +43,18 @@ impl VdLiteral {
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum VdLiteralData {
-    Int128(i128),
-    BigInt(VdBigIntData),
+    Integer(VdInteger),
     Float(String),
     SpecialConstant(VdSpecialConstant),
 }
 
+pub type VdInteger = num_bigint::BigInt;
+pub type VdSign = num_bigint::Sign;
+
 impl std::fmt::Display for VdLiteralData {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            VdLiteralData::Int128(n) => write!(f, "{}", n),
-            VdLiteralData::BigInt(n) => todo!(),
+            VdLiteralData::Integer(n) => write!(f, "{}", n),
             VdLiteralData::Float(n) => write!(f, "{}", n),
             VdLiteralData::SpecialConstant(n) => todo!(),
         }
@@ -67,7 +67,7 @@ impl VdLiteral {
     }
 
     pub fn new_int128(i: i128, db: &EternerDb) -> Self {
-        Self(VdTermId::new(VdLiteralData::Int128(i).into(), db))
+        Self(VdTermId::new(VdLiteralData::Integer(i.into()).into(), db))
     }
 
     pub fn data(self) -> &'static VdLiteralData {
@@ -86,14 +86,7 @@ fn zfc_literal_ty(literal: VdLiteral, db: &EternerDb) -> VdType {
     let data = literal.data();
     let menu = vd_ty_menu(db);
     match *data {
-        VdLiteralData::Int128(i) => {
-            if i >= 0 {
-                menu.nat
-            } else {
-                menu.int
-            }
-        }
-        VdLiteralData::BigInt(ref i) => match i.sign() {
+        VdLiteralData::Integer(ref i) => match i.sign() {
             Sign::Minus => menu.int,
             Sign::NoSign | Sign::Plus => menu.nat,
         },

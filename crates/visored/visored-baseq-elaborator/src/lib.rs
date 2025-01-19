@@ -1,3 +1,4 @@
+#![feature(if_let_guard)]
 #![feature(never_type)]
 #![feature(proc_macro_hygiene)]
 #![feature(stmt_expr_attributes)]

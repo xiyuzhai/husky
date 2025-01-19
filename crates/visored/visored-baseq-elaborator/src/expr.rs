@@ -97,9 +97,15 @@ impl<'sess> VdBsqExprFld<'sess> {
                     Ok(())
                 }
                 VdMirFunc::Power(signature) => {
+                    use num_traits::cast::ToPrimitive;
+
                     match arguments[1].data() {
                         VdBsqExprFldData::Literal(literal) => match *literal.data() {
-                            VdLiteralData::Int128(i) if i >= 0 && i < 10 => {
+                            VdLiteralData::Integer(ref i)
+                                if let Some(i) = i.to_i128()
+                                    && i >= 0
+                                    && i < 10 =>
+                            {
                                 use husky_unicode_symbols::superscript::superscript;
 
                                 // use unicode to show the superscript
@@ -297,7 +303,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdBsqExprFld<'sess> {
         let db = self.session().eterner_db();
         let lit = match litnum {
-            VdBsqLitnumTerm::Int128(i) => VdLiteral::new(VdLiteralData::Int128(i), db),
+            VdBsqLitnumTerm::Int128(i) => VdLiteral::new(VdLiteralData::Integer(i.into()), db),
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
             VdBsqLitnumTerm::Frac128(vd_bsq_frac128) => todo!(),
         };

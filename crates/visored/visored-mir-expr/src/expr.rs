@@ -94,12 +94,6 @@ impl VdMirExprEntry {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub struct VdMirLiteral {}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub struct VdMirVariable {}
-
 impl<'db> ToVdMir<VdMirExprIdxRange, VdMirExprRegionBuilder<'db>> for VdSemExprIdxRange {
     fn to_vd_mir(self, builder: &mut VdMirExprRegionBuilder<'db>) -> VdMirExprIdxRange {
         let mut exprs: Vec<VdMirExprEntry> = Vec::with_capacity(self.len());

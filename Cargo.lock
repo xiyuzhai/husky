@@ -13454,6 +13454,7 @@ dependencies = [
  "miracle",
  "num-bigint",
  "num-integer",
+ "num-traits",
  "ordered-float 4.5.0",
  "relative-path",
  "rustc-hash 2.0.0",

@@ -10,12 +10,14 @@ impl<'sess> VdBsqExprFld<'sess> {
     }
 
     pub fn eqs_nat128(self, i: i128) -> bool {
+        use num_traits::ToPrimitive;
+
         let VdBsqExprFldData::Literal(lit) = self.data() else {
             return false;
         };
-        let VdLiteralData::Int128(i1) = *lit.data() else {
+        let VdLiteralData::Integer(ref i1) = *lit.data() else {
             return false;
         };
-        i1 == i
+        i1.to_i128() == Some(i)
     }
 }
