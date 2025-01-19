@@ -17,7 +17,7 @@ pub fn ln_mir_expr_deep_eq(a: LnMirExprIdx, b: LnMirExprIdx, arena: LnMirExprAre
                 parameters: ref b_params,
                 body: b_body,
             },
-        ) => a_params == b_params && ln_mir_expr_deep_eq(a_body, b_body, arena),
+        ) => todo!(),
         (
             LnMirExprData::Application {
                 function: a_fn,
@@ -27,10 +27,10 @@ pub fn ln_mir_expr_deep_eq(a: LnMirExprIdx, b: LnMirExprIdx, arena: LnMirExprAre
                 function: b_fn,
                 arguments: b_args,
             },
-        ) => a_fn == b_fn && a_args == b_args,
+        ) => todo!(),
         (LnMirExprData::Sorry, LnMirExprData::Sorry) => true,
         (LnMirExprData::By { tactics: a_tactics }, LnMirExprData::By { tactics: b_tactics }) => {
-            a_tactics == b_tactics
+            todo!()
         }
         _ => false,
     }
