@@ -17,7 +17,6 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 {
                     return VdMirTermDerivationConstruction::LiteralAdd;
                 }
-                todo!();
                 (leader, signature, follower)
             }
             _ => {
@@ -39,11 +38,11 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let lopd = lopd.normalize(self, hc);
         let ropd = ropd.normalize(self, hc);
         let sum = self.mk_add(lopd.expr(), ropd.expr(), Some(expected_ty), hc);
-        let sum = sum.normalize(self, hc);
+        // let sum = sum.normalize(self, hc);
         VdMirTermDerivationConstruction::AddEq {
             lopd: lopd.derivation(),
             ropd: ropd.derivation(),
-            sum: sum.derivation(),
+            sum: todo!(),
         }
     }
 }
