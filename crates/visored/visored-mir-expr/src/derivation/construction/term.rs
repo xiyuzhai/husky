@@ -25,7 +25,7 @@ pub enum VdMirTermDerivationConstruction {
     AddEq {
         lopd: VdMirTermDerivationIdx,
         ropd: VdMirTermDerivationIdx,
-        sum: VdMirTermDerivationIdx,
+        merge: VdMirTermDerivationIdx,
     },
     AdditionInterchange,
     AdditionAssociativity,

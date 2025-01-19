@@ -2,7 +2,7 @@ use super::*;
 use crate::{
     coercion::VdBsqCoercionOutcome,
     elabm::{foldm::mapm_collect, ElabM},
-    expr::{VdBsqExprData, VdBsqExpr},
+    expr::{VdBsqExpr, VdBsqExprData},
     hypothesis::construction::VdBsqHypothesisConstruction,
     Mhr,
 };

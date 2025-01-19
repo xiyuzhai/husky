@@ -1,6 +1,6 @@
 use crate::{
     call::stack::VdBsqCallStack,
-    expr::{VdBsqExprData, VdBsqExpr},
+    expr::{VdBsqExpr, VdBsqExprData},
     hypothesis::{
         construction::VdBsqHypothesisConstruction,
         constructor::VdBsqHypothesisConstructor,

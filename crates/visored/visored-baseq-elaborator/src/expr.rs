@@ -274,11 +274,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 }
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub(crate) fn mk_expr(
-        &self,
-        expr_data: VdBsqExprData<'sess>,
-        ty: VdType,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn mk_expr(&self, expr_data: VdBsqExprData<'sess>, ty: VdType) -> VdBsqExpr<'sess> {
         let term = self.calc_expr_term(&expr_data, ty);
         let db = self.session().floater_db();
         VdBsqExpr::new_inner(expr_data, ty, term, db)
@@ -362,6 +358,37 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             },
             signature.expr_ty(),
         )
+    }
+
+    pub(crate) fn split_folding_separated_list(
+        &self,
+        leader: VdBsqExpr<'sess>,
+        followers: &[(VdBaseFoldingSeparatorSignature, VdBsqExpr<'sess>)],
+    ) -> (
+        VdBsqExpr<'sess>,
+        VdBaseFoldingSeparatorSignature,
+        VdBsqExpr<'sess>,
+    ) {
+        match followers.len() {
+            0 => unreachable!(),
+            1 => {
+                let (signature, follower) = followers[0];
+                (leader, signature, follower)
+            }
+            _ => {
+                let last_signature = followers.last().unwrap().0;
+                let lopd = self.mk_expr(
+                    VdBsqExprData::FoldingSeparatedList {
+                        leader,
+                        followers: followers[..followers.len() - 1].to_smallvec(),
+                    },
+                    followers[followers.len() - 2].0.expr_ty(),
+                );
+                let signature = followers.last().unwrap().0;
+                let ropd = followers.last().unwrap().1;
+                (lopd, signature, ropd)
+            }
+        }
     }
 }
 
