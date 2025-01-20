@@ -90,7 +90,7 @@ fn merge_literal<'db, 'sess>(
     match *lopd.data() {
         VdBsqExprData::Literal(leader) => todo!(),
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
-            VdMirTermDerivationConstruction::AtomMulConstant
+            VdMirTermDerivationConstruction::AtomMulSwap
         }
         VdBsqExprData::Application {
             function,

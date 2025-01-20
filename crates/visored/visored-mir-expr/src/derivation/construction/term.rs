@@ -15,6 +15,7 @@ use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
 };
 use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
+use visored_term::term::literal::VdLiteral;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdMirTermDerivationConstruction {
@@ -25,7 +26,10 @@ pub enum VdMirTermDerivationConstruction {
     SubEqsAddNeg {
         add_neg: VdMirTermDerivationIdx,
     },
-    LiteralAdd,
+    LiteralAddLiteral {
+        lopd: VdLiteral,
+        ropd: VdLiteral,
+    },
     /// derive `a + b => term` from `a => term_a`, `b => term_b` and `term_a + term_b => term`
     AddEq {
         lopd: VdMirTermDerivationIdx,
@@ -38,19 +42,23 @@ pub enum VdMirTermDerivationConstruction {
     AdditionInverse,
     AdditionDistributivity,
     NegLiteral,
-    /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a constant
-    AtomAddConstant,
+    /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
+    AtomAddSwap,
     LiteralMul,
     MulEq {
         lopd: VdMirTermDerivationIdx,
         ropd: VdMirTermDerivationIdx,
         merge: VdMirTermDerivationIdx,
     },
-    AtomMulConstant,
+    AtomMulSwap,
     /// derive `1 * b => b`
     OneMulAtom,
     /// derive `c * b => c * b^1` if `c` is a constant
     NonOneLiteralMulAtom,
+    /// derive `c + a => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
+    NonZeroLiteralAddAtom,
+    /// derive `c + 0 => c`
+    NfAddZero,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -111,7 +119,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::Reflection => {
                 check_reflection(lhs, signature, rhs, hc)
             }
-            VdMirTermDerivationConstruction::LiteralAdd => check_add_literal(lhs, rhs, hc),
+            VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => {
+                check_literal_add_literal(lhs, rhs, hc)
+            }
             VdMirTermDerivationConstruction::NumComparison { lhs_minus_rhs } => {
                 check_num_comparison(lhs, signature, rhs, lhs_minus_rhs, hc)
             }
@@ -131,19 +141,25 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(lhs, signature, rhs, lopd, ropd, merge, hc),
-            VdMirTermDerivationConstruction::AtomAddConstant => {
+            VdMirTermDerivationConstruction::AtomAddSwap => {
                 check_atom_add_constant(lhs, signature, rhs, hc)
             }
             VdMirTermDerivationConstruction::LiteralMul => todo!(),
             VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => {
                 check_mul_eq(lhs, signature, rhs, lopd, ropd, merge, hc)
             }
-            VdMirTermDerivationConstruction::AtomMulConstant => todo!(),
+            VdMirTermDerivationConstruction::AtomMulSwap => todo!(),
             VdMirTermDerivationConstruction::OneMulAtom => {
                 check_one_mul_atom(lhs, signature, rhs, hc)
             }
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => {
                 check_nonone_literal_mul_atom(lhs, signature, rhs, hc)
+            }
+            VdMirTermDerivationConstruction::NonZeroLiteralAddAtom => {
+                check_nonzero_literal_add_atom(lhs, signature, rhs, hc)
+            }
+            VdMirTermDerivationConstruction::NfAddZero => {
+                check_nf_add_zero(lhs, signature, rhs, hc)
             }
         }
     }

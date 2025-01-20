@@ -20,7 +20,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         VdMirTermDerivationConstruction::AddEq {
             lopd: lopd.derivation(),
             ropd: ropd.derivation(),
-            merge: merge(lopd.expr(), ropd.expr(), self, hc).derivation(),
+            merge: merge_nf_add_nf(lopd, ropd, self, hc).derivation(),
         }
     }
 }
@@ -29,39 +29,58 @@ fn try_trivial_literal_add<'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
 ) -> Option<VdMirTermDerivationConstruction> {
-    if let (&VdBsqExprData::Literal(leader), &VdBsqExprData::Literal(follower)) =
+    if let (&VdBsqExprData::Literal(lopd), &VdBsqExprData::Literal(ropd)) =
         (lopd.data(), ropd.data())
     {
-        return Some(VdMirTermDerivationConstruction::LiteralAdd);
+        return Some(VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd });
     }
     None
 }
 
-fn merge<'db, 'sess>(
-    lopd: VdBsqExpr<'sess>,
-    ropd: VdBsqExpr<'sess>,
+fn merge_nf_add_nf<'db, 'sess>(
+    lopd: VdBsqExprNf<'sess>,
+    ropd: VdBsqExprNf<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprNf<'sess> {
-    let construction = merge_construction(lopd, ropd, elr, hc);
-    let expr = elr.mk_add(lopd, ropd, hc);
+    let construction = merge_nf_add_nf_construction(lopd, ropd, elr, hc);
+    match construction {
+        VdMirTermDerivationConstruction::LiteralAddLiteral {
+            lopd: lopd_lit,
+            ropd: ropd_lit,
+        } => {
+            use husky_print_utils::p;
+            p!(lopd, ropd, lopd_lit, ropd_lit);
+            todo!()
+        }
+        _ => (),
+    }
+    let expr = elr.mk_add(lopd.expr(), ropd.expr(), hc);
     let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
     let derivation = hc.alloc_term_derivation(prop, construction);
     VdBsqExprNf::new(derivation, expr, elr, hc)
 }
 
-fn merge_construction<'db, 'sess>(
-    lopd: VdBsqExpr<'sess>,
-    ropd: VdBsqExpr<'sess>,
+fn merge_nf_add_nf_construction<'db, 'sess>(
+    lopd: VdBsqExprNf<'sess>,
+    ropd: VdBsqExprNf<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
-    if let Some(construction) = try_trivial_literal_add(lopd, ropd) {
+    if let Some(construction) = try_trivial_literal_add(lopd.expr(), ropd.expr()) {
         return construction;
     }
     match *ropd.data() {
-        VdBsqExprData::Literal(literal) => merge_literal(lopd, literal, elr, hc),
-        VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
+        VdBsqExprData::Literal(literal) => {
+            if literal.is_zero() {
+                VdMirTermDerivationConstruction::NfAddZero
+            } else {
+                merge_nf_add_nonzero_literal_construction(lopd, literal, elr, hc)
+            }
+        }
+        VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
+            merge_nf_add_atom_construction(lopd, ropd, elr, hc)
+        }
         VdBsqExprData::Application {
             function,
             ref arguments,
@@ -79,17 +98,51 @@ fn merge_construction<'db, 'sess>(
     }
 }
 
-fn merge_literal<'db, 'sess>(
-    lopd: VdBsqExpr<'sess>,
-    literal: VdLiteral,
+fn merge_nf_add_nonzero_literal_construction<'db, 'sess>(
+    lopd: VdBsqExprNf<'sess>,
+    ropd: VdLiteral,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
     match *lopd.data() {
-        VdBsqExprData::Literal(leader) => todo!(),
-        VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
-            VdMirTermDerivationConstruction::AtomAddConstant
+        VdBsqExprData::Literal(lopd) => {
+            VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd }
         }
+        VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
+            VdMirTermDerivationConstruction::AtomAddSwap
+        }
+        VdBsqExprData::Application {
+            function,
+            ref arguments,
+        } => todo!("function = `{:?}`", function),
+        VdBsqExprData::FoldingSeparatedList {
+            leader,
+            ref followers,
+        } => todo!(),
+        VdBsqExprData::ChainingSeparatedList {
+            leader,
+            ref followers,
+            joined_signature,
+        } => todo!(),
+        VdBsqExprData::ItemPath(vd_item_path) => todo!(),
+    }
+}
+
+fn merge_nf_add_atom_construction<'db, 'sess>(
+    lopd: VdBsqExprNf<'sess>,
+    ropd: VdBsqExprNf<'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+) -> VdMirTermDerivationConstruction {
+    match *lopd.data() {
+        VdBsqExprData::Literal(lopd) => {
+            if lopd.is_zero() {
+                todo!()
+            } else {
+                VdMirTermDerivationConstruction::NonZeroLiteralAddAtom
+            }
+        }
+        VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
         VdBsqExprData::Application {
             function,
             ref arguments,

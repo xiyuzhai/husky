@@ -5,7 +5,7 @@ use visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator;
 use visored_opr::separator::VdBaseSeparator;
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 
-pub(super) fn check_add_literal<'db, Src>(
+pub(super) fn check_literal_add_literal<'db, Src>(
     lhs: VdMirExprIdx,
     rhs: VdMirExprIdx,
     hc: &VdMirHypothesisConstructor<'db, Src>,
@@ -70,4 +70,33 @@ pub(super) fn check_atom_add_constant<'db, Src>(
     ds!(let (c1 + rhs_ropd) = rhs, hc);
     ds!(let (one * a1) = rhs_ropd, hc);
     assert!(hc.literal(one).is_one());
+}
+
+/// derive `c + a => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
+pub(super) fn check_nonzero_literal_add_atom<'db, Src>(
+    lhs: VdMirExprIdx,
+    signature: VdBaseChainingSeparatorSignature,
+    rhs: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
+    ds!(let (c + a) = lhs, hc);
+    ds!(let (c1 + rhs_ropd) = rhs, hc);
+    ds!(let (one * a1) = rhs_ropd, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(c1, c, hc);
+    assert_deep_eq!(a1, a, hc);
+}
+
+/// derive `c + 0 => c`
+pub(super) fn check_nf_add_zero<'db, Src>(
+    lhs: VdMirExprIdx,
+    signature: VdBaseChainingSeparatorSignature,
+    c1: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
+    ds!(let (c + zero) = lhs, hc);
+    assert!(hc.literal(zero).is_zero());
+    assert_deep_eq!(c1, c, hc);
 }
