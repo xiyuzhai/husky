@@ -21,7 +21,9 @@ use visored_term::term::literal::VdLiteral;
 pub enum VdMirTermDerivationConstruction {
     Reflection,
     NumComparison {
-        lhs_minus_rhs: VdMirTermDerivationIdx,
+        lhs_nf: VdMirTermDerivationIdx,
+        rhs_nf: VdMirTermDerivationIdx,
+        lhs_nf_minus_rhs_nf_nf: VdMirTermDerivationIdx,
     },
     SubEqsAddNeg {
         add_neg: VdMirTermDerivationIdx,
@@ -122,9 +124,19 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => {
                 check_literal_add_literal(lhs, rhs, hc)
             }
-            VdMirTermDerivationConstruction::NumComparison { lhs_minus_rhs } => {
-                check_num_comparison(lhs, signature, rhs, lhs_minus_rhs, hc)
-            }
+            VdMirTermDerivationConstruction::NumComparison {
+                lhs_nf,
+                rhs_nf,
+                lhs_nf_minus_rhs_nf_nf,
+            } => check_num_comparison(
+                lhs,
+                signature,
+                rhs,
+                lhs_nf,
+                rhs_nf,
+                lhs_nf_minus_rhs_nf_nf,
+                hc,
+            ),
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => {
                 check_sub_eqs_add_neg(lhs, signature, rhs, add_neg, hc)
             }
@@ -193,7 +205,9 @@ fn check_num_comparison<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
     follower: VdMirExprIdx,
-    lhs_minus_rhs: VdMirTermDerivationIdx,
+    a_nf: VdMirTermDerivationIdx,
+    b_nf: VdMirTermDerivationIdx,
+    a_nf_minus_a_nf_nf: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     assert_eq!(signature.separator(), VdMirBaseChainingSeparator::Iff);
@@ -206,11 +220,15 @@ fn check_num_comparison<'db, Src>(
         unreachable!()
     };
     assert!(hc.literal(zero).is_zero());
-    ds!(let (lhs_minus_rhs_lhs => term1) = lhs_minus_rhs.prop(hc), hc);
+    ds!(let (a_nf_minus_b_nf => term1) = a_nf_minus_a_nf_nf.prop(hc), hc);
     assert_deep_eq!(term1, term, hc);
-    ds!(let (a1 - b1) = lhs_minus_rhs_lhs, hc);
+    ds!(let (a1 => a_nf) = a_nf.prop(hc), hc);
+    ds!(let (b1 => b_nf) = b_nf.prop(hc), hc);
+    ds!(let (a_nf1 - b_nf1) = a_nf_minus_b_nf, hc);
     assert_deep_eq!(a1, a, hc);
     assert_deep_eq!(b1, b, hc);
+    assert_deep_eq!(a_nf1, a_nf, hc);
+    assert_deep_eq!(b_nf1, b_nf, hc);
 }
 
 /// obtain `a + (b + c) = term` from `a + b + c = term`

@@ -67,16 +67,18 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_num_comparison_chaining_separated_list_term_derivation_construction(
         &mut self,
-        leader: VdBsqExprNf<'sess>,
+        lhs: VdBsqExprNf<'sess>,
         signature: VdBaseChainingSeparatorSignature,
         separator: VdMirBaseComparisonSeparator,
-        follower: VdBsqExprNf<'sess>,
+        rhs: VdBsqExprNf<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let leader_minus_follower = self.mk_sub(*leader, *follower, hc);
+        let lhs_minus_rhs = self.mk_sub(*lhs, *rhs, hc);
         VdMirTermDerivationConstruction::NumComparison {
-            lhs_minus_rhs: self
-                .transcribe_expr_term_derivation(leader_minus_follower, hc)
+            lhs_nf: lhs.derivation(),
+            rhs_nf: rhs.derivation(),
+            lhs_nf_minus_rhs_nf_nf: self
+                .transcribe_expr_term_derivation(lhs_minus_rhs, hc)
                 .derivation(),
         }
     }
