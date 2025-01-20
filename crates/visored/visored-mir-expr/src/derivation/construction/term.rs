@@ -1,9 +1,10 @@
+pub mod finish;
 pub mod neg;
 pub mod product;
 pub mod sub;
 pub mod sum;
 
-use self::{neg::*, product::*, sub::*, sum::*};
+use self::{finish::*, neg::*, product::*, sub::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx,
@@ -61,6 +62,10 @@ pub enum VdMirTermDerivationConstruction {
     NonZeroLiteralAddAtom,
     /// derive `c + 0 => c`
     NfAddZero,
+    NonTrivialFinish {
+        src_nf: VdMirTermDerivationIdx,
+        dst_nf: VdMirTermDerivationIdx,
+    },
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -172,6 +177,9 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::NfAddZero => {
                 check_nf_add_zero(lhs, signature, rhs, hc)
+            }
+            VdMirTermDerivationConstruction::NonTrivialFinish { src_nf, dst_nf } => {
+                check_non_trivial_finish(lhs, signature, rhs, src_nf, dst_nf, hc)
             }
         }
     }

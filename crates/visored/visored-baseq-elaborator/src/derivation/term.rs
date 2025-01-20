@@ -40,12 +40,17 @@ where
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
-            let src_term_equivalence =
-                self.transcribe_expr_term_derivation(self.hc.arena()[src].expr(), hc);
-            let dst_term_equivalence =
-                self.transcribe_expr_term_derivation(self.hc.arena()[dst].expr(), hc);
+            let src_nf = self.transcribe_expr_term_derivation(self.hc.arena()[src].expr(), hc);
+            let dst_nf = self.transcribe_expr_term_derivation(self.hc.arena()[dst].expr(), hc);
             let prop = self.hc.arena()[dst].expr().transcribe(None, self, hc);
-            hc.alloc_derivation(prop, todo!())
+            hc.alloc_derivation(
+                prop,
+                VdMirTermDerivationConstruction::NonTrivialFinish {
+                    src_nf: src_nf.derivation(),
+                    dst_nf: dst_nf.derivation(),
+                }
+                .into(),
+            )
         })
     }
 
