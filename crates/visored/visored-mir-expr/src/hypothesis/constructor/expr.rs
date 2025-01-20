@@ -22,6 +22,9 @@ macro_rules! ds {
             visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator::COMM_RING_MUL,
         );
     };
+    (let ($lopd: ident ^ $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) = $hc.split_pow($merge);
+    };
     (let ($lopd: ident = $ropd: ident) = $merge: expr, $hc: expr) => {
         let ($lopd, $ropd) = $hc.split_trivial_chaining_separated_list(
             $merge,
@@ -190,6 +193,22 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                 assert_eq!(signature.opr(), opr);
                 assert_eq!(arguments.len(), 1);
                 arguments.first().unwrap()
+            }
+            _ => unreachable!("{:?}", self.expr_arena[expr].data()),
+        }
+    }
+
+    pub fn split_pow(&mut self, expr: VdMirExprIdx) -> (VdMirExprIdx, VdMirExprIdx) {
+        match *self.expr_arena[expr].data() {
+            VdMirExprData::Application {
+                function,
+                arguments,
+            } => {
+                let VdMirFunc::Power(signature) = function else {
+                    unreachable!()
+                };
+                assert_eq!(arguments.len(), 2);
+                (arguments.first().unwrap(), arguments.last().unwrap())
             }
             _ => unreachable!("{:?}", self.expr_arena[expr].data()),
         }

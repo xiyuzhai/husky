@@ -1,13 +1,14 @@
-mod neg;
-mod sub;
+pub mod neg;
+pub mod product;
+pub mod sub;
 pub mod sum;
 
-use self::{neg::*, sub::*, sum::*};
+use self::{neg::*, product::*, sub::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx,
     expr::VdMirExprData,
-    helpers::compare::{eq, vd_mir_expr_deep_eq},
+    helpers::compare::{assert_deep_eq, vd_mir_expr_deep_eq},
     hypothesis::constructor::expr::ds,
 };
 use visored_mir_opr::separator::chaining::{
@@ -46,6 +47,10 @@ pub enum VdMirTermDerivationConstruction {
         merge: VdMirTermDerivationIdx,
     },
     AtomMulConstant,
+    /// derive `1 * b => b`
+    OneMulAtom,
+    /// derive `c * b => c * b^1` if `c` is a constant
+    NonOneLiteralMulAtom,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -132,6 +137,12 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::LiteralMul => todo!(),
             VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => todo!(),
             VdMirTermDerivationConstruction::AtomMulConstant => todo!(),
+            VdMirTermDerivationConstruction::OneMulAtom => {
+                check_one_mul_atom(lhs, signature, rhs, hc)
+            }
+            VdMirTermDerivationConstruction::NonOneLiteralMulAtom => {
+                check_nonone_literal_mul_atom(lhs, signature, rhs, hc)
+            }
         }
     }
 }
@@ -176,12 +187,12 @@ fn check_num_comparison<'db, Src>(
     else {
         unreachable!()
     };
-    assert!(hc.literal(zero).eqs_zero());
+    assert!(hc.literal(zero).is_zero());
     ds!(let (lhs_minus_rhs_lhs => term1) = lhs_minus_rhs.prop(hc), hc);
-    eq!(term1, term, hc);
+    assert_deep_eq!(term1, term, hc);
     ds!(let (a1 - b1) = lhs_minus_rhs_lhs, hc);
-    eq!(a1, a, hc);
-    eq!(b1, b, hc);
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
 }
 
 /// obtain `a + (b + c) = term` from `a + b + c = term`

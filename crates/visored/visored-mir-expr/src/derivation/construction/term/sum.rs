@@ -1,4 +1,4 @@
-use crate::{helpers::compare::eq, hypothesis::constructor::expr::ds};
+use crate::{helpers::compare::assert_deep_eq, hypothesis::constructor::expr::ds};
 
 use super::*;
 use visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator;
@@ -48,14 +48,14 @@ pub(super) fn check_add_eq<'db, Src>(
     assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
     ds!(let (a + b) = lhs, hc);
     ds!(let (a1 => term_a) = lopd.prop(hc), hc);
-    eq!(a1, a, hc);
+    assert_deep_eq!(a1, a, hc);
     ds!(let (b1 => term_b) = ropd.prop(hc), hc);
-    eq!(b1, b, hc);
+    assert_deep_eq!(b1, b, hc);
     ds!(let (merge_lhs => term1) = merge.prop(hc), hc);
-    eq!(term1, term, hc);
+    assert_deep_eq!(term1, term, hc);
     ds!(let (term_a1 + term_b1) = merge_lhs, hc);
-    eq!(term_a1, term_a, hc);
-    eq!(term_b1, term_b, hc);
+    assert_deep_eq!(term_a1, term_a, hc);
+    assert_deep_eq!(term_b1, term_b, hc);
 }
 
 /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a constant
@@ -69,5 +69,5 @@ pub(super) fn check_atom_add_constant<'db, Src>(
     ds!(let (a + c) = lhs, hc);
     ds!(let (c1 + rhs_ropd) = rhs, hc);
     ds!(let (one * a1) = rhs_ropd, hc);
-    assert!(hc.literal(one).eqs_one());
+    assert!(hc.literal(one).is_one());
 }

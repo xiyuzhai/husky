@@ -14,7 +14,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 return construction;
             }
         }
-        let (lopd, _, ropd) = self.split_folding_separated_list(leader, followers);
+        let (lopd, signature, ropd) = self.split_folding_separated_list(leader, followers);
         let lopd = lopd.normalize(self, hc);
         let ropd = ropd.normalize(self, hc);
         VdMirTermDerivationConstruction::MulEq {
@@ -44,7 +44,7 @@ fn merge<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprNf<'sess> {
     let construction = merge_construction(lopd, ropd, elr, hc);
-    let expr = elr.mk_add(lopd, ropd, hc);
+    let expr = elr.mk_mul(lopd, ropd, hc);
     let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
     let derivation = hc.alloc_term_derivation(prop, construction);
     VdBsqExprNf::new(derivation, expr, elr, hc)
@@ -61,7 +61,9 @@ fn merge_construction<'db, 'sess>(
     }
     match *ropd.data() {
         VdBsqExprData::Literal(literal) => merge_literal(lopd, literal, elr, hc),
-        VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
+        VdBsqExprData::Variable(lx_math_letter, local_defn) => {
+            merge_atom_construction(lopd, ropd, elr, hc)
+        }
         VdBsqExprData::Application {
             function,
             ref arguments,
@@ -94,6 +96,38 @@ fn merge_literal<'db, 'sess>(
             function,
             ref arguments,
         } => todo!("function = `{:?}`", function),
+        VdBsqExprData::FoldingSeparatedList {
+            leader,
+            ref followers,
+        } => todo!(),
+        VdBsqExprData::ChainingSeparatedList {
+            leader,
+            ref followers,
+            joined_signature,
+        } => todo!(),
+        VdBsqExprData::ItemPath(vd_item_path) => todo!(),
+    }
+}
+
+fn merge_atom_construction<'db, 'sess>(
+    lopd: VdBsqExpr<'sess>,
+    ropd: VdBsqExpr<'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+) -> VdMirTermDerivationConstruction {
+    match *lopd.data() {
+        VdBsqExprData::Literal(literal) => {
+            if literal.is_one() {
+                VdMirTermDerivationConstruction::OneMulAtom
+            } else {
+                VdMirTermDerivationConstruction::NonOneLiteralMulAtom
+            }
+        }
+        VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
+        VdBsqExprData::Application {
+            function,
+            ref arguments,
+        } => todo!(),
         VdBsqExprData::FoldingSeparatedList {
             leader,
             ref followers,
