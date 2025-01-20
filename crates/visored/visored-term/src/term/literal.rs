@@ -81,6 +81,10 @@ impl VdLiteral {
         zfc_literal_ty(self, db)
     }
 
+    pub fn eqs_zero(self) -> bool {
+        self.eqs_i128(0)
+    }
+
     pub fn eqs_one(self) -> bool {
         self.eqs_i128(1)
     }

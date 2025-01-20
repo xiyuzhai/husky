@@ -11,7 +11,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         for (signature, _) in followers {
             assert_eq!(
                 signature.separator(),
-                VdMirBaseFoldingSeparator::CommRingAdd.into()
+                VdMirBaseFoldingSeparator::CommRingMul.into()
             );
         }
         let leader_equivalence = self.transcribe_expr_term_derivation(leader, hc);

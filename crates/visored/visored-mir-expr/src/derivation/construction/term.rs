@@ -5,7 +5,10 @@ pub mod sum;
 use self::{neg::*, sub::*, sum::*};
 use super::*;
 use crate::{
-    derivation::VdMirDerivationIdx, expr::VdMirExprData, helpers::compare::vd_mir_expr_deep_eq,
+    derivation::VdMirDerivationIdx,
+    expr::VdMirExprData,
+    helpers::compare::{eq, vd_mir_expr_deep_eq},
+    hypothesis::constructor::expr::ds,
 };
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
@@ -146,6 +149,7 @@ fn check_reflection<'db, Src>(
     assert!(vd_mir_expr_deep_eq(leader, follower, hc.expr_arena()))
 }
 
+/// derive `a <nc> b => term <nc> 0` from `a - b <nc> 0 => term <nc> 0` and `a - b => term`
 fn check_num_comparison<'db, Src>(
     leader: VdMirExprIdx,
     signature: VdBaseChainingSeparatorSignature,
@@ -154,17 +158,20 @@ fn check_num_comparison<'db, Src>(
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     assert_eq!(signature.separator(), VdMirBaseChainingSeparator::Iff);
-    let (leader_lhs, leader_signature, leader_rhs) =
-        hc.split_any_trivial_chaining_separated_list(leader);
-    let (follower_lhs, follower_signature, follower_rhs) =
-        hc.split_any_trivial_chaining_separated_list(follower);
+    let (a, leader_signature, b) = hc.split_any_trivial_chaining_separated_list(leader);
+    let (term, follower_signature, zero) = hc.split_any_trivial_chaining_separated_list(follower);
     assert_eq!(leader_signature.separator(), follower_signature.separator());
     let VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::Comparison(separator)) =
         leader_signature.separator()
     else {
         unreachable!()
     };
-    todo!()
+    assert!(hc.literal(zero).eqs_zero());
+    ds!(let (lhs_minus_rhs_lhs => term1) = lhs_minus_rhs.prop(hc), hc);
+    eq!(term1, term, hc);
+    ds!(let (a1 - b1) = lhs_minus_rhs_lhs, hc);
+    eq!(a1, a, hc);
+    eq!(b1, b, hc);
 }
 
 /// obtain `a + (b + c) = term` from `a + b + c = term`
