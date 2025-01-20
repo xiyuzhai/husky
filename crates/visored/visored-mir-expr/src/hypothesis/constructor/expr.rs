@@ -16,6 +16,12 @@ macro_rules! ds {
             visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator::COMM_RING_ADD,
         );
     };
+    (let ($lopd: ident * $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) = $hc.split_folding_separated_list(
+            $merge,
+            visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator::COMM_RING_MUL,
+        );
+    };
     (let ($lopd: ident = $ropd: ident) = $merge: expr, $hc: expr) => {
         let ($lopd, $ropd) = $hc.split_trivial_chaining_separated_list(
             $merge,

@@ -80,6 +80,20 @@ impl VdLiteral {
     pub fn ty(self, db: &EternerDb) -> VdType {
         zfc_literal_ty(self, db)
     }
+
+    pub fn eqs_one(self) -> bool {
+        self.eqs_i128(1)
+    }
+
+    pub fn eqs_i128(self, i: i128) -> bool {
+        match self.data() {
+            VdLiteralData::Int(n) => match n.try_into() {
+                Ok::<i128, _>(n) => n == i,
+                Err(_) => false,
+            },
+            VdLiteralData::Frac(_) => false,
+        }
+    }
 }
 
 fn zfc_literal_ty(literal: VdLiteral, db: &EternerDb) -> VdType {

@@ -65,7 +65,9 @@ pub(super) fn check_atom_add_constant<'db, Src>(
     rhs: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    use husky_print_utils::*;
-    p!(hc.show_expr_lisp(lhs), hc.show_expr_lisp(rhs));
-    todo!()
+    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
+    ds!(let (a + c) = lhs, hc);
+    ds!(let (c1 + rhs_ropd) = rhs, hc);
+    ds!(let (one * a1) = rhs_ropd, hc);
+    assert!(hc.literal(one).eqs_one());
 }
