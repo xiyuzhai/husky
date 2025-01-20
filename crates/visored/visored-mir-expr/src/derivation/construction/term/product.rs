@@ -31,3 +31,31 @@ pub(super) fn check_nonone_literal_mul_atom<'db, Src>(
     assert!(hc.literal(one).is_one());
     todo!()
 }
+
+/// derive `a * b => term` from `a => term_a`, `b => term_b` and `term_a * term_b => term`
+pub(super) fn check_mul_eq<'db, Src>(
+    // `a * b`
+    lhs: VdMirExprIdx,
+    signature: VdBaseChainingSeparatorSignature,
+    // `term`
+    term: VdMirExprIdx,
+    // `a => term_a`
+    lopd: VdMirTermDerivationIdx,
+    // `b => term_b`
+    ropd: VdMirTermDerivationIdx,
+    // `term_a * term_b => term`
+    merge: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
+    ds!(let (a * b) = lhs, hc);
+    ds!(let (a1 => term_a) = lopd.prop(hc), hc);
+    assert_deep_eq!(a1, a, hc);
+    ds!(let (b1 => term_b) = ropd.prop(hc), hc);
+    assert_deep_eq!(b1, b, hc);
+    ds!(let (merge_lhs => term1) = merge.prop(hc), hc);
+    assert_deep_eq!(term1, term, hc);
+    ds!(let (term_a1 * term_b1) = merge_lhs, hc);
+    assert_deep_eq!(term_a1, term_a, hc);
+    assert_deep_eq!(term_b1, term_b, hc);
+}

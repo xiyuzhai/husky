@@ -135,7 +135,9 @@ impl VdMirTermDerivationConstruction {
                 check_atom_add_constant(lhs, signature, rhs, hc)
             }
             VdMirTermDerivationConstruction::LiteralMul => todo!(),
-            VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => todo!(),
+            VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => {
+                check_mul_eq(lhs, signature, rhs, lopd, ropd, merge, hc)
+            }
             VdMirTermDerivationConstruction::AtomMulConstant => todo!(),
             VdMirTermDerivationConstruction::OneMulAtom => {
                 check_one_mul_atom(lhs, signature, rhs, hc)
