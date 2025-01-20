@@ -10,12 +10,11 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         if let &[(signature, follower)] = followers {
-            if let Some(construction) = try_literal_add(leader, follower) {
+            if let Some(construction) = try_trivial_literal_add(leader, follower) {
                 return construction;
             }
         }
-        let (lopd, signature, ropd) = self.split_folding_separated_list(leader, followers);
-        let expected_ty = signature.expr_ty();
+        let (lopd, _, ropd) = self.split_folding_separated_list(leader, followers);
         let lopd = lopd.normalize(self, hc);
         let ropd = ropd.normalize(self, hc);
         VdMirTermDerivationConstruction::AddEq {
@@ -26,7 +25,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 }
 
-fn try_literal_add<'sess>(
+fn try_trivial_literal_add<'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
 ) -> Option<VdMirTermDerivationConstruction> {
@@ -57,7 +56,7 @@ fn merge_construction<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
-    if let Some(construction) = try_literal_add(lopd, ropd) {
+    if let Some(construction) = try_trivial_literal_add(lopd, ropd) {
         return construction;
     }
     match *ropd.data() {

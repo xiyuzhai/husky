@@ -39,6 +39,13 @@ pub enum VdMirTermDerivationConstruction {
     NegLiteral,
     /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a constant
     AtomAddConstant,
+    LiteralMul,
+    MulEq {
+        lopd: VdMirTermDerivationIdx,
+        ropd: VdMirTermDerivationIdx,
+        merge: VdMirTermDerivationIdx,
+    },
+    AtomMulConstant,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -122,6 +129,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AtomAddConstant => {
                 check_atom_add_constant(lhs, signature, rhs, hc)
             }
+            VdMirTermDerivationConstruction::LiteralMul => todo!(),
+            VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => todo!(),
+            VdMirTermDerivationConstruction::AtomMulConstant => todo!(),
         }
     }
 }
