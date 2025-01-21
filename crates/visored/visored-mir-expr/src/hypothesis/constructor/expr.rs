@@ -10,6 +10,9 @@ use visored_mir_opr::separator::{
 
 #[macro_use]
 macro_rules! ds {
+    (let (sqrt $radicand: ident) = $merge: expr, $hc: expr) => {
+        let $radicand = $hc.split_sqrt($merge);
+    };
     (let ($lopd: ident + $ropd: ident) = $merge: expr, $hc: expr) => {
         let ($lopd, $ropd) = $hc.split_folding_separated_list(
             $merge,
@@ -21,6 +24,9 @@ macro_rules! ds {
             $merge,
             visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator::COMM_RING_MUL,
         );
+    };
+    (let ($lopd: ident ** $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) = $hc.split_pow($merge);
     };
     (let ($lopd: ident ^ $ropd: ident) = $merge: expr, $hc: expr) => {
         let ($lopd, $ropd) = $hc.split_pow($merge);
@@ -205,55 +211,68 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         expr: VdMirExprIdx,
         opr: VdMirBaseBinaryOpr,
     ) -> (VdMirExprIdx, VdMirExprIdx) {
-        match *self.expr_arena[expr].data() {
-            VdMirExprData::Application {
-                function,
-                arguments,
-            } => {
-                let VdMirFunc::NormalBaseBinaryOpr(signature) = function else {
-                    unreachable!()
-                };
-                assert_eq!(signature.opr(), opr);
-                assert_eq!(arguments.len(), 2);
-                (arguments.first().unwrap(), arguments.last().unwrap())
-            }
-            _ => unreachable!("{:?}", self.expr_arena[expr].data()),
-        }
+        let VdMirExprData::Application {
+            function,
+            arguments,
+        } = *self.expr_arena[expr].data()
+        else {
+            unreachable!("{:?}", self.expr_arena[expr].data())
+        };
+        let VdMirFunc::NormalBaseBinaryOpr(signature) = function else {
+            unreachable!()
+        };
+        assert_eq!(signature.opr(), opr);
+        assert_eq!(arguments.len(), 2);
+        (arguments.first().unwrap(), arguments.last().unwrap())
+    }
+
+    #[track_caller]
+    pub fn split_sqrt(&mut self, expr: VdMirExprIdx) -> VdMirExprIdx {
+        let VdMirExprData::Application {
+            function,
+            arguments,
+        } = *self.expr_arena[expr].data()
+        else {
+            unreachable!("{:?}", self.expr_arena[expr].data())
+        };
+        let VdMirFunc::NormalBaseSqrt(signature) = function else {
+            unreachable!()
+        };
+        assert_eq!(arguments.len(), 1);
+        arguments.first().unwrap()
     }
 
     #[track_caller]
     pub fn split_prefix(&mut self, expr: VdMirExprIdx, opr: VdMirBasePrefixOpr) -> VdMirExprIdx {
-        match *self.expr_arena[expr].data() {
-            VdMirExprData::Application {
-                function,
-                arguments,
-            } => {
-                let VdMirFunc::NormalBasePrefixOpr(signature) = function else {
-                    unreachable!()
-                };
-                assert_eq!(signature.opr(), opr);
-                assert_eq!(arguments.len(), 1);
-                arguments.first().unwrap()
-            }
-            _ => unreachable!("{:?}", self.expr_arena[expr].data()),
-        }
+        let VdMirExprData::Application {
+            function,
+            arguments,
+        } = *self.expr_arena[expr].data()
+        else {
+            unreachable!("{:?}", self.expr_arena[expr].data())
+        };
+        let VdMirFunc::NormalBasePrefixOpr(signature) = function else {
+            unreachable!()
+        };
+        assert_eq!(signature.opr(), opr);
+        assert_eq!(arguments.len(), 1);
+        arguments.first().unwrap()
     }
 
     #[track_caller]
     pub fn split_pow(&mut self, expr: VdMirExprIdx) -> (VdMirExprIdx, VdMirExprIdx) {
-        match *self.expr_arena[expr].data() {
-            VdMirExprData::Application {
-                function,
-                arguments,
-            } => {
-                let VdMirFunc::Power(signature) = function else {
-                    unreachable!()
-                };
-                assert_eq!(arguments.len(), 2);
-                (arguments.first().unwrap(), arguments.last().unwrap())
-            }
-            _ => unreachable!("{:?}", self.expr_arena[expr].data()),
-        }
+        let VdMirExprData::Application {
+            function,
+            arguments,
+        } = *self.expr_arena[expr].data()
+        else {
+            unreachable!("{:?}", self.expr_arena[expr].data())
+        };
+        let VdMirFunc::Power(signature) = function else {
+            unreachable!()
+        };
+        assert_eq!(arguments.len(), 2);
+        (arguments.first().unwrap(), arguments.last().unwrap())
     }
 }
 

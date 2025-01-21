@@ -6,7 +6,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         radicand: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let radicand = self.transcribe_expr_term_derivation(radicand, hc);
-        todo!()
+        let radicand_nf = self.transcribe_expr_term_derivation(radicand, hc);
+        VdMirTermDerivationConstruction::Sqrt {
+            radicand_nf: radicand_nf.derivation(),
+        }
     }
 }

@@ -96,6 +96,10 @@ impl VdLiteral {
         self.is_i128(1)
     }
 
+    pub fn is_one_half(self) -> bool {
+        self.is_frac128(1, 2)
+    }
+
     pub fn is_i128(self, i: i128) -> bool {
         match self.data() {
             VdLiteralData::Int(n) => match n.try_into() {
@@ -103,6 +107,13 @@ impl VdLiteral {
                 Err(_) => false,
             },
             VdLiteralData::Frac(_) => false,
+        }
+    }
+
+    pub fn is_frac128(self, numerator: i128, denominator: i128) -> bool {
+        match self.data() {
+            VdLiteralData::Frac(frac) => frac.is_frac128(numerator, denominator),
+            _ => false,
         }
     }
 }

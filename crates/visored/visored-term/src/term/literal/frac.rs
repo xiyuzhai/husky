@@ -1,5 +1,5 @@
 use super::*;
-use num_traits::identities::*;
+use num_traits::{identities::*, *};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct VdFrac {
@@ -20,6 +20,11 @@ impl VdFrac {
 
     pub fn new128(numerator: i128, denominator: i128) -> Self {
         Self::new(VdInt::from(numerator), VdInt::from(denominator))
+    }
+
+    pub fn is_frac128(&self, numerator: i128, denominator: i128) -> bool {
+        self.numerator.to_i128() == Some(numerator)
+            && self.denominator.to_i128() == Some(denominator)
     }
 }
 

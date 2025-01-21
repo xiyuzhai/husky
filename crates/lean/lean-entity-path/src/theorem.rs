@@ -31,6 +31,7 @@ pub enum LnTermDerivationTheoremPath {
     AtomMulAtomLess,
     AtomMulAtomEqual,
     AtomMulAtomGreater,
+    Sqrt,
 }
 
 impl LnTheoremPath {
@@ -91,6 +92,7 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::AtomMulAtomGreater => {
                 "term_derivation_atom_mul_atom_greater"
             }
+            LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt",
         }
     }
 
@@ -147,6 +149,7 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::AtomMulAtomGreater => {
                 "term_derivation_atom_mul_atom_greater".to_string()
             }
+            LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt".to_string(),
         }
     }
 }

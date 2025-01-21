@@ -61,8 +61,6 @@ pub(super) fn check_atom_mul_atom<'db, Src>(
     ds!(let (a * b) = expr, hc);
     match comparison {
         std::cmp::Ordering::Less => {
-            use husky_print_utils::*;
-            p!(hc.show_expr_lisp(a), hc.show_expr_lisp(term));
             ds!(let (c * stem) = term, hc);
             assert!(hc.literal(c).is_one());
             ds!(let (a1_pow_1 * b1_pow_1) = stem, hc);

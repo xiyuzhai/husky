@@ -1,10 +1,11 @@
 pub mod finish;
 pub mod neg;
 pub mod product;
+mod sqrt;
 pub mod sub;
 pub mod sum;
 
-use self::{finish::*, neg::*, product::*, sub::*, sum::*};
+use self::{finish::*, neg::*, product::*, sqrt::*, sub::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx,
@@ -68,6 +69,9 @@ pub enum VdMirTermDerivationConstruction {
     },
     AtomMulAtom {
         comparison: core::cmp::Ordering,
+    },
+    Sqrt {
+        radicand_nf: VdMirTermDerivationIdx,
     },
 }
 
@@ -156,6 +160,9 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::AtomMulAtom { comparison } => {
                 check_atom_mul_atom(prop, comparison, hc)
+            }
+            VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
+                check_sqrt(prop, radicand_nf, hc)
             }
         }
     }
