@@ -1,3 +1,5 @@
+pub mod term;
+
 use crate::*;
 use lean_mir_expr::{
     expr::{LnMirExprData, LnMirExprEntry},
@@ -5,7 +7,9 @@ use lean_mir_expr::{
 };
 use visored_mir_expr::{
     derivation::{
-        chunk::VdMirDerivationChunk, construction::VdMirDerivationConstruction, VdMirDerivationIdx,
+        chunk::VdMirDerivationChunk,
+        construction::{term::VdMirTermDerivationConstruction, VdMirDerivationConstruction},
+        VdMirDerivationIdx,
     },
     hypothesis::VdMirHypothesisEntry,
 };
@@ -34,7 +38,9 @@ where
         let ty = entry.prop().to_lean(self);
         let construction = match entry.construction() {
             VdMirDerivationConstruction::Ring(construction) => todo!(),
-            VdMirDerivationConstruction::Term(construction) => todo!(),
+            VdMirDerivationConstruction::Term(construction) => {
+                self.build_term_tactic_construction(construction)
+            }
         };
         LnMirTacticData::Have {
             ident,
@@ -51,9 +57,9 @@ where
             VdMirDerivationConstruction::Ring(construction) => match construction {
                 _ => todo!(),
             },
-            VdMirDerivationConstruction::Term(construction) => match construction {
-                _ => todo!(),
-            },
+            VdMirDerivationConstruction::Term(construction) => {
+                self.build_term_derivation_chunk_end_tactic_data(construction)
+            }
         }
     }
 }

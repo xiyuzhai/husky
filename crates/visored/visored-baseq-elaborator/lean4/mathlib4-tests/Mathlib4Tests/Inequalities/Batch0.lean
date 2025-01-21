@@ -149,20 +149,7 @@ end Example4
 
 namespace Example5
 def h := by
-  have h1 : (2 : ℚ) ≠ 0 := by term_trivial
-  have h2 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) := by
-    have d : (2 : ℚ) = 2 := by term_derivation_literal
-    have d1 : 0 = 0 := by term_derivation_literal
-    have d2 : (2 : ℚ) ≠ 0 ↔ true := by term_derivation_chaining_separated_list
-    have d3 : (1 : ℚ) = 1 := by term_derivation_literal
-    have d4 : (2 : ℚ) = 2 := by term_derivation_literal
-    have d5 : (1 : ℚ) / (2 : ℚ) = (1 : ℚ) / (2 : ℚ) := by term_derivation_div
-    have d6 : (2 : ℚ) = 2 := by term_derivation_literal
-    have d7 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) := by term_derivation_product
-    have d8 : (1 : ℚ) = 1 := by term_derivation_literal
-    have d9 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) ↔ true := by term_derivation_chaining_separated_list
-    have d10 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) := by term_derivation_finalize d2 d9
-    assumption
+  have h1 : (1 : ℚ) / (2 : ℚ) * (2 : ℚ) = (1 : ℚ) := by term_trivial
   exact ()
 end Example5
 
@@ -205,15 +192,36 @@ end Example11
 namespace Example12
 def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
   have h2 : x - (1 : ℝ) ≥ (0 : ℝ) := by
-    have d : x = x := by term_derivation_variable
-    have d1 : (1 : ℝ) = 1 := by term_derivation_literal
-    have d2 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + x ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d3 : x = x := by term_derivation_variable
-    have d4 : (1 : ℝ) = 1 := by term_derivation_literal
-    have d5 : x - (1 : ℝ) = (-1 : ℝ) + x := by term_derivation_sub
-    have d6 : (0 : ℝ) = 0 := by term_derivation_literal
-    have d7 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + x ≥ (0 : ℝ) := by term_derivation_chaining_separated_list
-    have d8 : x - (1 : ℝ) ≥ (0 : ℝ) := by term_derivation_finalize d2 d7
+    have d : x = x := term_derivation_reflection
+    have d1 : 1 = 1 := term_derivation_reflection
+    have d2 : x = x := term_derivation_reflection
+    have d3 : 1 = 1 := term_derivation_reflection
+    have d4 : -(1 : ℤ) = -1 := term_derivation_neg_literal
+    have d5 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_atom_add_swap
+    have d6 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
+    have d7 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
+    have d8 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ≥ (0 : ℝ) := term_derivation_num_comparison
+    have d9 : x = x := term_derivation_reflection
+    have d10 : 1 = 1 := term_derivation_reflection
+    have d11 : -(1 : ℤ) = -1 := term_derivation_neg_literal
+    have d12 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_atom_add_swap
+    have d13 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
+    have d14 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
+    have d15 : 0 = 0 := term_derivation_reflection
+    have d16 : -1 = -1 := term_derivation_reflection
+    have d17 : 1 = 1 := term_derivation_reflection
+    have d18 : x = x := term_derivation_reflection
+    have d19 : (1 : ℝ) * x = x := term_derivation_one_mul_atom
+    have d20 : (1 : ℝ) * x = x := term_derivation_mul_eq
+    have d21 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_non_zero_literal_add_atom
+    have d22 : (-1 : ℝ) + (1 : ℝ) * x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
+    have d23 : 0 = 0 := term_derivation_reflection
+    have d24 : -(0 : ℤ) = 0 := term_derivation_neg_literal
+    have d25 : (-1 : ℝ) + (1 : ℝ) * x + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_nf_add_zero
+    have d26 : (-1 : ℝ) + (1 : ℝ) * x + (-(0 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
+    have d27 : (-1 : ℝ) + (1 : ℝ) * x - (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
+    have d28 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ≥ (0 : ℝ) := term_derivation_num_comparison
+    have d29 : x - (1 : ℝ) ≥ (0 : ℝ) := term_derivation_non_trivial_finish
     assumption
   exact ()
 end Example12
@@ -348,15 +356,7 @@ namespace Example34
 def h := by
   let x := 1
   have h1 : x = 1 := by let_assigned
-  have h2 : x = 1 := by
-    have d : x = x := by term_derivation_variable
-    have d1 : 1 = 1 := by term_derivation_literal
-    have d2 : x = 1 ↔ (-1 : ℤ) + (x : ℤ) = (0 : ℤ) := by term_derivation_chaining_separated_list
-    have d3 : x = x := by term_derivation_variable
-    have d4 : 1 = 1 := by term_derivation_literal
-    have d5 : x = 1 ↔ (-1 : ℤ) + (x : ℤ) = (0 : ℤ) := by term_derivation_chaining_separated_list
-    have d6 : x = 1 := by term_derivation_finalize d2 d5
-    assumption
+  have h2 : x = 1 := by old_main_hypothesis
   exact ()
 end Example34
 

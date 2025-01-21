@@ -3,6 +3,31 @@ use super::*;
 #[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash)]
 pub enum LnTheoremPath {
     SquareNonnegative,
+    TermDerivation(LnTermDerivationTheoremPath),
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash)]
+pub enum LnTermDerivationTheoremPath {
+    Reflection,
+    NumComparison,
+    SubEqsAddNeg,
+    LiteralAddLiteral,
+    AddEq,
+    AdditionInterchange,
+    AdditionAssociativity,
+    AdditionIdentity,
+    AdditionInverse,
+    AdditionDistributivity,
+    NegLiteral,
+    AtomAddSwap,
+    LiteralMul,
+    MulEq,
+    AtomMulSwap,
+    OneMulAtom,
+    NonOneLiteralMulAtom,
+    NonZeroLiteralAddAtom,
+    NfAddZero,
+    NonTrivialFinish,
 }
 
 impl LnTheoremPath {
@@ -12,13 +37,99 @@ impl LnTheoremPath {
 impl LnTheoremPath {
     pub fn code(&self) -> &str {
         match self {
-            Self::SquareNonnegative => "sq_nonneg",
+            LnTheoremPath::SquareNonnegative => "sq_nonneg",
+            LnTheoremPath::TermDerivation(path) => path.code(),
         }
     }
 
     pub fn show(&self, db: &EternerDb) -> String {
         match self {
             Self::SquareNonnegative => "sq_nonneg".to_string(),
+            Self::TermDerivation(path) => path.show(db),
+        }
+    }
+}
+
+impl LnTermDerivationTheoremPath {
+    pub fn code(&self) -> &str {
+        match self {
+            LnTermDerivationTheoremPath::Reflection => "term_derivation_reflection",
+            LnTermDerivationTheoremPath::NumComparison => "term_derivation_num_comparison",
+            LnTermDerivationTheoremPath::SubEqsAddNeg => "term_derivation_sub_eqs_add_neg",
+            LnTermDerivationTheoremPath::LiteralAddLiteral => "term_derivation_literal_add_literal",
+            LnTermDerivationTheoremPath::AddEq => "term_derivation_add_eq",
+            LnTermDerivationTheoremPath::AdditionInterchange => {
+                "term_derivation_addition_interchange"
+            }
+            LnTermDerivationTheoremPath::AdditionAssociativity => {
+                "term_derivation_addition_associativity"
+            }
+            LnTermDerivationTheoremPath::AdditionIdentity => "term_derivation_addition_identity",
+            LnTermDerivationTheoremPath::AdditionInverse => "term_derivation_addition_inverse",
+            LnTermDerivationTheoremPath::AdditionDistributivity => {
+                "term_derivation_addition_distributivity"
+            }
+            LnTermDerivationTheoremPath::NegLiteral => "term_derivation_neg_literal",
+            LnTermDerivationTheoremPath::AtomAddSwap => "term_derivation_atom_add_swap",
+            LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul",
+            LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq",
+            LnTermDerivationTheoremPath::AtomMulSwap => "term_derivation_atom_mul_swap",
+            LnTermDerivationTheoremPath::OneMulAtom => "term_derivation_one_mul_atom",
+            LnTermDerivationTheoremPath::NonOneLiteralMulAtom => {
+                "term_derivation_non_one_literal_mul_atom"
+            }
+            LnTermDerivationTheoremPath::NonZeroLiteralAddAtom => {
+                "term_derivation_non_zero_literal_add_atom"
+            }
+            LnTermDerivationTheoremPath::NfAddZero => "term_derivation_nf_add_zero",
+            LnTermDerivationTheoremPath::NonTrivialFinish => "term_derivation_non_trivial_finish",
+        }
+    }
+
+    pub fn show(&self, db: &EternerDb) -> String {
+        match self {
+            LnTermDerivationTheoremPath::Reflection => "term_derivation_reflection".to_string(),
+            LnTermDerivationTheoremPath::NumComparison => {
+                "term_derivation_num_comparison".to_string()
+            }
+            LnTermDerivationTheoremPath::SubEqsAddNeg => {
+                "term_derivation_sub_eqs_add_neg".to_string()
+            }
+            LnTermDerivationTheoremPath::LiteralAddLiteral => {
+                "term_derivation_literal_add_literal".to_string()
+            }
+            LnTermDerivationTheoremPath::AddEq => "term_derivation_add_eq".to_string(),
+            LnTermDerivationTheoremPath::AdditionInterchange => {
+                "term_derivation_addition_interchange".to_string()
+            }
+            LnTermDerivationTheoremPath::AdditionAssociativity => {
+                "term_derivation_addition_associativity".to_string()
+            }
+            LnTermDerivationTheoremPath::AdditionIdentity => {
+                "term_derivation_addition_identity".to_string()
+            }
+            LnTermDerivationTheoremPath::AdditionInverse => {
+                "term_derivation_addition_inverse".to_string()
+            }
+            LnTermDerivationTheoremPath::AdditionDistributivity => {
+                "term_derivation_addition_distributivity".to_string()
+            }
+            LnTermDerivationTheoremPath::NegLiteral => "term_derivation_neg_literal".to_string(),
+            LnTermDerivationTheoremPath::AtomAddSwap => "term_derivation_atom_add_swap".to_string(),
+            LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul".to_string(),
+            LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq".to_string(),
+            LnTermDerivationTheoremPath::AtomMulSwap => "term_derivation_atom_mul_swap".to_string(),
+            LnTermDerivationTheoremPath::OneMulAtom => "term_derivation_one_mul_atom".to_string(),
+            LnTermDerivationTheoremPath::NonOneLiteralMulAtom => {
+                "term_derivation_non_one_literal_mul_atom".to_string()
+            }
+            LnTermDerivationTheoremPath::NonZeroLiteralAddAtom => {
+                "term_derivation_non_zero_literal_add_atom".to_string()
+            }
+            LnTermDerivationTheoremPath::NfAddZero => "term_derivation_nf_add_zero".to_string(),
+            LnTermDerivationTheoremPath::NonTrivialFinish => {
+                "term_derivation_non_trivial_finish".to_string()
+            }
         }
     }
 }
