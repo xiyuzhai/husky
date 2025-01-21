@@ -113,6 +113,10 @@ where
                 VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                     (LnTermDerivationTheoremPath::Sqrt, self.alloc_exprs([]))
                 }
+                VdMirTermDerivationConstruction::MulAssoc {
+                    rsignature,
+                    assoc_nf,
+                } => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

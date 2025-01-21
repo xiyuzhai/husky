@@ -15,7 +15,10 @@ use visored_mir_expr::{
         storage::VdMirSymbolLocalDefnStorage, VdMirSymbolLocalDefnHead, VdMirSymbolLocalDefnIdx,
     },
 };
-use visored_mir_opr::{opr::prefix::VdMirBasePrefixOpr, separator::VdMirBaseSeparator};
+use visored_mir_opr::{
+    opr::prefix::VdMirBasePrefixOpr,
+    separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
+};
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
 use visored_signature::signature::separator::base::{
     chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
@@ -482,6 +485,47 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
                 joined_signature,
             },
             VdBsqExprData::ItemPath(path) => VdMirExprData::ItemPath(path),
+        }
+    }
+}
+
+impl<'db, 'sess> VdBsqExpr<'sess> {
+    pub fn split_mul(
+        self,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (
+        VdBsqExpr<'sess>,
+        VdBaseFoldingSeparatorSignature,
+        VdBsqExpr<'sess>,
+    ) {
+        self.split_folding_separated_list(VdMirBaseFoldingSeparator::COMM_RING_MUL, elr)
+    }
+
+    pub fn split_folding_separated_list(
+        self,
+        separator: VdMirBaseFoldingSeparator,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+    ) -> (
+        VdBsqExpr<'sess>,
+        VdBaseFoldingSeparatorSignature,
+        VdBsqExpr<'sess>,
+    ) {
+        let VdBsqExprData::FoldingSeparatedList {
+            leader: lopd,
+            ref followers,
+        } = *self.data()
+        else {
+            todo!()
+        };
+
+        assert!(followers[0].0.separator() == separator);
+
+        if followers.len() == 1 {
+            (lopd, followers[0].0, followers[0].1)
+        } else {
+            let (signature, ropd) = *followers.last().unwrap();
+            (lopd, signature, ropd)
         }
     }
 }

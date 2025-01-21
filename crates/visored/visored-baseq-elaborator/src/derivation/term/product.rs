@@ -61,23 +61,22 @@ fn merge_construction<'db, 'sess>(
     }
     match *ropd.data() {
         VdBsqExprData::Literal(literal) => merge_literal(lopd, literal, elr, hc),
-        VdBsqExprData::Variable(lx_math_letter, local_defn) => {
-            merge_atom_construction(lopd, ropd, elr, hc)
+        VdBsqExprData::FoldingSeparatedList { ref followers, .. }
+            if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL =>
+        {
+            let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
+            let assoc = elr.mk_mul(elr.mk_mul(lopd, rlopd, hc), rropd, hc);
+            let assoc_nf = assoc.normalize(elr, hc);
+            use husky_print_utils::*;
+            p!(lopd, rlopd, rropd, assoc_nf);
+            todo!();
+            VdMirTermDerivationConstruction::MulAssoc {
+                rsignature,
+                assoc_nf: assoc_nf.derivation(),
+            }
         }
-        VdBsqExprData::Application {
-            function,
-            ref arguments,
-        } => todo!("function = `{:?}`", function),
-        VdBsqExprData::FoldingSeparatedList {
-            leader,
-            ref followers,
-        } => todo!(),
-        VdBsqExprData::ChainingSeparatedList {
-            leader,
-            ref followers,
-            joined_signature,
-        } => todo!(),
         VdBsqExprData::ItemPath(vd_item_path) => todo!(),
+        _ => merge_atom_construction(lopd, ropd, elr, hc),
     }
 }
 
