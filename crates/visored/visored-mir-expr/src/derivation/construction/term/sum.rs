@@ -10,27 +10,11 @@ pub(super) fn check_literal_add_literal<'db, Src>(
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     ds!(let (expr => term) = prop, hc);
-    let VdMirExprData::FoldingSeparatedList {
-        leader,
-        ref followers,
-    } = *hc.expr(expr).data()
-    else {
-        unreachable!(
-            "leader is not a literal, but a `{:?}`",
-            hc.expr(expr).data()
-        )
-    };
-    let lopd = hc.literal(leader);
-    let &[(signature, follower)] = followers.as_slice() else {
-        panic!()
-    };
-    assert_eq!(
-        signature.separator(),
-        VdMirBaseFoldingSeparator::CommRingAdd
-    );
-    let ropd = hc.literal(follower);
+    ds!(let (a + b) = expr, hc);
+    let a = hc.literal(a);
+    let b = hc.literal(b);
     let term = hc.literal(term);
-    assert_eq!(&lopd.data().add(ropd.data()), term.data());
+    assert_eq!(&a.data().add(b.data()), term.data());
 }
 
 /// derive `a + b => term` from `a => term_a`, `b => term_b` and `term_a + term_b => term`
@@ -58,8 +42,8 @@ pub(super) fn check_add_eq<'db, Src>(
     assert_deep_eq!(term_b1, term_b, hc);
 }
 
-/// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a constant
-pub(super) fn check_atom_add_constant<'db, Src>(
+/// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a litnum
+pub(super) fn check_atom_add_swap<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {

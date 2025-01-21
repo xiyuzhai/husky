@@ -1,5 +1,17 @@
 use super::*;
 
+pub(super) fn check_literal_mul_literal<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * b) = expr, hc);
+    let a = hc.literal(a);
+    let b = hc.literal(b);
+    let term = hc.literal(term);
+    assert_eq!(&a.data().mul(b.data()), term.data());
+}
+
 /// derive `1 * b => b`
 pub(super) fn check_one_mul_atom<'db, Src>(
     prop: VdMirExprIdx,

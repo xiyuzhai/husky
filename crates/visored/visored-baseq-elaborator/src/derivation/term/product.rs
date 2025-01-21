@@ -32,7 +32,7 @@ fn try_trivial_literal_mul<'sess>(
     if let (&VdBsqExprData::Literal(leader), &VdBsqExprData::Literal(follower)) =
         (lopd.data(), ropd.data())
     {
-        return Some(VdMirTermDerivationConstruction::LiteralMul);
+        return Some(VdMirTermDerivationConstruction::LiteralMulLiteral);
     }
     None
 }

@@ -50,7 +50,7 @@ pub enum VdMirTermDerivationConstruction {
     NegLiteral,
     /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
     AtomAddSwap,
-    LiteralMul,
+    LiteralMulLiteral,
     MulEq {
         lopd: VdMirTermDerivationIdx,
         ropd: VdMirTermDerivationIdx,
@@ -147,8 +147,10 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(prop, lopd, ropd, merge, hc),
-            VdMirTermDerivationConstruction::AtomAddSwap => check_atom_add_constant(prop, hc),
-            VdMirTermDerivationConstruction::LiteralMul => todo!(),
+            VdMirTermDerivationConstruction::AtomAddSwap => check_atom_add_swap(prop, hc),
+            VdMirTermDerivationConstruction::LiteralMulLiteral => {
+                check_literal_mul_literal(prop, hc)
+            }
             VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => {
                 check_mul_eq(prop, lopd, ropd, merge, hc)
             }

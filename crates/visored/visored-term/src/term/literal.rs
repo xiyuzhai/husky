@@ -140,4 +140,14 @@ impl VdLiteralData {
             VdLiteralData::Frac(vd_frac) => todo!(),
         }
     }
+
+    pub fn mul(&self, other: &Self) -> Self {
+        match self {
+            VdLiteralData::Int(slf) => match other {
+                VdLiteralData::Int(other) => VdLiteralData::Int(slf * other),
+                VdLiteralData::Frac(vd_frac) => todo!(),
+            },
+            VdLiteralData::Frac(vd_frac) => todo!(),
+        }
+    }
 }

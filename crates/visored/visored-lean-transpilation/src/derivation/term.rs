@@ -70,7 +70,7 @@ where
                     LnTermDerivationTheoremPath::AtomAddSwap,
                     self.alloc_exprs([]),
                 ),
-                VdMirTermDerivationConstruction::LiteralMul => (
+                VdMirTermDerivationConstruction::LiteralMulLiteral => (
                     LnTermDerivationTheoremPath::LiteralMul,
                     self.alloc_exprs([]),
                 ),
