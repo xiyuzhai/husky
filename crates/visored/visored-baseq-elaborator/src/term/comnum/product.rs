@@ -368,6 +368,9 @@ impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
+        if self.exponentials().len() == 1 {
+            return exponential_expr(self.exponentials().data()[0], elr, hc);
+        }
         let mut exponentials = self.exponentials().into_iter().copied();
         let leader = exponential_expr(exponentials.next().unwrap(), elr, hc);
         let mut prev_exponential_ty = leader.ty();

@@ -66,6 +66,9 @@ pub enum VdMirTermDerivationConstruction {
         src_nf: VdMirTermDerivationIdx,
         dst_nf: VdMirTermDerivationIdx,
     },
+    AtomMulAtom {
+        comparison: core::cmp::Ordering,
+    },
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -150,6 +153,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::NfAddZero => check_nf_add_zero(prop, hc),
             VdMirTermDerivationConstruction::NonTrivialFinish { src_nf, dst_nf } => {
                 check_non_trivial_finish(prop, src_nf, dst_nf, hc)
+            }
+            VdMirTermDerivationConstruction::AtomMulAtom { comparison } => {
+                check_atom_mul_atom(prop, comparison, hc)
             }
         }
     }

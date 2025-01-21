@@ -123,7 +123,15 @@ fn merge_atom_construction<'db, 'sess>(
                 VdMirTermDerivationConstruction::NonOneLiteralMulAtom
             }
         }
-        VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
+        VdBsqExprData::Variable(..) => {
+            if lopd == ropd {
+                todo!()
+            } else {
+                VdMirTermDerivationConstruction::AtomMulAtom {
+                    comparison: lopd.term().cmp(&ropd.term()),
+                }
+            }
+        }
         VdBsqExprData::Application {
             function,
             ref arguments,

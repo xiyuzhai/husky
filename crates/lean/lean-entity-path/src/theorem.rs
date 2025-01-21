@@ -28,6 +28,9 @@ pub enum LnTermDerivationTheoremPath {
     NonZeroLiteralAddAtom,
     NfAddZero,
     NonTrivialFinish,
+    AtomMulAtomLess,
+    AtomMulAtomEqual,
+    AtomMulAtomGreater,
 }
 
 impl LnTheoremPath {
@@ -83,6 +86,11 @@ impl LnTermDerivationTheoremPath {
             }
             LnTermDerivationTheoremPath::NfAddZero => "term_derivation_nf_add_zero",
             LnTermDerivationTheoremPath::NonTrivialFinish => "term_derivation_non_trivial_finish",
+            LnTermDerivationTheoremPath::AtomMulAtomLess => "term_derivation_atom_mul_atom_less",
+            LnTermDerivationTheoremPath::AtomMulAtomEqual => "term_derivation_atom_mul_atom_equal",
+            LnTermDerivationTheoremPath::AtomMulAtomGreater => {
+                "term_derivation_atom_mul_atom_greater"
+            }
         }
     }
 
@@ -129,6 +137,15 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::NfAddZero => "term_derivation_nf_add_zero".to_string(),
             LnTermDerivationTheoremPath::NonTrivialFinish => {
                 "term_derivation_non_trivial_finish".to_string()
+            }
+            LnTermDerivationTheoremPath::AtomMulAtomLess => {
+                "term_derivation_atom_mul_atom_less".to_string()
+            }
+            LnTermDerivationTheoremPath::AtomMulAtomEqual => {
+                "term_derivation_atom_mul_atom_equal".to_string()
+            }
+            LnTermDerivationTheoremPath::AtomMulAtomGreater => {
+                "term_derivation_atom_mul_atom_greater".to_string()
             }
         }
     }

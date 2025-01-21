@@ -100,6 +100,16 @@ where
                     LnTermDerivationTheoremPath::NonTrivialFinish,
                     self.alloc_exprs([]),
                 ),
+                VdMirTermDerivationConstruction::AtomMulAtom { comparison } => {
+                    let path = match comparison {
+                        core::cmp::Ordering::Less => LnTermDerivationTheoremPath::AtomMulAtomLess,
+                        core::cmp::Ordering::Equal => LnTermDerivationTheoremPath::AtomMulAtomEqual,
+                        core::cmp::Ordering::Greater => {
+                            LnTermDerivationTheoremPath::AtomMulAtomGreater
+                        }
+                    };
+                    (path, self.alloc_exprs([]))
+                }
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

@@ -91,4 +91,5 @@ int_to_the_power_of_nat = ring_power int, power int nat int
 rat_to_the_power_of_nat = ring_power rat, power rat nat rat
 real_to_the_power_of_nat = ring_power real, power real nat real
 real_to_the_power_of_int = ring_power real, power real int real
+real_to_the_power_of_rat = ring_power real, power real rat real
 complex_to_the_power_of_nat = ring_power complex, power complex nat complex

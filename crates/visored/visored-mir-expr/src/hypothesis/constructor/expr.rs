@@ -199,6 +199,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         )
     }
 
+    #[track_caller]
     pub fn split_binary(
         &mut self,
         expr: VdMirExprIdx,
@@ -220,6 +221,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         }
     }
 
+    #[track_caller]
     pub fn split_prefix(&mut self, expr: VdMirExprIdx, opr: VdMirBasePrefixOpr) -> VdMirExprIdx {
         match *self.expr_arena[expr].data() {
             VdMirExprData::Application {
@@ -237,6 +239,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         }
     }
 
+    #[track_caller]
     pub fn split_pow(&mut self, expr: VdMirExprIdx) -> (VdMirExprIdx, VdMirExprIdx) {
         match *self.expr_arena[expr].data() {
             VdMirExprData::Application {

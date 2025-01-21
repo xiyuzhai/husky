@@ -51,3 +51,29 @@ pub(super) fn check_mul_eq<'db, Src>(
     assert_deep_eq!(term_a1, term_a, hc);
     assert_deep_eq!(term_b1, term_b, hc);
 }
+
+pub(super) fn check_atom_mul_atom<'db, Src>(
+    prop: VdMirExprIdx,
+    comparison: core::cmp::Ordering,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * b) = expr, hc);
+    match comparison {
+        std::cmp::Ordering::Less => {
+            use husky_print_utils::*;
+            p!(hc.show_expr_lisp(a), hc.show_expr_lisp(term));
+            ds!(let (c * stem) = term, hc);
+            assert!(hc.literal(c).is_one());
+            ds!(let (a1_pow_1 * b1_pow_1) = stem, hc);
+            ds!(let (a1 ^ one) = a1_pow_1, hc);
+            assert!(hc.literal(one).is_one());
+            ds!(let (b1 ^ one) = b1_pow_1, hc);
+            assert!(hc.literal(one).is_one());
+            assert_deep_eq!(a1, a, hc);
+            assert_deep_eq!(b1, b, hc);
+        }
+        std::cmp::Ordering::Equal => todo!(),
+        std::cmp::Ordering::Greater => todo!(),
+    }
+}
