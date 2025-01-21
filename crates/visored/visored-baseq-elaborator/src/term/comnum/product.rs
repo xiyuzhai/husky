@@ -368,11 +368,24 @@ impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        todo!()
+        let mut exponentials = self.exponentials().into_iter().copied();
+        let leader = exponential_expr(exponentials.next().unwrap(), elr, hc);
+        let mut prev_exponential_ty = leader.ty();
+        let mut followers = smallvec![];
+        for exponential in exponentials {
+            let exponential = exponential_expr(exponential, elr, hc);
+            let signature = hc.infer_mul_signature(prev_exponential_ty, exponential.ty());
+            followers.push((signature, exponential));
+            prev_exponential_ty = signature.expr_ty();
+        }
+        elr.mk_expr(
+            VdBsqExprData::FoldingSeparatedList { leader, followers },
+            prev_exponential_ty,
+        )
     }
 }
 
-pub(super) fn product_expr<'db, 'sess>(
+fn product_expr<'db, 'sess>(
     stem: VdBsqProductStem<'sess>,
     factor: VdBsqLitnumTerm<'sess>,
     elr: &VdBsqElaboratorInner<'db, 'sess>,
@@ -382,89 +395,21 @@ pub(super) fn product_expr<'db, 'sess>(
     elr.mk_mul(factor.expr(elr, hc), stem.expr(elr, hc), hc)
 }
 
-// fn factors_expr_data_and_ty<'db, 'sess>(
-//     elr: &VdBsqElaboratorInner<'db, 'sess>,
-//     factors: impl IntoIterator<Item = Factor<'sess>>,
-//     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-// ) -> VdBsqExprFld<'sess> {
-//     let mut factors = factors.into_iter();
-//     let leader = factors.next().unwrap();
-//     let Some(fst_follower) = factors.next() else {
-//         return factor_expr_data_and_ty(elr, leader, hc);
-//     };
-//     let (leader_data, leader_ty) = factor_expr_data_and_ty(elr, leader, hc);
-//     let (fst_follower_data, fst_follower_ty) = factor_expr_data_and_ty(elr, fst_follower, hc);
-//     let fst_signature = hc.infer_mul_signature(leader_ty, fst_follower_ty);
-//     let mut acc_ty = fst_signature.expr_ty();
-//     let leader = elr.mk_expr(leader_data, leader_ty, Some(fst_signature.item_ty()));
-//     let fst_follower = elr.mk_expr(
-//         fst_follower_data,
-//         fst_follower_ty,
-//         Some(fst_signature.item_ty()),
-//     );
-//     let mut followers: SmallVec<[_; 4]> = smallvec![(fst_signature, fst_follower)];
-//     for factor in factors {
-//         let (follower_data, follower_ty) = factor_expr_data_and_ty(elr, factor, hc);
-//         let signature = hc.infer_mul_signature(acc_ty, follower_ty);
-//         acc_ty = signature.expr_ty();
-//         let follower = elr.mk_expr(follower_data, follower_ty, Some(signature.item_ty()));
-//         followers.push((signature, follower));
-//     }
-//     (
-//         VdBsqExprFldData::FoldingSeparatedList { leader, followers },
-//         acc_ty,
-//     )
-// }
-
-// fn factor_expr_data_and_ty<'db, 'sess>(
-//     elr: &VdBsqElaboratorInner<'db, 'sess>,
-//     factor: Factor<'sess>,
-//     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-// ) -> VdBsqExprFld<'sess> {
-//     match factor {
-//         Factor::Atom(atom) => atom.expr_data_and_ty(elr, hc),
-//         Factor::Exponential(base, exponent) => {
-//             exponential_expr_data_and_ty(elr, base, exponent, hc)
-//         }
-//     }
-// }
-
-// fn exponential_expr_data_and_ty<'db, 'sess>(
-//     elr: &VdBsqElaboratorInner<'db, 'sess>,
-//     base: VdBsqNumTerm<'sess>,
-//     exponent: VdBsqNumTerm<'sess>,
-//     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-// ) -> VdBsqExprFld<'sess> {
-//     assert!(!exponent.is_zero_trivially());
-//     if exponent.is_one_trivially() {
-//         return base.expr_data_and_ty(elr, hc);
-//     }
-//     if exponent.is_one_half_trivially() {
-//         let (data, ty) = base.expr_data_and_ty(elr, hc);
-//         let signature: VdBaseSqrtSignature = hc.infer_base_sqrt_signature(ty);
-//         return (
-//             VdBsqExprFldData::Application {
-//                 function: VdMirFunc::NormalBaseSqrt(signature),
-//                 arguments: smallvec![elr.mk_expr(data, ty, Some(signature.radicand_ty()),)],
-//             },
-//             signature.expr_ty(),
-//         );
-//     }
-//     let (base_data, base_ty) = base.expr_data_and_ty(elr, hc);
-//     let (exponent_data, exponent_ty) = exponent.expr_data_and_ty(elr, hc);
-//     let power_signature = hc.infer_power_signature(base_ty, exponent_ty);
-//     let base = elr.mk_expr(base_data, base_ty, Some(power_signature.base_ty()));
-//     let exponent = elr.mk_expr(
-//         exponent_data,
-//         exponent_ty,
-//         Some(power_signature.exponent_ty()),
-//     );
-//     let arguments = smallvec![base, exponent];
-//     (
-//         VdBsqExprFldData::Application {
-//             function: VdMirFunc::Power(power_signature),
-//             arguments,
-//         },
-//         power_signature.expr_ty(),
-//     )
-// }
+fn exponential_expr<'db, 'sess>(
+    (base, exponent): (VdBsqNumTerm<'sess>, VdBsqNumTerm<'sess>),
+    elr: &VdBsqElaboratorInner<'db, 'sess>,
+    hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+) -> VdBsqExpr<'sess> {
+    assert!(!exponent.is_zero_trivially());
+    let base = base.expr(elr, hc);
+    let exponent = exponent.expr(elr, hc);
+    let power_signature = hc.infer_power_signature(base.ty(), exponent.ty());
+    let arguments = smallvec![base, exponent];
+    elr.mk_expr(
+        VdBsqExprData::Application {
+            function: VdMirFunc::Power(power_signature),
+            arguments,
+        },
+        power_signature.expr_ty(),
+    )
+}

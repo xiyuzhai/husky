@@ -200,6 +200,9 @@ impl<'sess> VdBsqSumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqSumTerm<'sess> {
+    /// It should be noted that the constant term is put in the leftest/innest expr.
+    ///
+    /// This is different from product.
     pub(crate) fn expr(
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
