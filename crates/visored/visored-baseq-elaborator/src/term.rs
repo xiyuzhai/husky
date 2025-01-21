@@ -135,7 +135,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         match *expr {
             VdBsqExprData::Literal(vd_literal) => match *vd_literal.data() {
                 VdLiteralData::Int(ref n) => VdBsqBigInt::new_or_i128_ref(n, db).into(),
-                VdLiteralData::Frac(ref frac) => todo!(),
+                VdLiteralData::Frac(ref frac) => match VdBsqFrac128::from_vd_frac(frac) {
+                    Some(frac) => VdBsqLitnumTerm::Frac128(frac).into(),
+                    None => todo!(),
+                },
             },
             VdBsqExprData::Variable(lx_math_letter, local_defn_idx) => {
                 if ty.is_numeric(self.eterner_db()) {

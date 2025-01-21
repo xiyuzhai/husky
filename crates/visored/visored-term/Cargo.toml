@@ -23,6 +23,9 @@ eterned.workspace = true
 salsa = { workspace = true, optional = true }
 # lisp
 lisp-csv.workspace = true
+# math
+num-helpers.workspace = true
+num-traits.workspace = true
 # visored
 visored-coword.workspace = true
 visored-entity-path.workspace = true

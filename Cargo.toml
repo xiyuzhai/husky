@@ -416,6 +416,7 @@ sglang = { path = "crates/llms/sglang" }
 llm-benchmarks = { path = "crates/llms/llm-benchmarks" }
 # math
 combinatorics = { path = "crates/math/combinatorics" }
+num-helpers = { path = "crates/math/num-helpers" }
 num-try = { path = "crates/math/num-try" }
 # nlp
 spacy-rs = { path = "crates/nlp/spacy-rs" }

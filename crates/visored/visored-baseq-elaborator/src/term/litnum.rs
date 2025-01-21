@@ -13,6 +13,7 @@ use product::VdBsqProductTerm;
 use smallvec::*;
 use std::num::NonZeroU128;
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
+use visored_term::term::literal::frac::VdFrac;
 
 #[enum_class::from_variants]
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq)]
@@ -551,9 +552,10 @@ impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
                 }
             }
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
-            VdBsqLitnumTerm::Frac128(f) => {
-                todo!("translate to visored frac")
-            }
+            VdBsqLitnumTerm::Frac128(f) => (
+                VdBsqExprData::Literal(f.into_vd_literal(db)),
+                elr.ty_menu().rat,
+            ),
         }
     }
 }

@@ -70,6 +70,13 @@ impl VdLiteral {
         Self(VdTermId::new(VdLiteralData::Int(i.into()).into(), db))
     }
 
+    pub fn new_frac128(numerator: i128, denominator: i128, db: &EternerDb) -> Self {
+        Self(VdTermId::new(
+            VdLiteralData::Frac(VdFrac::new128(numerator, denominator)).into(),
+            db,
+        ))
+    }
+
     pub fn data(self) -> &'static VdLiteralData {
         match self.0.data() {
             VdTermData::Literal(data) => data,

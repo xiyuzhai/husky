@@ -1,10 +1,37 @@
 use super::*;
+use eterned::db::EternerDb;
 use num_bigint::BigInt;
+use num_integer::Integer;
+use num_traits::*;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct VdBsqFrac128 {
     numerator: i128,
     denominator: i128,
+}
+
+impl Into<VdFrac> for VdBsqFrac128 {
+    fn into(self) -> VdFrac {
+        VdFrac::new128(self.numerator, self.denominator)
+    }
+}
+
+impl VdBsqFrac128 {
+    pub fn into_vd_literal(self, db: &EternerDb) -> VdLiteral {
+        VdLiteral::new_frac128(self.numerator, self.denominator, db)
+    }
+}
+
+impl VdBsqFrac128 {
+    pub fn from_vd_frac(frac: &VdFrac) -> Option<Self> {
+        let numerator = frac.numerator().to_i128()?;
+        let denominator = frac.denominator().to_i128()?;
+        assert!(numerator.abs().gcd(&denominator).is_one());
+        Some(Self {
+            numerator,
+            denominator,
+        })
+    }
 }
 
 pub struct Div(pub i128, pub i128);
