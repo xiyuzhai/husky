@@ -3,13 +3,12 @@ use crate::{helpers::compare::assert_deep_eq, hypothesis::constructor::expr::ds}
 
 /// obtain `a - b => term` from `a + (-b) => term`
 pub(super) fn check_sub_eqs_add_neg<'db, Src>(
-    leader: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    term: VdMirExprIdx,
+    prop: VdMirExprIdx,
     add_neg: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    ds!(let (a - b) = leader, hc);
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a - b) = expr, hc);
     ds!(let (add_neg_lhs => term1) = add_neg.prop(hc), hc);
     assert_deep_eq!(term1, term, hc);
     ds!(let (a1 + neg_b) = add_neg_lhs, hc);

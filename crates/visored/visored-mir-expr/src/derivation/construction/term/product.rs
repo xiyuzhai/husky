@@ -2,12 +2,10 @@ use super::*;
 
 /// derive `1 * b => b`
 pub(super) fn check_one_mul_atom<'db, Src>(
-    expr: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    term: VdMirExprIdx,
+    prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
+    ds!(let (expr => term) = prop, hc);
     ds!(let (one * b) = expr, hc);
     assert!(hc.literal(one).is_one());
     assert_deep_eq!(term, b, hc);
@@ -15,12 +13,10 @@ pub(super) fn check_one_mul_atom<'db, Src>(
 
 /// derive `c * b => c * b^1` if `c` is a constant
 pub(super) fn check_nonone_literal_mul_atom<'db, Src>(
-    expr: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    term: VdMirExprIdx,
+    prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
+    ds!(let (expr => term) = prop, hc);
     ds!(let (c * b) = expr, hc);
     let c = hc.literal(c);
     assert!(!c.is_one());
@@ -34,11 +30,7 @@ pub(super) fn check_nonone_literal_mul_atom<'db, Src>(
 
 /// derive `a * b => term` from `a => term_a`, `b => term_b` and `term_a * term_b => term`
 pub(super) fn check_mul_eq<'db, Src>(
-    // `a * b`
-    lhs: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    // `term`
-    term: VdMirExprIdx,
+    prop: VdMirExprIdx,
     // `a => term_a`
     lopd: VdMirTermDerivationIdx,
     // `b => term_b`
@@ -47,8 +39,8 @@ pub(super) fn check_mul_eq<'db, Src>(
     merge: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::EQ);
-    ds!(let (a * b) = lhs, hc);
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * b) = expr, hc);
     ds!(let (a1 => term_a) = lopd.prop(hc), hc);
     assert_deep_eq!(a1, a, hc);
     ds!(let (b1 => term_b) = ropd.prop(hc), hc);

@@ -32,10 +32,7 @@ macro_rules! ds {
         );
     };
     (let ($lopd: ident => $ropd: ident) = $merge: expr, $hc: expr) => {
-        let ($lopd, $ropd) = $hc.split_trivial_chaining_separated_list(
-            $merge,
-            visored_mir_opr::separator::chaining::VdMirBaseChainingSeparator::EQ,
-        );
+        let ($lopd, $ropd) = $hc.split_term_reduction($merge);
     };
     (let ($lopd: ident - $ropd: ident) = $merge: expr, $hc: expr) => {
         let ($lopd, $ropd) = $hc.split_binary(
@@ -53,6 +50,7 @@ macro_rules! ds {
 
 pub(crate) use ds;
 use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
+use visored_term::term::VdTerm;
 
 impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     pub fn mk_expr(&mut self, entry: VdMirExprEntry) -> VdMirExprIdx {
@@ -158,6 +156,47 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                 self.show_expr_lisp(expr)
             ),
         }
+    }
+
+    #[track_caller]
+    pub fn split_any_trivial_chaining_separated_list_with_signature_checked(
+        &mut self,
+        expr: VdMirExprIdx,
+        f: impl Fn(&Self, VdMirExprIdx, VdBaseChainingSeparatorSignature) -> bool,
+    ) -> (VdMirExprIdx, VdMirExprIdx) {
+        match *self.expr_arena[expr].data() {
+            VdMirExprData::ChainingSeparatedList {
+                leader,
+                ref followers,
+                joined_signature: None,
+            } => {
+                assert_eq!(followers.len(), 1);
+                let (signature, follower) = followers[0];
+                assert!(f(self, leader, signature));
+                (leader, follower)
+            }
+            _ => unreachable!(
+                "try to split non-separated list: `{:?}` with lisp form: `{}`",
+                self.expr_arena[expr].data(),
+                self.show_expr_lisp(expr)
+            ),
+        }
+    }
+
+    #[track_caller]
+    pub fn split_term_reduction(&mut self, expr: VdMirExprIdx) -> (VdMirExprIdx, VdMirExprIdx) {
+        self.split_any_trivial_chaining_separated_list_with_signature_checked(
+            expr,
+            |slf, leader, signature| {
+                let ty = slf.expr_arena[leader].ty();
+                let expected_separator = if ty == slf.ty_menu.prop {
+                    VdMirBaseChainingSeparator::IFF
+                } else {
+                    VdMirBaseChainingSeparator::EQ
+                };
+                signature.separator() == expected_separator
+            },
+        )
     }
 
     pub fn split_binary(

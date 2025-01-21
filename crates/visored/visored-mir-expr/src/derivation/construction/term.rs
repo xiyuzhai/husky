@@ -112,85 +112,51 @@ impl VdMirTermDerivationConstruction {
         prop: VdMirExprIdx,
         hc: &mut VdMirHypothesisConstructor<'db, Src>,
     ) {
-        let expr_arena = hc.expr_arena();
-        let VdMirExprData::ChainingSeparatedList {
-            leader: lhs,
-            ref followers,
-            joined_signature: None,
-        } = *expr_arena[prop].data()
-        else {
-            unreachable!()
-        };
-        let (signature, rhs) = followers[0];
         match *self {
-            VdMirTermDerivationConstruction::Reflection => {
-                check_reflection(lhs, signature, rhs, hc)
-            }
+            VdMirTermDerivationConstruction::Reflection => check_reflection(prop, hc),
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => {
-                check_literal_add_literal(lhs, rhs, hc)
+                check_literal_add_literal(prop, hc)
             }
             VdMirTermDerivationConstruction::NumComparison {
                 lhs_nf,
                 rhs_nf,
                 lhs_nf_minus_rhs_nf_nf,
-            } => check_num_comparison(
-                lhs,
-                signature,
-                rhs,
-                lhs_nf,
-                rhs_nf,
-                lhs_nf_minus_rhs_nf_nf,
-                hc,
-            ),
+            } => check_num_comparison(prop, lhs_nf, rhs_nf, lhs_nf_minus_rhs_nf_nf, hc),
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => {
-                check_sub_eqs_add_neg(lhs, signature, rhs, add_neg, hc)
+                check_sub_eqs_add_neg(prop, add_neg, hc)
             }
-            VdMirTermDerivationConstruction::AdditionInterchange => {
-                check_add_interchange(lhs, signature, rhs, hc)
-            }
+            VdMirTermDerivationConstruction::AdditionInterchange => check_add_interchange(prop, hc),
             VdMirTermDerivationConstruction::AdditionAssociativity => todo!(),
             VdMirTermDerivationConstruction::AdditionIdentity => todo!(),
             VdMirTermDerivationConstruction::AdditionInverse => todo!(),
             VdMirTermDerivationConstruction::AdditionDistributivity => todo!(),
-            VdMirTermDerivationConstruction::NegLiteral => {
-                check_neg_literal(lhs, signature, rhs, hc)
-            }
+            VdMirTermDerivationConstruction::NegLiteral => check_neg_literal(prop, hc),
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
-            } => check_add_eq(lhs, signature, rhs, lopd, ropd, merge, hc),
-            VdMirTermDerivationConstruction::AtomAddSwap => {
-                check_atom_add_constant(lhs, signature, rhs, hc)
-            }
+            } => check_add_eq(prop, lopd, ropd, merge, hc),
+            VdMirTermDerivationConstruction::AtomAddSwap => check_atom_add_constant(prop, hc),
             VdMirTermDerivationConstruction::LiteralMul => todo!(),
             VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => {
-                check_mul_eq(lhs, signature, rhs, lopd, ropd, merge, hc)
+                check_mul_eq(prop, lopd, ropd, merge, hc)
             }
             VdMirTermDerivationConstruction::AtomMulSwap => todo!(),
-            VdMirTermDerivationConstruction::OneMulAtom => {
-                check_one_mul_atom(lhs, signature, rhs, hc)
-            }
+            VdMirTermDerivationConstruction::OneMulAtom => check_one_mul_atom(prop, hc),
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => {
-                check_nonone_literal_mul_atom(lhs, signature, rhs, hc)
+                check_nonone_literal_mul_atom(prop, hc)
             }
             VdMirTermDerivationConstruction::NonZeroLiteralAddAtom => {
-                check_nonzero_literal_add_atom(lhs, signature, rhs, hc)
+                check_nonzero_literal_add_atom(prop, hc)
             }
-            VdMirTermDerivationConstruction::NfAddZero => {
-                check_nf_add_zero(lhs, signature, rhs, hc)
-            }
+            VdMirTermDerivationConstruction::NfAddZero => check_nf_add_zero(prop, hc),
             VdMirTermDerivationConstruction::NonTrivialFinish { src_nf, dst_nf } => {
-                check_non_trivial_finish(lhs, signature, rhs, src_nf, dst_nf, hc)
+                check_non_trivial_finish(prop, src_nf, dst_nf, hc)
             }
         }
     }
 }
 
-fn check_reflection<'db, Src>(
-    leader: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    follower: VdMirExprIdx,
-    hc: &VdMirHypothesisConstructor<'db, Src>,
-) {
+fn check_reflection<'db, Src>(prop: VdMirExprIdx, hc: &mut VdMirHypothesisConstructor<'db, Src>) {
+    let (lhs, signature, rhs) = hc.split_any_trivial_chaining_separated_list(prop);
     match signature.separator() {
         VdMirBaseChainingSeparator::Iff => (),
         VdMirBaseChainingSeparator::Relation(separator) => match separator {
@@ -205,20 +171,18 @@ fn check_reflection<'db, Src>(
             VdMirBaseRelationSeparator::Containment(_) => panic!(),
         },
     }
-    assert!(vd_mir_expr_deep_eq(leader, follower, hc.expr_arena()))
+    assert!(vd_mir_expr_deep_eq(lhs, rhs, hc.expr_arena()))
 }
 
 /// derive `a <nc> b => term <nc> 0` from `a - b <nc> 0 => term <nc> 0` and `a - b => term`
 fn check_num_comparison<'db, Src>(
-    leader: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    follower: VdMirExprIdx,
+    prop: VdMirExprIdx,
     a_nf: VdMirTermDerivationIdx,
     b_nf: VdMirTermDerivationIdx,
     a_nf_minus_a_nf_nf: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    assert_eq!(signature.separator(), VdMirBaseChainingSeparator::Iff);
+    ds!(let (leader => follower) = prop, hc);
     let (a, leader_signature, b) = hc.split_any_trivial_chaining_separated_list(leader);
     let (term, follower_signature, zero) = hc.split_any_trivial_chaining_separated_list(follower);
     assert_eq!(leader_signature.separator(), follower_signature.separator());
@@ -240,12 +204,7 @@ fn check_num_comparison<'db, Src>(
 }
 
 /// obtain `a + (b + c) = term` from `a + b + c = term`
-fn check_add_interchange<'db, Src>(
-    leader: VdMirExprIdx,
-    signature: VdBaseChainingSeparatorSignature,
-    follower: VdMirExprIdx,
-    hc: &VdMirHypothesisConstructor<'db, Src>,
-) {
+fn check_add_interchange<'db, Src>(prop: VdMirExprIdx, hc: &VdMirHypothesisConstructor<'db, Src>) {
     todo!()
     // let expr_arena = hc.expr_arena();
 }
