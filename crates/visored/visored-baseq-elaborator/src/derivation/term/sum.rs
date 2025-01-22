@@ -196,19 +196,11 @@ fn merge_atom_construction<'db, 'sess>(
                         std::cmp::Ordering::Greater => {
                             let a_add_c = merge(a, c, elr, hc);
                             let term_ac_add_b = merge(a_add_c.expr(), b, elr, hc);
-                            p!(
-                                a,
-                                b,
-                                c,
-                                *a_add_c,
-                                a_add_c.term(),
-                                *term_ac_add_b,
-                                term_ac_add_b.term()
-                            );
-                            VdMirTermDerivationConstruction::SumNfAddProductGreater {
-                                a_add_c_nf: a_add_c.derivation(),
-                                term_ac_add_b_nf: term_ac_add_b.derivation(),
-                            }
+                            todo!("reduce to the case of merge product")
+                            // VdMirTermDerivationConstruction::SumNfAddProductGreater {
+                            //     a_add_c_nf: a_add_c.derivation(),
+                            //     term_ac_add_b_nf: term_ac_add_b.derivation(),
+                            // }
                         }
                     }
                 }
