@@ -104,14 +104,15 @@ where
             }
 
             // check lock file does not exist
-            if lock_file_path(path).exists() {
-                return Err(DiskCacheError::CacheFileLockedByAnotherProcess);
+            let lock_file_path = lock_file_path(path);
+            if lock_file_path.exists() {
+                return Err(DiskCacheError::CacheFileLockedByAnotherProcess { lock_file_path });
             }
 
             let mut cleanup_handler = CLEANUP_HANDLER.lock().unwrap();
 
             // create lock file
-            fs::File::create(lock_file_path(path))
+            fs::File::create(lock_file_path)
                 .map_err(|e| DiskCacheError::Io(path.to_path_buf(), e))?;
 
             // Register this lock file with the cleanup handler

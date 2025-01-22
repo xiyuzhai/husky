@@ -13,7 +13,7 @@ fn llm_cache_lock_works() {
         assert!(lock_file_path(&cache.path).exists());
         assert!(matches!(
             DiskCache::<(), (), (), ()>::new(db, tokio_runtime.clone(), path.clone()),
-            Err(DiskCacheError::CacheFileLockedByAnotherProcess)
+            Err(DiskCacheError::CacheFileLockedByAnotherProcess { .. })
         ));
     }
     assert!(!lock_file_path(&path).exists());
