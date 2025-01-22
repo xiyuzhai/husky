@@ -99,6 +99,12 @@ pub enum VdMirTermDerivationConstruction {
     NegEqsMinusOneMul {
         minus_one_mul_a_nf: VdMirTermDerivationIdx,
     },
+    /// derive `a + b + c => term` from `a + c => term_ac` and `term_ac + b => term`
+    SumNfAddProductGreater {
+        a_add_c_nf: VdMirTermDerivationIdx,
+        term_ac_add_c_nf: VdMirTermDerivationIdx,
+    },
+    ZeroAddNormalized,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -206,6 +212,11 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AtomAddProduct { comparison } => {
                 check_atom_add_product(prop, comparison, hc)
             }
+            VdMirTermDerivationConstruction::SumNfAddProductGreater {
+                a_add_c_nf,
+                term_ac_add_c_nf,
+            } => todo!(),
+            VdMirTermDerivationConstruction::ZeroAddNormalized => todo!(),
         }
     }
 }

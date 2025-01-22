@@ -160,11 +160,7 @@ impl<'sess> VdBsqSumBuilder<'sess> {
             (1, VdBsqLitnumTerm::ZERO) => {
                 let (base, coeff) = monomials.into_iter().next().unwrap();
                 assert!(!coeff.is_zero());
-                if coeff.is_one() {
-                    todo!()
-                } else {
-                    VdBsqProductTerm::new(coeff, base).into()
-                }
+                VdBsqProductTerm::new(coeff, base)
             }
             _ => VdBsqSumTerm::new(self.constant_litnum, monomials, self.db).into(),
         }

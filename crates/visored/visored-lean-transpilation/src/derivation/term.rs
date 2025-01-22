@@ -121,6 +121,11 @@ where
                 VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => todo!(),
                 VdMirTermDerivationConstruction::PowerOne { base } => todo!(),
                 VdMirTermDerivationConstruction::AtomAddProduct { comparison } => todo!(),
+                VdMirTermDerivationConstruction::SumNfAddProductGreater {
+                    a_add_c_nf,
+                    term_ac_add_c_nf,
+                } => todo!(),
+                VdMirTermDerivationConstruction::ZeroAddNormalized => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

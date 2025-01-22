@@ -15,7 +15,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         if let &[(signature, follower)] = followers {
-            if let Some(construction) = try_trivial_literal_add(leader, follower) {
+            if let Some(construction) = try_trivial_construction(leader, follower) {
                 return construction;
             }
         }
@@ -25,25 +25,31 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         VdMirTermDerivationConstruction::AddEq {
             lopd: lopd.derivation(),
             ropd: ropd.derivation(),
-            merge: merge_nf_add_nf(lopd, ropd, self, hc).derivation(),
+            merge: merge_nf_add_nf(*lopd, ropd, self, hc).derivation(),
         }
     }
 }
 
-fn try_trivial_literal_add<'sess>(
+fn try_trivial_construction<'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
 ) -> Option<VdMirTermDerivationConstruction> {
-    if let (&VdBsqExprData::Literal(lopd), &VdBsqExprData::Literal(ropd)) =
-        (lopd.data(), ropd.data())
-    {
-        return Some(VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd });
+    if let VdBsqExprData::Literal(lopd_lit) = lopd.data() {
+        if lopd_lit.is_zero() {
+            return Some(VdMirTermDerivationConstruction::ZeroAddNormalized);
+        }
+        if let VdBsqExprData::Literal(ropd_lit) = ropd.data() {
+            return Some(VdMirTermDerivationConstruction::LiteralAddLiteral {
+                lopd: *lopd_lit,
+                ropd: *ropd_lit,
+            });
+        }
     }
     None
 }
 
 fn merge_nf_add_nf<'db, 'sess>(
-    lopd: VdBsqExprNf<'sess>,
+    lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExprNf<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
@@ -60,19 +66,19 @@ fn merge_nf_add_nf<'db, 'sess>(
         }
         _ => (),
     }
-    let expr = elr.mk_add(lopd.expr(), ropd.expr(), hc);
+    let expr = elr.mk_add(lopd, ropd.expr(), hc);
     let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
     let derivation = hc.alloc_term_derivation(prop, construction);
     VdBsqExprNf::new(derivation, expr, elr, hc)
 }
 
 fn merge_nf_add_nf_construction<'db, 'sess>(
-    lopd: VdBsqExprNf<'sess>,
+    lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExprNf<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
-    if let Some(construction) = try_trivial_literal_add(lopd.expr(), ropd.expr()) {
+    if let Some(construction) = try_trivial_construction(lopd, ropd.expr()) {
         return construction;
     }
     match *ropd.data() {
@@ -111,7 +117,7 @@ fn merge_nf_add_nf_construction<'db, 'sess>(
 }
 
 fn merge_nf_add_nonzero_literal_construction<'db, 'sess>(
-    lopd: VdBsqExprNf<'sess>,
+    lopd: VdBsqExpr<'sess>,
     ropd: VdLiteral,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
@@ -141,7 +147,7 @@ fn merge_nf_add_nonzero_literal_construction<'db, 'sess>(
 }
 
 fn merge_nf_add_atom_construction<'db, 'sess>(
-    lopd: VdBsqExprNf<'sess>,
+    lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExprNf<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
@@ -159,10 +165,39 @@ fn merge_nf_add_atom_construction<'db, 'sess>(
             function,
             ref arguments,
         } => todo!("function = `{:?}`", function),
-        VdBsqExprData::FoldingSeparatedList {
-            leader,
-            ref followers,
-        } => todo!(),
+        VdBsqExprData::FoldingSeparatedList { ref followers, .. } => {
+            match followers[0].0.separator() {
+                VdMirBaseFoldingSeparator::CommRingAdd => {
+                    let (signature, lropd) = *followers.last().unwrap();
+                    let (a, _, b) = lopd
+                        .split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
+                    let VdBsqTerm::Comnum(VdBsqComnumTerm::Product(lropd)) = lropd.term() else {
+                        unreachable!()
+                    };
+                    let VdBsqTerm::Comnum(VdBsqComnumTerm::Atom(ropd_term)) = ropd.term() else {
+                        unreachable!()
+                    };
+                    let c = ropd;
+                    match lropd.stem().cmp(&VdBsqProductStem::Atom(ropd_term)) {
+                        std::cmp::Ordering::Less => todo!(),
+                        std::cmp::Ordering::Equal => todo!(),
+                        std::cmp::Ordering::Greater => {
+                            let a_add_c = merge_nf_add_nf(a, c, elr, hc);
+                            VdMirTermDerivationConstruction::SumNfAddProductGreater {
+                                a_add_c_nf: a_add_c.derivation(),
+                                term_ac_add_c_nf: elr
+                                    .mk_add(a_add_c.expr(), b, hc)
+                                    .normalize(elr, hc)
+                                    .derivation(),
+                            }
+                        }
+                    }
+                }
+                VdMirBaseFoldingSeparator::CommRingMul => todo!(),
+                VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
+            }
+        }
         VdBsqExprData::ChainingSeparatedList {
             leader,
             ref followers,
@@ -173,7 +208,7 @@ fn merge_nf_add_atom_construction<'db, 'sess>(
 }
 
 fn merge_nf_add_product_construction<'db, 'sess>(
-    lopd: VdBsqExprNf<'sess>,
+    lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExprNf<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
