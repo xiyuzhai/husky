@@ -13,7 +13,7 @@ pub(super) fn check_literal_mul_literal<'db, Src>(
 }
 
 /// derive `1 * b => b`
-pub(super) fn check_one_mul_atom<'db, Src>(
+pub(super) fn check_one_mul<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {

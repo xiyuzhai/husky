@@ -59,9 +59,11 @@ pub enum VdMirTermDerivationConstruction {
     },
     AtomMulSwap,
     /// derive `1 * b => b`
-    OneMulAtom,
-    /// derive `c * b => c * b^1` if `c` is a constant
+    OneMulNormalized,
+    /// derive `c * b => c * b^1` if `c` is a litnum
     NonOneLiteralMulAtom,
+    /// derive `c * b => c * b` if `c` is a litnum and `b` is an exponential
+    NonOneLiteralMulExponential,
     /// derive `c + a => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
     NonZeroLiteralAddAtom,
     /// derive `c + 0 => c`
@@ -162,7 +164,7 @@ impl VdMirTermDerivationConstruction {
                 check_mul_eq(prop, lopd, ropd, merge, hc)
             }
             VdMirTermDerivationConstruction::AtomMulSwap => todo!(),
-            VdMirTermDerivationConstruction::OneMulAtom => check_one_mul_atom(prop, hc),
+            VdMirTermDerivationConstruction::OneMulNormalized => check_one_mul(prop, hc),
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => {
                 check_nonone_literal_mul_atom(prop, hc)
             }
@@ -187,6 +189,7 @@ impl VdMirTermDerivationConstruction {
                 check_non_reduced_power(prop, base, exponent, hc)
             }
             VdMirTermDerivationConstruction::PowerOne { base } => check_power_one(prop, base, hc),
+            VdMirTermDerivationConstruction::NonOneLiteralMulExponential => todo!(),
         }
     }
 }

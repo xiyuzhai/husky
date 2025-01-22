@@ -10,7 +10,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         if let &[(signature, follower)] = followers {
-            if let Some(construction) = try_trivial_literal_mul(leader, follower) {
+            if let Some(construction) = try_trivial_construction(leader, follower) {
                 return construction;
             }
         }
@@ -25,14 +25,16 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 }
 
-fn try_trivial_literal_mul<'sess>(
+fn try_trivial_construction<'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
 ) -> Option<VdMirTermDerivationConstruction> {
-    if let (&VdBsqExprData::Literal(leader), &VdBsqExprData::Literal(follower)) =
-        (lopd.data(), ropd.data())
-    {
-        return Some(VdMirTermDerivationConstruction::LiteralMulLiteral);
+    if let &VdBsqExprData::Literal(leader) = lopd.data() {
+        if leader.is_one() {
+            return Some(VdMirTermDerivationConstruction::OneMulNormalized);
+        } else if let &VdBsqExprData::Literal(follower) = ropd.data() {
+            return Some(VdMirTermDerivationConstruction::LiteralMulLiteral);
+        }
     }
     None
 }
@@ -56,16 +58,10 @@ fn merge_construction<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
-    println!(
-        "call `merge_construction` with lopd = {:?}, ropd = {:?}",
-        lopd, ropd
-    );
-    detonate!(1000);
-
-    if let Some(construction) = try_trivial_literal_mul(lopd, ropd) {
+    if let Some(construction) = try_trivial_construction(lopd, ropd) {
         return construction;
     }
-    let r = match *ropd.data() {
+    match *ropd.data() {
         VdBsqExprData::Literal(literal) => merge_literal(lopd, literal, elr, hc),
         VdBsqExprData::FoldingSeparatedList { ref followers, .. }
             if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL =>
@@ -80,10 +76,16 @@ fn merge_construction<'db, 'sess>(
             VdMirTermDerivationConstruction::MulAssoc { rsignature }
         }
         VdBsqExprData::ItemPath(vd_item_path) => todo!(),
+        VdBsqExprData::Application {
+            function: VdMirFunc::NormalBaseSqrt(_),
+            ref arguments,
+        } => todo!(),
+        VdBsqExprData::Application {
+            function: VdMirFunc::Power(_),
+            ref arguments,
+        } => merge_exponential_construction(lopd, ropd, elr, hc),
         _ => merge_atom_construction(lopd, ropd, elr, hc),
-    };
-    println!("merge_construction returns {:?}", r);
-    r
+    }
 }
 
 fn merge_literal<'db, 'sess>(
@@ -114,23 +116,31 @@ fn merge_literal<'db, 'sess>(
     }
 }
 
+fn merge_exponential_construction<'db, 'sess>(
+    lopd: VdBsqExpr<'sess>,
+    ropd: VdBsqExpr<'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+) -> VdMirTermDerivationConstruction {
+    match *lopd.data() {
+        VdBsqExprData::Literal(literal) => {
+            assert!(!literal.is_one());
+            VdMirTermDerivationConstruction::NonOneLiteralMulExponential
+        }
+        _ => todo!(),
+    }
+}
+
 fn merge_atom_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
-    println!(
-        "call `merge_atom_construction` with lopd = {:?}, ropd = {:?}",
-        lopd, ropd
-    );
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
-            if literal.is_one() {
-                VdMirTermDerivationConstruction::OneMulAtom
-            } else {
-                VdMirTermDerivationConstruction::NonOneLiteralMulAtom
-            }
+            assert!(!literal.is_one());
+            VdMirTermDerivationConstruction::NonOneLiteralMulAtom
         }
         VdBsqExprData::Variable(..) => {
             if lopd == ropd {
