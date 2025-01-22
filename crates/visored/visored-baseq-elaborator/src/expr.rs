@@ -528,7 +528,7 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
         VdBsqExpr<'sess>,
     ) {
         let VdBsqExprData::FoldingSeparatedList {
-            leader: lopd,
+            leader,
             ref followers,
         } = *self.data()
         else {
@@ -538,9 +538,16 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
         assert!(followers[0].0.separator() == separator);
 
         if followers.len() == 1 {
-            (lopd, followers[0].0, followers[0].1)
+            (leader, followers[0].0, followers[0].1)
         } else {
             let (signature, ropd) = *followers.last().unwrap();
+            let lopd = elr.mk_expr(
+                VdBsqExprData::FoldingSeparatedList {
+                    leader,
+                    followers: followers[..followers.len() - 1].to_smallvec(),
+                },
+                followers[followers.len() - 2].0.expr_ty(),
+            );
             (lopd, signature, ropd)
         }
     }

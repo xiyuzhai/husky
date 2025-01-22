@@ -122,7 +122,7 @@ where
                 VdMirTermDerivationConstruction::AtomAddProduct { comparison } => todo!(),
                 VdMirTermDerivationConstruction::SumNfAddProductGreater {
                     a_add_c_nf,
-                    term_ac_add_c_nf,
+                    term_ac_add_b_nf,
                 } => todo!(),
                 VdMirTermDerivationConstruction::ZeroAdd { .. } => todo!(),
             };

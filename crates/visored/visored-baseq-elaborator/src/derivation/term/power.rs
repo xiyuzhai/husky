@@ -14,10 +14,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             };
         }
         let exponent = exponent.normalize(self, hc);
-        todo!()
-        // VdMirTermDerivationConstruction::NonReducedPower {
-        //     base: base.derivation(),
-        //     exponent: exponent.derivation(),
-        // }
+        VdMirTermDerivationConstruction::NonReducedPower {
+            base: base.derivation(),
+            exponent: exponent.derivation(),
+        }
     }
 }

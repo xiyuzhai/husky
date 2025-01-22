@@ -104,7 +104,7 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a + b + c => term` from `a + c => term_ac` and `term_ac + b => term`
     SumNfAddProductGreater {
         a_add_c_nf: VdMirTermDerivationIdx,
-        term_ac_add_c_nf: VdMirTermDerivationIdx,
+        term_ac_add_b_nf: VdMirTermDerivationIdx,
     },
     /// derive `0 + a => term` from `a => term`
     ZeroAdd {
@@ -219,8 +219,8 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::SumNfAddProductGreater {
                 a_add_c_nf,
-                term_ac_add_c_nf,
-            } => todo!(),
+                term_ac_add_b_nf,
+            } => check_sum_nf_add_product_greater(prop, a_add_c_nf, term_ac_add_b_nf, hc),
             VdMirTermDerivationConstruction::ZeroAdd { a_nf } => check_zero_add(prop, a_nf, hc),
         }
     }

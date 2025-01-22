@@ -120,3 +120,21 @@ pub(super) fn check_zero_add<'db, Src>(
     assert_deep_eq!(term1, term, hc);
     assert_deep_eq!(a1, a, hc);
 }
+
+/// derive `a + b + c => term` from `a + c => term_ac` and `term_ac + b => term`
+pub(super) fn check_sum_nf_add_product_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    a_add_c_nf: VdMirTermDerivationIdx,
+    term_ac_add_b_nf: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a_add_b + c) = expr, hc);
+    ds!(let (a + b) = a_add_b, hc);
+    ds!(let (a_add_c => term_ac) = a_add_c_nf.prop(hc), hc);
+    ds!(let (term_ac_add_b => term1) = term_ac_add_b_nf.prop(hc), hc);
+    p!(hc.show_expr_lisp(expr));
+    p!(hc.show_expr_lisp(term));
+    assert_deep_eq!(term1, term, hc);
+    todo!()
+}
