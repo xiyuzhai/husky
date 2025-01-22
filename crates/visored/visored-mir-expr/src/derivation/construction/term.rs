@@ -64,8 +64,10 @@ pub enum VdMirTermDerivationConstruction {
         merge: VdMirTermDerivationIdx,
     },
     AtomMulSwap,
-    /// derive `1 * b => b`
-    OneMulNormalized,
+    /// derive `1 * a => term` from `a => term`
+    OneMul {
+        a_nf: VdMirTermDerivationIdx,
+    },
     /// derive `c * b => c * b^1` if `c` is a litnum
     NonOneLiteralMulAtom,
     /// derive `c + a => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
@@ -104,7 +106,10 @@ pub enum VdMirTermDerivationConstruction {
         a_add_c_nf: VdMirTermDerivationIdx,
         term_ac_add_c_nf: VdMirTermDerivationIdx,
     },
-    ZeroAddNormalized,
+    /// derive `0 + a => term` from `a => term`
+    ZeroAdd {
+        a_nf: VdMirTermDerivationIdx,
+    },
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -183,7 +188,7 @@ impl VdMirTermDerivationConstruction {
                 check_mul_eq(prop, lopd, ropd, merge, hc)
             }
             VdMirTermDerivationConstruction::AtomMulSwap => todo!(),
-            VdMirTermDerivationConstruction::OneMulNormalized => check_one_mul(prop, hc),
+            VdMirTermDerivationConstruction::OneMul { a_nf } => check_one_mul(prop, a_nf, hc),
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => {
                 check_nonone_literal_mul_atom(prop, hc)
             }
@@ -216,7 +221,7 @@ impl VdMirTermDerivationConstruction {
                 a_add_c_nf,
                 term_ac_add_c_nf,
             } => todo!(),
-            VdMirTermDerivationConstruction::ZeroAddNormalized => todo!(),
+            VdMirTermDerivationConstruction::ZeroAdd { a_nf } => check_zero_add(prop, a_nf, hc),
         }
     }
 }

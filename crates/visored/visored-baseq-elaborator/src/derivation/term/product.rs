@@ -10,7 +10,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         if let &[(signature, follower)] = followers {
-            if let Some(construction) = try_trivial_construction(leader, follower) {
+            if let Some(construction) = try_trivial_construction(leader, follower, self, hc) {
                 return construction;
             }
         }
@@ -25,13 +25,18 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 }
 
-fn try_trivial_construction<'sess>(
+fn try_trivial_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> Option<VdMirTermDerivationConstruction> {
     if let &VdBsqExprData::Literal(leader) = lopd.data() {
         if leader.is_one() {
-            return Some(VdMirTermDerivationConstruction::OneMulNormalized);
+            let a_nf = ropd.normalize(elr, hc);
+            return Some(VdMirTermDerivationConstruction::OneMul {
+                a_nf: a_nf.derivation(),
+            });
         } else if let &VdBsqExprData::Literal(follower) = ropd.data() {
             return Some(VdMirTermDerivationConstruction::LiteralMulLiteral);
         }
@@ -58,7 +63,7 @@ fn merge_construction<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
-    if let Some(construction) = try_trivial_construction(lopd, ropd) {
+    if let Some(construction) = try_trivial_construction(lopd, ropd, elr, hc) {
         return construction;
     }
     match *ropd.data() {

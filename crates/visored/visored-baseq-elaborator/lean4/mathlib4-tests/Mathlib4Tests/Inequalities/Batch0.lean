@@ -209,16 +209,17 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d14 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
     have d15 : 0 = 0 := term_derivation_reflection
     have d16 : -1 = -1 := term_derivation_reflection
-    have d17 : (1 : ℝ) * x = x := term_derivation_one_mul_atom
-    have d18 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_non_zero_literal_add_atom
-    have d19 : (-1 : ℝ) + (1 : ℝ) * x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
-    have d20 : (-1 : ℤ) * (0 : ℤ) = 0 := term_derivation_literal_mul
-    have d21 : -(0 : ℤ) = 0 := term_derivation_neg_eqs_minus_one_mul
-    have d22 : (-1 : ℝ) + (1 : ℝ) * x + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_nf_add_zero
-    have d23 : (-1 : ℝ) + (1 : ℝ) * x + (-(0 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
-    have d24 : (-1 : ℝ) + (1 : ℝ) * x - (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
-    have d25 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ≥ (0 : ℝ) := term_derivation_num_comparison
-    have d26 : x - (1 : ℝ) ≥ (0 : ℝ) := term_derivation_non_trivial_finish
+    have d17 : x = x := term_derivation_reflection
+    have d18 : (1 : ℝ) * x = x := term_derivation_one_mul
+    have d19 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_non_zero_literal_add_atom
+    have d20 : (-1 : ℝ) + (1 : ℝ) * x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
+    have d21 : (-1 : ℤ) * (0 : ℤ) = 0 := term_derivation_literal_mul
+    have d22 : -(0 : ℤ) = 0 := term_derivation_neg_eqs_minus_one_mul
+    have d23 : (-1 : ℝ) + (1 : ℝ) * x + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_nf_add_zero
+    have d24 : (-1 : ℝ) + (1 : ℝ) * x + (-(0 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
+    have d25 : (-1 : ℝ) + (1 : ℝ) * x - (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
+    have d26 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ≥ (0 : ℝ) := term_derivation_num_comparison
+    have d27 : x - (1 : ℝ) ≥ (0 : ℝ) := term_derivation_non_trivial_finish
     assumption
   exact ()
 end Example12

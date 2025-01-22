@@ -106,3 +106,17 @@ pub(super) fn check_atom_add_product<'db, Src>(
         std::cmp::Ordering::Greater => todo!(),
     }
 }
+
+/// derive `0 + a => term` from `a => term`
+pub(super) fn check_zero_add<'db, Src>(
+    prop: VdMirExprIdx,
+    a_nf: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (zero + a) = expr, hc);
+    ds!(let (a1 => term1) = a_nf.prop(hc), hc);
+    assert!(hc.literal(zero).is_zero());
+    assert_deep_eq!(term1, term, hc);
+    assert_deep_eq!(a1, a, hc);
+}

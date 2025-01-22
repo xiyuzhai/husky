@@ -23,7 +23,7 @@ pub enum LnTermDerivationTheoremPath {
     LiteralMul,
     MulEq,
     AtomMulSwap,
-    OneMulNormalized,
+    OneMul,
     NonOneLiteralMulAtom,
     NonZeroLiteralAddAtom,
     NfAddZero,
@@ -80,7 +80,7 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul",
             LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq",
             LnTermDerivationTheoremPath::AtomMulSwap => "term_derivation_atom_mul_swap",
-            LnTermDerivationTheoremPath::OneMulNormalized => "term_derivation_one_mul_atom",
+            LnTermDerivationTheoremPath::OneMul => "term_derivation_one_mul",
             LnTermDerivationTheoremPath::NonOneLiteralMulAtom => {
                 "term_derivation_non_one_literal_mul_atom"
             }
@@ -133,9 +133,7 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul".to_string(),
             LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq".to_string(),
             LnTermDerivationTheoremPath::AtomMulSwap => "term_derivation_atom_mul_swap".to_string(),
-            LnTermDerivationTheoremPath::OneMulNormalized => {
-                "term_derivation_one_mul_atom".to_string()
-            }
+            LnTermDerivationTheoremPath::OneMul => "term_derivation_one_mul".to_string(),
             LnTermDerivationTheoremPath::NonOneLiteralMulAtom => {
                 "term_derivation_non_one_literal_mul_atom".to_string()
             }

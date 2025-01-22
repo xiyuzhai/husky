@@ -14,15 +14,18 @@ pub(super) fn check_literal_mul_literal<'db, Src>(
     assert_eq!(&a.data().mul(b.data()), term.data());
 }
 
-/// derive `1 * b => b`
+/// derive `1 * a => term` from `a => term`
 pub(super) fn check_one_mul<'db, Src>(
     prop: VdMirExprIdx,
+    a_nf: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     ds!(let (expr => term) = prop, hc);
-    ds!(let (one * b) = expr, hc);
+    ds!(let (one * a) = expr, hc);
+    ds!(let (a1 => term1) = a_nf.prop(hc), hc);
     assert!(hc.literal(one).is_one());
-    assert_deep_eq!(term, b, hc);
+    assert_deep_eq!(term1, term, hc);
+    assert_deep_eq!(a1, a, hc);
 }
 
 /// derive `c * b => c * b^1` if `c` is a constant
