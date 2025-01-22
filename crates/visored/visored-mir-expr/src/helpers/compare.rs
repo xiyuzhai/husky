@@ -8,10 +8,10 @@ macro_rules! assert_deep_eq {
             $crate::helpers::compare::vd_mir_expr_deep_eq($a, $b, $hc.expr_arena()),
             "{} = `{}`, {} = `{}`",
             stringify!($a),
-            $hc.show_expr_lisp($a),
+            $hc.fmt_expr($a),
             stringify!($b),
-            $hc.show_expr_lisp($b)
-        );
+            $hc.fmt_expr($b)
+        )
     };
 }
 

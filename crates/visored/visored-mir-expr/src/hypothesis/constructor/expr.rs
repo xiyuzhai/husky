@@ -1,6 +1,7 @@
 use super::*;
 use crate::{
-    expr::application::VdMirFunc, helpers::show::lisp_show_expr::VdMirExprLispShowExprBuilder,
+    expr::application::VdMirFunc,
+    helpers::show::{fmt::VdMirExprFormatter, lisp_show_expr::VdMirExprLispShowExprBuilder},
 };
 use lisp_show_expr::LispShowExpr;
 use visored_mir_opr::opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr};
@@ -55,6 +56,7 @@ macro_rules! ds {
 }
 
 pub(crate) use ds;
+use visored_opr::precedence::VdPrecedenceRange;
 use visored_signature::signature::separator::base::chaining::VdBaseChainingSeparatorSignature;
 use visored_term::term::VdTerm;
 
@@ -301,5 +303,32 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
             &self.symbol_local_defn_storage,
         );
         builder.render_expr(expr)
+    }
+
+    pub fn fmt_expr(&self, expr: VdMirExprIdx) -> String {
+        struct DisplayExpr<'a, 'db, Src> {
+            constructor: &'a VdMirHypothesisConstructor<'db, Src>,
+            expr: VdMirExprIdx,
+        }
+
+        impl<'a, 'db, Src> std::fmt::Display for DisplayExpr<'a, 'db, Src> {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                let formatter = VdMirExprFormatter::new(
+                    self.constructor.db,
+                    self.constructor.expr_arena.as_arena_ref(),
+                    self.constructor.stmt_arena.as_arena_ref(),
+                    &self.constructor.symbol_local_defn_storage,
+                );
+                formatter.show_fmt_expr(self.expr, VdPrecedenceRange::ANY, f)
+            }
+        }
+
+        format!(
+            "{}",
+            DisplayExpr {
+                constructor: self,
+                expr
+            }
+        )
     }
 }

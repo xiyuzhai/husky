@@ -217,13 +217,33 @@ fn merge_product_construction<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
     let ropd_stem = product_stem(ropd);
-    match lopd.term() {
-        VdBsqTerm::Litnum(lopd_term) => VdMirTermDerivationConstruction::Reflection,
-        VdBsqTerm::Comnum(lopd_term) => match lopd_term {
-            VdBsqComnumTerm::Atom(lopd) => VdMirTermDerivationConstruction::AtomAddProduct {
-                comparison: VdBsqProductStem::Atom(lopd).cmp(&ropd_stem),
-            },
-            VdBsqComnumTerm::Sum(sum) => match sum.monomials().last().unwrap().0.cmp(&ropd_stem) {
+    match lopd.data() {
+        VdBsqExprData::Literal(literal) => {
+            assert!(!literal.is_zero());
+            VdMirTermDerivationConstruction::Reflection
+        }
+        VdBsqExprData::Variable(..) => {
+            let lopd_stem: VdBsqProductStem = match lopd.term() {
+                VdBsqTerm::Litnum(lopd) => unreachable!(),
+                VdBsqTerm::Comnum(lopd) => match lopd {
+                    VdBsqComnumTerm::Atom(lopd) => lopd.into(),
+                    VdBsqComnumTerm::Sum(lopd) => unreachable!(),
+                    VdBsqComnumTerm::Product(lopd) => unreachable!(),
+                },
+                VdBsqTerm::Prop(lopd) => todo!(),
+                VdBsqTerm::Set(lopd) => todo!(),
+            };
+            VdMirTermDerivationConstruction::AtomAddProduct {
+                comparison: lopd_stem.cmp(&ropd_stem),
+            }
+        }
+        VdBsqExprData::Application {
+            function,
+            arguments,
+        } => todo!(),
+        VdBsqExprData::FoldingSeparatedList { leader, followers } => {
+            let last_follower = followers.last().unwrap().1;
+            match product_stem(last_follower).cmp(&ropd_stem) {
                 std::cmp::Ordering::Less => VdMirTermDerivationConstruction::Reflection,
                 std::cmp::Ordering::Equal => todo!(),
                 std::cmp::Ordering::Greater => {
@@ -234,11 +254,14 @@ fn merge_product_construction<'db, 'sess>(
                         a_add_c_nf: merge(a, c, elr, hc).derivation(),
                     }
                 }
-            },
-            VdBsqComnumTerm::Product(vd_bsq_product_term) => todo!(),
-        },
-        VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),
-        VdBsqTerm::Set(vd_bsq_set_term) => todo!(),
+            }
+        }
+        VdBsqExprData::ChainingSeparatedList {
+            leader,
+            followers,
+            joined_signature,
+        } => todo!(),
+        VdBsqExprData::ItemPath(vd_item_path) => todo!(),
     }
 }
 
