@@ -62,8 +62,6 @@ pub enum VdMirTermDerivationConstruction {
     OneMulNormalized,
     /// derive `c * b => c * b^1` if `c` is a litnum
     NonOneLiteralMulAtom,
-    /// derive `c * b => c * b` if `c` is a litnum and `b` is an exponential
-    NonOneLiteralMulExponential,
     /// derive `c + a => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
     NonZeroLiteralAddAtom,
     /// derive `c + 0 => c`
@@ -78,8 +76,11 @@ pub enum VdMirTermDerivationConstruction {
     Sqrt {
         radicand_nf: VdMirTermDerivationIdx,
     },
+    /// derive `(a * b) * c => term` from `a * b => lterm` and `lterm * c => term`
     MulAssoc {
         rsignature: VdBaseFoldingSeparatorSignature,
+        merge_rlopd_nf: VdMirTermDerivationIdx,
+        merge_rropd_nf: VdMirTermDerivationIdx,
     },
     NonReducedPower {
         base: VdMirTermDerivationIdx,
@@ -181,15 +182,15 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                 check_sqrt(prop, radicand_nf, hc)
             }
-            VdMirTermDerivationConstruction::MulAssoc { rsignature } => {
-                todo!()
-                // check_mul_assoc(prop, rsignature, hc)
-            }
+            VdMirTermDerivationConstruction::MulAssoc {
+                rsignature,
+                merge_rlopd_nf,
+                merge_rropd_nf,
+            } => check_mul_assoc(prop, rsignature, merge_rlopd_nf, merge_rropd_nf, hc),
             VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => {
                 check_non_reduced_power(prop, base, exponent, hc)
             }
             VdMirTermDerivationConstruction::PowerOne { base } => check_power_one(prop, base, hc),
-            VdMirTermDerivationConstruction::NonOneLiteralMulExponential => todo!(),
         }
     }
 }

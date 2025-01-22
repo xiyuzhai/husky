@@ -69,11 +69,11 @@ fn merge_construction<'db, 'sess>(
             let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
             let merge_rlopd_nf = merge(lopd, rlopd, elr, hc);
             let merge_rropd_nf = merge(merge_rlopd_nf.expr(), rropd, elr, hc);
-            // let assoc = elr.mk_mul(elr.mk_mul(lopd, rlopd, hc), rropd, hc);
-            use husky_print_utils::*;
-            p!(lopd, rlopd, rropd, merge_rlopd_nf, merge_rropd_nf);
-            todo!();
-            VdMirTermDerivationConstruction::MulAssoc { rsignature }
+            VdMirTermDerivationConstruction::MulAssoc {
+                rsignature,
+                merge_rlopd_nf: merge_rlopd_nf.derivation(),
+                merge_rropd_nf: merge_rropd_nf.derivation(),
+            }
         }
         VdBsqExprData::ItemPath(vd_item_path) => todo!(),
         VdBsqExprData::Application {
@@ -125,7 +125,7 @@ fn merge_exponential_construction<'db, 'sess>(
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
-            VdMirTermDerivationConstruction::NonOneLiteralMulExponential
+            VdMirTermDerivationConstruction::Reflection
         }
         _ => todo!(),
     }

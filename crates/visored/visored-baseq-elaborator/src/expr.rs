@@ -116,6 +116,11 @@ impl<'sess> VdBsqExpr<'sess> {
                                 write!(f, "{}", superscript)?;
                                 return Ok(());
                             }
+                            VdLiteralData::Frac(ref frac) if frac.is_frac128(1, 2) => {
+                                f.write_str("√")?;
+                                arguments[0].show_fmt(VdPrecedenceRange::ATOM, f)?;
+                                return Ok(());
+                            }
                             _ => (),
                         },
                         _ => (),

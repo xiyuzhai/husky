@@ -1,3 +1,5 @@
+use visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator;
+
 use super::*;
 
 pub(super) fn check_literal_mul_literal<'db, Src>(
@@ -87,4 +89,26 @@ pub(super) fn check_atom_mul_atom<'db, Src>(
         std::cmp::Ordering::Equal => todo!(),
         std::cmp::Ordering::Greater => todo!(),
     }
+}
+
+/// derive `a * (b * c) => term` from `a * b => lterm` and `lterm * c => term`
+pub(super) fn check_mul_assoc<'db, Src>(
+    prop: VdMirExprIdx,
+    rsignature: VdBaseFoldingSeparatorSignature,
+    merge_rlopd_nf: VdMirTermDerivationIdx,
+    merge_rropd_nf: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * expr_rhs) = expr, hc);
+    ds!(let (b * c) = expr_rhs, hc);
+    ds!(let (lopd1 => lterm) = merge_rlopd_nf.prop(hc), hc);
+    ds!(let (a1 * b1) = lopd1, hc);
+    ds!(let (lhs => term1) = merge_rropd_nf.prop(hc), hc);
+    ds!(let (lterm1 * c1) = lhs, hc);
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+    assert_deep_eq!(lterm1, lterm, hc);
+    assert_deep_eq!(c1, c, hc);
+    assert_deep_eq!(term1, term, hc);
 }

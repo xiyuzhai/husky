@@ -113,10 +113,13 @@ where
                 VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                     (LnTermDerivationTheoremPath::Sqrt, self.alloc_exprs([]))
                 }
-                VdMirTermDerivationConstruction::MulAssoc { rsignature } => todo!(),
+                VdMirTermDerivationConstruction::MulAssoc {
+                    rsignature,
+                    merge_rlopd_nf,
+                    merge_rropd_nf,
+                } => todo!(),
                 VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => todo!(),
                 VdMirTermDerivationConstruction::PowerOne { base } => todo!(),
-                VdMirTermDerivationConstruction::NonOneLiteralMulExponential => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(
