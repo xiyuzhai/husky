@@ -48,7 +48,6 @@ pub enum VdMirTermDerivationConstruction {
     AdditionIdentity,
     AdditionInverse,
     AdditionDistributivity,
-    NegLiteral,
     /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
     AtomAddSwap,
     LiteralMulLiteral,
@@ -88,6 +87,10 @@ pub enum VdMirTermDerivationConstruction {
     },
     PowerOne {
         base: VdMirTermDerivationIdx,
+    },
+    /// derive `-a => term` from `(-1) * a => term`
+    NegEqsMinusOneMul {
+        minus_one_mul_a_nf: VdMirTermDerivationIdx,
     },
 }
 
@@ -153,7 +156,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AdditionIdentity => todo!(),
             VdMirTermDerivationConstruction::AdditionInverse => todo!(),
             VdMirTermDerivationConstruction::AdditionDistributivity => todo!(),
-            VdMirTermDerivationConstruction::NegLiteral => check_neg_literal(prop, hc),
+            VdMirTermDerivationConstruction::NegEqsMinusOneMul { minus_one_mul_a_nf } => {
+                check_neg_eqs_minus_one_mul(prop, minus_one_mul_a_nf, hc)
+            }
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(prop, lopd, ropd, merge, hc),

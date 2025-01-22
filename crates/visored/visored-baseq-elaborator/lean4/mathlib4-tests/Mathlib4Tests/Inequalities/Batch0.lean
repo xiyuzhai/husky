@@ -195,15 +195,15 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d : x = x := term_derivation_reflection
     have d1 : 1 = 1 := term_derivation_reflection
     have d2 : x = x := term_derivation_reflection
-    have d3 : 1 = 1 := term_derivation_reflection
-    have d4 : -(1 : ℤ) = -1 := term_derivation_neg_literal
+    have d3 : (-1 : ℤ) * (1 : ℤ) = -1 := term_derivation_literal_mul
+    have d4 : -(1 : ℤ) = -1 := term_derivation_neg_eqs_minus_one_mul
     have d5 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_atom_add_swap
     have d6 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
     have d7 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
     have d8 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ≥ (0 : ℝ) := term_derivation_num_comparison
     have d9 : x = x := term_derivation_reflection
-    have d10 : 1 = 1 := term_derivation_reflection
-    have d11 : -(1 : ℤ) = -1 := term_derivation_neg_literal
+    have d10 : (-1 : ℤ) * (1 : ℤ) = -1 := term_derivation_literal_mul
+    have d11 : -(1 : ℤ) = -1 := term_derivation_neg_eqs_minus_one_mul
     have d12 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_atom_add_swap
     have d13 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
     have d14 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
@@ -212,8 +212,8 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d17 : (1 : ℝ) * x = x := term_derivation_one_mul_atom
     have d18 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_non_zero_literal_add_atom
     have d19 : (-1 : ℝ) + (1 : ℝ) * x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
-    have d20 : 0 = 0 := term_derivation_reflection
-    have d21 : -(0 : ℤ) = 0 := term_derivation_neg_literal
+    have d20 : (-1 : ℤ) * (0 : ℤ) = 0 := term_derivation_literal_mul
+    have d21 : -(0 : ℤ) = 0 := term_derivation_neg_eqs_minus_one_mul
     have d22 : (-1 : ℝ) + (1 : ℝ) * x + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_nf_add_zero
     have d23 : (-1 : ℝ) + (1 : ℝ) * x + (-(0 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
     have d24 : (-1 : ℝ) + (1 : ℝ) * x - (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal

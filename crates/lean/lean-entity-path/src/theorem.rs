@@ -18,7 +18,7 @@ pub enum LnTermDerivationTheoremPath {
     AdditionIdentity,
     AdditionInverse,
     AdditionDistributivity,
-    NegLiteral,
+    NegEqsMinusOneMul,
     AtomAddSwap,
     LiteralMul,
     MulEq,
@@ -73,7 +73,9 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::AdditionDistributivity => {
                 "term_derivation_addition_distributivity"
             }
-            LnTermDerivationTheoremPath::NegLiteral => "term_derivation_neg_literal",
+            LnTermDerivationTheoremPath::NegEqsMinusOneMul => {
+                "term_derivation_neg_eqs_minus_one_mul"
+            }
             LnTermDerivationTheoremPath::AtomAddSwap => "term_derivation_atom_add_swap",
             LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul",
             LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq",
@@ -124,7 +126,9 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::AdditionDistributivity => {
                 "term_derivation_addition_distributivity".to_string()
             }
-            LnTermDerivationTheoremPath::NegLiteral => "term_derivation_neg_literal".to_string(),
+            LnTermDerivationTheoremPath::NegEqsMinusOneMul => {
+                "term_derivation_neg_eqs_minus_one_mul".to_string()
+            }
             LnTermDerivationTheoremPath::AtomAddSwap => "term_derivation_atom_add_swap".to_string(),
             LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul".to_string(),
             LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq".to_string(),

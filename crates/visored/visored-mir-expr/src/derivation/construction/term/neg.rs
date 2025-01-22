@@ -5,37 +5,16 @@ use visored_opr::opr::prefix::VdBasePrefixOpr;
 use visored_signature::signature::prefix_opr::VdBasePrefixOprSignature;
 use visored_term::term::literal::{VdLiteral, VdLiteralData};
 
-pub(super) fn check_neg_literal<'db, Src>(
+/// derive `-a => term` from `(-1) * a => term`
+pub(super) fn check_neg_eqs_minus_one_mul<'db, Src>(
     prop: VdMirExprIdx,
+    minus_one_mul_a_nf: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    ds!(let (expr => term) = prop, hc);
-    let VdMirExprData::Application {
-        function: VdMirFunc::NormalBasePrefixOpr(signature),
-        arguments,
-    } = *hc.expr(expr).data()
-    else {
-        unreachable!(
-            "leader is not a literal, but a `{:?}`",
-            hc.expr(expr).data()
-        )
-    };
-    assert_eq!(signature.opr(), VdMirBasePrefixOpr::RING_NEG);
-    assert_eq!(arguments.len(), 1);
-    let arg = arguments.first().unwrap();
-    let VdMirExprData::Literal(arg) = *hc.expr(arg).data() else {
-        unreachable!("arg is not a literal, but a `{:?}`", hc.expr(arg).data())
-    };
-    let VdMirExprData::Literal(term) = *hc.expr(term).data() else {
-        unreachable!(
-            "follower is not a literal, but a `{:?}`",
-            hc.expr(term).data()
-        )
-    };
-    match *arg.data() {
-        VdLiteralData::Int(ref arg) => {
-            assert_eq!(term.data(), &VdLiteralData::Int(-arg));
-        }
-        VdLiteralData::Frac(_) => todo!(),
-    }
+    ds!(let (minus_a => term) = prop, hc);
+    ds!(let (-a) = minus_a, hc);
+    ds!(let (minus_one_mul_a => term1) = minus_one_mul_a_nf.prop(hc), hc);
+    ds!(let (minus_one * a1) = minus_one_mul_a, hc);
+    assert_deep_eq!(term, term1, hc);
+    assert_deep_eq!(a1, a, hc);
 }

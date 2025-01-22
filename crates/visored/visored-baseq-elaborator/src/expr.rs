@@ -295,6 +295,17 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         )
     }
 
+    pub fn mk_i128(&self, i: i128) -> VdBsqExpr<'sess> {
+        self.mk_lit(
+            VdBsqLitnumTerm::Int128(i),
+            if i >= 0 {
+                self.ty_menu().nat
+            } else {
+                self.ty_menu().int
+            },
+        )
+    }
+
     pub(crate) fn mk_lit(&self, litnum: VdBsqLitnumTerm<'sess>, ty: VdType) -> VdBsqExpr<'sess> {
         let db = self.session().eterner_db();
         let lit = match litnum {
