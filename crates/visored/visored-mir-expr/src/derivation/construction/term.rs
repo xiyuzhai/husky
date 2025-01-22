@@ -57,6 +57,14 @@ pub enum VdMirTermDerivationConstruction {
     AtomAddProduct {
         comparison: core::cmp::Ordering,
     },
+    /// derive `a + b * x + c * x => a + (b + c) * x`
+    SumAddProductEqualKeep,
+    /// derive `a + b * x + c * x => a` if `b + c` is zero
+    SumAddProductEqualCancel,
+    /// derive `a + b + c => term + b` from `a + c => term`
+    SumAddProductGreater {
+        a_add_c_nf: VdMirTermDerivationIdx,
+    },
     LiteralMulLiteral,
     MulEq {
         lopd: VdMirTermDerivationIdx,
@@ -223,6 +231,11 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::ZeroAdd { a_nf } => check_zero_add(prop, a_nf, hc),
             VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {
                 check_add_atom(prop, add_product_nf, hc)
+            }
+            VdMirTermDerivationConstruction::SumAddProductEqualKeep => todo!(),
+            VdMirTermDerivationConstruction::SumAddProductEqualCancel => todo!(),
+            VdMirTermDerivationConstruction::SumAddProductGreater { a_add_c_nf } => {
+                check_sum_add_product_greater(prop, a_add_c_nf, hc)
             }
         }
     }

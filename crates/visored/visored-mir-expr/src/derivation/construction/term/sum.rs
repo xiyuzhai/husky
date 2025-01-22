@@ -141,3 +141,12 @@ pub(super) fn check_add_atom<'db, Src>(
     assert_deep_eq!(a1, a, hc);
     assert_deep_eq!(b1, b, hc);
 }
+
+pub(super) fn check_sum_add_product_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    a_add_c_nf: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    p!(hc.show_expr_lisp(prop));
+    todo!()
+}

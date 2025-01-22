@@ -219,11 +219,22 @@ fn merge_product_construction<'db, 'sess>(
     let ropd_stem = product_stem(ropd);
     match lopd.term() {
         VdBsqTerm::Litnum(lopd_term) => VdMirTermDerivationConstruction::Reflection,
-        VdBsqTerm::Comnum(lopd) => match lopd {
+        VdBsqTerm::Comnum(lopd_term) => match lopd_term {
             VdBsqComnumTerm::Atom(lopd) => VdMirTermDerivationConstruction::AtomAddProduct {
                 comparison: VdBsqProductStem::Atom(lopd).cmp(&ropd_stem),
             },
-            VdBsqComnumTerm::Sum(vd_bsq_sum_term) => todo!(),
+            VdBsqComnumTerm::Sum(sum) => match sum.monomials().last().unwrap().0.cmp(&ropd_stem) {
+                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::Reflection,
+                std::cmp::Ordering::Equal => todo!(),
+                std::cmp::Ordering::Greater => {
+                    let (a, _, b) = lopd
+                        .split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
+                    let c = ropd;
+                    VdMirTermDerivationConstruction::SumAddProductGreater {
+                        a_add_c_nf: merge(a, c, elr, hc).derivation(),
+                    }
+                }
+            },
             VdBsqComnumTerm::Product(vd_bsq_product_term) => todo!(),
         },
         VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),

@@ -124,6 +124,9 @@ where
                 VdMirTermDerivationConstruction::AddAtom { .. } => {
                     ((LnTermDerivationTheoremPath::AddAtom, self.alloc_exprs([])))
                 }
+                VdMirTermDerivationConstruction::SumAddProductEqualKeep => todo!(),
+                VdMirTermDerivationConstruction::SumAddProductEqualCancel => todo!(),
+                VdMirTermDerivationConstruction::SumAddProductGreater { .. } => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(
