@@ -48,8 +48,15 @@ pub enum VdMirTermDerivationConstruction {
     AdditionIdentity,
     AdditionInverse,
     AdditionDistributivity,
-    /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
-    AtomAddSwap,
+    /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a nonzero literal
+    AtomAddNonZeroLiteral,
+    /// derive `a + b => 0 + 1 * a + b` if `a` is an atom and `b` is a product with higher stem
+    /// or derive `a + b => 0 + b + 1 * a` if `a` is an atom and `b` is a product with lower stem
+    /// or derive `a + b => 0 + c * a` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
+    /// or derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
+    AtomAddProduct {
+        comparison: core::cmp::Ordering,
+    },
     LiteralMulLiteral,
     MulEq {
         lopd: VdMirTermDerivationIdx,
@@ -162,7 +169,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(prop, lopd, ropd, merge, hc),
-            VdMirTermDerivationConstruction::AtomAddSwap => check_atom_add_swap(prop, hc),
+            VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => check_atom_add_swap(prop, hc),
             VdMirTermDerivationConstruction::LiteralMulLiteral => {
                 check_literal_mul_literal(prop, hc)
             }
@@ -196,6 +203,9 @@ impl VdMirTermDerivationConstruction {
                 check_non_reduced_power(prop, base, exponent, hc)
             }
             VdMirTermDerivationConstruction::PowerOne { base } => check_power_one(prop, base, hc),
+            VdMirTermDerivationConstruction::AtomAddProduct { comparison } => {
+                check_atom_add_product(prop, comparison, hc)
+            }
         }
     }
 }

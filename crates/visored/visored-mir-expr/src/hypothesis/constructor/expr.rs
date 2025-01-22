@@ -99,13 +99,29 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                 leader,
                 ref followers,
             } => {
+                use smallvec::ToSmallVec;
+
                 for (signature, _) in followers {
                     assert_eq!(separator, signature.separator());
                 }
                 match followers.len() {
                     0 => unreachable!(),
                     1 => (leader, followers[0].1),
-                    _ => todo!(),
+                    _ => {
+                        let lopd_ty = followers[followers.len() - 2].0.expr_ty();
+                        let lopd_expected_ty = followers[followers.len() - 1].0.item_ty();
+                        let ropd = followers.last().unwrap().1;
+                        let lopd_followers = followers[..followers.len() - 1].to_smallvec();
+                        let lopd = self.mk_expr(VdMirExprEntry::new(
+                            VdMirExprData::FoldingSeparatedList {
+                                leader,
+                                followers: lopd_followers,
+                            },
+                            lopd_ty,
+                            Some(lopd_expected_ty),
+                        ));
+                        (lopd, ropd)
+                    }
                 }
             }
             _ => unreachable!("{:?}", self.expr_arena[lhs].data()),

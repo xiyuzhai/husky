@@ -66,7 +66,7 @@ where
                     LnTermDerivationTheoremPath::NegEqsMinusOneMul,
                     self.alloc_exprs([]),
                 ),
-                VdMirTermDerivationConstruction::AtomAddSwap => (
+                VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => (
                     LnTermDerivationTheoremPath::AtomAddSwap,
                     self.alloc_exprs([]),
                 ),
@@ -120,6 +120,7 @@ where
                 } => todo!(),
                 VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => todo!(),
                 VdMirTermDerivationConstruction::PowerOne { base } => todo!(),
+                VdMirTermDerivationConstruction::AtomAddProduct { comparison } => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

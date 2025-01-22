@@ -1,3 +1,8 @@
+use crate::term::{
+    comnum::{product::VdBsqProductStem, VdBsqComnumTerm},
+    VdBsqTerm,
+};
+
 use super::*;
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
@@ -88,7 +93,14 @@ fn merge_nf_add_nf_construction<'db, 'sess>(
         VdBsqExprData::FoldingSeparatedList {
             leader,
             ref followers,
-        } => todo!(),
+        } => match followers[0].0.separator() {
+            VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
+            VdMirBaseFoldingSeparator::CommRingMul => {
+                merge_nf_add_product_construction(lopd, ropd, elr, hc)
+            }
+            VdMirBaseFoldingSeparator::SetTimes => todo!(),
+            VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
+        },
         VdBsqExprData::ChainingSeparatedList {
             leader,
             ref followers,
@@ -109,7 +121,7 @@ fn merge_nf_add_nonzero_literal_construction<'db, 'sess>(
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd }
         }
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
-            VdMirTermDerivationConstruction::AtomAddSwap
+            VdMirTermDerivationConstruction::AtomAddNonZeroLiteral
         }
         VdBsqExprData::Application {
             function,
@@ -157,5 +169,28 @@ fn merge_nf_add_atom_construction<'db, 'sess>(
             joined_signature,
         } => todo!(),
         VdBsqExprData::ItemPath(vd_item_path) => todo!(),
+    }
+}
+
+fn merge_nf_add_product_construction<'db, 'sess>(
+    lopd: VdBsqExprNf<'sess>,
+    ropd: VdBsqExprNf<'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+) -> VdMirTermDerivationConstruction {
+    let VdBsqTerm::Comnum(VdBsqComnumTerm::Product(product)) = ropd.term() else {
+        unreachable!()
+    };
+    match lopd.term() {
+        VdBsqTerm::Litnum(_) => todo!(),
+        VdBsqTerm::Comnum(lopd) => match lopd {
+            VdBsqComnumTerm::Atom(lopd) => VdMirTermDerivationConstruction::AtomAddProduct {
+                comparison: VdBsqProductStem::Atom(lopd).cmp(&product.stem()),
+            },
+            VdBsqComnumTerm::Sum(vd_bsq_sum_term) => todo!(),
+            VdBsqComnumTerm::Product(vd_bsq_product_term) => todo!(),
+        },
+        VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),
+        VdBsqTerm::Set(vd_bsq_set_term) => todo!(),
     }
 }
