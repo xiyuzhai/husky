@@ -78,7 +78,6 @@ pub enum VdMirTermDerivationConstruction {
     },
     MulAssoc {
         rsignature: VdBaseFoldingSeparatorSignature,
-        assoc_nf: VdMirTermDerivationIdx,
     },
     NonReducedPower {
         base: VdMirTermDerivationIdx,
@@ -180,10 +179,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                 check_sqrt(prop, radicand_nf, hc)
             }
-            VdMirTermDerivationConstruction::MulAssoc {
-                rsignature,
-                assoc_nf,
-            } => {
+            VdMirTermDerivationConstruction::MulAssoc { rsignature } => {
                 todo!()
                 // check_mul_assoc(prop, rsignature, hc)
             }

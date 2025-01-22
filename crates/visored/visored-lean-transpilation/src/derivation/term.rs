@@ -113,10 +113,7 @@ where
                 VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                     (LnTermDerivationTheoremPath::Sqrt, self.alloc_exprs([]))
                 }
-                VdMirTermDerivationConstruction::MulAssoc {
-                    rsignature,
-                    assoc_nf,
-                } => todo!(),
+                VdMirTermDerivationConstruction::MulAssoc { rsignature } => todo!(),
                 VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => todo!(),
                 VdMirTermDerivationConstruction::PowerOne { base } => todo!(),
             };

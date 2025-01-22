@@ -56,28 +56,34 @@ fn merge_construction<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
+    println!(
+        "call `merge_construction` with lopd = {:?}, ropd = {:?}",
+        lopd, ropd
+    );
+    detonate!(1000);
+
     if let Some(construction) = try_trivial_literal_mul(lopd, ropd) {
         return construction;
     }
-    match *ropd.data() {
+    let r = match *ropd.data() {
         VdBsqExprData::Literal(literal) => merge_literal(lopd, literal, elr, hc),
         VdBsqExprData::FoldingSeparatedList { ref followers, .. }
             if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL =>
         {
             let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
-            let assoc = elr.mk_mul(elr.mk_mul(lopd, rlopd, hc), rropd, hc);
-            let assoc_nf = assoc.normalize(elr, hc);
+            let merge_rlopd_nf = merge(lopd, rlopd, elr, hc);
+            let merge_rropd_nf = merge(merge_rlopd_nf.expr(), rropd, elr, hc);
+            // let assoc = elr.mk_mul(elr.mk_mul(lopd, rlopd, hc), rropd, hc);
             use husky_print_utils::*;
-            p!(lopd, rlopd, rropd, assoc_nf);
+            p!(lopd, rlopd, rropd, merge_rlopd_nf, merge_rropd_nf);
             todo!();
-            VdMirTermDerivationConstruction::MulAssoc {
-                rsignature,
-                assoc_nf: assoc_nf.derivation(),
-            }
+            VdMirTermDerivationConstruction::MulAssoc { rsignature }
         }
         VdBsqExprData::ItemPath(vd_item_path) => todo!(),
         _ => merge_atom_construction(lopd, ropd, elr, hc),
-    }
+    };
+    println!("merge_construction returns {:?}", r);
+    r
 }
 
 fn merge_literal<'db, 'sess>(
@@ -114,6 +120,10 @@ fn merge_atom_construction<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
+    println!(
+        "call `merge_atom_construction` with lopd = {:?}, ropd = {:?}",
+        lopd, ropd
+    );
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             if literal.is_one() {

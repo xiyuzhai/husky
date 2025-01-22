@@ -36,6 +36,7 @@ pub(super) fn check_nonone_literal_mul_atom<'db, Src>(
     p!(hc.show_expr_lisp(term));
     ds!(let (c1 * b_pow_1) = term, hc);
     ds!(let (b1 ^ one) = b_pow_1, hc);
+    p!(hc.show_expr_lisp(b_pow_1), hc.show_expr_lisp(one));
     assert!(hc.literal(one).is_one());
     todo!()
 }
