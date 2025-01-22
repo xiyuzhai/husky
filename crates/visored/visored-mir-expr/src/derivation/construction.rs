@@ -3,7 +3,7 @@ pub mod term;
 
 use self::ring::VdMirRingDerivationConstruction;
 use self::term::VdMirTermDerivationConstruction;
-use super::{expr::VdMirExprIdx, hypothesis::constructor::VdMirHypothesisConstructor};
+use super::{expr::VdMirExprIdx, hypothesis::constructor::VdMirHypothesisConstructor, *};
 
 #[enum_class::from_variants]
 #[derive(Debug, PartialEq, Eq)]

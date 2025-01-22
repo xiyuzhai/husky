@@ -47,7 +47,7 @@ use visored_term::{
 };
 
 #[enum_class::from_variants]
-#[derive(Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub enum VdBsqTerm<'sess> {
     Litnum(VdBsqLitnumTerm<'sess>),
     Comnum(VdBsqComnumTerm<'sess>),
@@ -95,14 +95,6 @@ impl<'sess> VdBsqTerm<'sess> {
             VdBsqTerm::Prop(_) => None,
             VdBsqTerm::Set(_) => None,
         }
-    }
-}
-
-impl<'sess> std::fmt::Debug for VdBsqTerm<'sess> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("VdBsqTerm(`")?;
-        self.show_fmt(VdPrecedenceRange::Any, f)?;
-        f.write_str("`)")
     }
 }
 

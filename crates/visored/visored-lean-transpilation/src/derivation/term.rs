@@ -117,6 +117,8 @@ where
                     rsignature,
                     assoc_nf,
                 } => todo!(),
+                VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => todo!(),
+                VdMirTermDerivationConstruction::PowerOne { base } => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

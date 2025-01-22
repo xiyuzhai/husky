@@ -28,6 +28,7 @@ use crate::elabm::ElabM;
 use alt_maybe_result::*;
 use elaborator::VdBsqElaboratorInner;
 use eterned::db::EternerDb;
+use husky_print_utils::*;
 use hypothesis::{contradiction::VdBsqHypothesisResult, VdBsqHypothesisIdx};
 use miracle::error::MiracleAltMaybeResult;
 use visored_models::VdModels;

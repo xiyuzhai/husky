@@ -94,6 +94,14 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         }
     }
 
+    pub fn is_one(&self, idx: VdMirExprIdx) -> bool {
+        self.literal(idx).is_one()
+    }
+
+    pub fn is_zero(&self, idx: VdMirExprIdx) -> bool {
+        self.literal(idx).is_zero()
+    }
+
     pub fn stmt_arena(&self) -> VdMirStmtArenaRef {
         self.stmt_arena.as_arena_ref()
     }

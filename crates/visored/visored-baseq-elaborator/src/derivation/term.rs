@@ -4,7 +4,7 @@ mod expr_nf;
 mod neg;
 pub mod power;
 mod product;
-pub mod square_root;
+pub mod sqrt;
 mod subtraction;
 mod sum;
 

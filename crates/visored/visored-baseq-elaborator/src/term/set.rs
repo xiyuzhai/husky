@@ -3,7 +3,7 @@ use std::marker::PhantomData;
 use visored_entity_path::path::set::VdSetPath;
 
 #[enum_class::from_variants]
-#[derive(Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub enum VdBsqSetTerm<'sess> {
     Path(VdSetPath),
     Phantom(PhantomData<&'sess ()>),

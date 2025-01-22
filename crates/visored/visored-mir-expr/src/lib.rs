@@ -20,6 +20,7 @@ use self::builder::region::VdMirExprRegionBuilder;
 #[cfg(test)]
 use self::tests::*;
 use either::*;
+use husky_print_utils::*;
 use visored_models::VdModels;
 
 pub trait ToVdMir<T, Builder> {

@@ -1,11 +1,12 @@
 pub mod finish;
 pub mod neg;
+pub mod pow;
 pub mod product;
 mod sqrt;
 pub mod sub;
 pub mod sum;
 
-use self::{finish::*, neg::*, product::*, sqrt::*, sub::*, sum::*};
+use self::{finish::*, neg::*, pow::*, product::*, sqrt::*, sub::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx,
@@ -78,6 +79,13 @@ pub enum VdMirTermDerivationConstruction {
     MulAssoc {
         rsignature: VdBaseFoldingSeparatorSignature,
         assoc_nf: VdMirTermDerivationIdx,
+    },
+    NonReducedPower {
+        base: VdMirTermDerivationIdx,
+        exponent: VdMirTermDerivationIdx,
+    },
+    PowerOne {
+        base: VdMirTermDerivationIdx,
     },
 }
 
@@ -179,6 +187,10 @@ impl VdMirTermDerivationConstruction {
                 todo!()
                 // check_mul_assoc(prop, rsignature, hc)
             }
+            VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => {
+                check_non_reduced_power(prop, base, exponent, hc)
+            }
+            VdMirTermDerivationConstruction::PowerOne { base } => check_power_one(prop, base, hc),
         }
     }
 }
