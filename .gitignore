@@ -375,3 +375,5 @@ venv/
 virtualenvs
 
 .llmenvs
+
+*.json.lock
