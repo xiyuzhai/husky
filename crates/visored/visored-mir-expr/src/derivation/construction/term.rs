@@ -70,8 +70,6 @@ pub enum VdMirTermDerivationConstruction {
     },
     /// derive `c * b => c * b^1` if `c` is a litnum
     NonOneLiteralMulAtom,
-    /// derive `c + a => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
-    NonZeroLiteralAddAtom,
     /// derive `c + 0 => c`
     NfAddZero,
     NonTrivialFinish {
@@ -109,6 +107,10 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `0 + a => term` from `a => term`
     ZeroAdd {
         a_nf: VdMirTermDerivationIdx,
+    },
+    /// derive `a + b => term` from `a + 1 * b => term` if `b` is an atom
+    AddAtom {
+        add_product_nf: VdMirTermDerivationIdx,
     },
 }
 
@@ -192,9 +194,6 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => {
                 check_nonone_literal_mul_atom(prop, hc)
             }
-            VdMirTermDerivationConstruction::NonZeroLiteralAddAtom => {
-                check_nonzero_literal_add_atom(prop, hc)
-            }
             VdMirTermDerivationConstruction::NfAddZero => check_nf_add_zero(prop, hc),
             VdMirTermDerivationConstruction::NonTrivialFinish { src_nf, dst_nf } => {
                 check_non_trivial_finish(prop, src_nf, dst_nf, hc)
@@ -222,6 +221,9 @@ impl VdMirTermDerivationConstruction {
                 term_ac_add_b_nf,
             } => check_sum_nf_add_product_greater(prop, a_add_c_nf, term_ac_add_b_nf, hc),
             VdMirTermDerivationConstruction::ZeroAdd { a_nf } => check_zero_add(prop, a_nf, hc),
+            VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {
+                check_add_atom(prop, add_product_nf, hc)
+            }
         }
     }
 }
@@ -242,7 +244,7 @@ fn check_reflection<'db, Src>(prop: VdMirExprIdx, hc: &mut VdMirHypothesisConstr
             VdMirBaseRelationSeparator::Containment(_) => panic!(),
         },
     }
-    assert!(vd_mir_expr_deep_eq(lhs, rhs, hc.expr_arena()))
+    assert_deep_eq!(lhs, rhs, hc)
 }
 
 /// derive `a <nc> b => term <nc> 0` from `a - b <nc> 0 => term <nc> 0` and `a - b => term`

@@ -25,13 +25,13 @@ pub enum LnTermDerivationTheoremPath {
     AtomMulSwap,
     OneMul,
     NonOneLiteralMulAtom,
-    NonZeroLiteralAddAtom,
     NfAddZero,
     NonTrivialFinish,
     AtomMulAtomLess,
     AtomMulAtomEqual,
     AtomMulAtomGreater,
     Sqrt,
+    AddAtom,
 }
 
 impl LnTheoremPath {
@@ -84,9 +84,6 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::NonOneLiteralMulAtom => {
                 "term_derivation_non_one_literal_mul_atom"
             }
-            LnTermDerivationTheoremPath::NonZeroLiteralAddAtom => {
-                "term_derivation_non_zero_literal_add_atom"
-            }
             LnTermDerivationTheoremPath::NfAddZero => "term_derivation_nf_add_zero",
             LnTermDerivationTheoremPath::NonTrivialFinish => "term_derivation_non_trivial_finish",
             LnTermDerivationTheoremPath::AtomMulAtomLess => "term_derivation_atom_mul_atom_less",
@@ -95,6 +92,7 @@ impl LnTermDerivationTheoremPath {
                 "term_derivation_atom_mul_atom_greater"
             }
             LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt",
+            LnTermDerivationTheoremPath::AddAtom => "term_derivation_add_atom",
         }
     }
 
@@ -137,9 +135,6 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::NonOneLiteralMulAtom => {
                 "term_derivation_non_one_literal_mul_atom".to_string()
             }
-            LnTermDerivationTheoremPath::NonZeroLiteralAddAtom => {
-                "term_derivation_non_zero_literal_add_atom".to_string()
-            }
             LnTermDerivationTheoremPath::NfAddZero => "term_derivation_nf_add_zero".to_string(),
             LnTermDerivationTheoremPath::NonTrivialFinish => {
                 "term_derivation_non_trivial_finish".to_string()
@@ -154,6 +149,7 @@ impl LnTermDerivationTheoremPath {
                 "term_derivation_atom_mul_atom_greater".to_string()
             }
             LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt".to_string(),
+            LnTermDerivationTheoremPath::AddAtom => "term_derivation_add_atom".to_string(),
         }
     }
 }

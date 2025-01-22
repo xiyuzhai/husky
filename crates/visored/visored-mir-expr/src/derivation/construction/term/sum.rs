@@ -54,20 +54,6 @@ pub(super) fn check_atom_add_swap<'db, Src>(
     assert!(hc.literal(one).is_one());
 }
 
-/// derive `c + a => c + 1 * a` if `a` is an atom and `c` is a nonzero literal or summand with different stem
-pub(super) fn check_nonzero_literal_add_atom<'db, Src>(
-    prop: VdMirExprIdx,
-    hc: &mut VdMirHypothesisConstructor<'db, Src>,
-) {
-    ds!(let (expr => term) = prop, hc);
-    ds!(let (c + a) = expr, hc);
-    ds!(let (c1 + rhs_ropd) = term, hc);
-    ds!(let (one * a1) = rhs_ropd, hc);
-    assert!(hc.literal(one).is_one());
-    assert_deep_eq!(c1, c, hc);
-    assert_deep_eq!(a1, a, hc);
-}
-
 /// derive `c + 0 => c`
 pub(super) fn check_nf_add_zero<'db, Src>(
     prop: VdMirExprIdx,
@@ -137,4 +123,21 @@ pub(super) fn check_sum_nf_add_product_greater<'db, Src>(
     p!(hc.show_expr_lisp(term));
     assert_deep_eq!(term1, term, hc);
     todo!()
+}
+
+/// derive `a + b => term` from `a + 1 * b => term` if `b` is an atom
+pub(super) fn check_add_atom<'db, Src>(
+    prop: VdMirExprIdx,
+    add_product_nf: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a + b) = expr, hc);
+    ds!(let (add_product => term1) = add_product_nf.prop(hc), hc);
+    assert_deep_eq!(term1, term, hc);
+    ds!(let (a1 + one_mul_b) = add_product, hc);
+    ds!(let (one * b1) = one_mul_b, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
 }

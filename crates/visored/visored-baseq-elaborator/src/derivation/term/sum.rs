@@ -95,7 +95,9 @@ fn merge_construction<'db, 'sess>(
             }
         }
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
-            merge_atom_construction(lopd, ropd, elr, hc)
+            let ropd = elr.mk_mul(elr.mk_i128(1), ropd, hc);
+            let add_product_nf = merge(lopd, ropd, elr, hc).derivation();
+            VdMirTermDerivationConstruction::AddAtom { add_product_nf }
         }
         VdBsqExprData::Application {
             function,
@@ -151,72 +153,62 @@ fn merge_nf_add_nonzero_literal_construction<'db, 'sess>(
     }
 }
 
-fn merge_atom_construction<'db, 'sess>(
-    lopd: VdBsqExpr<'sess>,
-    ropd: VdBsqExpr<'sess>,
-    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> VdMirTermDerivationConstruction {
-    match *lopd.data() {
-        VdBsqExprData::Literal(lopd) => {
-            if lopd.is_zero() {
-                todo!()
-            } else {
-                VdMirTermDerivationConstruction::NonZeroLiteralAddAtom
-            }
-        }
-        VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
-        VdBsqExprData::Application {
-            function,
-            ref arguments,
-        } => todo!("function = `{:?}`", function),
-        VdBsqExprData::FoldingSeparatedList { ref followers, .. } => {
-            match followers[0].0.separator() {
-                VdMirBaseFoldingSeparator::CommRingAdd => {
-                    let (signature, lropd) = *followers.last().unwrap();
-                    let (a, _, b) = lopd
-                        .split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
-                    let VdBsqTerm::Comnum(VdBsqComnumTerm::Atom(ropd_term)) = ropd.term() else {
-                        unreachable!()
-                    };
-                    let c = ropd;
-                    let lropd_stem: VdBsqProductStem = match lropd.term() {
-                        VdBsqTerm::Litnum(vd_bsq_litnum_term) => todo!(),
-                        VdBsqTerm::Comnum(lropd) => match lropd {
-                            VdBsqComnumTerm::Atom(lropd) => lropd.into(),
-                            VdBsqComnumTerm::Sum(_) => todo!(),
-                            VdBsqComnumTerm::Product(lropd) => lropd.stem(),
-                        },
-                        VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),
-                        VdBsqTerm::Set(vd_bsq_set_term) => todo!(),
-                    };
-                    match lropd_stem.cmp(&VdBsqProductStem::Atom(ropd_term)) {
-                        std::cmp::Ordering::Less => todo!(),
-                        std::cmp::Ordering::Equal => todo!(),
-                        std::cmp::Ordering::Greater => {
-                            let a_add_c = merge(a, c, elr, hc);
-                            let term_ac_add_b = merge(a_add_c.expr(), b, elr, hc);
-                            todo!("reduce to the case of merge product")
-                            // VdMirTermDerivationConstruction::SumNfAddProductGreater {
-                            //     a_add_c_nf: a_add_c.derivation(),
-                            //     term_ac_add_b_nf: term_ac_add_b.derivation(),
-                            // }
-                        }
-                    }
-                }
-                VdMirBaseFoldingSeparator::CommRingMul => todo!(),
-                VdMirBaseFoldingSeparator::SetTimes => todo!(),
-                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
-            }
-        }
-        VdBsqExprData::ChainingSeparatedList {
-            leader,
-            ref followers,
-            joined_signature,
-        } => todo!(),
-        VdBsqExprData::ItemPath(vd_item_path) => todo!(),
-    }
-}
+// fn merge_atom_construction<'db, 'sess>(
+//     lopd: VdBsqExpr<'sess>,
+//     ropd: VdBsqExpr<'sess>,
+//     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+//     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+// ) -> VdMirTermDerivationConstruction {
+//     match *lopd.data() {
+//         VdBsqExprData::Literal(lopd) => {
+//             if lopd.is_zero() {
+//                 todo!()
+//             } else {
+//                 VdMirTermDerivationConstruction::NonZeroLiteralAddAtom
+//             }
+//         }
+//         VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
+//         VdBsqExprData::Application {
+//             function,
+//             ref arguments,
+//         } => todo!("function = `{:?}`", function),
+//         VdBsqExprData::FoldingSeparatedList { ref followers, .. } => {
+//             match followers[0].0.separator() {
+//                 VdMirBaseFoldingSeparator::CommRingAdd => {
+//                     let (signature, lropd) = *followers.last().unwrap();
+//                     let (a, _, b) = lopd
+//                         .split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
+//                     let VdBsqTerm::Comnum(VdBsqComnumTerm::Atom(ropd_term)) = ropd.term() else {
+//                         unreachable!()
+//                     };
+//                     let c = ropd;
+//                     match lropd_stem.cmp(&VdBsqProductStem::Atom(ropd_term)) {
+//                         std::cmp::Ordering::Less => todo!(),
+//                         std::cmp::Ordering::Equal => todo!(),
+//                         std::cmp::Ordering::Greater => {
+//                             let a_add_c = merge(a, c, elr, hc);
+//                             let term_ac_add_b = merge(a_add_c.expr(), b, elr, hc);
+//                             todo!("reduce to the case of merge product")
+//                             // VdMirTermDerivationConstruction::SumNfAddProductGreater {
+//                             //     a_add_c_nf: a_add_c.derivation(),
+//                             //     term_ac_add_b_nf: term_ac_add_b.derivation(),
+//                             // }
+//                         }
+//                     }
+//                 }
+//                 VdMirBaseFoldingSeparator::CommRingMul => todo!(),
+//                 VdMirBaseFoldingSeparator::SetTimes => todo!(),
+//                 VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
+//             }
+//         }
+//         VdBsqExprData::ChainingSeparatedList {
+//             leader,
+//             ref followers,
+//             joined_signature,
+//         } => todo!(),
+//         VdBsqExprData::ItemPath(vd_item_path) => todo!(),
+//     }
+// }
 
 fn merge_product_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
@@ -224,17 +216,28 @@ fn merge_product_construction<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
-    let VdBsqTerm::Comnum(VdBsqComnumTerm::Product(product)) = ropd.term() else {
-        unreachable!()
-    };
+    let ropd_stem = product_stem(ropd);
     match lopd.term() {
-        VdBsqTerm::Litnum(_) => todo!(),
+        VdBsqTerm::Litnum(lopd_term) => VdMirTermDerivationConstruction::Reflection,
         VdBsqTerm::Comnum(lopd) => match lopd {
             VdBsqComnumTerm::Atom(lopd) => VdMirTermDerivationConstruction::AtomAddProduct {
-                comparison: VdBsqProductStem::Atom(lopd).cmp(&product.stem()),
+                comparison: VdBsqProductStem::Atom(lopd).cmp(&ropd_stem),
             },
             VdBsqComnumTerm::Sum(vd_bsq_sum_term) => todo!(),
             VdBsqComnumTerm::Product(vd_bsq_product_term) => todo!(),
+        },
+        VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),
+        VdBsqTerm::Set(vd_bsq_set_term) => todo!(),
+    }
+}
+
+fn product_stem<'sess>(product: VdBsqExpr<'sess>) -> VdBsqProductStem<'sess> {
+    match product.term() {
+        VdBsqTerm::Litnum(vd_bsq_litnum_term) => todo!(),
+        VdBsqTerm::Comnum(lropd) => match lropd {
+            VdBsqComnumTerm::Atom(lropd) => lropd.into(),
+            VdBsqComnumTerm::Sum(_) => todo!(),
+            VdBsqComnumTerm::Product(lropd) => lropd.stem(),
         },
         VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),
         VdBsqTerm::Set(vd_bsq_set_term) => todo!(),

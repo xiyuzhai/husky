@@ -88,10 +88,6 @@ where
                     LnTermDerivationTheoremPath::NonOneLiteralMulAtom,
                     self.alloc_exprs([]),
                 ),
-                VdMirTermDerivationConstruction::NonZeroLiteralAddAtom => (
-                    LnTermDerivationTheoremPath::NonZeroLiteralAddAtom,
-                    self.alloc_exprs([]),
-                ),
                 VdMirTermDerivationConstruction::NfAddZero => {
                     (LnTermDerivationTheoremPath::NfAddZero, self.alloc_exprs([]))
                 }
@@ -125,6 +121,9 @@ where
                     term_ac_add_b_nf,
                 } => todo!(),
                 VdMirTermDerivationConstruction::ZeroAdd { .. } => todo!(),
+                VdMirTermDerivationConstruction::AddAtom { .. } => {
+                    ((LnTermDerivationTheoremPath::AddAtom, self.alloc_exprs([])))
+                }
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(
