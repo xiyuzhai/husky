@@ -159,7 +159,14 @@ impl<'sess> VdBsqComnumSumTermData<'sess> {
 
 impl<'sess> VdBsqSumTerm<'sess> {
     pub fn neg(self, db: &'sess FloaterDb) -> VdBsqSumTerm<'sess> {
-        todo!()
+        VdBsqSumTerm::new(
+            self.constant_term().neg(db),
+            self.monomials()
+                .iter()
+                .map(|&(monomial, coeff)| (monomial, coeff.neg(db)))
+                .collect(),
+            db,
+        )
     }
 
     pub fn mul128(self, rhs: i128, db: &'sess FloaterDb) -> VdBsqNumTerm<'sess> {
