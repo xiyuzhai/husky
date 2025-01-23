@@ -158,6 +158,8 @@ where
                     LnTermDerivationTheoremPath::ProductAddProductGreater,
                     self.alloc_exprs([]),
                 ),
+                VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => todo!(),
+                VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

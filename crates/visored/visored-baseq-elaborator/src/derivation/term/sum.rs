@@ -249,13 +249,16 @@ fn merge_product_construction<'db, 'sess>(
                         std::cmp::Ordering::Less => VdMirTermDerivationConstruction::Reflection,
                         std::cmp::Ordering::Equal => todo!(),
                         std::cmp::Ordering::Greater => {
-                            let (a, _, _) = lopd.split_folding_separated_list(
+                            let (a, _, b) = lopd.split_folding_separated_list(
                                 VdMirBaseFoldingSeparator::CommRingAdd,
                                 elr,
                             );
                             let c = ropd;
+                            let a_add_c_nf = merge(a, c, elr, hc);
+                            let term_ac_add_b_nf = merge(a_add_c_nf.expr(), b, elr, hc);
                             VdMirTermDerivationConstruction::SumAddProductGreater {
-                                a_add_c_nf: merge(a, c, elr, hc).derivation(),
+                                a_add_c_nf: a_add_c_nf.derivation(),
+                                term_ac_add_b_nf: term_ac_add_b_nf.derivation(),
                             }
                         }
                     }

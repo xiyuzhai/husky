@@ -128,3 +128,26 @@ pub(super) fn check_mul_assoc<'db, Src>(
     assert_deep_eq!(c1, c, hc);
     assert_deep_eq!(term1, term, hc);
 }
+
+/// derive `c * a * b => c * (a * b)` if `a` and `b` are exponentials with `a`'s base being less than `b`'s base
+pub(super) fn check_simple_product_mul_exponential_less<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (c_mul_a * b) = expr, hc);
+    ds!(let (c * a) = c_mul_a, hc);
+    ds!(let (c1 * a_mul_b) = term, hc);
+    ds!(let (a1 * b1) = a_mul_b, hc);
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+    assert_deep_eq!(c1, c, hc);
+}
+
+/// derive `c * a * b => c * (b * a)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base
+pub(super) fn check_simple_product_mul_exponential_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    todo!()
+}

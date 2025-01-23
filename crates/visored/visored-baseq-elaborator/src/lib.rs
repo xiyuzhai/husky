@@ -28,6 +28,7 @@ use crate::elabm::ElabM;
 use alt_maybe_result::*;
 use elaborator::VdBsqElaboratorInner;
 use eterned::db::EternerDb;
+use husky_control_flow_utils::require;
 use husky_debug_utils::*;
 use husky_print_utils::*;
 use hypothesis::{contradiction::VdBsqHypothesisResult, VdBsqHypothesisIdx};

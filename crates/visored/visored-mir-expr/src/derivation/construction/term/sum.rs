@@ -128,19 +128,22 @@ pub(super) fn check_add_atom<'db, Src>(
     assert_deep_eq!(b1, b, hc);
 }
 
-/// derive `a + b + c => term + b` from `a + c => term`
+/// derive `a + b + c => term` from `a + c => term_ac` and `term_ac + b => term`
 pub(super) fn check_sum_add_product_greater<'db, Src>(
     prop: VdMirExprIdx,
     a_add_c_nf: VdMirTermDerivationIdx,
+    term_ac_add_b_nf: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    ds!(let (expr => term_add_b) = prop, hc);
+    ds!(let (expr => term) = prop, hc);
     ds!(let (a_add_b + c) = expr, hc);
     ds!(let (a + b) = a_add_b, hc);
-    ds!(let (term + b1) = term_add_b, hc);
-    ds!(let (a_add_c => term1) = a_add_c_nf.prop(hc), hc);
+    ds!(let (a_add_c => term_ac) = a_add_c_nf.prop(hc), hc);
     ds!(let (a1 + c1) = a_add_c, hc);
+    ds!(let (term_ac_add_b => term1) = term_ac_add_b_nf.prop(hc), hc);
+    ds!(let (term_ac1 + b1) = term_ac_add_b, hc);
     assert_deep_eq!(term1, term, hc);
+    assert_deep_eq!(term_ac1, term_ac, hc);
     assert_deep_eq!(a1, a, hc);
     assert_deep_eq!(b1, b, hc);
     assert_deep_eq!(c1, c, hc);

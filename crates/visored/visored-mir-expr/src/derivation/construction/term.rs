@@ -64,6 +64,7 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a + b + c => term` from `a + c => term_ac` and `term_ac + b => term`
     SumAddProductGreater {
         a_add_c_nf: VdMirTermDerivationIdx,
+        term_ac_add_b_nf: VdMirTermDerivationIdx,
     },
     LiteralMulLiteral,
     MulEq {
@@ -123,6 +124,10 @@ pub enum VdMirTermDerivationConstruction {
     ProductAddProductEqualCancel,
     /// derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is greater than the stem of `b`
     ProductAddProductGreater,
+    /// derive `c * a * b => c * (a * b)` if `a` and `b` are exponentials with `a`'s base being less than `b`'s base
+    SimpleProductMulExponentialLess,
+    /// derive `c * a * b => c * (b * a)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base
+    SimpleProductMulExponentialGreater,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -227,9 +232,10 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AtomAddProduct { comparison } => {
                 check_atom_add_product(prop, comparison, hc)
             }
-            VdMirTermDerivationConstruction::SumAddProductGreater { a_add_c_nf } => {
-                check_sum_add_product_greater(prop, a_add_c_nf, hc)
-            }
+            VdMirTermDerivationConstruction::SumAddProductGreater {
+                a_add_c_nf,
+                term_ac_add_b_nf,
+            } => check_sum_add_product_greater(prop, a_add_c_nf, term_ac_add_b_nf, hc),
             VdMirTermDerivationConstruction::ZeroAdd { a_nf } => check_zero_add(prop, a_nf, hc),
             VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {
                 check_add_atom(prop, add_product_nf, hc)
@@ -241,6 +247,12 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::ProductAddProductEqualCancel => todo!(),
             VdMirTermDerivationConstruction::ProductAddProductGreater => {
                 check_product_add_product_greater(prop, hc)
+            }
+            VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => {
+                check_simple_product_mul_exponential_less(prop, hc)
+            }
+            VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => {
+                check_simple_product_mul_exponential_greater(prop, hc)
             }
         }
     }

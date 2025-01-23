@@ -1,3 +1,9 @@
+use crate::term::{
+    comnum::{product::VdBsqProductStem, VdBsqComnumTerm},
+    num::VdBsqNumTerm,
+    VdBsqTerm,
+};
+
 use super::*;
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
@@ -127,13 +133,78 @@ fn merge_exponential_construction<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
+    let ropd_base = exponential_base(ropd);
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
             p!(lopd, ropd);
             VdMirTermDerivationConstruction::Reflection
         }
-        _ => todo!(),
+        VdBsqExprData::FoldingSeparatedList {
+            leader,
+            ref followers,
+        } if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL => {
+            match leader.data() {
+                VdBsqExprData::Literal(vd_literal) => (),
+                _ => unreachable!(),
+            }
+            if is_product_simple(followers) {
+                let a_base = exponential_base(followers[0].1);
+                let b_base = exponential_base(ropd);
+                match a_base.cmp(&b_base) {
+                    core::cmp::Ordering::Less => {
+                        VdMirTermDerivationConstruction::SimpleProductMulExponentialLess
+                    }
+                    core::cmp::Ordering::Equal => todo!(),
+                    core::cmp::Ordering::Greater => {
+                        VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater
+                    }
+                }
+            } else {
+                todo!()
+            }
+        }
+        _ => {
+            p!(lopd, ropd, ropd_base);
+            todo!()
+        }
+    }
+}
+
+fn is_product_simple<'sess>(
+    followers: &[(VdBaseFoldingSeparatorSignature, VdBsqExpr<'sess>)],
+) -> bool {
+    require!(followers.len() == 1);
+    match *followers[0].1.data() {
+        VdBsqExprData::FoldingSeparatedList {
+            leader,
+            ref followers,
+        } if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL => false,
+        _ => true,
+    }
+}
+
+fn exponential_base<'sess>(expr: VdBsqExpr<'sess>) -> VdBsqNumTerm<'sess> {
+    match expr.term() {
+        VdBsqTerm::Litnum(vd_bsq_litnum_term) => todo!(),
+        VdBsqTerm::Comnum(term) => match term {
+            VdBsqComnumTerm::Atom(term) => term.into(),
+            VdBsqComnumTerm::Sum(vd_bsq_sum_term) => todo!(),
+            VdBsqComnumTerm::Product(term) => {
+                assert!(term.litnum_factor().is_one());
+                match term.stem() {
+                    VdBsqProductStem::Atom(vd_bsq_atom_term) => {
+                        todo!()
+                    }
+                    VdBsqProductStem::NonTrivial(stem) => {
+                        assert_eq!(stem.exponentials().len(), 1);
+                        stem.exponentials().data()[0].0
+                    }
+                }
+            }
+        },
+        VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),
+        VdBsqTerm::Set(vd_bsq_set_term) => todo!(),
     }
 }
 
