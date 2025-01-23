@@ -30,9 +30,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_trivial_chaining_separated_list_term_derivation_construction(
         &mut self,
-        leader: VdBsqExprNf<'sess>,
+        leader: VdBsqExprDerived<'sess>,
         signature: VdBaseChainingSeparatorSignature,
-        follower: VdBsqExprNf<'sess>,
+        follower: VdBsqExprDerived<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         match signature.separator() {
@@ -49,10 +49,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_comparison_chaining_separated_list_term_derivation_construction(
         &mut self,
-        leader: VdBsqExprNf<'sess>,
+        leader: VdBsqExprDerived<'sess>,
         signature: VdBaseChainingSeparatorSignature,
         separator: VdMirBaseComparisonSeparator,
-        follower: VdBsqExprNf<'sess>,
+        follower: VdBsqExprDerived<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         let db = self.eterner_db();
@@ -67,10 +67,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_num_comparison_chaining_separated_list_term_derivation_construction(
         &mut self,
-        lhs: VdBsqExprNf<'sess>,
+        lhs: VdBsqExprDerived<'sess>,
         signature: VdBaseChainingSeparatorSignature,
         separator: VdMirBaseComparisonSeparator,
-        rhs: VdBsqExprNf<'sess>,
+        rhs: VdBsqExprDerived<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
         let lhs_minus_rhs = self.mk_sub(*lhs, *rhs, hc);

@@ -26,7 +26,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         VdMirTermDerivationConstruction::MulEq {
             lopd: lopd.derivation(),
             ropd: ropd.derivation(),
-            merge: merge(lopd.expr(), ropd.expr(), self, hc).derivation(),
+            merge: merge(lopd.derived(), ropd.derived(), self, hc).derivation(),
         }
     }
 }
@@ -55,12 +55,12 @@ fn merge<'db, 'sess>(
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> VdBsqExprNf<'sess> {
+) -> VdBsqExprDerived<'sess> {
     let construction = merge_construction(lopd, ropd, elr, hc);
     let expr = elr.mk_mul(lopd, ropd, hc);
     let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
     let derivation = hc.alloc_term_derivation(prop, construction);
-    VdBsqExprNf::new(derivation, expr, elr, hc)
+    VdBsqExprDerived::new(derivation, expr, elr, hc)
 }
 
 fn merge_construction<'db, 'sess>(
@@ -79,7 +79,7 @@ fn merge_construction<'db, 'sess>(
         {
             let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
             let merge_rlopd_nf = merge(lopd, rlopd, elr, hc);
-            let merge_rropd_nf = merge(merge_rlopd_nf.expr(), rropd, elr, hc);
+            let merge_rropd_nf = merge(merge_rlopd_nf.derived(), rropd, elr, hc);
             VdMirTermDerivationConstruction::MulAssoc {
                 rsignature,
                 merge_rlopd_nf: merge_rlopd_nf.derivation(),
@@ -137,7 +137,6 @@ fn merge_exponential_construction<'db, 'sess>(
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
-            p!(lopd, ropd);
             VdMirTermDerivationConstruction::Reflection
         }
         VdBsqExprData::FoldingSeparatedList {

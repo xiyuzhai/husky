@@ -49,15 +49,14 @@ pub(super) fn check_neg_sum<'db, Src>(
     neg_b_nf: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    p!(hc.fmt_expr(prop));
     ds!(let (expr => term) = prop, hc);
     ds!(let (-a_plus_b) = expr, hc);
     ds!(let (a + b) = a_plus_b, hc);
     ds!(let (neg_a_term + neg_b_term) = term, hc);
     ds!(let (neg_a => neg_a_term1) = neg_a_nf.prop(hc), hc);
     ds!(let (neg_b => neg_b_term1) = neg_b_nf.prop(hc), hc);
-    ds!(let (-a1) = neg_a_term1, hc);
-    ds!(let (-b1) = neg_b_term1, hc);
+    ds!(let (-a1) = neg_a, hc);
+    ds!(let (-b1) = neg_b, hc);
     assert_deep_eq!(neg_a_term1, neg_a_term, hc);
     assert_deep_eq!(neg_b_term1, neg_b_term, hc);
     assert_deep_eq!(a1, a, hc);
@@ -72,11 +71,11 @@ pub(super) fn check_neg_product<'db, Src>(
     ds!(let (expr => term) = prop, hc);
     ds!(let (-c_mul_a) = expr, hc);
     ds!(let (c * a) = c_mul_a, hc);
-    ds!(let (minus_c * a1) = term, hc);
+    ds!(let (neg_c * a1) = term, hc);
     assert_deep_eq!(a1, a, hc);
     let c = hc.literal(c);
-    let minus_c = hc.literal(minus_c);
-    assert_eq!(minus_c.data(), &c.data().neg());
+    let neg_c = hc.literal(neg_c);
+    assert_eq!(neg_c.data(), &c.data().neg());
 }
 
 /// derive `-(a^b) => (-1) * a^b`

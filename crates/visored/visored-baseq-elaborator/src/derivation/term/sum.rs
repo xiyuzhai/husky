@@ -58,12 +58,12 @@ fn merge<'db, 'sess>(
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> VdBsqExprNf<'sess> {
+) -> VdBsqExprDerived<'sess> {
     let construction = merge_construction(lopd, ropd, elr, hc);
     let expr = elr.mk_add(lopd, ropd, hc);
     let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
     let derivation = hc.alloc_term_derivation(prop, construction);
-    VdBsqExprNf::new(derivation, expr, elr, hc)
+    VdBsqExprDerived::new(derivation, expr, elr, hc)
 }
 
 fn merge_construction<'db, 'sess>(
@@ -80,7 +80,7 @@ fn merge_construction<'db, 'sess>(
             if literal.is_zero() {
                 VdMirTermDerivationConstruction::NfAddZero
             } else {
-                merge_nf_add_nonzero_literal_construction(lopd, literal, elr, hc)
+                merge_nonzero_literal_construction(lopd, literal, elr, hc)
             }
         }
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
@@ -96,7 +96,10 @@ fn merge_construction<'db, 'sess>(
             leader,
             ref followers,
         } => match followers[0].0.separator() {
-            VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
+            VdMirBaseFoldingSeparator::CommRingAdd => {
+                p!(lopd, ropd);
+                todo!()
+            }
             VdMirBaseFoldingSeparator::CommRingMul => {
                 merge_product_construction(lopd, ropd, elr, hc)
             }
@@ -112,7 +115,7 @@ fn merge_construction<'db, 'sess>(
     }
 }
 
-fn merge_nf_add_nonzero_literal_construction<'db, 'sess>(
+fn merge_nonzero_literal_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdLiteral,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
@@ -244,7 +247,7 @@ fn merge_product_construction<'db, 'sess>(
                             );
                             let c = ropd;
                             let a_add_c_nf = merge(a, c, elr, hc);
-                            let term_ac_add_b_nf = merge(a_add_c_nf.expr(), b, elr, hc);
+                            let term_ac_add_b_nf = merge(a_add_c_nf.derived(), b, elr, hc);
                             VdMirTermDerivationConstruction::SumAddProductGreater {
                                 a_add_c_nf: a_add_c_nf.derivation(),
                                 term_ac_add_b_nf: term_ac_add_b_nf.derivation(),
