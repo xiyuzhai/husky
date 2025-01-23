@@ -197,30 +197,31 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d2 : x = x := term_derivation_reflection
     have d3 : (-1 : ℤ) * (1 : ℤ) = -1 := term_derivation_literal_mul
     have d4 : -(1 : ℤ) = -1 := term_derivation_neg_eqs_minus_one_mul
-    have d5 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_atom_add_swap
-    have d6 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
-    have d7 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
-    have d8 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ≥ (0 : ℝ) := term_derivation_num_comparison
+    have d5 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_atom_add_swap
+    have d6 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_add_eq
+    have d7 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_literal_add_literal
+    have d8 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := term_derivation_num_comparison
     have d9 : x = x := term_derivation_reflection
     have d10 : (-1 : ℤ) * (1 : ℤ) = -1 := term_derivation_literal_mul
     have d11 : -(1 : ℤ) = -1 := term_derivation_neg_eqs_minus_one_mul
-    have d12 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_atom_add_swap
-    have d13 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
-    have d14 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
+    have d12 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_atom_add_swap
+    have d13 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_add_eq
+    have d14 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_literal_add_literal
     have d15 : 0 = 0 := term_derivation_reflection
     have d16 : -1 = -1 := term_derivation_reflection
     have d17 : x = x := term_derivation_reflection
-    have d18 : (1 : ℝ) * x = x := term_derivation_one_mul
-    have d19 : (-1 : ℝ) + (1 : ℝ) * x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_reflection
-    have d20 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_atom
-    have d21 : (-1 : ℝ) + (1 : ℝ) * x = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
-    have d22 : (-1 : ℤ) * (0 : ℤ) = 0 := term_derivation_literal_mul
-    have d23 : -(0 : ℤ) = 0 := term_derivation_neg_eqs_minus_one_mul
-    have d24 : (-1 : ℝ) + (1 : ℝ) * x + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_nf_add_zero
-    have d25 : (-1 : ℝ) + (1 : ℝ) * x + (-(0 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_add_eq
-    have d26 : (-1 : ℝ) + (1 : ℝ) * x - (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x := term_derivation_literal_add_literal
-    have d27 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ≥ (0 : ℝ) := term_derivation_num_comparison
-    have d28 : x - (1 : ℝ) ≥ (0 : ℝ) := term_derivation_non_trivial_finish
+    have d18 : x ^ 1 = x := term_derivation_power_one
+    have d19 : (1 : ℝ) * x ^ 1 = x := term_derivation_one_mul
+    have d20 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_reflection
+    have d21 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_add_atom
+    have d22 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_add_eq
+    have d23 : (-1 : ℤ) * (0 : ℤ) = 0 := term_derivation_literal_mul
+    have d24 : -(0 : ℤ) = 0 := term_derivation_neg_eqs_minus_one_mul
+    have d25 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_nf_add_zero
+    have d26 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 + (-(0 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_add_eq
+    have d27 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 - (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_literal_add_literal
+    have d28 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := term_derivation_num_comparison
+    have d29 : x - (1 : ℝ) ≥ (0 : ℝ) := term_derivation_non_trivial_finish
     assumption
   exact ()
 end Example12

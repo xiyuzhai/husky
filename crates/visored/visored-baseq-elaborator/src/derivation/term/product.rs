@@ -130,6 +130,7 @@ fn merge_exponential_construction<'db, 'sess>(
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
+            p!(lopd, ropd);
             VdMirTermDerivationConstruction::Reflection
         }
         _ => todo!(),

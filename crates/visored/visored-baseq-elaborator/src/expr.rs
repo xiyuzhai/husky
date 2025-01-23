@@ -379,6 +379,22 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         )
     }
 
+    pub(crate) fn mk_pow(
+        &self,
+        base: VdBsqExpr<'sess>,
+        exponent: VdBsqExpr<'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExpr<'sess> {
+        let signature = hc.infer_pow_signature(base.ty(), exponent.ty());
+        self.mk_expr(
+            VdBsqExprData::Application {
+                function: VdMirFunc::Power(signature),
+                arguments: smallvec![base, exponent],
+            },
+            signature.expr_ty(),
+        )
+    }
+
     pub(crate) fn split_folding_separated_list(
         &self,
         leader: VdBsqExpr<'sess>,

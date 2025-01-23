@@ -50,9 +50,9 @@ pub enum VdMirTermDerivationConstruction {
     AdditionDistributivity,
     /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a nonzero literal
     AtomAddNonZeroLiteral,
-    /// derive `a + b => 0 + 1 * a + b` if `a` is an atom and `b` is a product with higher stem
-    /// or derive `a + b => 0 + b + 1 * a` if `a` is an atom and `b` is a product with lower stem
-    /// or derive `a + b => 0 + c * a` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
+    /// derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem
+    /// or derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
+    /// or derive `a + b => 0 + c * a^1` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
     /// or derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
     AtomAddProduct {
         comparison: core::cmp::Ordering,
@@ -114,7 +114,7 @@ pub enum VdMirTermDerivationConstruction {
     ZeroAdd {
         a_nf: VdMirTermDerivationIdx,
     },
-    /// derive `a + b => term` from `a + 1 * b => term` if `b` is an atom
+    /// derive `a + b => term` from `a + 1 * b^1 => term` if `b` is an atom
     AddAtom {
         add_product_nf: VdMirTermDerivationIdx,
     },

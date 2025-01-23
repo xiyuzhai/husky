@@ -90,6 +90,18 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         )
     }
 
+    pub fn infer_pow_signature(&self, base_ty: VdType, exponent_ty: VdType) -> VdPowerSignature {
+        match self
+            .default_global_dispatch_table
+            .power_default_dispatch(base_ty, exponent_ty)
+            .unwrap()
+        {
+            VdAttachGlobalDispatch::Normal { signature } => match signature {
+                VdAttachSignature::Power(signature) => signature,
+            },
+        }
+    }
+
     pub fn infer_base_binary_opr_signature(
         &self,
         lopd_ty: VdType,

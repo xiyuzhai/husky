@@ -350,7 +350,7 @@ impl<'db, 'sess> VdBsqProductStem<'sess> {
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         match self {
-            VdBsqProductStem::Atom(slf) => slf.expr(elr, hc),
+            VdBsqProductStem::Atom(slf) => elr.mk_pow(slf.expr(elr, hc), elr.mk_i128(1), hc),
             VdBsqProductStem::NonTrivial(slf) => slf.expr(elr, hc),
         }
     }

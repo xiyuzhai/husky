@@ -65,9 +65,9 @@ pub(super) fn check_nf_add_zero<'db, Src>(
     assert_deep_eq!(term, c, hc);
 }
 
-/// derive `a + b => 0 + 1 * a + b` if `a` is an atom and `b` is a product with higher stem
-/// or derive `a + b => 0 + b + 1 * a` if `a` is an atom and `b` is a product with lower stem
-/// or derive `a + b => 0 + c * a` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
+/// derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem
+/// or derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
+/// or derive `a + b => 0 + c * a^1` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
 /// or derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
 pub(super) fn check_atom_add_product<'db, Src>(
     prop: VdMirExprIdx,
@@ -83,7 +83,9 @@ pub(super) fn check_atom_add_product<'db, Src>(
             ds!(let (lopd + b1) = term, hc);
             ds!(let (zero + lropd) = lopd, hc);
             assert!(hc.literal(zero).is_zero());
-            ds!(let (one * a1) = lropd, hc);
+            ds!(let (one * a_pow_1) = lropd, hc);
+            assert!(hc.literal(one).is_one());
+            ds!(let (a1 ^ one) = a_pow_1, hc);
             assert!(hc.literal(one).is_one());
             assert_deep_eq!(a1, a, hc);
             assert_deep_eq!(b1, b, hc);
@@ -107,7 +109,7 @@ pub(super) fn check_zero_add<'db, Src>(
     assert_deep_eq!(a1, a, hc);
 }
 
-/// derive `a + b => term` from `a + 1 * b => term` if `b` is an atom
+/// derive `a + b => term` from `a + 1 * b^1 => term` if `b` is an atom
 pub(super) fn check_add_atom<'db, Src>(
     prop: VdMirExprIdx,
     add_product_nf: VdMirTermDerivationIdx,
@@ -117,8 +119,10 @@ pub(super) fn check_add_atom<'db, Src>(
     ds!(let (a + b) = expr, hc);
     ds!(let (add_product => term1) = add_product_nf.prop(hc), hc);
     assert_deep_eq!(term1, term, hc);
-    ds!(let (a1 + one_mul_b) = add_product, hc);
-    ds!(let (one * b1) = one_mul_b, hc);
+    ds!(let (a1 + one_mul_b_pow_1) = add_product, hc);
+    ds!(let (one * b_pow_1) = one_mul_b_pow_1, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (b1 ^ one) = b_pow_1, hc);
     assert!(hc.literal(one).is_one());
     assert_deep_eq!(a1, a, hc);
     assert_deep_eq!(b1, b, hc);
