@@ -62,7 +62,7 @@ where
                     LnTermDerivationTheoremPath::AdditionDistributivity,
                     self.alloc_exprs([]),
                 ),
-                VdMirTermDerivationConstruction::NegEqsMinusOneMul { minus_one_mul_a_nf } => (
+                VdMirTermDerivationConstruction::NegAtom { minus_one_mul_a_nf } => (
                     LnTermDerivationTheoremPath::NegEqsMinusOneMul,
                     self.alloc_exprs([]),
                 ),
