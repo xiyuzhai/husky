@@ -15,7 +15,7 @@ impl<'sess> std::ops::Deref for VdBsqExprDerived<'sess> {
 }
 
 impl<'db, 'sess> VdBsqExprDerived<'sess> {
-    pub(super) fn new(
+    pub(super) fn new_normalized(
         derivation: VdMirTermDerivationIdx,
         expr: VdBsqExpr<'sess>,
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,
@@ -27,7 +27,7 @@ impl<'db, 'sess> VdBsqExprDerived<'sess> {
         }
     }
 
-    pub(super) fn new_override(
+    pub(super) unsafe fn new(
         derivation: VdMirTermDerivationIdx,
         derived: VdBsqExpr<'sess>,
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,

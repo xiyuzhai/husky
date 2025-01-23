@@ -1,6 +1,6 @@
 pub mod chaining_separated_list;
 pub mod division;
-mod expr_nf;
+mod expr_derived;
 mod neg;
 pub mod power;
 mod product;
@@ -8,7 +8,7 @@ pub mod sqrt;
 mod subtraction;
 mod sum;
 
-use self::expr_nf::*;
+use self::expr_derived::*;
 use super::*;
 use expr::{VdBsqExpr, VdBsqExprData};
 use smallvec::*;
@@ -61,7 +61,12 @@ where
     ) -> VdBsqExprDerived<'sess> {
         let prop = self.transcribe_expr_term_derivation_prop(expr, hc);
         let construction = self.transcribe_expr_term_derivation_construction(expr, hc);
-        VdBsqExprDerived::new(hc.alloc_term_derivation(prop, construction), expr, self, hc)
+        VdBsqExprDerived::new_normalized(
+            hc.alloc_term_derivation(prop, construction),
+            expr,
+            self,
+            hc,
+        )
     }
 
     fn transcribe_expr_term_derivation_prop(

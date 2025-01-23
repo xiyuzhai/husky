@@ -53,7 +53,7 @@ fn neg_derived<'db, 'sess>(
     let prop_expr_ty = elr.ty_menu().prop;
     let prop = hc.mk_expr(VdMirExprEntry::new(prop_expr_data, prop_expr_ty, None));
     let derivation = hc.alloc_term_derivation(prop, construction);
-    VdBsqExprDerived::new_override(derivation, derived, elr, hc)
+    unsafe { VdBsqExprDerived::new(derivation, derived, elr, hc) }
 }
 
 fn neg_nf_construction_and_derived<'db, 'sess>(
