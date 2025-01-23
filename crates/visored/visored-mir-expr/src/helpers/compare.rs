@@ -16,6 +16,7 @@ macro_rules! assert_deep_eq {
 }
 
 pub(crate) use assert_deep_eq;
+use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 
 pub fn vd_mir_expr_deep_eq(a: VdMirExprIdx, b: VdMirExprIdx, arena: VdMirExprArenaRef) -> bool {
     if a == b {
@@ -51,17 +52,7 @@ pub fn vd_mir_expr_deep_eq(a: VdMirExprIdx, b: VdMirExprIdx, arena: VdMirExprAre
                 leader: b_leader,
                 followers: b_followers,
             },
-        ) => {
-            require!(vd_mir_expr_deep_eq(*a_leader, *b_leader, arena));
-            require!(a_followers.len() == b_followers.len());
-            for (&(a_sep, a_follower), &(b_sep, b_follower)) in
-                a_followers.into_iter().zip(b_followers)
-            {
-                require!(a_sep == b_sep);
-                require!(vd_mir_expr_deep_eq(a_follower, b_follower, arena));
-            }
-            true
-        }
+        ) => folding_separated_list_deep_eq(*a_leader, a_followers, *b_leader, b_followers, arena),
         (
             VdMirExprData::ChainingSeparatedList {
                 leader: a_leader,
@@ -86,4 +77,40 @@ pub fn vd_mir_expr_deep_eq(a: VdMirExprIdx, b: VdMirExprIdx, arena: VdMirExprAre
         }
         _ => false,
     }
+}
+
+fn folding_separated_list_deep_eq(
+    a_leader: VdMirExprIdx,
+    a_followers: &[(VdBaseFoldingSeparatorSignature, VdMirExprIdx)],
+    b_leader: VdMirExprIdx,
+    b_followers: &[(VdBaseFoldingSeparatorSignature, VdMirExprIdx)],
+    arena: VdMirExprArenaRef,
+) -> bool {
+    let Some(&(last_a_signature, last_a_follower)) = a_followers.last() else {
+        return if b_followers.is_empty() {
+            vd_mir_expr_deep_eq(a_leader, b_leader, arena)
+        } else {
+            require!(let &VdMirExprData::FoldingSeparatedList {
+                leader: a_leader,
+                followers: ref a_followers,
+            } = arena[a_leader].data());
+            folding_separated_list_deep_eq(a_leader, a_followers, b_leader, b_followers, arena)
+        };
+    };
+    let Some(&(last_b_signature, last_b_follower)) = b_followers.last() else {
+        require!(let &VdMirExprData::FoldingSeparatedList {
+            leader: b_leader,
+            followers: ref b_followers,
+        } = arena[b_leader].data());
+        return folding_separated_list_deep_eq(a_leader, a_followers, b_leader, b_followers, arena);
+    };
+    require!(last_a_signature == last_b_signature);
+    require!(vd_mir_expr_deep_eq(last_a_follower, last_b_follower, arena));
+    folding_separated_list_deep_eq(
+        a_leader,
+        &a_followers[..a_followers.len() - 1],
+        b_leader,
+        &b_followers[..b_followers.len() - 1],
+        arena,
+    )
 }
