@@ -33,15 +33,13 @@ pub(super) fn check_nonone_literal_mul_atom<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
+    p!(hc.fmt_expr(prop));
     ds!(let (expr => term) = prop, hc);
     ds!(let (c * b) = expr, hc);
     let c = hc.literal(c);
     assert!(!c.is_one());
-    use husky_print_utils::*;
-    p!(hc.show_expr_lisp(term));
     ds!(let (c1 * b_pow_1) = term, hc);
     ds!(let (b1 ^ one) = b_pow_1, hc);
-    p!(hc.show_expr_lisp(b_pow_1), hc.show_expr_lisp(one));
     assert!(hc.literal(one).is_one());
     todo!()
 }
