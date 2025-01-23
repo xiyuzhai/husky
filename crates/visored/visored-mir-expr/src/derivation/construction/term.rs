@@ -1,3 +1,4 @@
+mod div;
 pub mod finish;
 pub mod neg;
 pub mod pow;
@@ -6,7 +7,7 @@ mod sqrt;
 pub mod sub;
 pub mod sum;
 
-use self::{finish::*, neg::*, pow::*, product::*, sqrt::*, sub::*, sum::*};
+use self::{div::*, finish::*, neg::*, pow::*, product::*, sqrt::*, sub::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx,
@@ -146,6 +147,16 @@ pub enum VdMirTermDerivationConstruction {
     AddSum {
         a_add_b_derivation: VdMirTermDerivationIdx,
         a_add_b_derived_add_c_derivation: VdMirTermDerivationIdx,
+    },
+    /// derive `a / b => term` from `a => a_term`, `b => b_term` and `a_term / b_term => term`
+    DivEq {
+        numerator_dn: VdMirTermDerivationIdx,
+        denominator_dn: VdMirTermDerivationIdx,
+        numerator_dn_div_denominator_dn_dn: VdMirTermDerivationIdx,
+    },
+    /// derive `a / b => term` from `a * b⁻¹ => term` if `b` is a literal
+    DivLiteral {
+        a_mul_b_inv_dn: VdMirTermDerivationIdx,
     },
 }
 
@@ -292,6 +303,20 @@ impl VdMirTermDerivationConstruction {
                 a_add_b_derived_add_c_derivation,
                 hc,
             ),
+            VdMirTermDerivationConstruction::DivEq {
+                numerator_dn,
+                denominator_dn,
+                numerator_dn_div_denominator_dn_dn,
+            } => check_div_eq(
+                prop,
+                numerator_dn,
+                denominator_dn,
+                numerator_dn_div_denominator_dn_dn,
+                hc,
+            ),
+            VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => {
+                check_div_literal(prop, a_mul_b_inv_dn, hc)
+            }
         }
     }
 }

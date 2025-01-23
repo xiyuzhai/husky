@@ -124,7 +124,7 @@ impl<'sess> VdBsqAtomTerm<'sess> {
         if rhs == 1.into() {
             return Some(self.into());
         }
-        match VdBsqProductTerm::new(rhs.inverse().unwrap(), self) {
+        match VdBsqProductTerm::new(rhs.inv(db).unwrap(), self) {
             VdBsqNumTerm::Litnum(_) => unreachable!(),
             VdBsqNumTerm::Comnum(comnum) => Some(comnum),
         }

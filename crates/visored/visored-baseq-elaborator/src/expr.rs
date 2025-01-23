@@ -296,20 +296,17 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 
     pub fn mk_i128(&self, i: i128) -> VdBsqExpr<'sess> {
-        self.mk_lit(
-            VdBsqLitnumTerm::Int128(i),
-            if i >= 0 {
-                self.ty_menu().nat
-            } else {
-                self.ty_menu().int
-            },
-        )
+        self.mk_lit(VdBsqLitnumTerm::Int128(i))
     }
 
-    pub(crate) fn mk_lit(&self, litnum: VdBsqLitnumTerm<'sess>, ty: VdType) -> VdBsqExpr<'sess> {
+    pub(crate) fn mk_lit(&self, litnum: VdBsqLitnumTerm<'sess>) -> VdBsqExpr<'sess> {
         let db = self.session().eterner_db();
-        let lit = match litnum {
-            VdBsqLitnumTerm::Int128(i) => VdLiteral::new(VdLiteralData::Int(i.into()), db),
+        let ty_menu = self.ty_menu();
+        let (lit, ty) = match litnum {
+            VdBsqLitnumTerm::Int128(i) => (
+                VdLiteral::new(VdLiteralData::Int(i.into()), db),
+                if i >= 0 { ty_menu.nat } else { ty_menu.int },
+            ),
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
             VdBsqLitnumTerm::Frac128(vd_bsq_frac128) => todo!(),
         };
@@ -376,6 +373,22 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 followers: smallvec![(signature, ropd)],
             },
             signature.expr_ty(),
+        )
+    }
+
+    pub(crate) fn mk_div(
+        &self,
+        numerator: VdBsqExpr<'sess>,
+        denominator: VdBsqExpr<'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExpr<'sess> {
+        let signature = hc.infer_div_signature(numerator.ty(), denominator.ty());
+        self.mk_expr(
+            VdBsqExprData::Application {
+                function: VdMirFunc::NormalBaseBinaryOpr(signature),
+                arguments: smallvec![numerator, denominator],
+            },
+            signature.expr_ty,
         )
     }
 

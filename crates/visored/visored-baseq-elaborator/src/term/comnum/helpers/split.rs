@@ -45,7 +45,7 @@ impl<'sess> VdBsqSumTerm<'sess> {
         let coeff0 = monomials.data()[0].1;
         debug_assert!(coeff0.is_nonzero());
         let factor = f(coeff0);
-        let inv_factor = factor.inverse().expect("nonzero");
+        let inv_factor = factor.inv(db).expect("nonzero");
         let normalized_constant_term = self.constant_term().mul(inv_factor, db);
         let normalized_monomials = monomials.map_collect(|coeff| coeff.mul(inv_factor, db));
         (factor, (normalized_constant_term, normalized_monomials))

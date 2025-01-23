@@ -388,7 +388,7 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
         }
     }
 
-    pub fn inverse(self) -> Option<Self> {
+    pub fn inv(self, db: &'sess FloaterDb) -> Option<Self> {
         match self {
             VdBsqLitnumTerm::Int128(slf) => {
                 if slf == 0 {
@@ -412,27 +412,29 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
 
 #[test]
 fn vd_bsq_litnum_term_inverse_works() {
-    assert!(VdBsqLitnumTerm::Int128(0).inverse().is_none());
+    let db = &FloaterDb::default();
+    assert!(VdBsqLitnumTerm::Int128(0).inv(db).is_none());
 
     #[track_caller]
     fn t<'sess>(
+        db: &'sess FloaterDb,
         input: impl Into<VdBsqLitnumTerm<'sess>>,
         expected: impl Into<VdBsqLitnumTerm<'sess>>,
     ) {
         let litnum = input.into();
-        let inverse = litnum.inverse();
+        let inverse = litnum.inv(db);
         assert!(inverse.is_some());
         assert_eq!(inverse.unwrap(), expected.into());
     }
 
     use self::frac128::Div;
 
-    t(1, 1);
-    t(-1, -1);
-    t(Div(2, 3), Div(3, 2));
-    t(Div(-2, 3), Div(-3, 2));
-    t(5, Div(1, 5));
-    t(-5, Div(-1, 5));
+    t(db, 1, 1);
+    t(db, -1, -1);
+    t(db, Div(2, 3), Div(3, 2));
+    t(db, Div(-2, 3), Div(-3, 2));
+    t(db, 5, Div(1, 5));
+    t(db, -5, Div(-1, 5));
 }
 
 impl<'sess> VdBsqLitnumTerm<'sess> {

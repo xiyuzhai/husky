@@ -130,6 +130,12 @@ fn zfc_literal_ty(literal: VdLiteral, db: &EternerDb) -> VdType {
     }
 }
 
+impl VdLiteral {
+    pub fn inv(self, db: &EternerDb) -> Option<Self> {
+        Some(Self::new(self.data().inv()?, db))
+    }
+}
+
 impl VdLiteralData {
     pub fn add(&self, other: &Self) -> Self {
         match self {
@@ -154,6 +160,20 @@ impl VdLiteralData {
     pub fn neg(&self) -> Self {
         match self {
             VdLiteralData::Int(n) => VdLiteralData::Int(-n),
+            VdLiteralData::Frac(vd_frac) => todo!(),
+        }
+    }
+
+    pub fn div(&self, other: &Self) -> Self {
+        match self {
+            VdLiteralData::Int(n) => todo!(),
+            VdLiteralData::Frac(vd_frac) => todo!(),
+        }
+    }
+
+    pub fn inv(&self) -> Option<Self> {
+        match self {
+            VdLiteralData::Int(n) => todo!(),
             VdLiteralData::Frac(vd_frac) => todo!(),
         }
     }

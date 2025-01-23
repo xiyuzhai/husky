@@ -26,7 +26,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         VdMirTermDerivationConstruction::MulEq {
             lopd: lopd.derivation(),
             ropd: ropd.derivation(),
-            merge: merge(lopd.derived(), ropd.derived(), self, hc).derivation(),
+            merge: derive_product(lopd.derived(), ropd.derived(), self, hc).derivation(),
         }
     }
 }
@@ -50,7 +50,7 @@ fn try_trivial_construction<'db, 'sess>(
     None
 }
 
-fn merge<'db, 'sess>(
+pub fn derive_product<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
@@ -78,8 +78,8 @@ fn merge_construction<'db, 'sess>(
             if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL =>
         {
             let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
-            let merge_rlopd_nf = merge(lopd, rlopd, elr, hc);
-            let merge_rropd_nf = merge(merge_rlopd_nf.derived(), rropd, elr, hc);
+            let merge_rlopd_nf = derive_product(lopd, rlopd, elr, hc);
+            let merge_rropd_nf = derive_product(merge_rlopd_nf.derived(), rropd, elr, hc);
             VdMirTermDerivationConstruction::MulProduct {
                 rsignature,
                 merge_rlopd_nf: merge_rlopd_nf.derivation(),

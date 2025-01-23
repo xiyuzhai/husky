@@ -26,6 +26,12 @@ macro_rules! ds {
             visored_mir_opr::separator::folding::VdMirBaseFoldingSeparator::COMM_RING_MUL,
         );
     };
+    (let ($lopd: ident / $ropd: ident) = $merge: expr, $hc: expr) => {
+        let ($lopd, $ropd) = $hc.split_binary(
+            $merge,
+            visored_mir_opr::opr::binary::VdMirBaseBinaryOpr::CommFieldDiv,
+        );
+    };
     (let ($lopd: ident ** $ropd: ident) = $merge: expr, $hc: expr) => {
         let ($lopd, $ropd) = $hc.split_pow($merge);
     };

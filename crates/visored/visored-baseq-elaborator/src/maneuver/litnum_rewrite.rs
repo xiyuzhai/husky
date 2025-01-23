@@ -42,7 +42,7 @@ where
         let db = elaborator.floater_db();
         match elaborator.hc.stack().get_active_litnum_equality(expr, db) {
             Some(litnum) => {
-                let litnum = elaborator.mk_lit(litnum, expr.ty());
+                let litnum = elaborator.mk_lit(litnum);
                 Pure(litnum).eval(elaborator, heuristic)
             }
             None => rewrite_subexprs(expr, litnum_rewrite_inner).eval(elaborator, heuristic),

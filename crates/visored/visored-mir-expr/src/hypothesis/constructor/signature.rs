@@ -90,6 +90,14 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         )
     }
 
+    pub fn infer_div_signature(
+        &self,
+        numerator_ty: VdType,
+        denominator_ty: VdType,
+    ) -> VdBaseBinaryOprSignature {
+        self.infer_base_binary_opr_signature(numerator_ty, VdBaseBinaryOpr::Div, denominator_ty)
+    }
+
     pub fn infer_pow_signature(&self, base_ty: VdType, exponent_ty: VdType) -> VdPowerSignature {
         match self
             .default_global_dispatch_table

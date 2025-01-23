@@ -191,6 +191,15 @@ where
                     a_add_b_derivation,
                     a_add_b_derived_add_c_derivation,
                 } => (LnTermDerivationTheoremPath::AddSum, self.alloc_exprs([])),
+                VdMirTermDerivationConstruction::DivEq {
+                    numerator_dn,
+                    denominator_dn,
+                    numerator_dn_div_denominator_dn_dn,
+                } => (LnTermDerivationTheoremPath::DivEq, self.alloc_exprs([])),
+                VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => (
+                    LnTermDerivationTheoremPath::DivLiteral,
+                    self.alloc_exprs([]),
+                ),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(
