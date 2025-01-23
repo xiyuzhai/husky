@@ -112,21 +112,36 @@ where
                     rsignature,
                     merge_rlopd_nf,
                     merge_rropd_nf,
-                } => todo!(),
-                VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => todo!(),
-                VdMirTermDerivationConstruction::PowerOne { base } => todo!(),
-                VdMirTermDerivationConstruction::AtomAddProduct { comparison } => todo!(),
-                VdMirTermDerivationConstruction::SumNfAddProductGreater {
-                    a_add_c_nf,
-                    term_ac_add_b_nf,
-                } => todo!(),
-                VdMirTermDerivationConstruction::ZeroAdd { .. } => todo!(),
+                } => (LnTermDerivationTheoremPath::MulAssoc, self.alloc_exprs([])),
+                VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => (
+                    LnTermDerivationTheoremPath::NonReducedPower,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::PowerOne { base } => {
+                    (LnTermDerivationTheoremPath::PowerOne, self.alloc_exprs([]))
+                }
+                VdMirTermDerivationConstruction::AtomAddProduct { comparison } => (
+                    LnTermDerivationTheoremPath::AtomAddProduct,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::ZeroAdd { .. } => {
+                    (LnTermDerivationTheoremPath::ZeroAdd, self.alloc_exprs([]))
+                }
                 VdMirTermDerivationConstruction::AddAtom { .. } => {
                     ((LnTermDerivationTheoremPath::AddAtom, self.alloc_exprs([])))
                 }
-                VdMirTermDerivationConstruction::SumAddProductEqualKeep => todo!(),
-                VdMirTermDerivationConstruction::SumAddProductEqualCancel => todo!(),
-                VdMirTermDerivationConstruction::SumAddProductGreater { .. } => todo!(),
+                VdMirTermDerivationConstruction::SumAddProductEqualKeep => (
+                    LnTermDerivationTheoremPath::SumAddProductEqualKeep,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::SumAddProductEqualCancel => (
+                    LnTermDerivationTheoremPath::SumAddProductEqualCancel,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::SumAddProductGreater { .. } => (
+                    LnTermDerivationTheoremPath::SumAddProductGreater,
+                    self.alloc_exprs([]),
+                ),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

@@ -32,6 +32,14 @@ pub enum LnTermDerivationTheoremPath {
     AtomMulAtomGreater,
     Sqrt,
     AddAtom,
+    MulAssoc,
+    NonReducedPower,
+    PowerOne,
+    AtomAddProduct,
+    ZeroAdd,
+    SumAddProductEqualKeep,
+    SumAddProductEqualCancel,
+    SumAddProductGreater,
 }
 
 impl LnTheoremPath {
@@ -93,6 +101,20 @@ impl LnTermDerivationTheoremPath {
             }
             LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt",
             LnTermDerivationTheoremPath::AddAtom => "term_derivation_add_atom",
+            LnTermDerivationTheoremPath::MulAssoc => "term_derivation_mul_assoc",
+            LnTermDerivationTheoremPath::NonReducedPower => "term_derivation_non_reduced_power",
+            LnTermDerivationTheoremPath::PowerOne => "term_derivation_power_one",
+            LnTermDerivationTheoremPath::AtomAddProduct => "term_derivation_atom_add_product",
+            LnTermDerivationTheoremPath::ZeroAdd => "term_derivation_zero_add",
+            LnTermDerivationTheoremPath::SumAddProductEqualKeep => {
+                "term_derivation_sum_add_product_equal_keep"
+            }
+            LnTermDerivationTheoremPath::SumAddProductEqualCancel => {
+                "term_derivation_sum_add_product_equal_cancel"
+            }
+            LnTermDerivationTheoremPath::SumAddProductGreater => {
+                "term_derivation_sum_add_product_greater"
+            }
         }
     }
 
@@ -150,6 +172,24 @@ impl LnTermDerivationTheoremPath {
             }
             LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt".to_string(),
             LnTermDerivationTheoremPath::AddAtom => "term_derivation_add_atom".to_string(),
+            LnTermDerivationTheoremPath::MulAssoc => "term_derivation_mul_assoc".to_string(),
+            LnTermDerivationTheoremPath::NonReducedPower => {
+                "term_derivation_non_reduced_power".to_string()
+            }
+            LnTermDerivationTheoremPath::PowerOne => "term_derivation_power_one".to_string(),
+            LnTermDerivationTheoremPath::AtomAddProduct => {
+                "term_derivation_atom_add_product".to_string()
+            }
+            LnTermDerivationTheoremPath::ZeroAdd => "term_derivation_zero_add".to_string(),
+            LnTermDerivationTheoremPath::SumAddProductEqualKeep => {
+                "term_derivation_sum_add_product_equal_keep".to_string()
+            }
+            LnTermDerivationTheoremPath::SumAddProductEqualCancel => {
+                "term_derivation_sum_add_product_equal_cancel".to_string()
+            }
+            LnTermDerivationTheoremPath::SumAddProductGreater => {
+                "term_derivation_sum_add_product_greater".to_string()
+            }
         }
     }
 }

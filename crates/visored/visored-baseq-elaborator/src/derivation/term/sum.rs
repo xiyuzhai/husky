@@ -242,18 +242,30 @@ fn merge_product_construction<'db, 'sess>(
             arguments,
         } => todo!(),
         VdBsqExprData::FoldingSeparatedList { leader, followers } => {
-            let last_follower = followers.last().unwrap().1;
-            match product_stem(last_follower).cmp(&ropd_stem) {
-                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::Reflection,
-                std::cmp::Ordering::Equal => todo!(),
-                std::cmp::Ordering::Greater => {
-                    let (a, _, b) = lopd
-                        .split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
-                    let c = ropd;
-                    VdMirTermDerivationConstruction::SumAddProductGreater {
-                        a_add_c_nf: merge(a, c, elr, hc).derivation(),
+            match followers[0].0.separator() {
+                VdMirBaseFoldingSeparator::CommRingAdd => {
+                    let last_follower = followers.last().unwrap().1;
+                    match product_stem(last_follower).cmp(&ropd_stem) {
+                        std::cmp::Ordering::Less => VdMirTermDerivationConstruction::Reflection,
+                        std::cmp::Ordering::Equal => todo!(),
+                        std::cmp::Ordering::Greater => {
+                            let (a, _, _) = lopd.split_folding_separated_list(
+                                VdMirBaseFoldingSeparator::CommRingAdd,
+                                elr,
+                            );
+                            let c = ropd;
+                            VdMirTermDerivationConstruction::SumAddProductGreater {
+                                a_add_c_nf: merge(a, c, elr, hc).derivation(),
+                            }
+                        }
                     }
                 }
+                VdMirBaseFoldingSeparator::CommRingMul => {
+                    p!(lopd, ropd);
+                    todo!()
+                }
+                VdMirBaseFoldingSeparator::SetTimes => todo!(),
+                VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
             }
         }
         VdBsqExprData::ChainingSeparatedList {

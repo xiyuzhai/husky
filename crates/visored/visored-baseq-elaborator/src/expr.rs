@@ -518,6 +518,7 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
         self.split_folding_separated_list(VdMirBaseFoldingSeparator::COMM_RING_MUL, elr)
     }
 
+    #[track_caller]
     pub fn split_folding_separated_list(
         self,
         separator: VdMirBaseFoldingSeparator,
