@@ -101,7 +101,7 @@ where
                         VdSign::Minus => true,
                         VdSign::Plus | VdSign::NoSign => false,
                     },
-                    VdLiteralData::Frac(_) => todo!(),
+                    VdLiteralData::Frac(_) => false,
                 };
                 (
                     LnMirExprData::Literal(to_lean_literal(literal, self.db())),
@@ -152,7 +152,9 @@ fn to_lean_literal(literal: VdLiteral, db: &EternerDb) -> LnLiteral {
             VdSign::Minus => LnLiteralData::Int(i.to_string()),
             VdSign::Plus | VdSign::NoSign => LnLiteralData::Nat(i.to_string()),
         },
-        VdLiteralData::Frac(ref lit) => todo!(),
+        VdLiteralData::Frac(ref lit) => {
+            LnLiteralData::Frac(format!("({} : ℚ) / {}", lit.numerator(), lit.denominator()))
+        }
     };
     LnLiteral::new(data, db)
 }

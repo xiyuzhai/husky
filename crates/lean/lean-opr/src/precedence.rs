@@ -26,6 +26,7 @@ impl LnPrecedence {
     pub const NEG: Self = LnPrecedence::Neg;
     pub const ARG: Self = LnPrecedence::Arg;
     pub const ATOM: Self = LnPrecedence::Max;
+    pub const MUL_DIV: Self = LnPrecedence::MulDiv;
 }
 
 impl LnPrecedenceRange {

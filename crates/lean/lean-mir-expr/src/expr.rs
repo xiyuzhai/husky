@@ -81,6 +81,7 @@ impl LnMirExprData {
                         LnPrecedence::ATOM
                     }
                 }
+                LnLiteralData::Frac(_) => LnPrecedence::MUL_DIV,
             },
             LnMirExprData::Lambda { parameters, body } => todo!(),
             LnMirExprData::Application {

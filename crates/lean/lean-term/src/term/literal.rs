@@ -16,6 +16,8 @@ impl std::fmt::Debug for LnLiteral {
 pub enum LnLiteralData {
     Nat(String),
     Int(String),
+    /// This is not a real literal in lean, but for convenience we put it here
+    Frac(String),
 }
 
 impl LnLiteral {
@@ -42,6 +44,7 @@ impl LnLiteralData {
         match self {
             LnLiteralData::Nat(s) => s,
             LnLiteralData::Int(s) => s,
+            LnLiteralData::Frac(s) => s,
         }
     }
 }
