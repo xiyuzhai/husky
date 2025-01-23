@@ -84,6 +84,9 @@ pub enum VdMirTermDerivationConstruction {
         src_nf: VdMirTermDerivationIdx,
         dst_nf: VdMirTermDerivationIdx,
     },
+    /// derive `a * b => 1 * a^1 * b^1` if `a` and `b` are atoms with the term order of `a` being lesser than `b`
+    /// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
+    /// derive `a * a => 1 * a^2`
     AtomMulAtom {
         comparison: core::cmp::Ordering,
     },
