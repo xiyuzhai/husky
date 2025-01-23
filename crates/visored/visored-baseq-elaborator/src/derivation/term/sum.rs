@@ -267,7 +267,9 @@ fn merge_product_construction<'db, 'sess>(
                     let lopd_stem = product_stem(lopd);
                     let ropd_stem = product_stem(ropd);
                     match lopd_stem.cmp(&ropd_stem) {
-                        std::cmp::Ordering::Less => todo!(),
+                        std::cmp::Ordering::Less => {
+                            VdMirTermDerivationConstruction::ProductAddProductLess
+                        }
                         std::cmp::Ordering::Equal => todo!(),
                         std::cmp::Ordering::Greater => {
                             VdMirTermDerivationConstruction::ProductAddProductGreater

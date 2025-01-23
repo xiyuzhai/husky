@@ -149,6 +149,21 @@ pub(super) fn check_sum_add_product_greater<'db, Src>(
     assert_deep_eq!(c1, c, hc);
 }
 
+/// derive `a + b => 0 + a + b` if `a` and `b` are products and the stem of `a` is less than the stem of `b`
+pub(super) fn check_product_add_product_less<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a + b) = expr, hc);
+    ds!(let (zero_add_a + b1) = term, hc);
+    ds!(let (zero + a1) = zero_add_a, hc);
+    assert!(hc.literal(zero).is_zero());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}
+
+/// derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is greater than the stem of `b`
 pub(super) fn check_product_add_product_greater<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
