@@ -126,11 +126,14 @@ where
                 VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                     (LnTermDerivationTheoremPath::Sqrt, self.alloc_exprs([]))
                 }
-                VdMirTermDerivationConstruction::MulAssoc {
+                VdMirTermDerivationConstruction::MulProduct {
                     rsignature,
                     merge_rlopd_nf,
                     merge_rropd_nf,
-                } => (LnTermDerivationTheoremPath::MulAssoc, self.alloc_exprs([])),
+                } => (
+                    LnTermDerivationTheoremPath::MulProduct,
+                    self.alloc_exprs([]),
+                ),
                 VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => (
                     LnTermDerivationTheoremPath::NonReducedPower,
                     self.alloc_exprs([]),
@@ -176,8 +179,18 @@ where
                     LnTermDerivationTheoremPath::ProductAddProductGreater,
                     self.alloc_exprs([]),
                 ),
-                VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => todo!(),
-                VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => todo!(),
+                VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => (
+                    LnTermDerivationTheoremPath::SimpleProductMulExponentialLess,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => (
+                    LnTermDerivationTheoremPath::SimpleProductMulExponentialGreater,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::AddSum {
+                    a_add_b_derivation,
+                    a_add_b_derived_add_c_derivation,
+                } => (LnTermDerivationTheoremPath::AddSum, self.alloc_exprs([])),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

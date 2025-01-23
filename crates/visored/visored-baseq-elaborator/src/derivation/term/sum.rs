@@ -96,10 +96,7 @@ fn merge_construction<'db, 'sess>(
             leader,
             ref followers,
         } => match followers[0].0.separator() {
-            VdMirBaseFoldingSeparator::CommRingAdd => {
-                p!(lopd, ropd);
-                todo!()
-            }
+            VdMirBaseFoldingSeparator::CommRingAdd => merge_sum_construction(lopd, ropd, elr, hc),
             VdMirBaseFoldingSeparator::CommRingMul => {
                 merge_product_construction(lopd, ropd, elr, hc)
             }
@@ -291,5 +288,21 @@ fn product_stem<'sess>(product: VdBsqExpr<'sess>) -> VdBsqProductStem<'sess> {
         },
         VdBsqTerm::Prop(vd_bsq_prop_term) => todo!(),
         VdBsqTerm::Set(vd_bsq_set_term) => todo!(),
+    }
+}
+
+fn merge_sum_construction<'db, 'sess>(
+    lopd: VdBsqExpr<'sess>,
+    ropd: VdBsqExpr<'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+    hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+) -> VdMirTermDerivationConstruction {
+    let a = lopd;
+    let (b, _, c) = ropd.split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
+    let a_add_b_derived = merge(a, b, elr, hc);
+    let a_add_b_derived_add_c_derived = merge(a_add_b_derived.derived(), c, elr, hc);
+    VdMirTermDerivationConstruction::AddSum {
+        a_add_b_derivation: a_add_b_derived.derivation(),
+        a_add_b_derived_add_c_derivation: a_add_b_derived_add_c_derived.derivation(),
     }
 }

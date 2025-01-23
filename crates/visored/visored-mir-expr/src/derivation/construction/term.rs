@@ -94,8 +94,8 @@ pub enum VdMirTermDerivationConstruction {
     Sqrt {
         radicand_nf: VdMirTermDerivationIdx,
     },
-    /// derive `(a * b) * c => term` from `a * b => lterm` and `lterm * c => term`
-    MulAssoc {
+    /// derive `a * (b * c) => term` from `a * b => lterm` and `lterm * c => term`
+    MulProduct {
         rsignature: VdBaseFoldingSeparatorSignature,
         merge_rlopd_nf: VdMirTermDerivationIdx,
         merge_rropd_nf: VdMirTermDerivationIdx,
@@ -142,6 +142,11 @@ pub enum VdMirTermDerivationConstruction {
     SimpleProductMulExponentialLess,
     /// derive `c * a * b => c * (b * a)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base
     SimpleProductMulExponentialGreater,
+    /// derive `a + (b + c) => term` from `a + b => term_ab` and `term_ab + c => term`
+    AddSum {
+        a_add_b_derivation: VdMirTermDerivationIdx,
+        a_add_b_derived_add_c_derivation: VdMirTermDerivationIdx,
+    },
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -242,7 +247,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                 check_sqrt(prop, radicand_nf, hc)
             }
-            VdMirTermDerivationConstruction::MulAssoc {
+            VdMirTermDerivationConstruction::MulProduct {
                 rsignature,
                 merge_rlopd_nf,
                 merge_rropd_nf,
@@ -278,6 +283,15 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => {
                 check_simple_product_mul_exponential_greater(prop, hc)
             }
+            VdMirTermDerivationConstruction::AddSum {
+                a_add_b_derivation,
+                a_add_b_derived_add_c_derivation,
+            } => check_add_sum(
+                prop,
+                a_add_b_derivation,
+                a_add_b_derived_add_c_derivation,
+                hc,
+            ),
         }
     }
 }

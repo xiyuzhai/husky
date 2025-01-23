@@ -37,7 +37,7 @@ pub enum LnTermDerivationTheoremPath {
     AtomMulAtomGreater,
     Sqrt,
     AddAtom,
-    MulAssoc,
+    MulProduct,
     NonReducedPower,
     PowerOne,
     AtomAddProduct,
@@ -49,6 +49,9 @@ pub enum LnTermDerivationTheoremPath {
     ProductAddProductEqualKeep,
     ProductAddProductEqualCancel,
     ProductAddProductGreater,
+    SimpleProductMulExponentialLess,
+    SimpleProductMulExponentialGreater,
+    AddSum,
 }
 
 impl LnTheoremPath {
@@ -113,7 +116,7 @@ impl LnTermDerivationTheoremPath {
             }
             LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt",
             LnTermDerivationTheoremPath::AddAtom => "term_derivation_add_atom",
-            LnTermDerivationTheoremPath::MulAssoc => "term_derivation_mul_assoc",
+            LnTermDerivationTheoremPath::MulProduct => "term_derivation_mul_product",
             LnTermDerivationTheoremPath::NonReducedPower => "term_derivation_non_reduced_power",
             LnTermDerivationTheoremPath::PowerOne => "term_derivation_power_one",
             LnTermDerivationTheoremPath::AtomAddProduct => "term_derivation_atom_add_product",
@@ -139,6 +142,13 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::ProductAddProductGreater => {
                 "term_derivation_product_add_product_greater"
             }
+            LnTermDerivationTheoremPath::SimpleProductMulExponentialLess => {
+                "term_derivation_simple_product_mul_exponential_less"
+            }
+            LnTermDerivationTheoremPath::SimpleProductMulExponentialGreater => {
+                "term_derivation_simple_product_mul_exponential_greater"
+            }
+            LnTermDerivationTheoremPath::AddSum => "term_derivation_add_sum",
         }
     }
 

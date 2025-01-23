@@ -162,7 +162,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d6 : √ (x * y) = (1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_sqrt
     have d7 : 2 * 1 = 2 := term_derivation_literal_mul
     have d8 : (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_reflection
-    have d9 : (2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_assoc
+    have d9 : (2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_product
     have d10 : (2 : ℝ) * √ (x * y) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_eq
     have d11 : -((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_neg_product
     have d12 : -((2 : ℝ) * √ (x * y)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_neg_eq
@@ -198,7 +198,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d42 : ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_non_reduced_power
     have d43 : (-2 : ℤ) * (1 : ℤ) = -2 := term_derivation_literal_mul
     have d44 : (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_reflection
-    have d45 : (-2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_assoc
+    have d45 : (-2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_product
     have d46 : (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_eq
     have d47 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_reflection
     have d48 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_add_eq
@@ -220,7 +220,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d64 : √ (x * y) = (1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_sqrt
     have d65 : 2 * 1 = 2 := term_derivation_literal_mul
     have d66 : (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_reflection
-    have d67 : (2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_assoc
+    have d67 : (2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_product
     have d68 : (2 : ℝ) * √ (x * y) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_eq
     have d69 : x = x := term_derivation_reflection
     have d70 : x ^ 1 = x := term_derivation_power_one
@@ -244,7 +244,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d88 : ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_non_reduced_power
     have d89 : 2 * 1 = 2 := term_derivation_literal_mul
     have d90 : (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_reflection
-    have d91 : (2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_assoc
+    have d91 : (2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_product
     have d92 : (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_mul_eq
     have d93 : -((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_neg_product
     have d94 : -((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := term_derivation_neg_eq

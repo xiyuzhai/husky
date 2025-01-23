@@ -80,7 +80,7 @@ fn merge_construction<'db, 'sess>(
             let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
             let merge_rlopd_nf = merge(lopd, rlopd, elr, hc);
             let merge_rropd_nf = merge(merge_rlopd_nf.derived(), rropd, elr, hc);
-            VdMirTermDerivationConstruction::MulAssoc {
+            VdMirTermDerivationConstruction::MulProduct {
                 rsignature,
                 merge_rlopd_nf: merge_rlopd_nf.derivation(),
                 merge_rropd_nf: merge_rropd_nf.derivation(),
