@@ -107,12 +107,19 @@ pub enum VdMirTermDerivationConstruction {
     PowerOne {
         base: VdMirTermDerivationIdx,
     },
+    NegLiteral,
     /// derive `-a => term` from `a => a_term` and `-a_term => term`
-    NegEq,
+    NegEq {
+        opd_nf: VdMirTermDerivationIdx,
+        minus_opd_nf_nf: VdMirTermDerivationIdx,
+    },
     /// derive `-a => (-1) * a^1`
     NegAtom,
     /// derive `-(a + b) => neg_a_term + neg_b_term` from `-a => neg_a_term` and `-b => neg_b_term`
-    NegSum,
+    NegSum {
+        neg_a_nf: VdMirTermDerivationIdx,
+        neg_b_nf: VdMirTermDerivationIdx,
+    },
     /// derive `-(c * a) => (-c) * a` if `c` is a litnum
     NegProduct,
     /// derive `-(a^b) => (-1) * a^b`
@@ -199,9 +206,17 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AdditionIdentity => todo!(),
             VdMirTermDerivationConstruction::AdditionInverse => todo!(),
             VdMirTermDerivationConstruction::AdditionDistributivity => todo!(),
-            VdMirTermDerivationConstruction::NegAtom { minus_one_mul_a_nf } => {
-                check_neg_atom(prop, minus_one_mul_a_nf, hc)
+            VdMirTermDerivationConstruction::NegLiteral => check_neg_literal(prop, hc),
+            VdMirTermDerivationConstruction::NegEq {
+                opd_nf,
+                minus_opd_nf_nf,
+            } => check_neg_eq(prop, opd_nf, minus_opd_nf_nf, hc),
+            VdMirTermDerivationConstruction::NegAtom => check_neg_atom(prop, hc),
+            VdMirTermDerivationConstruction::NegSum { neg_a_nf, neg_b_nf } => {
+                check_neg_sum(prop, neg_a_nf, neg_b_nf, hc)
             }
+            VdMirTermDerivationConstruction::NegProduct => check_neg_product(prop, hc),
+            VdMirTermDerivationConstruction::NegExponential => check_neg_exponential(prop, hc),
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(prop, lopd, ropd, merge, hc),

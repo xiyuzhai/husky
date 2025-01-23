@@ -62,8 +62,26 @@ where
                     LnTermDerivationTheoremPath::AdditionDistributivity,
                     self.alloc_exprs([]),
                 ),
-                VdMirTermDerivationConstruction::NegAtom { minus_one_mul_a_nf } => (
-                    LnTermDerivationTheoremPath::NegEqsMinusOneMul,
+                VdMirTermDerivationConstruction::NegLiteral => (
+                    LnTermDerivationTheoremPath::NegLiteral,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::NegEq {
+                    opd_nf,
+                    minus_opd_nf_nf,
+                } => (LnTermDerivationTheoremPath::NegEq, self.alloc_exprs([])),
+                VdMirTermDerivationConstruction::NegAtom => {
+                    (LnTermDerivationTheoremPath::NegAtom, self.alloc_exprs([]))
+                }
+                VdMirTermDerivationConstruction::NegSum { neg_a_nf, neg_b_nf } => {
+                    (LnTermDerivationTheoremPath::NegSum, self.alloc_exprs([]))
+                }
+                VdMirTermDerivationConstruction::NegProduct => (
+                    LnTermDerivationTheoremPath::NegProduct,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::NegExponential => (
+                    LnTermDerivationTheoremPath::NegExponential,
                     self.alloc_exprs([]),
                 ),
                 VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => (

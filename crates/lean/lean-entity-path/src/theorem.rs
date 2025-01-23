@@ -18,7 +18,12 @@ pub enum LnTermDerivationTheoremPath {
     AdditionIdentity,
     AdditionInverse,
     AdditionDistributivity,
-    NegEqsMinusOneMul,
+    NegLiteral,
+    NegEq,
+    NegAtom,
+    NegSum,
+    NegProduct,
+    NegExponential,
     AtomAddSwap,
     LiteralMul,
     MulEq,
@@ -85,9 +90,12 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::AdditionDistributivity => {
                 "term_derivation_addition_distributivity"
             }
-            LnTermDerivationTheoremPath::NegEqsMinusOneMul => {
-                "term_derivation_neg_eqs_minus_one_mul"
-            }
+            LnTermDerivationTheoremPath::NegLiteral => "term_derivation_neg_literal",
+            LnTermDerivationTheoremPath::NegEq => "term_derivation_neg_eq",
+            LnTermDerivationTheoremPath::NegAtom => "term_derivation_neg_atom",
+            LnTermDerivationTheoremPath::NegSum => "term_derivation_neg_sum",
+            LnTermDerivationTheoremPath::NegProduct => "term_derivation_neg_product",
+            LnTermDerivationTheoremPath::NegExponential => "term_derivation_neg_exponential",
             LnTermDerivationTheoremPath::AtomAddSwap => "term_derivation_atom_add_swap",
             LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul",
             LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq",

@@ -150,4 +150,11 @@ impl VdLiteralData {
             VdLiteralData::Frac(vd_frac) => todo!(),
         }
     }
+
+    pub fn neg(&self) -> Self {
+        match self {
+            VdLiteralData::Int(n) => VdLiteralData::Int(-n),
+            VdLiteralData::Frac(vd_frac) => todo!(),
+        }
+    }
 }

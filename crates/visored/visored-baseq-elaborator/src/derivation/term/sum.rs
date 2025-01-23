@@ -60,17 +60,6 @@ fn merge<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprNf<'sess> {
     let construction = merge_construction(lopd, ropd, elr, hc);
-    match construction {
-        VdMirTermDerivationConstruction::LiteralAddLiteral {
-            lopd: lopd_lit,
-            ropd: ropd_lit,
-        } => {
-            use husky_print_utils::p;
-            p!(lopd, ropd, lopd_lit, ropd_lit);
-            todo!()
-        }
-        _ => (),
-    }
     let expr = elr.mk_add(lopd, ropd, hc);
     let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
     let derivation = hc.alloc_term_derivation(prop, construction);
