@@ -8,7 +8,6 @@ pub(super) fn check_non_reduced_power<'db, Src>(
 ) {
     ds!(let (expr => term) = prop, hc);
     ds!(let (base ^ exponent) = expr, hc);
-    p!(hc.show_expr_lisp(exponent), hc.show_expr_lisp(term));
     ds!(let (one * stem) = term, hc);
     assert!(hc.is_one(one));
     ds!(let (base_term ^ exponent_term) = stem, hc);
