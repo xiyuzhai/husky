@@ -40,6 +40,10 @@ pub enum LnTermDerivationTheoremPath {
     SumAddProductEqualKeep,
     SumAddProductEqualCancel,
     SumAddProductGreater,
+    ProductAddProductLess,
+    ProductAddProductEqualKeep,
+    ProductAddProductEqualCancel,
+    ProductAddProductGreater,
 }
 
 impl LnTheoremPath {
@@ -115,81 +119,22 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::SumAddProductGreater => {
                 "term_derivation_sum_add_product_greater"
             }
+            LnTermDerivationTheoremPath::ProductAddProductLess => {
+                "term_derivation_product_add_product_less"
+            }
+            LnTermDerivationTheoremPath::ProductAddProductEqualKeep => {
+                "term_derivation_product_add_product_equal_keep"
+            }
+            LnTermDerivationTheoremPath::ProductAddProductEqualCancel => {
+                "term_derivation_product_add_product_equal_cancel"
+            }
+            LnTermDerivationTheoremPath::ProductAddProductGreater => {
+                "term_derivation_product_add_product_greater"
+            }
         }
     }
 
     pub fn show(&self, db: &EternerDb) -> String {
-        match self {
-            LnTermDerivationTheoremPath::Reflection => "term_derivation_reflection".to_string(),
-            LnTermDerivationTheoremPath::NumComparison => {
-                "term_derivation_num_comparison".to_string()
-            }
-            LnTermDerivationTheoremPath::SubEqsAddNeg => {
-                "term_derivation_sub_eqs_add_neg".to_string()
-            }
-            LnTermDerivationTheoremPath::LiteralAddLiteral => {
-                "term_derivation_literal_add_literal".to_string()
-            }
-            LnTermDerivationTheoremPath::AddEq => "term_derivation_add_eq".to_string(),
-            LnTermDerivationTheoremPath::AdditionInterchange => {
-                "term_derivation_addition_interchange".to_string()
-            }
-            LnTermDerivationTheoremPath::AdditionAssociativity => {
-                "term_derivation_addition_associativity".to_string()
-            }
-            LnTermDerivationTheoremPath::AdditionIdentity => {
-                "term_derivation_addition_identity".to_string()
-            }
-            LnTermDerivationTheoremPath::AdditionInverse => {
-                "term_derivation_addition_inverse".to_string()
-            }
-            LnTermDerivationTheoremPath::AdditionDistributivity => {
-                "term_derivation_addition_distributivity".to_string()
-            }
-            LnTermDerivationTheoremPath::NegEqsMinusOneMul => {
-                "term_derivation_neg_eqs_minus_one_mul".to_string()
-            }
-            LnTermDerivationTheoremPath::AtomAddSwap => "term_derivation_atom_add_swap".to_string(),
-            LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul".to_string(),
-            LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq".to_string(),
-            LnTermDerivationTheoremPath::AtomMulSwap => "term_derivation_atom_mul_swap".to_string(),
-            LnTermDerivationTheoremPath::OneMul => "term_derivation_one_mul".to_string(),
-            LnTermDerivationTheoremPath::NonOneLiteralMulAtom => {
-                "term_derivation_non_one_literal_mul_atom".to_string()
-            }
-            LnTermDerivationTheoremPath::NfAddZero => "term_derivation_nf_add_zero".to_string(),
-            LnTermDerivationTheoremPath::NonTrivialFinish => {
-                "term_derivation_non_trivial_finish".to_string()
-            }
-            LnTermDerivationTheoremPath::AtomMulAtomLess => {
-                "term_derivation_atom_mul_atom_less".to_string()
-            }
-            LnTermDerivationTheoremPath::AtomMulAtomEqual => {
-                "term_derivation_atom_mul_atom_equal".to_string()
-            }
-            LnTermDerivationTheoremPath::AtomMulAtomGreater => {
-                "term_derivation_atom_mul_atom_greater".to_string()
-            }
-            LnTermDerivationTheoremPath::Sqrt => "term_derivation_sqrt".to_string(),
-            LnTermDerivationTheoremPath::AddAtom => "term_derivation_add_atom".to_string(),
-            LnTermDerivationTheoremPath::MulAssoc => "term_derivation_mul_assoc".to_string(),
-            LnTermDerivationTheoremPath::NonReducedPower => {
-                "term_derivation_non_reduced_power".to_string()
-            }
-            LnTermDerivationTheoremPath::PowerOne => "term_derivation_power_one".to_string(),
-            LnTermDerivationTheoremPath::AtomAddProduct => {
-                "term_derivation_atom_add_product".to_string()
-            }
-            LnTermDerivationTheoremPath::ZeroAdd => "term_derivation_zero_add".to_string(),
-            LnTermDerivationTheoremPath::SumAddProductEqualKeep => {
-                "term_derivation_sum_add_product_equal_keep".to_string()
-            }
-            LnTermDerivationTheoremPath::SumAddProductEqualCancel => {
-                "term_derivation_sum_add_product_equal_cancel".to_string()
-            }
-            LnTermDerivationTheoremPath::SumAddProductGreater => {
-                "term_derivation_sum_add_product_greater".to_string()
-            }
-        }
+        self.code().to_string()
     }
 }

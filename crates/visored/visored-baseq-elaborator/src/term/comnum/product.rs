@@ -161,9 +161,9 @@ impl<'sess> VdBsqNonTrivialProductStem<'sess> {
 
 impl<'sess> std::fmt::Debug for VdBsqNonTrivialProductStem<'sess> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("VdBsqNonTrivialProductBase")
-            .field("exponentials", self.exponentials())
-            .finish()
+        f.write_str("VdBsqNonTrivialProductStem(`")?;
+        self.show_fmt(VdPrecedenceRange::ANY, f)?;
+        f.write_str("`)")
     }
 }
 

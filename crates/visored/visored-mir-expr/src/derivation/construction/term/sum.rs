@@ -141,3 +141,16 @@ pub(super) fn check_sum_add_product_greater<'db, Src>(
     assert_deep_eq!(b1, b, hc);
     assert_deep_eq!(c1, c, hc);
 }
+
+pub(super) fn check_product_add_product_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a + b) = expr, hc);
+    ds!(let (zero_add_b + a1) = term, hc);
+    ds!(let (zero + b1) = zero_add_b, hc);
+    assert!(hc.literal(zero).is_zero());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}

@@ -142,6 +142,22 @@ where
                     LnTermDerivationTheoremPath::SumAddProductGreater,
                     self.alloc_exprs([]),
                 ),
+                VdMirTermDerivationConstruction::ProductAddProductLess => (
+                    LnTermDerivationTheoremPath::ProductAddProductLess,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::ProductAddProductEqualKeep => (
+                    LnTermDerivationTheoremPath::ProductAddProductEqualKeep,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::ProductAddProductEqualCancel => (
+                    LnTermDerivationTheoremPath::ProductAddProductEqualCancel,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::ProductAddProductGreater => (
+                    LnTermDerivationTheoremPath::ProductAddProductGreater,
+                    self.alloc_exprs([]),
+                ),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

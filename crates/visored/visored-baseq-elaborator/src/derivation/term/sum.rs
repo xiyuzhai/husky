@@ -261,8 +261,15 @@ fn merge_product_construction<'db, 'sess>(
                     }
                 }
                 VdMirBaseFoldingSeparator::CommRingMul => {
-                    p!(lopd, ropd);
-                    todo!()
+                    let lopd_stem = product_stem(lopd);
+                    let ropd_stem = product_stem(ropd);
+                    match lopd_stem.cmp(&ropd_stem) {
+                        std::cmp::Ordering::Less => todo!(),
+                        std::cmp::Ordering::Equal => todo!(),
+                        std::cmp::Ordering::Greater => {
+                            VdMirTermDerivationConstruction::ProductAddProductGreater
+                        }
+                    }
                 }
                 VdMirBaseFoldingSeparator::SetTimes => todo!(),
                 VdMirBaseFoldingSeparator::TensorOtimes => todo!(),

@@ -115,6 +115,11 @@ pub enum VdMirTermDerivationConstruction {
     AddAtom {
         add_product_nf: VdMirTermDerivationIdx,
     },
+    ProductAddProductLess,
+    ProductAddProductEqualKeep,
+    ProductAddProductEqualCancel,
+    /// derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is greater than the stem of `b`
+    ProductAddProductGreater,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -228,6 +233,12 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::SumAddProductEqualKeep => todo!(),
             VdMirTermDerivationConstruction::SumAddProductEqualCancel => todo!(),
+            VdMirTermDerivationConstruction::ProductAddProductLess => todo!(),
+            VdMirTermDerivationConstruction::ProductAddProductEqualKeep => todo!(),
+            VdMirTermDerivationConstruction::ProductAddProductEqualCancel => todo!(),
+            VdMirTermDerivationConstruction::ProductAddProductGreater => {
+                check_product_add_product_greater(prop, hc)
+            }
         }
     }
 }
