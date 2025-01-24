@@ -91,7 +91,17 @@ pub(super) fn check_atom_add_product<'db, Src>(
             assert_deep_eq!(b1, b, hc);
         }
         std::cmp::Ordering::Equal => todo!(),
-        std::cmp::Ordering::Greater => todo!(),
+        std::cmp::Ordering::Greater => {
+            ds!(let (zero_add_b + one_mul_a_pow_one) = term, hc);
+            ds!(let (zero + b1) = zero_add_b, hc);
+            assert!(hc.literal(zero).is_zero());
+            ds!(let (one * a_pow_1) = one_mul_a_pow_one, hc);
+            assert!(hc.literal(one).is_one());
+            ds!(let (a1 ^ one) = a_pow_1, hc);
+            assert!(hc.literal(one).is_one());
+            assert_deep_eq!(a1, a, hc);
+            assert_deep_eq!(b1, b, hc);
+        }
     }
 }
 
