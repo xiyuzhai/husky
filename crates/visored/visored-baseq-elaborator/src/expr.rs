@@ -427,6 +427,14 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         self.mk_pow(base, self.mk_litnum(VdBsqLitnumTerm::Int128(1)), hc)
     }
 
+    pub(crate) fn mk_inv(
+        &self,
+        expr: VdBsqExpr<'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExpr<'sess> {
+        self.mk_pow(expr, self.mk_litnum(VdBsqLitnumTerm::Int128(-1)), hc)
+    }
+
     pub(crate) fn split_folding_separated_list(
         &self,
         leader: VdBsqExpr<'sess>,

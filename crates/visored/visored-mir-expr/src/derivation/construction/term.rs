@@ -171,6 +171,9 @@ pub enum VdMirTermDerivationConstruction {
     },
     /// derive `a + b => b + a` if `b` is a product and `a` is a literal
     ProductAddLiteral,
+    DivAtom {
+        a_mul_b_inv_dn: VdMirTermDerivationIdx,
+    },
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -346,6 +349,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::ProductAddLiteral => {
                 check_product_add_literal(prop, hc)
             }
+            VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => todo!(),
         }
     }
 }
