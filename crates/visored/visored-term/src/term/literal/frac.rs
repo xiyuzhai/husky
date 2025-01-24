@@ -53,6 +53,14 @@ impl VdFrac {
         self.numerator.to_i128() == Some(numerator)
             && self.denominator.to_i128() == Some(denominator)
     }
+
+    pub fn new_bigint_inv(n: &VdInt) -> Option<Self> {
+        match n.sign() {
+            Sign::Minus => Some(VdFrac::new((-1).into(), -n)),
+            Sign::NoSign => None,
+            Sign::Plus => Some(VdFrac::new(1.into(), n.clone())),
+        }
+    }
 }
 
 impl VdFrac {

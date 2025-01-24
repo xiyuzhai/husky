@@ -183,7 +183,7 @@ impl VdLiteralData {
 
     pub fn inv(&self) -> Option<Self> {
         match self {
-            VdLiteralData::Int(n) => todo!(),
+            VdLiteralData::Int(n) => VdFrac::new_bigint_inv(n).map(VdLiteralData::Frac),
             VdLiteralData::Frac(vd_frac) => todo!(),
         }
     }
