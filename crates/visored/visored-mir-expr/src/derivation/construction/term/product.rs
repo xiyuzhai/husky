@@ -186,3 +186,16 @@ pub(super) fn check_literal_mul_sum<'db, Src>(
     assert_deep_eq!(ab_term1, ab_term, hc);
     assert_deep_eq!(ac_term1, ac_term, hc);
 }
+
+/// derive `a + b => b + a` if `b` is a product and `a` is a literal
+pub(super) fn check_product_add_literal<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    p!(hc.fmt_expr(prop));
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a + b) = expr, hc);
+    ds!(let (b1 + a1) = term, hc);
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}

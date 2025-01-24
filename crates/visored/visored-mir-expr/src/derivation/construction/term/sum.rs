@@ -207,3 +207,27 @@ pub(super) fn check_add_sum<'db, Src>(
     assert_deep_eq!(b1, b, hc);
     assert_deep_eq!(c1, c, hc);
 }
+
+/// derive `a + b + c => term` from `a + c => ac_term` and `ac_term + b => term`
+pub(super) fn check_sum_add_literal<'db, Src>(
+    prop: VdMirExprIdx,
+    a_add_c_derivation: VdMirTermDerivationIdx,
+    a_add_c_derived_add_b_derivation: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a_add_b + c) = expr, hc);
+    ds!(let (a + b) = a_add_b, hc);
+
+    ds!(let (a_add_c => ac_term) = a_add_c_derivation.prop(hc), hc);
+    ds!(let (a1 + c1) = a_add_c, hc);
+
+    ds!(let (ac_term_add_b => term1) = a_add_c_derived_add_b_derivation.prop(hc), hc);
+    ds!(let (ac_term1 + b1) = ac_term_add_b, hc);
+
+    assert_deep_eq!(term1, term, hc);
+    assert_deep_eq!(ac_term1, ac_term, hc);
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+    assert_deep_eq!(c1, c, hc);
+}

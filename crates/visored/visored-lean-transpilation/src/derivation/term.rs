@@ -207,6 +207,17 @@ where
                     LnTermDerivationTheoremPath::LiteralMulSum,
                     self.alloc_exprs([]),
                 ),
+                VdMirTermDerivationConstruction::SumAddLiteral {
+                    a_add_c_derivation,
+                    a_add_c_derived_add_b_derivation,
+                } => (
+                    LnTermDerivationTheoremPath::SumAddLiteral,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::ProductAddLiteral => (
+                    LnTermDerivationTheoremPath::ProductAddLiteral,
+                    self.alloc_exprs([]),
+                ),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

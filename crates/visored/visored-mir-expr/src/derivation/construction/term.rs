@@ -164,6 +164,13 @@ pub enum VdMirTermDerivationConstruction {
         a_mul_b_derivation: VdMirTermDerivationIdx,
         a_mul_c_derivation: VdMirTermDerivationIdx,
     },
+    /// derive `a + b + c => term` from `a + c => ac_term` and `ac_term + b => term`
+    SumAddLiteral {
+        a_add_c_derivation: VdMirTermDerivationIdx,
+        a_add_c_derived_add_b_derivation: VdMirTermDerivationIdx,
+    },
+    /// derive `a + b => b + a` if `b` is a product and `a` is a literal
+    ProductAddLiteral,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -327,6 +334,18 @@ impl VdMirTermDerivationConstruction {
                 a_mul_b_derivation,
                 a_mul_c_derivation,
             } => check_literal_mul_sum(prop, a_mul_b_derivation, a_mul_c_derivation, hc),
+            VdMirTermDerivationConstruction::SumAddLiteral {
+                a_add_c_derivation,
+                a_add_c_derived_add_b_derivation,
+            } => check_sum_add_literal(
+                prop,
+                a_add_c_derivation,
+                a_add_c_derived_add_b_derivation,
+                hc,
+            ),
+            VdMirTermDerivationConstruction::ProductAddLiteral => {
+                check_product_add_literal(prop, hc)
+            }
         }
     }
 }

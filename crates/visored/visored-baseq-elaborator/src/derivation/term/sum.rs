@@ -74,11 +74,11 @@ fn merge_construction<'db, 'sess>(
         return construction;
     }
     match *ropd.data() {
-        VdBsqExprData::Literal(literal) => {
-            if literal.is_zero() {
+        VdBsqExprData::Literal(ropd_literal) => {
+            if ropd_literal.is_zero() {
                 VdMirTermDerivationConstruction::NfAddZero
             } else {
-                merge_nonzero_literal_construction(lopd, literal, elr, hc)
+                merge_nonzero_literal_construction(lopd, ropd, ropd_literal, elr, hc)
             }
         }
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
@@ -112,14 +112,16 @@ fn merge_construction<'db, 'sess>(
 
 fn merge_nonzero_literal_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
-    ropd: VdLiteral,
+    ropd: VdBsqExpr<'sess>,
+    ropd_literal: VdLiteral,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
     match *lopd.data() {
-        VdBsqExprData::Literal(lopd) => {
-            VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd }
-        }
+        VdBsqExprData::Literal(lopd) => VdMirTermDerivationConstruction::LiteralAddLiteral {
+            lopd,
+            ropd: ropd_literal,
+        },
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
             VdMirTermDerivationConstruction::AtomAddNonZeroLiteral
         }
@@ -130,7 +132,23 @@ fn merge_nonzero_literal_construction<'db, 'sess>(
         VdBsqExprData::FoldingSeparatedList {
             leader,
             ref followers,
-        } => todo!(),
+        } => match followers[0].0.separator() {
+            VdMirBaseFoldingSeparator::CommRingAdd => {
+                let (a, _, b) = lopd.split_add(elr, hc);
+                let c = ropd;
+                let a_add_c = merge(a, c, elr, hc);
+                let a_add_c_derived_add_b = merge(a_add_c.derived(), b, elr, hc);
+                VdMirTermDerivationConstruction::SumAddLiteral {
+                    a_add_c_derivation: a_add_c.derivation(),
+                    a_add_c_derived_add_b_derivation: a_add_c_derived_add_b.derivation(),
+                }
+            }
+            VdMirBaseFoldingSeparator::CommRingMul => {
+                VdMirTermDerivationConstruction::ProductAddLiteral
+            }
+            VdMirBaseFoldingSeparator::SetTimes => todo!(),
+            VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
+        },
         VdBsqExprData::ChainingSeparatedList {
             leader,
             ref followers,
