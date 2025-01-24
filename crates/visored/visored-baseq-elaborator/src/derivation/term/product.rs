@@ -204,9 +204,27 @@ fn derive_mul_exponential<'db, 'sess>(
                 todo!()
             }
         }
+        VdBsqExprData::Application {
+            function: VdMirFunc::Power(signature),
+            ref arguments,
+        } => todo!("signature = `{:?}`", signature),
         _ => {
-            p!(lopd, ropd, ropd_base);
-            todo!()
+            assert!(matches!(
+                lopd.term(),
+                VdBsqTerm::Comnum(VdBsqComnumTerm::Atom(_))
+            ));
+            let lopd_base = exponential_base(lopd);
+            match lopd_base.cmp(&ropd_base) {
+                std::cmp::Ordering::Less => (
+                    VdMirTermDerivationConstruction::AtomMulExponentialLess,
+                    None,
+                ),
+                std::cmp::Ordering::Equal => todo!(),
+                std::cmp::Ordering::Greater => (
+                    VdMirTermDerivationConstruction::AtomMulExponentialGreater,
+                    None,
+                ),
+            }
         }
     }
 }

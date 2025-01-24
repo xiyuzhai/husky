@@ -221,6 +221,8 @@ where
                 VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => {
                     (LnTermDerivationTheoremPath::DivAtom, self.alloc_exprs([]))
                 }
+                VdMirTermDerivationConstruction::AtomMulExponentialLess => todo!(),
+                VdMirTermDerivationConstruction::AtomMulExponentialGreater => todo!(),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

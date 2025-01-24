@@ -100,6 +100,10 @@ impl VdLiteral {
         self.is_frac128(1, 2)
     }
 
+    pub fn is_neg_one(self) -> bool {
+        self.is_i128(-1)
+    }
+
     pub fn is_i128(self, i: i128) -> bool {
         match self.data() {
             VdLiteralData::Int(n) => match n.try_into() {

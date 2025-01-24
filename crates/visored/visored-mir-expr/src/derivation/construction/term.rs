@@ -171,9 +171,14 @@ pub enum VdMirTermDerivationConstruction {
     },
     /// derive `a + b => b + a` if `b` is a product and `a` is a literal
     ProductAddLiteral,
+    /// derive `a / b => term` from `a * b⁻¹ => term` if `b` is an atom
     DivAtom {
         a_mul_b_inv_dn: VdMirTermDerivationIdx,
     },
+    /// derive `a * b => 1 * (a^1 * b)`
+    AtomMulExponentialLess,
+    /// derive `a * b => 1 * (b * a^1)`
+    AtomMulExponentialGreater,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -349,7 +354,15 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::ProductAddLiteral => {
                 check_product_add_literal(prop, hc)
             }
-            VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => todo!(),
+            VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => {
+                check_div_atom(prop, a_mul_b_inv_dn, hc)
+            }
+            VdMirTermDerivationConstruction::AtomMulExponentialLess => {
+                check_atom_mul_exponential_less(prop, hc)
+            }
+            VdMirTermDerivationConstruction::AtomMulExponentialGreater => {
+                check_atom_mul_exponential_greater(prop, hc)
+            }
         }
     }
 }

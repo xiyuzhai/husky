@@ -199,3 +199,52 @@ pub(super) fn check_product_add_literal<'db, Src>(
     assert_deep_eq!(a1, a, hc);
     assert_deep_eq!(b1, b, hc);
 }
+
+/// derive `a * b => 1 * (a^1 * b)`
+pub(super) fn check_atom_mul_exponential_less<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * b) = expr, hc);
+    ds!(let (one * stem) = term, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (a_pow_one * b1) = stem, hc);
+    ds!(let (a1 ^ one) = a_pow_one, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}
+
+/// derive `a * b => 1 * (b * a^1)`
+pub(super) fn check_atom_mul_exponential_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * b) = expr, hc);
+    ds!(let (one * stem) = term, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (b1 * a_pow_one) = stem, hc);
+    ds!(let (a1 ^ one) = a_pow_one, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}
+
+/// derive `a / b => term` from `a * b⁻¹ => term` if `b` is an atom
+pub(super) fn check_div_atom<'db, Src>(
+    prop: VdMirExprIdx,
+    a_mul_b_inv_dn: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a / b) = expr, hc);
+    ds!(let (mul_expr => term1) = a_mul_b_inv_dn.prop(hc), hc);
+    ds!(let (a1 * b_inv) = mul_expr, hc);
+    ds!(let (b1 ^ neg_one) = b_inv, hc);
+    assert!(hc.literal(neg_one).is_neg_one());
+    assert_deep_eq!(term1, term, hc);
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}
