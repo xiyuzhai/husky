@@ -192,7 +192,6 @@ pub(super) fn check_product_add_literal<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    p!(hc.fmt_expr(prop));
     ds!(let (expr => term) = prop, hc);
     ds!(let (a + b) = expr, hc);
     ds!(let (b1 + a1) = term, hc);

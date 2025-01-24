@@ -106,7 +106,7 @@ fn derive_product_construction<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirTermDerivationConstruction, Option<VdBsqExpr<'sess>>) {
     match *ropd.data() {
-        VdBsqExprData::Literal(_) => derive_mul_literal_construction(lopd, ropd, elr, hc),
+        VdBsqExprData::Literal(_) => derive_mul_literal(lopd, ropd, elr, hc),
         VdBsqExprData::FoldingSeparatedList { ref followers, .. }
             if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL =>
         {
@@ -131,11 +131,11 @@ fn derive_product_construction<'db, 'sess>(
             function: VdMirFunc::Power(_),
             ref arguments,
         } => derive_mul_exponential(lopd, ropd, elr, hc),
-        _ => merge_base_construction(lopd, ropd, elr, hc),
+        _ => derive_mul_base(lopd, ropd, elr, hc),
     }
 }
 
-fn derive_mul_literal_construction<'db, 'sess>(
+fn derive_mul_literal<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
@@ -266,7 +266,7 @@ fn exponential_base<'sess>(expr: VdBsqExpr<'sess>) -> VdBsqNumTerm<'sess> {
     }
 }
 
-fn merge_base_construction<'db, 'sess>(
+fn derive_mul_base<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
@@ -306,7 +306,15 @@ fn merge_base_construction<'db, 'sess>(
         VdBsqExprData::FoldingSeparatedList {
             leader,
             ref followers,
-        } => todo!(),
+        } => match followers[0].0.separator() {
+            VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
+            VdMirBaseFoldingSeparator::CommRingMul => {
+                p!(lopd, ropd);
+                todo!()
+            }
+            VdMirBaseFoldingSeparator::SetTimes => todo!(),
+            VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
+        },
         VdBsqExprData::ChainingSeparatedList {
             leader,
             ref followers,
