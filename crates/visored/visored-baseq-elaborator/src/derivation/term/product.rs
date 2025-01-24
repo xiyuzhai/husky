@@ -102,23 +102,22 @@ fn derive_product_construction<'db, 'sess>(
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> (VdMirTermDerivationConstruction, VdBsqExpr<'sess>) {
+) -> (VdMirTermDerivationConstruction, Option<VdBsqExpr<'sess>>) {
     match *ropd.data() {
-        VdBsqExprData::Literal(literal) => derive_mul_literal_construction(lopd, literal, elr, hc),
+        VdBsqExprData::Literal(_) => derive_mul_literal_construction(lopd, ropd, elr, hc),
         VdBsqExprData::FoldingSeparatedList { ref followers, .. }
             if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL =>
         {
             let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
             let merge_rlopd_nf = derive_product_aux(lopd, rlopd, elr, hc);
             let merge_rropd_nf = derive_product_aux(merge_rlopd_nf.derived(), rropd, elr, hc);
-            let derived = todo!();
             (
                 VdMirTermDerivationConstruction::MulProduct {
                     rsignature,
                     merge_rlopd_nf: merge_rlopd_nf.derivation(),
                     merge_rropd_nf: merge_rropd_nf.derivation(),
                 },
-                derived,
+                None,
             )
         }
         VdBsqExprData::ItemPath(vd_item_path) => todo!(),
@@ -129,19 +128,21 @@ fn derive_product_construction<'db, 'sess>(
         VdBsqExprData::Application {
             function: VdMirFunc::Power(_),
             ref arguments,
-        } => merge_exponential_construction(lopd, ropd, elr, hc),
+        } => derive_mul_exponential(lopd, ropd, elr, hc),
         _ => merge_atom_construction(lopd, ropd, elr, hc),
     }
 }
 
 fn derive_mul_literal_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
-    literal: VdLiteral,
+    ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> (VdMirTermDerivationConstruction, VdBsqExpr<'sess>) {
+) -> (VdMirTermDerivationConstruction, Option<VdBsqExpr<'sess>>) {
     match *lopd.data() {
-        VdBsqExprData::Literal(leader) => todo!(),
+        VdBsqExprData::Literal(leader) => {
+            (VdMirTermDerivationConstruction::LiteralMulLiteral, None)
+        }
         VdBsqExprData::Application {
             function,
             ref arguments,
@@ -150,29 +151,30 @@ fn derive_mul_literal_construction<'db, 'sess>(
             leader,
             ref followers,
         } if followers[0].0.separator() == VdMirBaseFoldingSeparator::CommRingMul => {
-            p!(lopd, literal);
+            p!(lopd, ropd);
             todo!()
         }
         _ => {
-            p!(lopd, literal);
-            let derived = todo!();
-            (VdMirTermDerivationConstruction::BaseMulLiteral, derived)
+            let derived = elr.mk_mul(ropd, elr.mk_pow_one(lopd, hc), hc);
+            (
+                VdMirTermDerivationConstruction::BaseMulLiteral,
+                Some(derived),
+            )
         }
     }
 }
 
-fn merge_exponential_construction<'db, 'sess>(
+fn derive_mul_exponential<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> (VdMirTermDerivationConstruction, VdBsqExpr<'sess>) {
+) -> (VdMirTermDerivationConstruction, Option<VdBsqExpr<'sess>>) {
     let ropd_base = exponential_base(ropd);
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
-            let derived = todo!();
-            (VdMirTermDerivationConstruction::Reflection, derived)
+            (VdMirTermDerivationConstruction::Reflection, None)
         }
         VdBsqExprData::FoldingSeparatedList {
             leader,
@@ -186,21 +188,15 @@ fn merge_exponential_construction<'db, 'sess>(
                 let a_base = exponential_base(followers[0].1);
                 let b_base = exponential_base(ropd);
                 match a_base.cmp(&b_base) {
-                    core::cmp::Ordering::Less => {
-                        let derived = todo!();
-                        (
-                            VdMirTermDerivationConstruction::SimpleProductMulExponentialLess,
-                            derived,
-                        )
-                    }
+                    core::cmp::Ordering::Less => (
+                        VdMirTermDerivationConstruction::SimpleProductMulExponentialLess,
+                        None,
+                    ),
                     core::cmp::Ordering::Equal => todo!(),
-                    core::cmp::Ordering::Greater => {
-                        let derived = todo!();
-                        (
-                            VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater,
-                            derived,
-                        )
-                    }
+                    core::cmp::Ordering::Greater => (
+                        VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater,
+                        None,
+                    ),
                 }
             } else {
                 todo!()
@@ -255,7 +251,7 @@ fn merge_atom_construction<'db, 'sess>(
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> (VdMirTermDerivationConstruction, VdBsqExpr<'sess>) {
+) -> (VdMirTermDerivationConstruction, Option<VdBsqExpr<'sess>>) {
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
@@ -275,12 +271,11 @@ fn merge_atom_construction<'db, 'sess>(
                     derived,
                 )
             } else {
-                let derived = todo!();
                 (
                     VdMirTermDerivationConstruction::AtomMulAtom {
                         comparison: lopd.term().cmp(&ropd.term()),
                     },
-                    derived,
+                    None,
                 )
             }
         }

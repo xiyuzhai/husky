@@ -1,7 +1,7 @@
 use super::*;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub(super) struct VdBsqExprDerived<'sess> {
+pub struct VdBsqExprDerived<'sess> {
     expr: VdBsqExpr<'sess>,
     derived: VdBsqExpr<'sess>,
     derivation: VdMirTermDerivationIdx,
@@ -16,22 +16,14 @@ impl<'sess> std::ops::Deref for VdBsqExprDerived<'sess> {
 }
 
 impl<'db, 'sess> VdBsqExprDerived<'sess> {
-    pub(super) fn new_normalized(
-        expr: VdBsqExpr<'sess>,
-        construction: VdMirTermDerivationConstruction,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> Self {
-        Self::new(expr, expr.term().expr(elr, hc), construction, elr, hc)
-    }
-
     pub(super) fn new(
         expr: VdBsqExpr<'sess>,
-        derived: VdBsqExpr<'sess>,
+        derived: Option<VdBsqExpr<'sess>>,
         construction: VdMirTermDerivationConstruction,
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> Self {
+        let derived = derived.unwrap_or_else(|| expr.term().expr(elr, hc));
         let prop = transcribe_expr_derivation_prop(expr, derived, elr, hc);
         let derivation = hc.alloc_term_derivation(prop, construction);
         Self {
@@ -68,5 +60,27 @@ impl<'sess> VdBsqExprDerived<'sess> {
 
     pub(super) fn derivation(self) -> VdMirTermDerivationIdx {
         self.derivation
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct VdBsqExprNormalized<'sess>(VdBsqExprDerived<'sess>);
+
+impl<'sess> std::ops::Deref for VdBsqExprNormalized<'sess> {
+    type Target = VdBsqExprDerived<'sess>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<'db, 'sess> VdBsqExprNormalized<'sess> {
+    pub(super) fn new(
+        expr: VdBsqExpr<'sess>,
+        construction: VdMirTermDerivationConstruction,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> Self {
+        Self(VdBsqExprDerived::new(expr, None, construction, elr, hc))
     }
 }

@@ -25,7 +25,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         VdMirTermDerivationConstruction::AddEq {
             lopd: lopd.derivation(),
             ropd: ropd.derivation(),
-            merge: merge(*lopd, *ropd, self, hc).derivation(),
+            merge: merge(**lopd, **ropd, self, hc).derivation(),
         }
     }
 }
@@ -58,10 +58,10 @@ fn merge<'db, 'sess>(
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> VdBsqExprDerived<'sess> {
+) -> VdBsqExprNormalized<'sess> {
     let construction = merge_construction(lopd, ropd, elr, hc);
     let expr = elr.mk_add(lopd, ropd, hc);
-    VdBsqExprDerived::new_normalized(expr, construction, elr, hc)
+    VdBsqExprNormalized::new(expr, construction, elr, hc)
 }
 
 fn merge_construction<'db, 'sess>(

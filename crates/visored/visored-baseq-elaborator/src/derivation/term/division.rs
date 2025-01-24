@@ -26,10 +26,10 @@ fn derive_div<'db, 'sess>(
     denominator: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-) -> VdBsqExprDerived<'sess> {
+) -> VdBsqExprNormalized<'sess> {
     let construction = derive_div_construction(numerator, denominator, elr, hc);
     let expr = elr.mk_div(numerator, denominator, hc);
-    VdBsqExprDerived::new_normalized(expr, construction, elr, hc)
+    VdBsqExprNormalized::new(expr, construction, elr, hc)
 }
 
 fn derive_div_construction<'db, 'sess>(

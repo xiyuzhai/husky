@@ -58,9 +58,9 @@ where
         &mut self,
         expr: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprDerived<'sess> {
+    ) -> VdBsqExprNormalized<'sess> {
         let construction = self.transcribe_expr_term_derivation_construction(expr, hc);
-        VdBsqExprDerived::new_normalized(expr, construction, self, hc)
+        VdBsqExprNormalized::new(expr, construction, self, hc)
     }
 
     fn transcribe_expr_term_derivation_construction(
@@ -141,7 +141,7 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
         self,
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExprDerived<'sess> {
+    ) -> VdBsqExprNormalized<'sess> {
         elr.transcribe_expr_term_derivation(self, hc)
     }
 }
