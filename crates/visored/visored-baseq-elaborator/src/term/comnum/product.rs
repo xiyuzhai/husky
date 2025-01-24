@@ -247,7 +247,10 @@ impl<'sess> VdBsqComnumTerm<'sess> {
     ) -> Self {
         match VdBsqProductStem::new_power(base, exponent, db) {
             Left(base) => base.into(),
-            Right(_) => todo!(),
+            Right(term) => match term {
+                VdBsqNumTerm::Litnum(vd_bsq_litnum_term) => todo!(),
+                VdBsqNumTerm::Comnum(term) => term,
+            },
         }
     }
 }
