@@ -14,12 +14,24 @@ macro_rules! require {
             return Default::default();
         }
     };
+    ($condition: expr, $result: expr) => {
+        if !$condition {
+            return $result;
+        }
+    };
     (let $pattern: pat = $expr: expr) => {
         let $pattern = $expr else {
             return Default::default();
         };
     };
+    (let $pattern: pat = $expr: expr, $result: expr) => {
+        let $pattern = $expr else {
+            return $result;
+        };
+    };
 }
+
+pub use require as rq;
 
 #[macro_export]
 macro_rules! pass {

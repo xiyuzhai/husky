@@ -29,9 +29,7 @@ fn derive_div<'db, 'sess>(
 ) -> VdBsqExprDerived<'sess> {
     let construction = derive_div_construction(numerator, denominator, elr, hc);
     let expr = elr.mk_div(numerator, denominator, hc);
-    let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
-    let derivation = hc.alloc_term_derivation(prop, construction);
-    VdBsqExprDerived::new_normalized(derivation, expr, elr, hc)
+    VdBsqExprDerived::new_normalized(expr, construction, elr, hc)
 }
 
 fn derive_div_construction<'db, 'sess>(
@@ -45,7 +43,7 @@ fn derive_div_construction<'db, 'sess>(
             let Some(denominator_inv) = denominator.inv(elr.floater_db()) else {
                 todo!()
             };
-            let a_mul_b_inv_dn = derive_product(numerator, elr.mk_lit(denominator_inv), elr, hc);
+            let a_mul_b_inv_dn = derive_product(numerator, elr.mk_litnum(denominator_inv), elr, hc);
             VdMirTermDerivationConstruction::DivLiteral {
                 a_mul_b_inv_dn: todo!(),
             }

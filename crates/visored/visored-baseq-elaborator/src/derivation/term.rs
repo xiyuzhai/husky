@@ -59,32 +59,8 @@ where
         expr: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExprDerived<'sess> {
-        let prop = self.transcribe_expr_term_derivation_prop(expr, hc);
         let construction = self.transcribe_expr_term_derivation_construction(expr, hc);
-        VdBsqExprDerived::new_normalized(
-            hc.alloc_term_derivation(prop, construction),
-            expr,
-            self,
-            hc,
-        )
-    }
-
-    fn transcribe_expr_term_derivation_prop(
-        &mut self,
-        expr: VdBsqExpr<'sess>,
-        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirExprIdx {
-        let term = expr.term();
-        let (expr_transcription, expr_ty) = expr.transcribe_with_ty(None, self, hc);
-        let (term_transcription, term_ty) = term.expr(self, hc).transcribe_with_ty(None, self, hc);
-        let signature = hc.infer_equivalence_signature(expr_ty, term_ty);
-        let prop_expr_data = VdMirExprData::ChainingSeparatedList {
-            leader: expr_transcription,
-            followers: smallvec![(signature, term_transcription)],
-            joined_signature: None,
-        };
-        let prop_expr_ty = self.ty_menu().prop;
-        hc.mk_expr(VdMirExprEntry::new(prop_expr_data, prop_expr_ty, None))
+        VdBsqExprDerived::new_normalized(expr, construction, self, hc)
     }
 
     fn transcribe_expr_term_derivation_construction(

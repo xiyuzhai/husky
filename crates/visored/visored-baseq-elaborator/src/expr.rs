@@ -300,10 +300,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 
     pub fn mk_i128(&self, i: i128) -> VdBsqExpr<'sess> {
-        self.mk_lit(VdBsqLitnumTerm::Int128(i))
+        self.mk_litnum(VdBsqLitnumTerm::Int128(i))
     }
 
-    pub(crate) fn mk_lit(&self, litnum: VdBsqLitnumTerm<'sess>) -> VdBsqExpr<'sess> {
+    pub(crate) fn mk_litnum(&self, litnum: VdBsqLitnumTerm<'sess>) -> VdBsqExpr<'sess> {
         let db = self.session().eterner_db();
         let ty_menu = self.ty_menu();
         let (lit, ty) = match litnum {
@@ -318,6 +318,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             ),
         };
         self.mk_expr(VdBsqExprData::Literal(lit), ty)
+    }
+
+    pub(crate) fn mk_literal(&self, literal: VdLiteral) -> VdBsqExpr<'sess> {
+        todo!()
     }
 
     pub(crate) fn mk_add(

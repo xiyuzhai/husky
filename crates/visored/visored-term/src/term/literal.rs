@@ -134,6 +134,10 @@ impl VdLiteral {
     pub fn inv(self, db: &EternerDb) -> Option<Self> {
         Some(Self::new(self.data().inv()?, db))
     }
+
+    pub fn mul(self, other: Self, db: &EternerDb) -> Self {
+        todo!()
+    }
 }
 
 impl VdLiteralData {

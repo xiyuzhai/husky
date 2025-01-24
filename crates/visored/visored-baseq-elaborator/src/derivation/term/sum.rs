@@ -61,9 +61,7 @@ fn merge<'db, 'sess>(
 ) -> VdBsqExprDerived<'sess> {
     let construction = merge_construction(lopd, ropd, elr, hc);
     let expr = elr.mk_add(lopd, ropd, hc);
-    let prop = elr.transcribe_expr_term_derivation_prop(expr, hc);
-    let derivation = hc.alloc_term_derivation(prop, construction);
-    VdBsqExprDerived::new_normalized(derivation, expr, elr, hc)
+    VdBsqExprDerived::new_normalized(expr, construction, elr, hc)
 }
 
 fn merge_construction<'db, 'sess>(

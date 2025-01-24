@@ -11,6 +11,7 @@ use crate::{
     expr::{VdBsqExpr, VdBsqExprData},
     foundations::opr::separator::relation::comparison::VdBsqComparisonOpr,
     hypothesis::VdBsqHypothesisIdx,
+    *,
 };
 use bigint::VdBsqBigInt;
 use builder::{product::VdBsqProductBuilder, sum::VdBsqSumBuilder};
