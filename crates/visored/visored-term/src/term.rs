@@ -24,7 +24,7 @@ use self::{
     stack_variable::{VdStackVariable, VdStackVariableData},
     symbolic_variable::{VdSymbolicVariable, VdSymbolicVariableData},
 };
-use crate::ty::VdType;
+use crate::{ty::VdType, *};
 use eterned::db::EternerDb;
 use item_path::VdItemPathTermData;
 use lisp_csv::expr::{LpCsvExpr, LpCsvExprData};

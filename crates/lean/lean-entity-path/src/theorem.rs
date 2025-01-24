@@ -54,6 +54,7 @@ pub enum LnTermDerivationTheoremPath {
     AddSum,
     DivEq,
     DivLiteral,
+    LiteralMulSum,
 }
 
 impl LnTheoremPath {
@@ -153,6 +154,7 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::AddSum => "term_derivation_add_sum",
             LnTermDerivationTheoremPath::DivEq => "term_derivation_div_eq",
             LnTermDerivationTheoremPath::DivLiteral => "term_derivation_div_literal",
+            LnTermDerivationTheoremPath::LiteralMulSum => "term_derivation_literal_mul_sum",
         }
     }
 

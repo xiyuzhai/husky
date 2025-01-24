@@ -49,6 +49,7 @@ fn try_trivial_construction<'db, 'sess>(
     None
 }
 
+/// Assumes that `lopd` and `ropd` are normalized or parts of normalized expressions.
 pub fn derive_product<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
@@ -60,7 +61,7 @@ pub fn derive_product<'db, 'sess>(
         leader,
         ref followers,
     } = *derived.data(), derived);
-    rq!(let VdBsqExprData::Literal(_) = leader.data(), derived);
+    rq!(let VdBsqExprData::Literal(leader_literal) = *leader.data(), derived);
     rq!(
         followers.len() == 1
             && followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL,
@@ -74,16 +75,17 @@ pub fn derive_product<'db, 'sess>(
             ..
         } = *follower.data(), derived);
     rq!(pow_args[1].is_one(), derived);
+    let base = pow_args[0];
     rq!(
         let VdBsqExprData::FoldingSeparatedList {
             followers: ref base_followers,
             ..
-        } = *pow_args[0].data(), derived);
+        } = *base.data(), derived);
     rq!(
         base_followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_ADD,
         derived
     );
-    derive_literal_mul_sum(leader, base_followers[0].1, elr, hc)
+    derive_literal_mul_sum(leader, leader_literal, base, elr, hc)
 }
 
 fn derive_product_aux<'db, 'sess>(
@@ -129,7 +131,7 @@ fn derive_product_construction<'db, 'sess>(
             function: VdMirFunc::Power(_),
             ref arguments,
         } => derive_mul_exponential(lopd, ropd, elr, hc),
-        _ => merge_atom_construction(lopd, ropd, elr, hc),
+        _ => merge_base_construction(lopd, ropd, elr, hc),
     }
 }
 
@@ -246,7 +248,7 @@ fn exponential_base<'sess>(expr: VdBsqExpr<'sess>) -> VdBsqNumTerm<'sess> {
     }
 }
 
-fn merge_atom_construction<'db, 'sess>(
+fn merge_base_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
@@ -255,10 +257,10 @@ fn merge_atom_construction<'db, 'sess>(
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
-            let derived = todo!();
+            let derived = elr.mk_mul(lopd, elr.mk_pow_one(ropd, hc), hc);
             (
                 VdMirTermDerivationConstruction::NonOneLiteralMulAtom,
-                derived,
+                Some(derived),
             )
         }
         VdBsqExprData::Variable(..) => {
@@ -298,10 +300,31 @@ fn merge_atom_construction<'db, 'sess>(
 
 fn derive_literal_mul_sum<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
+    lopd_literal: VdLiteral,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprDerived<'sess> {
-    p!(lopd, lopd.data(), ropd);
-    todo!()
+    if lopd_literal.is_zero() {
+        todo!("ZeroMul")
+    }
+    let a = lopd;
+    let (b, _, c) = ropd.split_add(elr, hc);
+    let a_mul_b_derivation = derive_product(a, b, elr, hc);
+    let a_mul_c_derivation = derive_product(a, c, elr, hc);
+    let derived = elr.mk_add(
+        a_mul_b_derivation.derived(),
+        a_mul_c_derivation.derived(),
+        hc,
+    );
+    VdBsqExprDerived::new(
+        elr.mk_mul(lopd, ropd, hc),
+        Some(derived),
+        VdMirTermDerivationConstruction::LiteralMulSum {
+            a_mul_b_derivation: a_mul_b_derivation.derivation(),
+            a_mul_c_derivation: a_mul_c_derivation.derivation(),
+        },
+        elr,
+        hc,
+    )
 }

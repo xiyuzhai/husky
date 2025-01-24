@@ -554,6 +554,18 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
 }
 
 impl<'db, 'sess> VdBsqExpr<'sess> {
+    pub fn split_add(
+        self,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (
+        VdBsqExpr<'sess>,
+        VdBaseFoldingSeparatorSignature,
+        VdBsqExpr<'sess>,
+    ) {
+        self.split_folding_separated_list(VdMirBaseFoldingSeparator::COMM_RING_ADD, elr)
+    }
+
     pub fn split_mul(
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,

@@ -157,7 +157,13 @@ impl VdLiteralData {
                 VdLiteralData::Int(other) => VdLiteralData::Int(slf * other),
                 VdLiteralData::Frac(vd_frac) => todo!(),
             },
-            VdLiteralData::Frac(vd_frac) => todo!(),
+            VdLiteralData::Frac(frac) => match other {
+                VdLiteralData::Int(big_int) => match frac.mul_bigint(big_int) {
+                    Left(frac) => VdLiteralData::Frac(frac),
+                    Right(big_int) => VdLiteralData::Int(big_int),
+                },
+                VdLiteralData::Frac(vd_frac) => todo!(),
+            },
         }
     }
 

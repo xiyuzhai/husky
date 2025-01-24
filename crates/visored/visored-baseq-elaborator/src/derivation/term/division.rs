@@ -45,7 +45,7 @@ fn derive_div_construction<'db, 'sess>(
             };
             let a_mul_b_inv_dn = derive_product(numerator, elr.mk_litnum(denominator_inv), elr, hc);
             VdMirTermDerivationConstruction::DivLiteral {
-                a_mul_b_inv_dn: todo!(),
+                a_mul_b_inv_dn: a_mul_b_inv_dn.derivation(),
             }
         }
         VdBsqTerm::Comnum(vd_bsq_comnum_term) => todo!(),

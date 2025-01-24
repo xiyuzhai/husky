@@ -155,9 +155,14 @@ pub enum VdMirTermDerivationConstruction {
         denominator_dn: VdMirTermDerivationIdx,
         numerator_dn_div_denominator_dn_dn: VdMirTermDerivationIdx,
     },
-    /// derive `a / b => term` from `a * b⁻¹ => term` if `b` is a literal
+    /// derive `a / b => term` from `b⁻¹ * a => term` if `b` is a literal
     DivLiteral {
         a_mul_b_inv_dn: VdMirTermDerivationIdx,
+    },
+    /// derive `a * (b + c) => ab_term + ac_term` from `a * b => ab_term` and `a * c => ac_term`
+    LiteralMulSum {
+        a_mul_b_derivation: VdMirTermDerivationIdx,
+        a_mul_c_derivation: VdMirTermDerivationIdx,
     },
 }
 
@@ -318,6 +323,10 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => {
                 check_div_literal(prop, a_mul_b_inv_dn, hc)
             }
+            VdMirTermDerivationConstruction::LiteralMulSum {
+                a_mul_b_derivation,
+                a_mul_c_derivation,
+            } => check_literal_mul_sum(prop, a_mul_b_derivation, a_mul_c_derivation, hc),
         }
     }
 }

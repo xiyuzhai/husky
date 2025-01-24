@@ -200,6 +200,13 @@ where
                     LnTermDerivationTheoremPath::DivLiteral,
                     self.alloc_exprs([]),
                 ),
+                VdMirTermDerivationConstruction::LiteralMulSum {
+                    a_mul_b_derivation,
+                    a_mul_c_derivation,
+                } => (
+                    LnTermDerivationTheoremPath::LiteralMulSum,
+                    self.alloc_exprs([]),
+                ),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(
