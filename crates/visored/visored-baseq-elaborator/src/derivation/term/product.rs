@@ -72,6 +72,10 @@ fn merge_construction<'db, 'sess>(
     if let Some(construction) = try_trivial_construction(lopd, ropd, elr, hc) {
         return construction;
     }
+    p!(
+        elr.mk_mul(lopd, ropd, hc),
+        elr.mk_mul(lopd, ropd, hc).term()
+    );
     match *ropd.data() {
         VdBsqExprData::Literal(literal) => merge_literal(lopd, literal, elr, hc),
         VdBsqExprData::FoldingSeparatedList { ref followers, .. }
@@ -106,10 +110,7 @@ fn merge_literal<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdMirTermDerivationConstruction {
     match *lopd.data() {
-        VdBsqExprData::Literal(leader) => todo!(),
-        VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
-            VdMirTermDerivationConstruction::AtomMulSwap
-        }
+        VdBsqExprData::Literal(leader) => VdMirTermDerivationConstruction::LiteralMulLiteral,
         VdBsqExprData::Application {
             function,
             ref arguments,
@@ -117,13 +118,14 @@ fn merge_literal<'db, 'sess>(
         VdBsqExprData::FoldingSeparatedList {
             leader,
             ref followers,
-        } => todo!(),
-        VdBsqExprData::ChainingSeparatedList {
-            leader,
-            ref followers,
-            joined_signature,
-        } => todo!(),
-        VdBsqExprData::ItemPath(vd_item_path) => todo!(),
+        } if followers[0].0.separator() == VdMirBaseFoldingSeparator::CommRingMul => {
+            p!(lopd, literal);
+            todo!()
+        }
+        _ => {
+            todo!();
+            VdMirTermDerivationConstruction::BaseMulLiteral
+        }
     }
 }
 

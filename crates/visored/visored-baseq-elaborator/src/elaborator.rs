@@ -129,7 +129,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         self.expr_to_fld_map[expr]
     }
 
-    pub(crate) fn expr_to_fld_map(&self) -> &VdMirExprMap<VdBsqExpr<'sess>> {
+    pub(crate) fn mir_expr_to_bsq_map(&self) -> &VdMirExprMap<VdBsqExpr<'sess>> {
         &self.expr_to_fld_map
     }
 }
@@ -286,7 +286,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
     }
 
     fn cache_expr(&mut self, expr: VdMirExprIdx, region_data: VdMirExprRegionDataRef) {
-        self.cache_expr_fld(expr, region_data);
+        self.cache_mir_expr_to_bsq(expr, region_data);
     }
 
     fn transcribe_explicit_hypothesis(

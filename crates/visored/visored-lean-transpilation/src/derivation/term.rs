@@ -95,7 +95,7 @@ where
                 VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => {
                     (LnTermDerivationTheoremPath::MulEq, self.alloc_exprs([]))
                 }
-                VdMirTermDerivationConstruction::AtomMulSwap => (
+                VdMirTermDerivationConstruction::BaseMulLiteral => (
                     LnTermDerivationTheoremPath::AtomMulSwap,
                     self.alloc_exprs([]),
                 ),

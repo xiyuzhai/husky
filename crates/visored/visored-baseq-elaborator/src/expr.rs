@@ -216,13 +216,17 @@ impl<'sess> VdBsqExprData<'sess> {
 pub type VdMirExprFlds<'sess> = SmallVec<[VdBsqExpr<'sess>; 4]>;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
-    pub fn cache_expr_fld(&mut self, expr_idx: VdMirExprIdx, region_data: VdMirExprRegionDataRef) {
-        if self.expr_to_fld_map().has(expr_idx) {
+    pub fn cache_mir_expr_to_bsq(
+        &mut self,
+        expr_idx: VdMirExprIdx,
+        region_data: VdMirExprRegionDataRef,
+    ) {
+        if self.mir_expr_to_bsq_map().has(expr_idx) {
             return;
         }
         let expr_entry = &region_data.expr_arena[expr_idx];
         let symbol_local_defn_storage = region_data.symbol_local_defn_storage;
-        let expr_data = self.calc_expr_fld_data(expr_entry, symbol_local_defn_storage);
+        let expr_data = self.calc_expr_data(expr_entry, symbol_local_defn_storage);
         let ty = expr_entry.ty();
         let term = self.calc_expr_term(&expr_data, ty);
         let db = self.session().floater_db();
@@ -230,7 +234,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         self.save_expr_fld(expr_idx, expr_fld);
     }
 
-    fn calc_expr_fld_data(
+    fn calc_expr_data(
         &self,
         entry: &VdMirExprEntry,
         symbol_local_defn_storage: &VdMirSymbolLocalDefnStorage,
@@ -308,7 +312,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 if i >= 0 { ty_menu.nat } else { ty_menu.int },
             ),
             VdBsqLitnumTerm::BigInt(vd_bsq_big_int) => todo!(),
-            VdBsqLitnumTerm::Frac128(vd_bsq_frac128) => todo!(),
+            VdBsqLitnumTerm::Frac128(frac128) => (
+                VdLiteral::new_frac128(frac128.numerator(), frac128.denominator(), db),
+                ty_menu.rat,
+            ),
         };
         self.mk_expr(VdBsqExprData::Literal(lit), ty)
     }

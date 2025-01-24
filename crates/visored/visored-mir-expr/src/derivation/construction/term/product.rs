@@ -149,3 +149,20 @@ pub(super) fn check_simple_product_mul_exponential_greater<'db, Src>(
 ) {
     todo!()
 }
+
+/// derive `a * c` => `c * a^1`
+pub(super) fn check_base_mul_literal<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    p!(hc.fmt_expr(prop));
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * c) = expr, hc);
+    ds!(let (c1 * a_pow_1) = term, hc);
+    ds!(let (a1 ^ one) = term, hc);
+    assert!(hc.is_one(one));
+    assert_deep_eq!(a1, a, hc);
+    let c = hc.literal(c);
+    let c1 = hc.literal(c1);
+    assert_eq!(c1, c);
+}
