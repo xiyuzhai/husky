@@ -70,7 +70,7 @@ end Example11
 namespace Example12
 def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
   have h2 : x - (1 : ℝ) ≥ (0 : ℝ) := by
-    have d : x = x := term_derivation_reflection
+    have d : x = x := by term_derivation_reflection
     have d1 : 1 = 1 := term_derivation_reflection
     have d2 : x = x := term_derivation_reflection
     have d3 : -(1 : ℤ) = -1 := term_derivation_neg_literal
