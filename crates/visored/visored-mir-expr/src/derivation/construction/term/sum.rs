@@ -42,8 +42,8 @@ pub(super) fn check_add_eq<'db, Src>(
     assert_deep_eq!(term_b1, term_b, hc);
 }
 
-/// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a litnum
-pub(super) fn check_atom_add_swap<'db, Src>(
+/// derive `a + c => c + 1 * a^1` if `a` is an atom and `c` is a litnum
+pub(super) fn check_atom_add_non_zero_literal<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {

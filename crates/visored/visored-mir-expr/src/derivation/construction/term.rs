@@ -49,7 +49,7 @@ pub enum VdMirTermDerivationConstruction {
     AdditionIdentity,
     AdditionInverse,
     AdditionDistributivity,
-    /// derive `a + c => c + 1 * a` if `a` is an atom and `c` is a nonzero literal
+    /// derive `a + c => c + 1 * a^1` if `a` is an atom and `c` is a nonzero literal
     AtomAddNonZeroLiteral,
     /// derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem
     /// or derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
@@ -261,7 +261,9 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AddEq {
                 lopd, ropd, merge, ..
             } => check_add_eq(prop, lopd, ropd, merge, hc),
-            VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => check_atom_add_swap(prop, hc),
+            VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => {
+                check_atom_add_non_zero_literal(prop, hc)
+            }
             VdMirTermDerivationConstruction::LiteralMulLiteral => {
                 check_literal_mul_literal(prop, hc)
             }
