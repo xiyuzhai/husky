@@ -264,7 +264,8 @@ theorem term_derivation_atom_mul_exponential_greater : true := by sorry
             LnTermDerivationTheoremPath::AtomAddNonZeroLiteral => {
                 // derive `a + c => c + 1 * a^1` if `a` is an atom and `c` is a nonzero literal
                 r#"
-theorem term_derivation_atom_add_non_zero_literal { α } { a : α } { c : α } [CommRing α] : a + c = c + 1 * a^1 := by ring
+theorem term_derivation_atom_add_non_zero_literal {α} {a c : α} [CommRing α] : 
+  a + c = c + 1 * a^1 := by ring
 "#
             }
             LnTermDerivationTheoremPath::LiteralMul => {
