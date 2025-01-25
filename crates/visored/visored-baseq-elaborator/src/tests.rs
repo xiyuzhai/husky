@@ -1,3 +1,9 @@
+use crate::{
+    elaborator::{VdBsqElaborator, VdBsqElaboratorInner},
+    helpers::tracker::VdBsqElaboratorTracker,
+    session::VdBsqSession,
+    *,
+};
 use eterned::db::EternerDb;
 use husky_path_utils::search::find_files;
 use latex_prelude::helper::tracker::LxDocumentInput;
@@ -10,12 +16,6 @@ use std::{
 use visored_lean_transpilation::scheme::dense::VdLeanTranspilationDenseScheme;
 use visored_models::VdModels;
 use visored_syn_expr::vibe::VdSynExprVibe;
-
-use crate::{
-    elaborator::{VdBsqElaborator, VdBsqElaboratorInner},
-    helpers::tracker::VdBsqElaboratorTracker,
-    session::VdBsqSession,
-};
 
 #[test]
 fn visored_tactic_baseq_elaborator_works() {
@@ -58,13 +58,18 @@ fn visored_tactic_baseq_elaborator_works() {
             );
             let lean4_code: String = format!(
                 r#"import Mathlib
-{}
+import Visored.Tactics
 
 {}"#,
-                hypothesis_header(),
                 tracker.show_fmt(db)
             );
-            expect_file!(relative_path.to_logical_path(lean4_dir)).assert_eq(&lean4_code);
+            let expect_file_path = relative_path.to_logical_path(lean4_dir);
+            assert!(
+                expect_file_path.exists(),
+                "Expect file path does not exist: {:?}",
+                expect_file_path
+            );
+            expect_file!(expect_file_path).assert_eq(&lean4_code);
         }
     }
 
@@ -76,7 +81,9 @@ fn visored_tactic_baseq_elaborator_works() {
         p.extension().map_or(false, |ext| ext == "tex")
     })
     .unwrap();
-    let lean4_dir = Path::new("../lean4/mathlib4-tests/Mathlib4Tests");
+    let lean4_dir = &dev_paths
+        .lean4_lib_dir()
+        .join("visored/Visored/BaseqElaborator/Tests/Main");
     t(
         &dev_paths,
         src_root,

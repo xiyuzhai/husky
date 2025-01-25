@@ -1,5 +1,4 @@
-import Mathlib
 import Visored.BaseqElaborator
-import Visored.MirExpr
+import Visored.Tactics
 
 def hello := "world"
