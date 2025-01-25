@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use super::*;
 use lean_entity_path::LnItemPath;
 use lean_mir_expr::{
@@ -21,12 +23,12 @@ where
 
     pub fn custom_tactic_data(
         &mut self,
-        name: &'static str,
+        name: impl Into<Cow<'static, str>>,
         arguments: Option<LnMirExprIdxRange>,
         construction: Option<LnMirExprIdx>,
     ) -> LnMirTacticData {
         LnMirTacticData::Custom {
-            name,
+            name: name.into(),
             arguments,
             construction,
         }

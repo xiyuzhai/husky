@@ -210,6 +210,7 @@ smallvec = { version = "1.12", features = [
     "may_dangle"
 ] }
 stacker = "0.1.16"
+strum = { version = "0.26", features = ["derive"] }
 syn = { version = "2.0.76", features = ["full", "extra-traits", "visit-mut"] }
 tempfile = "3.12"
 termcolor = "1.4.1"

@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use idx_arena::{Arena, ArenaIdx, ArenaIdxRange, ArenaRef};
 use lean_coword::ident::LnIdent;
 use lean_entity_path::theorem::LnTheoremPath;
@@ -45,7 +47,7 @@ pub enum LnMirTacticData {
     },
     Obvious,
     Custom {
-        name: &'static str,
+        name: Cow<'static, str>,
         arguments: Option<LnMirExprIdxRange>,
         construction: Option<LnMirExprIdx>,
     },

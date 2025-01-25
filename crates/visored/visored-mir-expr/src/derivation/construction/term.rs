@@ -23,7 +23,7 @@ use visored_signature::signature::separator::base::{
 };
 use visored_term::term::literal::VdLiteral;
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, strum::IntoStaticStr)]
 pub enum VdMirTermDerivationConstruction {
     Reflection,
     NumComparison {

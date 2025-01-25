@@ -446,11 +446,11 @@ impl<'a> LnMirExprFormatter<'a> {
                 self.format_expr_ext(hypothesis);
             }
             LnMirTacticData::Custom {
-                name,
+                ref name,
                 arguments,
                 construction,
             } => {
-                self.result += name;
+                self.result += &*name;
                 if let Some(arguments) = arguments {
                     for arg in arguments {
                         self.result += " ";

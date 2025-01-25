@@ -1,4 +1,6 @@
 //! TODO: put this under helpers
+use std::borrow::Cow;
+
 use crate::{
     expr::{
         LnMirExprArena, LnMirExprArenaRef, LnMirExprData, LnMirExprEntry, LnMirExprIdx,
@@ -71,11 +73,11 @@ impl LnMirExprConstructor {
 
     pub fn alloc_by_custom(
         &mut self,
-        name: &'static str,
+        name: impl Into<Cow<'static, str>>,
         arguments: impl Into<Option<LnMirExprIdxRange>>,
     ) -> LnMirExprIdx {
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
-            name,
+            name: name.into(),
             arguments: arguments.into(),
             construction: None,
         }]);
