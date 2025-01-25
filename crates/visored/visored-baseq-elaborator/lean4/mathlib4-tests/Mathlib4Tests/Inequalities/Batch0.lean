@@ -99,8 +99,8 @@ theorem term_derivation_neg_product : true := by sorry
 -- NegExponential
 theorem term_derivation_neg_exponential : true := by sorry
 
--- AtomAddSwap
-theorem term_derivation_atom_add_swap : true := by sorry
+-- AtomAddNonZeroLiteral
+theorem term_derivation_atom_add_non_zero_literal { α } { a : α } { c : α } [CommRing α] : a + c = c + 1 * a := by ring
 
 -- LiteralMul
 theorem term_derivation_literal_mul : true := by sorry
@@ -288,13 +288,13 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d1 : 1 = 1 := term_derivation_reflection
     have d2 : x = x := term_derivation_reflection
     have d3 : -(1 : ℤ) = -1 := term_derivation_neg_literal
-    have d4 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_atom_add_swap
+    have d4 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_atom_add_non_zero_literal
     have d5 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_add_eq
     have d6 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_literal_add_literal
     have d7 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := term_derivation_num_comparison
     have d8 : x = x := term_derivation_reflection
     have d9 : -(1 : ℤ) = -1 := term_derivation_neg_literal
-    have d10 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_atom_add_swap
+    have d10 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_atom_add_non_zero_literal
     have d11 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_add_eq
     have d12 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := term_derivation_literal_add_literal
     have d13 : 0 = 0 := term_derivation_reflection

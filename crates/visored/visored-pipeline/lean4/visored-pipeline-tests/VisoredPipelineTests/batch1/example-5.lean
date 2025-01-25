@@ -124,8 +124,8 @@ theorem term_derivation_neg_product : true := by sorry
 -- NegExponential
 theorem term_derivation_neg_exponential : true := by sorry
 
--- AtomAddSwap
-theorem term_derivation_atom_add_swap : true := by sorry
+-- AtomAddNonZeroLiteral
+theorem term_derivation_atom_add_non_zero_literal { α } { a : α } { c : α } [CommRing α] : a + c = c + 1 * a := by ring
 
 -- LiteralMul
 theorem term_derivation_literal_mul : true := by sorry

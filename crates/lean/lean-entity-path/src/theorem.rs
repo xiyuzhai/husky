@@ -25,7 +25,7 @@ pub enum LnTermDerivationTheoremPath {
     NegSum,
     NegProduct,
     NegExponential,
-    AtomAddSwap,
+    AtomAddNonZeroLiteral,
     LiteralMul,
     MulEq,
     AtomMulSwap,
@@ -110,7 +110,9 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::NegSum => "term_derivation_neg_sum",
             LnTermDerivationTheoremPath::NegProduct => "term_derivation_neg_product",
             LnTermDerivationTheoremPath::NegExponential => "term_derivation_neg_exponential",
-            LnTermDerivationTheoremPath::AtomAddSwap => "term_derivation_atom_add_swap",
+            LnTermDerivationTheoremPath::AtomAddNonZeroLiteral => {
+                "term_derivation_atom_add_non_zero_literal"
+            }
             LnTermDerivationTheoremPath::LiteralMul => "term_derivation_literal_mul",
             LnTermDerivationTheoremPath::MulEq => "term_derivation_mul_eq",
             LnTermDerivationTheoremPath::AtomMulSwap => "term_derivation_atom_mul_swap",

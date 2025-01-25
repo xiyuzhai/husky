@@ -85,7 +85,7 @@ where
                     self.alloc_exprs([]),
                 ),
                 VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => (
-                    LnTermDerivationTheoremPath::AtomAddSwap,
+                    LnTermDerivationTheoremPath::AtomAddNonZeroLiteral,
                     self.alloc_exprs([]),
                 ),
                 VdMirTermDerivationConstruction::LiteralMulLiteral => (
