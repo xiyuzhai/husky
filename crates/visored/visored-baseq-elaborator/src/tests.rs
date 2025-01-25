@@ -21,7 +21,7 @@ use crate::{
 fn visored_tactic_baseq_elaborator_works() {
     use husky_case_utils::{Case, ToCase};
     use husky_path_utils::HuskyLangDevPaths;
-    use lean_helpers::hypothesis::HYPOTHESIS_HEADER;
+    use lean_helpers::hypothesis::hypothesis_header;
 
     fn t(
         dev_paths: &HuskyLangDevPaths,
@@ -58,9 +58,10 @@ fn visored_tactic_baseq_elaborator_works() {
             );
             let lean4_code: String = format!(
                 r#"import Mathlib
-{HYPOTHESIS_HEADER}
+{}
 
 {}"#,
+                hypothesis_header(),
                 tracker.show_fmt(db)
             );
             expect_file!(relative_path.to_logical_path(lean4_dir)).assert_eq(&lean4_code);

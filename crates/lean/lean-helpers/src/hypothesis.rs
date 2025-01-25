@@ -1,5 +1,12 @@
-pub const HYPOTHESIS_HEADER: &str = r#"
+mod term_derivation;
 
+use self::term_derivation::TERM_DERIVATION_HEADER;
+use crate::*;
+use lazy_static::lazy_static;
+
+lazy_static! {
+    static ref HYPOTHESIS_HEADER: String = format!(
+        r#"
 macro "term_trivial": tactic =>`(tactic|
   first
   | simp; done
@@ -50,74 +57,12 @@ macro "litnum_bound": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-macro "term_derivation_variable": tactic =>`(tactic|
-  first
-  | rfl; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
+{}
+"#,
+        *TERM_DERIVATION_HEADER
+    );
+}
 
-macro "term_derivation_literal": tactic =>`(tactic|
-  first
-  | rfl; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_item_path": tactic =>`(tactic|
-  first
-  | rfl; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_sum": tactic =>`(tactic|
-  first
-  | rfl; done
-  | ring; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_sub": tactic =>`(tactic|
-  first
-  | rfl; done
-  | ring; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_product": tactic =>`(tactic|
-  first
-  | rfl; done
-  | ring; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_div": tactic =>`(tactic|
-  first
-  | rfl; done
-  | ring; done
-  | field_simp; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_finalize" d1:term:1024 d2:term:1024 : tactic =>`(tactic|
-  (apply (Iff.mpr $d2); apply (Iff.mp $d1); assumption)
-)
-
-macro "term_derivation_chaining_separated_list": tactic =>`(tactic|
-  first
-  | ring; done
-  | (constructor; repeat (intro h; linarith))
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_square": tactic =>`(tactic|
-  first
-  | ring; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-
-macro "term_derivation_power": tactic =>`(tactic|
-  first
-  | rfl; done
-  | ring; done
-  | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
-)
-"#;
+pub fn hypothesis_header() -> &'static str {
+    &HYPOTHESIS_HEADER
+}

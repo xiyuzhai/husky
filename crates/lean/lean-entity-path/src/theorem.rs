@@ -1,4 +1,5 @@
 use super::*;
+use enum_index::*;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash)]
 pub enum LnTheoremPath {
@@ -6,7 +7,7 @@ pub enum LnTheoremPath {
     TermDerivation(LnTermDerivationTheoremPath),
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash, IsEnumIndex)]
 pub enum LnTermDerivationTheoremPath {
     Reflection,
     NumComparison,

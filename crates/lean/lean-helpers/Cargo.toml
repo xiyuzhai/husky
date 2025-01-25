@@ -12,6 +12,11 @@ categories.workspace = true
 keywords.workspace = true
 
 [dependencies]
+lazy_static = "1.4.0"
+# abstractions
+enum-index.workspace = true
+# lean
+lean-entity-path.workspace = true
 
 [dev-dependencies]
 husky-path-utils.workspace = true
