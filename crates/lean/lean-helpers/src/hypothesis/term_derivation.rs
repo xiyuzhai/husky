@@ -138,7 +138,7 @@ theorem term_derivation_power_one : true := by sorry
             }
             LnTermDerivationTheoremPath::NegLiteral => {
                 r#"
-theorem term_derivation_neg_literal : true := by sorry
+macro "term_derivation_neg_literal" : term => `(by rfl)
 "#
             }
             LnTermDerivationTheoremPath::NegEq => {

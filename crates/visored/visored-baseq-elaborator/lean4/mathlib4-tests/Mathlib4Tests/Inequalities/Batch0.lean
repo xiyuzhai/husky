@@ -82,7 +82,7 @@ theorem term_derivation_addition_inverse : true := by sorry
 theorem term_derivation_addition_distributivity : true := by sorry
 
 -- NegLiteral
-theorem term_derivation_neg_literal : true := by sorry
+macro "term_derivation_neg_literal" : term => `(by rfl)
 
 -- NegEq
 theorem term_derivation_neg_eq : true := by sorry
