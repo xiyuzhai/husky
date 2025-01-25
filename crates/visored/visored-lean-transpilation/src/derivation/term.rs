@@ -187,6 +187,14 @@ where
                     LnTermDerivationTheoremPath::SimpleProductMulExponentialGreater,
                     self.alloc_exprs([]),
                 ),
+                VdMirTermDerivationConstruction::SimpleProductMulBaseLess => (
+                    LnTermDerivationTheoremPath::SimpleProductMulBaseLess,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::SimpleProductMulBaseGreater => (
+                    LnTermDerivationTheoremPath::SimpleProductMulBaseGreater,
+                    self.alloc_exprs([]),
+                ),
                 VdMirTermDerivationConstruction::AddSum {
                     a_add_b_derivation,
                     a_add_b_derived_add_c_derivation,
@@ -221,8 +229,14 @@ where
                 VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => {
                     (LnTermDerivationTheoremPath::DivAtom, self.alloc_exprs([]))
                 }
-                VdMirTermDerivationConstruction::AtomMulExponentialLess => todo!(),
-                VdMirTermDerivationConstruction::AtomMulExponentialGreater => todo!(),
+                VdMirTermDerivationConstruction::AtomMulExponentialLess => (
+                    LnTermDerivationTheoremPath::AtomMulExponentialLess,
+                    self.alloc_exprs([]),
+                ),
+                VdMirTermDerivationConstruction::AtomMulExponentialGreater => (
+                    LnTermDerivationTheoremPath::AtomMulExponentialGreater,
+                    self.alloc_exprs([]),
+                ),
             };
         let func = self.alloc_expr(LnMirExprEntry::new(
             LnMirExprData::ItemPath(LnItemPath::Theorem(LnTheoremPath::TermDerivation(

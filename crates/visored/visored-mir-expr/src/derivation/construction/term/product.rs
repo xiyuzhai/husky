@@ -148,6 +148,31 @@ pub(super) fn check_simple_product_mul_exponential_greater<'db, Src>(
     todo!()
 }
 
+/// derive `c * a * b => c * (a * b^1)`
+pub(super) fn check_simple_product_mul_base_less<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (c_mul_a * b) = expr, hc);
+    ds!(let (c * a) = c_mul_a, hc);
+    ds!(let (c1 * a_mul_b_pow_one) = term, hc);
+    ds!(let (a1 * b_pow_one) = a_mul_b_pow_one, hc);
+    ds!(let (b1 ^ one) = b_pow_one, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+    assert_deep_eq!(c1, c, hc);
+}
+
+/// derive `c * a * b => c * (b^1 * a)`
+pub(super) fn check_simple_product_mul_base_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    todo!()
+}
+
 /// derive `a * c` => `c * a^1`
 pub(super) fn check_base_mul_literal<'db, Src>(
     prop: VdMirExprIdx,

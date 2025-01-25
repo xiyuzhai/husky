@@ -144,6 +144,10 @@ pub enum VdMirTermDerivationConstruction {
     SimpleProductMulExponentialLess,
     /// derive `c * a * b => c * (b * a)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base
     SimpleProductMulExponentialGreater,
+    /// derive `c * a * b => c * (a * b^1)`
+    SimpleProductMulBaseLess,
+    /// derive `c * a * b => c * (b^1 * a)`
+    SimpleProductMulBaseGreater,
     /// derive `a + (b + c) => term` from `a + b => term_ab` and `term_ab + c => term`
     AddSum {
         a_add_b_derivation: VdMirTermDerivationIdx,
@@ -314,6 +318,12 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => {
                 check_simple_product_mul_exponential_greater(prop, hc)
+            }
+            VdMirTermDerivationConstruction::SimpleProductMulBaseLess => {
+                check_simple_product_mul_base_less(prop, hc)
+            }
+            VdMirTermDerivationConstruction::SimpleProductMulBaseGreater => {
+                check_simple_product_mul_base_greater(prop, hc)
             }
             VdMirTermDerivationConstruction::AddSum {
                 a_add_b_derivation,

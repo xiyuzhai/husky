@@ -282,6 +282,7 @@ fn derive_mul_base<'db, 'sess>(
             )
         }
         VdBsqExprData::Variable(..) => {
+            // TODO: match comparision
             if lopd == ropd {
                 let derived = todo!();
                 (
@@ -309,8 +310,23 @@ fn derive_mul_base<'db, 'sess>(
         } => match followers[0].0.separator() {
             VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
             VdMirBaseFoldingSeparator::CommRingMul => {
-                p!(lopd, ropd);
-                todo!()
+                if is_product_simple(followers) {
+                    let a_base = exponential_base(followers[0].1);
+                    let b_base = exponential_base(ropd);
+                    match a_base.cmp(&b_base) {
+                        core::cmp::Ordering::Less => (
+                            VdMirTermDerivationConstruction::SimpleProductMulBaseLess,
+                            None,
+                        ),
+                        core::cmp::Ordering::Equal => todo!(),
+                        core::cmp::Ordering::Greater => (
+                            VdMirTermDerivationConstruction::SimpleProductMulBaseGreater,
+                            None,
+                        ),
+                    }
+                } else {
+                    todo!()
+                }
             }
             VdMirBaseFoldingSeparator::SetTimes => todo!(),
             VdMirBaseFoldingSeparator::TensorOtimes => todo!(),

@@ -51,6 +51,8 @@ pub enum LnTermDerivationTheoremPath {
     ProductAddProductGreater,
     SimpleProductMulExponentialLess,
     SimpleProductMulExponentialGreater,
+    SimpleProductMulBaseLess,
+    SimpleProductMulBaseGreater,
     AddSum,
     DivEq,
     DivLiteral,
@@ -58,6 +60,8 @@ pub enum LnTermDerivationTheoremPath {
     SumAddLiteral,
     ProductAddLiteral,
     DivAtom,
+    AtomMulExponentialLess,
+    AtomMulExponentialGreater,
 }
 
 impl LnTheoremPath {
@@ -161,6 +165,18 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::SumAddLiteral => "term_derivation_sum_add_literal",
             LnTermDerivationTheoremPath::ProductAddLiteral => "term_derivation_product_add_literal",
             LnTermDerivationTheoremPath::DivAtom => "term_derivation_div_atom",
+            LnTermDerivationTheoremPath::SimpleProductMulBaseLess => {
+                "term_derivation_simple_product_mul_base_less"
+            }
+            LnTermDerivationTheoremPath::SimpleProductMulBaseGreater => {
+                "term_derivation_simple_product_mul_base_greater"
+            }
+            LnTermDerivationTheoremPath::AtomMulExponentialLess => {
+                "term_derivation_atom_mul_exponential_less"
+            }
+            LnTermDerivationTheoremPath::AtomMulExponentialGreater => {
+                "term_derivation_atom_mul_exponential_greater"
+            }
         }
     }
 
