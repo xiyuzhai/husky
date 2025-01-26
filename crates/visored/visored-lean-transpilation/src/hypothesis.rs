@@ -10,7 +10,7 @@ use lean_mir_expr::{
 };
 use visored_entity_path::theorem::VdTheoremPath;
 use visored_mir_expr::{
-    coercion::VdMirCoercion,
+    coercion::VdMirCoercionConstruction,
     expr::VdMirExprData,
     hypothesis::{
         chunk::VdMirHypothesisChunk, construction::VdMirHypothesisConstruction,

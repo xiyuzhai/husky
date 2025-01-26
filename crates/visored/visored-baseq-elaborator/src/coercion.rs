@@ -17,7 +17,7 @@ use visored_entity_path::{
     theorem::VdTheoremPath,
 };
 use visored_mir_expr::{
-    coercion::VdMirCoercion, elaborator::linear::IsVdMirSequentialElaboratorInner,
+    coercion::VdMirCoercionConstruction, elaborator::linear::IsVdMirSequentialElaboratorInner,
     hypothesis::constructor::VdMirHypothesisConstructor,
 };
 use visored_term::term::VdTerm;
@@ -58,12 +58,12 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &mut self,
         coercion: VdBsqCoercion<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdMirCoercion {
+    ) -> VdMirCoercionConstruction {
         match coercion {
-            VdBsqCoercion::Trivial(vd_baseq_trivial_coercion) => VdMirCoercion::Trivial,
-            VdBsqCoercion::Obvious(hypothesis) => {
-                VdMirCoercion::Obvious(self.transcribe_implicit_hypothesis(hypothesis, hc))
-            }
+            VdBsqCoercion::Trivial(vd_baseq_trivial_coercion) => VdMirCoercionConstruction::Trivial,
+            VdBsqCoercion::Obvious(hypothesis) => VdMirCoercionConstruction::Obvious(
+                self.transcribe_implicit_hypothesis(hypothesis, hc),
+            ),
         }
     }
 }

@@ -1,5 +1,6 @@
 use super::*;
 use convert_case::{Case, Casing};
+use either::*;
 use lean_entity_path::{
     theorem::{LnTermDerivationTheoremPath, LnTheoremPath},
     LnItemPath,
@@ -7,8 +8,9 @@ use lean_entity_path::{
 use lean_mir_expr::expr::{application::LnMirFunc, LnMirExprIdx, LnMirExprIdxRange};
 use smallvec::*;
 use visored_mir_expr::{
+    coercion::VdMirCoercion,
     derivation::construction::term::{VdMirTermDerivationConstruction, VdMirTermDerivationIdx},
-    expr::VdMirExprEntry,
+    expr::{VdMirExprEntry, VdMirExprIdx},
 };
 
 impl<'a, S> VdLeanTranspilationBuilder<'a, S>
@@ -19,6 +21,28 @@ where
         &mut self,
         construction: &VdMirTermDerivationConstruction,
     ) -> LnMirExprIdx {
+        use Argument::{Coercion as C, Derivation as D, Expr as E};
+
+        #[derive(Copy, Clone)]
+        enum Argument {
+            Coercion(VdMirCoercion),
+            Derivation(VdMirTermDerivationIdx),
+            Expr(VdMirExprIdx),
+        }
+
+        impl<S> VdTranspileToLean<S, LnMirExprEntry> for Argument
+        where
+            S: IsVdLeanTranspilationScheme,
+        {
+            fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
+                match self {
+                    C(coercion) => coercion.to_lean(builder),
+                    D(derivation) => derivation.to_lean(builder),
+                    E(expr) => expr.to_lean(builder),
+                }
+            }
+        }
+
         let variant_name: &'static str = construction.into();
         let arguments: Option<LnMirExprIdxRange> = match *construction {
             VdMirTermDerivationConstruction::Reflection => None,
@@ -30,7 +54,7 @@ where
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => None,
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => None,
             VdMirTermDerivationConstruction::AddEq { lopd, ropd, merge } => {
-                Some([lopd, ropd, merge].to_lean(self))
+                Some([D(lopd), D(ropd), D(merge)].to_lean(self))
             }
             VdMirTermDerivationConstruction::AdditionInterchange => None,
             VdMirTermDerivationConstruction::AdditionAssociativity => None,

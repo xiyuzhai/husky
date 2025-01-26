@@ -1,4 +1,5 @@
 mod builder;
+mod coercion;
 pub mod derivation;
 pub mod dictionary;
 mod expr;
@@ -16,6 +17,7 @@ use self::builder::VdLeanTranspilationBuilder;
 use self::scheme::IsVdLeanTranspilationScheme;
 #[cfg(test)]
 use self::tests::*;
+use either::Either;
 use visored_models::VdModels;
 
 pub trait VdTranspileToLean<S, T>: Copy

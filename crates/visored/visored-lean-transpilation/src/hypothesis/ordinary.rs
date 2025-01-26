@@ -24,8 +24,8 @@ where
                 is_real_coercion,
             } => {
                 match is_real_coercion {
-                    VdMirCoercion::Trivial => (),
-                    VdMirCoercion::Obvious(arena_idx) => todo!("handle this properly."),
+                    VdMirCoercionConstruction::Trivial => (),
+                    VdMirCoercionConstruction::Obvious(arena_idx) => todo!("handle this properly."),
                 }
                 let hypothesis = match path {
                     VdTheoremPath::SquareNonnegative => self.alloc_expr(LnMirExprEntry::new(
