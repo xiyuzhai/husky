@@ -89,7 +89,7 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d16 : x ^ 1 = x := by term_derivation_power_one
     have d17 : (1 : ℝ) * x ^ 1 = x := by term_derivation_one_mul
     have d18 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_reflection
-    have d19 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_atom
+    have d19 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_atom d18
     have d20 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq
     have d21 : -(0 : ℤ) = 0 := by term_derivation_neg_literal
     have d22 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_nf_add_zero

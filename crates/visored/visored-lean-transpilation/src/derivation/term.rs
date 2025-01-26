@@ -6,8 +6,9 @@ use lean_entity_path::{
 };
 use lean_mir_expr::expr::{application::LnMirFunc, LnMirExprIdx, LnMirExprIdxRange};
 use smallvec::*;
-use visored_mir_expr::derivation::construction::term::{
-    VdMirTermDerivationConstruction, VdMirTermDerivationIdx,
+use visored_mir_expr::{
+    derivation::construction::term::{VdMirTermDerivationConstruction, VdMirTermDerivationIdx},
+    expr::VdMirExprEntry,
 };
 
 impl<'a, S> VdLeanTranspilationBuilder<'a, S>
@@ -62,7 +63,10 @@ where
             VdMirTermDerivationConstruction::PowerOne { base } => None,
             VdMirTermDerivationConstruction::AtomAddProduct { comparison } => None,
             VdMirTermDerivationConstruction::ZeroAdd { .. } => None,
-            VdMirTermDerivationConstruction::AddAtom { .. } => None,
+            VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {
+                let add_product_nf = add_product_nf.to_lean(self);
+                Some(self.alloc_exprs([add_product_nf]))
+            }
             VdMirTermDerivationConstruction::SumAddProductEqualKeep => None,
             VdMirTermDerivationConstruction::SumAddProductEqualCancel => None,
             VdMirTermDerivationConstruction::SumAddProductGreater { .. } => None,

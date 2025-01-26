@@ -1,6 +1,8 @@
 import Mathlib
+import Visored.Tactics.Derivation.Term.Sum
+import Visored.Tactics.Derivation.Term.Product
+import Visored.Tactics.Derivation.Term.Coercion
 
-macro "term_derivation_add_atom": tactic => `(tactic| sorry)
 macro "term_derivation_add_eq": tactic => `(tactic| sorry)
 macro "term_derivation_atom_add_non_zero_literal": tactic => `(tactic| sorry)
 macro "term_derivation_neg_literal": tactic => `(tactic| norm_num)

@@ -279,7 +279,7 @@ def h (a b : ℝ) : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 :=
     have d22 : a = a := by term_derivation_reflection
     have d23 : b = b := by term_derivation_reflection
     have d24 : a + (1 : ℝ) * b ^ 1 = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_atom_add_product
-    have d25 : a + b = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_add_atom
+    have d25 : a + b = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_add_atom d24
     have d26 : a + b = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_add_eq
     have d27 : 2 = 2 := by term_derivation_reflection
     have d28 : ((0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1) * ((1 : ℚ) / 2 : ℝ) = ((1 : ℚ) / 2 : ℝ) * ((0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1) ^ 1 := by term_derivation_base_mul_literal
@@ -376,7 +376,7 @@ def h (a b : ℝ) : (a ^ 2 + b ^ 2) / (2 : ℝ) ≥ ((a + b) / (2 : ℝ)) ^ 2 :=
     have d119 : a = a := by term_derivation_reflection
     have d120 : b = b := by term_derivation_reflection
     have d121 : a + (1 : ℝ) * b ^ 1 = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_atom_add_product
-    have d122 : a + b = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_add_atom
+    have d122 : a + b = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_add_atom d121
     have d123 : a + b = (0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1 := by term_derivation_add_eq
     have d124 : 2 = 2 := by term_derivation_reflection
     have d125 : ((0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1) * ((1 : ℚ) / 2 : ℝ) = ((1 : ℚ) / 2 : ℝ) * ((0 : ℝ) + (1 : ℝ) * b ^ 1 + (1 : ℝ) * a ^ 1) ^ 1 := by term_derivation_base_mul_literal
