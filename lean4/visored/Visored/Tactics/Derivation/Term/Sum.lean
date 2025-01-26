@@ -1,5 +1,12 @@
 import Mathlib
 
+theorem term_derivation_add_assoc {α} {a b c b_add_c a_add_b: α} [CommRing α]
+  (hbc: b + c = b_add_c)
+  (hab: a + b = a_add_b)
+  : a + b_add_c = a_add_b + c := by
+  rw [← hbc, ← hab]
+  ring
+
 theorem term_derivation_add_atom {α} {a b term: α} [CommRing α] (h: a + 1 * b^1 = term) : a + b = term := by
   rw [←h]
   ring
