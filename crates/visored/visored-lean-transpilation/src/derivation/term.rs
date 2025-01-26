@@ -20,7 +20,7 @@ where
         construction: &VdMirTermDerivationConstruction,
     ) -> LnMirExprIdx {
         let variant_name: &'static str = construction.into();
-        let arguments: Option<LnMirExprIdxRange> = match construction {
+        let arguments: Option<LnMirExprIdxRange> = match *construction {
             VdMirTermDerivationConstruction::Reflection => None,
             VdMirTermDerivationConstruction::NumComparison {
                 lhs_nf,
@@ -29,7 +29,9 @@ where
             } => None,
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => None,
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => None,
-            VdMirTermDerivationConstruction::AddEq { lopd, ropd, merge } => None,
+            VdMirTermDerivationConstruction::AddEq { lopd, ropd, merge } => {
+                Some([lopd, ropd, merge].to_lean(self))
+            }
             VdMirTermDerivationConstruction::AdditionInterchange => None,
             VdMirTermDerivationConstruction::AdditionAssociativity => None,
             VdMirTermDerivationConstruction::AdditionIdentity => None,
@@ -64,8 +66,7 @@ where
             VdMirTermDerivationConstruction::AtomAddProduct { comparison } => None,
             VdMirTermDerivationConstruction::ZeroAdd { .. } => None,
             VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {
-                let add_product_nf = add_product_nf.to_lean(self);
-                Some(self.alloc_exprs([add_product_nf]))
+                Some([add_product_nf].to_lean(self))
             }
             VdMirTermDerivationConstruction::SumAddProductEqualKeep => None,
             VdMirTermDerivationConstruction::SumAddProductEqualCancel => None,

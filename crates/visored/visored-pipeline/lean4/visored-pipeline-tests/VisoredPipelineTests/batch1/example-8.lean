@@ -261,7 +261,7 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d4 : a / b = (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_div_eq
     have d5 : -(2 : ℤ) = -2 := by term_derivation_neg_literal
     have d6 : (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (-2 : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_product_add_literal
-    have d7 : a / b + (-(2 : ℤ) : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_add_eq
+    have d7 : a / b + (-(2 : ℤ) : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_add_eq d4 d5 d6
     have d8 : a / b - (2 : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_sub_eqs_add_neg
     have d9 : b = b := by term_derivation_reflection
     have d10 : a = a := by term_derivation_reflection
@@ -269,7 +269,7 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d12 : b / a = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_div_atom
     have d13 : b / a = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_div_eq
     have d14 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_reflection
-    have d15 : a / b - (2 : ℝ) + b / a = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq
+    have d15 : a / b - (2 : ℝ) + b / a = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq d8 d13 d14
     have d16 : 0 = 0 := by term_derivation_reflection
     have d17 : -2 = -2 := by term_derivation_reflection
     have d18 : b = b := by term_derivation_reflection
@@ -281,7 +281,7 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d24 : b ^ (-1 : ℤ) * a ^ 1 = (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_mul_eq
     have d25 : (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) = (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_one_mul
     have d26 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_reflection
-    have d27 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_add_eq
+    have d27 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_add_eq d17 d25 d26
     have d28 : b = b := by term_derivation_reflection
     have d29 : b ^ 1 = b := by term_derivation_power_one
     have d30 : a = a := by term_derivation_reflection
@@ -293,10 +293,10 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d36 : b ^ 1 * a ^ (-1 : ℤ) = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_mul_eq
     have d37 : (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_one_mul
     have d38 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_reflection
-    have d39 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq
+    have d39 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq d27 d37 d38
     have d40 : -(0 : ℤ) = 0 := by term_derivation_neg_literal
     have d41 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) + (0 : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_nf_add_zero
-    have d42 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) + (-(0 : ℤ) : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq
+    have d42 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) + (-(0 : ℤ) : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq d39 d40 d41
     have d43 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) - (0 : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_sub_eqs_add_neg
     have d44 : a / b - (2 : ℝ) + b / a ≥ (0 : ℝ) ↔ (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d45 : a = a := by term_derivation_reflection
@@ -310,7 +310,7 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d53 : b / a = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_div_atom
     have d54 : b / a = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_div_eq
     have d55 : (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_product_add_product_less
-    have d56 : a / b + b / a = (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq
+    have d56 : a / b + b / a = (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq d49 d54 d55
     have d57 : 2 = 2 := by term_derivation_reflection
     have d58 : b = b := by term_derivation_reflection
     have d59 : -1 = -1 := by term_derivation_reflection
@@ -332,7 +332,7 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d75 : b ^ 1 * a ^ (-1 : ℤ) = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_mul_eq
     have d76 : (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_one_mul
     have d77 : (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_product_add_product_less
-    have d78 : (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq
+    have d78 : (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq d66 d76 d77
     have d79 : -(2 : ℤ) = -2 := by term_derivation_neg_literal
     have d80 : -2 = -2 := by term_derivation_reflection
     have d81 : (0 : ℤ) + (-2 : ℤ) = -2 := by term_derivation_zero_add
@@ -340,7 +340,7 @@ def h (a b : ℝ) (h1 : a > (0 : ℝ)) (h2 : b > (0 : ℝ)) : a / b + b / a ≥ 
     have d83 : (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (-2 : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) := by term_derivation_sum_add_literal
     have d84 : (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_reflection
     have d85 : (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) + (-2 : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_sum_add_literal
-    have d86 : (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) + (-(2 : ℤ) : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq
+    have d86 : (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) + (-(2 : ℤ) : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_add_eq d78 d79 d85
     have d87 : (0 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) - (2 : ℝ) = (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) := by term_derivation_sub_eqs_add_neg
     have d88 : a / b + b / a ≥ (2 : ℝ) ↔ (-2 : ℝ) + (1 : ℝ) * (b ^ (-1 : ℤ) * a ^ 1) + (1 : ℝ) * (b ^ 1 * a ^ (-1 : ℤ)) ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d89 : a / b + b / a ≥ (2 : ℝ) := by term_derivation_non_trivial_finish

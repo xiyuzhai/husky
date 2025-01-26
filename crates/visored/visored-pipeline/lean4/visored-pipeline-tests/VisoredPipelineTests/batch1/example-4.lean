@@ -261,7 +261,7 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d7 : -((2 : ℝ) * x ^ 1) = (-2 : ℝ) * x ^ 1 := by term_derivation_neg_product
     have d8 : -((2 : ℝ) * x) = (-2 : ℝ) * x ^ 1 := by term_derivation_neg_eq
     have d9 : (1 : ℝ) * x ^ 2 + (-2 : ℝ) * x ^ 1 = (0 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_product_add_product_greater
-    have d10 : x ^ 2 + (-((2 : ℝ) * x) : ℝ) = (0 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq
+    have d10 : x ^ 2 + (-((2 : ℝ) * x) : ℝ) = (0 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq d2 d8 d9
     have d11 : x ^ 2 - (2 : ℝ) * x = (0 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_sub_eqs_add_neg
     have d12 : 1 = 1 := by term_derivation_reflection
     have d13 : 1 = 1 := by term_derivation_reflection
@@ -270,7 +270,7 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d16 : (0 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 := by term_derivation_sum_add_literal
     have d17 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_reflection
     have d18 : (0 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 + (1 : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_sum_add_literal
-    have d19 : x ^ 2 - (2 : ℝ) * x + (1 : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq
+    have d19 : x ^ 2 - (2 : ℝ) * x + (1 : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq d11 d12 d18
     have d20 : 0 = 0 := by term_derivation_reflection
     have d21 : 1 = 1 := by term_derivation_reflection
     have d22 : -2 = -2 := by term_derivation_reflection
@@ -279,16 +279,16 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d25 : (-2 : ℝ) * x = (-2 : ℝ) * x ^ 1 := by term_derivation_non_one_literal_mul_atom
     have d26 : (-2 : ℝ) * x ^ 1 = (-2 : ℝ) * x ^ 1 := by term_derivation_mul_eq
     have d27 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 := by term_derivation_reflection
-    have d28 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 := by term_derivation_add_eq
+    have d28 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 := by term_derivation_add_eq d21 d26 d27
     have d29 : x = x := by term_derivation_reflection
     have d30 : 2 = 2 := by term_derivation_reflection
     have d31 : x ^ 2 = (1 : ℝ) * x ^ 2 := by term_derivation_non_reduced_power
     have d32 : (1 : ℝ) * x ^ 2 = (1 : ℝ) * x ^ 2 := by term_derivation_one_mul
     have d33 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_reflection
-    have d34 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq
+    have d34 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq d28 d32 d33
     have d35 : -(0 : ℤ) = 0 := by term_derivation_neg_literal
     have d36 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 + (0 : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_nf_add_zero
-    have d37 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 + (-(0 : ℤ) : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq
+    have d37 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 + (-(0 : ℤ) : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq d34 d35 d36
     have d38 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 - (0 : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_sub_eqs_add_neg
     have d39 : x ^ 2 - (2 : ℝ) * x + (1 : ℝ) ≥ (0 : ℝ) ↔ (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d40 : x = x := by term_derivation_reflection
@@ -296,7 +296,7 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d42 : x ^ 2 = (1 : ℝ) * x ^ 2 := by term_derivation_non_reduced_power
     have d43 : 1 = 1 := by term_derivation_reflection
     have d44 : (1 : ℝ) * x ^ 2 + (1 : ℝ) = (1 : ℝ) + (1 : ℝ) * x ^ 2 := by term_derivation_product_add_literal
-    have d45 : x ^ 2 + (1 : ℝ) = (1 : ℝ) + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq
+    have d45 : x ^ 2 + (1 : ℝ) = (1 : ℝ) + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq d42 d43 d44
     have d46 : 2 = 2 := by term_derivation_reflection
     have d47 : x = x := by term_derivation_reflection
     have d48 : (2 : ℝ) * x = (2 : ℝ) * x ^ 1 := by term_derivation_non_one_literal_mul_atom
@@ -307,7 +307,7 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d53 : x ^ 2 = (1 : ℝ) * x ^ 2 := by term_derivation_non_reduced_power
     have d54 : (1 : ℝ) * x ^ 2 = (1 : ℝ) * x ^ 2 := by term_derivation_one_mul
     have d55 : (1 : ℝ) + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (1 : ℝ) * x ^ 2 := by term_derivation_reflection
-    have d56 : (1 : ℝ) + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq
+    have d56 : (1 : ℝ) + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq d50 d54 d55
     have d57 : 2 = 2 := by term_derivation_reflection
     have d58 : x = x := by term_derivation_reflection
     have d59 : x ^ 1 = x := by term_derivation_power_one
@@ -318,7 +318,7 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) : x + (1 : ℝ) / x ≥ (2 : ℝ) := by
     have d64 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 := by term_derivation_reflection
     have d65 : (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_reflection
     have d66 : (1 : ℝ) + (1 : ℝ) * x ^ 2 + (-2 : ℝ) * x ^ 1 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_sum_add_product_greater
-    have d67 : (1 : ℝ) + (1 : ℝ) * x ^ 2 + (-((2 : ℝ) * x ^ 1) : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq
+    have d67 : (1 : ℝ) + (1 : ℝ) * x ^ 2 + (-((2 : ℝ) * x ^ 1) : ℝ) = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_add_eq d56 d63 d66
     have d68 : (1 : ℝ) + (1 : ℝ) * x ^ 2 - (2 : ℝ) * x ^ 1 = (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 := by term_derivation_sub_eqs_add_neg
     have d69 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x ↔ (1 : ℝ) + (-2 : ℝ) * x ^ 1 + (1 : ℝ) * x ^ 2 ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d70 : x ^ 2 + (1 : ℝ) ≥ (2 : ℝ) * x := by term_derivation_non_trivial_finish

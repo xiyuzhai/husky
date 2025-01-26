@@ -16,7 +16,7 @@ use lean_opr::opr::binary::LnBinaryOpr;
 use lean_term::term::literal::{LnLiteral, LnLiteralData};
 use visored_entity_path::path::{trai_item::VdTraitItemPath, VdItemPath};
 use visored_mir_expr::{
-    derivation::VdMirDerivationIdx,
+    derivation::{construction::term::VdMirTermDerivationIdx, VdMirDerivationIdx},
     expr::{
         application::{VdMirFunc, VdMirFuncKey},
         VdMirExprData, VdMirExprIdx, VdMirExprIdxRange,
@@ -68,6 +68,24 @@ where
     fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
         let ident = builder.mangle_derivation(self);
         LnMirExprEntry::new(LnMirExprData::Variable { ident }, None)
+    }
+}
+
+impl<'db, S> VdTranspileToLean<S, LnMirExprEntry> for &VdMirDerivationIdx
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
+        VdMirDerivationIdx::to_lean(*self, builder)
+    }
+}
+
+impl<'db, S> VdTranspileToLean<S, LnMirExprEntry> for VdMirTermDerivationIdx
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
+        VdMirDerivationIdx::to_lean(*self, builder)
     }
 }
 

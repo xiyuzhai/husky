@@ -260,14 +260,14 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d11 : -((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_neg_product
     have d12 : -((2 : ℝ) * √ (x * y)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_neg_eq
     have d13 : x + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_atom_add_product
-    have d14 : x + (-((2 : ℝ) * √ (x * y)) : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq
+    have d14 : x + (-((2 : ℝ) * √ (x * y)) : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq d d12 d13
     have d15 : x - (2 : ℝ) * √ (x * y) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_sub_eqs_add_neg
     have d16 : y = y := by term_derivation_reflection
     have d17 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_reflection
     have d18 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_reflection
     have d19 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_sum_add_product_greater
     have d20 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_atom d19
-    have d21 : x - (2 : ℝ) * √ (x * y) + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq
+    have d21 : x - (2 : ℝ) * √ (x * y) + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq d15 d16 d20
     have d22 : 0 = 0 := by term_derivation_reflection
     have d23 : x = x := by term_derivation_reflection
     have d24 : x ^ 1 = x := by term_derivation_power_one
@@ -278,7 +278,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d29 : (1 : ℝ) * y ^ 1 = y := by term_derivation_one_mul
     have d30 : x + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_atom_add_product
     have d31 : x + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_atom d30
-    have d32 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_eq
+    have d32 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_eq d26 d29 d31
     have d33 : -2 = -2 := by term_derivation_reflection
     have d34 : x = x := by term_derivation_reflection
     have d35 : x ^ 1 = x := by term_derivation_power_one
@@ -294,17 +294,17 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d45 : (-2 : ℝ) * ((1 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_mul_product
     have d46 : (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_mul_eq
     have d47 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_reflection
-    have d48 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq
+    have d48 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq d32 d46 d47
     have d49 : -(0 : ℤ) = 0 := by term_derivation_neg_literal
     have d50 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) + (0 : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_nf_add_zero
-    have d51 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) + (-(0 : ℤ) : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq
+    have d51 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) + (-(0 : ℤ) : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq d48 d49 d50
     have d52 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) - (0 : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_sub_eqs_add_neg
     have d53 : x - (2 : ℝ) * √ (x * y) + y ≥ (0 : ℝ) ↔ (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d54 : x = x := by term_derivation_reflection
     have d55 : y = y := by term_derivation_reflection
     have d56 : x + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_atom_add_product
     have d57 : x + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_atom d56
-    have d58 : x + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_eq
+    have d58 : x + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_eq d54 d55 d57
     have d59 : 2 = 2 := by term_derivation_reflection
     have d60 : x = x := by term_derivation_reflection
     have d61 : y = y := by term_derivation_reflection
@@ -324,7 +324,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d75 : (1 : ℝ) * y ^ 1 = y := by term_derivation_one_mul
     have d76 : x + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_atom_add_product
     have d77 : x + y = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_atom d76
-    have d78 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_eq
+    have d78 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 := by term_derivation_add_eq d72 d75 d77
     have d79 : 2 = 2 := by term_derivation_reflection
     have d80 : x = x := by term_derivation_reflection
     have d81 : x ^ 1 = x := by term_derivation_power_one
@@ -342,7 +342,7 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) (y : ℝ) (h2 : y ≥ (0 : ℝ)) : (x + y
     have d93 : -((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_neg_product
     have d94 : -((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) = (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_neg_eq
     have d95 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_reflection
-    have d96 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq
+    have d96 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-((2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2)) : ℝ) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_add_eq d78 d94 d95
     have d97 : (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 - (2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) = (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) := by term_derivation_sub_eqs_add_neg
     have d98 : x + y ≥ (2 : ℝ) * √ (x * y) ↔ (0 : ℝ) + (1 : ℝ) * x ^ 1 + (1 : ℝ) * y ^ 1 + (-2 : ℝ) * ((1 : ℝ) * (x ^ 1 * y ^ 1)) ^ ((1 : ℚ) / 2) ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d99 : x + y ≥ (2 : ℝ) * √ (x * y) := by term_derivation_non_trivial_finish

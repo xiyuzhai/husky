@@ -3,7 +3,6 @@ import Visored.Tactics.Derivation.Term.Sum
 import Visored.Tactics.Derivation.Term.Product
 import Visored.Tactics.Derivation.Term.Coercion
 
-macro "term_derivation_add_eq": tactic => `(tactic| fail)
 macro "term_derivation_neg_literal": tactic => `(tactic| norm_num)
 macro "term_derivation_num_comparison": tactic => `(tactic| fail)
 macro "term_derivation_reflection": tactic => `(tactic| rfl)
