@@ -21,8 +21,8 @@ macro "term_derivation_atom_add_non_zero_literal" : tactic => `(tactic| (exact t
 example (x: ℝ) : x + 2 = 2 + 1 * x^1 := by
   term_derivation_atom_add_non_zero_literal
 
-theorem term_derivation_add_eq {α} {a b term_a term_b term: α} [CommRing α]
-  (ha: a = term_a) (hb: b = term_b) (hab: term_a + term_b = term) : a + b = term := by
+theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {term: γ} [CommRing γ][CoeTC α γ] [CoeTC β γ]
+  (ha: a = term_a) (hb: b = term_b) (hab: (term_a:γ)+ (term_b:γ)= term) : (a:γ) + (b:γ) = term := by
   rw [ha, hb, hab]
 
 /-- derive `a + b => term` from `a => term_a`, `b => term_b` and `term_a + term_b => term`
