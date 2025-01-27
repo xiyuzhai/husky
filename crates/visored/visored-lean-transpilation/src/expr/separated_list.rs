@@ -40,13 +40,17 @@ where
             } else {
                 None
             };
-            todo!()
-            // result = LnMirExprData::Application {
-            //     function,
-            //     arguments: self
-            //         .alloc_exprs([LnMirExprEntry::new(result, result_ty_ascription), follower]),
-            // };
-            // result_ty = separator.expr_ty();
+            result = LnMirExprData::Application {
+                function,
+                arguments: self.alloc_exprs([LnMirExprEntry::new(result), follower]),
+            };
+            if let Some(ty_ascription) = result_ty_ascription {
+                result = LnMirExprData::TypeAscription {
+                    expr: self.alloc_expr(LnMirExprEntry::new(result)),
+                    ty_ascription,
+                }
+            }
+            result_ty = separator.expr_ty();
         }
         result
     }

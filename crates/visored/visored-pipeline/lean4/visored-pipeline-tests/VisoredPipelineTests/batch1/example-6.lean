@@ -244,9 +244,9 @@ def h (x : ℝ) (h1 : x ≥ (0 : ℝ)) : x + (1 : ℝ) ≥ (2 : ℝ) * √ x := 
   first
   | have h2 : (√ x - (1 : ℝ)) ^ 2 ≥ (0 : ℝ) := by calc
     (√ x - (1 : ℝ)) ^ 2 = x - (2 : ℝ) * √ x + (1 : ℝ) := by obvious
-    _ ≥ (0 : ℝ) := by obvious
+    _ ≥ 0 : ℝ := by obvious
   | have h3 : x - (2 : ℝ) * √ x + (1 : ℝ) ≥ (0 : ℝ) := by calc
     x - (2 : ℝ) * √ x + (1 : ℝ) = (√ x - (1 : ℝ)) ^ 2 := by obvious
-    _ ≥ (0 : ℝ) := by obvious
+    _ ≥ 0 : ℝ := by obvious
   have h4 : x + (1 : ℝ) ≥ (2 : ℝ) * √ x := by obvious
   obvious

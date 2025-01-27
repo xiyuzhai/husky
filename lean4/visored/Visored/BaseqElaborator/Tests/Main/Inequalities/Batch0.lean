@@ -73,30 +73,29 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d : x = x := by term_derivation_reflection
     have d1 : 1 = 1 := by term_derivation_reflection
     have d2 : x = x := by term_derivation_reflection
-    have d3 : -(1 : ℤ) = -1 := by term_derivation_neg_literal
-    have d4 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_atom_add_non_zero_literal
-    have d5 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 :=
-      by term_derivation_add_eq d2 d3 eq_identity_coercion eq_nat_to_real_coercion d4
-    have d6 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_sub_eqs_add_neg
-    have d7 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := by term_derivation_num_comparison
+    have d3 : (-(1 : ℤ) : ℤ) = (-1 : ℤ) := by term_derivation_neg_literal
+    have d4 : x + ((-1 : ℤ) : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_atom_add_non_zero_literal
+    have d5 : x + ((-(1 : ℤ) : ℤ) : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d2 d3 d4
+    have d6 : x - (1 : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_sub_eqs_add_neg
+    have d7 : x ≥ (1 : ℝ) ↔ ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d8 : x = x := by term_derivation_reflection
-    have d9 : -(1 : ℤ) = -1 := by term_derivation_neg_literal
-    have d10 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_atom_add_non_zero_literal
-    have d11 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d8 d9 d10
-    have d12 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_sub_eqs_add_neg
+    have d9 : (-(1 : ℤ) : ℤ) = (-1 : ℤ) := by term_derivation_neg_literal
+    have d10 : x + ((-1 : ℤ) : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_atom_add_non_zero_literal
+    have d11 : x + ((-(1 : ℤ) : ℤ) : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d8 d9 d10
+    have d12 : x - (1 : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_sub_eqs_add_neg
     have d13 : 0 = 0 := by term_derivation_reflection
-    have d14 : -1 = -1 := by term_derivation_reflection
+    have d14 : (-1 : ℤ) = (-1 : ℤ) := by term_derivation_reflection
     have d15 : x = x := by term_derivation_reflection
     have d16 : x ^ 1 = x := by term_derivation_power_one
     have d17 : (1 : ℝ) * x ^ 1 = x := by term_derivation_one_mul
-    have d18 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_reflection
-    have d19 : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_atom d18
-    have d20 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d14 d17 d19
-    have d21 : -(0 : ℤ) = 0 := by term_derivation_neg_literal
-    have d22 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 + (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_nf_add_zero
-    have d23 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 + (-(0 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d20 d21 d22
-    have d24 : (-1 : ℝ) + (1 : ℝ) * x ^ 1 - (0 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_sub_eqs_add_neg
-    have d25 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := by term_derivation_num_comparison
+    have d18 : ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_reflection
+    have d19 : ((-1 : ℤ) : ℝ) + x = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_atom d18
+    have d20 : ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d14 d17 d19
+    have d21 : (-(0 : ℤ) : ℤ) = 0 := by term_derivation_neg_literal
+    have d22 : ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 + (0 : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_nf_add_zero
+    have d23 : ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 + ((-(0 : ℤ) : ℤ) : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d20 d21 d22
+    have d24 : ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 - (0 : ℝ) = ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_sub_eqs_add_neg
+    have d25 : x - (1 : ℝ) ≥ (0 : ℝ) ↔ ((-1 : ℤ) : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d26 : x - (1 : ℝ) ≥ (0 : ℝ) := by term_derivation_non_trivial_finish
     assumption
   exact ()

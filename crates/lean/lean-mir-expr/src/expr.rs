@@ -33,7 +33,7 @@ pub enum LnMirExprData {
     },
     TypeAscription {
         expr: LnMirExprIdx,
-        ty: LnMirExprIdx,
+        ty_ascription: LnMirExprIdx,
     },
     By {
         tactics: LnMirTacticIdxRange,
@@ -85,7 +85,7 @@ impl LnMirExprData {
                 arguments,
             } => function.outer_precedence(),
             LnMirExprData::By { tactics } => LnPrecedence::Min,
-            LnMirExprData::TypeAscription { expr, ty } => todo!(),
+            LnMirExprData::TypeAscription { .. } => LnPrecedence::TYPE_ASCRIPTION,
         }
     }
 
@@ -104,7 +104,10 @@ impl LnMirExprData {
                 arguments,
             } => function.expr().into_iter().chain(arguments).collect(),
             LnMirExprData::By { tactics } => todo!(),
-            LnMirExprData::TypeAscription { expr, ty } => todo!(),
+            LnMirExprData::TypeAscription {
+                expr,
+                ty_ascription: ty,
+            } => todo!(),
         }
     }
 }

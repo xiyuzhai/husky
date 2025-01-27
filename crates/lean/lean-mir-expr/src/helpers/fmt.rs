@@ -204,7 +204,22 @@ impl<'a> LnMirExprFormatter<'a> {
                     self.indented(|slf| slf.format_tactics(tactics));
                 }
             }
-            LnMirExprData::TypeAscription { expr, ty } => todo!(),
+            LnMirExprData::TypeAscription {
+                expr,
+                ty_ascription,
+            } => {
+                self.format_expr(
+                    expr,
+                    subexpr_try_multiline,
+                    LnPrecedenceRange::TYPE_ASCRIPTION,
+                );
+                self.result += " : ";
+                self.format_expr(
+                    ty_ascription,
+                    subexpr_try_multiline,
+                    LnPrecedenceRange::TYPE_ASCRIPTION,
+                );
+            }
         }
     }
 

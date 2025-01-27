@@ -9,6 +9,7 @@ use crate::{
     ty::VdTypeLeanTranspilation,
 };
 use either::*;
+use lean_entity_path::LnItemPath;
 use lean_mir_expr::expr::{
     application::LnMirFunc, LnMirExprData, LnMirExprEntry, LnMirExprIdx, LnMirExprIdxRange,
 };
@@ -108,21 +109,34 @@ where
         } else {
             None
         };
-        todo!("handle type ascription");
-        LnMirExprEntry::new(data)
+        match ty_ascription {
+            Some(ty_ascription) => LnMirExprEntry::new(LnMirExprData::TypeAscription {
+                expr: self.alloc_expr(LnMirExprEntry::new(data)),
+                ty_ascription,
+            }),
+            None => LnMirExprEntry::new(data),
+        }
     }
 
     fn build_expr_data(&mut self, expr: VdMirExprIdx) -> LnMirExprData {
+        let db = self.db();
         match *self.expr_arena()[expr].data() {
             VdMirExprData::Literal(literal) => {
+                let data = LnMirExprData::Literal(to_lean_literal(literal, db));
                 match *literal.data() {
                     VdLiteralData::Int(ref i) => match i.sign() {
-                        VdSign::Minus => todo!("add type ascription"),
-                        VdSign::Plus | VdSign::NoSign => (),
+                        VdSign::Minus => {
+                            return LnMirExprData::TypeAscription {
+                                expr: self.alloc_expr(LnMirExprEntry::new(data)),
+                                ty_ascription: self.alloc_expr(LnMirExprEntry::new(
+                                    LnMirExprData::ItemPath(LnItemPath::INT),
+                                )),
+                            }
+                        }
+                        VdSign::Plus | VdSign::NoSign => data,
                     },
-                    VdLiteralData::Frac(_) => (),
-                };
-                LnMirExprData::Literal(to_lean_literal(literal, self.db()))
+                    VdLiteralData::Frac(_) => data,
+                }
             }
             VdMirExprData::ItemPath(item_path) => {
                 let Some(translation) = self.dictionary().item_path_translation(item_path) else {

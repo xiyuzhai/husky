@@ -250,10 +250,10 @@ def h (x : ℝ) (h1 : x > (0 : ℝ)) (y : ℝ) (h2 : y > (0 : ℝ)) : (1 : ℝ) 
     first
     | have h8 : (x - y) ^ 2 ≥ (0 : ℝ) := by calc
       (x - y) ^ 2 = x ^ 2 - (2 : ℝ) * x * y + y ^ 2 := by obvious
-      _ ≥ (0 : ℝ) := by obvious
+      _ ≥ 0 : ℝ := by obvious
     | have h9 : x ^ 2 - (2 : ℝ) * x * y + y ^ 2 ≥ (0 : ℝ) := by calc
       x ^ 2 - (2 : ℝ) * x * y + y ^ 2 = (x - y) ^ 2 := by obvious
-      _ ≥ (0 : ℝ) := by obvious
+      _ ≥ 0 : ℝ := by obvious
     have h10 : x ^ 2 + y ^ 2 ≥ (2 : ℝ) * x * y := by obvious
     first
     | have h11 : x ^ 2 + (2 : ℝ) * x * y + y ^ 2 ≥ (4 : ℝ) * x * y := by calc
