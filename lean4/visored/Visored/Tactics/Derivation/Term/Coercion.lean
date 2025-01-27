@@ -1,5 +1,26 @@
 import Mathlib
 
+-- Equality coercions
+
+theorem eq_identity_coercion {α} {a : α} : a = a -> a = a := by
+  simp
+
+theorem eq_nat_to_int_coercion {a b : ℕ} : a = b -> (a : ℤ) = (b : ℤ) := by
+  intro h
+  rw [h]
+
+theorem eq_nat_to_rat_coercion {a b : ℕ} : a = b -> (a : ℚ) = (b : ℚ) := by
+  intro h
+  rw [h]
+
+theorem eq_nat_to_real_coercion {a b : ℕ} : a = b -> (a : ℝ) = (b : ℝ) := by
+  intro h
+  rw [h]
+
+theorem eq_nat_to_complex_coercion {a b : ℕ} : a = b -> (a : ℂ) = (b : ℂ) := by
+  intro h
+  rw [h]
+
 -- Addition coercions
 
 theorem add_nat_to_int_coercion {a b : ℕ} : (a + b : ℤ) = (a : ℤ) + (b : ℤ) := by ring

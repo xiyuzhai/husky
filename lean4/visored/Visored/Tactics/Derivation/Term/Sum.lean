@@ -28,11 +28,20 @@ macro "term_derivation_atom_add_non_zero_literal" : tactic => `(tactic| (exact t
 example (x: ℝ) : x + 2 = 2 + 1 * x^1 := by
   term_derivation_atom_add_non_zero_literal
 
-theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {term: γ} [CommRing γ][CoeTC α γ] [CoeTC β γ]
-  (ha: a = term_a) (hb: b = term_b) (hab: (term_a:γ)+ (term_b:γ)= term) : (a:γ) + (b:γ) = term := by
-  rw [ha, hb, hab]
+theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {a1 b1 term_a1 term_b1 term: γ}
+  [CommRing γ]
+  (ha0: a = term_a)
+  (hb0: b = term_b)
+  (a_coercion: a = term_a -> a1 = term_a1)
+  (b_coercion: b = term_b -> b1 = term_b1)
+  (hab: term_a1 + term_b1 = term)
+  : a1 + b1 = term := by
+  have ha : a1 = term_a1 := a_coercion ha0
+  have hb : b1 = term_b1 := b_coercion hb0
+  rw [ha, hb]
+  exact hab
 
 /-- derive `a + b => term` from `a => term_a`, `b => term_b` and `term_a + term_b => term`
 -/
-macro "term_derivation_add_eq" ha:term:1024 hb:term:1024 hab:term:1024 : tactic =>
-  `(tactic| exact term_derivation_add_eq $ha $hb $hab)
+macro "term_derivation_add_eq" ha0:term:1024 hb0:term:1024 ca:term:1024 cb:term:1024 hab:term:1024 : tactic =>
+  `(tactic| exact term_derivation_add_eq $ha0 $hb0 $ca $cb $hab)

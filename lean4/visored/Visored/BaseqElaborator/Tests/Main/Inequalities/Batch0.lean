@@ -75,7 +75,8 @@ def h (x : ℝ) (h1 : x ≥ (1 : ℝ)) := by
     have d2 : x = x := by term_derivation_reflection
     have d3 : -(1 : ℤ) = -1 := by term_derivation_neg_literal
     have d4 : x + (-1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_atom_add_non_zero_literal
-    have d5 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_add_eq d2 d3 d4
+    have d5 : x + (-(1 : ℤ) : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 :=
+      by term_derivation_add_eq d2 d3 eq_identity_coercion eq_nat_to_real_coercion d4
     have d6 : x - (1 : ℝ) = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by term_derivation_sub_eqs_add_neg
     have d7 : x ≥ (1 : ℝ) ↔ (-1 : ℝ) + (1 : ℝ) * x ^ 1 ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d8 : x = x := by term_derivation_reflection
