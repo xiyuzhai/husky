@@ -77,7 +77,7 @@ impl LnMirExprConstructor {
         match key {
             LnMirFuncKey::ItemPath(item_path) => {
                 let data = LnMirExprData::ItemPath(item_path);
-                let entry = LnMirExprEntry::new(data, None);
+                let entry = LnMirExprEntry::new(data);
                 LnMirFunc::Expr(self.alloc_expr(entry))
             }
             LnMirFuncKey::BinaryOpr { opr, instantiation } => {

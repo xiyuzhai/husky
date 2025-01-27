@@ -36,7 +36,7 @@ where
 
     pub fn exact_unit(&mut self) -> LnMirTacticData {
         let data = LnMirExprData::ItemPath(LnItemPath::UNIT);
-        let entry = LnMirExprEntry::new(data, None);
+        let entry = LnMirExprEntry::new(data);
         let unit = self.alloc_expr(entry);
         LnMirTacticData::Exact { term: unit }
     }

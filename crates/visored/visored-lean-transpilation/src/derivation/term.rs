@@ -131,7 +131,7 @@ where
             arguments,
             construction: None,
         }]);
-        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }, None))
+        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }))
     }
 
     pub(super) fn build_term_derivation_chunk_end_tactic_data(

@@ -240,7 +240,7 @@ where
     }
 
     pub(crate) fn sorry(&mut self) -> LnMirDefBody {
-        LnMirDefBody::Expr(self.alloc_expr(LnMirExprEntry::new(LnMirExprData::Sorry, todo!())))
+        LnMirDefBody::Expr(self.alloc_expr(LnMirExprEntry::new(LnMirExprData::Sorry)))
     }
 }
 

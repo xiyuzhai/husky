@@ -31,15 +31,18 @@ pub enum LnMirExprData {
         function: LnMirFunc,
         arguments: LnMirExprIdxRange,
     },
-    Sorry,
+    TypeAscription {
+        expr: LnMirExprIdx,
+        ty: LnMirExprIdx,
+    },
     By {
         tactics: LnMirTacticIdxRange,
     },
+    Sorry,
 }
 
 pub struct LnMirExprEntry {
     data: LnMirExprData,
-    ty_ascription: Option<LnMirExprIdx>,
 }
 
 pub type LnMirExprArena = Arena<LnMirExprEntry>;
@@ -48,21 +51,14 @@ pub type LnMirExprIdx = ArenaIdx<LnMirExprEntry>;
 pub type LnMirExprIdxRange = ArenaIdxRange<LnMirExprEntry>;
 
 impl LnMirExprEntry {
-    pub fn new(data: LnMirExprData, ty_ascription: Option<LnMirExprIdx>) -> Self {
-        Self {
-            data,
-            ty_ascription,
-        }
+    pub fn new(data: LnMirExprData) -> Self {
+        Self { data }
     }
 }
 
 impl LnMirExprEntry {
     pub fn data(&self) -> &LnMirExprData {
         &self.data
-    }
-
-    pub fn ty_ascription(&self) -> Option<LnMirExprIdx> {
-        self.ty_ascription
     }
 }
 
@@ -89,6 +85,7 @@ impl LnMirExprData {
                 arguments,
             } => function.outer_precedence(),
             LnMirExprData::By { tactics } => LnPrecedence::Min,
+            LnMirExprData::TypeAscription { expr, ty } => todo!(),
         }
     }
 
@@ -107,6 +104,7 @@ impl LnMirExprData {
                 arguments,
             } => function.expr().into_iter().chain(arguments).collect(),
             LnMirExprData::By { tactics } => todo!(),
+            LnMirExprData::TypeAscription { expr, ty } => todo!(),
         }
     }
 }

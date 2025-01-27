@@ -60,6 +60,7 @@ impl<'a> LnMirExprDisplayTreeBuilder<'a> {
             } => format!("application"),
             LnMirExprData::Sorry => "sorry".to_string(),
             LnMirExprData::By { tactics } => format!("by"),
+            LnMirExprData::TypeAscription { expr, ty } => todo!(),
         };
         let children = self.expr_arena[expr].data().children();
         DisplayTree::new(

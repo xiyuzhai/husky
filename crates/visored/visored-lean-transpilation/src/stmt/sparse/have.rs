@@ -82,13 +82,12 @@ impl<'a> VdLeanTranspilationBuilder<'a, Sparse> {
         LnItemDefnData::Def {
             ident,
             parameters: vec![],
-            ty: Some(self.alloc_expr(LnMirExprEntry::new(
-                LnMirExprData::Application {
+            ty: Some(
+                self.alloc_expr(LnMirExprEntry::new(LnMirExprData::Application {
                     function: ultimate_prop_function,
                     arguments: ultimate_prop_arguments,
-                },
-                todo!(),
-            ))),
+                })),
+            ),
             body: self.alloc_tactics([tactic_data]).into(),
         }
     }

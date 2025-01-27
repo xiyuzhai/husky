@@ -86,18 +86,13 @@ impl<'a> LnMirExprFormatter<'a> {
         let expr_arena = self.expr_arena;
         let expr_entry = &expr_arena[expr];
         let expr_data = expr_entry.data();
-        let needs_bracket = (!precedence_range.include(expr_data.outer_precedence()))
-            || expr_entry.ty_ascription().is_some();
+        let needs_bracket = (!precedence_range.include(expr_data.outer_precedence()));
         if needs_bracket {
             // TODO: consider multiline
             self.result += "(";
         }
         let prev_len = self.result.len();
         self.format_expr_inner(expr, false);
-        if let Some(ty_ascription) = expr_entry.ty_ascription() {
-            self.result += " : ";
-            self.format_expr_ext(ty_ascription);
-        }
         if try_multiline && !self.check_lines(prev_len) {
             self.result.truncate(prev_len);
             self.format_expr_inner(expr, true);
@@ -209,6 +204,7 @@ impl<'a> LnMirExprFormatter<'a> {
                     self.indented(|slf| slf.format_tactics(tactics));
                 }
             }
+            LnMirExprData::TypeAscription { expr, ty } => todo!(),
         }
     }
 

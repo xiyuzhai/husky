@@ -40,12 +40,13 @@ where
             } else {
                 None
             };
-            result = LnMirExprData::Application {
-                function,
-                arguments: self
-                    .alloc_exprs([LnMirExprEntry::new(result, result_ty_ascription), follower]),
-            };
-            result_ty = separator.expr_ty();
+            todo!()
+            // result = LnMirExprData::Application {
+            //     function,
+            //     arguments: self
+            //         .alloc_exprs([LnMirExprEntry::new(result, result_ty_ascription), follower]),
+            // };
+            // result_ty = separator.expr_ty();
         }
         result
     }

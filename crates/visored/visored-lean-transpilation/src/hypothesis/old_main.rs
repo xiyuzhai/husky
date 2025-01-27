@@ -11,12 +11,9 @@ where
     ) {
         let custom_tactic_data = self.custom_tactic_data("old_main_hypothesis", None, None);
         let construction_tactics = self.alloc_tactics([custom_tactic_data]);
-        let construction = self.alloc_expr(LnMirExprEntry::new(
-            LnMirExprData::By {
-                tactics: construction_tactics,
-            },
-            None,
-        ));
+        let construction = self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By {
+            tactics: construction_tactics,
+        }));
         ln_tactics.push(LnMirTacticData::Have {
             ident: self.mangle_old_main_hypothesis(),
             ty: Some(

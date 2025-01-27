@@ -68,7 +68,7 @@ impl LnMirExprConstructor {
 
     pub fn alloc_by(&mut self, tactics: impl IntoIterator<Item = LnMirTacticData>) -> LnMirExprIdx {
         let tactics = self.alloc_tactics(tactics);
-        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }, None))
+        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }))
     }
 
     pub fn alloc_by_custom(
@@ -81,7 +81,7 @@ impl LnMirExprConstructor {
             arguments: arguments.into(),
             construction: None,
         }]);
-        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }, None))
+        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }))
     }
 
     pub fn alloc_exprs(

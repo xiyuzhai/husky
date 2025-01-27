@@ -30,7 +30,6 @@ where
                 let hypothesis = match path {
                     VdTheoremPath::SquareNonnegative => self.alloc_expr(LnMirExprEntry::new(
                         LnMirExprData::ItemPath(LnTheoremPath::SquareNonnegative.into()),
-                        None,
                     )),
                 };
                 self.alloc_tactics([LnMirTacticData::Apply { hypothesis }])
@@ -58,12 +57,9 @@ where
             }
             VdMirHypothesisConstruction::Kurapika => todo!(),
         };
-        let construction = self.alloc_expr(LnMirExprEntry::new(
-            LnMirExprData::By {
-                tactics: construction_tactics,
-            },
-            None,
-        ));
+        let construction = self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By {
+            tactics: construction_tactics,
+        }));
         let ident = self.mangle_hypothesis(hypothesis);
         ln_tactics.push(LnMirTacticData::Have {
             ident,

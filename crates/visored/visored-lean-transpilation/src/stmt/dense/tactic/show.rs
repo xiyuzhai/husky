@@ -29,12 +29,9 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
                     p!(self.input(), following_stmts.len());
                     todo!()
                 }
-                let construction = self.alloc_expr(LnMirExprEntry::new(
-                    LnMirExprData::By {
-                        tactics: construction_tactics,
-                    },
-                    None,
-                ));
+                let construction = self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By {
+                    tactics: construction_tactics,
+                }));
                 LnMirTacticData::Have {
                     ident: self.new_hypothesis_ident(),
                     ty: Some(ty),
