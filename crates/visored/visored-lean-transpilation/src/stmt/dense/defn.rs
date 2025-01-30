@@ -162,9 +162,13 @@ impl<'a> VdLeanTranspilationBuilder<'a, Dense> {
                 });
                 std::ops::ControlFlow::Continue(())
             }
-            VdMirStmtData::Assume { prop, .. } => {
+            VdMirStmtData::Assume {
+                prop,
+                hypothesis_chunk_place,
+                ..
+            } => {
                 parameters.push(LnDefParameter {
-                    ident: self.mangle_assume(),
+                    ident: self.mangle_assume(hypothesis_chunk_place.unwrap()),
                     ty: prop.to_lean(self),
                 });
                 std::ops::ControlFlow::Continue(())

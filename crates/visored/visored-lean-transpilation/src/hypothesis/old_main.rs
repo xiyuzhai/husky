@@ -15,7 +15,7 @@ where
             tactics: construction_tactics,
         }));
         ln_tactics.push(LnMirTacticData::Have {
-            ident: self.mangle_old_main_hypothesis(),
+            ident: self.mangle_hypothesis(main_hypothesis),
             ty: Some(
                 self.hypothesis_arena()[main_hypothesis]
                     .expr()

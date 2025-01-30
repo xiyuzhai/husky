@@ -76,19 +76,19 @@ macro "litnum_bound": tactic =>`(tactic|
 )
 
 def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b + b / a ≥ ((2:ℕ) : ℝ) := by
-  have h3 : a > ((0:ℕ) : ℝ) := by old_main_hypothesis
-  have h4 : b > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : a > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h2 : b > ((0:ℕ) : ℝ) := by old_main_hypothesis
   first
-  | have h5 : (√ (a / b) - √ (b / a)) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+  | have h3 : (√ (a / b) - √ (b / a)) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
     (√ (a / b) - √ (b / a)) ^ (2:ℕ) = √ (a / b) ^ (2:ℕ) - ((2:ℕ) : ℝ) * √ (a / b) * √ (b / a) + √ (b / a) ^ (2:ℕ) := by obvious
     _ = a / b - ((2:ℕ) : ℝ) + b / a := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  | have h6 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by calc
+  | have h4 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by calc
     a / b - ((2:ℕ) : ℝ) + b / a = √ (a / b) ^ (2:ℕ) - ((2:ℕ) : ℝ) * √ (a / b) * √ (b / a) + √ (b / a) ^ (2:ℕ) := by obvious
     _ = (√ (a / b) - √ (b / a)) ^ (2:ℕ) := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  have h7 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by obvious
-  have h8 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by
+  have h5 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by obvious
+  have h6 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by
     have d : a = a := by term_derivation_reflection
     have d1 : b = b := by term_derivation_reflection
     have d2 : a * b ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) := by term_derivation_atom_mul_exponential_greater
@@ -178,6 +178,6 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b 
     have d86 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_add_eq d78 d79 eq_identity_coercion eq_int_to_real_coercion d85
     have d87 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) - ((2:ℕ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_sub_eqs_add_neg d86 neg_nat_to_real_coercion
     have d88 : a / b + b / a ≥ ((2:ℕ) : ℝ) ↔ ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_finish h7 d44 d88
+    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_finish h5 d44 d88
     assumption
   obvious

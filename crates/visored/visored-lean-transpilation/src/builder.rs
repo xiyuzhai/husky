@@ -21,7 +21,7 @@ use visored_mir_expr::{
     derivation::{VdMirDerivationArenaRef, VdMirDerivationIdx},
     expr::VdMirExprArenaRef,
     hint::VdMirHintArenaRef,
-    hypothesis::{VdMirHypothesisArenaRef, VdMirHypothesisIdx},
+    hypothesis::{chunk::VdMirHypothesisChunk, VdMirHypothesisArenaRef, VdMirHypothesisIdx},
     region::VdMirExprRegionData,
     source_map::VdMirRegionSourceMap,
     stmt::VdMirStmtArenaRef,
@@ -218,23 +218,25 @@ where
     }
 
     pub(crate) fn mangle_old_main_hypothesis(&mut self) -> LnIdent {
+        // TODO: This is a temporary hack to get the old main hypothesis to work.
         self.new_hypothesis_ident()
     }
 
     pub(crate) fn mangle_stmts_item_defn(&mut self) -> LnIdent {
+        // TODO: This is a temporary hack to get the old main hypothesis to work.
         self.new_hypothesis_ident()
     }
 
-    pub(crate) fn mangle_assume(&mut self) -> LnIdent {
-        self.new_hypothesis_ident()
-    }
-
+    /// TODO: This is a temporary hack to get the old main hypothesis to work.
     pub(crate) fn new_hypothesis_ident(&mut self) -> LnIdent {
-        let db = self.db();
         self.mangler.new_hypothesis_ident(
-            vd_module_path_to_ln_namespace_or_inherited(self.current_module_path, db),
-            db,
+            vd_module_path_to_ln_namespace_or_inherited(self.current_module_path, self.db()),
+            self.db(),
         )
+    }
+
+    pub(crate) fn mangle_assume(&mut self, hypothesis_chunk: VdMirHypothesisChunk) -> LnIdent {
+        self.mangle_hypothesis(hypothesis_chunk.main_hypothesis())
     }
 
     pub(crate) fn mangle_derivation(&mut self, derivation: VdMirDerivationIdx) -> LnIdent {

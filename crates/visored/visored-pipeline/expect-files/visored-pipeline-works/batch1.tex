@@ -495,16 +495,16 @@ macro "litnum_bound": tactic =>`(tactic|
 )
 
 def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ) : ℝ) := by
-  have h2 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
   first
-  | have h3 : (x - ((1:ℕ) : ℝ)) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+  | have h2 : (x - ((1:ℕ) : ℝ)) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
     (x - ((1:ℕ) : ℝ)) ^ (2:ℕ) = x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x + ((1:ℕ) : ℝ) := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  | have h4 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x + ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by calc
+  | have h3 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x + ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by calc
     x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x + ((1:ℕ) : ℝ) = (x - ((1:ℕ) : ℝ)) ^ (2:ℕ) := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  have h5 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x + ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by obvious
-  have h6 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x := by
+  have h4 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x + ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by obvious
+  have h5 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x := by
     have d : x = x := by term_derivation_reflection
     have d1 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d2 : x ^ (2:ℕ) = ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_non_reduced_power
@@ -575,10 +575,10 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ
     have d67 : ((1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) + (-(((2:ℕ) : ℝ) * x ^ (1:ℕ)) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_add_eq d56 d63 eq_identity_coercion eq_identity_coercion d66
     have d68 : ((1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x ^ (1:ℕ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_sub_eqs_add_neg d67 neg_identity_coercion
     have d69 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x ↔ ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d70 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x := by term_derivation_non_trivial_finish h5 d39 d69
+    have d70 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x := by term_derivation_non_trivial_finish h4 d39 d69
     assumption
-  have h7 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
-  have h8 : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ) : ℝ) := by obvious
+  have h1 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h6 : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ) : ℝ) := by obvious
   obvious
 
 \end{lstlisting}
@@ -946,43 +946,43 @@ macro "litnum_bound": tactic =>`(tactic|
 
 def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y > ((0:ℕ) : ℝ)) : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by
   have h3 : in_set := by obvious
-  have h4 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
-  have h5 : in_set := by obvious
-  have h6 : y > ((0:ℕ) : ℝ) := by old_main_hypothesis
-  have h15 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by
-    have h7 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+  have h1 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h4 : in_set := by obvious
+  have h2 : y > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h13 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by
+    have h5 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
       simp
       apply sq_nonneg
     first
-    | have h8 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+    | have h6 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
       (x - y) ^ (2:ℕ) = x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) := by obvious
       _ ≥ (0:ℕ) : ℝ := by obvious
-    | have h9 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+    | have h7 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
       x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) = (x - y) ^ (2:ℕ) := by obvious
       _ ≥ (0:ℕ) : ℝ := by obvious
-    have h10 : x ^ (2:ℕ) + y ^ (2:ℕ) ≥ ((2:ℕ) : ℝ) * x * y := by obvious
+    have h8 : x ^ (2:ℕ) + y ^ (2:ℕ) ≥ ((2:ℕ) : ℝ) * x * y := by obvious
     first
-    | have h11 : x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
+    | have h9 : x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
       x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) = (x + y) ^ (2:ℕ) := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y := by obvious
-    | have h12 : (x + y) ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
+    | have h10 : (x + y) ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
       (x + y) ^ (2:ℕ) = x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y := by obvious
     first
-    | have h13 : (x + y) ^ (2:ℕ) / (x * y * (x + y)) ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
+    | have h11 : (x + y) ^ (2:ℕ) / (x * y * (x + y)) ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
       (x + y) ^ (2:ℕ) / (x * y * (x + y)) = (x + y) / (x * y) := by obvious
       _ = x / (x * y) + y / (x * y) := by obvious
       _ = ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y / (x * y * (x + y)) := by obvious
       _ = ((4:ℕ) : ℝ) / (x + y) := by obvious
-    | have h14 : ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
+    | have h12 : ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
       ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x = x / (x * y) + y / (x * y) := by obvious
       _ = (x + y) / (x * y) := by obvious
       _ = (x + y) ^ (2:ℕ) / (x * y * (x + y)) := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y / (x * y * (x + y)) := by obvious
       _ = ((4:ℕ) : ℝ) / (x + y) := by obvious
     obvious
-  have h16 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by obvious
+  have h14 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by obvious
 
 \end{lstlisting}
 \end{tcolorbox}
@@ -1102,19 +1102,19 @@ macro "litnum_bound": tactic =>`(tactic|
 )
 
 def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b + b / a ≥ ((2:ℕ) : ℝ) := by
-  have h3 : a > ((0:ℕ) : ℝ) := by old_main_hypothesis
-  have h4 : b > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : a > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h2 : b > ((0:ℕ) : ℝ) := by old_main_hypothesis
   first
-  | have h5 : (√ (a / b) - √ (b / a)) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+  | have h3 : (√ (a / b) - √ (b / a)) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
     (√ (a / b) - √ (b / a)) ^ (2:ℕ) = √ (a / b) ^ (2:ℕ) - ((2:ℕ) : ℝ) * √ (a / b) * √ (b / a) + √ (b / a) ^ (2:ℕ) := by obvious
     _ = a / b - ((2:ℕ) : ℝ) + b / a := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  | have h6 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by calc
+  | have h4 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by calc
     a / b - ((2:ℕ) : ℝ) + b / a = √ (a / b) ^ (2:ℕ) - ((2:ℕ) : ℝ) * √ (a / b) * √ (b / a) + √ (b / a) ^ (2:ℕ) := by obvious
     _ = (√ (a / b) - √ (b / a)) ^ (2:ℕ) := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  have h7 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by obvious
-  have h8 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by
+  have h5 : a / b - ((2:ℕ) : ℝ) + b / a ≥ ((0:ℕ) : ℝ) := by obvious
+  have h6 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by
     have d : a = a := by term_derivation_reflection
     have d1 : b = b := by term_derivation_reflection
     have d2 : a * b ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) := by term_derivation_atom_mul_exponential_greater
@@ -1204,7 +1204,7 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b 
     have d86 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_add_eq d78 d79 eq_identity_coercion eq_int_to_real_coercion d85
     have d87 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) - ((2:ℕ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_sub_eqs_add_neg d86 neg_nat_to_real_coercion
     have d88 : a / b + b / a ≥ ((2:ℕ) : ℝ) ↔ ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_finish h7 d44 d88
+    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_finish h5 d44 d88
     assumption
   obvious
 

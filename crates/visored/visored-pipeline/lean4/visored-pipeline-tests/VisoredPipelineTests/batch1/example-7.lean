@@ -77,40 +77,40 @@ macro "litnum_bound": tactic =>`(tactic|
 
 def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y > ((0:ℕ) : ℝ)) : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by
   have h3 : in_set := by obvious
-  have h4 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
-  have h5 : in_set := by obvious
-  have h6 : y > ((0:ℕ) : ℝ) := by old_main_hypothesis
-  have h15 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by
-    have h7 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+  have h1 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h4 : in_set := by obvious
+  have h2 : y > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h13 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by
+    have h5 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
       simp
       apply sq_nonneg
     first
-    | have h8 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+    | have h6 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
       (x - y) ^ (2:ℕ) = x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) := by obvious
       _ ≥ (0:ℕ) : ℝ := by obvious
-    | have h9 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+    | have h7 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
       x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) = (x - y) ^ (2:ℕ) := by obvious
       _ ≥ (0:ℕ) : ℝ := by obvious
-    have h10 : x ^ (2:ℕ) + y ^ (2:ℕ) ≥ ((2:ℕ) : ℝ) * x * y := by obvious
+    have h8 : x ^ (2:ℕ) + y ^ (2:ℕ) ≥ ((2:ℕ) : ℝ) * x * y := by obvious
     first
-    | have h11 : x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
+    | have h9 : x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
       x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) = (x + y) ^ (2:ℕ) := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y := by obvious
-    | have h12 : (x + y) ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
+    | have h10 : (x + y) ^ (2:ℕ) ≥ ((4:ℕ) : ℝ) * x * y := by calc
       (x + y) ^ (2:ℕ) = x ^ (2:ℕ) + ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y := by obvious
     first
-    | have h13 : (x + y) ^ (2:ℕ) / (x * y * (x + y)) ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
+    | have h11 : (x + y) ^ (2:ℕ) / (x * y * (x + y)) ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
       (x + y) ^ (2:ℕ) / (x * y * (x + y)) = (x + y) / (x * y) := by obvious
       _ = x / (x * y) + y / (x * y) := by obvious
       _ = ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y / (x * y * (x + y)) := by obvious
       _ = ((4:ℕ) : ℝ) / (x + y) := by obvious
-    | have h14 : ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
+    | have h12 : ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x ≥ ((4:ℕ) : ℝ) / (x + y) := by calc
       ((1:ℕ) : ℝ) / y + ((1:ℕ) : ℝ) / x = x / (x * y) + y / (x * y) := by obvious
       _ = (x + y) / (x * y) := by obvious
       _ = (x + y) ^ (2:ℕ) / (x * y * (x + y)) := by obvious
       _ ≥ ((4:ℕ) : ℝ) * x * y / (x * y * (x + y)) := by obvious
       _ = ((4:ℕ) : ℝ) / (x + y) := by obvious
     obvious
-  have h16 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by obvious
+  have h14 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by obvious

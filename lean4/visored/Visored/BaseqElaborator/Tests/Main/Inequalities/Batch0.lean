@@ -71,7 +71,7 @@ end Example11
 
 namespace Example12
 def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
-  have h3 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
+  have h2 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
     have d : x = x := by term_derivation_reflection
     have d1 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection
     have d2 : x = x := by term_derivation_reflection
@@ -98,7 +98,7 @@ def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
     have d23 : ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) = ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_add_eq d20 d21 eq_identity_coercion eq_int_to_real_coercion d22
     have d24 : ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) - ((0:ℕ) : ℝ) = ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_sub_eqs_add_neg d23 neg_nat_to_real_coercion
     have d25 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d26 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_non_trivial_finish h2 d7 d25
+    have d26 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_non_trivial_finish h1 d7 d25
     assumption
   exact ()
 end Example12
@@ -225,7 +225,7 @@ end Example32
 
 namespace Example33
 def h (x : ℝ) (h1 : x = ((1:ℕ) : ℝ)) := by
-  have h2 : x = ((1:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : x = ((1:ℕ) : ℝ) := by old_main_hypothesis
   exact ()
 end Example33
 
@@ -233,7 +233,7 @@ namespace Example34
 def h := by
   let x := (1:ℕ)
   have h1 : x = (1:ℕ) := by let_assigned
-  have h2 : x = (1:ℕ) := by old_main_hypothesis
+  have h1 : x = (1:ℕ) := by old_main_hypothesis
   exact ()
 end Example34
 
@@ -259,7 +259,7 @@ end Example36
 
 namespace Example37
 def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) := by
-  have h2 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
   exact ()
 end Example37
 
@@ -319,7 +319,7 @@ end Example46
 
 namespace Example47
 def h (x : ℝ) (h1 : (- x : ℝ) > ((0:ℕ) : ℝ)) := by
-  have h2 : (- x : ℝ) > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : (- x : ℝ) > ((0:ℕ) : ℝ) := by old_main_hypothesis
   exact ()
 end Example47
 
@@ -379,7 +379,7 @@ end Example56
 
 namespace Example57
 def h (x : ℝ) (h1 : (-(((2:ℕ) : ℝ) * x) : ℝ) > ((0:ℕ) : ℝ)) := by
-  have h2 : (-(((2:ℕ) : ℝ) * x) : ℝ) > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : (-(((2:ℕ) : ℝ) * x) : ℝ) > ((0:ℕ) : ℝ) := by old_main_hypothesis
   exact ()
 end Example57
 
@@ -439,7 +439,7 @@ end Example66
 
 namespace Example67
 def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℝ) * x) : ℝ) > ((0:ℕ) : ℝ)) := by
-  have h2 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℝ) * x) : ℝ) > ((0:ℕ) : ℝ) := by old_main_hypothesis
+  have h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℝ) * x) : ℝ) > ((0:ℕ) : ℝ) := by old_main_hypothesis
   exact ()
 end Example67
 
