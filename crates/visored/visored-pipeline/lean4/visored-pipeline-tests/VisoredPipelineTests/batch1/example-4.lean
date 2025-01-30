@@ -123,7 +123,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ
     have d34 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_add_eq d28 d32 eq_identity_coercion eq_identity_coercion d33
     have d35 : (-((0:ℕ) : ℤ) : ℤ) = (0:ℕ) := by term_derivation_neg_literal
     have d36 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) + ((0:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_nf_add_zero
-    have d37 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_add_eq d34 d35 eq_identity_coercion eq_nat_to_real_coercion d36
+    have d37 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_add_eq d34 d35 eq_identity_coercion eq_int_to_real_coercion d36
     have d38 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) - ((0:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_sub_eqs_add_neg d37 neg_nat_to_real_coercion
     have d39 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x + ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
     have d40 : x = x := by term_derivation_reflection

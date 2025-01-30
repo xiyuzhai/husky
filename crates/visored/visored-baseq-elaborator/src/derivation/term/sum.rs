@@ -21,14 +21,15 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             }
         }
         let (a, signature, b) = self.split_folding_separated_list(leader, followers);
-        let a = a.normalize(self, hc);
-        let b = b.normalize(self, hc);
+        let a_normalized = a.normalize(self, hc);
+        let b_normalized = b.normalize(self, hc);
         VdMirTermDerivationConstruction::AddEq {
             a_eq_coercion: VdMirSeparatorCoercion::new_eq(a.ty(), signature.item_ty()),
             b_eq_coercion: VdMirSeparatorCoercion::new_eq(b.ty(), signature.item_ty()),
-            a_derivation: a.derivation(),
-            b_derivation: b.derivation(),
-            a_term_add_b_term_derivation: merge(**a, **b, self, hc).derivation(),
+            a_derivation: a_normalized.derivation(),
+            b_derivation: b_normalized.derivation(),
+            a_term_add_b_term_derivation: merge(**a_normalized, **b_normalized, self, hc)
+                .derivation(),
         }
     }
 }
