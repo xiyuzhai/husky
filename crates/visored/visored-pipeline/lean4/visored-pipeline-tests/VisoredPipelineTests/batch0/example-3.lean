@@ -108,124 +108,124 @@ def h (a b c : ℝ) : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by
     have d16 : b = b := by term_derivation_reflection
     have d17 : a * b = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_atom_mul_atom
     have d18 : a * b = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d19 : (-((1 : ℝ) * (b ^ 1 * a ^ 1)) : ℝ) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_product
-    have d20 : (-(a * b) : ℝ) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_eq
-    have d21 : -(1: ℤ) = -(1: ℤ) := by term_derivation_reflection
+    have d19 : (-((1 : ℝ) * (b ^ 1 * a ^ 1)) : ℝ) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_product
+    have d20 : (-(a * b) : ℝ) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_eq
+    have d21 : (-1 : ℤ) = (-1 : ℤ) := by term_derivation_reflection
     have d22 : b = b := by term_derivation_reflection
     have d23 : b ^ 1 = b := by term_derivation_power_one
     have d24 : a = a := by term_derivation_reflection
     have d25 : a ^ 1 = a := by term_derivation_power_one
     have d26 : b * a = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_atom_mul_atom
     have d27 : b ^ 1 * a ^ 1 = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d28 : -(1: ℤ) * (1 : ℤ) = -(1: ℤ) := by term_derivation_literal_mul_literal
-    have d29 : (-(1: ℤ) : ℝ) * b ^ 1 = (-(1: ℤ) : ℝ) * b ^ 1 := by term_derivation_reflection
-    have d30 : (-(1: ℤ) : ℝ) * b ^ 1 * a ^ 1 = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
-    have d31 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d32 : (-(1: ℤ) : ℝ) * ((1 : ℝ) * (b ^ 1 * a ^ 1)) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d33 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d34 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_zero_add
-    have d35 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_product_add_product_less
-    have d36 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
-    have d37 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
-    have d38 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
-    have d39 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
-    have d40 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
-    have d41 : a ^ 2 + b ^ 2 + c ^ 2 + (-(a * b) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_eq d14 d20 eq_identity_coercion eq_identity_coercion d40
-    have d42 : a ^ 2 + b ^ 2 + c ^ 2 - a * b = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sub_eqs_add_neg
+    have d28 : (-1 : ℤ) * (1 : ℤ) = (-1 : ℤ) := by term_derivation_literal_mul_literal
+    have d29 : ((-1 : ℤ) : ℝ) * b ^ 1 = ((-1 : ℤ) : ℝ) * b ^ 1 := by term_derivation_reflection
+    have d30 : ((-1 : ℤ) : ℝ) * b ^ 1 * a ^ 1 = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
+    have d31 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d32 : ((-1 : ℤ) : ℝ) * ((1 : ℝ) * (b ^ 1 * a ^ 1)) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d33 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
+    have d34 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_zero_add
+    have d35 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_product_add_product_less
+    have d36 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
+    have d37 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
+    have d38 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
+    have d39 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
+    have d40 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
+    have d41 : a ^ 2 + b ^ 2 + c ^ 2 + (-(a * b) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_eq d14 d20 eq_identity_coercion eq_identity_coercion d40
+    have d42 : a ^ 2 + b ^ 2 + c ^ 2 - a * b = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sub_eqs_add_neg
     have d43 : b = b := by term_derivation_reflection
     have d44 : c = c := by term_derivation_reflection
     have d45 : b * c = (1 : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_atom_mul_atom
     have d46 : b * c = (1 : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_eq
-    have d47 : (-((1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_product
-    have d48 : (-(b * c) : ℝ) = (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_eq
-    have d49 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
-    have d50 : a ^ 2 + b ^ 2 + c ^ 2 - a * b + (-(b * c) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d42 d48 eq_identity_coercion eq_identity_coercion d49
-    have d51 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
+    have d47 : (-((1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_product
+    have d48 : (-(b * c) : ℝ) = ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_eq
+    have d49 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
+    have d50 : a ^ 2 + b ^ 2 + c ^ 2 - a * b + (-(b * c) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d42 d48 eq_identity_coercion eq_identity_coercion d49
+    have d51 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
     have d52 : c = c := by term_derivation_reflection
     have d53 : a = a := by term_derivation_reflection
     have d54 : c * a = (1 : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_atom_mul_atom
     have d55 : c * a = (1 : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d56 : (-((1 : ℝ) * (c ^ 1 * a ^ 1)) : ℝ) = (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_product
-    have d57 : (-(c * a) : ℝ) = (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_eq
-    have d58 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_reflection
-    have d59 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_reflection
-    have d60 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
-    have d61 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
-    have d62 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
-    have d63 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
-    have d64 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
-    have d65 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
-    have d66 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sum_add_product_greater
-    have d67 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c + (-(c * a) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d51 d57 eq_identity_coercion eq_identity_coercion d66
-    have d68 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c - c * a = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
+    have d56 : (-((1 : ℝ) * (c ^ 1 * a ^ 1)) : ℝ) = ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_product
+    have d57 : (-(c * a) : ℝ) = ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_eq
+    have d58 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_reflection
+    have d59 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_reflection
+    have d60 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
+    have d61 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
+    have d62 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
+    have d63 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
+    have d64 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
+    have d65 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
+    have d66 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sum_add_product_greater
+    have d67 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c + (-(c * a) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d51 d57 eq_identity_coercion eq_identity_coercion d66
+    have d68 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c - c * a = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
     have d69 : 0 = 0 := by term_derivation_reflection
-    have d70 : -(1: ℤ) = -(1: ℤ) := by term_derivation_reflection
+    have d70 : (-1 : ℤ) = (-1 : ℤ) := by term_derivation_reflection
     have d71 : b = b := by term_derivation_reflection
     have d72 : b ^ 1 = b := by term_derivation_power_one
     have d73 : a = a := by term_derivation_reflection
     have d74 : a ^ 1 = a := by term_derivation_power_one
     have d75 : b * a = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_atom_mul_atom
     have d76 : b ^ 1 * a ^ 1 = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d77 : -(1: ℤ) * (1 : ℤ) = -(1: ℤ) := by term_derivation_literal_mul_literal
-    have d78 : (-(1: ℤ) : ℝ) * b ^ 1 = (-(1: ℤ) : ℝ) * b ^ 1 := by term_derivation_reflection
-    have d79 : (-(1: ℤ) : ℝ) * b ^ 1 * a ^ 1 = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
-    have d80 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d81 : (-(1: ℤ) : ℝ) * ((1 : ℝ) * (b ^ 1 * a ^ 1)) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d82 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d83 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_zero_add
-    have d84 : -(1: ℤ) = -(1: ℤ) := by term_derivation_reflection
+    have d77 : (-1 : ℤ) * (1 : ℤ) = (-1 : ℤ) := by term_derivation_literal_mul_literal
+    have d78 : ((-1 : ℤ) : ℝ) * b ^ 1 = ((-1 : ℤ) : ℝ) * b ^ 1 := by term_derivation_reflection
+    have d79 : ((-1 : ℤ) : ℝ) * b ^ 1 * a ^ 1 = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
+    have d80 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d81 : ((-1 : ℤ) : ℝ) * ((1 : ℝ) * (b ^ 1 * a ^ 1)) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d82 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
+    have d83 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_zero_add
+    have d84 : (-1 : ℤ) = (-1 : ℤ) := by term_derivation_reflection
     have d85 : c = c := by term_derivation_reflection
     have d86 : c ^ 1 = c := by term_derivation_power_one
     have d87 : a = a := by term_derivation_reflection
     have d88 : a ^ 1 = a := by term_derivation_power_one
     have d89 : c * a = (1 : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_atom_mul_atom
     have d90 : c ^ 1 * a ^ 1 = (1 : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d91 : -(1: ℤ) * (1 : ℤ) = -(1: ℤ) := by term_derivation_literal_mul_literal
-    have d92 : (-(1: ℤ) : ℝ) * c ^ 1 = (-(1: ℤ) : ℝ) * c ^ 1 := by term_derivation_reflection
-    have d93 : (-(1: ℤ) : ℝ) * c ^ 1 * a ^ 1 = (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
-    have d94 : (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d95 : (-(1: ℤ) : ℝ) * ((1 : ℝ) * (c ^ 1 * a ^ 1)) = (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d96 : (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d97 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_product_add_product_less
-    have d98 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_add_eq d83 d96 eq_identity_coercion eq_identity_coercion d97
+    have d91 : (-1 : ℤ) * (1 : ℤ) = (-1 : ℤ) := by term_derivation_literal_mul_literal
+    have d92 : ((-1 : ℤ) : ℝ) * c ^ 1 = ((-1 : ℤ) : ℝ) * c ^ 1 := by term_derivation_reflection
+    have d93 : ((-1 : ℤ) : ℝ) * c ^ 1 * a ^ 1 = ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
+    have d94 : ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d95 : ((-1 : ℤ) : ℝ) * ((1 : ℝ) * (c ^ 1 * a ^ 1)) = ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d96 : ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_mul_eq
+    have d97 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_product_add_product_less
+    have d98 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_add_eq d83 d96 eq_identity_coercion eq_identity_coercion d97
     have d99 : b = b := by term_derivation_reflection
     have d100 : 2 = 2 := by term_derivation_reflection
     have d101 : b ^ 2 = (1 : ℝ) * b ^ 2 := by term_derivation_non_reduced_power
     have d102 : (1 : ℝ) * b ^ 2 = (1 : ℝ) * b ^ 2 := by term_derivation_one_mul
-    have d103 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_reflection
-    have d104 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_add_eq d98 d102 eq_identity_coercion eq_identity_coercion d103
+    have d103 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_reflection
+    have d104 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_add_eq d98 d102 eq_identity_coercion eq_identity_coercion d103
     have d105 : c = c := by term_derivation_reflection
     have d106 : 2 = 2 := by term_derivation_reflection
     have d107 : c ^ 2 = (1 : ℝ) * c ^ 2 := by term_derivation_non_reduced_power
     have d108 : (1 : ℝ) * c ^ 2 = (1 : ℝ) * c ^ 2 := by term_derivation_one_mul
-    have d109 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
-    have d110 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_add_eq d104 d108 eq_identity_coercion eq_identity_coercion d109
+    have d109 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
+    have d110 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_add_eq d104 d108 eq_identity_coercion eq_identity_coercion d109
     have d111 : a = a := by term_derivation_reflection
     have d112 : 2 = 2 := by term_derivation_reflection
     have d113 : a ^ 2 = (1 : ℝ) * a ^ 2 := by term_derivation_non_reduced_power
     have d114 : (1 : ℝ) * a ^ 2 = (1 : ℝ) * a ^ 2 := by term_derivation_one_mul
-    have d115 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
-    have d116 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_eq d110 d114 eq_identity_coercion eq_identity_coercion d115
-    have d117 : -(1: ℤ) = -(1: ℤ) := by term_derivation_reflection
+    have d115 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
+    have d116 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_eq d110 d114 eq_identity_coercion eq_identity_coercion d115
+    have d117 : (-1 : ℤ) = (-1 : ℤ) := by term_derivation_reflection
     have d118 : c = c := by term_derivation_reflection
     have d119 : c ^ 1 = c := by term_derivation_power_one
     have d120 : b = b := by term_derivation_reflection
     have d121 : b ^ 1 = b := by term_derivation_power_one
     have d122 : c * b = (1 : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_atom_mul_atom
     have d123 : c ^ 1 * b ^ 1 = (1 : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_eq
-    have d124 : -(1: ℤ) * (1 : ℤ) = -(1: ℤ) := by term_derivation_literal_mul_literal
-    have d125 : (-(1: ℤ) : ℝ) * c ^ 1 = (-(1: ℤ) : ℝ) * c ^ 1 := by term_derivation_reflection
-    have d126 : (-(1: ℤ) : ℝ) * c ^ 1 * b ^ 1 = (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_simple_product_mul_exponential_less
-    have d127 : (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_product
-    have d128 : (-(1: ℤ) : ℝ) * ((1 : ℝ) * (c ^ 1 * b ^ 1)) = (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_product
-    have d129 : (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_eq
-    have d130 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
-    have d131 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d116 d129 eq_identity_coercion eq_identity_coercion d130
+    have d124 : (-1 : ℤ) * (1 : ℤ) = (-1 : ℤ) := by term_derivation_literal_mul_literal
+    have d125 : ((-1 : ℤ) : ℝ) * c ^ 1 = ((-1 : ℤ) : ℝ) * c ^ 1 := by term_derivation_reflection
+    have d126 : ((-1 : ℤ) : ℝ) * c ^ 1 * b ^ 1 = ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_simple_product_mul_exponential_less
+    have d127 : ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) = ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_product
+    have d128 : ((-1 : ℤ) : ℝ) * ((1 : ℝ) * (c ^ 1 * b ^ 1)) = ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_product
+    have d129 : ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) = ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_mul_eq
+    have d130 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
+    have d131 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d116 d129 eq_identity_coercion eq_identity_coercion d130
     have d132 : (-(0 : ℤ) : ℤ) = 0 := by term_derivation_neg_literal
-    have d133 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) + (0 : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_nf_add_zero
-    have d134 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) + ((-(0 : ℤ) : ℤ) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d131 d132 eq_identity_coercion eq_nat_to_real_coercion d133
-    have d135 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) - (0 : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
-    have d136 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c - c * a ≥ (0 : ℝ) ↔ (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) ≥ (0 : ℝ) := by term_derivation_num_comparison
+    have d133 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) + (0 : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_nf_add_zero
+    have d134 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) + ((-(0 : ℤ) : ℤ) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d131 d132 eq_identity_coercion eq_nat_to_real_coercion d133
+    have d135 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) - (0 : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
+    have d136 : a ^ 2 + b ^ 2 + c ^ 2 - a * b - b * c - c * a ≥ (0 : ℝ) ↔ (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d137 : a = a := by term_derivation_reflection
     have d138 : 2 = 2 := by term_derivation_reflection
     have d139 : a ^ 2 = (1 : ℝ) * a ^ 2 := by term_derivation_non_reduced_power
@@ -303,48 +303,48 @@ def h (a b c : ℝ) : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by
     have d211 : (0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
     have d212 : (0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d203 d210 eq_identity_coercion eq_identity_coercion d211
     have d213 : (-(0 : ℤ) : ℤ) = 0 := by term_derivation_neg_literal
-    have d214 : (-((1 : ℝ) * (b ^ 1 * a ^ 1)) : ℝ) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_product
-    have d215 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1)) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_sum
-    have d216 : (-((1 : ℝ) * (c ^ 1 * a ^ 1)) : ℝ) = (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_product
-    have d217 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1)) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_sum
-    have d218 : (-((1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_product
-    have d219 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_sum
-    have d220 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_eq
+    have d214 : (-((1 : ℝ) * (b ^ 1 * a ^ 1)) : ℝ) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_product
+    have d215 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1)) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_neg_sum
+    have d216 : (-((1 : ℝ) * (c ^ 1 * a ^ 1)) : ℝ) = ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_product
+    have d217 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1)) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_neg_sum
+    have d218 : (-((1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_product
+    have d219 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_sum
+    have d220 : (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_neg_eq
     have d221 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (0 : ℝ) = (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_nf_add_zero
-    have d222 : -(1: ℤ) = -(1: ℤ) := by term_derivation_reflection
+    have d222 : (-1 : ℤ) = (-1 : ℤ) := by term_derivation_reflection
     have d223 : b = b := by term_derivation_reflection
     have d224 : b ^ 1 = b := by term_derivation_power_one
     have d225 : a = a := by term_derivation_reflection
     have d226 : a ^ 1 = a := by term_derivation_power_one
     have d227 : b * a = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_atom_mul_atom
     have d228 : b ^ 1 * a ^ 1 = (1 : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d229 : -(1: ℤ) * (1 : ℤ) = -(1: ℤ) := by term_derivation_literal_mul_literal
-    have d230 : (-(1: ℤ) : ℝ) * b ^ 1 = (-(1: ℤ) : ℝ) * b ^ 1 := by term_derivation_reflection
-    have d231 : (-(1: ℤ) : ℝ) * b ^ 1 * a ^ 1 = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
-    have d232 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d233 : (-(1: ℤ) : ℝ) * ((1 : ℝ) * (b ^ 1 * a ^ 1)) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
-    have d234 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
-    have d235 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_zero_add
-    have d236 : (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_product_add_product_less
-    have d237 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
-    have d238 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
-    have d239 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
-    have d240 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
-    have d241 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
-    have d242 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1)) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_sum
-    have d243 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_reflection
-    have d244 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_reflection
-    have d245 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
-    have d246 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
-    have d247 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
-    have d248 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
-    have d249 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
-    have d250 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1)) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_sum
-    have d251 : (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
-    have d252 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1)) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_sum
-    have d253 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d186 d220 eq_identity_coercion eq_identity_coercion d252
-    have d254 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 - ((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) = (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
-    have d255 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a ↔ (0 : ℝ) + (-(1: ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (-(1: ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-(1: ℤ) : ℝ) * (c ^ 1 * b ^ 1) ≥ (0 : ℝ) := by term_derivation_num_comparison
+    have d229 : (-1 : ℤ) * (1 : ℤ) = (-1 : ℤ) := by term_derivation_literal_mul_literal
+    have d230 : ((-1 : ℤ) : ℝ) * b ^ 1 = ((-1 : ℤ) : ℝ) * b ^ 1 := by term_derivation_reflection
+    have d231 : ((-1 : ℤ) : ℝ) * b ^ 1 * a ^ 1 = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_simple_product_mul_exponential_less
+    have d232 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d233 : ((-1 : ℤ) : ℝ) * ((1 : ℝ) * (b ^ 1 * a ^ 1)) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_product
+    have d234 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_mul_eq
+    have d235 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) := by term_derivation_zero_add
+    have d236 : ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_product_add_product_less
+    have d237 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
+    have d238 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
+    have d239 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
+    have d240 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
+    have d241 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
+    have d242 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1)) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_sum
+    have d243 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) := by term_derivation_reflection
+    have d244 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_reflection
+    have d245 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 := by term_derivation_sum_add_product_greater
+    have d246 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_reflection
+    have d247 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 := by term_derivation_sum_add_product_greater
+    have d248 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_reflection
+    have d249 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_sum_add_product_greater
+    have d250 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1)) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 := by term_derivation_add_sum
+    have d251 : (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_reflection
+    have d252 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1)) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_sum
+    have d253 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + (-((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) : ℝ) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_add_eq d186 d220 eq_identity_coercion eq_identity_coercion d252
+    have d254 : (0 : ℝ) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 - ((0 : ℝ) + (1 : ℝ) * (b ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * (c ^ 1 * b ^ 1)) = (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) := by term_derivation_sub_eqs_add_neg
+    have d255 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a ↔ (0 : ℝ) + ((-1 : ℤ) : ℝ) * (b ^ 1 * a ^ 1) + ((-1 : ℤ) : ℝ) * (c ^ 1 * a ^ 1) + (1 : ℝ) * b ^ 2 + (1 : ℝ) * c ^ 2 + (1 : ℝ) * a ^ 2 + ((-1 : ℤ) : ℝ) * (c ^ 1 * b ^ 1) ≥ (0 : ℝ) := by term_derivation_num_comparison
     have d256 : a ^ 2 + b ^ 2 + c ^ 2 ≥ a * b + b * c + c * a := by term_derivation_non_trivial_finish
     assumption
   obvious
