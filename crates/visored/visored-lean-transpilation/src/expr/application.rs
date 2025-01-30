@@ -23,23 +23,21 @@ where
                 };
                 match *translation {
                     VdFuncKeyTranslation::PrefixOpr(func_key) => match func_key {
-                        LnMirFuncKey::PrefixOpr { opr, instantiation } => match opr {
-                            LnPrefixOpr::Neg => {
-                                let ty = self.expr_arena()[expr].ty();
-                                match ty.to_lean(self) {
-                                    VdTypeLeanTranspilation::Type(ty_ascription) => {
-                                        let data = LnMirExprData::Application {
-                                            function: self.build_func_from_key(func_key),
-                                            arguments: arguments.to_lean(self),
-                                        };
-                                        LnMirExprData::TypeAscription {
-                                            expr: self.alloc_expr(LnMirExprEntry::new(data)),
-                                            ty_ascription,
-                                        }
+                        LnMirFuncKey::PrefixOpr { opr, instantiation } => {
+                            let ty = self.expr_arena()[expr].ty();
+                            match ty.to_lean(self) {
+                                VdTypeLeanTranspilation::Type(ty_ascription) => {
+                                    let data = LnMirExprData::Application {
+                                        function: self.build_func_from_key(func_key),
+                                        arguments: arguments.to_lean(self),
+                                    };
+                                    LnMirExprData::TypeAscription {
+                                        expr: self.alloc_expr(LnMirExprEntry::new(data)),
+                                        ty_ascription,
                                     }
                                 }
                             }
-                        },
+                        }
                         _ => unreachable!(),
                     },
                     VdFuncKeyTranslation::FoldingBinaryOpr(func_key) => {
