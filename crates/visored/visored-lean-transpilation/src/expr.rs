@@ -121,23 +121,7 @@ where
     fn build_expr_data(&mut self, expr: VdMirExprIdx) -> LnMirExprData {
         let db = self.db();
         match *self.expr_arena()[expr].data() {
-            VdMirExprData::Literal(literal) => {
-                let data = LnMirExprData::Literal(to_lean_literal(literal, db));
-                match *literal.data() {
-                    VdLiteralData::Int(ref i) => match i.sign() {
-                        VdSign::Minus => {
-                            return LnMirExprData::TypeAscription {
-                                expr: self.alloc_expr(LnMirExprEntry::new(data)),
-                                ty_ascription: self.alloc_expr(LnMirExprEntry::new(
-                                    LnMirExprData::ItemPath(LnItemPath::INT),
-                                )),
-                            }
-                        }
-                        VdSign::Plus | VdSign::NoSign => data,
-                    },
-                    VdLiteralData::Frac(_) => data,
-                }
-            }
+            VdMirExprData::Literal(literal) => LnMirExprData::Literal(to_lean_literal(literal, db)),
             VdMirExprData::ItemPath(item_path) => {
                 let Some(translation) = self.dictionary().item_path_translation(item_path) else {
                     todo!("item path not found, `{:?}`", item_path)
@@ -173,7 +157,7 @@ where
 fn to_lean_literal(literal: VdLiteral, db: &EternerDb) -> LnLiteral {
     let data = match *literal.data() {
         VdLiteralData::Int(ref i) => match i.sign() {
-            VdSign::Minus => LnLiteralData::Int(i.to_string()),
+            VdSign::Minus => LnLiteralData::Int(format!("-({}: ℤ)", (-i).to_string())),
             VdSign::Plus | VdSign::NoSign => LnLiteralData::Nat(i.to_string()),
         },
         VdLiteralData::Frac(ref lit) => {
