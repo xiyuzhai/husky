@@ -6,6 +6,5 @@ import Visored.Tactics.Derivation.Term.Coercion
 macro "term_derivation_neg_literal": tactic => `(tactic| norm_num)
 macro "term_derivation_num_comparison": tactic => `(tactic| fail "not implemented")
 macro "term_derivation_reflection": tactic => `(tactic| rfl)
-macro "term_derivation_power_one": tactic => `(tactic| fail "not implemented")
 macro "term_derivation_one_mul": tactic => `(tactic| fail "not implemented")
 macro "term_derivation_non_trivial_finish": tactic => `(tactic| fail "not implemented")
