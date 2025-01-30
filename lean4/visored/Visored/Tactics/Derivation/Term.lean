@@ -8,5 +8,4 @@ macro "term_derivation_num_comparison": tactic => `(tactic| fail "not implemente
 macro "term_derivation_reflection": tactic => `(tactic| rfl)
 macro "term_derivation_power_one": tactic => `(tactic| fail "not implemented")
 macro "term_derivation_one_mul": tactic => `(tactic| fail "not implemented")
-macro "term_derivation_nf_add_zero": tactic => `(tactic| fail "not implemented")
 macro "term_derivation_non_trivial_finish": tactic => `(tactic| fail "not implemented")

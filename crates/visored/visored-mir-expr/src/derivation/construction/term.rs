@@ -86,7 +86,7 @@ pub enum VdMirTermDerivationConstruction {
     },
     /// derive `c * b => c * b^1` if `c` is a litnum
     NonOneLiteralMulAtom,
-    /// derive `c + 0 => c`
+    /// derive `a + 0 => a`
     NfAddZero,
     NonTrivialFinish {
         src_nf: VdMirTermDerivationIdx,

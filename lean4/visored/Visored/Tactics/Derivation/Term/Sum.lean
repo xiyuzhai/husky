@@ -54,3 +54,6 @@ theorem term_derivation_sub_eqs_add_neg {α} {a b' neg_b' term: α} [CommRing α
 /-- derive `a - b => term` from `a + (-b) => term`
 -/
 macro "term_derivation_sub_eqs_add_neg" h_add_neg:term:1024 b_coercion:term:1024 : tactic => `(tactic| exact term_derivation_sub_eqs_add_neg $h_add_neg $b_coercion)
+
+/-- derive `a + 0 => a` -/
+macro "term_derivation_nf_add_zero": tactic => `(tactic| simp)
