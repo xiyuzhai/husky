@@ -2,8 +2,9 @@ import Mathlib
 
 -- Equality coercions
 
-theorem eq_identity_coercion {α} {a : α} : a = a -> a = a := by
-  simp
+theorem eq_identity_coercion {α} {a b : α} : a = b -> a = b := by
+  intro h
+  exact h
 
 theorem eq_nat_to_int_coercion {a b : ℕ} : a = b -> (a : ℤ) = (b : ℤ) := by
   intro h
@@ -28,7 +29,7 @@ theorem eq_int_to_real_coercion {a b : ℤ} : a = b -> (a : ℝ) = (b : ℝ) := 
 -- Negation coercions
 
 theorem neg_nat_to_real_coercion {a : ℕ} : ((-(a: ℤ): ℤ) : ℝ) = -(a : ℝ) := by
-  sorry
+  simp
 
 -- Addition coercions
 
