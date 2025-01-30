@@ -46,6 +46,7 @@ macro "litnum_reduce": tactic =>`(tactic|
 
 macro "litnum_bound": tactic =>`(tactic|
   first
+  | simp; linarith; done
   | linarith; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
