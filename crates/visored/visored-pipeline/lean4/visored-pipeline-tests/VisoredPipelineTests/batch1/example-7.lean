@@ -81,7 +81,9 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y > ((0:ℕ) : ℝ)) 
   have h5 : in_set := by obvious
   have h6 : y > ((0:ℕ) : ℝ) := by old_main_hypothesis
   have h15 : ((1:ℕ) : ℝ) / x + ((1:ℕ) : ℝ) / y ≥ ((4:ℕ) : ℝ) / (x + y) := by
-    have h7 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by apply sq_nonneg
+    have h7 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+      simp
+      apply sq_nonneg
     first
     | have h8 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
       (x - y) ^ (2:ℕ) = x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) := by obvious

@@ -76,5 +76,7 @@ macro "litnum_bound": tactic =>`(tactic|
 )
 
 def h (x : ℝ) : x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
-  have h1 : x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by apply sq_nonneg
+  have h1 : x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+    simp
+    apply sq_nonneg
   obvious

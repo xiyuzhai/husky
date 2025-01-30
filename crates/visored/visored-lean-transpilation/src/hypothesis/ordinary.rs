@@ -22,18 +22,23 @@ where
             VdMirHypothesisConstruction::Apply {
                 path,
                 is_real_coercion,
-            } => {
-                match is_real_coercion {
-                    VdMirCoercionConstruction::Trivial => (),
-                    VdMirCoercionConstruction::Obvious(arena_idx) => todo!("handle this properly."),
+            } => match path {
+                VdTheoremPath::SquareNonnegative => {
+                    match is_real_coercion {
+                        VdMirCoercionConstruction::Trivial => (),
+                        VdMirCoercionConstruction::Obvious(arena_idx) => {
+                            todo!("handle this properly.")
+                        }
+                    }
+                    let hypothesis = self.alloc_expr(LnMirExprEntry::new(LnMirExprData::ItemPath(
+                        LnTheoremPath::SquareNonnegative.into(),
+                    )));
+                    self.alloc_tactics([
+                        LnMirTacticData::Simp,
+                        LnMirTacticData::Apply { hypothesis },
+                    ])
                 }
-                let hypothesis = match path {
-                    VdTheoremPath::SquareNonnegative => self.alloc_expr(LnMirExprEntry::new(
-                        LnMirExprData::ItemPath(LnTheoremPath::SquareNonnegative.into()),
-                    )),
-                };
-                self.alloc_tactics([LnMirTacticData::Apply { hypothesis }])
-            }
+            },
             VdMirHypothesisConstruction::Assume => return,
             VdMirHypothesisConstruction::TermEquivalence {
                 hypothesis,

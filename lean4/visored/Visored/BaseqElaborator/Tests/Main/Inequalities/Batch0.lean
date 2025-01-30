@@ -63,7 +63,9 @@ end Example10
 
 namespace Example11
 def h (x : ℝ) := by
-  have h1 : x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by apply sq_nonneg
+  have h1 : x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+    simp
+    apply sq_nonneg
   exact ()
 end Example11
 

@@ -52,6 +52,7 @@ pub enum LnMirTacticData {
         construction: Option<LnMirExprIdx>,
     },
     Assumption,
+    Simp,
 }
 
 pub type LnMirTacticArena = Arena<LnMirTacticData>;

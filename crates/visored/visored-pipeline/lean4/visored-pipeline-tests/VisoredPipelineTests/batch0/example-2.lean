@@ -79,7 +79,9 @@ def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : �
   have h3 : (√ x - √ y) ^ (2:ℕ) = √ x ^ (2:ℕ) - ((2:ℕ) : ℝ) * √ x * √ y + √ y ^ (2:ℕ) := by obvious
   have h4 : √ x ^ (2:ℕ) - ((2:ℕ) : ℝ) * √ x * √ y + √ y ^ (2:ℕ) = x - ((2:ℕ) : ℝ) * √ (x * y) + y := by obvious
   have h5 : x - ((2:ℕ) : ℝ) * √ (x * y) + y ≥ ((0:ℕ) : ℝ) := by obvious
-  have h6 : (√ x - √ y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by apply sq_nonneg
+  have h6 : (√ x - √ y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+    simp
+    apply sq_nonneg
   have h7 : x + y ≥ ((2:ℕ) : ℝ) * √ (x * y) := by
     have d : x = x := by term_derivation_reflection
     have d1 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection

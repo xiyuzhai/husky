@@ -476,6 +476,9 @@ impl<'a> LnMirExprFormatter<'a> {
             LnMirTacticData::Assumption => {
                 self.result += "assumption";
             }
+            LnMirTacticData::Simp => {
+                self.result += "simp";
+            }
         }
     }
 
