@@ -1,6 +1,3 @@
-mod term_derivation;
-
-use self::term_derivation::TERM_DERIVATION_HEADER;
 use crate::*;
 use lazy_static::lazy_static;
 
@@ -56,10 +53,7 @@ macro "litnum_bound": tactic =>`(tactic|
   | linarith; done
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
-
-{}
 "#,
-        *TERM_DERIVATION_HEADER
     );
 }
 

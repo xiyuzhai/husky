@@ -31,6 +31,7 @@ use visored_sem_expr::range::{
     VdSemBlockTokenIdxRangeMap, VdSemClauseTokenIdxRangeMap, VdSemDivisionTokenIdxRangeMap,
     VdSemExprTokenIdxRangeMap, VdSemPhraseTokenIdxRangeMap, VdSemSentenceTokenIdxRangeMap,
 };
+use visored_term::menu::{vd_ty_menu, VdTypeMenu};
 
 use crate::{
     dictionary::VdLeanDictionary,
@@ -44,6 +45,7 @@ pub struct VdLeanTranspilationBuilder<'a, S: IsVdLeanTranspilationScheme> {
     scheme: &'a S,
     input: &'a str,
     ln_item_path_menu: &'a LnItemPathMenu,
+    ty_menu: &'a VdTypeMenu,
     lean_hir_expr_constructor: LnMirExprConstructor,
     expr_arena: VdMirExprArenaRef<'a>,
     stmt_arena: VdMirStmtArenaRef<'a>,
@@ -141,6 +143,7 @@ where
             db,
             scheme,
             ln_item_path_menu: &ln_item_path_menu,
+            ty_menu: vd_ty_menu(db),
             lean_hir_expr_constructor: LnMirExprConstructor::new(db),
             expr_arena,
             stmt_arena,
@@ -195,6 +198,10 @@ where
 
     pub(crate) fn current_module_path(&self) -> VdModulePath {
         self.current_module_path
+    }
+
+    pub(crate) fn ty_menu(&self) -> &'a VdTypeMenu {
+        self.ty_menu
     }
 
     pub(crate) fn mangle_symbol(&mut self, symbol_local_defn: VdMirSymbolLocalDefnIdx) -> LnIdent {

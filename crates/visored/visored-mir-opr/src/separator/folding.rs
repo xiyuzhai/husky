@@ -40,6 +40,15 @@ impl VdMirBaseFoldingSeparator {
         }
     }
 
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBaseFoldingSeparator::CommRingAdd => "comm_ring_add",
+            VdMirBaseFoldingSeparator::CommRingMul => "comm_ring_mul",
+            VdMirBaseFoldingSeparator::SetTimes => "set_times",
+            VdMirBaseFoldingSeparator::TensorOtimes => "tensor_otimes",
+        }
+    }
+
     pub fn outer_precedence(&self) -> VdPrecedence {
         self.class().precedence()
     }

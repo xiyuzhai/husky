@@ -71,6 +71,13 @@ impl VdMirBaseSeparator {
         }
     }
 
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBaseSeparator::Folding(slf) => slf.code(),
+            VdMirBaseSeparator::Chaining(slf) => slf.code(),
+        }
+    }
+
     pub fn show_fmt(self, f: &mut impl std::fmt::Write) -> std::fmt::Result {
         f.write_str(self.unicode())
     }

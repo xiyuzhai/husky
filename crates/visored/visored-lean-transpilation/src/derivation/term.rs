@@ -8,7 +8,7 @@ use lean_entity_path::{
 use lean_mir_expr::expr::{application::LnMirFunc, LnMirExprIdx, LnMirExprIdxRange};
 use smallvec::*;
 use visored_mir_expr::{
-    coercion::VdMirCoercion,
+    coercion::{VdMirCoercion, VdMirSeparatorCoercion},
     derivation::construction::term::{VdMirTermDerivationConstruction, VdMirTermDerivationIdx},
     expr::{VdMirExprEntry, VdMirExprIdx},
 };
@@ -53,9 +53,22 @@ where
             } => None,
             VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => None,
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => None,
-            VdMirTermDerivationConstruction::AddEq { lopd, ropd, merge } => {
-                Some([D(lopd), D(ropd), D(merge)].to_lean(self))
-            }
+            VdMirTermDerivationConstruction::AddEq {
+                a_eq_coercion,
+                b_eq_coercion,
+                a_derivation,
+                b_derivation,
+                a_term_add_b_term_derivation,
+            } => Some(
+                [
+                    D(a_derivation),
+                    D(b_derivation),
+                    C(a_eq_coercion.into()),
+                    C(b_eq_coercion.into()),
+                    D(a_term_add_b_term_derivation),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::AdditionInterchange => None,
             VdMirTermDerivationConstruction::AdditionAssociativity => None,
             VdMirTermDerivationConstruction::AdditionIdentity => None,

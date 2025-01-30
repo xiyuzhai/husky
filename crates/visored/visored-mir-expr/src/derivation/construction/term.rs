@@ -15,6 +15,7 @@ use crate::{
     helpers::compare::{assert_deep_eq, vd_mir_expr_deep_eq},
     hypothesis::constructor::expr::ds,
 };
+use coercion::{VdMirCoercion, VdMirSeparatorCoercion};
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
 };
@@ -38,11 +39,13 @@ pub enum VdMirTermDerivationConstruction {
         lopd: VdLiteral,
         ropd: VdLiteral,
     },
-    /// derive `a + b => term` from `a => term_a`, `b => term_b` and `term_a + term_b => term`
+    /// derive `a + b => term` from `a => term_a`, `b => term_b` and `a_term + b_term => term`
     AddEq {
-        lopd: VdMirTermDerivationIdx,
-        ropd: VdMirTermDerivationIdx,
-        merge: VdMirTermDerivationIdx,
+        a_eq_coercion: VdMirSeparatorCoercion,
+        b_eq_coercion: VdMirSeparatorCoercion,
+        a_derivation: VdMirTermDerivationIdx,
+        b_derivation: VdMirTermDerivationIdx,
+        a_term_add_b_term_derivation: VdMirTermDerivationIdx,
     },
     AdditionInterchange,
     AdditionAssociativity,
@@ -259,7 +262,10 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::NegProduct => check_neg_product(prop, hc),
             VdMirTermDerivationConstruction::NegExponential => check_neg_exponential(prop, hc),
             VdMirTermDerivationConstruction::AddEq {
-                lopd, ropd, merge, ..
+                a_derivation: lopd,
+                b_derivation: ropd,
+                a_term_add_b_term_derivation: merge,
+                ..
             } => check_add_eq(prop, lopd, ropd, merge, hc),
             VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => {
                 check_atom_add_non_zero_literal(prop, hc)

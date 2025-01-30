@@ -1,5 +1,6 @@
 use super::*;
 use enum_index::*;
+use lean_coword::ident::LnIdent;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash)]
 pub enum LnTheoremPath {
@@ -7,7 +8,7 @@ pub enum LnTheoremPath {
     TermDerivation(LnTermDerivationTheoremPath),
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash, IsEnumIndex)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, PartialOrd, Ord, Hash)]
 pub enum LnTermDerivationTheoremPath {
     Reflection,
     NumComparison,
@@ -63,6 +64,7 @@ pub enum LnTermDerivationTheoremPath {
     DivAtom,
     AtomMulExponentialLess,
     AtomMulExponentialGreater,
+    Custom(LnIdent),
 }
 
 impl LnTheoremPath {
@@ -180,6 +182,7 @@ impl LnTermDerivationTheoremPath {
             LnTermDerivationTheoremPath::AtomMulExponentialGreater => {
                 "term_derivation_atom_mul_exponential_greater"
             }
+            LnTermDerivationTheoremPath::Custom(code) => code.data(),
         }
     }
 

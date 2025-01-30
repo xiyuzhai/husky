@@ -4,6 +4,7 @@ use crate::term::{
 };
 
 use super::*;
+use visored_mir_expr::coercion::VdMirSeparatorCoercion;
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
 
@@ -19,13 +20,15 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                 return construction;
             }
         }
-        let (lopd, _, ropd) = self.split_folding_separated_list(leader, followers);
-        let lopd = lopd.normalize(self, hc);
-        let ropd = ropd.normalize(self, hc);
+        let (a, signature, b) = self.split_folding_separated_list(leader, followers);
+        let a = a.normalize(self, hc);
+        let b = b.normalize(self, hc);
         VdMirTermDerivationConstruction::AddEq {
-            lopd: lopd.derivation(),
-            ropd: ropd.derivation(),
-            merge: merge(**lopd, **ropd, self, hc).derivation(),
+            a_eq_coercion: VdMirSeparatorCoercion::new_eq(a.ty(), signature.item_ty()),
+            b_eq_coercion: VdMirSeparatorCoercion::new_eq(b.ty(), signature.item_ty()),
+            a_derivation: a.derivation(),
+            b_derivation: b.derivation(),
+            a_term_add_b_term_derivation: merge(**a, **b, self, hc).derivation(),
         }
     }
 }

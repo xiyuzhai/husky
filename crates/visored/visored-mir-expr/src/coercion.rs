@@ -12,13 +12,62 @@ pub enum VdMirCoercionConstruction {
 #[enum_class::from_variants]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VdMirCoercion {
-    BinaryOpr(VdOprCoercion<VdMirBaseBinaryOpr>),
-    Separator(VdOprCoercion<VdMirBaseSeparator>),
+    /// Examples:
+    /// - `(a : T) - (b : T) = (a - b : T)` for `a`, `b` of type `S`
+    /// - `(a : T) = (b : T) ↔ a = b` for `a`, `b` of type `S`
+    BinaryOpr(VdMirBinaryOprCoercion),
+    /// Examples:
+    /// - `(a : T) + (b : T) = (a + b : T)` for `a`, `b` of type `S`
+    Separator(VdMirSeparatorCoercion),
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct VdOprCoercion<Opr> {
+pub struct VdMirOprCoercion<Opr> {
     opr: Opr,
     source_ty: VdType,
     target_ty: VdType,
+}
+
+pub type VdMirBinaryOprCoercion = VdMirOprCoercion<VdMirBaseBinaryOpr>;
+pub type VdMirSeparatorCoercion = VdMirOprCoercion<VdMirBaseSeparator>;
+
+impl<Opr> VdMirOprCoercion<Opr>
+where
+    Opr: Copy,
+{
+    // TODO: check construction
+    pub fn new(opr: Opr, source_ty: VdType, target_ty: VdType) -> Self {
+        Self {
+            opr,
+            source_ty,
+            target_ty,
+        }
+    }
+}
+
+impl<Opr> VdMirOprCoercion<Opr>
+where
+    Opr: Copy,
+{
+    pub fn opr(self) -> Opr {
+        self.opr
+    }
+
+    pub fn source_ty(self) -> VdType {
+        self.source_ty
+    }
+
+    pub fn target_ty(self) -> VdType {
+        self.target_ty
+    }
+}
+
+impl VdMirOprCoercion<VdMirBaseSeparator> {
+    pub fn new_eq(source_ty: VdType, target_ty: VdType) -> Self {
+        Self {
+            opr: VdMirBaseSeparator::EQ,
+            source_ty,
+            target_ty,
+        }
+    }
 }

@@ -176,6 +176,13 @@ impl VdMirBaseChainingSeparator {
         }
     }
 
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBaseChainingSeparator::Iff => "iff",
+            VdMirBaseChainingSeparator::Relation(relation) => relation.code(),
+        }
+    }
+
     pub fn is_equivalence(self) -> bool {
         match self {
             VdMirBaseChainingSeparator::Iff => true,
@@ -208,6 +215,13 @@ impl VdMirBaseRelationSeparator {
         }
     }
 
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBaseRelationSeparator::Comparison(comparison) => comparison.code(),
+            VdMirBaseRelationSeparator::Containment(containment) => containment.code(),
+        }
+    }
+
     pub fn is_equivalence(self) -> bool {
         match self {
             VdMirBaseRelationSeparator::Comparison(slf) => slf.is_equivalence(),
@@ -225,6 +239,17 @@ impl VdMirBaseComparisonSeparator {
             VdMirBaseComparisonSeparator::Gt => ">",
             VdMirBaseComparisonSeparator::Le => "≤",
             VdMirBaseComparisonSeparator::Ge => "≥",
+        }
+    }
+
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBaseComparisonSeparator::Eq => "eq",
+            VdMirBaseComparisonSeparator::Ne => "ne",
+            VdMirBaseComparisonSeparator::Lt => "lt",
+            VdMirBaseComparisonSeparator::Gt => "gt",
+            VdMirBaseComparisonSeparator::Le => "le",
+            VdMirBaseComparisonSeparator::Ge => "ge",
         }
     }
 
@@ -249,6 +274,21 @@ impl VdMirBaseContainmentSeparator {
             VdMirBaseContainmentSeparator::Supseteqq => "⫆",
             VdMirBaseContainmentSeparator::Subsetneq => "⊊",
             VdMirBaseContainmentSeparator::Supsetneq => "⊋",
+        }
+    }
+
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBaseContainmentSeparator::InSet => "in_set",
+            VdMirBaseContainmentSeparator::Notin => "notin",
+            VdMirBaseContainmentSeparator::Subset => "subset",
+            VdMirBaseContainmentSeparator::Supset => "supset",
+            VdMirBaseContainmentSeparator::Subseteq => "subseteq",
+            VdMirBaseContainmentSeparator::Supseteq => "supseteq",
+            VdMirBaseContainmentSeparator::Subseteqq => "subseteqq",
+            VdMirBaseContainmentSeparator::Supseteqq => "supseteqq",
+            VdMirBaseContainmentSeparator::Subsetneq => "subsetneq",
+            VdMirBaseContainmentSeparator::Supsetneq => "supsetneq",
         }
     }
 
