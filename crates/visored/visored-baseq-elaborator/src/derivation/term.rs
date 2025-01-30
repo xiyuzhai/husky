@@ -92,7 +92,7 @@ where
                         let &[lopd, ropd] = arguments.as_slice() else {
                             unreachable!()
                         };
-                        self.transcribe_sub_term_derivation_construction(lopd, ropd, hc)
+                        self.transcribe_sub_term_derivation_construction(lopd, signature, ropd, hc)
                     }
                     VdMirBaseBinaryOpr::CommFieldDiv => {
                         let &[numerator, denominator] = arguments.as_slice() else {

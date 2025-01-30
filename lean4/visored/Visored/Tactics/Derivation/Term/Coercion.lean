@@ -25,6 +25,11 @@ theorem eq_int_to_real_coercion {a b : ℤ} : a = b -> (a : ℝ) = (b : ℝ) := 
   intro h
   rw [h]
 
+-- Negation coercions
+
+theorem neg_nat_to_real_coercion {a : ℕ} : ((-(a: ℤ): ℤ) : ℝ) = -(a : ℝ) := by
+  sorry
+
 -- Addition coercions
 
 theorem add_nat_to_int_coercion {a b : ℕ} : (a + b : ℤ) = (a : ℤ) + (b : ℤ) := by ring

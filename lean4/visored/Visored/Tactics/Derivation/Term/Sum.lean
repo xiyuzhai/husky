@@ -45,3 +45,12 @@ theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {a1 b1 te
 -/
 macro "term_derivation_add_eq" ha0:term:1024 hb0:term:1024 ca:term:1024 cb:term:1024 hab:term:1024 : tactic =>
   `(tactic| exact term_derivation_add_eq $ha0 $hb0 $ca $cb $hab)
+
+theorem term_derivation_sub_eqs_add_neg {α} {a b' neg_b' term: α} [CommRing α] (h: a + neg_b' = term) (h2: neg_b' = -b' ) : a - b' = term := by
+  rw [←h]
+  rw [h2]
+  ring
+
+/-- derive `a - b => term` from `a + (-b) => term`
+-/
+macro "term_derivation_sub_eqs_add_neg" h_add_neg:term:1024 b_coercion:term:1024 : tactic => `(tactic| exact term_derivation_sub_eqs_add_neg $h_add_neg $b_coercion)

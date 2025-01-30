@@ -1,6 +1,9 @@
 use crate::hypothesis::VdMirHypothesisIdx;
 use crate::*;
-use visored_mir_opr::{opr::binary::VdMirBaseBinaryOpr, separator::VdMirBaseSeparator};
+use visored_mir_opr::{
+    opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
+    separator::VdMirBaseSeparator,
+};
 use visored_term::ty::VdType;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -12,6 +15,7 @@ pub enum VdMirCoercionConstruction {
 #[enum_class::from_variants]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VdMirCoercion {
+    PrefixOpr(VdMirPrefixOprCoercion),
     /// Examples:
     /// - `(a : T) - (b : T) = (a - b : T)` for `a`, `b` of type `S`
     /// - `(a : T) = (b : T) ↔ a = b` for `a`, `b` of type `S`
@@ -28,6 +32,7 @@ pub struct VdMirOprCoercion<Opr> {
     target_ty: VdType,
 }
 
+pub type VdMirPrefixOprCoercion = VdMirOprCoercion<VdMirBasePrefixOpr>;
 pub type VdMirBinaryOprCoercion = VdMirOprCoercion<VdMirBaseBinaryOpr>;
 pub type VdMirSeparatorCoercion = VdMirOprCoercion<VdMirBaseSeparator>;
 

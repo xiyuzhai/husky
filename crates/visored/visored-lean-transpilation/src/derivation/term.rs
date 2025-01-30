@@ -51,7 +51,10 @@ where
                 rhs_nf,
                 lhs_nf_minus_rhs_nf_nf,
             } => None,
-            VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => None,
+            VdMirTermDerivationConstruction::SubEqsAddNeg {
+                add_neg,
+                b_neg_coercion,
+            } => Some([D(add_neg), C(b_neg_coercion.into())].to_lean(self)),
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => None,
             VdMirTermDerivationConstruction::AddEq {
                 a_eq_coercion,

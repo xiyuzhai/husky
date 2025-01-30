@@ -15,7 +15,7 @@ use crate::{
     helpers::compare::{assert_deep_eq, vd_mir_expr_deep_eq},
     hypothesis::constructor::expr::ds,
 };
-use coercion::{VdMirCoercion, VdMirSeparatorCoercion};
+use coercion::{VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
 };
@@ -32,8 +32,10 @@ pub enum VdMirTermDerivationConstruction {
         rhs_nf: VdMirTermDerivationIdx,
         lhs_nf_minus_rhs_nf_nf: VdMirTermDerivationIdx,
     },
+    /// derive `a - b => term` from `a + (-b) => term`
     SubEqsAddNeg {
         add_neg: VdMirTermDerivationIdx,
+        b_neg_coercion: VdMirPrefixOprCoercion,
     },
     LiteralAddLiteral {
         lopd: VdLiteral,
@@ -242,9 +244,10 @@ impl VdMirTermDerivationConstruction {
                 rhs_nf,
                 lhs_nf_minus_rhs_nf_nf,
             } => check_num_comparison(prop, lhs_nf, rhs_nf, lhs_nf_minus_rhs_nf_nf, hc),
-            VdMirTermDerivationConstruction::SubEqsAddNeg { add_neg } => {
-                check_sub_eqs_add_neg(prop, add_neg, hc)
-            }
+            VdMirTermDerivationConstruction::SubEqsAddNeg {
+                add_neg,
+                b_neg_coercion,
+            } => check_sub_eqs_add_neg(prop, add_neg, hc),
             VdMirTermDerivationConstruction::AdditionInterchange => check_add_interchange(prop, hc),
             VdMirTermDerivationConstruction::AdditionAssociativity => todo!(),
             VdMirTermDerivationConstruction::AdditionIdentity => todo!(),

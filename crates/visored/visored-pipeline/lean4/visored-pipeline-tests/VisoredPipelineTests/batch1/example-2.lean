@@ -75,6 +75,6 @@ macro "litnum_bound": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-def h (x : ℝ) : x ^ 2 ≥ (0 : ℝ) := by
-  have h1 : x ^ 2 ≥ (0 : ℝ) := by apply sq_nonneg
+def h (x : ℝ) : x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+  have h1 : x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by apply sq_nonneg
   obvious

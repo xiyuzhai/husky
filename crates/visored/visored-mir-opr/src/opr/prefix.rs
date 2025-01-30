@@ -26,6 +26,13 @@ impl VdMirBasePrefixOpr {
             VdMirBasePrefixOpr::RING_NEG => "-",
         }
     }
+
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBasePrefixOpr::RING_POS => "pos",
+            VdMirBasePrefixOpr::RING_NEG => "neg",
+        }
+    }
 }
 
 impl std::fmt::Display for VdMirBasePrefixOpr {

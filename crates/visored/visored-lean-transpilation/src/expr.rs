@@ -157,8 +157,8 @@ where
 fn to_lean_literal(literal: VdLiteral, db: &EternerDb) -> LnLiteral {
     let data = match *literal.data() {
         VdLiteralData::Int(ref i) => match i.sign() {
-            VdSign::Minus => LnLiteralData::Int(format!("({i} : ℤ)")),
-            VdSign::Plus | VdSign::NoSign => LnLiteralData::Nat(i.to_string()),
+            VdSign::Minus => LnLiteralData::Int(format!("({i}:ℤ)")),
+            VdSign::Plus | VdSign::NoSign => LnLiteralData::Nat(format!("({i}:ℕ)")),
         },
         VdLiteralData::Frac(ref lit) => {
             LnLiteralData::Frac(format!("({} : ℚ) / {}", lit.numerator(), lit.denominator()))

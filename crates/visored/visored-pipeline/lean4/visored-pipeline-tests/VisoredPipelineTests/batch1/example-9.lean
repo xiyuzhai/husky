@@ -75,13 +75,13 @@ macro "litnum_bound": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-def h (x y : ℝ) : x ^ 2 + y ^ 2 ≥ (2 : ℝ) * x * y := by
+def h (x y : ℝ) : x ^ (2:ℕ) + y ^ (2:ℕ) ≥ ((2:ℕ) : ℝ) * x * y := by
   first
-  | have h1 : (x - y) ^ 2 ≥ (0 : ℝ) := by calc
-    (x - y) ^ 2 = x ^ 2 - (2 : ℝ) * x * y + y ^ 2 := by obvious
-    _ ≥ 0 : ℝ := by obvious
-  | have h2 : x ^ 2 - (2 : ℝ) * x * y + y ^ 2 ≥ (0 : ℝ) := by calc
-    x ^ 2 - (2 : ℝ) * x * y + y ^ 2 = (x - y) ^ 2 := by obvious
-    _ ≥ 0 : ℝ := by obvious
-  have h3 : x ^ 2 + y ^ 2 ≥ (2 : ℝ) * x * y := by obvious
+  | have h1 : (x - y) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+    (x - y) ^ (2:ℕ) = x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) := by obvious
+    _ ≥ (0:ℕ) : ℝ := by obvious
+  | have h2 : x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by calc
+    x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x * y + y ^ (2:ℕ) = (x - y) ^ (2:ℕ) := by obvious
+    _ ≥ (0:ℕ) : ℝ := by obvious
+  have h3 : x ^ (2:ℕ) + y ^ (2:ℕ) ≥ ((2:ℕ) : ℝ) * x * y := by obvious
   obvious
