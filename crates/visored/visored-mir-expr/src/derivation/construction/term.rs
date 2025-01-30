@@ -16,6 +16,7 @@ use crate::{
     hypothesis::constructor::expr::ds,
 };
 use coercion::{VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
+use hypothesis::VdMirHypothesisIdx;
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
 };
@@ -88,7 +89,9 @@ pub enum VdMirTermDerivationConstruction {
     NonOneLiteralMulAtom,
     /// derive `a + 0 => a`
     NfAddZero,
+    /// derive `src_nf ↔ dst_nf`
     NonTrivialFinish {
+        src: VdMirHypothesisIdx,
         src_nf: VdMirTermDerivationIdx,
         dst_nf: VdMirTermDerivationIdx,
     },
@@ -285,9 +288,11 @@ impl VdMirTermDerivationConstruction {
                 check_nonone_literal_mul_atom(prop, hc)
             }
             VdMirTermDerivationConstruction::NfAddZero => check_nf_add_zero(prop, hc),
-            VdMirTermDerivationConstruction::NonTrivialFinish { src_nf, dst_nf } => {
-                check_non_trivial_finish(prop, src_nf, dst_nf, hc)
-            }
+            VdMirTermDerivationConstruction::NonTrivialFinish {
+                src,
+                src_nf,
+                dst_nf,
+            } => check_non_trivial_finish(prop, src, src_nf, dst_nf, hc),
             VdMirTermDerivationConstruction::AtomMulAtom { comparison } => {
                 check_atom_mul_atom(prop, comparison, hc)
             }

@@ -11,6 +11,7 @@ use visored_mir_expr::{
     coercion::{VdMirCoercion, VdMirSeparatorCoercion},
     derivation::construction::term::{VdMirTermDerivationConstruction, VdMirTermDerivationIdx},
     expr::{VdMirExprEntry, VdMirExprIdx},
+    hypothesis::VdMirHypothesisIdx,
 };
 
 impl<'a, S> VdLeanTranspilationBuilder<'a, S>
@@ -21,13 +22,14 @@ where
         &mut self,
         construction: &VdMirTermDerivationConstruction,
     ) -> LnMirExprIdx {
-        use Argument::{Coercion as C, Derivation as D, Expr as E};
+        use Argument::{Coercion as C, Derivation as D, Expr as E, Hypothesis as H};
 
         #[derive(Copy, Clone)]
         enum Argument {
             Coercion(VdMirCoercion),
             Derivation(VdMirTermDerivationIdx),
             Expr(VdMirExprIdx),
+            Hypothesis(VdMirHypothesisIdx),
         }
 
         impl<S> VdTranspileToLean<S, LnMirExprEntry> for Argument
@@ -39,6 +41,7 @@ where
                     C(coercion) => coercion.to_lean(builder),
                     D(derivation) => derivation.to_lean(builder),
                     E(expr) => expr.to_lean(builder),
+                    H(hypothesis) => hypothesis.to_lean(builder),
                 }
             }
         }
@@ -93,7 +96,11 @@ where
             VdMirTermDerivationConstruction::OneMul { .. } => None,
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => None,
             VdMirTermDerivationConstruction::NfAddZero => None,
-            VdMirTermDerivationConstruction::NonTrivialFinish { src_nf, dst_nf } => None,
+            VdMirTermDerivationConstruction::NonTrivialFinish {
+                src,
+                src_nf,
+                dst_nf,
+            } => Some([H(src), D(src_nf), D(dst_nf)].to_lean(self)),
             VdMirTermDerivationConstruction::AtomMulAtom { comparison } => None,
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => None,
             VdMirTermDerivationConstruction::MulProduct {
@@ -155,9 +162,11 @@ where
         construction: &VdMirTermDerivationConstruction,
     ) -> LnMirTacticData {
         match construction {
-            VdMirTermDerivationConstruction::NonTrivialFinish { src_nf, dst_nf } => {
-                LnMirTacticData::Assumption
-            }
+            VdMirTermDerivationConstruction::NonTrivialFinish {
+                src,
+                src_nf,
+                dst_nf,
+            } => LnMirTacticData::Assumption,
             _ => todo!(),
         }
     }

@@ -59,3 +59,14 @@ where
         }
     }
 }
+
+impl<S> VdTranspileToLean<S, LnMirExprEntry> for VdMirHypothesisIdx
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
+        let ident = builder.mangle_hypothesis(self);
+        let data = LnMirExprData::Variable { ident };
+        LnMirExprEntry::new(data)
+    }
+}

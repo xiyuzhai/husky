@@ -71,7 +71,7 @@ end Example11
 
 namespace Example12
 def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
-  have h2 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
+  have h3 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
     have d : x = x := by term_derivation_reflection
     have d1 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection
     have d2 : x = x := by term_derivation_reflection
@@ -98,7 +98,7 @@ def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
     have d23 : ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) = ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_add_eq d20 d21 eq_identity_coercion eq_int_to_real_coercion d22
     have d24 : ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) - ((0:ℕ) : ℝ) = ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_sub_eqs_add_neg d23 neg_nat_to_real_coercion
     have d25 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ ((-1:ℤ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (1:ℕ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d26 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_non_trivial_finish
+    have d26 : x - ((1:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_non_trivial_finish h2 d7 d25
     assumption
   exact ()
 end Example12

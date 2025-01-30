@@ -178,6 +178,6 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b 
     have d86 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_add_eq d78 d79 eq_identity_coercion eq_int_to_real_coercion d85
     have d87 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) - ((2:ℕ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_sub_eqs_add_neg d86 neg_nat_to_real_coercion
     have d88 : a / b + b / a ≥ ((2:ℕ) : ℝ) ↔ ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_finish
+    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_finish h7 d44 d88
     assumption
   obvious

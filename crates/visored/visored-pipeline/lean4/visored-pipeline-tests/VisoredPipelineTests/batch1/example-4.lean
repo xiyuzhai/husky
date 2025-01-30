@@ -156,7 +156,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ
     have d67 : ((1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) + (-(((2:ℕ) : ℝ) * x ^ (1:ℕ)) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_add_eq d56 d63 eq_identity_coercion eq_identity_coercion d66
     have d68 : ((1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) - ((2:ℕ) : ℝ) * x ^ (1:ℕ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_sub_eqs_add_neg d67 neg_identity_coercion
     have d69 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x ↔ ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d70 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x := by term_derivation_non_trivial_finish
+    have d70 : x ^ (2:ℕ) + ((1:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x := by term_derivation_non_trivial_finish h5 d39 d69
     assumption
   have h7 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
   have h8 : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ) : ℝ) := by obvious

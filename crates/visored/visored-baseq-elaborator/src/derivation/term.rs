@@ -46,6 +46,7 @@ where
             hc.alloc_derivation(
                 prop,
                 VdMirTermDerivationConstruction::NonTrivialFinish {
+                    src: hc.cached_hypothesis(src).unwrap(),
                     src_nf: src_nf.derivation(),
                     dst_nf: dst_nf.derivation(),
                 }

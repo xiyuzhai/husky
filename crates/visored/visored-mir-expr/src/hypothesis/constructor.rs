@@ -181,7 +181,7 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         let hypothesis = self
             .hypothesis_arena
             .alloc_one(VdMirHypothesisEntry::new(expr, hypothesis));
-        self.cache.insert(src, hypothesis);
+        assert!(self.cache.insert(src, hypothesis).is_none());
         hypothesis
     }
 
@@ -215,6 +215,13 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
     ) -> VdMirDerivationIdx {
         let entry = VdMirDerivationEntry::new(prop, construction, self);
         self.derivation_arena.alloc_one(entry)
+    }
+
+    pub fn cached_hypothesis(&self, src: Src) -> Option<VdMirHypothesisIdx>
+    where
+        Src: std::hash::Hash + Eq,
+    {
+        self.cache.get(&src).copied()
     }
 
     pub(crate) fn finish(
