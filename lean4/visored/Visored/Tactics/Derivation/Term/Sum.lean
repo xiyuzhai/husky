@@ -7,7 +7,7 @@ theorem term_derivation_add_assoc {α} {a b c b_add_c a_add_b: α} [CommRing α]
   rw [← hbc, ← hab]
   ring
 
-theorem term_derivation_add_atom {α} {a b term: α} [CommRing α] (h: a + 1 * b^1 = term) : a + b = term := by
+theorem term_derivation_add_atom {α} {a b term: α} [CommRing α] (h: a + (1:ℕ) * b^1 = term) : a + b = term := by
   rw [←h]
   ring
 
@@ -15,8 +15,8 @@ theorem term_derivation_add_atom {α} {a b term: α} [CommRing α] (h: a + 1 * b
 -/
 macro "term_derivation_add_atom" d:term : tactic => `(tactic| (exact term_derivation_add_atom $d))
 
-example (x: ℝ) (d18: (-1 : ℝ) + (1 : ℝ) * x ^ 1 = (-1 : ℝ) + (1 : ℝ) * x ^ 1)
-  : (-1 : ℝ) + x = (-1 : ℝ) + (1 : ℝ) * x ^ 1 := by
+example (x: ℝ) (d18: (-1 : ℝ) + ((1:ℕ) : ℝ) * x ^ 1 = (-1 : ℝ) + ((1:ℕ) : ℝ) * x ^ 1)
+  : (-1 : ℝ) + x = (-1 : ℝ) + ((1:ℕ) : ℝ) * x ^ 1 := by
   term_derivation_add_atom d18
 
 theorem term_derivation_atom_add_non_zero_literal {α} {a c: α} [CommRing α] : a + c = c + ((1 :ℕ) : α) * a^1 := by
