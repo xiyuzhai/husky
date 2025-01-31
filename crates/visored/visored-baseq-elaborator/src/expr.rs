@@ -20,9 +20,12 @@ use visored_mir_opr::{
     separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
 };
 use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
-use visored_signature::signature::separator::base::{
-    chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
-    VdBaseSeparatorSignature,
+use visored_signature::signature::{
+    attach::VdPowerSignature,
+    separator::base::{
+        chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
+        VdBaseSeparatorSignature,
+    },
 };
 use visored_term::{
     term::literal::{VdLiteral, VdLiteralData},
@@ -619,6 +622,23 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
             );
             (lopd, signature, ropd)
         }
+    }
+
+    pub fn split_pow(
+        self,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (VdBsqExpr<'sess>, VdPowerSignature, VdBsqExpr<'sess>) {
+        let VdBsqExprData::Application {
+            function: VdMirFunc::Power(signature),
+            ref arguments,
+        } = *self.data()
+        else {
+            todo!()
+        };
+        assert_eq!(arguments.len(), 2);
+        let (base, exponent) = (arguments[0], arguments[1]);
+        (base, signature, exponent)
     }
 
     pub fn split_trivial_chaining_separated_list(

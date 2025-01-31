@@ -272,3 +272,16 @@ pub(super) fn check_div_atom<'db, Src>(
     assert_deep_eq!(a1, a, hc);
     assert_deep_eq!(b1, b, hc);
 }
+
+/// derive `1 * a^1 => a`
+pub(super) fn check_one_mul_power_one<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => a) = prop, hc);
+    ds!(let (one * a_pow_one) = expr, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (a1 ^ one) = a_pow_one, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+}

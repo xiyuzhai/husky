@@ -195,6 +195,8 @@ pub enum VdMirTermDerivationConstruction {
     AtomMulExponentialLess,
     /// derive `a * b => 1 * (b * a^1)`
     AtomMulExponentialGreater,
+    /// derive `1 * a^1 => a`
+    OneMulPowerOne,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -396,6 +398,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => {
                 check_expr_equivalence(prop, src_nf, dst_nf, hc)
             }
+            VdMirTermDerivationConstruction::OneMulPowerOne => check_one_mul_power_one(prop, hc),
         }
     }
 }

@@ -177,7 +177,12 @@ fn derive_mul_exponential<'db, 'sess>(
     let ropd_base = exponential_base(ropd);
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
-            assert!(!literal.is_one(), "lopd = {:?}, ropd = {:?}", lopd, ropd);
+            if literal.is_one() {
+                let (base, signature, exponent) = ropd.split_pow(elr, hc);
+                if exponent.is_one() {
+                    return (VdMirTermDerivationConstruction::OneMulPowerOne, None);
+                }
+            }
             (VdMirTermDerivationConstruction::Reflection, None)
         }
         VdBsqExprData::FoldingSeparatedList {
