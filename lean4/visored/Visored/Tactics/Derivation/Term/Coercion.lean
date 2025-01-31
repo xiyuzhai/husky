@@ -22,7 +22,27 @@ theorem eq_nat_to_complex_coercion {a b : ℕ} : a = b -> (a : ℂ) = (b : ℂ) 
   intro h
   rw [h]
 
+theorem eq_int_to_rat_coercion {a b : ℤ} : a = b -> (a : ℚ) = (b : ℚ) := by
+  intro h
+  rw [h]
+
 theorem eq_int_to_real_coercion {a b : ℤ} : a = b -> (a : ℝ) = (b : ℝ) := by
+  intro h
+  rw [h]
+
+theorem eq_int_to_complex_coercion {a b : ℤ} : a = b -> (a : ℂ) = (b : ℂ) := by
+  intro h
+  rw [h]
+
+theorem eq_rat_to_real_coercion {a b : ℚ} : a = b -> (a : ℝ) = (b : ℝ) := by
+  intro h
+  rw [h]
+
+theorem eq_rat_to_complex_coercion {a b : ℚ} : a = b -> (a : ℂ) = (b : ℂ) := by
+  intro h
+  rw [h]
+
+theorem eq_real_to_complex_coercion {a b : ℝ} : a = b -> (a : ℂ) = (b : ℂ) := by
   intro h
   rw [h]
 

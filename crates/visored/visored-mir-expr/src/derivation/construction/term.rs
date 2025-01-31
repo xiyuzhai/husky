@@ -112,7 +112,7 @@ pub enum VdMirTermDerivationConstruction {
     Sqrt {
         radicand_nf: VdMirTermDerivationIdx,
     },
-    /// derive `a * (b * c) => term` from `a * b => lterm` and `lterm * c => term`
+    /// derive `a * (b * c) => term` from `a * b => ab_term` and `ab_term * c => term`
     MulProduct {
         rsignature: VdBaseFoldingSeparatorSignature,
         merge_rlopd_nf: VdMirTermDerivationIdx,

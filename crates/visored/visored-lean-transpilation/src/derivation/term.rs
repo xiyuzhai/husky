@@ -101,9 +101,9 @@ where
                 [
                     D(a),
                     D(b),
+                    D(merge),
                     C(a_eq_coercion.into()),
                     C(b_eq_coercion.into()),
-                    D(merge),
                 ]
                 .to_lean(self),
             ),
@@ -122,7 +122,7 @@ where
                 rsignature,
                 merge_rlopd_nf,
                 merge_rropd_nf,
-            } => None,
+            } => Some([D(merge_rlopd_nf), D(merge_rropd_nf)].to_lean(self)),
             VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => None,
             VdMirTermDerivationConstruction::PowerOne { base } => None,
             VdMirTermDerivationConstruction::AtomAddProduct { comparison } => None,
