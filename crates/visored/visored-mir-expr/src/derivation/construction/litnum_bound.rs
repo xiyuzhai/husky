@@ -26,6 +26,12 @@ impl VdMirLitnumBoundDerivationConstruction {
         prop: VdMirExprIdx,
         hc: &mut VdMirHypothesisConstructor<'db, Src>,
     ) {
-        todo!()
+        match self {
+            VdMirLitnumBoundDerivationConstruction::Finish => check_finish(prop, hc),
+        }
     }
+}
+
+fn check_finish<'db, Src>(prop: VdMirExprIdx, hc: &mut VdMirHypothesisConstructor<'db, Src>) {
+    // todo!()
 }

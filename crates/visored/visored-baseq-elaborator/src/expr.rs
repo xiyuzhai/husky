@@ -471,20 +471,20 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
     pub fn transcribe(
         &self,
         expected_ty: Option<VdType>,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprIdx {
-        let entry = self.transcribe_entry(expected_ty, elaborator, hc);
+        let entry = self.transcribe_entry(expected_ty, elr, hc);
         hc.mk_expr(entry)
     }
 
     pub fn transcribe_with_ty(
         &self,
         expected_ty: Option<VdType>,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdMirExprIdx, VdType) {
-        let entry = self.transcribe_entry(expected_ty, elaborator, hc);
+        let entry = self.transcribe_entry(expected_ty, elr, hc);
         let ty = entry.ty();
         (hc.mk_expr(entry), ty)
     }
@@ -492,10 +492,10 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
     fn transcribe_entry(
         &self,
         expected_ty: Option<VdType>,
-        elaborator: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirExprEntry {
-        let data = self.transcribe_expr_data(elaborator, hc);
+        let data = self.transcribe_expr_data(elr, hc);
         let ty = self.ty();
         VdMirExprEntry::new(data, ty, expected_ty)
     }

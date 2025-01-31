@@ -19,11 +19,7 @@ where
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
-            p!(
-                self.hc.arena()[bound.src().hypothesis()],
-                self.hc.arena()[dst]
-            );
-            let prop = todo!();
+            let prop = self.hc.arena()[dst].expr().transcribe(None, self, hc);
             hc.alloc_derivation(prop, VdMirLitnumBoundDerivationConstruction::Finish.into())
         })
     }
