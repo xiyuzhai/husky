@@ -78,3 +78,8 @@ theorem term_derivation_one_mul_power_one {α} {a: α} [CommRing α] : ((1:ℕ) 
   ring
 
 macro "term_derivation_one_mul_power_one": tactic => `(tactic| exact term_derivation_one_mul_power_one)
+
+theorem term_derivation_non_one_literal_mul_atom {α} {a c: α} [CommRing α] : c * a = c * a^(1:ℕ) := by
+  ring
+
+macro "term_derivation_non_one_literal_mul_atom": tactic => `(tactic| exact term_derivation_non_one_literal_mul_atom)
