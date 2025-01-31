@@ -5,7 +5,9 @@ use lean_entity_path::{
     LnItemPath,
 };
 use lean_mir_expr::expr::{LnMirExprData, LnMirExprEntry};
-use visored_mir_expr::coercion::{VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
+use visored_mir_expr::coercion::{
+    VdMirBinaryOprCoercion, VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion,
+};
 use visored_term::{menu::VdTypeMenu, ty::VdType};
 
 impl<S> VdTranspileToLean<S, LnMirExprEntry> for VdMirCoercion
@@ -15,7 +17,7 @@ where
     fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
         let ident = match self {
             VdMirCoercion::PrefixOpr(slf) => create_prefix_opr_coercion_ident(slf, builder),
-            VdMirCoercion::BinaryOpr(slf) => todo!(),
+            VdMirCoercion::BinaryOpr(slf) => create_binary_opr_coercion_ident(slf, builder),
             VdMirCoercion::Separator(slf) => create_separator_coercion_ident(slf, builder),
         };
         LnMirExprEntry::new(LnMirExprData::ItemPath(LnItemPath::Theorem(
@@ -42,6 +44,28 @@ where
     let target_ty = ty_code(target_ty, ty_menu);
     LnIdent::from_owned(
         format!("{prefix}_{source_ty}_to_{target_ty}_coercion"),
+        builder.db(),
+    )
+}
+
+fn create_binary_opr_coercion_ident<S>(
+    signature: VdMirBinaryOprCoercion,
+    builder: &VdLeanTranspilationBuilder<S>,
+) -> LnIdent
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    let binary_opr = signature.opr().code();
+    let source_ty = signature.source_ty();
+    let target_ty = signature.target_ty();
+    if source_ty == target_ty {
+        return LnIdent::from_owned(format!("{binary_opr}_identity_coercion"), builder.db());
+    }
+    let ty_menu = builder.ty_menu();
+    let source_ty = ty_code(source_ty, ty_menu);
+    let target_ty = ty_code(target_ty, ty_menu);
+    LnIdent::from_owned(
+        format!("{binary_opr}_{source_ty}_to_{target_ty}_coercion"),
         builder.db(),
     )
 }

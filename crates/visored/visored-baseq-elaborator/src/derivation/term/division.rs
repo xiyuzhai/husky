@@ -1,21 +1,40 @@
 use super::product::derive_product;
 use super::*;
 use crate::term::{comnum::VdBsqComnumTerm, VdBsqTerm};
+use visored_mir_expr::coercion::VdMirBinaryOprCoercion;
+use visored_opr::opr::binary::VdBaseBinaryOpr;
+use visored_signature::signature::binary_opr::{
+    base::VdBaseBinaryOprSignature, VdBinaryOprSignature,
+};
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub(super) fn transcribe_div_term_derivation_construction(
         &mut self,
-        numerator: VdBsqExpr<'sess>,
-        denominator: VdBsqExpr<'sess>,
+        a: VdBsqExpr<'sess>,
+        signature: VdBaseBinaryOprSignature,
+        b: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let numerator_nf = numerator.normalize(self, hc);
-        let denominator_nf = denominator.normalize(self, hc);
-        let numerator_dn_div_denominator_dn_nf = derive_div(numerator_nf, denominator_nf, self, hc);
+        let a_nf = a.normalize(self, hc);
+        let b_nf = b.normalize(self, hc);
+        let a_nf_div_b_nf_dn = derive_div(a_nf, b_nf, self, hc);
+        assert_eq!(signature.opr, VdMirBaseBinaryOpr::CommFieldDiv);
+        let a_coercion = VdMirBinaryOprCoercion::new(
+            VdMirBaseBinaryOpr::CommFieldDiv,
+            a_nf.ty(),
+            signature.lopd_ty,
+        );
+        let b_coercion = VdMirBinaryOprCoercion::new(
+            VdMirBaseBinaryOpr::CommFieldDiv,
+            b_nf.ty(),
+            signature.ropd_ty,
+        );
         VdMirTermDerivationConstruction::DivEq {
-            numerator_dn: numerator_nf.derivation(),
-            denominator_dn: denominator_nf.derivation(),
-            numerator_dn_div_denominator_dn_dn: numerator_dn_div_denominator_dn_nf.derivation(),
+            a_dn: a_nf.derivation(),
+            b_dn: b_nf.derivation(),
+            a_coercion,
+            b_coercion,
+            a_nf_div_b_nf_dn: a_nf_div_b_nf_dn.derivation(),
         }
     }
 }

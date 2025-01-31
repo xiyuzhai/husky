@@ -120,7 +120,7 @@ def h (a b : ℝ) : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) ≥ ((a + b) /
     have d28 : ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_product_add_product_less
     have d29 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (2:ℕ) + ((1:ℕ) : ℝ) * a ^ (2:ℕ)) * ((1:ℚ)/2 : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_literal_mul_sum
     have d30 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (2:ℕ) + ((1:ℕ) : ℝ) * a ^ (2:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_div_literal
-    have d31 : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_div_eq
+    have d31 : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_div_eq d7 d8 comm_field_div_identity_coercion comm_field_div_nat_to_real_coercion d30
     have d32 : a = a := by term_derivation_reflection
     have d33 : b = b := by term_derivation_reflection
     have d34 : a + ((1:ℕ) : ℝ) * b ^ (1:ℕ) = ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (1:ℕ) + ((1:ℕ) : ℝ) * a ^ (1:ℕ) := by term_derivation_atom_add_product
@@ -146,7 +146,7 @@ def h (a b : ℝ) : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) ≥ ((a + b) /
     have d54 : ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_product_add_product_less
     have d55 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (1:ℕ) + ((1:ℕ) : ℝ) * a ^ (1:ℕ)) * ((1:ℚ)/2 : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_literal_mul_sum
     have d56 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (1:ℕ) + ((1:ℕ) : ℝ) * a ^ (1:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_div_literal
-    have d57 : (a + b) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_div_eq
+    have d57 : (a + b) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_div_eq d36 d37 comm_field_div_identity_coercion comm_field_div_nat_to_real_coercion d56
     have d58 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d59 : ((a + b) / ((2:ℕ) : ℝ)) ^ (2:ℕ) = ((1:ℕ) : ℝ) * (((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ)) ^ (2:ℕ) := by term_derivation_non_reduced_power
     have d60 : (-(((1:ℕ) : ℝ) * (((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ)) ^ (2:ℕ)) : ℝ) = ((-1:ℤ) : ℝ) * (((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ)) ^ (2:ℕ) := by term_derivation_neg_product
@@ -234,7 +234,7 @@ def h (a b : ℝ) : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) ≥ ((a + b) /
     have d142 : ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_product_add_product_less
     have d143 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (2:ℕ) + ((1:ℕ) : ℝ) * a ^ (2:ℕ)) * ((1:ℚ)/2 : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_literal_mul_sum
     have d144 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (2:ℕ) + ((1:ℕ) : ℝ) * a ^ (2:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_div_literal
-    have d145 : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_div_eq
+    have d145 : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (2:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (2:ℕ) := by term_derivation_div_eq d121 d122 comm_field_div_identity_coercion comm_field_div_nat_to_real_coercion d144
     have d146 : a = a := by term_derivation_reflection
     have d147 : b = b := by term_derivation_reflection
     have d148 : a + ((1:ℕ) : ℝ) * b ^ (1:ℕ) = ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (1:ℕ) + ((1:ℕ) : ℝ) * a ^ (1:ℕ) := by term_derivation_atom_add_product
@@ -260,7 +260,7 @@ def h (a b : ℝ) : (a ^ (2:ℕ) + b ^ (2:ℕ)) / ((2:ℕ) : ℝ) ≥ ((a + b) /
     have d168 : ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_product_add_product_less
     have d169 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (1:ℕ) + ((1:ℕ) : ℝ) * a ^ (1:ℕ)) * ((1:ℚ)/2 : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_literal_mul_sum
     have d170 : (((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * b ^ (1:ℕ) + ((1:ℕ) : ℝ) * a ^ (1:ℕ)) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_div_literal
-    have d171 : (a + b) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_div_eq
+    have d171 : (a + b) / ((2:ℕ) : ℝ) = ((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ) := by term_derivation_div_eq d150 d151 comm_field_div_identity_coercion comm_field_div_nat_to_real_coercion d170
     have d172 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d173 : ((a + b) / ((2:ℕ) : ℝ)) ^ (2:ℕ) = ((1:ℕ) : ℝ) * (((0:ℕ) : ℝ) + ((1:ℚ)/2 : ℝ) * b ^ (1:ℕ) + ((1:ℚ)/2 : ℝ) * a ^ (1:ℕ)) ^ (2:ℕ) := by term_derivation_non_reduced_power
     have d174 : (1:ℚ)/2 = (1:ℚ)/2 := by term_derivation_reflection

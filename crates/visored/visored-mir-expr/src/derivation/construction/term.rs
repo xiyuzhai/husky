@@ -15,7 +15,9 @@ use crate::{
     helpers::compare::{assert_deep_eq, vd_mir_expr_deep_eq},
     hypothesis::constructor::expr::ds,
 };
-use coercion::{VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
+use coercion::{
+    VdMirBinaryOprCoercion, VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion,
+};
 use hypothesis::VdMirHypothesisIdx;
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
@@ -167,9 +169,11 @@ pub enum VdMirTermDerivationConstruction {
     },
     /// derive `a / b => term` from `a => a_term`, `b => b_term` and `a_term / b_term => term`
     DivEq {
-        numerator_dn: VdMirTermDerivationIdx,
-        denominator_dn: VdMirTermDerivationIdx,
-        numerator_dn_div_denominator_dn_dn: VdMirTermDerivationIdx,
+        a_dn: VdMirTermDerivationIdx,
+        b_dn: VdMirTermDerivationIdx,
+        a_coercion: VdMirBinaryOprCoercion,
+        b_coercion: VdMirBinaryOprCoercion,
+        a_nf_div_b_nf_dn: VdMirTermDerivationIdx,
     },
     /// derive `a / b => term` from `a * b⁻¹ => term` if `b` is a literal
     DivLiteral {
@@ -362,16 +366,12 @@ impl VdMirTermDerivationConstruction {
                 hc,
             ),
             VdMirTermDerivationConstruction::DivEq {
-                numerator_dn,
-                denominator_dn,
-                numerator_dn_div_denominator_dn_dn,
-            } => check_div_eq(
-                prop,
-                numerator_dn,
-                denominator_dn,
-                numerator_dn_div_denominator_dn_dn,
-                hc,
-            ),
+                a_dn,
+                b_dn,
+                a_coercion,
+                b_coercion,
+                a_nf_div_b_nf_dn,
+            } => check_div_eq(prop, a_dn, b_dn, a_nf_div_b_nf_dn, hc),
             VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => {
                 check_div_literal(prop, a_mul_b_inv_dn, hc)
             }

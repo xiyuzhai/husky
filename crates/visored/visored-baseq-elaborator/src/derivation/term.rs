@@ -127,7 +127,12 @@ where
                         let &[numerator, denominator] = arguments.as_slice() else {
                             unreachable!()
                         };
-                        self.transcribe_div_term_derivation_construction(numerator, denominator, hc)
+                        self.transcribe_div_term_derivation_construction(
+                            numerator,
+                            signature,
+                            denominator,
+                            hc,
+                        )
                     }
                 },
                 VdMirFunc::Power(signature) => {

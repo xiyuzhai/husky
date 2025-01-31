@@ -42,6 +42,13 @@ impl VdMirBaseBinaryOpr {
             VdMirBaseBinaryOpr::CommFieldDiv => "/",
         }
     }
+
+    pub fn code(self) -> &'static str {
+        match self {
+            VdMirBaseBinaryOpr::CommRingSub => "comm_ring_sub",
+            VdMirBaseBinaryOpr::CommFieldDiv => "comm_field_div",
+        }
+    }
 }
 
 impl std::fmt::Display for VdMirBaseBinaryOpr {

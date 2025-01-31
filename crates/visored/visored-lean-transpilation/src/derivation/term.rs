@@ -131,10 +131,21 @@ where
                 a_add_b_derived_add_c_derivation,
             } => None,
             VdMirTermDerivationConstruction::DivEq {
-                numerator_dn,
-                denominator_dn,
-                numerator_dn_div_denominator_dn_dn,
-            } => None,
+                a_dn,
+                b_dn,
+                a_coercion,
+                b_coercion,
+                a_nf_div_b_nf_dn,
+            } => Some(
+                [
+                    D(a_dn),
+                    D(b_dn),
+                    C(a_coercion.into()),
+                    C(b_coercion.into()),
+                    D(a_nf_div_b_nf_dn),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => None,
             VdMirTermDerivationConstruction::LiteralMulSum {
                 p_derivation,
