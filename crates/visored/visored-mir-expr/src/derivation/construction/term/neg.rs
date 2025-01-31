@@ -34,12 +34,18 @@ pub(super) fn check_neg_eq<'db, Src>(
     assert_deep_eq!(term1, term, hc);
 }
 
-/// derive `-a => term` from `(-1) * a => term`
+/// derive `-a => (-1) * a^1`
 pub(super) fn check_neg_atom<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    todo!()
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (-a) = expr, hc);
+    ds!(let (minus_one * a_pow_one) = term, hc);
+    assert!(hc.literal(minus_one).is_i128(-1));
+    ds!(let (a1 ^ one) = a_pow_one, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
 }
 
 /// derive `-(a + b) => neg_a_term + neg_b_term` from `-a => neg_a_term` and `-b => neg_b_term`

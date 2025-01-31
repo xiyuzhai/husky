@@ -8,7 +8,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdMirTermDerivationConstruction {
         match *opd.data() {
             VdBsqExprData::Literal(vd_literal) => VdMirTermDerivationConstruction::NegLiteral,
-            VdBsqExprData::Variable(lx_math_letter, arena_idx) => todo!(),
+            VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
+                VdMirTermDerivationConstruction::NegAtom
+            }
             VdBsqExprData::ItemPath(vd_item_path) => todo!(),
             _ => {
                 let opd = opd.normalize(self, hc);
