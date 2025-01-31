@@ -292,3 +292,14 @@ pub(super) fn check_one_mul_power_one<'db, Src>(
     assert!(hc.literal(one).is_one());
     assert_deep_eq!(a1, a, hc);
 }
+
+/// derive `a * 1 => a`
+pub(super) fn check_mul_one<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => a) = prop, hc);
+    ds!(let (a1 * one) = expr, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+}

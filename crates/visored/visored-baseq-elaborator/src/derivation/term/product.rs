@@ -144,6 +144,9 @@ fn derive_mul_literal<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> (VdMirTermDerivationConstruction, Option<VdBsqExpr<'sess>>) {
+    if ropd.is_one() {
+        return (VdMirTermDerivationConstruction::MulOne, None);
+    }
     match *lopd.data() {
         VdBsqExprData::Literal(leader) => {
             (VdMirTermDerivationConstruction::LiteralMulLiteral, None)
