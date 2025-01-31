@@ -57,3 +57,9 @@ macro "term_derivation_sub_eqs_add_neg" h_add_neg:term:1024 b_coercion:term:1024
 
 /-- derive `a + 0 => a` -/
 macro "term_derivation_nf_add_zero": tactic => `(tactic| simp)
+
+macro "term_derivation_literal_add_literal": tactic => `(tactic| simp)
+
+macro "term_derivation_zero_add": tactic => `(tactic| simp)
+
+macro "term_derivation_sum_add_literal": tactic => `(tactic| simp)
