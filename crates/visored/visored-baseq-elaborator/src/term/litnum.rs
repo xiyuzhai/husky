@@ -486,7 +486,14 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
                 VdBsqComparisonOpr::GE => i >= 0,
             },
             VdBsqLitnumTerm::BigInt(i) => todo!(),
-            VdBsqLitnumTerm::Frac128(f) => todo!(),
+            VdBsqLitnumTerm::Frac128(f) => match kind {
+                VdBsqComparisonOpr::EQ => f.numerator() == 0,
+                VdBsqComparisonOpr::NE => f.numerator() != 0,
+                VdBsqComparisonOpr::LT => f.numerator() < 0,
+                VdBsqComparisonOpr::GT => f.numerator() > 0,
+                VdBsqComparisonOpr::LE => f.numerator() <= 0,
+                VdBsqComparisonOpr::GE => f.numerator() >= 0,
+            },
         }
     }
 

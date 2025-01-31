@@ -15,12 +15,12 @@ theorem term_derivation_non_trivial_hypothesis_equivalence {src dst nf : Prop} (
 macro "term_derivation_non_trivial_hypothesis_equivalence" src:term:1024 src_nf:term:1024 dst_nf:term:1024 : tactic
   => `(tactic| exact term_derivation_non_trivial_hypothesis_equivalence $src $src_nf $dst_nf)
 
-theorem term_derivation_non_trivial_expr_equivalence_eq {α} {a b term: α}
+theorem term_derivation_non_trivial_expr_equivalence {α} {a b term: α}
   (ha_nf: a = term)
   (hb_nf: b = term)
   : a = b := by
   rw [ha_nf, hb_nf]
 
 
-macro "term_derivation_non_trivial_expr_equivalence_eq" ha_nf:term:1024 hb_nf:term:1024 : tactic
-  => `(tactic| exact term_derivation_non_trivial_expr_equivalence_eq $ha_nf $hb_nf)
+macro "term_derivation_non_trivial_expr_equivalence" ha_nf:term:1024 hb_nf:term:1024 : tactic
+  => `(tactic| exact term_derivation_non_trivial_expr_equivalence $ha_nf $hb_nf)
