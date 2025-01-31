@@ -77,8 +77,10 @@ pub enum VdMirTermDerivationConstruction {
     },
     LiteralMulLiteral,
     MulEq {
-        lopd: VdMirTermDerivationIdx,
-        ropd: VdMirTermDerivationIdx,
+        a: VdMirTermDerivationIdx,
+        b: VdMirTermDerivationIdx,
+        a_eq_coercion: VdMirSeparatorCoercion,
+        b_eq_coercion: VdMirSeparatorCoercion,
         merge: VdMirTermDerivationIdx,
     },
     /// derive `a * c` => `c * a^1`
@@ -294,9 +296,13 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::LiteralMulLiteral => {
                 check_literal_mul_literal(prop, hc)
             }
-            VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => {
-                check_mul_eq(prop, lopd, ropd, merge, hc)
-            }
+            VdMirTermDerivationConstruction::MulEq {
+                a,
+                b,
+                a_eq_coercion,
+                b_eq_coercion,
+                merge,
+            } => check_mul_eq(prop, a, b, merge, hc),
             VdMirTermDerivationConstruction::BaseMulLiteral => check_base_mul_literal(prop, hc),
             VdMirTermDerivationConstruction::OneMul { a_nf } => check_one_mul(prop, a_nf, hc),
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => {

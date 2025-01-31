@@ -92,7 +92,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ
     have d3 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d4 : x = x := by term_derivation_reflection
     have d5 : ((2:ℕ) : ℝ) * x = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_non_one_literal_mul_atom
-    have d6 : ((2:ℕ) : ℝ) * x = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq
+    have d6 : ((2:ℕ) : ℝ) * x = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq d3 d4 eq_nat_to_real_coercion eq_identity_coercion d5
     have d7 : (-(((2:ℕ) : ℝ) * x ^ (1:ℕ)) : ℝ) = ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_neg_product
     have d8 : (-(((2:ℕ) : ℝ) * x) : ℝ) = ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_neg_eq
     have d9 : ((1:ℕ) : ℝ) * x ^ (2:ℕ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) = ((0:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) + ((1:ℕ) : ℝ) * x ^ (2:ℕ) := by term_derivation_product_add_product_greater
@@ -112,7 +112,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ
     have d23 : x = x := by term_derivation_reflection
     have d24 : x ^ (1:ℕ) = x := by term_derivation_power_one
     have d25 : ((-2:ℤ) : ℝ) * x = ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_non_one_literal_mul_atom
-    have d26 : ((-2:ℤ) : ℝ) * x ^ (1:ℕ) = ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq
+    have d26 : ((-2:ℤ) : ℝ) * x ^ (1:ℕ) = ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq d22 d24 eq_int_to_real_coercion eq_identity_coercion d25
     have d27 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_reflection
     have d28 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_add_eq d21 d26 eq_nat_to_real_coercion eq_identity_coercion d27
     have d29 : x = x := by term_derivation_reflection
@@ -135,7 +135,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ
     have d46 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d47 : x = x := by term_derivation_reflection
     have d48 : ((2:ℕ) : ℝ) * x = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_non_one_literal_mul_atom
-    have d49 : ((2:ℕ) : ℝ) * x = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq
+    have d49 : ((2:ℕ) : ℝ) * x = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq d46 d47 eq_nat_to_real_coercion eq_identity_coercion d48
     have d50 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection
     have d51 : x = x := by term_derivation_reflection
     have d52 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
@@ -147,7 +147,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + ((1:ℕ) : ℝ) / x ≥ ((2:ℕ
     have d58 : x = x := by term_derivation_reflection
     have d59 : x ^ (1:ℕ) = x := by term_derivation_power_one
     have d60 : ((2:ℕ) : ℝ) * x = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_non_one_literal_mul_atom
-    have d61 : ((2:ℕ) : ℝ) * x ^ (1:ℕ) = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq
+    have d61 : ((2:ℕ) : ℝ) * x ^ (1:ℕ) = ((2:ℕ) : ℝ) * x ^ (1:ℕ) := by term_derivation_mul_eq d57 d59 eq_nat_to_real_coercion eq_identity_coercion d60
     have d62 : (-(((2:ℕ) : ℝ) * x ^ (1:ℕ)) : ℝ) = ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_neg_product
     have d63 : (-(((2:ℕ) : ℝ) * x ^ (1:ℕ)) : ℝ) = ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_neg_eq
     have d64 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * x ^ (1:ℕ) := by term_derivation_reflection

@@ -91,7 +91,22 @@ where
             VdMirTermDerivationConstruction::NegExponential => None,
             VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => None,
             VdMirTermDerivationConstruction::LiteralMulLiteral => None,
-            VdMirTermDerivationConstruction::MulEq { lopd, ropd, merge } => None,
+            VdMirTermDerivationConstruction::MulEq {
+                a,
+                b,
+                a_eq_coercion,
+                b_eq_coercion,
+                merge,
+            } => Some(
+                [
+                    D(a),
+                    D(b),
+                    C(a_eq_coercion.into()),
+                    C(b_eq_coercion.into()),
+                    D(merge),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::BaseMulLiteral => None,
             VdMirTermDerivationConstruction::OneMul { .. } => None,
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => None,
