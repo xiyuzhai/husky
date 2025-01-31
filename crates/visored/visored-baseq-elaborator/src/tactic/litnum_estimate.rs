@@ -71,8 +71,9 @@ fn try_one_shot<'db, 'sess>(
     };
     let (src, bound) = elr.hc.stack().get_active_litnum_bound(leader, opr, db)?;
     require!(bound.finalize(rhs, db));
-    let hypothesis = elr
-        .hc
-        .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound { src });
+    let hypothesis = elr.hc.construct_new_hypothesis(
+        prop,
+        VdBsqHypothesisConstruction::LitnumBound { src, bound },
+    );
     AltJustOk(Ok(hypothesis))
 }

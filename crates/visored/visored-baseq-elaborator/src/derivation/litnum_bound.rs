@@ -1,5 +1,5 @@
 use super::*;
-use hypothesis::stashes::litnum_bound::VdBsqLitnumBoundSrc;
+use hypothesis::stashes::litnum_bound::{VdBsqLitnumBound, VdBsqLitnumBoundSrc};
 use visored_mir_expr::{
     derivation::{
         chunk::VdMirDerivationChunk,
@@ -16,6 +16,7 @@ where
         &mut self,
         dst: VdBsqHypothesisIdx<'sess>,
         src: VdBsqLitnumBoundSrc<'sess>,
+        bound: VdBsqLitnumBound<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {

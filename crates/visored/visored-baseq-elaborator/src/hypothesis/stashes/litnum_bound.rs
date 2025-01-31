@@ -1,3 +1,6 @@
+mod normalized;
+
+use self::normalized::*;
 use super::*;
 use crate::{
     expr::VdBsqExpr,
@@ -31,84 +34,10 @@ pub type VdBsqLitnumBoundStash<'sess> = VdBsqHypothesisUpgradeStash<'sess, VdBsq
 
 pub struct VdBsqLitnumBoundScheme;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct VdBsqLitnumBoundKey<'sess> {
-    normalized_monomials: VdBsqComnumTerm<'sess>,
-}
-
-/// always a lower bound
-///
-/// `litnum` is the right hand side constant
-///
-/// `boundary_kind` indicates whether it's closed or open
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub struct VdBsqNormalizedLitnumBound<'sess> {
-    lower_bound_litnum: VdBsqLitnumTerm<'sess>,
-    boundary_kind: VdBsqBoundBoundaryKind,
-}
-
-impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
-    pub fn is_upgrade_of(self, other: Self) -> bool {
-        self > other
-    }
-}
-
-#[test]
-fn vd_bsq_normalized_litnum_bound_is_upgrade_works() {
-    fn t<'sess>(
-        slf: VdBsqNormalizedLitnumBound<'sess>,
-        other: VdBsqNormalizedLitnumBound<'sess>,
-        expected: bool,
-    ) {
-        assert_eq!(slf.is_upgrade_of(other), expected);
-    }
-    fn c<'sess>(t: impl Into<VdBsqLitnumTerm<'sess>>) -> VdBsqNormalizedLitnumBound<'sess> {
-        VdBsqNormalizedLitnumBound {
-            lower_bound_litnum: t.into(),
-            boundary_kind: VdBsqBoundBoundaryKind::Closed,
-        }
-    }
-    fn o<'sess>(t: impl Into<VdBsqLitnumTerm<'sess>>) -> VdBsqNormalizedLitnumBound<'sess> {
-        VdBsqNormalizedLitnumBound {
-            lower_bound_litnum: t.into(),
-            boundary_kind: VdBsqBoundBoundaryKind::Open,
-        }
-    }
-    t(c(1), o(1), false);
-    t(o(1), o(1), false);
-    t(c(1), c(1), false);
-    t(o(1), c(1), true);
-    t(c(1), c(2), false);
-    t(c(1), o(2), false);
-    t(o(1), c(2), false);
-    t(o(1), o(2), false);
-    t(c(2), c(1), true);
-    t(c(2), o(1), true);
-    t(o(2), c(1), true);
-    t(o(2), o(1), true);
-}
-
-impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
-    fn unnormalize(
-        self,
-        litnum_factor: VdBsqLitnumTerm<'sess>,
-        litnum_summand: VdBsqLitnumTerm<'sess>,
-        opr: VdBsqBoundOpr,
-        db: &'sess FloaterDb,
-    ) -> VdBsqLitnumBound<'sess> {
-        VdBsqLitnumBound {
-            bound_litnum: self
-                .lower_bound_litnum
-                .add(litnum_summand, db)
-                .mul(litnum_factor, db),
-            boundary_kind: self.boundary_kind,
-            opr,
-        }
-    }
-}
-
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct VdBsqLitnumBound<'sess> {
+    litnum_factor: VdBsqLitnumTerm<'sess>,
+    litnum_summand: VdBsqLitnumTerm<'sess>,
     bound_litnum: VdBsqLitnumTerm<'sess>,
     boundary_kind: VdBsqBoundBoundaryKind,
     opr: VdBsqBoundOpr,
@@ -168,7 +97,7 @@ impl<'sess> VdBsqLitnumBound<'sess> {
 }
 
 impl IsVdBsqHypothesisStashScheme for VdBsqLitnumBoundScheme {
-    type Key<'sess> = VdBsqLitnumBoundKey<'sess>;
+    type Key<'sess> = VdBsqNormalizedLitnumBoundKey<'sess>;
 
     type Value<'sess> = (
         VdBsqLitnumBoundSrc<'sess>,
@@ -208,15 +137,10 @@ impl IsVdBsqHypothesisUpgradeStashScheme for VdBsqLitnumBoundScheme {
             litnum_summand,
         };
         Some((
-            VdBsqLitnumBoundKey {
-                normalized_monomials,
-            },
+            VdBsqNormalizedLitnumBoundKey::new(normalized_monomials),
             (
                 src,
-                VdBsqNormalizedLitnumBound {
-                    lower_bound_litnum,
-                    boundary_kind,
-                },
+                VdBsqNormalizedLitnumBound::new(lower_bound_litnum, boundary_kind),
             ),
         ))
     }
@@ -265,9 +189,7 @@ impl<'sess> VdBsqLitnumBoundStash<'sess> {
     ) -> Option<(VdBsqLitnumBoundSrc<'sess>, VdBsqLitnumBound<'sess>)> {
         let (litnum_factor, (litnum_summand, normalized_monomials)) = split(term, opr, db);
         self.get_active_value_with(
-            VdBsqLitnumBoundKey {
-                normalized_monomials,
-            },
+            VdBsqNormalizedLitnumBoundKey::new(normalized_monomials),
             db,
             active_hypotheses,
             |&(src, value)| {
