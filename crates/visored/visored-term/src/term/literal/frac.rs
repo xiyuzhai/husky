@@ -10,6 +10,8 @@ pub struct VdFrac {
 impl VdFrac {
     pub fn new(numerator: VdInt, denominator: VdInt) -> Self {
         assert!(!denominator.is_zero());
+        assert!(denominator.is_positive());
+        assert!(!denominator.is_one());
         let gcd = num_helpers::gcd(&numerator, &denominator);
         assert!(gcd.is_one());
         Self {
@@ -54,11 +56,17 @@ impl VdFrac {
             && self.denominator.to_i128() == Some(denominator)
     }
 
-    pub fn new_bigint_inv(n: &VdInt) -> Option<Self> {
-        match n.sign() {
-            Sign::Minus => Some(VdFrac::new((-1).into(), -n)),
-            Sign::NoSign => None,
-            Sign::Plus => Some(VdFrac::new(1.into(), n.clone())),
+    pub fn new_bigint_inv(n: &VdInt) -> Option<VdLiteralData> {
+        if n.is_one() {
+            Some(VdLiteralData::Int(1.into()))
+        } else if n == &(-1).into() {
+            Some(VdLiteralData::Int((-1).into()))
+        } else {
+            match n.sign() {
+                Sign::Minus => Some(VdLiteralData::Frac(VdFrac::new((-1).into(), -n))),
+                Sign::NoSign => None,
+                Sign::Plus => Some(VdLiteralData::Frac(VdFrac::new(1.into(), n.clone()))),
+            }
         }
     }
 }

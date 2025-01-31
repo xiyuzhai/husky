@@ -22,7 +22,7 @@ pub(super) fn check_div_eq<'db, Src>(
     assert_deep_eq!(b_term1, b_term, hc);
 }
 
-/// derive `a / b => term` from `b⁻¹ * a => term` if `b` is a literal
+/// derive `a / b => term` from `a * b⁻¹ => term` if `b` is a literal
 pub(super) fn check_div_literal<'db, Src>(
     prop: VdMirExprIdx,
     a_mul_b_inv_dn: VdMirTermDerivationIdx,
@@ -31,8 +31,8 @@ pub(super) fn check_div_literal<'db, Src>(
     p!(hc.fmt_expr(prop), hc.fmt_expr(a_mul_b_inv_dn.prop(hc)));
     ds!(let (expr => term) = prop, hc);
     ds!(let (a / b) = expr, hc);
-    ds!(let (b_inv_mul_a => term1) = a_mul_b_inv_dn.prop(hc), hc);
-    ds!(let (b_inv * a1) = b_inv_mul_a, hc);
+    ds!(let (a_mul_b_inv => term1) = a_mul_b_inv_dn.prop(hc), hc);
+    ds!(let (a1 * b_inv) = a_mul_b_inv, hc);
     assert_deep_eq!(a1, a, hc);
     assert_deep_eq!(term1, term, hc);
     let b = hc.literal(b);

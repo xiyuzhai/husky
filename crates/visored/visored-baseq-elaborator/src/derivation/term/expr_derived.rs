@@ -54,6 +54,10 @@ fn transcribe_expr_derivation_prop<'db, 'sess>(
 }
 
 impl<'sess> VdBsqExprDerived<'sess> {
+    pub(super) fn expr(self) -> VdBsqExpr<'sess> {
+        self.expr
+    }
+
     pub(super) fn derived(self) -> VdBsqExpr<'sess> {
         self.derived
     }

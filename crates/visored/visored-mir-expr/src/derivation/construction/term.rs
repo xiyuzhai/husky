@@ -171,7 +171,7 @@ pub enum VdMirTermDerivationConstruction {
         denominator_dn: VdMirTermDerivationIdx,
         numerator_dn_div_denominator_dn_dn: VdMirTermDerivationIdx,
     },
-    /// derive `a / b => term` from `b⁻¹ * a => term` if `b` is a literal
+    /// derive `a / b => term` from `a * b⁻¹ => term` if `b` is a literal
     DivLiteral {
         a_mul_b_inv_dn: VdMirTermDerivationIdx,
     },

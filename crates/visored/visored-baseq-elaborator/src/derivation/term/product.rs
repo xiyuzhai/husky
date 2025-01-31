@@ -370,7 +370,7 @@ fn derive_literal_mul_sum<'db, 'sess>(
         hc,
     );
     VdBsqExprDerived::new(
-        elr.mk_mul(lopd, ropd, hc),
+        p.expr(),
         Some(ab_term_plus_ac_term_derivation.derived()),
         VdMirTermDerivationConstruction::LiteralMulSum {
             p_derivation: p.derivation(),
