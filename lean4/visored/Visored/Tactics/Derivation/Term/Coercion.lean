@@ -28,8 +28,28 @@ theorem eq_int_to_real_coercion {a b : ℤ} : a = b -> (a : ℝ) = (b : ℝ) := 
 
 -- Negation coercions
 
-theorem neg_nat_to_real_coercion {a : ℕ} : ((-(a: ℤ): ℤ) : ℝ) = -(a : ℝ) := by
-  simp
+theorem neg_identity_coercion {α} {a : α} [Neg α] : (-a) = (-a) := by
+  rfl
+
+theorem neg_nat_to_int_coercion {a : ℕ} : (-(a : ℤ)) = (-(a : ℤ) : ℤ) := by simp
+
+theorem neg_nat_to_rat_coercion {a : ℕ} : ((-(a : ℤ) : ℤ) : ℚ) = -(a : ℚ) := by simp
+
+theorem neg_nat_to_real_coercion {a : ℕ} : ((-(a : ℤ) : ℤ) : ℝ) = -(a : ℝ) := by simp
+
+theorem neg_nat_to_complex_coercion {a : ℕ} : ((-(a : ℤ) : ℤ) : ℂ) = -(a : ℂ) := by simp
+
+theorem neg_int_to_rat_coercion {a : ℤ} : ((-a: ℤ) : ℚ) = -(a : ℚ) := by simp
+
+theorem neg_int_to_real_coercion {a : ℤ} : ((-a: ℤ) : ℝ) = -(a : ℝ) := by simp
+
+theorem neg_int_to_complex_coercion {a : ℤ} : ((-a: ℤ) : ℂ) = -(a : ℂ) := by simp
+
+theorem neg_rat_to_real_coercion {a : ℚ} : ((-a: ℚ) : ℝ) = -(a : ℝ) := by simp
+
+theorem neg_rat_to_complex_coercion {a : ℚ} : ((-a: ℚ) : ℂ) = -(a : ℂ) := by simp
+
+theorem neg_real_to_complex_coercion {a : ℝ} : ((-a: ℝ) : ℂ) = -(a : ℂ) := by simp
 
 -- Addition coercions
 
