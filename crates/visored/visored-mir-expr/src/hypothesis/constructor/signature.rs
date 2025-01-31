@@ -116,11 +116,15 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         opr: VdBaseBinaryOpr,
         ropd_ty: VdType,
     ) -> VdBaseBinaryOprSignature {
-        match self
+        let Some(dispatch) = self
             .default_global_dispatch_table
             .base_binary_opr_default_dispatch(lopd_ty, opr, ropd_ty)
-            .unwrap()
-        {
+        else {
+            use husky_print_utils::p;
+            p!(lopd_ty, opr, ropd_ty);
+            todo!()
+        };
+        match dispatch {
             VdBinaryOprGlobalDispatch::Normal {
                 base_binary_opr,
                 signature,

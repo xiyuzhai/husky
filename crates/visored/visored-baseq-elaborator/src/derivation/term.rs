@@ -40,19 +40,47 @@ where
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
-            let src_nf = self.transcribe_expr_term_derivation(self.hc.arena()[src].expr(), hc);
-            let dst_nf = self.transcribe_expr_term_derivation(self.hc.arena()[dst].expr(), hc);
-            let prop = self.hc.arena()[dst].expr().transcribe(None, self, hc);
-            hc.alloc_derivation(
-                prop,
-                VdMirTermDerivationConstruction::NonTrivialFinish {
-                    src: hc.cached_hypothesis(src).unwrap(),
-                    src_nf: src_nf.derivation(),
-                    dst_nf: dst_nf.derivation(),
-                }
-                .into(),
-            )
+            self.transcribe_non_trivial_hypothesis_equivalence_term_derivation(src, dst, hc)
         })
+    }
+
+    pub fn transcribe_non_trivial_hypothesis_equivalence_term_derivation(
+        &mut self,
+        src: VdBsqHypothesisIdx<'sess>,
+        dst: VdBsqHypothesisIdx<'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirDerivationIdx {
+        let src_nf = self.transcribe_expr_term_derivation(self.hc.arena()[src].prop(), hc);
+        let dst_nf = self.transcribe_expr_term_derivation(self.hc.arena()[dst].prop(), hc);
+        let prop = self.hc.arena()[dst].prop().transcribe(None, self, hc);
+        hc.alloc_derivation(
+            prop,
+            VdMirTermDerivationConstruction::NonTrivialHypothesisEquivalence {
+                src: hc.cached_hypothesis(src).unwrap(),
+                src_nf: src_nf.derivation(),
+                dst_nf: dst_nf.derivation(),
+            }
+            .into(),
+        )
+    }
+
+    pub fn transcribe_non_trivial_expr_equivalence_term_derivation(
+        &mut self,
+        src: VdBsqExpr<'sess>,
+        dst: VdBsqExpr<'sess>,
+        hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdMirTermDerivationIdx {
+        let src_nf = self.transcribe_expr_term_derivation(src, hc);
+        let dst_nf = self.transcribe_expr_term_derivation(dst, hc);
+        let prop = dst.transcribe(None, self, hc);
+        hc.alloc_term_derivation(
+            prop,
+            VdMirTermDerivationConstruction::ExprEquivalence {
+                src_nf: src_nf.derivation(),
+                dst_nf: dst_nf.derivation(),
+            }
+            .into(),
+        )
     }
 
     fn transcribe_expr_term_derivation(

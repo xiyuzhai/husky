@@ -56,7 +56,7 @@ impl<'sess> VdBsqHypothesisArena<'sess> {
 }
 
 impl<'sess> VdBsqHypothesisEntry<'sess> {
-    pub fn expr(&self) -> VdBsqExpr<'sess> {
+    pub fn prop(&self) -> VdBsqExpr<'sess> {
         self.prop
     }
 
@@ -114,7 +114,7 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
         let hypothesis_entry = &elr.hc.arena()[self];
         let prop = match explicit_prop {
             Some(prop) => prop,
-            None => hypothesis_entry.expr().transcribe(None, elr, hc),
+            None => hypothesis_entry.prop().transcribe(None, elr, hc),
         };
         (prop, construction)
     }

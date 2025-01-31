@@ -1,5 +1,5 @@
 mod div;
-pub mod finish;
+pub mod equivalence;
 pub mod neg;
 pub mod pow;
 pub mod product;
@@ -7,7 +7,7 @@ mod sqrt;
 pub mod sub;
 pub mod sum;
 
-use self::{div::*, finish::*, neg::*, pow::*, product::*, sqrt::*, sub::*, sum::*};
+use self::{div::*, equivalence::*, neg::*, pow::*, product::*, sqrt::*, sub::*, sum::*};
 use super::*;
 use crate::{
     derivation::VdMirDerivationIdx,
@@ -90,8 +90,12 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a + 0 => a`
     NfAddZero,
     /// derive `src_nf ↔ dst_nf`
-    NonTrivialFinish {
+    NonTrivialHypothesisEquivalence {
         src: VdMirHypothesisIdx,
+        src_nf: VdMirTermDerivationIdx,
+        dst_nf: VdMirTermDerivationIdx,
+    },
+    ExprEquivalence {
         src_nf: VdMirTermDerivationIdx,
         dst_nf: VdMirTermDerivationIdx,
     },
@@ -288,11 +292,11 @@ impl VdMirTermDerivationConstruction {
                 check_nonone_literal_mul_atom(prop, hc)
             }
             VdMirTermDerivationConstruction::NfAddZero => check_nf_add_zero(prop, hc),
-            VdMirTermDerivationConstruction::NonTrivialFinish {
+            VdMirTermDerivationConstruction::NonTrivialHypothesisEquivalence {
                 src,
                 src_nf,
                 dst_nf,
-            } => check_non_trivial_finish(prop, src, src_nf, dst_nf, hc),
+            } => check_non_trivial_hypothesis_equivalence(prop, src, src_nf, dst_nf, hc),
             VdMirTermDerivationConstruction::AtomMulAtom { comparison } => {
                 check_atom_mul_atom(prop, comparison, hc)
             }
@@ -388,6 +392,9 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::AtomMulExponentialGreater => {
                 check_atom_mul_exponential_greater(prop, hc)
+            }
+            VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => {
+                check_expr_equivalence(prop, src_nf, dst_nf, hc)
             }
         }
     }

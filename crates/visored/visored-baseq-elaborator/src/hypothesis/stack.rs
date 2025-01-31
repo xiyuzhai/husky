@@ -169,7 +169,7 @@ impl<'sess> VdBsqHypothesisStack<'sess> {
         record: VdBsqHypothesisStackRecord<'sess>,
         entry: &VdBsqHypothesisEntry<'sess>,
     ) {
-        let expr = entry.expr();
+        let expr = entry.prop();
         // only add the hypothesis to the term map if the term is not already present
         if self.get_active_hypothesis_with_expr(expr).is_none() {
             self.expr_to_hypothesis_map.insert(expr, record);
@@ -181,7 +181,7 @@ impl<'sess> VdBsqHypothesisStack<'sess> {
         record: VdBsqHypothesisStackRecord<'sess>,
         entry: &VdBsqHypothesisEntry<'sess>,
     ) {
-        let term = entry.expr().term();
+        let term = entry.prop().term();
         // only add the hypothesis to the term map if the term is not already present
         if term.is_nontrivial()
             && self

@@ -53,7 +53,7 @@ impl IsVdBsqHypothesisUniqueStashScheme for VdBsqLitnumEqualityScheme {
         entry: &VdBsqHypothesisEntry<'sess>,
         db: &'sess FloaterDb,
     ) -> Option<(Self::Key<'sess>, Self::Value<'sess>)> {
-        let VdBsqTerm::Prop(VdBsqPropTerm::NumRelation(term)) = entry.expr().term() else {
+        let VdBsqTerm::Prop(VdBsqPropTerm::NumRelation(term)) = entry.prop().term() else {
             return None;
         };
         require!(term.opr() == VdBsqComparisonOpr::Eq);

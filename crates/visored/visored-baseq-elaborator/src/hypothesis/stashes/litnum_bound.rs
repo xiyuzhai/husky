@@ -142,7 +142,7 @@ impl IsVdBsqHypothesisUpgradeStashScheme for VdBsqLitnumBoundScheme {
         entry: &VdBsqHypothesisEntry<'sess>,
         db: &'sess FloaterDb,
     ) -> Option<(Self::Key<'sess>, Self::Value<'sess>)> {
-        let VdBsqTerm::Prop(VdBsqPropTerm::NumRelation(term)) = entry.expr().term() else {
+        let VdBsqTerm::Prop(VdBsqPropTerm::NumRelation(term)) = entry.prop().term() else {
             return None;
         };
         let VdBsqComparisonOpr::Bound(opr) = term.opr() else {

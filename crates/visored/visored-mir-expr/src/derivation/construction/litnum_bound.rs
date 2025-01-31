@@ -7,6 +7,7 @@ use crate::{
 };
 use coercion::{VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
 use hypothesis::VdMirHypothesisIdx;
+use term::VdMirTermDerivationIdx;
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
 };
@@ -17,7 +18,9 @@ use visored_term::term::literal::VdLiteral;
 
 #[derive(Debug, PartialEq, Eq, strum::IntoStaticStr)]
 pub enum VdMirLitnumBoundDerivationConstruction {
-    Finish,
+    Finish {
+        src_nf_and_dst_nf_equivalence: VdMirTermDerivationIdx,
+    },
 }
 
 impl VdMirLitnumBoundDerivationConstruction {
@@ -26,12 +29,18 @@ impl VdMirLitnumBoundDerivationConstruction {
         prop: VdMirExprIdx,
         hc: &mut VdMirHypothesisConstructor<'db, Src>,
     ) {
-        match self {
-            VdMirLitnumBoundDerivationConstruction::Finish => check_finish(prop, hc),
+        match *self {
+            VdMirLitnumBoundDerivationConstruction::Finish {
+                src_nf_and_dst_nf_equivalence,
+            } => check_finish(prop, src_nf_and_dst_nf_equivalence, hc),
         }
     }
 }
 
-fn check_finish<'db, Src>(prop: VdMirExprIdx, hc: &mut VdMirHypothesisConstructor<'db, Src>) {
+fn check_finish<'db, Src>(
+    prop: VdMirExprIdx,
+    src_nf_and_dst_nf_equivalence: VdMirTermDerivationIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
     // todo!()
 }

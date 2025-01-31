@@ -620,4 +620,26 @@ impl<'db, 'sess> VdBsqExpr<'sess> {
             (lopd, signature, ropd)
         }
     }
+
+    pub fn split_trivial_chaining_separated_list(
+        self,
+        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> (
+        VdBsqExpr<'sess>,
+        VdBaseChainingSeparatorSignature,
+        VdBsqExpr<'sess>,
+    ) {
+        let VdBsqExprData::ChainingSeparatedList {
+            leader,
+            ref followers,
+            joined_signature: None,
+        } = *self.data()
+        else {
+            todo!()
+        };
+        assert_eq!(followers.len(), 1);
+        let (signature, ropd) = followers[0];
+        (leader, signature, ropd)
+    }
 }

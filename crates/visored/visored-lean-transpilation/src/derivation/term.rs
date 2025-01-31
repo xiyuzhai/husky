@@ -96,7 +96,7 @@ where
             VdMirTermDerivationConstruction::OneMul { .. } => None,
             VdMirTermDerivationConstruction::NonOneLiteralMulAtom => None,
             VdMirTermDerivationConstruction::NfAddZero => None,
-            VdMirTermDerivationConstruction::NonTrivialFinish {
+            VdMirTermDerivationConstruction::NonTrivialHypothesisEquivalence {
                 src,
                 src_nf,
                 dst_nf,
@@ -148,6 +148,7 @@ where
             VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => None,
             VdMirTermDerivationConstruction::AtomMulExponentialLess => None,
             VdMirTermDerivationConstruction::AtomMulExponentialGreater => None,
+            VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => todo!(),
         };
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name: term_derivation_tactic_name_from_variant_name(variant_name).into(),
@@ -162,7 +163,7 @@ where
         construction: &VdMirTermDerivationConstruction,
     ) -> LnMirTacticData {
         match construction {
-            VdMirTermDerivationConstruction::NonTrivialFinish {
+            VdMirTermDerivationConstruction::NonTrivialHypothesisEquivalence {
                 src,
                 src_nf,
                 dst_nf,
