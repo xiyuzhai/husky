@@ -1,3 +1,4 @@
+pub mod litnum_bound;
 pub mod term;
 
 use crate::*;
@@ -41,7 +42,9 @@ where
             VdMirDerivationConstruction::Term(construction) => {
                 self.build_term_tactic_construction(construction)
             }
-            VdMirDerivationConstruction::LitnumBound(construction) => todo!(),
+            VdMirDerivationConstruction::LitnumBound(construction) => {
+                self.build_litnum_bound_tactic_construction(construction)
+            }
         };
         LnMirTacticData::Have {
             ident,
@@ -61,7 +64,9 @@ where
             VdMirDerivationConstruction::Term(construction) => {
                 self.build_term_derivation_chunk_end_tactic_data(construction)
             }
-            VdMirDerivationConstruction::LitnumBound(construction) => todo!(),
+            VdMirDerivationConstruction::LitnumBound(construction) => {
+                self.build_litnum_bound_derivation_chunk_end_tactic_data(construction)
+            }
         }
     }
 }

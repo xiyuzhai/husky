@@ -57,8 +57,7 @@ where
                 self.alloc_tactics([custom_tactic_data])
             }
             VdMirHypothesisConstruction::LitnumBound { derivation_chunk } => {
-                let custom_tactic_data = self.custom_tactic_data("litnum_bound", None, None);
-                self.alloc_tactics([custom_tactic_data])
+                self.build_derivation_tactics(derivation_chunk, ln_tactics)
             }
             VdMirHypothesisConstruction::Kurapika => todo!(),
         };

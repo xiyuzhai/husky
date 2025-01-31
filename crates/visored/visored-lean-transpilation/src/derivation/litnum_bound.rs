@@ -1,0 +1,60 @@
+use super::*;
+use convert_case::{Case, Casing};
+use either::*;
+use lean_entity_path::{
+    theorem::{LnTermDerivationTheoremPath, LnTheoremPath},
+    LnItemPath,
+};
+use lean_mir_expr::expr::{application::LnMirFunc, LnMirExprIdx, LnMirExprIdxRange};
+use smallvec::*;
+use visored_mir_expr::{
+    coercion::{VdMirCoercion, VdMirSeparatorCoercion},
+    derivation::construction::{
+        litnum_bound::VdMirLitnumBoundDerivationConstruction,
+        term::{VdMirTermDerivationConstruction, VdMirTermDerivationIdx},
+    },
+    expr::{VdMirExprEntry, VdMirExprIdx},
+    hypothesis::VdMirHypothesisIdx,
+};
+
+impl<'a, S> VdLeanTranspilationBuilder<'a, S>
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    pub(super) fn build_litnum_bound_tactic_construction(
+        &mut self,
+        construction: &VdMirLitnumBoundDerivationConstruction,
+    ) -> LnMirExprIdx {
+        let variant_name: &'static str = construction.into();
+        let arguments: Option<LnMirExprIdxRange> = match *construction {
+            VdMirLitnumBoundDerivationConstruction::Finish {
+                src_nf_and_dst_nf_equivalence,
+            } => None,
+        };
+        let tactics = self.alloc_tactics([LnMirTacticData::Custom {
+            name: litnum_bound_tactic_name_from_variant_name(variant_name).into(),
+            arguments,
+            construction: None,
+        }]);
+        self.alloc_expr(LnMirExprEntry::new(LnMirExprData::By { tactics }))
+    }
+
+    pub(super) fn build_litnum_bound_derivation_chunk_end_tactic_data(
+        &mut self,
+        construction: &VdMirLitnumBoundDerivationConstruction,
+    ) -> LnMirTacticData {
+        match construction {
+            VdMirLitnumBoundDerivationConstruction::Finish {
+                src_nf_and_dst_nf_equivalence,
+            } => LnMirTacticData::Assumption,
+            _ => todo!(),
+        }
+    }
+}
+
+fn litnum_bound_tactic_name_from_variant_name(variant_name: &'static str) -> String {
+    format!(
+        "litnum_bound_derivation_{}",
+        variant_name.to_case(Case::Snake)
+    )
+}
