@@ -171,8 +171,8 @@ pub enum VdMirTermDerivationConstruction {
     DivEq {
         a_dn: VdMirTermDerivationIdx,
         b_dn: VdMirTermDerivationIdx,
-        a_coercion: VdMirBinaryOprCoercion,
-        b_coercion: VdMirBinaryOprCoercion,
+        a_eq_coercion: VdMirSeparatorCoercion,
+        b_eq_coercion: VdMirSeparatorCoercion,
         a_nf_div_b_nf_dn: VdMirTermDerivationIdx,
     },
     /// derive `a / b => term` from `a * b⁻¹ => term` if `b` is a literal
@@ -368,8 +368,8 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::DivEq {
                 a_dn,
                 b_dn,
-                a_coercion,
-                b_coercion,
+                a_eq_coercion: a_coercion,
+                b_eq_coercion: b_coercion,
                 a_nf_div_b_nf_dn,
             } => check_div_eq(prop, a_dn, b_dn, a_nf_div_b_nf_dn, hc),
             VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => {

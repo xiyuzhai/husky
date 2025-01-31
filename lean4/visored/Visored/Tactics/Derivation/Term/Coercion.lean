@@ -94,3 +94,35 @@ theorem mul_rat_to_real_coercion {a b : ℚ} : (a * b : ℝ) = (a : ℝ) * (b : 
 theorem mul_rat_to_complex_coercion {a b : ℚ} : (a * b : ℂ) = (a : ℂ) * (b : ℂ) := by ring
 
 theorem mul_real_to_complex_coercion {a b : ℝ} : (a * b : ℂ) = (a : ℂ) * (b : ℂ) := by ring
+
+-- Commutative field coercions
+
+theorem comm_field_div_identity_coercion {α} {a b : α} [Field α] : (a / b) = (a / b) := by
+  rfl
+
+theorem comm_field_div_nat_to_rat_coercion {a b : ℕ} : (a : ℚ) / (b : ℚ) = (a / b : ℚ) := by
+  rfl
+
+theorem comm_field_div_nat_to_real_coercion {a b : ℕ} : (a : ℝ) / (b : ℝ) = (a / b : ℝ) := by
+  rfl
+
+theorem comm_field_div_nat_to_complex_coercion {a b : ℕ} : (a : ℂ) / (b : ℂ) = (a / b : ℂ) := by
+  rfl
+
+theorem comm_field_div_int_to_rat_coercion {a b : ℤ} : (a : ℚ) / (b : ℚ) = (a / b : ℚ) := by
+  rfl
+
+theorem comm_field_div_int_to_real_coercion {a b : ℤ} : (a : ℝ) / (b : ℝ) = (a / b : ℝ) := by
+  rfl
+
+theorem comm_field_div_int_to_complex_coercion {a b : ℤ} : (a : ℂ) / (b : ℂ) = (a / b : ℂ) := by
+  rfl
+
+theorem comm_field_div_rat_to_real_coercion {a b : ℚ} : (a : ℝ) / (b : ℝ) = (a / b : ℝ) := by
+  rfl
+
+theorem comm_field_div_rat_to_complex_coercion {a b : ℚ} : (a : ℂ) / (b : ℂ) = (a / b : ℂ) := by
+  rfl
+
+theorem comm_field_div_real_to_complex_coercion {a b : ℝ} : (a : ℂ) / (b : ℂ) = (a / b : ℂ) := by
+  rfl

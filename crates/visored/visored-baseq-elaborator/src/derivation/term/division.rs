@@ -1,7 +1,7 @@
 use super::product::derive_product;
 use super::*;
 use crate::term::{comnum::VdBsqComnumTerm, VdBsqTerm};
-use visored_mir_expr::coercion::VdMirBinaryOprCoercion;
+use visored_mir_expr::coercion::{VdMirBinaryOprCoercion, VdMirSeparatorCoercion};
 use visored_opr::opr::binary::VdBaseBinaryOpr;
 use visored_signature::signature::binary_opr::{
     base::VdBaseBinaryOprSignature, VdBinaryOprSignature,
@@ -19,21 +19,15 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         let b_nf = b.normalize(self, hc);
         let a_nf_div_b_nf_dn = derive_div(a_nf, b_nf, self, hc);
         assert_eq!(signature.opr, VdMirBaseBinaryOpr::CommFieldDiv);
-        let a_coercion = VdMirBinaryOprCoercion::new(
-            VdMirBaseBinaryOpr::CommFieldDiv,
-            a_nf.ty(),
-            signature.lopd_ty,
-        );
-        let b_coercion = VdMirBinaryOprCoercion::new(
-            VdMirBaseBinaryOpr::CommFieldDiv,
-            b_nf.ty(),
-            signature.ropd_ty,
-        );
+        let a_eq_coercion =
+            VdMirSeparatorCoercion::new(VdMirBaseSeparator::EQ, a_nf.ty(), signature.lopd_ty);
+        let b_eq_coercion =
+            VdMirSeparatorCoercion::new(VdMirBaseSeparator::EQ, b_nf.ty(), signature.ropd_ty);
         VdMirTermDerivationConstruction::DivEq {
             a_dn: a_nf.derivation(),
             b_dn: b_nf.derivation(),
-            a_coercion,
-            b_coercion,
+            a_eq_coercion,
+            b_eq_coercion,
             a_nf_div_b_nf_dn: a_nf_div_b_nf_dn.derivation(),
         }
     }

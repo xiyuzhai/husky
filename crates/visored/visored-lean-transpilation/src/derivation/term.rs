@@ -133,8 +133,8 @@ where
             VdMirTermDerivationConstruction::DivEq {
                 a_dn,
                 b_dn,
-                a_coercion,
-                b_coercion,
+                a_eq_coercion: a_coercion,
+                b_eq_coercion: b_coercion,
                 a_nf_div_b_nf_dn,
             } => Some(
                 [
