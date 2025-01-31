@@ -161,7 +161,7 @@ fn to_lean_literal(literal: VdLiteral, db: &EternerDb) -> LnLiteral {
             VdSign::Plus | VdSign::NoSign => LnLiteralData::Nat(format!("({i}:ℕ)")),
         },
         VdLiteralData::Frac(ref lit) => {
-            LnLiteralData::Frac(format!("({} : ℚ) / {}", lit.numerator(), lit.denominator()))
+            LnLiteralData::Frac(format!("({}:ℚ)/{}", lit.numerator(), lit.denominator()))
         }
     };
     LnLiteral::new(data, db)
