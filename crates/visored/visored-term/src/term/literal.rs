@@ -44,6 +44,7 @@ impl VdLiteral {
     }
 }
 
+#[enum_class::from_variants]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum VdLiteralData {
     Int(VdInt),
@@ -151,7 +152,7 @@ impl VdLiteralData {
                 VdLiteralData::Int(other) => VdLiteralData::Int(slf + other),
                 VdLiteralData::Frac(vd_frac) => todo!(),
             },
-            VdLiteralData::Frac(vd_frac) => todo!(),
+            VdLiteralData::Frac(f) => f.add_literal(other),
         }
     }
 
@@ -162,10 +163,7 @@ impl VdLiteralData {
                 VdLiteralData::Frac(vd_frac) => todo!(),
             },
             VdLiteralData::Frac(frac) => match other {
-                VdLiteralData::Int(big_int) => match frac.mul_bigint(big_int) {
-                    Left(frac) => VdLiteralData::Frac(frac),
-                    Right(big_int) => VdLiteralData::Int(big_int),
-                },
+                VdLiteralData::Int(big_int) => frac.mul_bigint(big_int),
                 VdLiteralData::Frac(vd_frac) => todo!(),
             },
         }
@@ -174,7 +172,7 @@ impl VdLiteralData {
     pub fn neg(&self) -> Self {
         match self {
             VdLiteralData::Int(n) => VdLiteralData::Int(-n),
-            VdLiteralData::Frac(vd_frac) => todo!(),
+            VdLiteralData::Frac(f) => VdLiteralData::Frac(-f),
         }
     }
 

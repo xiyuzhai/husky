@@ -20,9 +20,9 @@ impl VdFrac {
         }
     }
 
-    pub fn new_raw(raw_numerator: &VdInt, raw_denominator: &VdInt) -> Either<Self, VdInt> {
+    pub fn new_raw(raw_numerator: &VdInt, raw_denominator: &VdInt) -> VdLiteralData {
         if raw_denominator.is_zero() {
-            return Right(0.into());
+            return VdLiteralData::Int(0.into());
         }
         let gcd = num_helpers::gcd(raw_numerator, raw_denominator);
         let gcd = match raw_denominator.sign() {
@@ -41,9 +41,9 @@ impl VdFrac {
         let numerator = raw_numerator / &gcd;
         let denominator = raw_denominator / &gcd;
         if denominator.is_one() {
-            Right(numerator)
+            VdLiteralData::Int(numerator)
         } else {
-            Left(Self::new(numerator, denominator))
+            VdLiteralData::Frac(Self::new(numerator, denominator))
         }
     }
 
@@ -88,7 +88,44 @@ impl std::fmt::Display for VdFrac {
 }
 
 impl VdFrac {
-    pub fn mul_bigint(&self, big_int: &VdInt) -> Either<VdFrac, VdInt> {
+    pub fn add_literal(&self, other: &VdLiteralData) -> VdLiteralData {
+        match other {
+            VdLiteralData::Int(big_int) => self.add_bigint(big_int).into(),
+            VdLiteralData::Frac(vd_frac) => self.add_frac(vd_frac),
+        }
+    }
+
+    pub fn add_bigint(&self, big_int: &VdInt) -> Self {
+        Self::new(
+            &self.numerator + big_int * &self.denominator,
+            self.denominator.clone(),
+        )
+    }
+
+    pub fn add_frac(&self, other: &VdFrac) -> VdLiteralData {
+        Self::new_raw(
+            &(&self.numerator * &other.denominator + &other.numerator * &self.denominator),
+            &(&self.denominator * &other.denominator),
+        )
+    }
+
+    pub fn mul_bigint(&self, big_int: &VdInt) -> VdLiteralData {
         VdFrac::new_raw(&(&self.numerator * big_int), &self.denominator)
+    }
+}
+
+impl std::ops::Neg for VdFrac {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self::new(-self.numerator, self.denominator)
+    }
+}
+
+impl std::ops::Neg for &VdFrac {
+    type Output = VdFrac;
+
+    fn neg(self) -> Self::Output {
+        VdFrac::new(-&self.numerator, self.denominator.clone())
     }
 }
