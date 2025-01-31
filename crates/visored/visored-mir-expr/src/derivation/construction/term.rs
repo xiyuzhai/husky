@@ -225,8 +225,8 @@ impl VdMirTermDerivationIdx {
         hc: &'a VdMirHypothesisConstructor<'db, Src>,
     ) -> &'a VdMirTermDerivationConstruction {
         match hc.derivation_arena()[*self].construction() {
-            VdMirDerivationConstruction::Ring(_) => unreachable!(),
             VdMirDerivationConstruction::Term(construction) => construction,
+            _ => unreachable!(),
         }
     }
 }

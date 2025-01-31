@@ -41,6 +41,7 @@ where
             VdMirDerivationConstruction::Term(construction) => {
                 self.build_term_tactic_construction(construction)
             }
+            VdMirDerivationConstruction::LitnumBound(construction) => todo!(),
         };
         LnMirTacticData::Have {
             ident,
@@ -60,6 +61,7 @@ where
             VdMirDerivationConstruction::Term(construction) => {
                 self.build_term_derivation_chunk_end_tactic_data(construction)
             }
+            VdMirDerivationConstruction::LitnumBound(construction) => todo!(),
         }
     }
 }

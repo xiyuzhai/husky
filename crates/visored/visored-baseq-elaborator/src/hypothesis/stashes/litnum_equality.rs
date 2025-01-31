@@ -21,33 +21,33 @@ use crate::{
 use floated_sequential::db::FloaterDb;
 use husky_control_flow_utils::require;
 
-pub type LitnumEqualityStash<'sess> = VdBsqHypothesisUniqueStash<'sess, VdBsqLitNumEqualityScheme>;
+pub type LitnumEqualityStash<'sess> = VdBsqHypothesisUniqueStash<'sess, VdBsqLitnumEqualityScheme>;
 
-pub struct VdBsqLitNumEqualityScheme;
+pub struct VdBsqLitnumEqualityScheme;
 
-impl IsVdBsqHypothesisStashScheme for VdBsqLitNumEqualityScheme {
-    type Key<'sess> = VdBsqLitNumEqualityKey<'sess>;
+impl IsVdBsqHypothesisStashScheme for VdBsqLitnumEqualityScheme {
+    type Key<'sess> = VdBsqLitnumEqualityKey<'sess>;
 
-    type Value<'sess> = VdBsqLitNumEqualityValue<'sess>;
+    type Value<'sess> = VdBsqLitnumEqualityValue<'sess>;
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct VdBsqLitNumEqualityKey<'sess> {
+pub struct VdBsqLitnumEqualityKey<'sess> {
     normalized_monomials: VdBsqComnumTerm<'sess>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct VdBsqLitNumEqualityValue<'sess> {
+pub struct VdBsqLitnumEqualityValue<'sess> {
     litnum: VdBsqLitnumTerm<'sess>,
 }
 
-impl<'sess> VdBsqLitNumEqualityValue<'sess> {
+impl<'sess> VdBsqLitnumEqualityValue<'sess> {
     pub fn litnum(&self) -> VdBsqLitnumTerm<'sess> {
         self.litnum
     }
 }
 
-impl IsVdBsqHypothesisUniqueStashScheme for VdBsqLitNumEqualityScheme {
+impl IsVdBsqHypothesisUniqueStashScheme for VdBsqLitnumEqualityScheme {
     fn key_value_from_hypothesis<'sess>(
         record: VdBsqHypothesisStackRecord<'sess>,
         entry: &VdBsqHypothesisEntry<'sess>,
@@ -61,10 +61,10 @@ impl IsVdBsqHypothesisUniqueStashScheme for VdBsqLitNumEqualityScheme {
         let (_, (normalized_constant_litnum, normalized_monomials)) =
             lhs_minus_rhs.split_fld(|f| f, db);
         let neg_normalized_constant_litnum = normalized_constant_litnum.neg(db);
-        let key = VdBsqLitNumEqualityKey {
+        let key = VdBsqLitnumEqualityKey {
             normalized_monomials,
         };
-        let value = VdBsqLitNumEqualityValue {
+        let value = VdBsqLitnumEqualityValue {
             litnum: neg_normalized_constant_litnum,
         };
         Some((key, value))
@@ -92,7 +92,7 @@ impl<'sess> LitnumEqualityStash<'sess> {
                 (VdBsqLitnumTerm::ZERO, product.stem().into()),
             ),
         };
-        let key = VdBsqLitNumEqualityKey {
+        let key = VdBsqLitnumEqualityKey {
             normalized_monomials: x,
         };
         let value = self.get_valid_value(&key, active_hypotheses)?.litnum;

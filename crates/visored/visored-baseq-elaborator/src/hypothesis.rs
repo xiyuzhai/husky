@@ -106,7 +106,7 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
             VdBsqHypothesisConstruction::LetAssigned => VdMirHypothesisConstruction::LetAssigned,
             VdBsqHypothesisConstruction::LitnumReduce => VdMirHypothesisConstruction::LitnumReduce,
             VdBsqHypothesisConstruction::LitnumBound => VdMirHypothesisConstruction::LitnumBound {
-                derivation_chunk: elr.transcribe_litnum_bound_derivation(self, self, hc),
+                derivation_chunk: elr.transcribe_litnum_bound_derivation(self, todo!(), hc),
             },
         };
         let hypothesis_entry = &elr.hc.arena()[self];

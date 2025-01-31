@@ -65,6 +65,16 @@ pub struct VdBsqHypothesisStackRecord<'sess> {
     hypothesis_idx: VdBsqHypothesisIdx<'sess>,
 }
 
+impl<'sess> VdBsqHypothesisStackRecord<'sess> {
+    pub fn stack_idx(&self) -> usize {
+        self.stack_idx
+    }
+
+    pub fn hypothesis_idx(&self) -> VdBsqHypothesisIdx<'sess> {
+        self.hypothesis_idx
+    }
+}
+
 #[derive(Debug, PartialEq, Eq)]
 pub struct VdBsqHypothesisStackRecorded<'sess, T> {
     record: VdBsqHypothesisStackRecord<'sess>,
