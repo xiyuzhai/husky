@@ -25,3 +25,7 @@ macro "term_derivation_div_eq"
   b_coercion:term:1024
   d:term:1024
   : tactic => `(tactic| exact term_derivation_div_eq $a_nf $b_nf $a_coercion $b_coercion $d)
+
+macro "term_derivation_literal_mul_literal" : tactic => `(tactic| simp)
+
+macro "term_derivation_neg_atom" : tactic => `(tactic| simp)

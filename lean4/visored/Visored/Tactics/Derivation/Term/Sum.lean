@@ -63,3 +63,18 @@ macro "term_derivation_literal_add_literal": tactic => `(tactic| simp)
 macro "term_derivation_zero_add": tactic => `(tactic| simp)
 
 macro "term_derivation_sum_add_literal": tactic => `(tactic| simp)
+
+theorem term_derivation_product_add_literal {α} {p c: α} [CommRing α] : p + c = c + p := by
+  ring
+
+macro "term_derivation_product_add_literal": tactic => `(tactic| exact term_derivation_product_add_literal)
+
+theorem term_derivation_base_mul_literal {α} {a c: α} [CommRing α] : a * c = c * a^1 := by
+  ring
+
+macro "term_derivation_base_mul_literal": tactic => `(tactic| exact term_derivation_base_mul_literal)
+
+theorem term_derivation_one_mul_power_one {α} {a: α} [CommRing α] : ((1:ℕ) : α) * a^(1:ℕ) = a := by
+  ring
+
+macro "term_derivation_one_mul_power_one": tactic => `(tactic| exact term_derivation_one_mul_power_one)
