@@ -96,16 +96,18 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
                 is_real_coercion: elr.transcribe_coercion(is_real_coercion, hc),
             },
             VdBsqHypothesisConstruction::Assume => VdMirHypothesisConstruction::Assume,
-            VdBsqHypothesisConstruction::TermEquivalence {
-                hypothesis: src_hypothesis,
-            } => VdMirHypothesisConstruction::TermEquivalence {
-                hypothesis: src_hypothesis.transcribe(elr, None, hc),
-                derivation_chunk: elr.transcribe_term_derivation(src_hypothesis, self, hc),
-            },
+            VdBsqHypothesisConstruction::TermEquivalence { hypothesis } => {
+                VdMirHypothesisConstruction::TermEquivalence {
+                    hypothesis: hypothesis.transcribe(elr, None, hc),
+                    derivation_chunk: elr.transcribe_term_derivation(hypothesis, self, hc),
+                }
+            }
             VdBsqHypothesisConstruction::CommRing => VdMirHypothesisConstruction::CommRing,
             VdBsqHypothesisConstruction::LetAssigned => VdMirHypothesisConstruction::LetAssigned,
             VdBsqHypothesisConstruction::LitnumReduce => VdMirHypothesisConstruction::LitnumReduce,
-            VdBsqHypothesisConstruction::LitnumBound => VdMirHypothesisConstruction::LitnumBound,
+            VdBsqHypothesisConstruction::LitnumBound => VdMirHypothesisConstruction::LitnumBound {
+                derivation_chunk: elr.transcribe_litnum_bound_derivation(self, self, hc),
+            },
         };
         let hypothesis_entry = &elr.hc.arena()[self];
         let prop = match explicit_prop {

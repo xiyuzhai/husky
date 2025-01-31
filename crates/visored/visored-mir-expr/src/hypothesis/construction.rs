@@ -14,10 +14,16 @@ pub enum VdMirHypothesisConstruction {
         hypothesis: VdMirHypothesisIdx,
         derivation_chunk: VdMirDerivationChunk,
     },
+    // TODO: add derivation chunk
     TermTrivial(bool),
+    // TODO: add derivation chunk
     CommRing,
     LetAssigned,
+    // TODO: add derivation chunk
     LitnumReduce,
-    LitnumBound,
+    // TODO: add derivation chunk
+    LitnumBound {
+        derivation_chunk: VdMirDerivationChunk,
+    },
     Kurapika,
 }
