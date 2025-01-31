@@ -1,4 +1,5 @@
 use super::*;
+use hypothesis::stashes::litnum_bound::VdBsqLitnumBoundSrc;
 use visored_mir_expr::{
     derivation::{
         chunk::VdMirDerivationChunk,
@@ -13,13 +14,12 @@ where
 {
     pub fn transcribe_litnum_bound_derivation(
         &mut self,
-        src: VdBsqHypothesisIdx<'sess>,
         dst: VdBsqHypothesisIdx<'sess>,
+        src: VdBsqLitnumBoundSrc<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
-            p!(self.hc.arena()[src]);
-            p!(self.hc.arena()[dst]);
+            p!(src, self.hc.arena()[src.hypothesis()], self.hc.arena()[dst]);
             let prop = todo!();
             hc.alloc_derivation(prop, VdMirLitnumBoundDerivationConstruction::Finish.into())
         })

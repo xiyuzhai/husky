@@ -1,5 +1,6 @@
 use super::*;
 use crate::coercion::VdBsqCoercion;
+use stashes::litnum_bound::VdBsqLitnumBoundSrc;
 use std::marker::PhantomData;
 use visored_entity_path::theorem::VdTheoremPath;
 
@@ -18,5 +19,7 @@ pub enum VdBsqHypothesisConstruction<'sess> {
     Sorry,
     LetAssigned,
     LitnumReduce,
-    LitnumBound,
+    LitnumBound {
+        src: VdBsqLitnumBoundSrc<'sess>,
+    },
 }

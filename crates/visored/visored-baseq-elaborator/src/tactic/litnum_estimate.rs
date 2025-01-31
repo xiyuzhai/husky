@@ -73,6 +73,6 @@ fn try_one_shot<'db, 'sess>(
     require!(bound.finalize(rhs, db));
     let hypothesis = elr
         .hc
-        .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound);
+        .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound { src });
     AltJustOk(Ok(hypothesis))
 }
