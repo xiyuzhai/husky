@@ -363,11 +363,6 @@ fn derive_literal_mul_sum<'db, 'sess>(
     let (b, _, c) = ropd.split_add(elr, hc);
     let a_mul_b_derivation = derive_product(a, b, elr, hc);
     let a_mul_c_derivation = derive_product(a, c, elr, hc);
-    let derived = elr.mk_add(
-        a_mul_b_derivation.derived(),
-        a_mul_c_derivation.derived(),
-        hc,
-    );
     let ab_term_plus_ac_term_derivation = derive_add(
         a_mul_b_derivation.derived(),
         a_mul_c_derivation.derived(),
@@ -376,7 +371,7 @@ fn derive_literal_mul_sum<'db, 'sess>(
     );
     VdBsqExprDerived::new(
         elr.mk_mul(lopd, ropd, hc),
-        Some(derived),
+        Some(ab_term_plus_ac_term_derivation.derived()),
         VdMirTermDerivationConstruction::LiteralMulSum {
             p_derivation: p.derivation(),
             a_mul_b_derivation: a_mul_b_derivation.derivation(),
