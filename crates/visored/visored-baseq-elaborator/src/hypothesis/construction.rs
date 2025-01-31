@@ -20,7 +20,6 @@ pub enum VdBsqHypothesisConstruction<'sess> {
     LetAssigned,
     LitnumReduce,
     LitnumBound {
-        src: VdBsqLitnumBoundSrc<'sess>,
         bound: VdBsqLitnumBound<'sess>,
     },
 }

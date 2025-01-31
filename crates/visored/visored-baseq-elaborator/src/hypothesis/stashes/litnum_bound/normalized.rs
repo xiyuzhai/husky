@@ -13,30 +13,49 @@ impl<'sess> VdBsqNormalizedLitnumBoundKey<'sess> {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub struct VdBsqNormalizedLitnumBound<'sess> {
+    src: VdBsqLitnumBoundSrc<'sess>,
+    inner: VdBsqNormalizedLitnumBoundInner<'sess>,
+}
+
 /// always a lower bound
 ///
 /// `litnum` is the right hand side constant
 ///
 /// `boundary_kind` indicates whether it's closed or open
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub struct VdBsqNormalizedLitnumBound<'sess> {
+pub struct VdBsqNormalizedLitnumBoundInner<'sess> {
     lower_bound_litnum: VdBsqLitnumTerm<'sess>,
     boundary_kind: VdBsqBoundBoundaryKind,
 }
 
 impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
     pub(super) fn new(
+        src: VdBsqLitnumBoundSrc<'sess>,
         lower_bound_litnum: VdBsqLitnumTerm<'sess>,
         boundary_kind: VdBsqBoundBoundaryKind,
     ) -> Self {
         Self {
-            lower_bound_litnum,
-            boundary_kind,
+            src,
+            inner: VdBsqNormalizedLitnumBoundInner {
+                lower_bound_litnum,
+                boundary_kind,
+            },
         }
     }
 }
 
 impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
+    pub fn is_upgrade_of(self, other: Self) -> bool {
+        if self.inner == other.inner {
+            return false;
+        }
+        self.inner.is_upgrade_of(other.inner)
+    }
+}
+
+impl<'sess> VdBsqNormalizedLitnumBoundInner<'sess> {
     pub fn is_upgrade_of(self, other: Self) -> bool {
         self > other
     }
@@ -51,13 +70,15 @@ impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
         db: &'sess FloaterDb,
     ) -> VdBsqLitnumBound<'sess> {
         VdBsqLitnumBound {
+            src: self.src,
             litnum_factor,
             litnum_summand,
             bound_litnum: self
+                .inner
                 .lower_bound_litnum
                 .add(litnum_summand, db)
                 .mul(litnum_factor, db),
-            boundary_kind: self.boundary_kind,
+            boundary_kind: self.inner.boundary_kind,
             opr,
         }
     }
@@ -66,20 +87,20 @@ impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
 #[test]
 fn vd_bsq_normalized_litnum_bound_is_upgrade_works() {
     fn t<'sess>(
-        slf: VdBsqNormalizedLitnumBound<'sess>,
-        other: VdBsqNormalizedLitnumBound<'sess>,
+        slf: VdBsqNormalizedLitnumBoundInner<'sess>,
+        other: VdBsqNormalizedLitnumBoundInner<'sess>,
         expected: bool,
     ) {
         assert_eq!(slf.is_upgrade_of(other), expected);
     }
-    fn c<'sess>(t: impl Into<VdBsqLitnumTerm<'sess>>) -> VdBsqNormalizedLitnumBound<'sess> {
-        VdBsqNormalizedLitnumBound {
+    fn c<'sess>(t: impl Into<VdBsqLitnumTerm<'sess>>) -> VdBsqNormalizedLitnumBoundInner<'sess> {
+        VdBsqNormalizedLitnumBoundInner {
             lower_bound_litnum: t.into(),
             boundary_kind: VdBsqBoundBoundaryKind::Closed,
         }
     }
-    fn o<'sess>(t: impl Into<VdBsqLitnumTerm<'sess>>) -> VdBsqNormalizedLitnumBound<'sess> {
-        VdBsqNormalizedLitnumBound {
+    fn o<'sess>(t: impl Into<VdBsqLitnumTerm<'sess>>) -> VdBsqNormalizedLitnumBoundInner<'sess> {
+        VdBsqNormalizedLitnumBoundInner {
             lower_bound_litnum: t.into(),
             boundary_kind: VdBsqBoundBoundaryKind::Open,
         }

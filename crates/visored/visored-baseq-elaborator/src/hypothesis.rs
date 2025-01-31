@@ -105,9 +105,9 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
             VdBsqHypothesisConstruction::CommRing => VdMirHypothesisConstruction::CommRing,
             VdBsqHypothesisConstruction::LetAssigned => VdMirHypothesisConstruction::LetAssigned,
             VdBsqHypothesisConstruction::LitnumReduce => VdMirHypothesisConstruction::LitnumReduce,
-            VdBsqHypothesisConstruction::LitnumBound { src, bound } => {
+            VdBsqHypothesisConstruction::LitnumBound { bound } => {
                 VdMirHypothesisConstruction::LitnumBound {
-                    derivation_chunk: elr.transcribe_litnum_bound_derivation(self, src, bound, hc),
+                    derivation_chunk: elr.transcribe_litnum_bound_derivation(self, bound, hc),
                 }
             }
         };
