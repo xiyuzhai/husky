@@ -303,3 +303,18 @@ pub(super) fn check_mul_one<'db, Src>(
     assert!(hc.literal(one).is_one());
     assert_deep_eq!(a1, a, hc);
 }
+
+/// derive `(c * a) * d => e * a` if `c`, `d` and `e` are literals and `e` is equal to `c * d`
+pub(super) fn check_simple_product_mul_literal<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (c_mul_a * d) = expr, hc);
+    ds!(let (c * a) = c_mul_a, hc);
+    ds!(let (e * a) = term, hc);
+    let c = hc.literal(c);
+    let d = hc.literal(d);
+    let e = hc.literal(e);
+    assert_eq!(e.data(), &(c.data() * d.data()));
+}

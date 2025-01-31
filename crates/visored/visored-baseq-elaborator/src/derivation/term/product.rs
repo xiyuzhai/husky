@@ -159,8 +159,13 @@ fn derive_mul_literal<'db, 'sess>(
             leader,
             ref followers,
         } if followers[0].0.separator() == VdMirBaseFoldingSeparator::CommRingMul => {
-            p!(lopd, ropd);
-            todo!()
+            match is_product_simple(leader, followers) {
+                true => (
+                    VdMirTermDerivationConstruction::SimpleProductMulLiteral,
+                    None,
+                ),
+                false => todo!(),
+            }
         }
         _ => {
             let derived = elr.mk_mul(ropd, elr.mk_pow_one(lopd, hc), hc);
@@ -197,7 +202,7 @@ fn derive_mul_exponential<'db, 'sess>(
                 VdBsqExprData::Literal(vd_literal) => (),
                 _ => unreachable!(),
             }
-            if is_product_simple(followers) {
+            if is_product_simple(leader, followers) {
                 let a_base = exponential_base(followers[0].1);
                 let b_base = exponential_base(ropd);
                 match a_base.cmp(&b_base) {
@@ -241,8 +246,10 @@ fn derive_mul_exponential<'db, 'sess>(
 }
 
 fn is_product_simple<'sess>(
+    leader: VdBsqExpr<'sess>,
     followers: &[(VdBaseFoldingSeparatorSignature, VdBsqExpr<'sess>)],
 ) -> bool {
+    assert!(matches!(leader.data(), VdBsqExprData::Literal(_)));
     require!(followers.len() == 1);
     match *followers[0].1.data() {
         VdBsqExprData::FoldingSeparatedList {
@@ -321,7 +328,7 @@ fn derive_mul_base<'db, 'sess>(
         } => match followers[0].0.separator() {
             VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
             VdMirBaseFoldingSeparator::CommRingMul => {
-                if is_product_simple(followers) {
+                if is_product_simple(leader, followers) {
                     let a_base = exponential_base(followers[0].1);
                     let b_base = exponential_base(ropd);
                     match a_base.cmp(&b_base) {

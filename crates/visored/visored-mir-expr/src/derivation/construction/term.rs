@@ -201,6 +201,7 @@ pub enum VdMirTermDerivationConstruction {
     OneMulPowerOne,
     /// derive `a * 1 => a`
     MulOne,
+    SimpleProductMulLiteral,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -413,6 +414,9 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::OneMulPowerOne => check_one_mul_power_one(prop, hc),
             VdMirTermDerivationConstruction::MulOne => check_mul_one(prop, hc),
+            VdMirTermDerivationConstruction::SimpleProductMulLiteral => {
+                check_simple_product_mul_literal(prop, hc)
+            }
         }
     }
 }

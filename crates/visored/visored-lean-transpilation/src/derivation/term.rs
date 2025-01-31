@@ -153,6 +153,7 @@ where
             VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => todo!(),
             VdMirTermDerivationConstruction::OneMulPowerOne => None,
             VdMirTermDerivationConstruction::MulOne => todo!(),
+            VdMirTermDerivationConstruction::SimpleProductMulLiteral => todo!(),
         };
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name: term_derivation_tactic_name_from_variant_name(variant_name).into(),

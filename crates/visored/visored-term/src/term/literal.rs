@@ -160,7 +160,7 @@ impl VdLiteralData {
         match self {
             VdLiteralData::Int(slf) => match other {
                 VdLiteralData::Int(other) => VdLiteralData::Int(slf * other),
-                VdLiteralData::Frac(vd_frac) => todo!(),
+                VdLiteralData::Frac(other) => other.mul_bigint(slf),
             },
             VdLiteralData::Frac(frac) => match other {
                 VdLiteralData::Int(big_int) => frac.mul_bigint(big_int),
@@ -188,5 +188,13 @@ impl VdLiteralData {
             VdLiteralData::Int(n) => VdFrac::new_bigint_inv(n),
             VdLiteralData::Frac(vd_frac) => todo!(),
         }
+    }
+}
+
+impl std::ops::Mul for &VdLiteralData {
+    type Output = VdLiteralData;
+
+    fn mul(self, other: Self) -> Self::Output {
+        self.mul(other)
     }
 }
