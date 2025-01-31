@@ -57,6 +57,8 @@ pub fn derive_product<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprDerived<'sess> {
     let derived = derive_product_aux(lopd, ropd, elr, hc);
+    // the following deals with the case where the end product is of form a litnum multiplying a sum
+    // we reduce it to just a sum
     rq!(let VdBsqExprData::FoldingSeparatedList {
         leader,
         ref followers,
@@ -175,7 +177,7 @@ fn derive_mul_exponential<'db, 'sess>(
     let ropd_base = exponential_base(ropd);
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
-            assert!(!literal.is_one());
+            assert!(!literal.is_one(), "lopd = {:?}, ropd = {:?}", lopd, ropd);
             (VdMirTermDerivationConstruction::Reflection, None)
         }
         VdBsqExprData::FoldingSeparatedList {
