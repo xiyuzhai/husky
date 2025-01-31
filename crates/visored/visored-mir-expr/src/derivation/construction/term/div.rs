@@ -28,6 +28,7 @@ pub(super) fn check_div_literal<'db, Src>(
     a_mul_b_inv_dn: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
+    p!(hc.fmt_expr(prop), hc.fmt_expr(a_mul_b_inv_dn.prop(hc)));
     ds!(let (expr => term) = prop, hc);
     ds!(let (a / b) = expr, hc);
     ds!(let (b_inv_mul_a => term1) = a_mul_b_inv_dn.prop(hc), hc);

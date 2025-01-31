@@ -137,8 +137,10 @@ where
             } => None,
             VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => None,
             VdMirTermDerivationConstruction::LiteralMulSum {
+                p_derivation,
                 a_mul_b_derivation,
                 a_mul_c_derivation,
+                ab_term_plus_ac_term_derivation,
             } => None,
             VdMirTermDerivationConstruction::SumAddLiteral {
                 a_add_c_derivation,

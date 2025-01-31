@@ -175,10 +175,12 @@ pub enum VdMirTermDerivationConstruction {
     DivLiteral {
         a_mul_b_inv_dn: VdMirTermDerivationIdx,
     },
-    /// derive `a * (b + c) => ab_term + ac_term` from `a * b => ab_term` and `a * c => ac_term`
+    /// derive `p => term` from `p => a * (b + c)^1` `a * b => ab_term` and `a * c => ac_term` and `ab_term + ac_term => term`
     LiteralMulSum {
+        p_derivation: VdMirTermDerivationIdx,
         a_mul_b_derivation: VdMirTermDerivationIdx,
         a_mul_c_derivation: VdMirTermDerivationIdx,
+        ab_term_plus_ac_term_derivation: VdMirTermDerivationIdx,
     },
     /// derive `a + b + c => term` from `a + c => ac_term` and `ac_term + b => term`
     SumAddLiteral {
@@ -371,9 +373,18 @@ impl VdMirTermDerivationConstruction {
                 check_div_literal(prop, a_mul_b_inv_dn, hc)
             }
             VdMirTermDerivationConstruction::LiteralMulSum {
+                p_derivation,
                 a_mul_b_derivation,
                 a_mul_c_derivation,
-            } => check_literal_mul_sum(prop, a_mul_b_derivation, a_mul_c_derivation, hc),
+                ab_term_plus_ac_term_derivation,
+            } => check_literal_mul_sum(
+                prop,
+                p_derivation,
+                a_mul_b_derivation,
+                a_mul_c_derivation,
+                ab_term_plus_ac_term_derivation,
+                hc,
+            ),
             VdMirTermDerivationConstruction::SumAddLiteral {
                 a_add_c_derivation,
                 a_add_c_derived_add_b_derivation,

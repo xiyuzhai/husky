@@ -28,7 +28,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             b_eq_coercion: VdMirSeparatorCoercion::new_eq(b.ty(), signature.item_ty()),
             a_derivation: a_normalized.derivation(),
             b_derivation: b_normalized.derivation(),
-            a_term_add_b_term_derivation: merge(**a_normalized, **b_normalized, self, hc)
+            a_term_add_b_term_derivation: derive_add(**a_normalized, **b_normalized, self, hc)
                 .derivation(),
         }
     }
@@ -57,18 +57,18 @@ fn try_trivial_construction<'db, 'sess>(
     None
 }
 
-fn merge<'db, 'sess>(
+pub(super) fn derive_add<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprNormalized<'sess> {
-    let construction = merge_construction(lopd, ropd, elr, hc);
+    let construction = derive_add_construction(lopd, ropd, elr, hc);
     let expr = elr.mk_add(lopd, ropd, hc);
     VdBsqExprNormalized::new(expr, construction, elr, hc)
 }
 
-fn merge_construction<'db, 'sess>(
+fn derive_add_construction<'db, 'sess>(
     lopd: VdBsqExpr<'sess>,
     ropd: VdBsqExpr<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
@@ -87,7 +87,7 @@ fn merge_construction<'db, 'sess>(
         }
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
             let ropd = elr.mk_mul(elr.mk_i128(1), elr.mk_pow(ropd, elr.mk_i128(1), hc), hc);
-            let add_product_nf = merge(lopd, ropd, elr, hc).derivation();
+            let add_product_nf = derive_add(lopd, ropd, elr, hc).derivation();
             VdMirTermDerivationConstruction::AddAtom { add_product_nf }
         }
         VdBsqExprData::Application {
@@ -140,8 +140,8 @@ fn merge_nonzero_literal_construction<'db, 'sess>(
             VdMirBaseFoldingSeparator::CommRingAdd => {
                 let (a, _, b) = lopd.split_add(elr, hc);
                 let c = ropd;
-                let a_add_c = merge(a, c, elr, hc);
-                let a_add_c_derived_add_b = merge(a_add_c.derived(), b, elr, hc);
+                let a_add_c = derive_add(a, c, elr, hc);
+                let a_add_c_derived_add_b = derive_add(a_add_c.derived(), b, elr, hc);
                 VdMirTermDerivationConstruction::SumAddLiteral {
                     a_add_c_derivation: a_add_c.derivation(),
                     a_add_c_derived_add_b_derivation: a_add_c_derived_add_b.derivation(),
@@ -263,8 +263,8 @@ fn merge_product_construction<'db, 'sess>(
                                 elr,
                             );
                             let c = ropd;
-                            let a_add_c_nf = merge(a, c, elr, hc);
-                            let term_ac_add_b_nf = merge(a_add_c_nf.derived(), b, elr, hc);
+                            let a_add_c_nf = derive_add(a, c, elr, hc);
+                            let term_ac_add_b_nf = derive_add(a_add_c_nf.derived(), b, elr, hc);
                             VdMirTermDerivationConstruction::SumAddProductGreater {
                                 a_add_c_nf: a_add_c_nf.derivation(),
                                 term_ac_add_b_nf: term_ac_add_b_nf.derivation(),
@@ -319,8 +319,8 @@ fn merge_sum_construction<'db, 'sess>(
 ) -> VdMirTermDerivationConstruction {
     let a = lopd;
     let (b, _, c) = ropd.split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
-    let a_add_b_derived = merge(a, b, elr, hc);
-    let a_add_b_derived_add_c_derived = merge(a_add_b_derived.derived(), c, elr, hc);
+    let a_add_b_derived = derive_add(a, b, elr, hc);
+    let a_add_b_derived_add_c_derived = derive_add(a_add_b_derived.derived(), c, elr, hc);
     VdMirTermDerivationConstruction::AddSum {
         a_add_b_derivation: a_add_b_derived.derivation(),
         a_add_b_derived_add_c_derivation: a_add_b_derived_add_c_derived.derivation(),

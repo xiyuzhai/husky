@@ -4,6 +4,7 @@ use crate::term::{
     num::VdBsqNumTerm,
     VdBsqTerm,
 };
+use sum::derive_add;
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
 
@@ -87,7 +88,7 @@ pub fn derive_product<'db, 'sess>(
         base_followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_ADD,
         derived
     );
-    derive_literal_mul_sum(leader, leader_literal, base, elr, hc)
+    derive_literal_mul_sum(derived, leader, leader_literal, base, elr, hc)
 }
 
 fn derive_product_aux<'db, 'sess>(
@@ -348,6 +349,7 @@ fn derive_mul_base<'db, 'sess>(
 }
 
 fn derive_literal_mul_sum<'db, 'sess>(
+    p: VdBsqExprDerived<'sess>,
     lopd: VdBsqExpr<'sess>,
     lopd_literal: VdLiteral,
     ropd: VdBsqExpr<'sess>,
@@ -366,12 +368,20 @@ fn derive_literal_mul_sum<'db, 'sess>(
         a_mul_c_derivation.derived(),
         hc,
     );
+    let ab_term_plus_ac_term_derivation = derive_add(
+        a_mul_b_derivation.derived(),
+        a_mul_c_derivation.derived(),
+        elr,
+        hc,
+    );
     VdBsqExprDerived::new(
         elr.mk_mul(lopd, ropd, hc),
         Some(derived),
         VdMirTermDerivationConstruction::LiteralMulSum {
+            p_derivation: p.derivation(),
             a_mul_b_derivation: a_mul_b_derivation.derivation(),
             a_mul_c_derivation: a_mul_c_derivation.derivation(),
+            ab_term_plus_ac_term_derivation: ab_term_plus_ac_term_derivation.derivation(),
         },
         elr,
         hc,

@@ -189,19 +189,25 @@ pub(super) fn check_base_mul_literal<'db, Src>(
     assert_eq!(c1, c);
 }
 
-/// derive `a * (b + c) => ab_term + ac_term` from `a * b => ab_term` and `a * c => ac_term`
+/// derive `p => term` from `p => a * (b + c)^1` `a * b => ab_term` and `a * c => ac_term` and `ab_term + ac_term => term`
 pub(super) fn check_literal_mul_sum<'db, Src>(
     prop: VdMirExprIdx,
+    p_derivation: VdMirTermDerivationIdx,
     a_mul_b_derivation: VdMirTermDerivationIdx,
     a_mul_c_derivation: VdMirTermDerivationIdx,
+    ab_term_plus_ac_term_derivation: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
-    ds!(let (expr => term) = prop, hc);
-    ds!(let (a * b_add_c) = expr, hc);
+    ds!(let (p => term) = prop, hc);
+    ds!(let (p1 => a_mul_sum_of_b_and_c_pow_one) = p_derivation.prop(hc), hc);
+    ds!(let (a * sum_of_b_and_c_pow_one) = a_mul_sum_of_b_and_c_pow_one, hc);
+    ds!(let (b_add_c ^ one) = sum_of_b_and_c_pow_one, hc);
+    assert!(hc.literal(one).is_one());
     ds!(let (b + c) = b_add_c, hc);
     ds!(let (a_mul_b => ab_term) = a_mul_b_derivation.prop(hc), hc);
     ds!(let (a_mul_c => ac_term) = a_mul_c_derivation.prop(hc), hc);
-    ds!(let (ab_term1 + ac_term1) = term, hc);
+    ds!(let (ab_term_add_ac_term => term1) = ab_term_plus_ac_term_derivation.prop(hc), hc);
+    ds!(let (ab_term1 + ac_term1) = ab_term_add_ac_term, hc);
     ds!(let (a1 * b1) = a_mul_b, hc);
     ds!(let (a2 * c1) = a_mul_c, hc);
     assert_deep_eq!(a1, a, hc);
@@ -210,6 +216,7 @@ pub(super) fn check_literal_mul_sum<'db, Src>(
     assert_deep_eq!(c1, c, hc);
     assert_deep_eq!(ab_term1, ab_term, hc);
     assert_deep_eq!(ac_term1, ac_term, hc);
+    assert_deep_eq!(term1, term, hc);
 }
 
 /// derive `a + b => b + a` if `b` is a product and `a` is a literal
