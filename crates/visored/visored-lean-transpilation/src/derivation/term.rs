@@ -150,10 +150,10 @@ where
             VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => None,
             VdMirTermDerivationConstruction::AtomMulExponentialLess => None,
             VdMirTermDerivationConstruction::AtomMulExponentialGreater => None,
-            VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => todo!(),
+            VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => None,
             VdMirTermDerivationConstruction::OneMulPowerOne => None,
-            VdMirTermDerivationConstruction::MulOne => todo!(),
-            VdMirTermDerivationConstruction::SimpleProductMulLiteral => todo!(),
+            VdMirTermDerivationConstruction::MulOne => None,
+            VdMirTermDerivationConstruction::SimpleProductMulLiteral => None,
         };
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name: term_derivation_tactic_name_from_variant_name(variant_name).into(),

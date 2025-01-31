@@ -162,9 +162,9 @@ impl VdLiteralData {
                 VdLiteralData::Int(other) => VdLiteralData::Int(slf * other),
                 VdLiteralData::Frac(other) => other.mul_bigint(slf),
             },
-            VdLiteralData::Frac(frac) => match other {
-                VdLiteralData::Int(big_int) => frac.mul_bigint(big_int),
-                VdLiteralData::Frac(vd_frac) => todo!(),
+            VdLiteralData::Frac(slf) => match other {
+                VdLiteralData::Int(other) => slf.mul_bigint(other),
+                VdLiteralData::Frac(other) => slf.mul(other),
             },
         }
     }
@@ -186,7 +186,7 @@ impl VdLiteralData {
     pub fn inv(&self) -> Option<Self> {
         match self {
             VdLiteralData::Int(n) => VdFrac::new_bigint_inv(n),
-            VdLiteralData::Frac(vd_frac) => todo!(),
+            VdLiteralData::Frac(f) => f.inv(),
         }
     }
 }

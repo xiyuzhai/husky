@@ -276,16 +276,8 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
         Some(self.mul_frac128(rhs.inverse(), db))
     }
 
-    pub fn div_assign(&mut self, rhs: Self, db: &FloaterDb) {
-        match *self {
-            VdBsqLitnumTerm::Int128(slf) => match rhs {
-                VdBsqLitnumTerm::Int128(rhs) => *self = VdBsqFrac128::new128(slf, rhs).unwrap(),
-                VdBsqLitnumTerm::BigInt(i) => todo!(),
-                VdBsqLitnumTerm::Frac128(_) => todo!(),
-            },
-            VdBsqLitnumTerm::BigInt(i) => todo!(),
-            VdBsqLitnumTerm::Frac128(_) => todo!(),
-        }
+    pub fn div_assign(&mut self, rhs: Self, db: &'sess FloaterDb) {
+        *self = self.div(rhs, db).unwrap();
     }
 
     pub fn pow(self, exponent: VdBsqLitnumTerm<'sess>, db: &'sess FloaterDb) -> Self {

@@ -20,9 +20,12 @@ impl VdFrac {
         }
     }
 
-    pub fn new_raw(raw_numerator: &VdInt, raw_denominator: &VdInt) -> VdLiteralData {
+    pub fn new_raw(raw_numerator: &VdInt, raw_denominator: &VdInt) -> Option<VdLiteralData> {
         if raw_denominator.is_zero() {
-            return VdLiteralData::Int(0.into());
+            return Some(VdLiteralData::Int(0.into()));
+        }
+        if raw_denominator.is_zero() {
+            return None;
         }
         let gcd = num_helpers::gcd(raw_numerator, raw_denominator);
         let gcd = match raw_denominator.sign() {
@@ -41,9 +44,9 @@ impl VdFrac {
         let numerator = raw_numerator / &gcd;
         let denominator = raw_denominator / &gcd;
         if denominator.is_one() {
-            VdLiteralData::Int(numerator)
+            Some(VdLiteralData::Int(numerator))
         } else {
-            VdLiteralData::Frac(Self::new(numerator, denominator))
+            Some(VdLiteralData::Frac(Self::new(numerator, denominator)))
         }
     }
 
@@ -107,10 +110,23 @@ impl VdFrac {
             &(&self.numerator * &other.denominator + &other.numerator * &self.denominator),
             &(&self.denominator * &other.denominator),
         )
+        .unwrap()
     }
 
     pub fn mul_bigint(&self, big_int: &VdInt) -> VdLiteralData {
-        VdFrac::new_raw(&(&self.numerator * big_int), &self.denominator)
+        VdFrac::new_raw(&(&self.numerator * big_int), &self.denominator).unwrap()
+    }
+
+    pub fn mul(&self, other: &VdFrac) -> VdLiteralData {
+        Self::new_raw(
+            &(&self.numerator * &other.numerator),
+            &(&self.denominator * &other.denominator),
+        )
+        .unwrap()
+    }
+
+    pub fn inv(&self) -> Option<VdLiteralData> {
+        Self::new_raw(&self.denominator, &self.numerator)
     }
 }
 

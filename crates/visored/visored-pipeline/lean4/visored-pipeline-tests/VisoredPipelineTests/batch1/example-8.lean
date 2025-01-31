@@ -122,8 +122,8 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b 
     have d30 : a = a := by term_derivation_reflection
     have d31 : (-1:ℤ) = (-1:ℤ) := by term_derivation_reflection
     have d32 : a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * a ^ (-1:ℤ) := by term_derivation_non_reduced_power
-    have d33 : b * ((1:ℕ) : ℝ) = ((1:ℕ) : ℝ) * b ^ (1:ℕ) := by term_derivation_base_mul_literal
-    have d34 : ((1:ℕ) : ℝ) * b ^ (1:ℕ) * a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_simple_product_mul_exponential_less
+    have d33 : b * ((1:ℕ) : ℝ) = b := by term_derivation_mul_one
+    have d34 : b * a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_atom_mul_exponential_less
     have d35 : b * (((1:ℕ) : ℝ) * a ^ (-1:ℤ)) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_mul_product
     have d36 : b ^ (1:ℕ) * a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_mul_eq
     have d37 : ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_one_mul
@@ -161,8 +161,8 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b 
     have d69 : a = a := by term_derivation_reflection
     have d70 : (-1:ℤ) = (-1:ℤ) := by term_derivation_reflection
     have d71 : a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * a ^ (-1:ℤ) := by term_derivation_non_reduced_power
-    have d72 : b * ((1:ℕ) : ℝ) = ((1:ℕ) : ℝ) * b ^ (1:ℕ) := by term_derivation_base_mul_literal
-    have d73 : ((1:ℕ) : ℝ) * b ^ (1:ℕ) * a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_simple_product_mul_exponential_less
+    have d72 : b * ((1:ℕ) : ℝ) = b := by term_derivation_mul_one
+    have d73 : b * a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_atom_mul_exponential_less
     have d74 : b * (((1:ℕ) : ℝ) * a ^ (-1:ℤ)) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_mul_product
     have d75 : b ^ (1:ℕ) * a ^ (-1:ℤ) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_mul_eq
     have d76 : ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) = ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_one_mul
@@ -178,6 +178,6 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : a / b 
     have d86 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_add_eq d78 d79 eq_identity_coercion eq_int_to_real_coercion d85
     have d87 : ((0:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) - ((2:ℕ) : ℝ) = ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) := by term_derivation_sub_eqs_add_neg d86 neg_nat_to_real_coercion
     have d88 : a / b + b / a ≥ ((2:ℕ) : ℝ) ↔ ((-2:ℤ) : ℝ) + ((1:ℕ) : ℝ) * (b ^ (-1:ℤ) * a ^ (1:ℕ)) + ((1:ℕ) : ℝ) * (b ^ (1:ℕ) * a ^ (-1:ℤ)) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
-    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_finish h5 d44 d88
+    have d89 : a / b + b / a ≥ ((2:ℕ) : ℝ) := by term_derivation_non_trivial_hypothesis_equivalence h5 d44 d88
     assumption
   obvious
