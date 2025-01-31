@@ -161,7 +161,9 @@ where
             VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => None,
             VdMirTermDerivationConstruction::AtomMulExponentialLess => None,
             VdMirTermDerivationConstruction::AtomMulExponentialGreater => None,
-            VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => None,
+            VdMirTermDerivationConstruction::NonTrivialExprEquivalence { src_nf, dst_nf } => {
+                Some([D(src_nf), D(dst_nf)].to_lean(self))
+            }
             VdMirTermDerivationConstruction::OneMulPowerOne => None,
             VdMirTermDerivationConstruction::MulOne => None,
             VdMirTermDerivationConstruction::SimpleProductMulLiteral => None,

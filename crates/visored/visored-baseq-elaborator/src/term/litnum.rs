@@ -486,7 +486,7 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
                 VdBsqComparisonOpr::GE => i >= 0,
             },
             VdBsqLitnumTerm::BigInt(i) => todo!(),
-            VdBsqLitnumTerm::Frac128(_) => todo!(),
+            VdBsqLitnumTerm::Frac128(f) => todo!(),
         }
     }
 

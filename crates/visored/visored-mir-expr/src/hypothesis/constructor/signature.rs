@@ -40,6 +40,18 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         self.infer_base_chaining_separator_signature(prev_item_ty, separator, next_item_ty)
     }
 
+    pub fn infer_eq_signature(
+        &self,
+        prev_item_ty: VdType,
+        next_item_ty: VdType,
+    ) -> VdBaseChainingSeparatorSignature {
+        self.infer_base_chaining_separator_signature(
+            prev_item_ty,
+            VdBaseSeparator::Eq,
+            next_item_ty,
+        )
+    }
+
     pub fn infer_add_signature(
         &self,
         prev_item_ty: VdType,

@@ -97,7 +97,7 @@ pub enum VdMirTermDerivationConstruction {
         src_nf: VdMirTermDerivationIdx,
         dst_nf: VdMirTermDerivationIdx,
     },
-    ExprEquivalence {
+    NonTrivialExprEquivalence {
         src_nf: VdMirTermDerivationIdx,
         dst_nf: VdMirTermDerivationIdx,
     },
@@ -409,7 +409,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AtomMulExponentialGreater => {
                 check_atom_mul_exponential_greater(prop, hc)
             }
-            VdMirTermDerivationConstruction::ExprEquivalence { src_nf, dst_nf } => {
+            VdMirTermDerivationConstruction::NonTrivialExprEquivalence { src_nf, dst_nf } => {
                 check_expr_equivalence(prop, src_nf, dst_nf, hc)
             }
             VdMirTermDerivationConstruction::OneMulPowerOne => check_one_mul_power_one(prop, hc),

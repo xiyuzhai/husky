@@ -327,6 +327,23 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         todo!()
     }
 
+    pub(crate) fn mk_eq(
+        &self,
+        lopd: VdBsqExpr<'sess>,
+        ropd: VdBsqExpr<'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExpr<'sess> {
+        let signature = hc.infer_eq_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprData::ChainingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
+                joined_signature: None,
+            },
+            signature.expr_ty(),
+        )
+    }
+
     pub(crate) fn mk_add(
         &self,
         lopd: VdBsqExpr<'sess>,
