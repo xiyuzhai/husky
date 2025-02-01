@@ -62,7 +62,50 @@ macro "term_derivation_literal_add_literal": tactic => `(tactic| norm_num)
 
 macro "term_derivation_zero_add": tactic => `(tactic| simp)
 
-macro "term_derivation_sum_add_literal": tactic => `(tactic| simp)
+theorem term_derivation_sum_add_literal
+    {αγ αβγ}
+    {a_αγ c_αγ ac_term : αγ}
+    {a_αβγ b_αβγ ac_term_αβγ term a_add_b_αβγ a_add_c_αβγ c_αβγ a_αβ_αβγ a_αγ_αβγ c_αγ_αβγ b_αβ_αβγ: αβγ}
+    [CommRing αγ] [CommRing αβγ]
+    (hac : a_αγ + c_αγ = ac_term)
+    (hacb : ac_term_αβγ + b_αβγ = term)
+    (ha_add_b_αβγ_add_coercion : a_add_b_αβγ = a_αβ_αβγ + b_αβ_αβγ)
+    (ha_αβ_αβγ_coercion_triangle : a_αβ_αβγ = a_αβγ)
+    (hb_αβ_αβγ_coercion_triangle : b_αβ_αβγ = b_αβγ)
+    (hac_eq_coercion : a_αγ + c_αγ = ac_term -> a_add_c_αβγ = ac_term_αβγ)
+    (hac_αβγ_add_coercion : a_add_c_αβγ = a_αγ_αβγ + c_αγ_αβγ)
+    (ha_αγ_αβγ_coercion_triangle : a_αγ_αβγ = a_αβγ)
+    (hc_αγ_αβγ_coercion_triangle : c_αγ_αβγ = c_αβγ)
+    : a_add_b_αβγ + c_αβγ = term := by
+  rw [ha_add_b_αβγ_add_coercion]
+  rw [ha_αβ_αβγ_coercion_triangle]
+  rw [hb_αβ_αβγ_coercion_triangle]
+  rw [add_comm]
+  rw [← add_assoc]
+  nth_rw 2 [add_comm]
+  have h : a_add_c_αβγ = ac_term_αβγ := hac_eq_coercion hac
+  have h : a_αβγ + c_αβγ = ac_term_αβγ := by
+    rw [← ha_αγ_αβγ_coercion_triangle]
+    rw [← hc_αγ_αβγ_coercion_triangle]
+    rw [← hac_αβγ_add_coercion]
+    exact h
+  rw [h]
+  exact hacb
+
+/--
+derive `a + b + c => term` from `a + c => ac_term` and `ac_term + b => term`
+-/
+macro "term_derivation_sum_add_literal"
+  hac:term:1024
+  hacb:term:1024
+  ha_add_b_αβγ_add_coercion:term:1024
+  ha_αβ_αβγ_coercion_triangle:term:1024
+  hb_αβ_αβγ_coercion_triangle:term:1024
+  hac_eq_coercion:term:1024
+  ha_add_c_αβγ_add_coercion:term:1024
+  ha_αγ_αβγ_coercion_triangle:term:1024
+  hc_αγ_αβγ_coercion_triangle:term:1024
+  : tactic => `(tactic| exact term_derivation_sum_add_literal $hac $hacb $ha_add_b_αβγ_add_coercion $ha_αβ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hac_eq_coercion $ha_add_c_αβγ_add_coercion $ha_αγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle)
 
 theorem term_derivation_product_add_literal {α} {p c: α} [CommRing α] : p + c = c + p := by
   ring

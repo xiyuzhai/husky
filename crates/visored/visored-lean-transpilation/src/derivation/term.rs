@@ -219,7 +219,27 @@ where
             VdMirTermDerivationConstruction::SumAddLiteral {
                 a_add_c_derivation,
                 a_add_c_derived_add_b_derivation,
-            } => None,
+                a_add_b_add_coercion,
+                a_ab_abc_coercion_triangle,
+                b_ab_abc_coercion_triangle,
+                ac_eq_coercion,
+                ac_add_coercion,
+                a_ac_abc_coercion_triangle,
+                c_ac_abc_coercion_triangle,
+            } => Some(
+                [
+                    D(a_add_c_derivation),
+                    D(a_add_c_derived_add_b_derivation),
+                    C(a_add_b_add_coercion.into()),
+                    C(a_ab_abc_coercion_triangle.into()),
+                    C(b_ab_abc_coercion_triangle.into()),
+                    C(ac_eq_coercion.into()),
+                    C(ac_add_coercion.into()),
+                    C(a_ac_abc_coercion_triangle.into()),
+                    C(c_ac_abc_coercion_triangle.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::ProductAddLiteral => None,
             VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => None,
             VdMirTermDerivationConstruction::AtomMulExponentialLess => None,

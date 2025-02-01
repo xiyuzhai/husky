@@ -102,9 +102,9 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : x + (((1:ℕ) : ℝ) / x : ℝ) ≥
     have d13 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection
     have d14 : (0:ℕ) + (1:ℕ) = (1:ℕ) := by term_derivation_zero_add
     have d15 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) := by term_derivation_reflection
-    have d16 : ((0:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) := by term_derivation_sum_add_literal
+    have d16 : ((0:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) := by term_derivation_sum_add_literal d14 d15 comm_ring_add_identity_coercion nat_real_real_coercion_triangle real_real_real_coercion_triangle eq_nat_to_real_coercion comm_ring_add_nat_to_real_coercion nat_nat_real_coercion_triangle nat_nat_real_coercion_triangle
     have d17 : ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) := by term_derivation_reflection
-    have d18 : ((0:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) + ((1:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) := by term_derivation_sum_add_literal
+    have d18 : ((0:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) + ((1:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) := by term_derivation_sum_add_literal d16 d17 comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle eq_identity_coercion comm_ring_add_identity_coercion real_real_real_coercion_triangle nat_real_real_coercion_triangle
     have d19 : ((x ^ (2:ℕ) : ℝ) - ((2:ℕ) : ℝ) * x : ℝ) + ((1:ℕ) : ℝ) = ((1:ℕ) : ℝ) + ((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) + ((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) := by term_derivation_add_eq d11 d12 eq_identity_coercion eq_nat_to_real_coercion d18
     have d20 : (0:ℕ) = (0:ℕ) := by term_derivation_reflection
     have d21 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection

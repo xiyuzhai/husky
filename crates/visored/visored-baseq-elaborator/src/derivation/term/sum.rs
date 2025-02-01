@@ -4,7 +4,7 @@ use crate::term::{
 };
 
 use super::*;
-use visored_mir_expr::coercion::VdMirSeparatorCoercion;
+use visored_mir_expr::coercion::{triangle::VdMirCoercionTriangle, VdMirSeparatorCoercion};
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
 
@@ -142,9 +142,22 @@ fn merge_nonzero_literal_construction<'db, 'sess>(
                 let c = ropd;
                 let a_add_c = derive_add(a, c, elr, hc);
                 let a_add_c_derived_add_b = derive_add(a_add_c.derived(), b, elr, hc);
+                let a_ty = a.ty();
+                let b_ty = b.ty();
+                let c_ty = c.ty();
+                let ab_ty = lopd.ty();
+                let ac_ty = a_add_c.expr().ty();
+                let abc_ty = a_add_c_derived_add_b.expr().ty();
                 VdMirTermDerivationConstruction::SumAddLiteral {
                     a_add_c_derivation: a_add_c.derivation(),
                     a_add_c_derived_add_b_derivation: a_add_c_derived_add_b.derivation(),
+                    a_add_b_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(ab_ty, abc_ty),
+                    a_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(a_ty, ab_ty, abc_ty),
+                    b_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(b_ty, ab_ty, abc_ty),
+                    ac_eq_coercion: VdMirSeparatorCoercion::new_eq(ac_ty, abc_ty),
+                    ac_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(ac_ty, abc_ty),
+                    a_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(a_ty, ac_ty, abc_ty),
+                    c_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(c_ty, ac_ty, abc_ty),
                 }
             }
             VdMirBaseFoldingSeparator::CommRingMul => {

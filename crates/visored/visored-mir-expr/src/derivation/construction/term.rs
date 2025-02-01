@@ -209,6 +209,13 @@ pub enum VdMirTermDerivationConstruction {
     SumAddLiteral {
         a_add_c_derivation: VdMirTermDerivationIdx,
         a_add_c_derived_add_b_derivation: VdMirTermDerivationIdx,
+        a_add_b_add_coercion: VdMirSeparatorCoercion,
+        a_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+        b_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+        ac_eq_coercion: VdMirSeparatorCoercion,
+        ac_add_coercion: VdMirSeparatorCoercion,
+        a_ac_abc_coercion_triangle: VdMirCoercionTriangle,
+        c_ac_abc_coercion_triangle: VdMirCoercionTriangle,
     },
     /// derive `a + b => b + a` if `b` is a product and `a` is a literal
     ProductAddLiteral,
@@ -430,6 +437,13 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::SumAddLiteral {
                 a_add_c_derivation,
                 a_add_c_derived_add_b_derivation,
+                a_add_b_add_coercion,
+                a_ab_abc_coercion_triangle,
+                b_ab_abc_coercion_triangle,
+                ac_eq_coercion,
+                ac_add_coercion,
+                a_ac_abc_coercion_triangle,
+                c_ac_abc_coercion_triangle,
             } => check_sum_add_literal(
                 prop,
                 a_add_c_derivation,
