@@ -87,3 +87,41 @@ macro "term_derivation_mul_product"
   hbc_mul_coercion:term:1024
   : tactic =>
   `(tactic| exact term_derivation_mul_product $hab $habc $hab_eq_coercion $hab_mul_coercion $hbc_mul_coercion)
+
+theorem term_derivation_literal_mul_sum
+  {π αβ βγ αγ αβγ}
+  {p term0_π term_π : π}
+  {a_αβ b_αβ ab_term : αβ}
+  {a_αγ c_αγ ac_term : αγ}
+  {b_αβγ c_αβγ b_add_c_αβγ term0 term : αβγ}
+  {a_αβγ ac_term_αβγ ab_term_αβγ sum_of_b_and_c_pow_one_αβγ : αβγ}
+  [CommRing π]
+  [CommRing αβ]
+  [CommRing βγ]
+  [CommRing αγ]
+  [CommRing αβγ]
+  (hp0 : p = term0_π)
+  (hterm0_mul_coercion : term0 = a_αβγ * sum_of_b_and_c_pow_one_αβγ)
+  (hab_nf : a_αβ * b_αβ = ab_term)
+  (hac_nf : a_αγ * c_αγ = ac_term)
+  (habc_nf : ab_term_αβγ + ac_term_αβγ = term)
+  (hpow_coercion : sum_of_b_and_c_pow_one_αβγ = b_add_c_αβγ ^ (1:ℕ))
+  (hbc_coercion : b_add_c_αβγ = b_αβγ + c_αβγ)
+  (hπ_coercion : term0 = term -> term0_π = term_π)
+  (hab_coercion : a_αβ * b_αβ = ab_term -> a_αβγ * b_αβγ = ab_term_αβγ)
+  (hac_coercion : a_αγ * c_αγ = ac_term -> a_αβγ * c_αβγ = ac_term_αβγ)
+  : p = term_π := by
+  have h: term0 = term := by
+    rw[hterm0_mul_coercion]
+    rw[hpow_coercion]
+    rw[hbc_coercion]
+    ring_nf
+    rw[hab_coercion hab_nf]
+    rw[hac_coercion hac_nf]
+    exact habc_nf
+  have h: term0_π = term_π := hπ_coercion h
+  rw[← h]
+  exact hp0
+
+/-- derive `p => term` from `p => a * (b + c)^1` `a * b => ab_term` and `a * c => ac_term` and `ab_term + ac_term => term` -/
+macro "term_derivation_literal_mul_sum" : tactic => `(tactic| simp)
