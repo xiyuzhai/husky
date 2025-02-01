@@ -125,25 +125,28 @@ theorem neg_real_to_complex_coercion {a : ℝ} : ((-a: ℝ) : ℂ) = -(a : ℂ) 
 
 -- Addition coercions
 
-theorem add_nat_to_int_coercion {a b : ℕ} : (a + b : ℤ) = (a : ℤ) + (b : ℤ) := by ring
+theorem comm_ring_add_identity_coercion {α} {a b : α} [CommRing α] : a + b = a + b := by
+  rfl
 
-theorem add_nat_to_rat_coercion {a b : ℕ} : (a + b : ℚ) = (a : ℚ) + (b : ℚ) := by ring
+theorem comm_ring_add_nat_to_int_coercion {a b : ℕ} : (a + b : ℤ) = (a : ℤ) + (b : ℤ) := by ring
 
-theorem add_nat_to_real_coercion {a b : ℕ} : (a + b : ℝ) = (a : ℝ) + (b : ℝ) := by ring
+theorem comm_ring_add_nat_to_rat_coercion {a b : ℕ} : (a + b : ℚ) = (a : ℚ) + (b : ℚ) := by ring
 
-theorem add_nat_to_complex_coercion {a b : ℕ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
+theorem comm_ring_add_nat_to_real_coercion {a b : ℕ} : (a + b : ℝ) = (a : ℝ) + (b : ℝ) := by ring
 
-theorem add_int_to_rat_coercion {a b : ℤ} : (a + b : ℚ) = (a : ℚ) + (b : ℚ) := by ring
+theorem comm_ring_add_nat_to_complex_coercion {a b : ℕ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
 
-theorem add_int_to_real_coercion {a b : ℤ} : (a + b : ℝ) = (a : ℝ) + (b : ℝ) := by ring
+theorem comm_ring_add_int_to_rat_coercion {a b : ℤ} : (a + b : ℚ) = (a : ℚ) + (b : ℚ) := by ring
 
-theorem add_int_to_complex_coercion {a b : ℤ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
+theorem comm_ring_add_int_to_real_coercion {a b : ℤ} : (a + b : ℝ) = (a : ℝ) + (b : ℝ) := by ring
 
-theorem add_rat_to_real_coercion {a b : ℚ} : (a + b : ℝ) = (a : ℝ) + (b : ℝ) := by ring
+theorem comm_ring_add_int_to_complex_coercion {a b : ℤ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
 
-theorem add_rat_to_complex_coercion {a b : ℚ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
+theorem comm_ring_add_rat_to_real_coercion {a b : ℚ} : (a + b : ℝ) = (a : ℝ) + (b : ℝ) := by ring
 
-theorem add_real_to_complex_coercion {a b : ℝ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
+theorem comm_ring_add_rat_to_complex_coercion {a b : ℚ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
+
+theorem comm_ring_add_real_to_complex_coercion {a b : ℝ} : (a + b : ℂ) = (a : ℂ) + (b : ℂ) := by ring
 
 -- Multiplication coercions
 
@@ -201,3 +204,7 @@ theorem comm_field_div_rat_to_complex_coercion {a b : ℚ} : (a : ℂ) / (b : �
 
 theorem comm_field_div_real_to_complex_coercion {a b : ℝ} : (a : ℂ) / (b : ℂ) = (a / b : ℂ) := by
   rfl
+
+-- pow
+
+theorem real_pow_nat_to_real_pow_nat_coercion {a : ℝ} {i : ℕ} : (a ^ i : ℝ) = ((a : ℝ) ^ (i : ℕ) : ℝ) := by simp

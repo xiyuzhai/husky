@@ -82,4 +82,8 @@ impl VdMirOprCoercion<VdMirBaseSeparator> {
     pub fn new_comm_ring_mul(source_ty: VdType, target_ty: VdType) -> Self {
         Self::new(VdMirBaseSeparator::COMM_RING_MUL, source_ty, target_ty)
     }
+
+    pub fn new_comm_ring_add(source_ty: VdType, target_ty: VdType) -> Self {
+        Self::new(VdMirBaseSeparator::COMM_RING_ADD, source_ty, target_ty)
+    }
 }

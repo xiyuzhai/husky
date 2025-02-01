@@ -89,18 +89,16 @@ macro "term_derivation_mul_product"
   `(tactic| exact term_derivation_mul_product $hab $habc $hab_eq_coercion $hab_mul_coercion $hbc_mul_coercion)
 
 theorem term_derivation_literal_mul_sum
-  {π αβ βγ αγ αβγ}
+  {π αβ αγ αβγ}
   {p term0_π term_π : π}
   {a_αβ b_αβ ab_term : αβ}
   {a_αγ c_αγ ac_term : αγ}
-  {a_αβγ a_αβ_αβγ a_αγ_αβγ b_αβγ b_αβ_αβγ b_βγ_αβγ c_αβγ c_αγ_αβγ c_βγ_αβγ b_add_c_αβγ a_αβ_mul_b_αβ_αβγ a_αγ_mul_c_αγ_αβγ term0 term ac_term_αβγ ab_term_αβγ sum_of_b_and_c_pow_one_αβγ : αβγ}
+  {a_αβγ a_αβ_αβγ a_αγ_αβγ b_αβγ b_αβ_αβγ b_βγ_αβγ c_αβγ c_αγ_αβγ c_βγ_αβγ b_add_c_αβγ a_αβ_mul_b_αβ_αβγ a_αγ_mul_c_αγ_αβγ term ac_term_αβγ ab_term_αβγ sum_of_b_and_c_pow_one_αβγ : αβγ}
   [CommRing π]
   [CommRing αβ]
-  [CommRing βγ]
   [CommRing αγ]
   [CommRing αβγ]
   (hp0 : p = term0_π)
-  (hterm0_mul_coercion : term0 = a_αβγ * sum_of_b_and_c_pow_one_αβγ)
   (hab_nf : a_αβ * b_αβ = ab_term)
   (hac_nf : a_αγ * c_αγ = ac_term)
   (habc_nf : ab_term_αβγ + ac_term_αβγ = term)
@@ -116,10 +114,9 @@ theorem term_derivation_literal_mul_sum
   (hb_βγ_αβγ_coercion_triangle: b_βγ_αβγ = b_αβγ)
   (hc_αγ_αβγ_coercion_triangle: c_αγ_αβγ = c_αβγ)
   (hc_βγ_αβγ_coercion_triangle: c_βγ_αβγ = c_αβγ)
-  (hπ_coercion : term0 = term -> term0_π = term_π)
+  (hπ_coercion : a_αβγ * sum_of_b_and_c_pow_one_αβγ = term -> term0_π = term_π)
   : p = term_π := by
-  have h: term0 = term := by
-    rw[hterm0_mul_coercion]
+  have h: a_αβγ * sum_of_b_and_c_pow_one_αβγ = term := by
     rw[hpow_coercion]
     rw[hbc_coercion]
     ring_nf
@@ -149,7 +146,6 @@ theorem term_derivation_literal_mul_sum
 /-- derive `p => term` from `p => a * (b + c)^1` `a * b => ab_term` and `a * c => ac_term` and `ab_term + ac_term => term` -/
 macro "term_derivation_literal_mul_sum"
   hp0:term:1024
-  hterm0_mul_coercion:term:1024
   hab_nf:term:1024
   hac_nf:term:1024
   habc_nf:term:1024
@@ -166,4 +162,4 @@ macro "term_derivation_literal_mul_sum"
   hc_αγ_αβγ_coercion_triangle:term:1024
   hc_βγ_αβγ_coercion_triangle:term:1024
   hπ_coercion:term:1024
-  : tactic => `(tactic| exact term_derivation_literal_mul_sum $hp0 $hterm0_mul_coercion $hab_nf $hac_nf $habc_nf $hβγ_αβγ_pow_coercion $hbc_coercion $hαβ_αβγ_eq_coercion $hαβ_αβγ_mul_coercion $hαγ_αβγ_eq_coercion $hαγ_αβγ_mul_coercion $ha_αβ_αβγ_coercion_triangle $ha_αγ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hb_βγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle $hc_βγ_αβγ_coercion_triangle $hπ_coercion)
+  : tactic => `(tactic| exact term_derivation_literal_mul_sum $hp0 $hab_nf $hac_nf $habc_nf $hβγ_αβγ_pow_coercion $hbc_coercion $hαβ_αβγ_eq_coercion $hαβ_αβγ_mul_coercion $hαγ_αβγ_eq_coercion $hαγ_αβγ_mul_coercion $ha_αβ_αβγ_coercion_triangle $ha_αγ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hb_βγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle $hc_βγ_αβγ_coercion_triangle $hπ_coercion)

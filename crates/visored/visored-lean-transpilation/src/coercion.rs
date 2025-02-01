@@ -6,8 +6,8 @@ use lean_entity_path::{
 };
 use lean_mir_expr::expr::{LnMirExprData, LnMirExprEntry};
 use visored_mir_expr::coercion::{
-    triangle::VdMirCoercionTriangle, VdMirBinaryOprCoercion, VdMirCoercion, VdMirPrefixOprCoercion,
-    VdMirSeparatorCoercion,
+    pow::VdMirPowCoercion, triangle::VdMirCoercionTriangle, VdMirBinaryOprCoercion, VdMirCoercion,
+    VdMirPrefixOprCoercion, VdMirSeparatorCoercion,
 };
 use visored_term::{menu::VdTypeMenu, ty::VdType};
 
@@ -21,7 +21,7 @@ where
             VdMirCoercion::PrefixOpr(slf) => create_prefix_opr_coercion_ident(slf, builder),
             VdMirCoercion::BinaryOpr(slf) => create_binary_opr_coercion_ident(slf, builder),
             VdMirCoercion::Separator(slf) => create_separator_coercion_ident(slf, builder),
-            VdMirCoercion::Pow(vd_mir_pow_coercion) => todo!(),
+            VdMirCoercion::Pow(slf) => create_pow_coercion_ident(slf, builder),
         };
         LnMirExprEntry::new(LnMirExprData::ItemPath(LnItemPath::Theorem(
             LnTheoremPath::TermDerivation(LnTermDerivationTheoremPath::Custom(ident)),
@@ -104,6 +104,26 @@ where
     let target_ty = ty_code(target_ty, ty_menu);
     LnIdent::from_owned(
         format!("{separator}_{source_ty}_to_{target_ty}_coercion"),
+        builder.db(),
+    )
+}
+
+fn create_pow_coercion_ident<S>(
+    coercion: VdMirPowCoercion,
+    builder: &VdLeanTranspilationBuilder<S>,
+) -> LnIdent
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    let ty_menu = builder.ty_menu();
+    let src_base_ty = ty_code(coercion.src_base_ty, ty_menu);
+    let src_exponent_ty = ty_code(coercion.src_exponent_ty, ty_menu);
+    let dst_base_ty = ty_code(coercion.dst_base_ty, ty_menu);
+    let dst_exponent_ty = ty_code(coercion.dst_exponent_ty, ty_menu);
+    LnIdent::from_owned(
+        format!(
+            "{src_base_ty}_pow_{src_exponent_ty}_to_{dst_base_ty}_pow_{dst_exponent_ty}_coercion"
+        ),
         builder.db(),
     )
 }

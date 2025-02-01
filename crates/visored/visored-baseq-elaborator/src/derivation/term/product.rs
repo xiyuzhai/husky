@@ -5,7 +5,9 @@ use crate::term::{
     VdBsqTerm,
 };
 use sum::derive_add;
-use visored_mir_expr::coercion::VdMirSeparatorCoercion;
+use visored_mir_expr::coercion::{
+    pow::VdMirPowCoercion, triangle::VdMirCoercionTriangle, VdMirSeparatorCoercion,
+};
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
 
@@ -388,13 +390,22 @@ fn derive_literal_mul_sum<'db, 'sess>(
     let a = lopd;
     let (b, _, c) = ropd.split_add(elr, hc);
     let a_mul_b_derivation = derive_product(a, b, elr, hc);
+    let ab_ty = a_mul_b_derivation.expr().ty();
     let a_mul_c_derivation = derive_product(a, c, elr, hc);
+    let ac_ty = a_mul_c_derivation.expr().ty();
     let ab_term_plus_ac_term_derivation = derive_add(
         a_mul_b_derivation.derived(),
         a_mul_c_derivation.derived(),
         elr,
         hc,
     );
+    let abc_ty = ab_term_plus_ac_term_derivation.expr().ty();
+    let p_ty = p.expr().ty();
+    let a_ty = a.ty();
+    let b_ty = b.ty();
+    let c_ty = c.ty();
+    let bc_ty = ropd.ty();
+    let ty_menu = elr.ty_menu();
     VdBsqExprDerived::new(
         p.expr(),
         Some(ab_term_plus_ac_term_derivation.derived()),
@@ -403,19 +414,19 @@ fn derive_literal_mul_sum<'db, 'sess>(
             a_mul_b_derivation: a_mul_b_derivation.derivation(),
             a_mul_c_derivation: a_mul_c_derivation.derivation(),
             ab_term_plus_ac_term_derivation: ab_term_plus_ac_term_derivation.derivation(),
-            pow_coercion: todo!(),
-            bc_add_coercion: todo!(),
-            ab_eq_coercion: todo!(),
-            ab_mul_coercion: todo!(),
-            ac_eq_coercion: todo!(),
-            ac_mul_coercion: todo!(),
-            a_ab_abc_coercion_triangle: todo!(),
-            a_ac_abc_coercion_triangle: todo!(),
-            b_ab_abc_coercion_triangle: todo!(),
-            b_bc_abc_coercion_triangle: todo!(),
-            c_ac_abc_coercion_triangle: todo!(),
-            c_bc_abc_coercion_triangle: todo!(),
-            p_coercion: todo!(),
+            pow_coercion: VdMirPowCoercion::new(bc_ty, ty_menu.nat, abc_ty, ty_menu.nat),
+            bc_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(bc_ty, abc_ty),
+            ab_eq_coercion: VdMirSeparatorCoercion::new_eq(ab_ty, abc_ty),
+            ab_mul_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(ab_ty, abc_ty),
+            ac_eq_coercion: VdMirSeparatorCoercion::new_eq(ac_ty, abc_ty),
+            ac_mul_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(ac_ty, abc_ty),
+            a_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(a_ty, ab_ty, abc_ty),
+            a_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(a_ty, ac_ty, abc_ty),
+            b_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(b_ty, ab_ty, abc_ty),
+            b_bc_abc_coercion_triangle: VdMirCoercionTriangle::new(b_ty, bc_ty, abc_ty),
+            c_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(c_ty, ac_ty, abc_ty),
+            c_bc_abc_coercion_triangle: VdMirCoercionTriangle::new(c_ty, bc_ty, abc_ty),
+            p_coercion: VdMirSeparatorCoercion::new_eq(p_ty, abc_ty),
         },
         elr,
         hc,
