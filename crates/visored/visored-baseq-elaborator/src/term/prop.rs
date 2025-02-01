@@ -1,8 +1,9 @@
+pub mod iff;
 pub mod in_set;
 pub mod num_chain;
 pub mod num_relation;
 
-use self::{in_set::*, num_chain::*, num_relation::*};
+use self::{iff::*, in_set::*, num_chain::*, num_relation::*};
 use super::*;
 
 #[enum_class::from_variants]
@@ -12,6 +13,12 @@ pub enum VdBsqPropTerm<'sess> {
     NumChain(VdBsqNumChain<'sess>),
     Trivial(bool),
     InSet(VdBsqInSet<'sess>),
+    Iff(VdBsqIff<'sess>),
+}
+
+impl<'sess> VdBsqPropTerm<'sess> {
+    pub const TRUE: Self = Self::Trivial(true);
+    pub const FALSE: Self = Self::Trivial(false);
 }
 
 impl<'sess> std::fmt::Debug for VdBsqPropTerm<'sess> {
@@ -33,6 +40,7 @@ impl<'sess> VdBsqPropTerm<'sess> {
             VdBsqPropTerm::NumChain(slf) => slf.show_fmt(precedence_range, f),
             VdBsqPropTerm::Trivial(slf) => write!(f, "{}", slf),
             VdBsqPropTerm::InSet(slf) => slf.show_fmt(precedence_range, f),
+            VdBsqPropTerm::Iff(vd_bsq_iff) => todo!(),
         }
     }
 }
@@ -54,6 +62,7 @@ impl<'db, 'sess> VdBsqPropTerm<'sess> {
                 elr.mk_expr(VdBsqExprData::ItemPath(path), elr.ty_menu().prop)
             }
             VdBsqPropTerm::InSet(_) => todo!(),
+            VdBsqPropTerm::Iff(vd_bsq_iff) => todo!(),
         }
     }
 }

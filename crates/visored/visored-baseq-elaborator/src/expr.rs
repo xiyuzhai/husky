@@ -19,7 +19,10 @@ use visored_mir_opr::{
     opr::prefix::VdMirBasePrefixOpr,
     separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator},
 };
-use visored_opr::precedence::{VdPrecedence, VdPrecedenceRange};
+use visored_opr::{
+    precedence::{VdPrecedence, VdPrecedenceRange},
+    separator::VdBaseSeparator,
+};
 use visored_signature::signature::{
     attach::VdPowerSignature,
     separator::base::{
@@ -347,6 +350,23 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         )
     }
 
+    pub(crate) fn mk_iff(
+        &self,
+        lopd: VdBsqExpr<'sess>,
+        ropd: VdBsqExpr<'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExpr<'sess> {
+        let signature = hc.infer_iff_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprData::ChainingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
+                joined_signature: None,
+            },
+            signature.expr_ty(),
+        )
+    }
+
     pub(crate) fn mk_add(
         &self,
         lopd: VdBsqExpr<'sess>,
@@ -456,6 +476,25 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         self.mk_pow(expr, self.mk_litnum(VdBsqLitnumTerm::Int128(-1)), hc)
+    }
+
+    pub(crate) fn mk_trivial_chaining_separated_list(
+        &self,
+        leader: VdBsqExpr<'sess>,
+        separator: VdBaseSeparator,
+        follower: VdBsqExpr<'sess>,
+        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
+    ) -> VdBsqExpr<'sess> {
+        let signature =
+            hc.infer_base_chaining_separator_signature(leader.ty(), separator, follower.ty());
+        self.mk_expr(
+            VdBsqExprData::ChainingSeparatedList {
+                leader,
+                followers: smallvec![(signature, follower)],
+                joined_signature: None,
+            },
+            signature.expr_ty(),
+        )
     }
 
     pub(crate) fn split_folding_separated_list(

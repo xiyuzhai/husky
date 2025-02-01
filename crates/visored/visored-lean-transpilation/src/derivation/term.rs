@@ -22,30 +22,6 @@ where
         &mut self,
         construction: &VdMirTermDerivationConstruction,
     ) -> LnMirExprIdx {
-        use Argument::{Coercion as C, Derivation as D, Expr as E, Hypothesis as H};
-
-        #[derive(Copy, Clone)]
-        enum Argument {
-            Coercion(VdMirCoercion),
-            Derivation(VdMirTermDerivationIdx),
-            Expr(VdMirExprIdx),
-            Hypothesis(VdMirHypothesisIdx),
-        }
-
-        impl<S> VdTranspileToLean<S, LnMirExprEntry> for Argument
-        where
-            S: IsVdLeanTranspilationScheme,
-        {
-            fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
-                match self {
-                    C(coercion) => coercion.to_lean(builder),
-                    D(derivation) => derivation.to_lean(builder),
-                    E(expr) => expr.to_lean(builder),
-                    H(hypothesis) => hypothesis.to_lean(builder),
-                }
-            }
-        }
-
         let variant_name: &'static str = construction.into();
         let arguments: Option<LnMirExprIdxRange> = match *construction {
             VdMirTermDerivationConstruction::Reflection => None,
@@ -57,7 +33,7 @@ where
             VdMirTermDerivationConstruction::SubEqsAddNeg {
                 add_neg,
                 b_neg_coercion,
-            } => Some([D(add_neg), C(b_neg_coercion.into())].to_lean(self)),
+            } => Some([D(*add_neg), C(b_neg_coercion.into())].to_lean(self)),
             VdMirTermDerivationConstruction::LiteralAddLiteral { lopd, ropd } => None,
             VdMirTermDerivationConstruction::AddEq {
                 a_eq_coercion,
@@ -67,11 +43,11 @@ where
                 a_term_add_b_term_derivation,
             } => Some(
                 [
-                    D(a_derivation),
-                    D(b_derivation),
+                    D(*a_derivation),
+                    D(*b_derivation),
                     C(a_eq_coercion.into()),
                     C(b_eq_coercion.into()),
-                    D(a_term_add_b_term_derivation),
+                    D(*a_term_add_b_term_derivation),
                 ]
                 .to_lean(self),
             ),
@@ -84,7 +60,7 @@ where
             VdMirTermDerivationConstruction::NegEq {
                 opd_nf,
                 neg_a_term_nf,
-            } => Some([D(opd_nf), D(neg_a_term_nf)].to_lean(self)),
+            } => Some([D(*opd_nf), D(*neg_a_term_nf)].to_lean(self)),
             VdMirTermDerivationConstruction::NegAtom => None,
             VdMirTermDerivationConstruction::NegSum { neg_a_nf, neg_b_nf } => None,
             VdMirTermDerivationConstruction::NegProduct => None,
@@ -99,9 +75,9 @@ where
                 merge,
             } => Some(
                 [
-                    D(a),
-                    D(b),
-                    D(merge),
+                    D(*a),
+                    D(*b),
+                    D(*merge),
                     C(a_eq_coercion.into()),
                     C(b_eq_coercion.into()),
                 ]
@@ -115,7 +91,7 @@ where
                 src,
                 src_nf,
                 dst_nf,
-            } => Some([H(src), D(src_nf), D(dst_nf)].to_lean(self)),
+            } => Some([H(src), D(*src_nf), D(*dst_nf)].to_lean(self)),
             VdMirTermDerivationConstruction::AtomMulAtom { comparison } => None,
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => None,
             VdMirTermDerivationConstruction::MulProduct {
@@ -127,8 +103,8 @@ where
                 bc_mul_coercion,
             } => Some(
                 [
-                    D(ab_nf),
-                    D(ab_term_mul_c_nf),
+                    D(*ab_nf),
+                    D(*ab_term_mul_c_nf),
                     C(ab_eq_coercion.into()),
                     C(ab_mul_coercion.into()),
                     C(bc_mul_coercion.into()),
@@ -169,11 +145,11 @@ where
                 a_nf_div_b_nf_dn,
             } => Some(
                 [
-                    D(a_dn),
-                    D(b_dn),
+                    D(*a_dn),
+                    D(*b_dn),
                     C(a_coercion.into()),
                     C(b_coercion.into()),
-                    D(a_nf_div_b_nf_dn),
+                    D(*a_nf_div_b_nf_dn),
                 ]
                 .to_lean(self),
             ),
@@ -200,10 +176,10 @@ where
                 ac_mul_coercion,
             } => Some(
                 [
-                    D(p_derivation),
-                    D(a_mul_b_derivation),
-                    D(a_mul_c_derivation),
-                    D(ab_term_plus_ac_term_derivation),
+                    D(*p_derivation),
+                    D(*a_mul_b_derivation),
+                    D(*a_mul_c_derivation),
+                    D(*ab_term_plus_ac_term_derivation),
                     C(pow_coercion.into()),
                     C(bc_add_coercion.into()),
                     C(ab_eq_coercion.into()),
@@ -232,8 +208,8 @@ where
                 c_ac_abc_coercion_triangle,
             } => Some(
                 [
-                    D(a_add_c_derivation),
-                    D(a_add_c_derived_add_b_derivation),
+                    D(*a_add_c_derivation),
+                    D(*a_add_c_derived_add_b_derivation),
                     C(a_add_b_add_coercion.into()),
                     C(a_ab_abc_coercion_triangle.into()),
                     C(b_ab_abc_coercion_triangle.into()),
@@ -249,7 +225,7 @@ where
             VdMirTermDerivationConstruction::AtomMulExponentialLess => None,
             VdMirTermDerivationConstruction::AtomMulExponentialGreater => None,
             VdMirTermDerivationConstruction::NonTrivialExprEquivalence { src_nf, dst_nf } => {
-                Some([D(src_nf), D(dst_nf)].to_lean(self))
+                Some([D(*src_nf), D(*dst_nf)].to_lean(self))
             }
             VdMirTermDerivationConstruction::OneMulPowerOne => None,
             VdMirTermDerivationConstruction::MulOne => None,

@@ -19,6 +19,7 @@ use either::*;
 use floated_sequential::db::FloaterDb;
 use floated_sequential::floated;
 use frac128::VdBsqFrac128;
+use iff::VdBsqIff;
 use in_set::VdBsqInSet;
 use num_chain::VdBsqNumChain;
 use product::VdBsqProductStem;
@@ -95,6 +96,13 @@ impl<'sess> VdBsqTerm<'sess> {
             VdBsqTerm::Comnum(comnum) => Some(VdBsqNumTerm::Comnum(comnum)),
             VdBsqTerm::Prop(_) => None,
             VdBsqTerm::Set(_) => None,
+        }
+    }
+
+    pub fn prop(self) -> Option<VdBsqPropTerm<'sess>> {
+        match self {
+            VdBsqTerm::Prop(prop) => Some(prop),
+            _ => None,
         }
     }
 }
@@ -282,6 +290,12 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
                             VdBsqInSet::new(leader.term(), follower.term(), self.floater_db())
                                 .into()
                         }
+                        VdMirBaseChainingSeparator::IFF => VdBsqIff::new(
+                            leader.term().prop().unwrap(),
+                            follower.term().prop().unwrap(),
+                            self.floater_db(),
+                        )
+                        .into(),
                         separator => todo!("unsupported separator: {separator:?}"),
                     }
                 }

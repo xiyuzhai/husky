@@ -27,9 +27,12 @@ where
     ) -> LnMirExprIdx {
         let variant_name: &'static str = construction.into();
         let arguments: Option<LnMirExprIdxRange> = match *construction {
+            VdMirLitnumBoundDerivationConstruction::Normalize => todo!(),
             VdMirLitnumBoundDerivationConstruction::Finish {
-                src_nf_and_dst_nf_equivalence,
-            } => None,
+                src_nf_dn: src_nf,
+                dst_nf_dn: dst_nf,
+                src_nf_and_dst_nf_equivalence_dn: src_nf_and_dst_nf_equivalence,
+            } => Some([D(*src_nf), D(*dst_nf), D(*src_nf_and_dst_nf_equivalence)].to_lean(self)),
         };
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name: litnum_bound_tactic_name_from_variant_name(variant_name).into(),
@@ -45,7 +48,9 @@ where
     ) -> LnMirTacticData {
         match construction {
             VdMirLitnumBoundDerivationConstruction::Finish {
-                src_nf_and_dst_nf_equivalence,
+                src_nf_dn: src_nf,
+                dst_nf_dn: dst_nf,
+                src_nf_and_dst_nf_equivalence_dn: src_nf_and_dst_nf_equivalence,
             } => LnMirTacticData::Assumption,
             _ => todo!(),
         }

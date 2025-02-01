@@ -7,13 +7,19 @@ use lean_mir_expr::{
     tactic::{LnMirTacticData, LnMirTacticIdxRange},
 };
 use visored_mir_expr::{
+    coercion::VdMirCoercion,
     derivation::{
         chunk::VdMirDerivationChunk,
-        construction::{term::VdMirTermDerivationConstruction, VdMirDerivationConstruction},
+        construction::{
+            term::{VdMirTermDerivationConstruction, VdMirTermDerivationIdx},
+            VdMirDerivationConstruction,
+        },
         VdMirDerivationIdx,
     },
-    hypothesis::VdMirHypothesisEntry,
+    expr::VdMirExprIdx,
+    hypothesis::{VdMirHypothesisEntry, VdMirHypothesisIdx},
 };
+use Argument::{Coercion as C, Derivation as D, Expr as E, Hypothesis as H};
 
 impl<'a, S> VdLeanTranspilationBuilder<'a, S>
 where
@@ -67,6 +73,28 @@ where
             VdMirDerivationConstruction::LitnumBound(construction) => {
                 self.build_litnum_bound_derivation_chunk_end_tactic_data(construction)
             }
+        }
+    }
+}
+
+#[derive(Copy, Clone)]
+enum Argument {
+    Coercion(VdMirCoercion),
+    Derivation(VdMirDerivationIdx),
+    Expr(VdMirExprIdx),
+    Hypothesis(VdMirHypothesisIdx),
+}
+
+impl<S> VdTranspileToLean<S, LnMirExprEntry> for Argument
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
+        match self {
+            C(coercion) => coercion.to_lean(builder),
+            D(derivation) => derivation.to_lean(builder),
+            E(expr) => expr.to_lean(builder),
+            H(hypothesis) => hypothesis.to_lean(builder),
         }
     }
 }

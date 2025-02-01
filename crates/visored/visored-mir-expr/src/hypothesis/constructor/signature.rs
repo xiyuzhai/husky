@@ -52,6 +52,18 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
         )
     }
 
+    pub fn infer_iff_signature(
+        &self,
+        prev_item_ty: VdType,
+        next_item_ty: VdType,
+    ) -> VdBaseChainingSeparatorSignature {
+        self.infer_base_chaining_separator_signature(
+            prev_item_ty,
+            VdBaseSeparator::Leftrightarrow,
+            next_item_ty,
+        )
+    }
+
     pub fn infer_add_signature(
         &self,
         prev_item_ty: VdType,
@@ -164,7 +176,12 @@ impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
                     signature,
                 } => signature,
             },
-            None => todo!(),
+            None => todo!(
+                "prev_item_ty: `{:?}`, base_separator: `{:?}`, next_item_ty: `{:?}`",
+                prev_item_ty,
+                base_separator,
+                next_item_ty
+            ),
         }
     }
 

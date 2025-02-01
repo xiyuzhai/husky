@@ -19,8 +19,33 @@ use visored_term::term::literal::VdLiteral;
 #[derive(Debug, PartialEq, Eq, strum::IntoStaticStr)]
 pub enum VdMirLitnumBoundDerivationConstruction {
     Finish {
-        src_nf_and_dst_nf_equivalence: VdMirTermDerivationIdx,
+        src_nf_dn: VdMirLitnumBoundDerivationIdx,
+        dst_nf_dn: VdMirLitnumBoundDerivationIdx,
+        src_nf_and_dst_nf_equivalence_dn: VdMirTermDerivationIdx,
     },
+    Normalize,
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub struct VdMirLitnumBoundDerivationIdx(VdMirDerivationIdx);
+
+impl std::ops::Deref for VdMirLitnumBoundDerivationIdx {
+    type Target = VdMirDerivationIdx;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<'db, Src> VdMirHypothesisConstructor<'db, Src> {
+    pub fn alloc_litnum_bound_derivation(
+        &mut self,
+        prop: VdMirExprIdx,
+        construction: VdMirLitnumBoundDerivationConstruction,
+    ) -> VdMirLitnumBoundDerivationIdx {
+        let idx = self.alloc_derivation(prop, construction.into());
+        VdMirLitnumBoundDerivationIdx(idx)
+    }
 }
 
 impl VdMirLitnumBoundDerivationConstruction {
@@ -30,15 +55,24 @@ impl VdMirLitnumBoundDerivationConstruction {
         hc: &mut VdMirHypothesisConstructor<'db, Src>,
     ) {
         match *self {
+            VdMirLitnumBoundDerivationConstruction::Normalize => check_normalize(prop, hc),
             VdMirLitnumBoundDerivationConstruction::Finish {
-                src_nf_and_dst_nf_equivalence,
-            } => check_finish(prop, src_nf_and_dst_nf_equivalence, hc),
+                src_nf_dn: src_nf,
+                dst_nf_dn: dst_nf,
+                src_nf_and_dst_nf_equivalence_dn: src_nf_and_dst_nf_equivalence,
+            } => check_finish(prop, src_nf, dst_nf, src_nf_and_dst_nf_equivalence, hc),
         }
     }
 }
 
+fn check_normalize<'db, Src>(prop: VdMirExprIdx, hc: &mut VdMirHypothesisConstructor<'db, Src>) {
+    // todo!()
+}
+
 fn check_finish<'db, Src>(
     prop: VdMirExprIdx,
+    src_nf: VdMirLitnumBoundDerivationIdx,
+    dst_nf: VdMirLitnumBoundDerivationIdx,
     src_nf_and_dst_nf_equivalence: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
