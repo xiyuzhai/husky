@@ -83,8 +83,8 @@ where
             VdMirTermDerivationConstruction::NegLiteral => None,
             VdMirTermDerivationConstruction::NegEq {
                 opd_nf,
-                minus_opd_nf_nf,
-            } => None,
+                neg_a_term_nf,
+            } => Some([D(opd_nf), D(neg_a_term_nf)].to_lean(self)),
             VdMirTermDerivationConstruction::NegAtom => None,
             VdMirTermDerivationConstruction::NegSum { neg_a_nf, neg_b_nf } => None,
             VdMirTermDerivationConstruction::NegProduct => None,

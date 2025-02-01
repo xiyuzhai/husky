@@ -72,7 +72,19 @@ theorem term_derivation_neg_product
 /-- derive `-(c * a) => (-c) * a` if `c` is a literal -/
 macro "term_derivation_neg_product" : tactic => `(tactic| exact term_derivation_neg_product (by norm_num))
 
-macro "term_derivation_neg_eq" : tactic => `(tactic| simp)
+theorem term_derivation_neg_eq
+  {α}
+  {a term a_term : α}
+  [CommRing α]
+  (ha: a = a_term)
+  (hneg_a_term: -a_term = term)
+  : -a = term := by
+  rw [ha]
+  exact hneg_a_term
+
+/-- derive `-a => term` from `a => a_term` and `-a_term => term` -/
+macro "term_derivation_neg_eq" ha:term:1024 hneg_a_term:term:1024 : tactic
+  => `(tactic| exact term_derivation_neg_eq $ha $hneg_a_term)
 
 theorem term_derivation_mul_product
   {αβ αβγ}

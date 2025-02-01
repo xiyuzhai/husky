@@ -21,13 +21,13 @@ pub(super) fn check_neg_literal<'db, Src>(
 pub(super) fn check_neg_eq<'db, Src>(
     prop: VdMirExprIdx,
     opd_nf: VdMirTermDerivationIdx,
-    minus_opd_nf_nf: VdMirTermDerivationIdx,
+    neg_a_term_nf: VdMirTermDerivationIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     ds!(let (minus_a => term) = prop, hc);
     ds!(let (-a) = minus_a, hc);
     ds!(let (a1 => a_term) = opd_nf.prop(hc), hc);
-    ds!(let (minus_a_term => term1) = minus_opd_nf_nf.prop(hc), hc);
+    ds!(let (minus_a_term => term1) = neg_a_term_nf.prop(hc), hc);
     ds!(let (-a_term1) = minus_a_term, hc);
     assert_deep_eq!(a_term1, a_term, hc);
     assert_deep_eq!(a1, a, hc);

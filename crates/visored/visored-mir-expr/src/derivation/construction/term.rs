@@ -133,7 +133,7 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `-a => term` from `a => a_term` and `-a_term => term`
     NegEq {
         opd_nf: VdMirTermDerivationIdx,
-        minus_opd_nf_nf: VdMirTermDerivationIdx,
+        neg_a_term_nf: VdMirTermDerivationIdx,
     },
     /// derive `-a => (-1) * a^1`
     NegAtom,
@@ -300,8 +300,8 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::NegLiteral => check_neg_literal(prop, hc),
             VdMirTermDerivationConstruction::NegEq {
                 opd_nf,
-                minus_opd_nf_nf,
-            } => check_neg_eq(prop, opd_nf, minus_opd_nf_nf, hc),
+                neg_a_term_nf,
+            } => check_neg_eq(prop, opd_nf, neg_a_term_nf, hc),
             VdMirTermDerivationConstruction::NegAtom => check_neg_atom(prop, hc),
             VdMirTermDerivationConstruction::NegSum { neg_a_nf, neg_b_nf } => {
                 check_neg_sum(prop, neg_a_nf, neg_b_nf, hc)

@@ -14,10 +14,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             VdBsqExprData::ItemPath(vd_item_path) => todo!(),
             _ => {
                 let opd = opd.normalize(self, hc);
-                let minus_opd_nf_nf = neg_derived(opd.derived(), self, hc);
+                let neg_a_term_nf = neg_derived(opd.derived(), self, hc);
                 VdMirTermDerivationConstruction::NegEq {
                     opd_nf: opd.derivation(),
-                    minus_opd_nf_nf: minus_opd_nf_nf.derivation(),
+                    neg_a_term_nf: neg_a_term_nf.derivation(),
                 }
             }
         }
