@@ -75,6 +75,6 @@ macro "litnum_bound": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-def h (a b : ℝ) : a + b = b + a := by
-  have h1 : a + b = b + a := by term_trivial
+def h (a b : ℝ) : (a + b : ℝ) = (b + a : ℝ) := by
+  have h1 : (a + b : ℝ) = (b + a : ℝ) := by term_trivial
   obvious

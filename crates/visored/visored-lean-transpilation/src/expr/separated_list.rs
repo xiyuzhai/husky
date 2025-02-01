@@ -21,36 +21,24 @@ where
     ) -> LnMirExprData {
         debug_assert!(followers.len() >= 1);
         let mut follower_iter = followers.iter().copied();
-        let leader = self.build_expr_entry(leader);
-        let (fst_separator, fst_follower) = follower_iter.next().unwrap();
-        let fst_follower = self.build_expr_entry(fst_follower);
-        let mut result = LnMirExprData::Application {
-            function: self.build_folding_func(fst_separator),
-            arguments: self.alloc_exprs([leader, fst_follower]),
-        };
-        let mut result_ty = fst_separator.expr_ty();
-        for (separator, follower) in follower_iter {
+        let mut result = self.build_expr_data(leader);
+        let mut result_ty = self.expr_arena()[leader].ty();
+        for (signature, follower) in follower_iter {
             let follower = self.build_expr_entry(follower);
-            let function = self.build_folding_func(separator);
-            let result_expected_ty = separator.item_ty();
-            let result_ty_ascription = if result_expected_ty != result_ty {
-                match result_expected_ty.to_lean(self) {
-                    VdTypeLeanTranspilation::Type(expected_ty) => Some(expected_ty),
-                }
-            } else {
-                None
+            let function = self.build_folding_func(signature);
+            let result_expected_ty = signature.item_ty();
+            let result_ty_ascription = match result_expected_ty.to_lean(self) {
+                VdTypeLeanTranspilation::Type(expected_ty) => expected_ty,
             };
             result = LnMirExprData::Application {
                 function,
                 arguments: self.alloc_exprs([LnMirExprEntry::new(result), follower]),
             };
-            if let Some(ty_ascription) = result_ty_ascription {
-                result = LnMirExprData::TypeAscription {
-                    expr: self.alloc_expr(LnMirExprEntry::new(result)),
-                    ty_ascription,
-                }
-            }
-            result_ty = separator.expr_ty();
+            result = LnMirExprData::TypeAscription {
+                expr: self.alloc_expr(LnMirExprEntry::new(result)),
+                ty_ascription: result_ty_ascription,
+            };
+            result_ty = signature.expr_ty();
         }
         result
     }

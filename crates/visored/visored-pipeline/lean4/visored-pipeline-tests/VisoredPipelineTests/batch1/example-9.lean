@@ -75,13 +75,13 @@ macro "litnum_bound": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-def h (x y : ℝ) : (x ^ (2:ℕ) : ℝ) + (y ^ (2:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x * y := by
+def h (x y : ℝ) : ((x ^ (2:ℕ) : ℝ) + (y ^ (2:ℕ) : ℝ) : ℝ) ≥ (((2:ℕ) * x : ℝ) * y : ℝ) := by
   first
   | have h1 : ((x - y : ℝ) ^ (2:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by calc
-    (x - y : ℝ) ^ (2:ℕ) : ℝ = ((x ^ (2:ℕ) : ℝ) - ((2:ℕ) : ℝ) * x * y : ℝ) + (y ^ (2:ℕ) : ℝ) := by obvious
+    (x - y : ℝ) ^ (2:ℕ) : ℝ = ((x ^ (2:ℕ) : ℝ) - (((2:ℕ) * x : ℝ) * y : ℝ) : ℝ) + (y ^ (2:ℕ) : ℝ) : ℝ := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  | have h2 : ((x ^ (2:ℕ) : ℝ) - ((2:ℕ) : ℝ) * x * y : ℝ) + (y ^ (2:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by calc
-    ((x ^ (2:ℕ) : ℝ) - ((2:ℕ) : ℝ) * x * y : ℝ) + (y ^ (2:ℕ) : ℝ) = (x - y : ℝ) ^ (2:ℕ) : ℝ := by obvious
+  | have h2 : (((x ^ (2:ℕ) : ℝ) - (((2:ℕ) * x : ℝ) * y : ℝ) : ℝ) + (y ^ (2:ℕ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by calc
+    ((x ^ (2:ℕ) : ℝ) - (((2:ℕ) * x : ℝ) * y : ℝ) : ℝ) + (y ^ (2:ℕ) : ℝ) : ℝ = (x - y : ℝ) ^ (2:ℕ) : ℝ := by obvious
     _ ≥ (0:ℕ) : ℝ := by obvious
-  have h3 : (x ^ (2:ℕ) : ℝ) + (y ^ (2:ℕ) : ℝ) ≥ ((2:ℕ) : ℝ) * x * y := by obvious
+  have h3 : ((x ^ (2:ℕ) : ℝ) + (y ^ (2:ℕ) : ℝ) : ℝ) ≥ (((2:ℕ) * x : ℝ) * y : ℝ) := by obvious
   obvious
