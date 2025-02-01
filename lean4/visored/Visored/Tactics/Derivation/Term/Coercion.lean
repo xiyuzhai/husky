@@ -1,5 +1,57 @@
 import Mathlib
 
+-- triangles
+
+theorem nat_nat_nat_coercion_triangle {a: ℕ} : ((a : ℕ) : ℕ) = (a : ℕ) := by simp
+theorem nat_nat_int_coercion_triangle {a: ℕ} : ((a : ℕ) : ℤ) = (a : ℤ) := by simp
+theorem nat_nat_rat_coercion_triangle {a: ℕ} : ((a : ℕ) : ℚ) = (a : ℚ) := by simp
+theorem nat_nat_real_coercion_triangle {a: ℕ} : ((a : ℕ) : ℝ) = (a : ℝ) := by simp
+theorem nat_nat_complex_coercion_triangle {a: ℕ} : ((a : ℕ) : ℂ) = (a : ℂ) := by simp
+
+theorem nat_int_int_coercion_triangle {a: ℕ} : ((a : ℤ) : ℤ) = (a : ℤ) := by simp
+theorem nat_int_rat_coercion_triangle {a: ℕ} : ((a : ℤ) : ℚ) = (a : ℚ) := by simp
+theorem nat_int_real_coercion_triangle {a: ℕ} : ((a : ℤ) : ℝ) = (a : ℝ) := by simp
+theorem nat_int_complex_coercion_triangle {a: ℕ} : ((a : ℤ) : ℂ) = (a : ℂ) := by simp
+
+theorem nat_rat_rat_coercion_triangle {a: ℕ} : ((a : ℚ) : ℚ) = (a : ℚ) := by simp
+theorem nat_rat_real_coercion_triangle {a: ℕ} : ((a : ℚ) : ℝ) = (a : ℝ) := by simp
+theorem nat_rat_complex_coercion_triangle {a: ℕ} : ((a : ℚ) : ℂ) = (a : ℂ) := by simp
+
+theorem nat_real_real_coercion_triangle {a: ℕ} : ((a : ℝ) : ℝ) = (a : ℝ) := by simp
+theorem nat_real_complex_coercion_triangle {a: ℕ} : ((a : ℝ) : ℂ) = (a : ℂ) := by simp
+
+theorem nat_complex_complex_coercion_triangle {a: ℕ} : ((a : ℂ) : ℂ) = (a : ℂ) := by simp
+
+theorem int_int_int_coercion_triangle {a: ℤ} : ((a : ℤ) : ℤ) = (a : ℤ) := by simp
+theorem int_int_rat_coercion_triangle {a: ℤ} : ((a : ℤ) : ℚ) = (a : ℚ) := by simp
+theorem int_int_real_coercion_triangle {a: ℤ} : ((a : ℤ) : ℝ) = (a : ℝ) := by simp
+theorem int_int_complex_coercion_triangle {a: ℤ} : ((a : ℤ) : ℂ) = (a : ℂ) := by simp
+
+theorem int_rat_rat_coercion_triangle {a: ℤ} : ((a : ℚ) : ℚ) = (a : ℚ) := by simp
+theorem int_rat_real_coercion_triangle {a: ℤ} : ((a : ℚ) : ℝ) = (a : ℝ) := by simp
+theorem int_rat_complex_coercion_triangle {a: ℤ} : ((a : ℚ) : ℂ) = (a : ℂ) := by simp
+
+theorem int_real_real_coercion_triangle {a: ℤ} : ((a : ℝ) : ℝ) = (a : ℝ) := by simp
+theorem int_real_complex_coercion_triangle {a: ℤ} : ((a : ℝ) : ℂ) = (a : ℂ) := by simp
+
+theorem int_complex_complex_coercion_triangle {a: ℤ} : ((a : ℂ) : ℂ) = (a : ℂ) := by simp
+
+theorem rat_rat_rat_coercion_triangle {a: ℚ} : ((a : ℚ) : ℚ) = (a : ℚ) := by simp
+theorem rat_rat_real_coercion_triangle {a: ℚ} : ((a : ℚ) : ℝ) = (a : ℝ) := by simp
+theorem rat_rat_complex_coercion_triangle {a: ℚ} : ((a : ℚ) : ℂ) = (a : ℂ) := by simp
+
+theorem rat_real_real_coercion_triangle {a: ℚ} : ((a : ℝ) : ℝ) = (a : ℝ) := by simp
+theorem rat_real_complex_coercion_triangle {a: ℚ} : ((a : ℝ) : ℂ) = (a : ℂ) := by simp
+
+theorem rat_complex_complex_coercion_triangle {a: ℚ} : ((a : ℂ) : ℂ) = (a : ℂ) := by simp
+
+theorem real_real_real_coercion_triangle {a: ℝ} : ((a : ℝ) : ℝ) = (a : ℝ) := by simp
+theorem real_real_complex_coercion_triangle {a: ℝ} : ((a : ℝ) : ℂ) = (a : ℂ) := by simp
+
+theorem real_complex_complex_coercion_triangle {a: ℝ} : ((a : ℂ) : ℂ) = (a : ℂ) := by simp
+
+theorem complex_complex_complex_coercion_triangle {a: ℂ} : ((a : ℂ) : ℂ) = (a : ℂ) := by simp
+
 -- Equality coercions
 
 theorem eq_identity_coercion {α} {a b : α} : a = b -> a = b := by
