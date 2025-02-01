@@ -140,3 +140,17 @@ theorem term_derivation_product_add_product_less
 derive `a + b => 0 + a + b` if `a` and `b` are products and the stem of `a` is less than the stem of `b`
 -/
 macro "term_derivation_product_add_product_less" hzero_add_a_add_coercion:term:1024 : tactic => `(tactic| exact term_derivation_product_add_product_less $hzero_add_a_add_coercion)
+
+theorem term_derivation_product_add_product_greater
+  {αβ}
+  {a_αβ b_αβ zero_add_b_αβ : αβ}
+  [CommRing αβ]
+  (hzero_add_b_add_coercion: zero_add_b_αβ = ((0:ℕ):αβ) + b_αβ)
+  : a_αβ + b_αβ = zero_add_b_αβ + a_αβ := by
+  rw [hzero_add_b_add_coercion]
+  ring
+
+/--
+derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is greater than the stem of `b`
+-/
+macro "term_derivation_product_add_product_greater" hzero_add_b_add_coercion:term:1024 : tactic => `(tactic| exact term_derivation_product_add_product_greater $hzero_add_b_add_coercion)

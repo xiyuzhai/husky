@@ -161,7 +161,9 @@ pub enum VdMirTermDerivationConstruction {
     ProductAddProductEqualKeep,
     ProductAddProductEqualCancel,
     /// derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is greater than the stem of `b`
-    ProductAddProductGreater,
+    ProductAddProductGreater {
+        zero_add_b_add_coercion: VdMirSeparatorCoercion,
+    },
     /// derive `c * a * b => c * (a * b)` if `a` and `b` are exponentials with `a`'s base being less than `b`'s base
     SimpleProductMulExponentialLess,
     /// derive `c * a * b => c * (b * a)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base
@@ -376,9 +378,9 @@ impl VdMirTermDerivationConstruction {
             } => check_product_add_product_less(prop, hc),
             VdMirTermDerivationConstruction::ProductAddProductEqualKeep => todo!(),
             VdMirTermDerivationConstruction::ProductAddProductEqualCancel => todo!(),
-            VdMirTermDerivationConstruction::ProductAddProductGreater => {
-                check_product_add_product_greater(prop, hc)
-            }
+            VdMirTermDerivationConstruction::ProductAddProductGreater {
+                zero_add_b_add_coercion,
+            } => check_product_add_product_greater(prop, hc),
             VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => {
                 check_simple_product_mul_exponential_less(prop, hc)
             }

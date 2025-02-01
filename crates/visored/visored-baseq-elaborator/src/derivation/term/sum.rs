@@ -300,7 +300,12 @@ fn merge_product_construction<'db, 'sess>(
                         }
                         std::cmp::Ordering::Equal => todo!(),
                         std::cmp::Ordering::Greater => {
-                            VdMirTermDerivationConstruction::ProductAddProductGreater
+                            VdMirTermDerivationConstruction::ProductAddProductGreater {
+                                zero_add_b_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(
+                                    ropd.ty(),
+                                    fst_signature.item_ty(),
+                                ),
+                            }
                         }
                     }
                 }

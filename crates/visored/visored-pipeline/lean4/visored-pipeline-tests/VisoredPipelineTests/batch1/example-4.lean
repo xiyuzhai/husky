@@ -95,7 +95,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : (x + (((1:ℕ) : ℝ) / x : ℝ) : 
     have d6 : ((2:ℕ) * x : ℝ) = ((2:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_mul_eq d3 d4 d5 eq_nat_to_real_coercion eq_identity_coercion
     have d7 : (-((2:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) = ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_neg_product
     have d8 : (-((2:ℕ) * x : ℝ) : ℝ) = ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_neg_eq d6 d7
-    have d9 : (((1:ℕ) * (x ^ (2:ℕ) : ℝ) : ℝ) + ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) = (((0:ℕ) + ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((1:ℕ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_product_greater
+    have d9 : (((1:ℕ) * (x ^ (2:ℕ) : ℝ) : ℝ) + ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) = (((0:ℕ) + ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((1:ℕ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_product_greater comm_ring_add_identity_coercion
     have d10 : ((x ^ (2:ℕ) : ℝ) + (-((2:ℕ) * x : ℝ) : ℝ) : ℝ) = (((0:ℕ) + ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((1:ℕ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d2 d8 eq_identity_coercion eq_identity_coercion d9
     have d11 : ((x ^ (2:ℕ) : ℝ) - ((2:ℕ) * x : ℝ) : ℝ) = (((0:ℕ) + ((-2:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((1:ℕ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d10 neg_identity_coercion
     have d12 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection

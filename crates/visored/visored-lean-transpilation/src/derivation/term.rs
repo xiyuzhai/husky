@@ -150,7 +150,9 @@ where
             } => Some([C(zero_add_a_add_coercion.into())].to_lean(self)),
             VdMirTermDerivationConstruction::ProductAddProductEqualKeep => None,
             VdMirTermDerivationConstruction::ProductAddProductEqualCancel => None,
-            VdMirTermDerivationConstruction::ProductAddProductGreater => None,
+            VdMirTermDerivationConstruction::ProductAddProductGreater {
+                zero_add_b_add_coercion,
+            } => Some([C(zero_add_b_add_coercion.into())].to_lean(self)),
             VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => None,
             VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => None,
             VdMirTermDerivationConstruction::SimpleProductMulBaseLess => None,
