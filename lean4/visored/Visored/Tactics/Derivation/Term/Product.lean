@@ -60,7 +60,17 @@ macro "term_derivation_literal_mul_literal" : tactic => `(tactic| norm_num)
 
 macro "term_derivation_neg_atom" : tactic => `(tactic| simp)
 
-macro "term_derivation_neg_product" : tactic => `(tactic| simp)
+theorem term_derivation_neg_product
+  {α}
+  {a c neg_c : α}
+  [CommRing α]
+  (hc: -c = neg_c)
+  : -(c * a) = neg_c *  a := by
+  rw [← hc]
+  simp
+
+/-- derive `-(c * a) => (-c) * a` if `c` is a literal -/
+macro "term_derivation_neg_product" : tactic => `(tactic| exact term_derivation_neg_product (by norm_num))
 
 macro "term_derivation_neg_eq" : tactic => `(tactic| simp)
 
