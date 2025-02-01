@@ -16,6 +16,7 @@ use visored_mir_expr::{
     expr::{VdMirExprEntry, VdMirExprIdx},
     hypothesis::VdMirHypothesisIdx,
 };
+use visored_mir_opr::separator::chaining::VdMirBaseComparisonSeparator;
 
 impl<'a, S> VdLeanTranspilationBuilder<'a, S>
 where
@@ -27,7 +28,9 @@ where
     ) -> LnMirExprIdx {
         let variant_name: &'static str = construction.into();
         let arguments: Option<LnMirExprIdxRange> = match *construction {
-            VdMirLitnumBoundDerivationConstruction::Normalize => todo!(),
+            VdMirLitnumBoundDerivationConstruction::Normalize { separator } => {
+                Some([A(separator.unicode())].to_lean(self))
+            }
             VdMirLitnumBoundDerivationConstruction::Finish {
                 src_nf_dn: src_nf,
                 dst_nf_dn: dst_nf,

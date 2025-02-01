@@ -18,6 +18,7 @@ use crate::tactic::LnMirTacticIdxRange;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum LnMirExprData {
+    Arbitrary(String),
     Literal(LnLiteral),
     ItemPath(LnItemPath),
     Variable {
@@ -65,6 +66,7 @@ impl LnMirExprEntry {
 impl LnMirExprData {
     pub(crate) fn outer_precedence(&self) -> LnPrecedence {
         match self {
+            LnMirExprData::Arbitrary(_) => LnPrecedence::ATOM,
             LnMirExprData::ItemPath(_) | LnMirExprData::Variable { .. } | LnMirExprData::Sorry => {
                 LnPrecedence::ATOM
             }
@@ -78,6 +80,7 @@ impl LnMirExprData {
                     }
                 }
                 LnLiteralData::Frac(_) => LnPrecedence::MUL_DIV,
+                LnLiteralData::String(_) => LnPrecedence::ATOM,
             },
             LnMirExprData::Lambda { parameters, body } => todo!(),
             LnMirExprData::Application {
@@ -91,6 +94,7 @@ impl LnMirExprData {
 
     pub(crate) fn children(&self) -> Vec<LnMirExprIdx> {
         match *self {
+            LnMirExprData::Arbitrary(_) => vec![],
             LnMirExprData::ItemPath(_)
             | LnMirExprData::Literal(_)
             | LnMirExprData::Sorry

@@ -110,6 +110,9 @@ impl<'a> LnMirExprFormatter<'a> {
         let subexpr_try_multiline = multiline;
         let arena = self.expr_arena;
         match *arena[expr].data() {
+            LnMirExprData::Arbitrary(ref s) => {
+                self.result += s;
+            }
             LnMirExprData::ItemPath(item_path) => {
                 self.result += &item_path.show(db);
             }
@@ -191,6 +194,7 @@ impl<'a> LnMirExprFormatter<'a> {
                     LnLiteralData::Nat(s) => s,
                     LnLiteralData::Int(s) => s,
                     LnLiteralData::Frac(s) => s,
+                    LnLiteralData::String(s) => s,
                 }
             }
             LnMirExprData::Sorry => self.write_word("sorry"),

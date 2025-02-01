@@ -31,17 +31,15 @@ where
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
             let prop = self.hc.arena()[dst].prop().transcribe(None, self, hc);
             let src = bound.src();
-            let (src_nf, src_nf_dn) = litnum_bound_nf(
-                src.litnum_factor(),
-                src.litnum_summand(),
-                src.hypothesis(),
-                self,
-                hc,
-            );
-            let (dst_nf, dst_nf_dn) =
-                litnum_bound_nf(bound.litnum_factor(), bound.litnum_summand(), dst, self, hc);
-            let src_nf_and_dst_nf_equivalence_dn =
-                self.transcribe_non_trivial_expr_equivalence_term_derivation(src_nf, dst_nf, hc);
+            let (src_nf, src_nf_dn) =
+                normalize_litnum_bound(src.litnum_factor(), src.hypothesis(), self, hc);
+            let (dst_nf, dst_nf_dn) = normalize_litnum_bound(bound.litnum_factor(), dst, self, hc);
+            let src_nf_and_dst_nf_equivalence_dn = self
+                .transcribe_non_trivial_expr_equivalence_term_derivation(
+                    self.mk_sub(src_nf, self.mk_litnum(src.litnum_summand()), hc),
+                    self.mk_sub(dst_nf, self.mk_litnum(bound.litnum_summand()), hc),
+                    hc,
+                );
             hc.alloc_derivation(
                 prop,
                 VdMirLitnumBoundDerivationConstruction::Finish {
@@ -55,9 +53,8 @@ where
     }
 }
 
-fn litnum_bound_nf<'db, 'sess>(
+fn normalize_litnum_bound<'db, 'sess>(
     litnum_factor: VdBsqLitnumTerm<'sess>,
-    litnum_summand: VdBsqLitnumTerm<'sess>,
     hypothesis: VdBsqHypothesisIdx<'sess>,
     elr: &VdBsqElaboratorInner<'db, 'sess>,
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
@@ -67,8 +64,6 @@ fn litnum_bound_nf<'db, 'sess>(
     let (lhs, signature, rhs) = prop.split_trivial_chaining_separated_list(elr, hc);
     let expr = elr.mk_sub(lhs, rhs, hc);
     let expr = elr.mk_div(expr, litnum_factor, hc);
-    let litnum_summand = elr.mk_litnum(litnum_summand);
-    let expr = elr.mk_sub(expr, litnum_summand, hc);
     let VdBaseChainingSeparatorSignature::Relation(VdBaseRelationSeparatorSignature::Comparison(
         signature,
     )) = signature
@@ -93,7 +88,11 @@ fn litnum_bound_nf<'db, 'sess>(
             ),
     };
     let dn_prop = elr.mk_iff(prop, prop_nf, hc).transcribe(None, elr, hc);
-    let dn = hc
-        .alloc_litnum_bound_derivation(dn_prop, VdMirLitnumBoundDerivationConstruction::Normalize);
+    let dn = hc.alloc_litnum_bound_derivation(
+        dn_prop,
+        VdMirLitnumBoundDerivationConstruction::Normalize {
+            separator: signature.separator(),
+        },
+    );
     (expr, dn)
 }

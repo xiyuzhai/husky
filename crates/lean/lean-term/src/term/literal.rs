@@ -18,11 +18,19 @@ pub enum LnLiteralData {
     Int(String),
     /// This is not a real literal in lean, but for convenience we put it here
     Frac(String),
+    String(String),
 }
 
 impl LnLiteral {
     pub fn new(data: LnLiteralData, db: &EternerDb) -> Self {
         Self(LnTermId::new(data.into(), db))
+    }
+
+    pub fn new_string(string: String, db: &EternerDb) -> Self {
+        Self(LnTermId::new(
+            LnTermData::Literal(LnLiteralData::String(string)),
+            db,
+        ))
     }
 
     pub(crate) fn show(&self, db: &EternerDb) -> String {
@@ -45,6 +53,7 @@ impl LnLiteralData {
             LnLiteralData::Nat(s) => s,
             LnLiteralData::Int(s) => s,
             LnLiteralData::Frac(s) => s,
+            LnLiteralData::String(s) => s,
         }
     }
 }

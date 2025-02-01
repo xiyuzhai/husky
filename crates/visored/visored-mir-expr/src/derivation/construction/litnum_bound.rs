@@ -8,8 +8,11 @@ use crate::{
 use coercion::{VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
 use hypothesis::VdMirHypothesisIdx;
 use term::VdMirTermDerivationIdx;
-use visored_mir_opr::separator::chaining::{
-    VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
+use visored_mir_opr::separator::{
+    chaining::{
+        VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
+    },
+    VdMirBaseSeparator,
 };
 use visored_signature::signature::separator::base::{
     chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
@@ -23,7 +26,9 @@ pub enum VdMirLitnumBoundDerivationConstruction {
         dst_nf_dn: VdMirLitnumBoundDerivationIdx,
         src_nf_and_dst_nf_equivalence_dn: VdMirTermDerivationIdx,
     },
-    Normalize,
+    Normalize {
+        separator: VdMirBaseComparisonSeparator,
+    },
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
@@ -55,7 +60,9 @@ impl VdMirLitnumBoundDerivationConstruction {
         hc: &mut VdMirHypothesisConstructor<'db, Src>,
     ) {
         match *self {
-            VdMirLitnumBoundDerivationConstruction::Normalize => check_normalize(prop, hc),
+            VdMirLitnumBoundDerivationConstruction::Normalize { separator } => {
+                check_normalize(prop, separator, hc)
+            }
             VdMirLitnumBoundDerivationConstruction::Finish {
                 src_nf_dn: src_nf,
                 dst_nf_dn: dst_nf,
@@ -65,7 +72,11 @@ impl VdMirLitnumBoundDerivationConstruction {
     }
 }
 
-fn check_normalize<'db, Src>(prop: VdMirExprIdx, hc: &mut VdMirHypothesisConstructor<'db, Src>) {
+fn check_normalize<'db, Src>(
+    prop: VdMirExprIdx,
+    separator: VdMirBaseComparisonSeparator,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
     // todo!()
 }
 

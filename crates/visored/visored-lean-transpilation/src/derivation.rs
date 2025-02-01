@@ -6,6 +6,7 @@ use lean_mir_expr::{
     expr::{LnMirExprData, LnMirExprEntry},
     tactic::{LnMirTacticData, LnMirTacticIdxRange},
 };
+use lean_term::term::literal::LnLiteral;
 use visored_mir_expr::{
     coercion::VdMirCoercion,
     derivation::{
@@ -19,7 +20,9 @@ use visored_mir_expr::{
     expr::VdMirExprIdx,
     hypothesis::{VdMirHypothesisEntry, VdMirHypothesisIdx},
 };
-use Argument::{Coercion as C, Derivation as D, Expr as E, Hypothesis as H};
+use Argument::{
+    Arbitrary as A, Coercion as C, Derivation as D, Expr as E, Hypothesis as H, String as S,
+};
 
 impl<'a, S> VdLeanTranspilationBuilder<'a, S>
 where
@@ -78,23 +81,30 @@ where
 }
 
 #[derive(Copy, Clone)]
-enum Argument {
+enum Argument<'a> {
+    Arbitrary(&'a str),
     Coercion(VdMirCoercion),
     Derivation(VdMirDerivationIdx),
     Expr(VdMirExprIdx),
     Hypothesis(VdMirHypothesisIdx),
+    String(&'a str),
 }
 
-impl<S> VdTranspileToLean<S, LnMirExprEntry> for Argument
+impl<'a, S> VdTranspileToLean<S, LnMirExprEntry> for Argument<'a>
 where
     S: IsVdLeanTranspilationScheme,
 {
     fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
         match self {
+            A(s) => LnMirExprEntry::new(LnMirExprData::Arbitrary(s.to_string())),
             C(coercion) => coercion.to_lean(builder),
             D(derivation) => derivation.to_lean(builder),
             E(expr) => expr.to_lean(builder),
             H(hypothesis) => hypothesis.to_lean(builder),
+            S(string) => LnMirExprEntry::new(LnMirExprData::Literal(LnLiteral::new_string(
+                format!("{:?}", string),
+                builder.db(),
+            ))),
         }
     }
 }
