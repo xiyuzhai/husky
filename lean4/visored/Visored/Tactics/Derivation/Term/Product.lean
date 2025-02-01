@@ -3,7 +3,16 @@ import Mathlib
 macro "term_derivation_power_one": tactic => `(tactic| simp)
 macro "term_derivation_one_mul": tactic => `(tactic| simp)
 macro "term_derivation_mul_one": tactic => `(tactic| simp)
-macro "term_derivation_div_literal": tactic => `(tactic| simp)
+
+theorem term_derivation_div_literal {α} {a b b_inv term : α} [Field α]
+  (h: a * b_inv = term)
+  (hb: b⁻¹ = b_inv) : a / b = term := by
+  rw [← h]
+  rw [← hb]
+  ring
+
+/-- derive `a / b => term` from `a * b⁻¹ => term` if `b` is a literal -/
+macro "term_derivation_div_literal" h:term:1024 : tactic => `(tactic| exact term_derivation_div_literal $h (by norm_num))
 
 theorem term_derivation_mul_eq {α β γ} {a term_a : α} {b term_b:β} {a1 b1 term_a1 term_b1 term: γ}
   [Field γ]

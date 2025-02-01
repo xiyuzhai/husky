@@ -173,7 +173,9 @@ where
                 ]
                 .to_lean(self),
             ),
-            VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => None,
+            VdMirTermDerivationConstruction::DivLiteral { a_mul_b_inv_dn } => {
+                Some([a_mul_b_inv_dn].to_lean(self))
+            }
             VdMirTermDerivationConstruction::LiteralMulSum {
                 p_derivation,
                 a_mul_b_derivation,
