@@ -69,10 +69,10 @@ where
 
 impl VdMirOprCoercion<VdMirBaseSeparator> {
     pub fn new_eq(source_ty: VdType, target_ty: VdType) -> Self {
-        Self {
-            opr: VdMirBaseSeparator::EQ,
-            source_ty,
-            target_ty,
-        }
+        Self::new(VdMirBaseSeparator::EQ, source_ty, target_ty)
+    }
+
+    pub fn new_comm_ring_mul(source_ty: VdType, target_ty: VdType) -> Self {
+        Self::new(VdMirBaseSeparator::COMM_RING_MUL, source_ty, target_ty)
     }
 }

@@ -120,9 +120,21 @@ where
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => None,
             VdMirTermDerivationConstruction::MulProduct {
                 rsignature,
-                merge_rlopd_nf,
-                merge_rropd_nf,
-            } => Some([D(merge_rlopd_nf), D(merge_rropd_nf)].to_lean(self)),
+                ab_nf,
+                ab_term_mul_c_nf,
+                ab_eq_coercion,
+                ab_mul_coercion,
+                bc_mul_coercion,
+            } => Some(
+                [
+                    D(ab_nf),
+                    D(ab_term_mul_c_nf),
+                    C(ab_eq_coercion.into()),
+                    C(ab_mul_coercion.into()),
+                    C(bc_mul_coercion.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => None,
             VdMirTermDerivationConstruction::PowerOne { base } => None,
             VdMirTermDerivationConstruction::AtomAddProduct { comparison } => None,

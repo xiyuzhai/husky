@@ -95,25 +95,28 @@ theorem add_real_to_complex_coercion {a b : ℝ} : (a + b : ℂ) = (a : ℂ) + (
 
 -- Multiplication coercions
 
-theorem mul_nat_to_int_coercion {a b : ℕ} : (a * b : ℤ) = (a : ℤ) * (b : ℤ) := by ring
+theorem comm_ring_mul_identity_coercion {α} {a b : α} [CommRing α] : a * b = a * b := by
+  rfl
 
-theorem mul_nat_to_rat_coercion {a b : ℕ} : (a * b : ℚ) = (a : ℚ) * (b : ℚ) := by ring
+theorem comm_ring_mul_nat_to_int_coercion {a b : ℕ} : ((a * b: ℕ) : ℤ) = (a : ℤ) * (b : ℤ) := by simp
 
-theorem mul_nat_to_real_coercion {a b : ℕ} : (a * b : ℝ) = (a : ℝ) * (b : ℝ) := by ring
+theorem comm_ring_mul_nat_to_rat_coercion {a b : ℕ} : ((a * b : ℕ) : ℚ) = (a : ℚ) * (b : ℚ) := by simp
 
-theorem mul_nat_to_complex_coercion {a b : ℕ} : (a * b : ℂ) = (a : ℂ) * (b : ℂ) := by ring
+theorem comm_ring_mul_nat_to_real_coercion {a b : ℕ} : ((a * b : ℕ) : ℝ) = (a : ℝ) * (b : ℝ) := by simp
 
-theorem mul_int_to_rat_coercion {a b : ℤ} : (a * b : ℚ) = (a : ℚ) * (b : ℚ) := by ring
+theorem comm_ring_mul_nat_to_complex_coercion {a b : ℕ} : ((a * b : ℕ) : ℂ) = (a : ℂ) * (b : ℂ) := by simp
 
-theorem mul_int_to_real_coercion {a b : ℤ} : (a * b : ℝ) = (a : ℝ) * (b : ℝ) := by ring
+theorem comm_ring_mul_int_to_rat_coercion {a b : ℤ} : ((a * b : ℤ) : ℚ) = (a : ℚ) * (b : ℚ) := by simp
 
-theorem mul_int_to_complex_coercion {a b : ℤ} : (a * b : ℂ) = (a : ℂ) * (b : ℂ) := by ring
+theorem comm_ring_mul_int_to_real_coercion {a b : ℤ} : ((a * b : ℤ) : ℝ) = (a : ℝ) * (b : ℝ) := by simp
 
-theorem mul_rat_to_real_coercion {a b : ℚ} : (a * b : ℝ) = (a : ℝ) * (b : ℝ) := by ring
+theorem comm_ring_mul_int_to_complex_coercion {a b : ℤ} : ((a * b : ℤ) : ℂ) = (a : ℂ) * (b : ℂ) := by simp
 
-theorem mul_rat_to_complex_coercion {a b : ℚ} : (a * b : ℂ) = (a : ℂ) * (b : ℂ) := by ring
+theorem comm_ring_mul_rat_to_real_coercion {a b : ℚ} : ((a * b : ℚ) : ℝ) = (a : ℝ) * (b : ℝ) := by simp
 
-theorem mul_real_to_complex_coercion {a b : ℝ} : (a * b : ℂ) = (a : ℂ) * (b : ℂ) := by ring
+theorem comm_ring_mul_rat_to_complex_coercion {a b : ℚ} : ((a * b : ℚ) : ℂ) = (a : ℂ) * (b : ℂ) := by simp
+
+theorem comm_ring_mul_real_to_complex_coercion {a b : ℝ} : ((a * b : ℝ) : ℂ) = (a : ℂ) * (b : ℂ) := by simp
 
 -- Commutative field coercions
 

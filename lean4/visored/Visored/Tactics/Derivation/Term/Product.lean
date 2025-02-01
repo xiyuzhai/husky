@@ -55,17 +55,35 @@ macro "term_derivation_neg_product" : tactic => `(tactic| simp)
 
 macro "term_derivation_neg_eq" : tactic => `(tactic| simp)
 
-theorem term_derivation_mul_product {α} {a b c ab_term term: α} [CommRing α]
-  (hab: a * b = ab_term)
-  (hc: ab_term * c = term)
-  : a * (b * c) = term := by
-  have h: a * b * c = term := by
-    rw [hab]
-    rw [hc]
-  have h2: a * (b * c) = a * b * c := by
-    ring
-  rw [h2]
-  exact h
+theorem term_derivation_mul_product
+  {αβ αβγ}
+  {a_αβ b_αβ ab_term: αβ}
+  {a_αβγ b_αβγ ab_term_αβγ c_αβγ abc_term bc_αβγ a_αβ_mul_b_αβ_αβγ : αβγ}
+  [CommRing αβ]
+  [CommRing αβγ]
+  (hab: a_αβ * b_αβ = ab_term)
+  (habc: ab_term_αβγ * c_αβγ = abc_term)
+  (hab_eq_coercion: a_αβ * b_αβ = ab_term -> a_αβ_mul_b_αβ_αβγ = ab_term_αβγ)
+  (hab_mul_coercion: a_αβ_mul_b_αβ_αβγ = a_αβγ * b_αβγ)
+  (hbc_mul_coercion: bc_αβγ = b_αβγ * c_αβγ)
+  : a_αβγ * bc_αβγ = abc_term := by
+  rw [hbc_mul_coercion]
+  have h: a_αβγ * b_αβγ * c_αβγ = a_αβγ * (b_αβγ * c_αβγ) := by ring
+  rw [← h]
+  have hab_coercion: a_αβ * b_αβ = ab_term -> a_αβγ * b_αβγ = ab_term_αβγ := by
+    intro h
+    have h: a_αβ_mul_b_αβ_αβγ = ab_term_αβγ := hab_eq_coercion h
+    rw [← hab_mul_coercion]
+    exact h
+  rw [hab_coercion hab]
+  exact habc
 
 /-- derive `a * (b * c) => term` from `a * b => ab_term` and `ab_term * c => term` -/
-macro "term_derivation_mul_product" hab:term:1024 hc:term:1024 : tactic => `(tactic| exact term_derivation_mul_product $hab $hc)
+macro "term_derivation_mul_product"
+  hab:term:1024
+  habc:term:1024
+  hab_eq_coercion:term:1024
+  hab_mul_coercion:term:1024
+  hbc_mul_coercion:term:1024
+  : tactic =>
+  `(tactic| exact term_derivation_mul_product $hab $habc $hab_eq_coercion $hab_mul_coercion $hbc_mul_coercion)

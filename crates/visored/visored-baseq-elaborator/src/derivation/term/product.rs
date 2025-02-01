@@ -118,14 +118,25 @@ fn derive_product_construction<'db, 'sess>(
         VdBsqExprData::FoldingSeparatedList { ref followers, .. }
             if followers[0].0.separator() == VdMirBaseFoldingSeparator::COMM_RING_MUL =>
         {
-            let (rlopd, rsignature, rropd) = ropd.split_mul(elr, hc);
-            let merge_rlopd_nf = derive_product_aux(lopd, rlopd, elr, hc);
-            let merge_rropd_nf = derive_product_aux(merge_rlopd_nf.derived(), rropd, elr, hc);
+            let (b, rsignature, c) = ropd.split_mul(elr, hc);
+            let ab_dn = derive_product_aux(lopd, b, elr, hc);
+            let ab_term_mul_c_dn = derive_product_aux(ab_dn.derived(), c, elr, hc);
+            let ab_eq_coercion =
+                VdMirSeparatorCoercion::new_eq(ab_dn.expr().ty(), ab_term_mul_c_dn.expr().ty());
+            let ab_mul_coercion = VdMirSeparatorCoercion::new_comm_ring_mul(
+                ab_dn.expr().ty(),
+                ab_term_mul_c_dn.expr().ty(),
+            );
+            let bc_mul_coercion =
+                VdMirSeparatorCoercion::new_comm_ring_mul(ropd.ty(), ab_term_mul_c_dn.expr().ty());
             (
                 VdMirTermDerivationConstruction::MulProduct {
                     rsignature,
-                    merge_rlopd_nf: merge_rlopd_nf.derivation(),
-                    merge_rropd_nf: merge_rropd_nf.derivation(),
+                    ab_nf: ab_dn.derivation(),
+                    ab_term_mul_c_nf: ab_term_mul_c_dn.derivation(),
+                    ab_eq_coercion,
+                    ab_mul_coercion,
+                    bc_mul_coercion,
                 },
                 None,
             )

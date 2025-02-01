@@ -115,8 +115,11 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a * (b * c) => term` from `a * b => ab_term` and `ab_term * c => term`
     MulProduct {
         rsignature: VdBaseFoldingSeparatorSignature,
-        merge_rlopd_nf: VdMirTermDerivationIdx,
-        merge_rropd_nf: VdMirTermDerivationIdx,
+        ab_nf: VdMirTermDerivationIdx,
+        ab_term_mul_c_nf: VdMirTermDerivationIdx,
+        ab_eq_coercion: VdMirSeparatorCoercion,
+        ab_mul_coercion: VdMirSeparatorCoercion,
+        bc_mul_coercion: VdMirSeparatorCoercion,
     },
     NonReducedPower {
         base: VdMirTermDerivationIdx,
@@ -322,9 +325,12 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::MulProduct {
                 rsignature,
-                merge_rlopd_nf,
-                merge_rropd_nf,
-            } => check_mul_assoc(prop, rsignature, merge_rlopd_nf, merge_rropd_nf, hc),
+                ab_nf,
+                ab_term_mul_c_nf,
+                ab_eq_coercion,
+                ab_mul_coercion,
+                bc_mul_coercion,
+            } => check_mul_assoc(prop, rsignature, ab_nf, ab_term_mul_c_nf, hc),
             VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => {
                 check_non_reduced_power(prop, base, exponent, hc)
             }
