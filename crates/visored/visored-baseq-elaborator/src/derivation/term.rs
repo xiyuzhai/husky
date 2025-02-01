@@ -64,12 +64,14 @@ where
         )
     }
 
+    #[track_caller]
     pub fn transcribe_non_trivial_expr_equivalence_term_derivation(
         &mut self,
         src: VdBsqExpr<'sess>,
         dst: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationIdx {
+        assert_eq!(src.term(), dst.term());
         let src_nf = self.transcribe_expr_term_derivation(src, hc);
         let dst_nf = self.transcribe_expr_term_derivation(dst, hc);
         let prop = self.mk_eq(src, dst, hc).transcribe(None, self, hc);

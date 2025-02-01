@@ -24,14 +24,15 @@ where
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
             let prop = self.hc.arena()[dst].prop().transcribe(None, self, hc);
             let src = bound.src();
-            let src_nf = nf(
+            let src_nf = litnum_bound_nf(
                 src.litnum_factor(),
                 src.litnum_summand(),
                 src.hypothesis(),
                 self,
                 hc,
             );
-            let dst_nf = nf(bound.litnum_factor(), bound.litnum_summand(), dst, self, hc);
+            let dst_nf =
+                litnum_bound_nf(bound.litnum_factor(), bound.litnum_summand(), dst, self, hc);
             let src_nf_and_dst_nf_equivalence =
                 self.transcribe_non_trivial_expr_equivalence_term_derivation(src_nf, dst_nf, hc);
             hc.alloc_derivation(
@@ -45,7 +46,7 @@ where
     }
 }
 
-fn nf<'db, 'sess>(
+fn litnum_bound_nf<'db, 'sess>(
     litnum_factor: VdBsqLitnumTerm<'sess>,
     litnum_summand: VdBsqLitnumTerm<'sess>,
     hypothesis: VdBsqHypothesisIdx<'sess>,

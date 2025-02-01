@@ -93,17 +93,6 @@ impl<'sess> VdBsqLitnumBoundSrc<'sess> {
 }
 
 impl<'sess> VdBsqLitnumBound<'sess> {
-    pub fn merge(&mut self, other: VdBsqLitnumBound<'sess>, db: &'sess FloaterDb) {
-        assert!(self.opr == other.opr);
-        self.bound_litnum = self.bound_litnum.add(other.bound_litnum, db);
-        self.boundary_kind = match (self.boundary_kind, other.boundary_kind) {
-            (VdBsqBoundBoundaryKind::Open, VdBsqBoundBoundaryKind::Open) => {
-                VdBsqBoundBoundaryKind::Open
-            }
-            _ => VdBsqBoundBoundaryKind::Closed,
-        };
-    }
-
     pub fn finalize(self, rhs: VdBsqLitnumTerm<'sess>, db: &'sess FloaterDb) -> bool {
         // range A contains range B means if x is in B, then x is in A
         if self.opr.boundary_kind().contains(self.boundary_kind) {

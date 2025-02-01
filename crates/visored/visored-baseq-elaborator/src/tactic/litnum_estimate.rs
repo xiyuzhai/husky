@@ -7,7 +7,7 @@ use crate::{
 use alt_option::*;
 use foundations::opr::separator::relation::comparison::VdBsqBoundOpr;
 use husky_control_flow_utils::require;
-use term::{litnum::VdBsqLitnumTerm, prop::VdBsqPropTerm, VdBsqTerm};
+use term::{litnum::VdBsqLitnumTerm, num::VdBsqNumTerm, prop::VdBsqPropTerm, VdBsqTerm};
 use visored_baseq_elaborator_macros::unify_elabm;
 use visored_entity_path::{
     path::{
@@ -54,23 +54,27 @@ fn try_all<'db, 'sess>(
     opr: VdBsqBoundOpr,
     rhs: VdBsqLitnumTerm<'sess>,
 ) -> Mhr<'sess> {
-    try_one_shot(elr, prop, leader, opr, rhs)?;
+    try_one_shot(elr, prop, opr)?;
     AltNothing
 }
 
 fn try_one_shot<'db, 'sess>(
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     prop: VdBsqExpr<'sess>,
-    leader: VdBsqExpr<'sess>,
     opr: VdBsqBoundOpr,
-    rhs: VdBsqLitnumTerm<'sess>,
 ) -> Mhr<'sess> {
     let db = elr.floater_db();
-    let VdBsqTerm::Comnum(leader) = leader.term() else {
+    let VdBsqTerm::Prop(VdBsqPropTerm::NumRelation(num_relation_prop)) = prop.term() else {
         todo!()
     };
-    let bound = elr.hc.stack().get_active_litnum_bound(leader, opr, db)?;
-    require!(bound.finalize(rhs, db));
+    let VdBsqNumTerm::Comnum(lhs_sub_rhs) = num_relation_prop.lhs_minus_rhs() else {
+        unreachable!()
+    };
+    let bound = elr
+        .hc
+        .stack()
+        .get_active_litnum_bound(lhs_sub_rhs, opr, db)?;
+    require!(bound.finalize(VdBsqLitnumTerm::ZERO, db));
     let hypothesis = elr
         .hc
         .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound { bound });
