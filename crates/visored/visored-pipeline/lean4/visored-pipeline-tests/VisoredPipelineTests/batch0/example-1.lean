@@ -75,8 +75,8 @@ macro "litnum_bound": tactic =>`(tactic|
   | fail "Could not prove this goal automatically. Afterall, this is an ad hoc implementation."
 )
 
-def h (a b : ℝ) : (a + b) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
-  have h1 : (a + b) ^ (2:ℕ) ≥ ((0:ℕ) : ℝ) := by
+def h (a b : ℝ) : ((a + b) ^ (2:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
+  have h1 : ((a + b) ^ (2:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
     simp
     apply sq_nonneg
   obvious
