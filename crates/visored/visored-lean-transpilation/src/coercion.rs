@@ -6,7 +6,8 @@ use lean_entity_path::{
 };
 use lean_mir_expr::expr::{LnMirExprData, LnMirExprEntry};
 use visored_mir_expr::coercion::{
-    VdMirBinaryOprCoercion, VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion,
+    triangle::VdMirCoercionTriangle, VdMirBinaryOprCoercion, VdMirCoercion, VdMirPrefixOprCoercion,
+    VdMirSeparatorCoercion,
 };
 use visored_term::{menu::VdTypeMenu, ty::VdType};
 
@@ -16,14 +17,29 @@ where
 {
     fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
         let ident = match self {
+            VdMirCoercion::Triangle(slf) => create_triangle_coercion_ident(slf, builder),
             VdMirCoercion::PrefixOpr(slf) => create_prefix_opr_coercion_ident(slf, builder),
             VdMirCoercion::BinaryOpr(slf) => create_binary_opr_coercion_ident(slf, builder),
             VdMirCoercion::Separator(slf) => create_separator_coercion_ident(slf, builder),
+            VdMirCoercion::Pow(vd_mir_pow_coercion) => todo!(),
         };
         LnMirExprEntry::new(LnMirExprData::ItemPath(LnItemPath::Theorem(
             LnTheoremPath::TermDerivation(LnTermDerivationTheoremPath::Custom(ident)),
         )))
     }
+}
+
+fn create_triangle_coercion_ident<S>(
+    signature: VdMirCoercionTriangle,
+    builder: &VdLeanTranspilationBuilder<S>,
+) -> LnIdent
+where
+    S: IsVdLeanTranspilationScheme,
+{
+    let src = ty_code(signature.src, builder.ty_menu());
+    let mid = ty_code(signature.mid, builder.ty_menu());
+    let dst = ty_code(signature.dst, builder.ty_menu());
+    LnIdent::from_owned(format!("{src}_{mid}_{dst}_coercion_triangle"), builder.db())
 }
 
 fn create_prefix_opr_coercion_ident<S>(

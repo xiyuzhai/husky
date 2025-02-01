@@ -16,7 +16,8 @@ use crate::{
     hypothesis::constructor::expr::ds,
 };
 use coercion::{
-    VdMirBinaryOprCoercion, VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion,
+    pow::VdMirPowCoercion, triangle::VdMirCoercionTriangle, VdMirBinaryOprCoercion, VdMirCoercion,
+    VdMirPrefixOprCoercion, VdMirSeparatorCoercion,
 };
 use hypothesis::VdMirHypothesisIdx;
 use visored_mir_opr::separator::chaining::{
@@ -190,6 +191,19 @@ pub enum VdMirTermDerivationConstruction {
         a_mul_b_derivation: VdMirTermDerivationIdx,
         a_mul_c_derivation: VdMirTermDerivationIdx,
         ab_term_plus_ac_term_derivation: VdMirTermDerivationIdx,
+        pow_coercion: VdMirPowCoercion,
+        bc_add_coercion: VdMirSeparatorCoercion,
+        ab_eq_coercion: VdMirSeparatorCoercion,
+        ab_mul_coercion: VdMirSeparatorCoercion,
+        ac_eq_coercion: VdMirSeparatorCoercion,
+        ac_mul_coercion: VdMirSeparatorCoercion,
+        a_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+        a_ac_abc_coercion_triangle: VdMirCoercionTriangle,
+        b_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+        b_bc_abc_coercion_triangle: VdMirCoercionTriangle,
+        c_ac_abc_coercion_triangle: VdMirCoercionTriangle,
+        c_bc_abc_coercion_triangle: VdMirCoercionTriangle,
+        p_coercion: VdMirSeparatorCoercion,
     },
     /// derive `a + b + c => term` from `a + c => ac_term` and `ac_term + b => term`
     SumAddLiteral {
@@ -392,6 +406,19 @@ impl VdMirTermDerivationConstruction {
                 a_mul_b_derivation,
                 a_mul_c_derivation,
                 ab_term_plus_ac_term_derivation,
+                pow_coercion,
+                a_ab_abc_coercion_triangle,
+                a_ac_abc_coercion_triangle,
+                b_ab_abc_coercion_triangle,
+                b_bc_abc_coercion_triangle,
+                c_ac_abc_coercion_triangle,
+                c_bc_abc_coercion_triangle,
+                p_coercion,
+                bc_add_coercion,
+                ab_eq_coercion,
+                ab_mul_coercion,
+                ac_eq_coercion,
+                ac_mul_coercion,
             } => check_literal_mul_sum(
                 prop,
                 p_derivation,

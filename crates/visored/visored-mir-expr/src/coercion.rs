@@ -1,5 +1,10 @@
+pub mod pow;
+pub mod triangle;
+
+use self::pow::VdMirPowCoercion;
 use crate::hypothesis::VdMirHypothesisIdx;
 use crate::*;
+use triangle::VdMirCoercionTriangle;
 use visored_mir_opr::{
     opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
     separator::VdMirBaseSeparator,
@@ -15,6 +20,7 @@ pub enum VdMirCoercionConstruction {
 #[enum_class::from_variants]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VdMirCoercion {
+    Triangle(VdMirCoercionTriangle),
     PrefixOpr(VdMirPrefixOprCoercion),
     /// Examples:
     /// - `(a : T) - (b : T) = (a - b : T)` for `a`, `b` of type `S`
@@ -23,6 +29,7 @@ pub enum VdMirCoercion {
     /// Examples:
     /// - `(a : T) + (b : T) = (a + b : T)` for `a`, `b` of type `S`
     Separator(VdMirSeparatorCoercion),
+    Pow(VdMirPowCoercion),
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
