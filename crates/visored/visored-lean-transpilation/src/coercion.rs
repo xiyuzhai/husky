@@ -15,6 +15,7 @@ impl<S> VdTranspileToLean<S, LnMirExprEntry> for VdMirCoercion
 where
     S: IsVdLeanTranspilationScheme,
 {
+    #[track_caller]
     fn to_lean(self, builder: &mut VdLeanTranspilationBuilder<S>) -> LnMirExprEntry {
         let ident = match self {
             VdMirCoercion::Triangle(slf) => create_triangle_coercion_ident(slf, builder),
@@ -86,6 +87,7 @@ where
     )
 }
 
+#[track_caller]
 fn create_separator_coercion_ident<S>(
     signature: VdMirSeparatorCoercion,
     builder: &VdLeanTranspilationBuilder<S>,
@@ -128,6 +130,7 @@ where
     )
 }
 
+#[track_caller]
 fn ty_code(ty: VdType, ty_menu: &VdTypeMenu) -> &'static str {
     if ty == ty_menu.nat {
         "nat"
@@ -140,6 +143,6 @@ fn ty_code(ty: VdType, ty_menu: &VdTypeMenu) -> &'static str {
     } else if ty == ty_menu.complex {
         "complex"
     } else {
-        todo!()
+        todo!("ty = {:?}", ty)
     }
 }

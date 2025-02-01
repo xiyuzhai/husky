@@ -5,6 +5,7 @@ use self::pow::VdMirPowCoercion;
 use crate::hypothesis::VdMirHypothesisIdx;
 use crate::*;
 use triangle::VdMirCoercionTriangle;
+use visored_entity_path::path::VdItemPath;
 use visored_mir_opr::{
     opr::{binary::VdMirBaseBinaryOpr, prefix::VdMirBasePrefixOpr},
     separator::VdMirBaseSeparator,
@@ -48,7 +49,19 @@ where
     Opr: Copy,
 {
     // TODO: check construction
+    #[track_caller]
     pub fn new(opr: Opr, source_ty: VdType, target_ty: VdType) -> Self {
+        match source_ty.data() {
+            visored_term::term::VdTermData::ItemPath(path) => match path.item_path() {
+                VdItemPath::Prop(vd_prop_path) => todo!(),
+                VdItemPath::Category(vd_category_path) => todo!(),
+                VdItemPath::Set(vd_set_path) => (),
+                VdItemPath::Function(vd_function_path) => todo!(),
+                VdItemPath::Trait(vd_trait_path) => todo!(),
+                VdItemPath::TraitItem(vd_trait_item_path) => todo!(),
+            },
+            _ => todo!(),
+        }
         Self {
             opr,
             source_ty,
@@ -79,6 +92,7 @@ impl VdMirOprCoercion<VdMirBaseSeparator> {
         Self::new(VdMirBaseSeparator::EQ, source_ty, target_ty)
     }
 
+    #[track_caller]
     pub fn new_comm_ring_mul(source_ty: VdType, target_ty: VdType) -> Self {
         Self::new(VdMirBaseSeparator::COMM_RING_MUL, source_ty, target_ty)
     }

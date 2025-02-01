@@ -154,3 +154,35 @@ theorem term_derivation_product_add_product_greater
 derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is greater than the stem of `b`
 -/
 macro "term_derivation_product_add_product_greater" hzero_add_b_add_coercion:term:1024 : tactic => `(tactic| exact term_derivation_product_add_product_greater $hzero_add_b_add_coercion)
+
+theorem term_derivation_simple_product_mul_literal
+  {αγδ}
+  {c_mul_a_αγδ d_αγδ e_mul_a_αγδ c_αγ_αγδ a_αγ_αγδ e_αγδ e_αε_αγδ a_αε_αγδ a_αγδ : αγδ}
+  [CommRing αγδ]
+  (hc_mul_d_eqs_e: c_αγ_αγδ * d_αγδ = e_αγδ)
+  (hc_mul_a_mul_coercion: c_mul_a_αγδ = c_αγ_αγδ * a_αγ_αγδ)
+  (he_mul_a_mul_coercion: e_mul_a_αγδ = e_αε_αγδ * a_αε_αγδ)
+  (ha_αε_αγδ_coercion_triangle : a_αε_αγδ = a_αγδ)
+  (ha_αγ_αγδ_coercion_triangle : a_αγ_αγδ = a_αγδ)
+  (he_αε_αγδ_coercion_triangle : e_αε_αγδ = e_αγδ)
+  : c_mul_a_αγδ * d_αγδ = e_mul_a_αγδ := by
+  rw [hc_mul_a_mul_coercion]
+  have h : c_αγ_αγδ * a_αγ_αγδ * d_αγδ = (c_αγ_αγδ * d_αγδ) * a_αγ_αγδ := by ring
+  rw [h]
+  rw [he_mul_a_mul_coercion]
+  rw [ha_αε_αγδ_coercion_triangle]
+  rw [ha_αγ_αγδ_coercion_triangle]
+  rw [he_αε_αγδ_coercion_triangle]
+  rw [hc_mul_d_eqs_e]
+
+
+/--
+derive `(c * a) * d => e * a` if `c`, `d` and `e` are literals and `e` is equal to `c * d`
+-/
+macro "term_derivation_simple_product_mul_literal"
+  hc_mul_a_mul_coercion:term:1024
+  he_mul_a_mul_coercion:term:1024
+  ha_αε_αγδ_coercion_triangle:term:1024
+  ha_αγ_αγδ_coercion_triangle:term:1024
+  he_αε_αγδ_coercion_triangle:term:1024
+  : tactic => `(tactic| exact term_derivation_simple_product_mul_literal (by norm_num) $hc_mul_a_mul_coercion $he_mul_a_mul_coercion $ha_αε_αγδ_coercion_triangle $ha_αγ_αγδ_coercion_triangle $he_αε_αγδ_coercion_triangle)

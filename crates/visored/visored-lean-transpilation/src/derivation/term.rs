@@ -253,7 +253,22 @@ where
             }
             VdMirTermDerivationConstruction::OneMulPowerOne => None,
             VdMirTermDerivationConstruction::MulOne => None,
-            VdMirTermDerivationConstruction::SimpleProductMulLiteral => None,
+            VdMirTermDerivationConstruction::SimpleProductMulLiteral {
+                c_mul_a_mul_coercion,
+                e_mul_a_mul_coercion: e_mul_a_coercion,
+                a_ae_acd_coercion_triangle,
+                a_ac_acd_coercion_triangle,
+                e_ae_acd_coercion_triangle,
+            } => Some(
+                [
+                    C(c_mul_a_mul_coercion.into()),
+                    C(e_mul_a_coercion.into()),
+                    C(a_ae_acd_coercion_triangle.into()),
+                    C(a_ac_acd_coercion_triangle.into()),
+                    C(e_ae_acd_coercion_triangle.into()),
+                ]
+                .to_lean(self),
+            ),
         };
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name: term_derivation_tactic_name_from_variant_name(variant_name).into(),

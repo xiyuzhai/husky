@@ -141,7 +141,7 @@ impl VdLiteral {
     }
 
     pub fn mul(self, other: Self, db: &EternerDb) -> Self {
-        todo!()
+        Self::new(self.data().mul(other.data()), db)
     }
 }
 

@@ -324,7 +324,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 
     pub(crate) fn mk_literal(&self, literal: VdLiteral) -> VdBsqExpr<'sess> {
-        todo!()
+        self.mk_expr(
+            VdBsqExprData::Literal(literal),
+            literal.ty(self.eterner_db()),
+        )
     }
 
     pub(crate) fn mk_eq(

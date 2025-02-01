@@ -235,7 +235,14 @@ pub enum VdMirTermDerivationConstruction {
     OneMulPowerOne,
     /// derive `a * 1 => a`
     MulOne,
-    SimpleProductMulLiteral,
+    /// derive `(c * a) * d => e * a` if `c`, `d` and `e` are literals and `e` is equal to `c * d`
+    SimpleProductMulLiteral {
+        c_mul_a_mul_coercion: VdMirSeparatorCoercion,
+        e_mul_a_mul_coercion: VdMirSeparatorCoercion,
+        a_ae_acd_coercion_triangle: VdMirCoercionTriangle,
+        a_ac_acd_coercion_triangle: VdMirCoercionTriangle,
+        e_ae_acd_coercion_triangle: VdMirCoercionTriangle,
+    },
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
@@ -471,9 +478,13 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::OneMulPowerOne => check_one_mul_power_one(prop, hc),
             VdMirTermDerivationConstruction::MulOne => check_mul_one(prop, hc),
-            VdMirTermDerivationConstruction::SimpleProductMulLiteral => {
-                check_simple_product_mul_literal(prop, hc)
-            }
+            VdMirTermDerivationConstruction::SimpleProductMulLiteral {
+                c_mul_a_mul_coercion,
+                e_mul_a_mul_coercion: e_mul_a_coercion,
+                a_ae_acd_coercion_triangle,
+                a_ac_acd_coercion_triangle,
+                e_ae_acd_coercion_triangle,
+            } => check_simple_product_mul_literal(prop, hc),
         }
     }
 }

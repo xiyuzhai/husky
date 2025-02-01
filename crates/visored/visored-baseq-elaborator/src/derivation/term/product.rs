@@ -178,10 +178,48 @@ fn derive_mul_literal<'db, 'sess>(
             ref followers,
         } if followers[0].0.separator() == VdMirBaseFoldingSeparator::CommRingMul => {
             match is_product_simple(leader, followers) {
-                true => (
-                    VdMirTermDerivationConstruction::SimpleProductMulLiteral,
-                    None,
-                ),
+                true => {
+                    let c = leader;
+                    let a = followers[0].1;
+                    let ac_ty = followers[0].0.expr_ty();
+                    let d = ropd;
+                    let a_ty = a.ty();
+                    let c_ty = c.ty();
+                    let d_ty = d.ty();
+                    let e = {
+                        let VdBsqExprData::Literal(c) = *c.data() else {
+                            unreachable!()
+                        };
+                        let VdBsqExprData::Literal(d) = *d.data() else {
+                            unreachable!()
+                        };
+                        let e = c.mul(d, elr.eterner_db());
+                        elr.mk_literal(e)
+                    };
+                    let e_ty = e.ty();
+                    let acd_ty = hc.infer_mul_signature(ac_ty, d_ty).expr_ty();
+                    let ae_ty = hc.infer_mul_signature(a_ty, e_ty).expr_ty();
+                    (
+                        VdMirTermDerivationConstruction::SimpleProductMulLiteral {
+                            c_mul_a_mul_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(
+                                ac_ty, acd_ty,
+                            ),
+                            e_mul_a_mul_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(
+                                ae_ty, acd_ty,
+                            ),
+                            a_ae_acd_coercion_triangle: VdMirCoercionTriangle::new(
+                                a_ty, ae_ty, acd_ty,
+                            ),
+                            a_ac_acd_coercion_triangle: VdMirCoercionTriangle::new(
+                                a_ty, ac_ty, acd_ty,
+                            ),
+                            e_ae_acd_coercion_triangle: VdMirCoercionTriangle::new(
+                                e_ty, ae_ty, acd_ty,
+                            ),
+                        },
+                        None,
+                    )
+                }
                 false => todo!(),
             }
         }
