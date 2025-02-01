@@ -145,7 +145,9 @@ where
             VdMirTermDerivationConstruction::SumAddProductEqualKeep => None,
             VdMirTermDerivationConstruction::SumAddProductEqualCancel => None,
             VdMirTermDerivationConstruction::SumAddProductGreater { .. } => None,
-            VdMirTermDerivationConstruction::ProductAddProductLess => None,
+            VdMirTermDerivationConstruction::ProductAddProductLess {
+                zero_add_a_add_coercion,
+            } => Some([C(zero_add_a_add_coercion.into())].to_lean(self)),
             VdMirTermDerivationConstruction::ProductAddProductEqualKeep => None,
             VdMirTermDerivationConstruction::ProductAddProductEqualCancel => None,
             VdMirTermDerivationConstruction::ProductAddProductGreater => None,

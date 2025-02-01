@@ -155,7 +155,9 @@ pub enum VdMirTermDerivationConstruction {
         add_product_nf: VdMirTermDerivationIdx,
     },
     /// derive `a + b => 0 + a + b` if `a` and `b` are products and the stem of `a` is less than the stem of `b`
-    ProductAddProductLess,
+    ProductAddProductLess {
+        zero_add_a_add_coercion: VdMirSeparatorCoercion,
+    },
     ProductAddProductEqualKeep,
     ProductAddProductEqualCancel,
     /// derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is greater than the stem of `b`
@@ -369,9 +371,9 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::SumAddProductEqualKeep => todo!(),
             VdMirTermDerivationConstruction::SumAddProductEqualCancel => todo!(),
-            VdMirTermDerivationConstruction::ProductAddProductLess => {
-                check_product_add_product_less(prop, hc)
-            }
+            VdMirTermDerivationConstruction::ProductAddProductLess {
+                zero_add_a_add_coercion,
+            } => check_product_add_product_less(prop, hc),
             VdMirTermDerivationConstruction::ProductAddProductEqualKeep => todo!(),
             VdMirTermDerivationConstruction::ProductAddProductEqualCancel => todo!(),
             VdMirTermDerivationConstruction::ProductAddProductGreater => {

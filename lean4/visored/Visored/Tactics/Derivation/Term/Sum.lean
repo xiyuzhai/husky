@@ -126,3 +126,17 @@ theorem term_derivation_non_one_literal_mul_atom {α} {a c: α} [CommRing α] : 
   ring
 
 macro "term_derivation_non_one_literal_mul_atom": tactic => `(tactic| exact term_derivation_non_one_literal_mul_atom)
+
+theorem term_derivation_product_add_product_less
+  {αβ}
+  {a_αβ b_αβ zero_add_a_αβ : αβ}
+  [CommRing αβ]
+  (hzero_add_a_add_coercion: zero_add_a_αβ = ((0:ℕ):αβ) + a_αβ)
+  : a_αβ + b_αβ = zero_add_a_αβ + b_αβ := by
+  rw [hzero_add_a_add_coercion]
+  ring
+
+/--
+derive `a + b => 0 + a + b` if `a` and `b` are products and the stem of `a` is less than the stem of `b`
+-/
+macro "term_derivation_product_add_product_less" hzero_add_a_add_coercion:term:1024 : tactic => `(tactic| exact term_derivation_product_add_product_less $hzero_add_a_add_coercion)

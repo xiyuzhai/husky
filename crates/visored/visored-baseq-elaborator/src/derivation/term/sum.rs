@@ -264,7 +264,8 @@ fn merge_product_construction<'db, 'sess>(
             arguments,
         } => todo!(),
         VdBsqExprData::FoldingSeparatedList { leader, followers } => {
-            match followers[0].0.separator() {
+            let fst_signature = &followers[0].0;
+            match fst_signature.separator() {
                 VdMirBaseFoldingSeparator::CommRingAdd => {
                     let last_follower = followers.last().unwrap().1;
                     match product_stem(last_follower).cmp(&ropd_stem) {
@@ -290,7 +291,12 @@ fn merge_product_construction<'db, 'sess>(
                     let ropd_stem = product_stem(ropd);
                     match lopd_stem.cmp(&ropd_stem) {
                         std::cmp::Ordering::Less => {
-                            VdMirTermDerivationConstruction::ProductAddProductLess
+                            VdMirTermDerivationConstruction::ProductAddProductLess {
+                                zero_add_a_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(
+                                    lopd.ty(),
+                                    fst_signature.item_ty(),
+                                ),
+                            }
                         }
                         std::cmp::Ordering::Equal => todo!(),
                         std::cmp::Ordering::Greater => {
