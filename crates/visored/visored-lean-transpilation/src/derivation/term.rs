@@ -113,7 +113,10 @@ where
             ),
             VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => None,
             VdMirTermDerivationConstruction::PowerOne { base } => None,
-            VdMirTermDerivationConstruction::AtomAddProduct { comparison } => None,
+            VdMirTermDerivationConstruction::AtomAddProductLess => None,
+            VdMirTermDerivationConstruction::AtomAddProductEqualKeep => None,
+            VdMirTermDerivationConstruction::AtomAddProductEqualCancel => None,
+            VdMirTermDerivationConstruction::AtomAddProductGreater => None,
             VdMirTermDerivationConstruction::ZeroAdd { .. } => None,
             VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {
                 Some([add_product_nf].to_lean(self))

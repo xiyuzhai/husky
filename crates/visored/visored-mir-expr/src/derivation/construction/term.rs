@@ -61,12 +61,13 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a + c => c + 1 * a^1` if `a` is an atom and `c` is a nonzero literal
     AtomAddNonZeroLiteral,
     /// derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem
-    /// or derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
-    /// or derive `a + b => 0 + c * a^1` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
-    /// or derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
-    AtomAddProduct {
-        comparison: core::cmp::Ordering,
-    },
+    AtomAddProductLess,
+    /// derive `a + b => 0 + c * a^1` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
+    AtomAddProductEqualKeep,
+    /// derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
+    AtomAddProductEqualCancel,
+    /// derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
+    AtomAddProductGreater,
     /// derive `a + b * x + c * x => a + (b + c) * x`
     SumAddProductEqualKeep,
     /// derive `a + b * x + c * x => a` if `b + c` is zero
@@ -367,8 +368,17 @@ impl VdMirTermDerivationConstruction {
                 check_non_reduced_power(prop, base, exponent, hc)
             }
             VdMirTermDerivationConstruction::PowerOne { base } => check_power_one(prop, base, hc),
-            VdMirTermDerivationConstruction::AtomAddProduct { comparison } => {
-                check_atom_add_product(prop, comparison, hc)
+            VdMirTermDerivationConstruction::AtomAddProductLess => {
+                check_atom_add_product_less(prop, hc)
+            }
+            VdMirTermDerivationConstruction::AtomAddProductEqualKeep => {
+                check_atom_add_product_equal_keep(prop, hc)
+            }
+            VdMirTermDerivationConstruction::AtomAddProductEqualCancel => {
+                check_atom_add_product_equal_cancel(prop, hc)
+            }
+            VdMirTermDerivationConstruction::AtomAddProductGreater => {
+                check_atom_add_product_greater(prop, hc)
             }
             VdMirTermDerivationConstruction::SumAddProductGreater {
                 a_add_c_nf,

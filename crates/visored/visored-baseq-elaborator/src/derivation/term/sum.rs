@@ -255,8 +255,12 @@ fn merge_product_construction<'db, 'sess>(
                 VdBsqTerm::Prop(lopd) => todo!(),
                 VdBsqTerm::Set(lopd) => todo!(),
             };
-            VdMirTermDerivationConstruction::AtomAddProduct {
-                comparison: lopd_stem.cmp(&ropd_stem),
+            match lopd_stem.cmp(&ropd_stem) {
+                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::AtomAddProductLess,
+                std::cmp::Ordering::Equal => todo!(),
+                std::cmp::Ordering::Greater => {
+                    VdMirTermDerivationConstruction::AtomAddProductGreater
+                }
             }
         }
         VdBsqExprData::Application {

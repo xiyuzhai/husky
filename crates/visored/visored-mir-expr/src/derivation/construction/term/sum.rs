@@ -66,43 +66,67 @@ pub(super) fn check_nf_add_zero<'db, Src>(
 }
 
 /// derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem
-/// or derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
-/// or derive `a + b => 0 + c * a^1` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
-/// or derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
-pub(super) fn check_atom_add_product<'db, Src>(
+pub(super) fn check_atom_add_product_less<'db, Src>(
     prop: VdMirExprIdx,
-    comparison: core::cmp::Ordering,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     ds!(let (expr => term) = prop, hc);
     ds!(let (a + b) = expr, hc);
     ds!(let (d * stem) = b, hc);
     let d = hc.literal(d);
-    match comparison {
-        std::cmp::Ordering::Less => {
-            ds!(let (lopd + b1) = term, hc);
-            ds!(let (zero + lropd) = lopd, hc);
-            assert!(hc.literal(zero).is_zero());
-            ds!(let (one * a_pow_1) = lropd, hc);
-            assert!(hc.literal(one).is_one());
-            ds!(let (a1 ^ one) = a_pow_1, hc);
-            assert!(hc.literal(one).is_one());
-            assert_deep_eq!(a1, a, hc);
-            assert_deep_eq!(b1, b, hc);
-        }
-        std::cmp::Ordering::Equal => todo!(),
-        std::cmp::Ordering::Greater => {
-            ds!(let (zero_add_b + one_mul_a_pow_one) = term, hc);
-            ds!(let (zero + b1) = zero_add_b, hc);
-            assert!(hc.literal(zero).is_zero());
-            ds!(let (one * a_pow_1) = one_mul_a_pow_one, hc);
-            assert!(hc.literal(one).is_one());
-            ds!(let (a1 ^ one) = a_pow_1, hc);
-            assert!(hc.literal(one).is_one());
-            assert_deep_eq!(a1, a, hc);
-            assert_deep_eq!(b1, b, hc);
-        }
-    }
+    ds!(let (lopd + b1) = term, hc);
+    ds!(let (zero + lropd) = lopd, hc);
+    assert!(hc.literal(zero).is_zero());
+    ds!(let (one * a_pow_1) = lropd, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (a1 ^ one) = a_pow_1, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}
+
+/// derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
+pub(super) fn check_atom_add_product_equal_keep<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a + b) = expr, hc);
+    ds!(let (d * stem) = b, hc);
+    let d = hc.literal(d);
+    todo!()
+}
+
+/// or derive `a + b => 0 + c * a^1` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
+pub(super) fn check_atom_add_product_equal_cancel<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a + b) = expr, hc);
+    ds!(let (d * stem) = b, hc);
+    let d = hc.literal(d);
+    todo!()
+}
+
+/// or derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
+pub(super) fn check_atom_add_product_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a + b) = expr, hc);
+    ds!(let (d * stem) = b, hc);
+    let d = hc.literal(d);
+    ds!(let (zero_add_b + one_mul_a_pow_one) = term, hc);
+    ds!(let (zero + b1) = zero_add_b, hc);
+    assert!(hc.literal(zero).is_zero());
+    ds!(let (one * a_pow_1) = one_mul_a_pow_one, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (a1 ^ one) = a_pow_1, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
 }
 
 /// derive `0 + a => term` from `a => term`
