@@ -125,9 +125,8 @@ theorem term_derivation_literal_mul_sum
   {a_αβ b_αβ ab_term : αβ}
   {a_αγ c_αγ ac_term : αγ}
   {a_αβγ a_αβ_αβγ a_αγ_αβγ b_αβγ b_αβ_αβγ b_βγ_αβγ c_αβγ c_αγ_αβγ c_βγ_αβγ b_add_c_αβγ a_αβ_mul_b_αβ_αβγ a_αγ_mul_c_αγ_αβγ term ac_term_αβγ ab_term_αβγ sum_of_b_and_c_pow_one_αβγ : αβγ}
-  [CommRing π]
-  [CommRing αβ]
-  [CommRing αγ]
+  [HMul αβ αβ αβ]
+  [HMul αγ αγ αγ]
   [CommRing αβγ]
   (hp0 : p = term0_π)
   (hab_nf : a_αβ * b_αβ = ab_term)
