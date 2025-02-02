@@ -98,6 +98,16 @@ theorem eq_real_to_complex_coercion {a b : ℝ} : a = b -> (a : ℂ) = (b : ℂ)
   intro h
   rw [h]
 
+-- Greater than coercions
+
+theorem gt_identity_coercion {α} {a b : α} [Preorder α] : a > b ↔ a > b := by
+  rfl
+
+-- Greater than or equal to coercions
+
+theorem ge_identity_coercion {α} {a b : α} [Preorder α] : a ≥ b ↔ a ≥ b := by
+  rfl
+
 -- Negation coercions
 
 theorem neg_identity_coercion {α} {a : α} [Neg α] : (-a) = (-a) := by
@@ -147,6 +157,25 @@ theorem comm_ring_add_rat_to_real_coercion {a b : ℚ} : ((a + b : ℚ) : ℝ) =
 theorem comm_ring_add_rat_to_complex_coercion {a b : ℚ} : ((a + b : ℚ) : ℂ) = (a : ℂ) + (b : ℂ) := by simp
 
 theorem comm_ring_add_real_to_complex_coercion {a b : ℝ} : ((a + b : ℝ) : ℂ) = (a : ℂ) + (b : ℂ) := by simp
+
+-- Subtraction coercions
+
+theorem comm_ring_sub_identity_coercion {α} {a b : α} [CommRing α] : a - b = a - b := by
+  rfl
+
+theorem comm_ring_sub_nat_to_int_coercion {a b : ℕ} : ((a - b : ℤ) : ℤ) = (a : ℤ) - (b : ℤ) := by simp
+
+theorem comm_ring_sub_nat_to_rat_coercion {a b : ℕ} : ((a - b : ℤ) : ℚ) = (a : ℚ) - (b : ℚ) := by simp
+
+theorem comm_ring_sub_nat_to_real_coercion {a b : ℕ} : ((a - b : ℤ) : ℝ) = (a : ℝ) - (b : ℝ) := by simp
+
+theorem comm_ring_sub_nat_to_complex_coercion {a b : ℕ} : ((a - b : ℤ) : ℂ) = (a : ℂ) - (b : ℂ) := by simp
+
+theorem comm_ring_sub_int_to_rat_coercion {a b : ℤ} : ((a - b : ℤ) : ℚ) = (a : ℚ) - (b : ℚ) := by simp
+
+theorem comm_ring_sub_int_to_real_coercion {a b : ℤ} : ((a - b : ℤ) : ℝ) = (a : ℝ) - (b : ℝ) := by simp
+
+theorem comm_ring_sub_int_to_complex_coercion {a b : ℤ} : ((a - b : ℤ) : ℂ) = (a : ℂ) - (b : ℂ) := by simp
 
 -- Multiplication coercions
 

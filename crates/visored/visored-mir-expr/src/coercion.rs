@@ -87,7 +87,7 @@ where
     }
 }
 
-impl VdMirOprCoercion<VdMirBaseSeparator> {
+impl VdMirSeparatorCoercion {
     pub fn new_eq(source_ty: VdType, target_ty: VdType) -> Self {
         Self::new(VdMirBaseSeparator::EQ, source_ty, target_ty)
     }
@@ -99,5 +99,11 @@ impl VdMirOprCoercion<VdMirBaseSeparator> {
 
     pub fn new_comm_ring_add(source_ty: VdType, target_ty: VdType) -> Self {
         Self::new(VdMirBaseSeparator::COMM_RING_ADD, source_ty, target_ty)
+    }
+}
+
+impl VdMirBinaryOprCoercion {
+    pub fn new_sub(source_ty: VdType, target_ty: VdType) -> Self {
+        Self::new(VdMirBaseBinaryOpr::COMM_RING_SUB, source_ty, target_ty)
     }
 }

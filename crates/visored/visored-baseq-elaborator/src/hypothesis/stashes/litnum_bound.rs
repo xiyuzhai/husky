@@ -37,11 +37,11 @@ pub struct VdBsqLitnumBoundScheme;
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct VdBsqLitnumBound<'sess> {
     src: VdBsqLitnumBoundSrc<'sess>,
+    query_opr: VdBsqBoundOpr,
     litnum_factor: VdBsqLitnumTerm<'sess>,
     litnum_summand: VdBsqLitnumTerm<'sess>,
     bound_litnum: VdBsqLitnumTerm<'sess>,
     boundary_kind: VdBsqBoundBoundaryKind,
-    opr: VdBsqBoundOpr,
 }
 
 /// the hypothesis is term equivalent to `litnum_factor * (litnum_summand + normalized_monomials) <relationship> 0`
@@ -73,8 +73,8 @@ impl<'sess> VdBsqLitnumBound<'sess> {
         self.boundary_kind
     }
 
-    pub fn opr(&self) -> VdBsqBoundOpr {
-        self.opr
+    pub fn query_opr(&self) -> VdBsqBoundOpr {
+        self.query_opr
     }
 }
 
@@ -95,16 +95,16 @@ impl<'sess> VdBsqLitnumBoundSrc<'sess> {
 impl<'sess> VdBsqLitnumBound<'sess> {
     pub fn finalize(self, rhs: VdBsqLitnumTerm<'sess>, db: &'sess FloaterDb) -> bool {
         // range A contains range B means if x is in B, then x is in A
-        if self.opr.boundary_kind().contains(self.boundary_kind) {
+        if self.query_opr.boundary_kind().contains(self.boundary_kind) {
             if self.bound_litnum == rhs {
                 return true;
             }
-            match self.opr {
+            match self.query_opr {
                 VdBsqBoundOpr::Lt | VdBsqBoundOpr::Le => self.bound_litnum <= rhs,
                 VdBsqBoundOpr::Gt | VdBsqBoundOpr::Ge => self.bound_litnum >= rhs,
             }
         } else {
-            match self.opr {
+            match self.query_opr {
                 VdBsqBoundOpr::Lt | VdBsqBoundOpr::Le => self.bound_litnum < rhs,
                 VdBsqBoundOpr::Gt | VdBsqBoundOpr::Ge => self.bound_litnum > rhs,
             }

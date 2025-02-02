@@ -79,7 +79,7 @@ impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
                 .add(litnum_summand, db)
                 .mul(litnum_factor, db),
             boundary_kind: self.inner.boundary_kind,
-            opr,
+            query_opr: opr,
         }
     }
 }

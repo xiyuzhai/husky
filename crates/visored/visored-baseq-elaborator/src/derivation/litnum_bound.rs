@@ -2,8 +2,10 @@ use crate::term::litnum::VdBsqLitnumTerm;
 
 use super::*;
 use expr::VdBsqExpr;
+use foundations::opr::separator::relation::comparison::{VdBsqBoundBoundaryKind, VdBsqBoundOpr};
 use hypothesis::stashes::litnum_bound::{VdBsqLitnumBound, VdBsqLitnumBoundSrc};
 use visored_mir_expr::{
+    coercion::{VdMirBinaryOprCoercion, VdMirSeparatorCoercion},
     derivation::{
         chunk::VdMirDerivationChunk,
         construction::litnum_bound::{
@@ -31,23 +33,42 @@ where
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
             let prop = self.hc.arena()[dst].prop().transcribe(None, self, hc);
             let src = bound.src();
+            let a_opr = match bound.boundary_kind() {
+                VdBsqBoundBoundaryKind::Closed => VdMirBaseComparisonSeparator::GE,
+                VdBsqBoundBoundaryKind::Open => VdMirBaseComparisonSeparator::GT,
+            };
+            let b_opr = match bound.query_opr() {
+                VdBsqBoundOpr::Le | VdBsqBoundOpr::Ge => VdMirBaseComparisonSeparator::GE,
+                VdBsqBoundOpr::Lt | VdBsqBoundOpr::Gt => VdMirBaseComparisonSeparator::GT,
+            };
             let (src_nf, src_nf_dn) =
                 normalize_litnum_bound(src.litnum_factor(), src.hypothesis(), self, hc);
             let (dst_nf, dst_nf_dn) = normalize_litnum_bound(bound.litnum_factor(), dst, self, hc);
+            let src_diff = self.mk_sub(src_nf, self.mk_litnum(src.litnum_summand()), hc);
+            let dst_diff = self.mk_sub(dst_nf, self.mk_litnum(bound.litnum_summand()), hc);
             let src_nf_and_dst_nf_equivalence_dn = self
-                .transcribe_non_trivial_expr_equivalence_term_derivation(
-                    self.mk_sub(src_nf, self.mk_litnum(src.litnum_summand()), hc),
-                    self.mk_sub(dst_nf, self.mk_litnum(bound.litnum_summand()), hc),
-                    hc,
-                );
+                .transcribe_non_trivial_expr_equivalence_term_derivation(src_diff, dst_diff, hc);
             let src = src.hypothesis().transcribe(self, None, hc);
+            let a_ty = src_diff.ty();
+            let b_ty = dst_diff.ty();
+            let ab_ty = hc.infer_eq_signature(a_ty, b_ty).left_item_ty();
+            let src_sub_coercion = VdMirBinaryOprCoercion::new_sub(a_ty, ab_ty);
+            let dst_sub_coercion = VdMirBinaryOprCoercion::new_sub(b_ty, ab_ty);
+            let src_cmp_coercion = VdMirSeparatorCoercion::new(a_opr.into(), a_ty, ab_ty);
+            let dst_cmp_coercion = VdMirSeparatorCoercion::new(b_opr.into(), b_ty, ab_ty);
             hc.alloc_derivation(
                 prop,
                 VdMirLitnumBoundDerivationConstruction::Finish {
+                    a_opr,
+                    b_opr,
                     src,
                     src_nf_dn,
                     dst_nf_dn,
                     src_nf_and_dst_nf_equivalence_dn,
+                    src_sub_coercion,
+                    dst_sub_coercion,
+                    src_cmp_coercion,
+                    dst_cmp_coercion,
                 }
                 .into(),
             )

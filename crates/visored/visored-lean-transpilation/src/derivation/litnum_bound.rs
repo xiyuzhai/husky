@@ -32,16 +32,28 @@ where
                 Some([A(separator.unicode())].to_lean(self))
             }
             VdMirLitnumBoundDerivationConstruction::Finish {
+                a_opr,
+                b_opr,
                 src,
                 src_nf_dn,
                 dst_nf_dn,
                 src_nf_and_dst_nf_equivalence_dn,
+                src_sub_coercion,
+                dst_sub_coercion,
+                src_cmp_coercion,
+                dst_cmp_coercion,
             } => Some(
                 [
+                    A(a_opr.unicode()),
+                    A(b_opr.unicode()),
                     H(src),
                     D(*src_nf_dn),
                     D(*dst_nf_dn),
                     D(*src_nf_and_dst_nf_equivalence_dn),
+                    C(src_sub_coercion.into()),
+                    C(dst_sub_coercion.into()),
+                    C(src_cmp_coercion.into()),
+                    C(dst_cmp_coercion.into()),
                 ]
                 .to_lean(self),
             ),

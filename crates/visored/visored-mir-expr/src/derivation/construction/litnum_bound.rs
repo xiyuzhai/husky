@@ -5,7 +5,9 @@ use crate::{
     helpers::compare::{assert_deep_eq, vd_mir_expr_deep_eq},
     hypothesis::constructor::expr::ds,
 };
-use coercion::{VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
+use coercion::{
+    VdMirBinaryOprCoercion, VdMirCoercion, VdMirPrefixOprCoercion, VdMirSeparatorCoercion,
+};
 use hypothesis::VdMirHypothesisIdx;
 use term::VdMirTermDerivationIdx;
 use visored_mir_opr::separator::{
@@ -22,10 +24,16 @@ use visored_term::term::literal::VdLiteral;
 #[derive(Debug, PartialEq, Eq, strum::IntoStaticStr)]
 pub enum VdMirLitnumBoundDerivationConstruction {
     Finish {
+        a_opr: VdMirBaseComparisonSeparator,
+        b_opr: VdMirBaseComparisonSeparator,
         src: VdMirHypothesisIdx,
         src_nf_dn: VdMirLitnumBoundDerivationIdx,
         dst_nf_dn: VdMirLitnumBoundDerivationIdx,
         src_nf_and_dst_nf_equivalence_dn: VdMirTermDerivationIdx,
+        src_sub_coercion: VdMirBinaryOprCoercion,
+        dst_sub_coercion: VdMirBinaryOprCoercion,
+        src_cmp_coercion: VdMirSeparatorCoercion,
+        dst_cmp_coercion: VdMirSeparatorCoercion,
     },
     Normalize {
         separator: VdMirBaseComparisonSeparator,
@@ -65,10 +73,16 @@ impl VdMirLitnumBoundDerivationConstruction {
                 check_normalize(prop, separator, hc)
             }
             VdMirLitnumBoundDerivationConstruction::Finish {
+                a_opr,
+                b_opr,
                 src,
                 src_nf_dn,
                 dst_nf_dn,
                 src_nf_and_dst_nf_equivalence_dn,
+                src_sub_coercion,
+                dst_sub_coercion,
+                src_cmp_coercion,
+                dst_cmp_coercion,
             } => check_finish(
                 prop,
                 src,

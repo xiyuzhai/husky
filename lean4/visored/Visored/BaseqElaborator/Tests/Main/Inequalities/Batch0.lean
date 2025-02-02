@@ -1,5 +1,10 @@
+
 import Mathlib
 import Visored.Tactics
+
+set_option maxHeartbeats 1000000000
+set_option diagnostics true
+set_option diagnostics.threshold 1000000000
 
 namespace Example1
 def h := by
@@ -300,7 +305,7 @@ def h (x : ℝ) (h1 : x > ((1:ℕ) : ℝ)) := by
     have d31 : (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d28 d29 eq_identity_coercion eq_int_to_real_coercion d30
     have d32 : (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d31 neg_nat_to_real_coercion
     have d33 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d19 d32
-    have d34 : x > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d33
+    have d34 : x > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d33 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example38
@@ -347,7 +352,7 @@ def h (x : ℝ) (h1 : x > ((1:ℕ) : ℝ)) := by
     have d36 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-(-1:ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d28 d29 eq_identity_coercion eq_int_to_real_coercion d35
     have d37 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d36 neg_int_to_real_coercion
     have d38 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = (((x - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d19 d37
-    have d39 : x ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d38
+    have d39 : x ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d38 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example39
@@ -389,7 +394,7 @@ def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
     have d31 : (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d28 d29 eq_identity_coercion eq_int_to_real_coercion d30
     have d32 : (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d31 neg_nat_to_real_coercion
     have d33 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d19 d32
-    have d34 : x ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d33
+    have d34 : x ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d33 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example40
@@ -431,7 +436,7 @@ def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
     have d31 : (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d28 d29 eq_identity_coercion eq_int_to_real_coercion d30
     have d32 : (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d31 neg_nat_to_real_coercion
     have d33 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = (((x - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d19 d32
-    have d34 : x > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d33
+    have d34 : x > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d33 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example41
@@ -494,7 +499,7 @@ def h (x : ℝ) (h1 : x < ((1:ℕ) : ℝ)) := by
     have d52 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d51
     have d53 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d52 neg_nat_to_real_coercion
     have d54 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d27 d53
-    have d55 : x ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d54
+    have d55 : x ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d54 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example42
@@ -557,7 +562,7 @@ def h (x : ℝ) (h1 : x < ((1:ℕ) : ℝ)) := by
     have d52 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d51
     have d53 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d52 neg_nat_to_real_coercion
     have d54 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d27 d53
-    have d55 : x < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d54
+    have d55 : x < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d54 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example43
@@ -620,7 +625,7 @@ def h (x : ℝ) (h1 : x < ((1:ℕ) : ℝ)) := by
     have d52 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d51
     have d53 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d52 neg_nat_to_real_coercion
     have d54 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d27 d53
-    have d55 : x ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d54
+    have d55 : x ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d54 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example44
@@ -683,7 +688,7 @@ def h (x : ℝ) (h1 : x ≤ ((1:ℕ) : ℝ)) := by
     have d52 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d51
     have d53 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d52 neg_nat_to_real_coercion
     have d54 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d27 d53
-    have d55 : x < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d54
+    have d55 : x < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d54 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example45
@@ -746,7 +751,7 @@ def h (x : ℝ) (h1 : x ≤ ((1:ℕ) : ℝ)) := by
     have d52 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d51
     have d53 : (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d52 neg_nat_to_real_coercion
     have d54 : (((x - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = (((x - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d27 d53
-    have d55 : x ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d54
+    have d55 : x ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d54 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example46
@@ -796,7 +801,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) > ((1:ℕ) : ℝ)) := by
     have d33 : ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d30 d31 eq_identity_coercion eq_int_to_real_coercion d32
     have d34 : ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d33 neg_nat_to_real_coercion
     have d35 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d21 d34
-    have d36 : (- x : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d35
+    have d36 : (- x : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d35 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example48
@@ -847,7 +852,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) > ((1:ℕ) : ℝ)) := by
     have d40 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-(-1:ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d30 d31 eq_identity_coercion eq_int_to_real_coercion d39
     have d41 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d40 neg_int_to_real_coercion
     have d42 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d21 d41
-    have d43 : (- x : ℝ) ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d42
+    have d43 : (- x : ℝ) ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d42 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example49
@@ -891,7 +896,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) ≥ ((1:ℕ) : ℝ)) := by
     have d33 : ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d30 d31 eq_identity_coercion eq_int_to_real_coercion d32
     have d34 : ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d33 neg_nat_to_real_coercion
     have d35 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d21 d34
-    have d36 : (- x : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d35
+    have d36 : (- x : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d35 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example50
@@ -935,7 +940,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) ≥ ((1:ℕ) : ℝ)) := by
     have d33 : ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d30 d31 eq_identity_coercion eq_int_to_real_coercion d32
     have d34 : ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d33 neg_nat_to_real_coercion
     have d35 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((-1:ℤ) : ℝ) : ℝ) = ((((- x : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d21 d34
-    have d36 : (- x : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d35
+    have d36 : (- x : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d35 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example51
@@ -996,7 +1001,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) < ((1:ℕ) : ℝ)) := by
     have d50 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d49
     have d51 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d50 neg_nat_to_real_coercion
     have d52 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d26 d51
-    have d53 : (- x : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d52
+    have d53 : (- x : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d52 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example52
@@ -1057,7 +1062,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) < ((1:ℕ) : ℝ)) := by
     have d50 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d49
     have d51 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d50 neg_nat_to_real_coercion
     have d52 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d26 d51
-    have d53 : (- x : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d52
+    have d53 : (- x : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d52 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example53
@@ -1118,7 +1123,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) < ((1:ℕ) : ℝ)) := by
     have d50 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d49
     have d51 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d50 neg_nat_to_real_coercion
     have d52 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d26 d51
-    have d53 : (- x : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d52
+    have d53 : (- x : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d52 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example54
@@ -1179,7 +1184,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) ≤ ((1:ℕ) : ℝ)) := by
     have d50 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d49
     have d51 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d50 neg_nat_to_real_coercion
     have d52 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d26 d51
-    have d53 : (- x : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d52
+    have d53 : (- x : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d52 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example55
@@ -1240,7 +1245,7 @@ def h (x : ℝ) (h1 : (- x : ℝ) ≤ ((1:ℕ) : ℝ)) := by
     have d50 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((2:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_int_to_real_coercion d49
     have d51 : ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d50 neg_nat_to_real_coercion
     have d52 : ((((- x : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = ((((- x : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d26 d51
-    have d53 : (- x : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d52
+    have d53 : (- x : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d52 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example56
@@ -1306,7 +1311,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) > ((1:ℕ) : ℝ)) := by
     have d49 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d46 d47 eq_identity_coercion eq_int_to_real_coercion d48
     have d50 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d49 neg_nat_to_real_coercion
     have d51 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d32 d50
-    have d52 : (-((2:ℕ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d51
+    have d52 : (-((2:ℕ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d51 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example58
@@ -1379,7 +1384,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) > ((1:ℕ) : ℝ)) := by
     have d62 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) + ((-(((-1:ℚ)/2:ℚ)) : ℚ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d52 d53 eq_identity_coercion eq_rat_to_real_coercion d61
     have d63 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d62 neg_rat_to_real_coercion
     have d64 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d32 d63
-    have d65 : (-((2:ℕ) * x : ℝ) : ℝ) ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d64
+    have d65 : (-((2:ℕ) * x : ℝ) : ℝ) ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d64 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example59
@@ -1439,7 +1444,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) ≥ ((1:ℕ) : ℝ)) := by
     have d49 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d46 d47 eq_identity_coercion eq_int_to_real_coercion d48
     have d50 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d49 neg_nat_to_real_coercion
     have d51 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d32 d50
-    have d52 : (-((2:ℕ) * x : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d51
+    have d52 : (-((2:ℕ) * x : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d51 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example60
@@ -1499,7 +1504,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) ≥ ((1:ℕ) : ℝ)) := by
     have d49 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d46 d47 eq_identity_coercion eq_int_to_real_coercion d48
     have d50 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d49 neg_nat_to_real_coercion
     have d51 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d32 d50
-    have d52 : (-((2:ℕ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d51
+    have d52 : (-((2:ℕ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d51 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example61
@@ -1570,7 +1575,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) < ((1:ℕ) : ℝ)) := by
     have d60 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) + ((-(((1:ℚ)/2:ℚ)) : ℚ) : ℝ) : ℝ) = x := by term_derivation_add_eq d52 d53 eq_identity_coercion eq_rat_to_real_coercion d59
     have d61 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d60 neg_rat_to_real_coercion
     have d62 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d31 d61
-    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d62
+    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d62 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example62
@@ -1641,7 +1646,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) < ((1:ℕ) : ℝ)) := by
     have d60 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d52 d53 eq_identity_coercion eq_int_to_real_coercion d59
     have d61 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d60 neg_nat_to_real_coercion
     have d62 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d31 d61
-    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d62
+    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d62 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example63
@@ -1712,7 +1717,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) < ((1:ℕ) : ℝ)) := by
     have d60 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d52 d53 eq_identity_coercion eq_int_to_real_coercion d59
     have d61 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d60 neg_nat_to_real_coercion
     have d62 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d31 d61
-    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d62
+    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d62 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example64
@@ -1783,7 +1788,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((1:ℕ) : ℝ)) := by
     have d60 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d52 d53 eq_identity_coercion eq_int_to_real_coercion d59
     have d61 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d60 neg_nat_to_real_coercion
     have d62 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d31 d61
-    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d62
+    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d62 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example65
@@ -1854,7 +1859,7 @@ def h (x : ℝ) (h1 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((1:ℕ) : ℝ)) := by
     have d60 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d52 d53 eq_identity_coercion eq_int_to_real_coercion d59
     have d61 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d60 neg_nat_to_real_coercion
     have d62 : ((((-((2:ℕ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((2:ℕ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d31 d61
-    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d62
+    have d63 : (-((2:ℕ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d62 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example66
@@ -1928,7 +1933,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d57 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d54 d55 eq_identity_coercion eq_int_to_real_coercion d56
     have d58 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d57 neg_nat_to_real_coercion
     have d59 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((-3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d36 d58
-    have d60 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d59
+    have d60 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d59 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example68
@@ -2009,7 +2014,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d70 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-(((-3:ℚ)/2:ℚ)) : ℚ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d60 d61 eq_identity_coercion eq_rat_to_real_coercion d69
     have d71 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((-3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d70 neg_rat_to_real_coercion
     have d72 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((-3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((-3:ℚ)/2:ℚ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d36 d71
-    have d73 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d72
+    have d73 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≥ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d72 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example69
@@ -2077,7 +2082,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d57 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d54 d55 eq_identity_coercion eq_int_to_real_coercion d56
     have d58 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d57 neg_nat_to_real_coercion
     have d59 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((-3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d36 d58
-    have d60 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d59
+    have d60 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d59 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example70
@@ -2145,7 +2150,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d57 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_add_eq d54 d55 eq_identity_coercion eq_int_to_real_coercion d56
     have d58 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d57 neg_nat_to_real_coercion
     have d59 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((-3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d36 d58
-    have d60 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d59
+    have d60 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d59 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example71
@@ -2224,7 +2229,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d68 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-(((3:ℚ)/2:ℚ)) : ℚ) : ℝ) : ℝ) = x := by term_derivation_add_eq d60 d61 eq_identity_coercion eq_rat_to_real_coercion d67
     have d69 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d68 neg_rat_to_real_coercion
     have d70 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d35 d69
-    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d70
+    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d70 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example72
@@ -2303,7 +2308,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d68 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((3:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d60 d61 eq_identity_coercion eq_int_to_real_coercion d67
     have d69 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d68 neg_nat_to_real_coercion
     have d70 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d35 d69
-    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d70
+    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d70 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example73
@@ -2382,7 +2387,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d68 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((3:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d60 d61 eq_identity_coercion eq_int_to_real_coercion d67
     have d69 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d68 neg_nat_to_real_coercion
     have d70 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d35 d69
-    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d70
+    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d70 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example74
@@ -2461,7 +2466,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d68 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((3:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d60 d61 eq_identity_coercion eq_int_to_real_coercion d67
     have d69 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d68 neg_nat_to_real_coercion
     have d70 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d35 d69
-    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d70
+    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) < ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d70 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example75
@@ -2540,7 +2545,7 @@ def h (x : ℝ) (h1 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : 
     have d68 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((3:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = x := by term_derivation_add_eq d60 d61 eq_identity_coercion eq_int_to_real_coercion d67
     have d69 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) = x := by term_derivation_sub_eqs_add_neg d68 neg_nat_to_real_coercion
     have d70 : ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = ((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) - ((2:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d35 d69
-    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d70
+    have d71 : (-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) ≤ ((2:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d70 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example76
@@ -2639,7 +2644,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d88 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((1:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((3:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d85 d86 eq_identity_coercion eq_int_to_real_coercion d87
     have d89 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((3:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d88 neg_nat_to_real_coercion
     have d90 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d46 d89
-    have d91 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d90
+    have d91 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d90 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example77
@@ -2747,7 +2752,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d97 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((1:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((3:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d94 d95 eq_identity_coercion eq_int_to_real_coercion d96
     have d98 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((3:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d97 neg_nat_to_real_coercion
     have d99 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((-3:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / (((1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d55 d98
-    have d100 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d99
+    have d100 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d99 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example78
@@ -2855,7 +2860,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d97 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-(((-1:ℚ)/2:ℚ)) : ℚ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d87 d88 eq_identity_coercion eq_rat_to_real_coercion d96
     have d98 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d97 neg_rat_to_real_coercion
     have d99 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d54 d98
-    have d100 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≥ ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d99
+    have d100 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≥ ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d99 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example79
@@ -2945,7 +2950,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d79 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d76 d77 eq_identity_coercion eq_int_to_real_coercion d78
     have d80 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d79 neg_nat_to_real_coercion
     have d81 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d54 d80
-    have d82 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d81
+    have d82 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≥ ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d81 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example80
@@ -3035,7 +3040,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d79 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d76 d77 eq_identity_coercion eq_int_to_real_coercion d78
     have d80 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d79 neg_nat_to_real_coercion
     have d81 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - (((-1:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((1:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d54 d80
-    have d82 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d81
+    have d82 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) > ((0:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d81 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example81
@@ -3156,7 +3161,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d110 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-(((3:ℚ)/2:ℚ)) : ℚ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((-3:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d100 d101 eq_identity_coercion eq_rat_to_real_coercion d109
     have d111 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((-3:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d110 neg_rat_to_real_coercion
     have d112 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d54 d111
-    have d113 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≤ ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d112
+    have d113 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≤ ((((1:ℕ) : ℚ) / ((2:ℕ) : ℚ) : ℚ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d112 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example82
@@ -3271,7 +3276,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d104 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((3:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((-3:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d94 d95 eq_identity_coercion eq_int_to_real_coercion d103
     have d105 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((-3:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d104 neg_nat_to_real_coercion
     have d106 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d54 d105
-    have d107 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) < ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d106
+    have d107 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) < ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > > h1 d d1 d106 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example83
@@ -3388,7 +3393,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d106 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d94 d95 eq_identity_coercion eq_int_to_real_coercion d105
     have d107 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d106 neg_nat_to_real_coercion
     have d108 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d55 d107
-    have d109 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d108
+    have d109 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish > ≥ h1 d d1 d108 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion gt_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example84
@@ -3505,7 +3510,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d106 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d94 d95 eq_identity_coercion eq_int_to_real_coercion d105
     have d107 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((-1:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℚ)/3:ℚ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d106 neg_nat_to_real_coercion
     have d108 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-2:ℤ) : ℝ) : ℝ) - (((1:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / ((-1:ℤ) : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d55 d107
-    have d109 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) < ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d108
+    have d109 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) < ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ > h1 d d1 d108 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion gt_identity_coercion
     assumption
   exact ()
 end Example85
@@ -3620,7 +3625,7 @@ def h (x y : ℝ) (h1 : ((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ)
     have d104 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) + ((-((3:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((-3:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d94 d95 eq_identity_coercion eq_int_to_real_coercion d103
     have d105 : (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) = (((0:ℕ) + ((1:ℕ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((-3:ℤ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d104 neg_nat_to_real_coercion
     have d106 : (((((-((((2:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + ((2:ℕ) * y : ℝ) : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-2:ℚ)/3:ℚ) : ℝ) : ℝ) - (((3:ℚ)/2:ℚ) : ℝ) : ℝ) = (((((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) - ((1:ℕ) : ℝ) : ℝ) / (((-1:ℚ)/3:ℚ) : ℝ) : ℝ) - ((3:ℕ) : ℝ) : ℝ) := by term_derivation_non_trivial_expr_equivalence d54 d105
-    have d107 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish h1 d d1 d106
+    have d107 : ((-((((1:ℕ) : ℚ) / ((3:ℕ) : ℚ) : ℚ) * x : ℝ) : ℝ) + y : ℝ) ≤ ((1:ℕ) : ℝ) := by litnum_bound_derivation_finish ≥ ≥ h1 d d1 d106 comm_ring_sub_identity_coercion comm_ring_sub_identity_coercion ge_identity_coercion ge_identity_coercion
     assumption
   exact ()
 end Example86
