@@ -29,7 +29,7 @@ example (x: ℝ) : x + 2 = 2 + ((1 :ℕ) : ℝ) * x^1 := by
   term_derivation_atom_add_non_zero_literal
 
 theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {a1 b1 term_a1 term_b1 term: γ}
-  [CommRing γ]
+  [Add γ]
   (ha0: a = term_a)
   (hb0: b = term_b)
   (a_coercion: a = term_a -> a1 = term_a1)
@@ -46,10 +46,10 @@ theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {a1 b1 te
 macro "term_derivation_add_eq" ha0:term:1024 hb0:term:1024 ca:term:1024 cb:term:1024 hab:term:1024 : tactic =>
   `(tactic| exact term_derivation_add_eq $ha0 $hb0 $ca $cb $hab)
 
-theorem term_derivation_sub_eqs_add_neg {α} {a b' neg_b' term: α} [CommRing α] (h: a + neg_b' = term) (h2: neg_b' = -b' ) : a - b' = term := by
+theorem term_derivation_sub_eqs_add_neg {α} {a b' neg_b' term: α} [AddCommGroup α] (h: a + neg_b' = term) (h2: neg_b' = -b' ) : a - b' = term := by
   rw [←h]
   rw [h2]
-  ring
+  rw [← sub_eq_add_neg]
 
 /-- derive `a - b => term` from `a + (-b) => term`
 -/
@@ -66,7 +66,7 @@ theorem term_derivation_sum_add_literal
     {αγ αβγ}
     {a_αγ c_αγ ac_term : αγ}
     {a_αβγ b_αβγ ac_term_αβγ term a_add_b_αβγ a_add_c_αβγ c_αβγ a_αβ_αβγ a_αγ_αβγ c_αγ_αβγ b_αβ_αβγ: αβγ}
-    [CommRing αγ] [CommRing αβγ]
+    [Add αγ] [AddCommSemigroup αβγ]
     (hac : a_αγ + c_αγ = ac_term)
     (hacb : ac_term_αβγ + b_αβγ = term)
     (ha_add_b_αβγ_add_coercion : a_add_b_αβγ = a_αβ_αβγ + b_αβ_αβγ)
@@ -81,6 +81,9 @@ theorem term_derivation_sum_add_literal
   rw [ha_αβ_αβγ_coercion_triangle]
   rw [hb_αβ_αβγ_coercion_triangle]
   rw [add_comm]
+  have h : c_αβγ + a_αβγ + b_αβγ = c_αβγ + (a_αβγ + b_αβγ) := (add_assoc c_αβγ  a_αβγ  b_αβγ)
+  have h :  c_αβγ + (a_αβγ + b_αβγ) = c_αβγ + a_αβγ + b_αβγ := by
+    rw [← (add_assoc c_αβγ  a_αβγ  b_αβγ)]
   rw [← add_assoc]
   nth_rw 2 [add_comm]
   have h : a_add_c_αβγ = ac_term_αβγ := hac_eq_coercion hac
@@ -107,22 +110,21 @@ macro "term_derivation_sum_add_literal"
   hc_αγ_αβγ_coercion_triangle:term:1024
   : tactic => `(tactic| exact term_derivation_sum_add_literal $hac $hacb $ha_add_b_αβγ_add_coercion $ha_αβ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hac_eq_coercion $ha_add_c_αβγ_add_coercion $ha_αγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle)
 
-theorem term_derivation_product_add_literal {α} {p c: α} [CommRing α] : p + c = c + p := by
-  ring
+theorem term_derivation_product_add_literal {α} {p c: α} [AddCommSemigroup α] : p + c = c + p := add_comm _ _
 
 macro "term_derivation_product_add_literal": tactic => `(tactic| exact term_derivation_product_add_literal)
 
-theorem term_derivation_base_mul_literal {α} {a c: α} [CommRing α] : a * c = c * a^1 := by
+theorem term_derivation_base_mul_literal {α} {a c: α} [CommSemiring α] : a * c = c * a^1 := by
   ring
 
 macro "term_derivation_base_mul_literal": tactic => `(tactic| exact term_derivation_base_mul_literal)
 
-theorem term_derivation_one_mul_power_one {α} {a: α} [CommRing α] : ((1:ℕ) : α) * a^(1:ℕ) = a := by
+theorem term_derivation_one_mul_power_one {α} {a: α} [CommSemiring α] : ((1:ℕ) : α) * a^(1:ℕ) = a := by
   ring
 
 macro "term_derivation_one_mul_power_one": tactic => `(tactic| exact term_derivation_one_mul_power_one)
 
-theorem term_derivation_non_one_literal_mul_atom {α} {a c: α} [CommRing α] : c * a = c * a^(1:ℕ) := by
+theorem term_derivation_non_one_literal_mul_atom {α} {a c: α} [CommSemiring α] : c * a = c * a^(1:ℕ) := by
   ring
 
 macro "term_derivation_non_one_literal_mul_atom": tactic => `(tactic| exact term_derivation_non_one_literal_mul_atom)

@@ -75,7 +75,7 @@ macro "term_derivation_neg_product" : tactic => `(tactic| exact term_derivation_
 theorem term_derivation_neg_eq
   {α}
   {a term a_term : α}
-  [CommRing α]
+  [Neg α]
   (ha: a = a_term)
   (hneg_a_term: -a_term = term)
   : -a = term := by
@@ -90,8 +90,8 @@ theorem term_derivation_mul_product
   {αβ αβγ}
   {a_αβ b_αβ ab_term: αβ}
   {a_αβγ b_αβγ ab_term_αβγ c_αβγ abc_term bc_αβγ a_αβ_mul_b_αβ_αβγ : αβγ}
-  [CommRing αβ]
-  [CommRing αβγ]
+  [HMul αβ αβ αβ]
+  [Semigroup αβγ]
   (hab: a_αβ * b_αβ = ab_term)
   (habc: ab_term_αβγ * c_αβγ = abc_term)
   (hab_eq_coercion: a_αβ * b_αβ = ab_term -> a_αβ_mul_b_αβ_αβγ = ab_term_αβγ)
@@ -99,7 +99,7 @@ theorem term_derivation_mul_product
   (hbc_mul_coercion: bc_αβγ = b_αβγ * c_αβγ)
   : a_αβγ * bc_αβγ = abc_term := by
   rw [hbc_mul_coercion]
-  have h: a_αβγ * b_αβγ * c_αβγ = a_αβγ * (b_αβγ * c_αβγ) := by ring
+  have h: a_αβγ * b_αβγ * c_αβγ = a_αβγ * (b_αβγ * c_αβγ) := by apply mul_assoc
   rw [← h]
   have hab_coercion: a_αβ * b_αβ = ab_term -> a_αβγ * b_αβγ = ab_term_αβγ := by
     intro h
@@ -125,9 +125,9 @@ theorem term_derivation_literal_mul_sum
   {a_αβ b_αβ ab_term : αβ}
   {a_αγ c_αγ ac_term : αγ}
   {a_αβγ a_αβ_αβγ a_αγ_αβγ b_αβγ b_αβ_αβγ b_βγ_αβγ c_αβγ c_αγ_αβγ c_βγ_αβγ b_add_c_αβγ a_αβ_mul_b_αβ_αβγ a_αγ_mul_c_αγ_αβγ term ac_term_αβγ ab_term_αβγ sum_of_b_and_c_pow_one_αβγ : αβγ}
-  [HMul αβ αβ αβ]
-  [HMul αγ αγ αγ]
-  [CommRing αβγ]
+  [Mul αβ]
+  [Mul αγ]
+  [Semiring αβγ]
   (hp0 : p = term0_π)
   (hab_nf : a_αβ * b_αβ = ab_term)
   (hac_nf : a_αγ * c_αγ = ac_term)
@@ -150,8 +150,6 @@ theorem term_derivation_literal_mul_sum
     rw[hpow_coercion]
     rw[hbc_coercion]
     ring_nf
-    nth_rw 1 [← ha_αβ_αβγ_coercion_triangle]
-    rw[← ha_αγ_αβγ_coercion_triangle]
     rw[hb_βγ_αβγ_coercion_triangle]
     rw[← hb_αβ_αβγ_coercion_triangle]
     rw[hc_βγ_αβγ_coercion_triangle]
@@ -161,13 +159,27 @@ theorem term_derivation_literal_mul_sum
       have h: a_αβ_mul_b_αβ_αβγ = ab_term_αβγ := hab_eq_coercion h
       rw[← hab_mul_coercion]
       exact h
+    have hab_nf_coerced : a_αβ_αβγ * b_αβ_αβγ = ab_term_αβγ := hab_coercion hab_nf
+    have hab_nf_coerced : a_αβγ * b_αβγ = ab_term_αβγ := by
+      rw[← ha_αβ_αβγ_coercion_triangle]
+      rw[← hb_αβ_αβγ_coercion_triangle]
+      exact hab_nf_coerced
     have hac_coercion : a_αγ * c_αγ = ac_term -> a_αγ_αβγ * c_αγ_αβγ = ac_term_αβγ := by
       intro h
       have h: a_αγ_mul_c_αγ_αβγ = ac_term_αβγ := hac_eq_coercion h
       rw[← hac_mul_coercion]
       exact h
-    rw[hab_coercion hab_nf]
-    rw[hac_coercion hac_nf]
+    have hac_nf_coerced : a_αγ_αβγ * c_αγ_αβγ = ac_term_αβγ := hac_coercion hac_nf
+    have hac_nf_coerced : a_αβγ * c_αβγ = ac_term_αβγ := by
+      rw[← ha_αγ_αβγ_coercion_triangle]
+      rw[← hc_αγ_αβγ_coercion_triangle]
+      exact hac_nf_coerced
+    simp
+    rw [left_distrib]
+    rw [hb_αβ_αβγ_coercion_triangle]
+    rw [hc_αγ_αβγ_coercion_triangle]
+    rw [hab_nf_coerced]
+    rw [hac_nf_coerced]
     exact habc_nf
   have h: term0_π = term_π := hπ_coercion h
   rw[← h]
