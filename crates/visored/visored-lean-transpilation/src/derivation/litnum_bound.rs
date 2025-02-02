@@ -32,10 +32,19 @@ where
                 Some([A(separator.unicode())].to_lean(self))
             }
             VdMirLitnumBoundDerivationConstruction::Finish {
-                src_nf_dn: src_nf,
-                dst_nf_dn: dst_nf,
-                src_nf_and_dst_nf_equivalence_dn: src_nf_and_dst_nf_equivalence,
-            } => Some([D(*src_nf), D(*dst_nf), D(*src_nf_and_dst_nf_equivalence)].to_lean(self)),
+                src,
+                src_nf_dn,
+                dst_nf_dn,
+                src_nf_and_dst_nf_equivalence_dn,
+            } => Some(
+                [
+                    H(src),
+                    D(*src_nf_dn),
+                    D(*dst_nf_dn),
+                    D(*src_nf_and_dst_nf_equivalence_dn),
+                ]
+                .to_lean(self),
+            ),
         };
         let tactics = self.alloc_tactics([LnMirTacticData::Custom {
             name: litnum_bound_tactic_name_from_variant_name(variant_name).into(),
@@ -50,11 +59,7 @@ where
         construction: &VdMirLitnumBoundDerivationConstruction,
     ) -> LnMirTacticData {
         match construction {
-            VdMirLitnumBoundDerivationConstruction::Finish {
-                src_nf_dn: src_nf,
-                dst_nf_dn: dst_nf,
-                src_nf_and_dst_nf_equivalence_dn: src_nf_and_dst_nf_equivalence,
-            } => LnMirTacticData::Assumption,
+            VdMirLitnumBoundDerivationConstruction::Finish { .. } => LnMirTacticData::Assumption,
             _ => todo!(),
         }
     }

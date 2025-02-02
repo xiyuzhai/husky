@@ -40,9 +40,11 @@ where
                     self.mk_sub(dst_nf, self.mk_litnum(bound.litnum_summand()), hc),
                     hc,
                 );
+            let src = src.hypothesis().transcribe(self, None, hc);
             hc.alloc_derivation(
                 prop,
                 VdMirLitnumBoundDerivationConstruction::Finish {
+                    src,
                     src_nf_dn,
                     dst_nf_dn,
                     src_nf_and_dst_nf_equivalence_dn,

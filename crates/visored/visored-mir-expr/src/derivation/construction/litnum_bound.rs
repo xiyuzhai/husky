@@ -22,6 +22,7 @@ use visored_term::term::literal::VdLiteral;
 #[derive(Debug, PartialEq, Eq, strum::IntoStaticStr)]
 pub enum VdMirLitnumBoundDerivationConstruction {
     Finish {
+        src: VdMirHypothesisIdx,
         src_nf_dn: VdMirLitnumBoundDerivationIdx,
         dst_nf_dn: VdMirLitnumBoundDerivationIdx,
         src_nf_and_dst_nf_equivalence_dn: VdMirTermDerivationIdx,
@@ -64,10 +65,18 @@ impl VdMirLitnumBoundDerivationConstruction {
                 check_normalize(prop, separator, hc)
             }
             VdMirLitnumBoundDerivationConstruction::Finish {
-                src_nf_dn: src_nf,
-                dst_nf_dn: dst_nf,
-                src_nf_and_dst_nf_equivalence_dn: src_nf_and_dst_nf_equivalence,
-            } => check_finish(prop, src_nf, dst_nf, src_nf_and_dst_nf_equivalence, hc),
+                src,
+                src_nf_dn,
+                dst_nf_dn,
+                src_nf_and_dst_nf_equivalence_dn,
+            } => check_finish(
+                prop,
+                src,
+                src_nf_dn,
+                dst_nf_dn,
+                src_nf_and_dst_nf_equivalence_dn,
+                hc,
+            ),
         }
     }
 }
@@ -82,6 +91,7 @@ fn check_normalize<'db, Src>(
 
 fn check_finish<'db, Src>(
     prop: VdMirExprIdx,
+    src: VdMirHypothesisIdx,
     src_nf: VdMirLitnumBoundDerivationIdx,
     dst_nf: VdMirLitnumBoundDerivationIdx,
     src_nf_and_dst_nf_equivalence: VdMirTermDerivationIdx,
