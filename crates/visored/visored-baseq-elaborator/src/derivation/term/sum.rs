@@ -4,7 +4,9 @@ use crate::term::{
 };
 
 use super::*;
-use visored_mir_expr::coercion::{triangle::VdMirCoercionTriangle, VdMirSeparatorCoercion};
+use visored_mir_expr::coercion::{
+    pow::VdMirPowCoercion, triangle::VdMirCoercionTriangle, VdMirSeparatorCoercion,
+};
 use visored_signature::signature::separator::base::folding::VdBaseFoldingSeparatorSignature;
 use visored_term::term::literal::VdLiteral;
 
@@ -255,8 +257,28 @@ fn merge_product_construction<'db, 'sess>(
                 VdBsqTerm::Prop(lopd) => todo!(),
                 VdBsqTerm::Set(lopd) => todo!(),
             };
+            let a_ty = lopd.ty();
+            let b_ty = ropd.ty();
+            let ab_ty = hc.infer_add_signature(a_ty, b_ty).expr_ty();
             match lopd_stem.cmp(&ropd_stem) {
-                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::AtomAddProductLess,
+                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::AtomAddProductLess {
+                    zero_add_one_mul_a_pow_one_add_coercion:
+                        VdMirSeparatorCoercion::new_comm_ring_add(a_ty, ab_ty),
+                    one_mul_a_pow_one_add_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(
+                        a_ty, ab_ty,
+                    ),
+                    one_a_ac_coercion_triangle: VdMirCoercionTriangle::new(
+                        elr.ty_menu().nat,
+                        a_ty,
+                        ab_ty,
+                    ),
+                    a_pow_one_pow_coercion: VdMirPowCoercion::new(
+                        a_ty,
+                        elr.ty_menu().nat,
+                        ab_ty,
+                        elr.ty_menu().nat,
+                    ),
+                },
                 std::cmp::Ordering::Equal => todo!(),
                 std::cmp::Ordering::Greater => {
                     VdMirTermDerivationConstruction::AtomAddProductGreater

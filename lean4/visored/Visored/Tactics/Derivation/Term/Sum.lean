@@ -188,3 +188,27 @@ macro "term_derivation_simple_product_mul_literal"
   ha_αγ_αγδ_coercion_triangle:term:1024
   he_αε_αγδ_coercion_triangle:term:1024
   : tactic => `(tactic| exact term_derivation_simple_product_mul_literal (by norm_num) $hc_mul_a_mul_coercion $he_mul_a_mul_coercion $ha_αε_αγδ_coercion_triangle $ha_αγ_αγδ_coercion_triangle $he_αε_αγδ_coercion_triangle)
+
+theorem term_derivation_atom_add_product_less
+  {αβ}
+  {one_α_αβ a_αβ a_pow_one_αβ b_αβ zero_add_one_mul_a_pow_one_αβ one_mul_a_pow_one_αβ : αβ}
+  [CommSemiring αβ]
+  (hzero_add_one_mul_a_pow_one_αβ_mul_coercion: zero_add_one_mul_a_pow_one_αβ = ((0:ℕ):αβ) + one_mul_a_pow_one_αβ)
+  (hone_mul_a_pow_one_αβ_mul_coercion: one_mul_a_pow_one_αβ = one_α_αβ * a_pow_one_αβ)
+  (hone_α_αβ_coercion_triangle: one_α_αβ = ((1:ℕ):αβ))
+  (ha_pow_one_αβ_pow_coercion: a_pow_one_αβ = (a_αβ)^(1:ℕ))
+  : a_αβ + b_αβ = zero_add_one_mul_a_pow_one_αβ + b_αβ := by
+  rw [hzero_add_one_mul_a_pow_one_αβ_mul_coercion]
+  rw [hone_mul_a_pow_one_αβ_mul_coercion]
+  rw [hone_α_αβ_coercion_triangle]
+  rw [ha_pow_one_αβ_pow_coercion]
+  ring
+
+/-- derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem -/
+macro "term_derivation_atom_add_product_less"
+  hzero_add_one_mul_a_pow_one_αβ_mul_coercion:term:1024
+  hone_mul_a_pow_one_αβ_mul_coercion:term:1024
+  hone_α_αβ_coercion_triangle:term:1024
+  ha_pow_one_αβ_pow_coercion:term:1024
+  : tactic
+  => `(tactic| exact term_derivation_atom_add_product_less $hzero_add_one_mul_a_pow_one_αβ_mul_coercion $hone_mul_a_pow_one_αβ_mul_coercion $hone_α_αβ_coercion_triangle $ha_pow_one_αβ_pow_coercion)

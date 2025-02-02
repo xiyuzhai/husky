@@ -61,7 +61,12 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a + c => c + 1 * a^1` if `a` is an atom and `c` is a nonzero literal
     AtomAddNonZeroLiteral,
     /// derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem
-    AtomAddProductLess,
+    AtomAddProductLess {
+        zero_add_one_mul_a_pow_one_add_coercion: VdMirSeparatorCoercion,
+        one_mul_a_pow_one_add_coercion: VdMirSeparatorCoercion,
+        one_a_ac_coercion_triangle: VdMirCoercionTriangle,
+        a_pow_one_pow_coercion: VdMirPowCoercion,
+    },
     /// derive `a + b => 0 + c * a^1` if `a` is an atom and `b` is a product with same stem and coefficient d=c-1 and `c` is nonzero
     AtomAddProductEqualKeep,
     /// derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
@@ -368,9 +373,12 @@ impl VdMirTermDerivationConstruction {
                 check_non_reduced_power(prop, base, exponent, hc)
             }
             VdMirTermDerivationConstruction::PowerOne { base } => check_power_one(prop, base, hc),
-            VdMirTermDerivationConstruction::AtomAddProductLess => {
-                check_atom_add_product_less(prop, hc)
-            }
+            VdMirTermDerivationConstruction::AtomAddProductLess {
+                zero_add_one_mul_a_pow_one_add_coercion,
+                one_mul_a_pow_one_add_coercion,
+                one_a_ac_coercion_triangle,
+                a_pow_one_pow_coercion,
+            } => check_atom_add_product_less(prop, hc),
             VdMirTermDerivationConstruction::AtomAddProductEqualKeep => {
                 check_atom_add_product_equal_keep(prop, hc)
             }
