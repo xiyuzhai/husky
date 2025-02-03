@@ -31,6 +31,7 @@ use visored_term::term::literal::VdLiteral;
 #[derive(Debug, PartialEq, Eq, strum::IntoStaticStr)]
 pub enum VdMirTermDerivationConstruction {
     Reflection,
+    /// derive `a <re> b` through `a => a_nf`, `a => b_nf` and `a_nf - b_nf <re> 0`
     NumComparison {
         lhs_nf: VdMirTermDerivationIdx,
         rhs_nf: VdMirTermDerivationIdx,
