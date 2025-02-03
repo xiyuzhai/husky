@@ -27,7 +27,7 @@ impl LnPrecedence {
     pub const ARG: Self = LnPrecedence::Arg;
     pub const ATOM: Self = LnPrecedence::Max;
     pub const MUL_DIV: Self = LnPrecedence::MulDiv;
-    pub const TYPE_ASCRIPTION: Self = LnPrecedence::Min;
+    pub const TYPE_ASCRIPTION: Self = LnPrecedence::Max;
 }
 
 impl LnPrecedenceRange {
@@ -37,7 +37,7 @@ impl LnPrecedenceRange {
     /// `^` is infixr in lean4, see `src/lean/Init/Notation.lean` in lean4 repo
     pub const POW_BASE: Self = LnPrecedenceRange::Greater(LnPrecedence::POW);
     pub const POW_EXPONENT: Self = LnPrecedenceRange::NoLess(LnPrecedence::POW);
-    pub const TYPE_ASCRIPTION: Self = LnPrecedenceRange::Greater(LnPrecedence::Min);
+    pub const TYPE_ASCRIPTION_LOPD: Self = LnPrecedenceRange::Greater(LnPrecedence::Min);
 }
 
 /// # methods

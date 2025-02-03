@@ -9,8 +9,8 @@ macro_rules
   | ring; done
   | ring_nf; rw [Real.sq_sqrt]; ring; all_goals attack; done
   | nlinarith; done
-  | apply sq_nonneg; all_goals attack; done
-  | apply div_nonneg; all_goals attack; done
+  | simp; apply sq_nonneg; all_goals attack; done
+  | simp; apply div_nonneg; all_goals attack; done
   | field_simp; ring; done
   | linarith; done
 )

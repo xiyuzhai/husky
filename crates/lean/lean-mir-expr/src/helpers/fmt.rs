@@ -212,17 +212,19 @@ impl<'a> LnMirExprFormatter<'a> {
                 expr,
                 ty_ascription,
             } => {
+                self.result += "(";
                 self.format_expr(
                     expr,
                     subexpr_try_multiline,
-                    LnPrecedenceRange::TYPE_ASCRIPTION,
+                    LnPrecedenceRange::TYPE_ASCRIPTION_LOPD,
                 );
                 self.result += " : ";
                 self.format_expr(
                     ty_ascription,
                     subexpr_try_multiline,
-                    LnPrecedenceRange::TYPE_ASCRIPTION,
+                    LnPrecedenceRange::TYPE_ASCRIPTION_LOPD,
                 );
+                self.result += ")";
             }
         }
     }
