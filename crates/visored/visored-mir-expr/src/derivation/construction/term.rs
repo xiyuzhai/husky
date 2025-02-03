@@ -31,8 +31,9 @@ use visored_term::term::literal::VdLiteral;
 #[derive(Debug, PartialEq, Eq, strum::IntoStaticStr)]
 pub enum VdMirTermDerivationConstruction {
     Reflection,
-    /// derive `a <re> b` through `a => a_nf`, `a => b_nf` and `a_nf - b_nf <re> 0`
+    /// derive `a <cmp> b => term <cmp> 0` through `a => a_nf`, `a => b_nf` and `a_nf - b_nf => term`
     NumComparison {
+        separator: VdMirBaseComparisonSeparator,
         lhs_nf: VdMirTermDerivationIdx,
         rhs_nf: VdMirTermDerivationIdx,
         lhs_nf_minus_rhs_nf_nf: VdMirTermDerivationIdx,
@@ -302,10 +303,11 @@ impl VdMirTermDerivationConstruction {
                 check_literal_add_literal(prop, hc)
             }
             VdMirTermDerivationConstruction::NumComparison {
+                separator,
                 lhs_nf,
                 rhs_nf,
                 lhs_nf_minus_rhs_nf_nf,
-            } => check_num_comparison(prop, lhs_nf, rhs_nf, lhs_nf_minus_rhs_nf_nf, hc),
+            } => check_num_comparison(prop, separator, lhs_nf, rhs_nf, lhs_nf_minus_rhs_nf_nf, hc),
             VdMirTermDerivationConstruction::SubEqsAddNeg {
                 add_neg,
                 b_neg_coercion,
@@ -531,9 +533,10 @@ fn check_reflection<'db, Src>(prop: VdMirExprIdx, hc: &mut VdMirHypothesisConstr
     assert_deep_eq!(lhs, rhs, hc)
 }
 
-/// derive `a <nc> b => term <nc> 0` from `a - b <nc> 0 => term <nc> 0` and `a - b => term`
+/// derive `a <cmp> b => term <cmp> 0` through `a => a_nf`, `a => b_nf` and `a_nf - b_nf => term`
 fn check_num_comparison<'db, Src>(
     prop: VdMirExprIdx,
+    separator: VdMirBaseComparisonSeparator,
     a_nf: VdMirTermDerivationIdx,
     b_nf: VdMirTermDerivationIdx,
     a_nf_minus_a_nf_nf: VdMirTermDerivationIdx,
@@ -541,6 +544,7 @@ fn check_num_comparison<'db, Src>(
 ) {
     ds!(let (leader => follower) = prop, hc);
     let (a, leader_signature, b) = hc.split_any_trivial_chaining_separated_list(leader);
+    assert_eq!(leader_signature.separator(), separator.into());
     let (term, follower_signature, zero) = hc.split_any_trivial_chaining_separated_list(follower);
     assert_eq!(leader_signature.separator(), follower_signature.separator());
     let VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::Comparison(separator)) =

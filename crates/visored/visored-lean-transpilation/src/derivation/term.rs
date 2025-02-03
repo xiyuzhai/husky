@@ -26,10 +26,19 @@ where
         let arguments: Option<LnMirExprIdxRange> = match *construction {
             VdMirTermDerivationConstruction::Reflection => None,
             VdMirTermDerivationConstruction::NumComparison {
+                separator,
                 lhs_nf,
                 rhs_nf,
                 lhs_nf_minus_rhs_nf_nf,
-            } => None,
+            } => Some(
+                [
+                    A(separator.unicode()),
+                    D(*lhs_nf),
+                    D(*rhs_nf),
+                    D(*lhs_nf_minus_rhs_nf_nf),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::SubEqsAddNeg {
                 add_neg,
                 b_neg_coercion,

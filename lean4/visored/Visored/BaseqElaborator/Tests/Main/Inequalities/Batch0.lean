@@ -81,7 +81,7 @@ def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
     have d4 : (x + ((-1:ℤ) : ℝ) : ℝ) = (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_add_non_zero_literal
     have d5 : (x + ((-((1:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d2 d3 eq_identity_coercion eq_int_to_real_coercion d4
     have d6 : (x - ((1:ℕ) : ℝ) : ℝ) = (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d5 neg_nat_to_real_coercion
-    have d7 : x ≥ ((1:ℕ) : ℝ) ↔ (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
+    have d7 : x ≥ ((1:ℕ) : ℝ) ↔ (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison ≥ d d1 d6
     have d8 : x = x := by term_derivation_reflection
     have d9 : (-((1:ℕ) : ℤ) : ℤ) = (-1:ℤ) := by term_derivation_neg_literal
     have d10 : (x + ((-1:ℤ) : ℝ) : ℝ) = (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_add_non_zero_literal
@@ -99,7 +99,7 @@ def h (x : ℝ) (h1 : x ≥ ((1:ℕ) : ℝ)) := by
     have d22 : ((((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((0:ℕ) : ℝ) : ℝ) = (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_nf_add_zero
     have d23 : ((((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + ((-((0:ℕ) : ℤ) : ℤ) : ℝ) : ℝ) = (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d20 d21 eq_identity_coercion eq_int_to_real_coercion d22
     have d24 : ((((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d23 neg_nat_to_real_coercion
-    have d25 : (x - ((1:ℕ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison
+    have d25 : (x - ((1:ℕ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ (((-1:ℤ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison ≥ d12 d13 d24
     have d26 : (x - ((1:ℕ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_non_trivial_hypothesis_equivalence h1 d7 d25
     assumption
   exact ()

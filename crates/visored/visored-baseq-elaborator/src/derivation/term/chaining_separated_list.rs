@@ -75,6 +75,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     ) -> VdMirTermDerivationConstruction {
         let lhs_minus_rhs = self.mk_sub(**lhs, **rhs, hc);
         VdMirTermDerivationConstruction::NumComparison {
+            separator,
             lhs_nf: lhs.derivation(),
             rhs_nf: rhs.derivation(),
             lhs_nf_minus_rhs_nf_nf: self

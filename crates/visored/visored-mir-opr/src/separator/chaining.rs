@@ -32,11 +32,15 @@ pub enum VdMirBaseComparisonSeparator {
     Ge,
 }
 
+impl From<VdMirBaseComparisonSeparator> for VdMirBaseChainingSeparator {
+    fn from(separator: VdMirBaseComparisonSeparator) -> Self {
+        VdMirBaseChainingSeparator::Relation(VdMirBaseRelationSeparator::Comparison(separator))
+    }
+}
+
 impl From<VdMirBaseComparisonSeparator> for VdMirBaseSeparator {
     fn from(separator: VdMirBaseComparisonSeparator) -> Self {
-        VdMirBaseSeparator::Chaining(VdMirBaseChainingSeparator::Relation(
-            VdMirBaseRelationSeparator::Comparison(separator),
-        ))
+        VdMirBaseSeparator::Chaining(separator.into())
     }
 }
 

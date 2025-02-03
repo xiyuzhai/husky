@@ -1,10 +1,10 @@
 import Mathlib
-import Visored.Tactics.Derivation.Term.Sum
-import Visored.Tactics.Derivation.Term.Product
 import Visored.Tactics.Derivation.Term.Coercion
+import Visored.Tactics.Derivation.Term.Comparison
+import Visored.Tactics.Derivation.Term.Product
+import Visored.Tactics.Derivation.Term.Sum
 
 macro "term_derivation_neg_literal": tactic => `(tactic| norm_num)
-macro "term_derivation_num_comparison": tactic => `(tactic| norm_num)
 macro "term_derivation_reflection": tactic => `(tactic| rfl)
 
 theorem term_derivation_non_trivial_hypothesis_equivalence {src dst nf : Prop} (hsrc: src) (hsrc_nf: src ↔ nf) (hdst_nf: dst ↔ nf) : dst := by
