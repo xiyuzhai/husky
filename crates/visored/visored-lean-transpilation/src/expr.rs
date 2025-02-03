@@ -96,10 +96,15 @@ where
 {
     pub(crate) fn build_expr_entry(&mut self, expr: VdMirExprIdx) -> LnMirExprEntry {
         let data = self.build_expr_data(expr);
+        LnMirExprEntry::new(data)
+    }
+
+    fn build_expr_data(&mut self, expr: VdMirExprIdx) -> LnMirExprData {
+        let data = self.build_expr_data_inner(expr);
+        // ad type ascription if necessary (mismatch between expected and actual type)
         let entry = &self.expr_arena()[expr];
-        let ty = entry.ty();
         let ty_ascription = if let Some(expected_ty) = entry.expected_ty() {
-            if ty != expected_ty {
+            if entry.ty() != expected_ty {
                 match expected_ty.to_lean(self) {
                     VdTypeLeanTranspilation::Type(expected_ty) => Some(expected_ty),
                 }
@@ -110,15 +115,15 @@ where
             None
         };
         match ty_ascription {
-            Some(ty_ascription) => LnMirExprEntry::new(LnMirExprData::TypeAscription {
+            Some(ty_ascription) => LnMirExprData::TypeAscription {
                 expr: self.alloc_expr(LnMirExprEntry::new(data)),
                 ty_ascription,
-            }),
-            None => LnMirExprEntry::new(data),
+            },
+            None => data,
         }
     }
 
-    fn build_expr_data(&mut self, expr: VdMirExprIdx) -> LnMirExprData {
+    fn build_expr_data_inner(&mut self, expr: VdMirExprIdx) -> LnMirExprData {
         let db = self.db();
         match *self.expr_arena()[expr].data() {
             VdMirExprData::Literal(literal) => LnMirExprData::Literal(to_lean_literal(literal, db)),

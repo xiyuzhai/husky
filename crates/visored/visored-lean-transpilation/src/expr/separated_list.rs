@@ -4,7 +4,7 @@ use either::*;
 use lean_mir_expr::expr::application::{LnMirFunc, LnMirFuncKey};
 use smallvec::*;
 use visored_mir_expr::expr::VdMirExprIdxRange;
-use visored_mir_opr::separator::VdMirBaseSeparator;
+use visored_mir_opr::separator::{folding::VdMirBaseFoldingSeparator, VdMirBaseSeparator};
 use visored_signature::signature::separator::base::{
     chaining::VdBaseChainingSeparatorSignature, folding::VdBaseFoldingSeparatorSignature,
     VdBaseSeparatorSignature,

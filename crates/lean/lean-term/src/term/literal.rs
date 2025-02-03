@@ -7,8 +7,7 @@ pub struct LnLiteral(LnTermId);
 
 impl std::fmt::Debug for LnLiteral {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        todo!()
-        // write!(f, "LnLiteral({})", self.0)
+        write!(f, "LnLiteral(`{}`)", self.data().str())
     }
 }
 
