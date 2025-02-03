@@ -61,7 +61,9 @@ fn visored_pipeline_works() {
         })
         .collect();
     assert!(!tex_files.is_empty());
-    let lean4_dir = Path::new("lean4/visored-pipeline-tests/VisoredPipelineTests");
+    let lean4_dir = &HuskyLangDevPaths::new()
+        .lean4_lib_dir()
+        .join("visored/Visored/Pipeline/Tests");
 
     t(
         tokio_runtime,

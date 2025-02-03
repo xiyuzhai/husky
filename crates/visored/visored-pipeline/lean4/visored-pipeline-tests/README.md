@@ -1,1 +1,0 @@
-# visored-pipeline-tests
