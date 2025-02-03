@@ -212,3 +212,5 @@ macro "term_derivation_atom_add_product_less"
   ha_pow_one_αβ_pow_coercion:term:1024
   : tactic
   => `(tactic| exact term_derivation_atom_add_product_less $hzero_add_one_mul_a_pow_one_αβ_mul_coercion $hone_mul_a_pow_one_αβ_mul_coercion $hone_α_αβ_coercion_triangle $ha_pow_one_αβ_pow_coercion)
+
+macro "term_derivation_sum_add_product_greater" : tactic => `(tactic| fail "not implemented")

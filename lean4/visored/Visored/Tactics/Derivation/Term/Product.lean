@@ -205,3 +205,13 @@ macro "term_derivation_literal_mul_sum"
   hc_βγ_αβγ_coercion_triangle:term:1024
   hπ_coercion:term:1024
   : tactic => `(tactic| exact term_derivation_literal_mul_sum $hp0 $hab_nf $hac_nf $habc_nf $hβγ_αβγ_pow_coercion $hbc_coercion $hαβ_αβγ_eq_coercion $hαβ_αβγ_mul_coercion $hαγ_αβγ_eq_coercion $hαγ_αβγ_mul_coercion $ha_αβ_αβγ_coercion_triangle $ha_αγ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hb_βγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle $hc_βγ_αβγ_coercion_triangle $hπ_coercion)
+
+macro "term_derivation_atom_mul_atom_less" : tactic => `(tactic| fail "not implemented")
+
+macro "term_derivation_atom_mul_atom_equal" : tactic => `(tactic| fail "not implemented")
+
+macro "term_derivation_atom_mul_atom_greater" : tactic => `(tactic| fail "not implemented")
+
+macro "term_derivation_sqrt" : tactic => `(tactic| fail "not implemented")
+
+macro "term_derivation_non_reduced_power" : tactic => `(tactic| fail "not implemented")

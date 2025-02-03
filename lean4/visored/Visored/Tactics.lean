@@ -1,3 +1,4 @@
+import Visored.Std
 import Visored.Tactics.Derivation
 import Visored.Tactics.Hypothesis
 

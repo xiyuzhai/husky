@@ -356,23 +356,12 @@ fn derive_mul_base<'db, 'sess>(
             )
         }
         VdBsqExprData::Variable(..) => {
-            // TODO: match comparision
-            if lopd == ropd {
-                let derived = todo!();
-                (
-                    VdMirTermDerivationConstruction::AtomMulAtom {
-                        comparison: lopd.term().cmp(&ropd.term()),
-                    },
-                    derived,
-                )
-            } else {
-                (
-                    VdMirTermDerivationConstruction::AtomMulAtom {
-                        comparison: lopd.term().cmp(&ropd.term()),
-                    },
-                    None,
-                )
-            }
+            let construction = match lopd.term().cmp(&ropd.term()) {
+                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::AtomMulAtomLess,
+                std::cmp::Ordering::Equal => VdMirTermDerivationConstruction::AtomMulAtomEqual,
+                std::cmp::Ordering::Greater => VdMirTermDerivationConstruction::AtomMulAtomGreater,
+            };
+            (construction, None)
         }
         VdBsqExprData::Application {
             function,

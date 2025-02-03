@@ -92,7 +92,9 @@ where
                 src_nf,
                 dst_nf,
             } => Some([H(src), D(*src_nf), D(*dst_nf)].to_lean(self)),
-            VdMirTermDerivationConstruction::AtomMulAtom { comparison } => None,
+            VdMirTermDerivationConstruction::AtomMulAtomLess => None,
+            VdMirTermDerivationConstruction::AtomMulAtomEqual => None,
+            VdMirTermDerivationConstruction::AtomMulAtomGreater => None,
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => None,
             VdMirTermDerivationConstruction::MulProduct {
                 rsignature,

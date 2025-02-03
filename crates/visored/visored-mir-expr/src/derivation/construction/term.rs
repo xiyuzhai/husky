@@ -111,11 +111,11 @@ pub enum VdMirTermDerivationConstruction {
         dst_nf: VdMirTermDerivationIdx,
     },
     /// derive `a * b => 1 * a^1 * b^1` if `a` and `b` are atoms with the term order of `a` being lesser than `b`
-    /// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
+    AtomMulAtomLess,
     /// derive `a * a => 1 * a^2`
-    AtomMulAtom {
-        comparison: core::cmp::Ordering,
-    },
+    AtomMulAtomEqual,
+    /// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
+    AtomMulAtomGreater,
     Sqrt {
         radicand_nf: VdMirTermDerivationIdx,
     },
@@ -355,8 +355,12 @@ impl VdMirTermDerivationConstruction {
                 src_nf,
                 dst_nf,
             } => check_non_trivial_hypothesis_equivalence(prop, src, src_nf, dst_nf, hc),
-            VdMirTermDerivationConstruction::AtomMulAtom { comparison } => {
-                check_atom_mul_atom(prop, comparison, hc)
+            VdMirTermDerivationConstruction::AtomMulAtomLess => check_atom_mul_atom_less(prop, hc),
+            VdMirTermDerivationConstruction::AtomMulAtomEqual => {
+                check_atom_mul_atom_equal(prop, hc)
+            }
+            VdMirTermDerivationConstruction::AtomMulAtomGreater => {
+                check_atom_mul_atom_greater(prop, hc)
             }
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                 check_sqrt(prop, radicand_nf, hc)

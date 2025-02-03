@@ -67,40 +67,49 @@ pub(super) fn check_mul_eq<'db, Src>(
 }
 
 /// derive `a * b => 1 * a^1 * b^1` if `a` and `b` are atoms with the term order of `a` being lesser than `b`
-/// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
-/// derive `a * a => 1 * a^2`
-pub(super) fn check_atom_mul_atom<'db, Src>(
+pub(super) fn check_atom_mul_atom_less<'db, Src>(
     prop: VdMirExprIdx,
-    comparison: core::cmp::Ordering,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,
 ) {
     ds!(let (expr => term) = prop, hc);
     ds!(let (a * b) = expr, hc);
-    match comparison {
-        std::cmp::Ordering::Less => {
-            ds!(let (one * stem) = term, hc);
-            assert!(hc.literal(one).is_one());
-            ds!(let (a1_pow_1 * b1_pow_1) = stem, hc);
-            ds!(let (a1 ^ one) = a1_pow_1, hc);
-            assert!(hc.literal(one).is_one());
-            ds!(let (b1 ^ one) = b1_pow_1, hc);
-            assert!(hc.literal(one).is_one());
-            assert_deep_eq!(a1, a, hc);
-            assert_deep_eq!(b1, b, hc);
-        }
-        std::cmp::Ordering::Equal => todo!(),
-        std::cmp::Ordering::Greater => {
-            ds!(let (c * stem) = term, hc);
-            assert!(hc.literal(c).is_one());
-            ds!(let (b1_pow_1 * a1_pow_1) = stem, hc);
-            ds!(let (b1 ^ one) = b1_pow_1, hc);
-            assert!(hc.literal(one).is_one());
-            ds!(let (a1 ^ one) = a1_pow_1, hc);
-            assert!(hc.literal(one).is_one());
-            assert_deep_eq!(a1, a, hc);
-            assert_deep_eq!(b1, b, hc);
-        }
-    }
+    ds!(let (one * stem) = term, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (a1_pow_1 * b1_pow_1) = stem, hc);
+    ds!(let (a1 ^ one) = a1_pow_1, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (b1 ^ one) = b1_pow_1, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
+}
+
+/// derive `a * a => 1 * a^2`
+pub(super) fn check_atom_mul_atom_equal<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * b) = expr, hc);
+    todo!()
+}
+
+/// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
+pub(super) fn check_atom_mul_atom_greater<'db, Src>(
+    prop: VdMirExprIdx,
+    hc: &mut VdMirHypothesisConstructor<'db, Src>,
+) {
+    ds!(let (expr => term) = prop, hc);
+    ds!(let (a * b) = expr, hc);
+    ds!(let (c * stem) = term, hc);
+    assert!(hc.literal(c).is_one());
+    ds!(let (b1_pow_1 * a1_pow_1) = stem, hc);
+    ds!(let (b1 ^ one) = b1_pow_1, hc);
+    assert!(hc.literal(one).is_one());
+    ds!(let (a1 ^ one) = a1_pow_1, hc);
+    assert!(hc.literal(one).is_one());
+    assert_deep_eq!(a1, a, hc);
+    assert_deep_eq!(b1, b, hc);
 }
 
 /// derive `a * (b * c) => term` from `a * b => lterm` and `lterm * c => term`
