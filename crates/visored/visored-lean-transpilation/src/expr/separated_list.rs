@@ -21,36 +21,26 @@ where
     ) -> LnMirExprData {
         debug_assert!(followers.len() >= 1);
         let mut follower_iter = followers.iter().copied();
-        let fst_signature = followers[0].0;
-        let leader_data = self.build_expr_data(leader);
-        let mut result = self.ascribe_ty_to_folding_separated_list_item(leader_data, fst_signature);
-        let mut result_ty = fst_signature.expr_ty();
+        let mut result = self.build_expr_data(leader);
+        let mut result_ty = self.expr_arena()[leader].ty();
         for (signature, follower) in follower_iter {
             let follower = self.build_expr_entry(follower);
             let function = self.build_folding_func(signature);
-            let application_data = LnMirExprData::Application {
+            let result_expected_ty = signature.item_ty();
+            let result_ty_ascription = match result_expected_ty.to_lean(self) {
+                VdTypeLeanTranspilation::Type(expected_ty) => expected_ty,
+            };
+            result = LnMirExprData::Application {
                 function,
                 arguments: self.alloc_exprs([LnMirExprEntry::new(result), follower]),
             };
-            result = self.ascribe_ty_to_folding_separated_list_item(application_data, signature);
+            result = LnMirExprData::TypeAscription {
+                expr: self.alloc_expr(LnMirExprEntry::new(result)),
+                ty_ascription: result_ty_ascription,
+            };
             result_ty = signature.expr_ty();
         }
         result
-    }
-
-    fn ascribe_ty_to_folding_separated_list_item(
-        &mut self,
-        result: LnMirExprData,
-        signature: VdBaseFoldingSeparatorSignature,
-    ) -> LnMirExprData {
-        let result_expected_ty = signature.item_ty();
-        let result_ty_ascription = match result_expected_ty.to_lean(self) {
-            VdTypeLeanTranspilation::Type(expected_ty) => expected_ty,
-        };
-        LnMirExprData::TypeAscription {
-            expr: self.alloc_expr(LnMirExprEntry::new(result)),
-            ty_ascription: result_ty_ascription,
-        }
     }
 
     fn build_folding_func(&mut self, signature: VdBaseFoldingSeparatorSignature) -> LnMirFunc {
