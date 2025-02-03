@@ -216,6 +216,8 @@ We have $x^2 \ge 0$ because these are real numbers.
 import Visored.Obvious
 import Visored.Tactics
 
+set_option maxHeartbeats 20000000000
+
 {}
 "#,
             tracker.show_fmt(self.db)

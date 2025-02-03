@@ -2,6 +2,8 @@ import Mathlib
 import Visored.Obvious
 import Visored.Tactics
 
+set_option maxHeartbeats 20000000000
+
 def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y > ((0:ℕ) : ℝ)) : ((((1:ℕ) : ℝ) / x : ℝ) + (((1:ℕ) : ℝ) / y : ℝ) : ℝ) ≥ (((4:ℕ) : ℝ) / (x + y : ℝ) : ℝ) := by
   have h3 : in_set := by obvious
   have h1 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis

@@ -76,6 +76,8 @@ import Mathlib
 import Visored.Obvious
 import Visored.Tactics
 
+set_option maxHeartbeats 20000000000
+
 def h : ((1:ℕ) + (1:ℕ) : ℕ) = (2:ℕ) := by
   have h1 : ((1:ℕ) + (1:ℕ) : ℕ) = (2:ℕ) := by term_trivial
   obvious
@@ -114,6 +116,8 @@ Lean 4 code:
 import Mathlib
 import Visored.Obvious
 import Visored.Tactics
+
+set_option maxHeartbeats 20000000000
 
 def h (x : ℝ) : (x ^ (2:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
   have h1 : (x ^ (2:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by
@@ -156,6 +160,8 @@ Lean 4 code:
 import Mathlib
 import Visored.Obvious
 import Visored.Tactics
+
+set_option maxHeartbeats 20000000000
 
 def h (a b : ℝ) : (a + b : ℝ) = (b + a : ℝ) := by
   have h1 : (a + b : ℝ) = (b + a : ℝ) := by term_trivial
@@ -201,6 +207,8 @@ Lean 4 code:
 import Mathlib
 import Visored.Obvious
 import Visored.Tactics
+
+set_option maxHeartbeats 20000000000
 
 def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : (x + (((1:ℕ) : ℝ) / x : ℝ) : ℝ) ≥ ((2:ℕ) : ℝ) := by
   have h1 : x > ((0:ℕ) : ℝ) := by old_main_hypothesis
@@ -325,6 +333,8 @@ import Mathlib
 import Visored.Obvious
 import Visored.Tactics
 
+set_option maxHeartbeats 20000000000
+
 def h (x : ℝ) : ((x ^ (2:ℕ) : ℝ) + ((1:ℕ) : ℝ) : ℝ) ≥ ((2:ℕ) * x : ℝ) := by
   first
   | have h1 : ((x - ((1:ℕ) : ℝ) : ℝ) ^ (2:ℕ) : ℝ) ≥ ((0:ℕ) : ℝ) := by calc
@@ -372,6 +382,8 @@ Lean 4 code:
 import Mathlib
 import Visored.Obvious
 import Visored.Tactics
+
+set_option maxHeartbeats 20000000000
 
 def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) : (x + ((1:ℕ) : ℝ) : ℝ) ≥ ((2:ℕ) * √ x : ℝ) := by
   first
@@ -432,6 +444,8 @@ Lean 4 code:
 import Mathlib
 import Visored.Obvious
 import Visored.Tactics
+
+set_option maxHeartbeats 20000000000
 
 def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y > ((0:ℕ) : ℝ)) : ((((1:ℕ) : ℝ) / x : ℝ) + (((1:ℕ) : ℝ) / y : ℝ) : ℝ) ≥ (((4:ℕ) : ℝ) / (x + y : ℝ) : ℝ) := by
   have h3 : in_set := by obvious
@@ -516,6 +530,8 @@ Lean 4 code:
 import Mathlib
 import Visored.Obvious
 import Visored.Tactics
+
+set_option maxHeartbeats 20000000000
 
 def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : ((a / b : ℝ) + (b / a : ℝ) : ℝ) ≥ ((2:ℕ) : ℝ) := by
   have h1 : a > ((0:ℕ) : ℝ) := by old_main_hypothesis
@@ -661,6 +677,8 @@ Lean 4 code:
 import Mathlib
 import Visored.Obvious
 import Visored.Tactics
+
+set_option maxHeartbeats 20000000000
 
 def h (x y : ℝ) : ((x ^ (2:ℕ) : ℝ) + (y ^ (2:ℕ) : ℝ) : ℝ) ≥ (((2:ℕ) * x : ℝ) * y : ℝ) := by
   first

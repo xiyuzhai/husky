@@ -2,6 +2,8 @@ import Mathlib
 import Visored.Obvious
 import Visored.Tactics
 
+set_option maxHeartbeats 20000000000
+
 def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : ℝ)) : ((x + y : ℝ) / ((2:ℕ) : ℝ) : ℝ) ≥ √ (x * y : ℝ) := by
   have h3 : ((√ x - √ y : ℝ) ^ (2:ℕ) : ℝ) = (((√ x ^ (2:ℕ) : ℝ) - (((2:ℕ) * √ x : ℝ) * √ y : ℝ) : ℝ) + (√ y ^ (2:ℕ) : ℝ) : ℝ) := by obvious
   have h4 : (((√ x ^ (2:ℕ) : ℝ) - (((2:ℕ) * √ x : ℝ) * √ y : ℝ) : ℝ) + (√ y ^ (2:ℕ) : ℝ) : ℝ) = ((x - ((2:ℕ) * √ (x * y : ℝ) : ℝ) : ℝ) + y : ℝ) := by obvious

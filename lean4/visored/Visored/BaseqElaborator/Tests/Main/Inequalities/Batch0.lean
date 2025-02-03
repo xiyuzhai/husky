@@ -1,6 +1,8 @@
 import Mathlib
 import Visored.Tactics
 
+set_option maxHeartbeats 20000000000
+
 namespace Example1
 def h := by
   have h1 : (0:ℕ) = (0:ℕ) := by term_trivial

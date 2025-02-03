@@ -59,6 +59,8 @@ fn visored_tactic_baseq_elaborator_works() {
                 r#"import Mathlib
 import Visored.Tactics
 
+set_option maxHeartbeats 20000000000
+
 {}"#,
                 tracker.show_fmt(db)
             );
