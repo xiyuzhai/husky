@@ -21,7 +21,6 @@ use visored_syn_expr::vibe::VdSynExprVibe;
 fn visored_tactic_baseq_elaborator_works() {
     use husky_case_utils::{Case, ToCase};
     use husky_path_utils::HuskyLangDevPaths;
-    use lean_helpers::hypothesis::hypothesis_header;
 
     fn t(
         dev_paths: &HuskyLangDevPaths,

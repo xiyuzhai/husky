@@ -8,8 +8,6 @@ use husky_io_utils::diff_write;
 use input::VdPipelineInput;
 use latex_prelude::helper::tracker::LxDocumentBodyInput;
 use latex_vfs::path::LxFilePath;
-use lean_helpers::hypothesis::hypothesis_header;
-use lean_helpers::obvious::OBVIOUS_HEADER;
 use lean_mir_expr::helpers::ad_hoc_header::AD_HOC_HEADER;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -215,12 +213,11 @@ We have $x^2 \ge 0$ because these are real numbers.
         );
         self.lean4_code = Some(format!(
             r#"import Mathlib
-{OBVIOUS_HEADER}
-{AD_HOC_HEADER}
-{}
+import Visored.Obvious
+import Visored.Tactics
+
 {}
 "#,
-            hypothesis_header(),
             tracker.show_fmt(self.db)
         ));
         let lean4_code_path = self
