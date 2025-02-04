@@ -57,11 +57,6 @@ pub enum VdMirTermDerivationConstruction {
         b_derivation: VdMirTermDerivationIdx,
         a_term_add_b_term_derivation: VdMirTermDerivationIdx,
     },
-    AdditionInterchange,
-    AdditionAssociativity,
-    AdditionIdentity,
-    AdditionInverse,
-    AdditionDistributivity,
     /// derive `a + c => c + 1 * a^1` if `a` is an atom and `c` is a nonzero literal
     AtomAddNonZeroLiteral,
     /// derive `a + b => 0 + 1 * a^1 + b` if `a` is an atom and `b` is a product with higher stem
@@ -357,11 +352,6 @@ impl VdMirTermDerivationConstruction {
                 add_neg,
                 b_neg_coercion,
             } => check_sub_eqs_add_neg(prop, add_neg, hc),
-            VdMirTermDerivationConstruction::AdditionInterchange => check_add_interchange(prop, hc),
-            VdMirTermDerivationConstruction::AdditionAssociativity => todo!(),
-            VdMirTermDerivationConstruction::AdditionIdentity => todo!(),
-            VdMirTermDerivationConstruction::AdditionInverse => todo!(),
-            VdMirTermDerivationConstruction::AdditionDistributivity => todo!(),
             VdMirTermDerivationConstruction::NegLiteral => check_neg_literal(prop, hc),
             VdMirTermDerivationConstruction::NegEq {
                 opd_nf,
@@ -617,10 +607,4 @@ fn check_num_comparison<'db, Src>(
     assert_deep_eq!(b1, b, hc);
     assert_deep_eq!(a_nf1, a_nf, hc);
     assert_deep_eq!(b_nf1, b_nf, hc);
-}
-
-/// obtain `a + (b + c) = term` from `a + b + c = term`
-fn check_add_interchange<'db, Src>(prop: VdMirExprIdx, hc: &VdMirHypothesisConstructor<'db, Src>) {
-    todo!()
-    // let expr_arena = hc.expr_arena();
 }

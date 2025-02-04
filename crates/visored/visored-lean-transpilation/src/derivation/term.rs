@@ -64,11 +64,6 @@ where
                 ]
                 .to_lean(self),
             ),
-            VdMirTermDerivationConstruction::AdditionInterchange => None,
-            VdMirTermDerivationConstruction::AdditionAssociativity => None,
-            VdMirTermDerivationConstruction::AdditionIdentity => None,
-            VdMirTermDerivationConstruction::AdditionInverse => None,
-            VdMirTermDerivationConstruction::AdditionDistributivity => None,
             VdMirTermDerivationConstruction::NegLiteral => None,
             VdMirTermDerivationConstruction::NegEq {
                 opd_nf,
@@ -363,7 +358,9 @@ where
                 .to_lean(self),
             ),
             VdMirTermDerivationConstruction::ProductAddLiteral => None,
-            VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => None,
+            VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => {
+                Some([a_mul_b_inv_dn].to_lean(self))
+            }
             VdMirTermDerivationConstruction::AtomMulExponentialLess => None,
             VdMirTermDerivationConstruction::AtomMulExponentialGreater {
                 a_pow_one_pow_coercion,

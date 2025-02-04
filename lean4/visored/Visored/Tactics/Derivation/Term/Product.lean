@@ -367,3 +367,18 @@ theorem term_derivation_atom_mul_exponential_greater
 macro "term_derivation_atom_mul_exponential_greater"
   ha_pow_one_pow_coercion:term:1024
   : tactic => `(tactic| exact term_derivation_atom_mul_exponential_greater $ha_pow_one_pow_coercion)
+
+theorem term_derivation_div_atom
+  {α}
+  [Field α]
+  {a b term : α}
+  (ha_mul_b_inv_dn : a * b^(-1:ℤ) = term)
+  : a / b = term := by
+  rw [div_eq_mul_inv]
+  rw [← zpow_neg_one]
+  rw[ha_mul_b_inv_dn]
+
+/-- derive `a / b => term` from `a * b⁻¹ => term` if `b` is an atom -/
+macro "term_derivation_div_atom"
+  ha_mul_b_inv_dn:term:1024
+  : tactic => `(tactic| exact term_derivation_div_atom $ha_mul_b_inv_dn)
