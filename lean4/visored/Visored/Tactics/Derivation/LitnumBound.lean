@@ -119,8 +119,6 @@ theorem litnum_bound_derivation_finish_gt_gt
       _ > ((0:ℕ) : αβ) := by assumption
   exact hdst_dn.mpr $ hy_gt_zero_gt_coercion.mpr hy_gt_zero
 
-example {α} [OrderedCommRing α] {x : α} : x > 0 ↔ x ≥ 0 := λ h => le_of_lt h
-
 theorem litnum_bound_derivation_finish_gt_ge
   {src dst: Prop}
   {α β αβ}
