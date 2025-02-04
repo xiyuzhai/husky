@@ -1,3 +1,4 @@
+//! one key can map to one unique value
 use super::*;
 use crate::{
     hypothesis::{

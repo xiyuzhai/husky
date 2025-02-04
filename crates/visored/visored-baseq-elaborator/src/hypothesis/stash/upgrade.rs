@@ -1,3 +1,4 @@
+//! one key can map to one unique value, but the value can be upgraded
 use super::*;
 use crate::hypothesis::{
     stack::{VdBsqActiveHypotheses, VdBsqHypothesisStackRecord},
