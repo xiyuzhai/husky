@@ -35,6 +35,7 @@ macro "term_derivation_mul_eq"
   b_coercion:term:1024
   : tactic => `(tactic| exact term_derivation_mul_eq $a_nf $b_nf $d $a_coercion $b_coercion)
 
+-- TODO: term_a and term_b could be of their own type
 theorem term_derivation_div_eq {α β γ} {a term_a : α} {b term_b:β} {a1 b1 term_a1 term_b1 term: γ}
   [Field γ]
   (ha0: a = term_a)
@@ -48,6 +49,7 @@ theorem term_derivation_div_eq {α β γ} {a term_a : α} {b term_b:β} {a1 b1 t
   rw [ha, hb]
   exact hab
 
+/-- derive `a / b => term` from `a => a_term`, `b => b_term` and `a_term / b_term => term` -/
 macro "term_derivation_div_eq"
   a_nf:term:1024
   b_nf:term:1024
@@ -72,6 +74,7 @@ theorem term_derivation_neg_product
 /-- derive `-(c * a) => (-c) * a` if `c` is a literal -/
 macro "term_derivation_neg_product" : tactic => `(tactic| exact term_derivation_neg_product (by norm_num))
 
+-- TODO: a_term could be of its own type
 theorem term_derivation_neg_eq
   {α}
   {a term a_term : α}
@@ -86,6 +89,7 @@ theorem term_derivation_neg_eq
 macro "term_derivation_neg_eq" ha:term:1024 hneg_a_term:term:1024 : tactic
   => `(tactic| exact term_derivation_neg_eq $ha $hneg_a_term)
 
+-- TODO: ab_term could be of its own type
 theorem term_derivation_mul_product
   {αβ αβγ}
   {a_αβ b_αβ ab_term: αβ}
@@ -119,6 +123,7 @@ macro "term_derivation_mul_product"
   : tactic =>
   `(tactic| exact term_derivation_mul_product $hab $habc $hab_eq_coercion $hab_mul_coercion $hbc_mul_coercion)
 
+-- TODO: ab_term and ac_term could be of their own type
 theorem term_derivation_literal_mul_sum
   {π αβ αγ αβγ}
   {p term0_π term_π : π}
@@ -311,14 +316,6 @@ macro "term_derivation_non_reduced_power"
   hb:term:1024
   : tactic => `(tactic| exact term_derivation_non_reduced_power $ha $hb)
 
-/--
-Derive `c * a * b  =  c * (a * b)`
-when the factors `a` and `b` are given as exponentials
-with the form
-  a = a_base^(a_exp_val)   and   b = b_base^(b_exp_val)
-and assuming that the base of `a` is strictly less than that of `b`.
-This condition is used in our canonical term‐ordering.
--/
 theorem term_derivation_simple_product_mul_exponential_less
   {αβγ}
   {c_mul_a_αβγ b_αβγ b_αβ_αβγ c_αβγ a_mul_b_αβγ a_αβ_αβγ a_αγ_αβγ c_αγ_αβγ a_αβγ: αβγ}

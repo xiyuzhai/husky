@@ -1,12 +1,5 @@
 import Mathlib
 
-theorem term_derivation_add_assoc {α} {a b c b_add_c a_add_b: α} [CommRing α]
-  (hbc: b + c = b_add_c)
-  (hab: a + b = a_add_b)
-  : a + b_add_c = a_add_b + c := by
-  rw [← hbc, ← hab]
-  ring
-
 theorem term_derivation_add_atom {α} {a b term: α} [CommRing α] (h: a + (1:ℕ) * b^1 = term) : a + b = term := by
   rw [←h]
   ring
@@ -28,6 +21,7 @@ macro "term_derivation_atom_add_non_zero_literal" : tactic => `(tactic| (exact t
 example (x: ℝ) : x + 2 = 2 + ((1 :ℕ) : ℝ) * x^1 := by
   term_derivation_atom_add_non_zero_literal
 
+-- TODO: term_a and term_b could be of their own type
 theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {a1 b1 term_a1 term_b1 term: γ}
   [Add γ]
   (ha0: a = term_a)
@@ -62,6 +56,7 @@ macro "term_derivation_literal_add_literal": tactic => `(tactic| norm_num)
 
 macro "term_derivation_zero_add": tactic => `(tactic| simp)
 
+-- TODO: ac_term could be of its own type
 theorem term_derivation_sum_add_literal
     {αγ αβγ}
     {a_αγ c_αγ ac_term : αγ}
@@ -181,6 +176,7 @@ macro "term_derivation_atom_add_product_less"
   : tactic
   => `(tactic| exact term_derivation_atom_add_product_less $hzero_add_one_mul_a_pow_one_αβ_mul_coercion $hone_mul_a_pow_one_αβ_mul_coercion $hone_α_αβ_coercion_triangle $ha_pow_one_αβ_pow_coercion)
 
+-- TODO: ac_term could be of its own type
 theorem term_derivation_sum_add_product_greater
     {αγ αβγ}
     {a_αγ c_αγ ac_term : αγ}
@@ -255,3 +251,30 @@ macro "term_derivation_neg_sum"
   hb_neg_coercion:term:1024
   hneg_a_term_add_neg_b_term_αβ_add_coercion:term:1024
   : tactic => `(tactic| exact term_derivation_neg_sum $h_neg_a $h_neg_b $ha_eq_coercion $hb_eq_coercion $ha_neg_coercion $hb_neg_coercion $hneg_a_term_add_neg_b_term_αβ_add_coercion)
+
+theorem term_derivation_add_sum
+  {αβ αβ' αβ'γ αβγ}
+  {a_αβ b_αβ term_ab_αβ : αβ}
+  {term_ab_αβ' : αβ'}
+  {a_αβγ b_αβγ c_αβγ term_ab_add_c term b_add_c_αβγ term_αβγ term_ab_αβγ : αβγ}
+  {term_ab_αβ'γ c_αβ'γ term: αβ'γ}
+  [AddCommSemigroup αβ]
+  [AddCommSemigroup αβ'γ]
+  [AddCommSemigroup αβγ]
+  (h_ab: a_αβ + b_αβ = term_ab_αβ)
+  (h_ab_add_c: term_ab_αβ'γ + c_αβ'γ = term)
+  (hb_add_c_add_coercion: b_add_c_αβγ = b_αβγ + c_αβγ)
+  : a_αβγ + b_add_c_αβγ = term_αβγ := by
+  rw [hb_add_c_add_coercion]
+  rw [← add_assoc]
+  have h : a_αβγ + b_αβγ = term_ab_αβγ := by
+    sorry
+  rw [h]
+  -- exact h_ab_add_c
+  sorry
+
+/-- derive `a + (b + c) => term` from `a + b => term_ab` and `term_ab + c => term` -/
+macro "term_derivation_add_sum"
+  term_ab:term:1024
+  term_ab_add_c:term:1024
+  : tactic => `(tactic| exact term_derivation_add_sum $term_ab $term_ab_add_c)
