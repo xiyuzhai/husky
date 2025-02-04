@@ -321,7 +321,14 @@ fn derive_mul_exponential<'db, 'sess>(
             let αβ = hc.infer_mul_signature(α, β).expr_ty();
             match lopd_base.cmp(&ropd_base) {
                 std::cmp::Ordering::Less => (
-                    VdMirTermDerivationConstruction::AtomMulExponentialLess,
+                    VdMirTermDerivationConstruction::AtomMulExponentialLess {
+                        a_pow_one_pow_coercion: VdMirPowCoercion::new(
+                            α,
+                            elr.ty_menu().nat,
+                            αβ,
+                            elr.ty_menu().nat,
+                        ),
+                    },
                     None,
                 ),
                 std::cmp::Ordering::Equal => todo!(),

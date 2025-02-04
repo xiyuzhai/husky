@@ -352,6 +352,22 @@ macro "term_derivation_simple_product_mul_exponential_less"
     $ha_αβ_αβγ_coercion_triangle
   )
 
+theorem term_derivation_atom_mul_exponential_less
+  {αβ}
+  {a_αβ b_αβ a_pow_one_αβ : αβ}
+  [CommSemiring αβ]
+  (ha_pow_one_pow_coercion : a_pow_one_αβ = a_αβ^(1:ℕ))
+  : a_αβ * b_αβ = ((1:ℕ):αβ) * (a_pow_one_αβ * b_αβ) := by
+  rw[ha_pow_one_pow_coercion]
+  simp
+
+/-- derive `a * b => 1 * (a^1 * b)` if `a` and `b` are exponentials with `a`'s base being less than `b`'s base -/
+macro "term_derivation_atom_mul_exponential_less"
+  ha_pow_one_pow_coercion:term:1024
+  : tactic => `(
+    tactic| exact term_derivation_atom_mul_exponential_less $ha_pow_one_pow_coercion
+  )
+
 theorem term_derivation_atom_mul_exponential_greater
   {αβ}
   {a_αβ b_αβ a_pow_one_αβ : αβ}
@@ -382,3 +398,12 @@ theorem term_derivation_div_atom
 macro "term_derivation_div_atom"
   ha_mul_b_inv_dn:term:1024
   : tactic => `(tactic| exact term_derivation_div_atom $ha_mul_b_inv_dn)
+
+macro "term_derivation_simple_product_mul_base_less"
+  : tactic => `(tactic| fail "not implemented")
+
+macro "term_derivation_simple_product_mul_base_equal"
+  : tactic => `(tactic| fail "not implemented")
+
+macro "term_derivation_simple_product_mul_base_greater"
+  : tactic => `(tactic| fail "not implemented")

@@ -272,7 +272,9 @@ pub enum VdMirTermDerivationConstruction {
         a_mul_b_inv_dn: VdMirTermDerivationIdx,
     },
     /// derive `a * b => 1 * (a^1 * b)`
-    AtomMulExponentialLess,
+    AtomMulExponentialLess {
+        a_pow_one_pow_coercion: VdMirPowCoercion,
+    },
     /// derive `a * b => 1 * (b * a^1)`
     AtomMulExponentialGreater {
         a_pow_one_pow_coercion: VdMirPowCoercion,
@@ -537,7 +539,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => {
                 check_div_atom(prop, a_mul_b_inv_dn, hc)
             }
-            VdMirTermDerivationConstruction::AtomMulExponentialLess => {
+            VdMirTermDerivationConstruction::AtomMulExponentialLess { .. } => {
                 check_atom_mul_exponential_less(prop, hc)
             }
             VdMirTermDerivationConstruction::AtomMulExponentialGreater { .. } => {

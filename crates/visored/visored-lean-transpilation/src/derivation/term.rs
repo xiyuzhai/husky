@@ -361,7 +361,9 @@ where
             VdMirTermDerivationConstruction::DivAtom { a_mul_b_inv_dn } => {
                 Some([a_mul_b_inv_dn].to_lean(self))
             }
-            VdMirTermDerivationConstruction::AtomMulExponentialLess => None,
+            VdMirTermDerivationConstruction::AtomMulExponentialLess {
+                a_pow_one_pow_coercion,
+            } => Some([C(a_pow_one_pow_coercion.into())].to_lean(self)),
             VdMirTermDerivationConstruction::AtomMulExponentialGreater {
                 a_pow_one_pow_coercion,
             } => Some([C(a_pow_one_pow_coercion.into())].to_lean(self)),
