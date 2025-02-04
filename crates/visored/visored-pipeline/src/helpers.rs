@@ -131,19 +131,11 @@ Regularized proof:
 \begin{{tcolorbox}}[colback=red!10, width=\linewidth]
 {}
 \end{{tcolorbox}}
-
-Lean 4 code:
-\begin{{tcolorbox}}[colback=white!10, width=\linewidth]
-\begin{{lstlisting}}[language=Lean4]
-{}
-\end{{lstlisting}}
-\end{{tcolorbox}}
 "#,
             tracker.input.content,
             tracker.simplified_proof.1,
             tracker.elaborated_proof.1,
             tracker.regularized_proof.1,
-            tracker.lean4_code
         )
         .unwrap();
     }
