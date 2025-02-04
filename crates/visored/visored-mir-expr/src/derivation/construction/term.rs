@@ -187,7 +187,14 @@ pub enum VdMirTermDerivationConstruction {
         zero_add_b_add_coercion: VdMirSeparatorCoercion,
     },
     /// derive `c * a * b => c * (a * b)` if `a` and `b` are exponentials with `a`'s base being less than `b`'s base
-    SimpleProductMulExponentialLess,
+    SimpleProductMulExponentialLess {
+        c_mul_a_mul_coercion: VdMirSeparatorCoercion,
+        a_mul_b_mul_coercion: VdMirSeparatorCoercion,
+        c_ac_abc_coercion_triangle: VdMirCoercionTriangle,
+        a_ac_abc_coercion_triangle: VdMirCoercionTriangle,
+        b_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+        a_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+    },
     /// derive `c * a * b => c * (b * a)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base
     SimpleProductMulExponentialGreater,
     /// derive `c * a * b => c * (a * b^1)`
@@ -438,7 +445,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::ProductAddProductGreater {
                 zero_add_b_add_coercion,
             } => check_product_add_product_greater(prop, hc),
-            VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => {
+            VdMirTermDerivationConstruction::SimpleProductMulExponentialLess { .. } => {
                 check_simple_product_mul_exponential_less(prop, hc)
             }
             VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => {

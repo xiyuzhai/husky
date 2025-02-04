@@ -196,7 +196,24 @@ where
             VdMirTermDerivationConstruction::ProductAddProductGreater {
                 zero_add_b_add_coercion,
             } => Some([C(zero_add_b_add_coercion.into())].to_lean(self)),
-            VdMirTermDerivationConstruction::SimpleProductMulExponentialLess => None,
+            VdMirTermDerivationConstruction::SimpleProductMulExponentialLess {
+                c_mul_a_mul_coercion,
+                a_mul_b_mul_coercion,
+                c_ac_abc_coercion_triangle,
+                a_ac_abc_coercion_triangle,
+                b_ab_abc_coercion_triangle,
+                a_ab_abc_coercion_triangle,
+            } => Some(
+                [
+                    C(c_mul_a_mul_coercion.into()),
+                    C(a_mul_b_mul_coercion.into()),
+                    C(c_ac_abc_coercion_triangle.into()),
+                    C(a_ac_abc_coercion_triangle.into()),
+                    C(b_ab_abc_coercion_triangle.into()),
+                    C(a_ab_abc_coercion_triangle.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => None,
             VdMirTermDerivationConstruction::SimpleProductMulBaseLess => None,
             VdMirTermDerivationConstruction::SimpleProductMulBaseGreater => None,

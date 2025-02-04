@@ -294,3 +294,47 @@ macro "term_derivation_non_reduced_power"
   ha:term:1024
   hb:term:1024
   : tactic => `(tactic| exact term_derivation_non_reduced_power $ha $hb)
+
+/--
+Derive `c * a * b  =  c * (a * b)`
+when the factors `a` and `b` are given as exponentials
+with the form
+  a = a_base^(a_exp_val)   and   b = b_base^(b_exp_val)
+and assuming that the base of `a` is strictly less than that of `b`.
+This condition is used in our canonical term‐ordering.
+-/
+theorem term_derivation_simple_product_mul_exponential_less
+  {αβγ}
+  {c_mul_a_αβγ b_αβγ b_αβ_αβγ c_αβγ a_mul_b_αβγ a_αβ_αβγ a_αγ_αβγ c_αγ_αβγ a_αβγ: αβγ}
+  [CommSemiring αβγ]
+  (hc_mul_a_αβγ_mul_coercion : c_mul_a_αβγ = c_αγ_αβγ * a_αγ_αβγ)
+  (ha_mul_b_αβγ_mul_coercion : a_mul_b_αβγ = a_αβ_αβγ * b_αβ_αβγ)
+  (hc_αγ_αβγ_coercion_triangle: c_αγ_αβγ = c_αβγ)
+  (ha_αγ_αβγ_coercion_triangle: a_αγ_αβγ = a_αβγ)
+  (hb_αβ_αβγ_coercion_triangle: b_αβ_αβγ = b_αβγ)
+  (ha_αβ_αβγ_coercion_triangle: a_αβ_αβγ = a_αβγ)
+  : c_mul_a_αβγ * b_αβγ = c_αβγ * a_mul_b_αβγ := by
+  rw [hc_mul_a_αβγ_mul_coercion]
+  rw [ha_mul_b_αβγ_mul_coercion]
+  rw [hc_αγ_αβγ_coercion_triangle]
+  rw [ha_αγ_αβγ_coercion_triangle]
+  rw [hb_αβ_αβγ_coercion_triangle]
+  rw [ha_αβ_αβγ_coercion_triangle]
+  rw [← mul_assoc]
+
+/-- derive `c * a * b => c * (a * b)` if `a` and `b` are exponentials with `a`'s base being less than `b`'s base -/
+macro "term_derivation_simple_product_mul_exponential_less"
+  hc_mul_a_αβγ_mul_coercion:term:1024
+  ha_mul_b_αβγ_mul_coercion:term:1024
+  hc_αγ_αβγ_coercion_triangle:term:1024
+  ha_αγ_αβγ_coercion_triangle:term:1024
+  hb_αβ_αβγ_coercion_triangle:term:1024
+  ha_αβ_αβγ_coercion_triangle:term:1024
+  : tactic => `(tactic| exact term_derivation_simple_product_mul_exponential_less
+    $hc_mul_a_αβγ_mul_coercion
+    $ha_mul_b_αβγ_mul_coercion
+    $hc_αγ_αβγ_coercion_triangle
+    $ha_αγ_αβγ_coercion_triangle
+    $hb_αβ_αβγ_coercion_triangle
+    $ha_αβ_αβγ_coercion_triangle
+  )

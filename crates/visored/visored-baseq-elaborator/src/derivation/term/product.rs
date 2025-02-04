@@ -259,11 +259,39 @@ fn derive_mul_exponential<'db, 'sess>(
                 _ => unreachable!(),
             }
             if is_product_simple(leader, followers) {
-                let a_base = exponential_base(followers[0].1);
+                let c = leader;
+                let a = followers[0].1;
+                let b = ropd;
+                let a_ty = a.ty();
+                let b_ty = b.ty();
+                let c_ty = c.ty();
+                let ab_ty = hc.infer_mul_signature(a_ty, b_ty).expr_ty();
+                let ac_ty = hc.infer_mul_signature(a_ty, c_ty).expr_ty();
+                let abc_ty = hc.infer_mul_signature(ab_ty, c_ty).expr_ty();
+                let a_base = exponential_base(a);
                 let b_base = exponential_base(ropd);
                 match a_base.cmp(&b_base) {
                     core::cmp::Ordering::Less => (
-                        VdMirTermDerivationConstruction::SimpleProductMulExponentialLess,
+                        VdMirTermDerivationConstruction::SimpleProductMulExponentialLess {
+                            c_mul_a_mul_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(
+                                ac_ty, abc_ty,
+                            ),
+                            a_mul_b_mul_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(
+                                ab_ty, abc_ty,
+                            ),
+                            c_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                c_ty, ac_ty, abc_ty,
+                            ),
+                            a_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                a_ty, ac_ty, abc_ty,
+                            ),
+                            b_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                b_ty, ab_ty, abc_ty,
+                            ),
+                            a_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                a_ty, ab_ty, abc_ty,
+                            ),
+                        },
                         None,
                     ),
                     core::cmp::Ordering::Equal => todo!(),
