@@ -151,7 +151,30 @@ where
             }
             VdMirTermDerivationConstruction::SumAddProductEqualKeep => None,
             VdMirTermDerivationConstruction::SumAddProductEqualCancel => None,
-            VdMirTermDerivationConstruction::SumAddProductGreater { .. } => None,
+            VdMirTermDerivationConstruction::SumAddProductGreater {
+                a_add_c_nf,
+                term_ac_add_b_nf,
+                ab_add_coercion,
+                a_ab_abc_coercion_triangle,
+                b_ab_abc_coercion_triangle,
+                ac_eq_coercion,
+                ac_add_coercion,
+                a_ac_abc_coercion_triangle,
+                c_ac_abc_coercion_triangle,
+            } => Some(
+                [
+                    D(*a_add_c_nf),
+                    D(*term_ac_add_b_nf),
+                    C(ab_add_coercion.into()),
+                    C(a_ab_abc_coercion_triangle.into()),
+                    C(b_ab_abc_coercion_triangle.into()),
+                    C(ac_eq_coercion.into()),
+                    C(ac_add_coercion.into()),
+                    C(a_ac_abc_coercion_triangle.into()),
+                    C(c_ac_abc_coercion_triangle.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::ProductAddProductLess {
                 zero_add_a_add_coercion,
             } => Some([C(zero_add_a_add_coercion.into())].to_lean(self)),

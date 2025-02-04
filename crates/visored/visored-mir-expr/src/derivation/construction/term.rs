@@ -85,6 +85,13 @@ pub enum VdMirTermDerivationConstruction {
     SumAddProductGreater {
         a_add_c_nf: VdMirTermDerivationIdx,
         term_ac_add_b_nf: VdMirTermDerivationIdx,
+        ab_add_coercion: VdMirSeparatorCoercion,
+        a_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+        b_ab_abc_coercion_triangle: VdMirCoercionTriangle,
+        ac_eq_coercion: VdMirSeparatorCoercion,
+        ac_add_coercion: VdMirSeparatorCoercion,
+        a_ac_abc_coercion_triangle: VdMirCoercionTriangle,
+        c_ac_abc_coercion_triangle: VdMirCoercionTriangle,
     },
     LiteralMulLiteral,
     MulEq {
@@ -402,6 +409,13 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::SumAddProductGreater {
                 a_add_c_nf,
                 term_ac_add_b_nf,
+                ab_add_coercion,
+                a_ab_abc_coercion_triangle,
+                b_ab_abc_coercion_triangle,
+                ac_eq_coercion,
+                ac_add_coercion,
+                a_ac_abc_coercion_triangle,
+                c_ac_abc_coercion_triangle,
             } => check_sum_add_product_greater(prop, a_add_c_nf, term_ac_add_b_nf, hc),
             VdMirTermDerivationConstruction::ZeroAdd { a_nf } => check_zero_add(prop, a_nf, hc),
             VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {

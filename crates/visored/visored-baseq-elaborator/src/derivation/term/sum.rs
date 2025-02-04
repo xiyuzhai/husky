@@ -304,10 +304,35 @@ fn merge_product_construction<'db, 'sess>(
                             );
                             let c = ropd;
                             let a_add_c_nf = derive_add(a, c, elr, hc);
+                            let a_ty = a.ty();
+                            let b_ty = b.ty();
+                            let c_ty = c.ty();
+                            let ab_ty = lopd.ty();
+                            let ac_ty = a_add_c_nf.expr().ty();
                             let term_ac_add_b_nf = derive_add(a_add_c_nf.derived(), b, elr, hc);
+                            let abc_ty = term_ac_add_b_nf.expr().ty();
                             VdMirTermDerivationConstruction::SumAddProductGreater {
                                 a_add_c_nf: a_add_c_nf.derivation(),
                                 term_ac_add_b_nf: term_ac_add_b_nf.derivation(),
+                                ab_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(
+                                    ab_ty, abc_ty,
+                                ),
+                                a_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                    a_ty, ab_ty, abc_ty,
+                                ),
+                                b_ab_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                    b_ty, ab_ty, abc_ty,
+                                ),
+                                ac_eq_coercion: VdMirSeparatorCoercion::new_eq(ac_ty, abc_ty),
+                                ac_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(
+                                    ac_ty, abc_ty,
+                                ),
+                                a_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                    a_ty, ac_ty, abc_ty,
+                                ),
+                                c_ac_abc_coercion_triangle: VdMirCoercionTriangle::new(
+                                    c_ty, ac_ty, abc_ty,
+                                ),
                             }
                         }
                     }

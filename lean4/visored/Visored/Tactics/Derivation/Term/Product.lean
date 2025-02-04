@@ -206,6 +206,37 @@ macro "term_derivation_literal_mul_sum"
   hπ_coercion:term:1024
   : tactic => `(tactic| exact term_derivation_literal_mul_sum $hp0 $hab_nf $hac_nf $habc_nf $hβγ_αβγ_pow_coercion $hbc_coercion $hαβ_αβγ_eq_coercion $hαβ_αβγ_mul_coercion $hαγ_αβγ_eq_coercion $hαγ_αβγ_mul_coercion $ha_αβ_αβγ_coercion_triangle $ha_αγ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hb_βγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle $hc_βγ_αβγ_coercion_triangle $hπ_coercion)
 
+theorem term_derivation_simple_product_mul_literal
+  {αγδ}
+  {c_mul_a_αγδ d_αγδ e_mul_a_αγδ c_αγ_αγδ a_αγ_αγδ e_αγδ e_αε_αγδ a_αε_αγδ a_αγδ : αγδ}
+  [CommRing αγδ]
+  (hc_mul_d_eqs_e: c_αγ_αγδ * d_αγδ = e_αγδ)
+  (hc_mul_a_mul_coercion: c_mul_a_αγδ = c_αγ_αγδ * a_αγ_αγδ)
+  (he_mul_a_mul_coercion: e_mul_a_αγδ = e_αε_αγδ * a_αε_αγδ)
+  (ha_αε_αγδ_coercion_triangle : a_αε_αγδ = a_αγδ)
+  (ha_αγ_αγδ_coercion_triangle : a_αγ_αγδ = a_αγδ)
+  (he_αε_αγδ_coercion_triangle : e_αε_αγδ = e_αγδ)
+  : c_mul_a_αγδ * d_αγδ = e_mul_a_αγδ := by
+  rw [hc_mul_a_mul_coercion]
+  have h : c_αγ_αγδ * a_αγ_αγδ * d_αγδ = (c_αγ_αγδ * d_αγδ) * a_αγ_αγδ := by ring
+  rw [h]
+  rw [he_mul_a_mul_coercion]
+  rw [ha_αε_αγδ_coercion_triangle]
+  rw [ha_αγ_αγδ_coercion_triangle]
+  rw [he_αε_αγδ_coercion_triangle]
+  rw [hc_mul_d_eqs_e]
+
+/--
+derive `(c * a) * d => e * a` if `c`, `d` and `e` are literals and `e` is equal to `c * d`
+-/
+macro "term_derivation_simple_product_mul_literal"
+  hc_mul_a_mul_coercion:term:1024
+  he_mul_a_mul_coercion:term:1024
+  ha_αε_αγδ_coercion_triangle:term:1024
+  ha_αγ_αγδ_coercion_triangle:term:1024
+  he_αε_αγδ_coercion_triangle:term:1024
+  : tactic => `(tactic| exact term_derivation_simple_product_mul_literal (by norm_num) $hc_mul_a_mul_coercion $he_mul_a_mul_coercion $ha_αε_αγδ_coercion_triangle $ha_αγ_αγδ_coercion_triangle $he_αε_αγδ_coercion_triangle)
+
 macro "term_derivation_atom_mul_atom_less" : tactic => `(tactic| fail "not implemented")
 
 macro "term_derivation_atom_mul_atom_equal" : tactic => `(tactic| fail "not implemented")

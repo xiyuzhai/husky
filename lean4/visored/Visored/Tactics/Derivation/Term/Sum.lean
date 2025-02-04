@@ -157,38 +157,6 @@ derive `a + b => 0 + b + a` if `a` and `b` are products and the stem of `a` is g
 -/
 macro "term_derivation_product_add_product_greater" hzero_add_b_add_coercion:term:1024 : tactic => `(tactic| exact term_derivation_product_add_product_greater $hzero_add_b_add_coercion)
 
-theorem term_derivation_simple_product_mul_literal
-  {αγδ}
-  {c_mul_a_αγδ d_αγδ e_mul_a_αγδ c_αγ_αγδ a_αγ_αγδ e_αγδ e_αε_αγδ a_αε_αγδ a_αγδ : αγδ}
-  [CommRing αγδ]
-  (hc_mul_d_eqs_e: c_αγ_αγδ * d_αγδ = e_αγδ)
-  (hc_mul_a_mul_coercion: c_mul_a_αγδ = c_αγ_αγδ * a_αγ_αγδ)
-  (he_mul_a_mul_coercion: e_mul_a_αγδ = e_αε_αγδ * a_αε_αγδ)
-  (ha_αε_αγδ_coercion_triangle : a_αε_αγδ = a_αγδ)
-  (ha_αγ_αγδ_coercion_triangle : a_αγ_αγδ = a_αγδ)
-  (he_αε_αγδ_coercion_triangle : e_αε_αγδ = e_αγδ)
-  : c_mul_a_αγδ * d_αγδ = e_mul_a_αγδ := by
-  rw [hc_mul_a_mul_coercion]
-  have h : c_αγ_αγδ * a_αγ_αγδ * d_αγδ = (c_αγ_αγδ * d_αγδ) * a_αγ_αγδ := by ring
-  rw [h]
-  rw [he_mul_a_mul_coercion]
-  rw [ha_αε_αγδ_coercion_triangle]
-  rw [ha_αγ_αγδ_coercion_triangle]
-  rw [he_αε_αγδ_coercion_triangle]
-  rw [hc_mul_d_eqs_e]
-
-
-/--
-derive `(c * a) * d => e * a` if `c`, `d` and `e` are literals and `e` is equal to `c * d`
--/
-macro "term_derivation_simple_product_mul_literal"
-  hc_mul_a_mul_coercion:term:1024
-  he_mul_a_mul_coercion:term:1024
-  ha_αε_αγδ_coercion_triangle:term:1024
-  ha_αγ_αγδ_coercion_triangle:term:1024
-  he_αε_αγδ_coercion_triangle:term:1024
-  : tactic => `(tactic| exact term_derivation_simple_product_mul_literal (by norm_num) $hc_mul_a_mul_coercion $he_mul_a_mul_coercion $ha_αε_αγδ_coercion_triangle $ha_αγ_αγδ_coercion_triangle $he_αε_αγδ_coercion_triangle)
-
 theorem term_derivation_atom_add_product_less
   {αβ}
   {one_α_αβ a_αβ a_pow_one_αβ b_αβ zero_add_one_mul_a_pow_one_αβ one_mul_a_pow_one_αβ : αβ}
@@ -213,4 +181,45 @@ macro "term_derivation_atom_add_product_less"
   : tactic
   => `(tactic| exact term_derivation_atom_add_product_less $hzero_add_one_mul_a_pow_one_αβ_mul_coercion $hone_mul_a_pow_one_αβ_mul_coercion $hone_α_αβ_coercion_triangle $ha_pow_one_αβ_pow_coercion)
 
-macro "term_derivation_sum_add_product_greater" : tactic => `(tactic| fail "not implemented")
+theorem term_derivation_sum_add_product_greater
+    {αγ αβγ}
+    {a_αγ c_αγ ac_term : αγ}
+    {a_αβγ b_αβγ ac_term_αβγ term a_add_b_αβγ a_add_c_αβγ c_αβγ c_αγ_αβγ a_αβ_αβγ a_αγ_αβγ b_αβ_αβγ: αβγ}
+    [Add αγ] [AddCommSemigroup αβγ]
+    (hac : a_αγ + c_αγ = ac_term)
+    (hacb : ac_term_αβγ + b_αβγ = term)
+    (ha_add_b_αβγ_add_coercion : a_add_b_αβγ = a_αβ_αβγ + b_αβ_αβγ)
+    (ha_αβ_αβγ_coercion_triangle : a_αβ_αβγ = a_αβγ)
+    (hb_αβ_αβγ_coercion_triangle : b_αβ_αβγ = b_αβγ)
+    (hac_eq_coercion : a_αγ + c_αγ = ac_term ↔ a_add_c_αβγ = ac_term_αβγ)
+    (hac_αβγ_add_coercion : a_add_c_αβγ = a_αγ_αβγ + c_αγ_αβγ)
+    (ha_αγ_αβγ_coercion_triangle : a_αγ_αβγ = a_αβγ)
+    (hc_αγ_αβγ_coercion_triangle : c_αγ_αβγ = c_αβγ)
+    : a_add_b_αβγ + c_αβγ = term := by
+  rw [ha_add_b_αβγ_add_coercion]
+  rw [ha_αβ_αβγ_coercion_triangle]
+  rw [hb_αβ_αβγ_coercion_triangle]
+  have h : a_add_c_αβγ = ac_term_αβγ := hac_eq_coercion.mp hac
+  have h : a_αβγ + c_αβγ = ac_term_αβγ := by
+    rw [← ha_αγ_αβγ_coercion_triangle]
+    rw [← hc_αγ_αβγ_coercion_triangle]
+    rw [← hac_αβγ_add_coercion]
+    exact h
+  rw [add_comm]
+  rw [← add_assoc]
+  nth_rw 2 [add_comm]
+  rw [h]
+  exact hacb
+
+/-- derive `a + b + c => term` from `a + c => term_ac` and `term_ac + b => term` -/
+macro "term_derivation_sum_add_product_greater"
+  hac:term:1024
+  hacb:term:1024
+  ha_add_b_αβγ_add_coercion:term:1024
+  ha_αβ_αβγ_coercion_triangle:term:1024
+  hb_αβ_αβγ_coercion_triangle:term:1024
+  hac_eq_coercion:term:1024
+  ha_add_c_αβγ_add_coercion:term:1024
+  ha_αγ_αβγ_coercion_triangle:term:1024
+  hc_αγ_αβγ_coercion_triangle:term:1024
+  : tactic => `(tactic| exact term_derivation_sum_add_product_greater $hac $hacb $ha_add_b_αβγ_add_coercion $ha_αβ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hac_eq_coercion $ha_add_c_αβγ_add_coercion $ha_αγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle)
