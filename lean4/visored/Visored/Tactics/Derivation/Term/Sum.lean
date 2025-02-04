@@ -32,12 +32,12 @@ theorem term_derivation_add_eq {α β γ} {a term_a :α} {b term_b:β} {a1 b1 te
   [Add γ]
   (ha0: a = term_a)
   (hb0: b = term_b)
-  (a_coercion: a = term_a -> a1 = term_a1)
-  (b_coercion: b = term_b -> b1 = term_b1)
+  (a_coercion: a = term_a ↔ a1 = term_a1)
+  (b_coercion: b = term_b ↔ b1 = term_b1)
   (hab: term_a1 + term_b1 = term)
   : a1 + b1 = term := by
-  have ha : a1 = term_a1 := a_coercion ha0
-  have hb : b1 = term_b1 := b_coercion hb0
+  have ha : a1 = term_a1 := a_coercion.mp ha0
+  have hb : b1 = term_b1 := b_coercion.mp hb0
   rw [ha, hb]
   exact hab
 
@@ -72,7 +72,7 @@ theorem term_derivation_sum_add_literal
     (ha_add_b_αβγ_add_coercion : a_add_b_αβγ = a_αβ_αβγ + b_αβ_αβγ)
     (ha_αβ_αβγ_coercion_triangle : a_αβ_αβγ = a_αβγ)
     (hb_αβ_αβγ_coercion_triangle : b_αβ_αβγ = b_αβγ)
-    (hac_eq_coercion : a_αγ + c_αγ = ac_term -> a_add_c_αβγ = ac_term_αβγ)
+    (hac_eq_coercion : a_αγ + c_αγ = ac_term ↔ a_add_c_αβγ = ac_term_αβγ)
     (hac_αβγ_add_coercion : a_add_c_αβγ = a_αγ_αβγ + c_αγ_αβγ)
     (ha_αγ_αβγ_coercion_triangle : a_αγ_αβγ = a_αβγ)
     (hc_αγ_αβγ_coercion_triangle : c_αγ_αβγ = c_αβγ)
@@ -86,7 +86,7 @@ theorem term_derivation_sum_add_literal
     rw [← (add_assoc c_αβγ  a_αβγ  b_αβγ)]
   rw [← add_assoc]
   nth_rw 2 [add_comm]
-  have h : a_add_c_αβγ = ac_term_αβγ := hac_eq_coercion hac
+  have h : a_add_c_αβγ = ac_term_αβγ := hac_eq_coercion.mp hac
   have h : a_αβγ + c_αβγ = ac_term_αβγ := by
     rw [← ha_αγ_αβγ_coercion_triangle]
     rw [← hc_αγ_αβγ_coercion_triangle]

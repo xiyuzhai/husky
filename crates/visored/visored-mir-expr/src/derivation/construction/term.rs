@@ -34,9 +34,11 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a <cmp> b => term <cmp> 0` through `a => a_nf`, `a => b_nf` and `a_nf - b_nf => term`
     NumComparison {
         separator: VdMirBaseComparisonSeparator,
-        lhs_nf: VdMirTermDerivationIdx,
-        rhs_nf: VdMirTermDerivationIdx,
-        lhs_nf_minus_rhs_nf_nf: VdMirTermDerivationIdx,
+        a_nf: VdMirTermDerivationIdx,
+        b_nf: VdMirTermDerivationIdx,
+        a_nf_sub_b_nf_nf: VdMirTermDerivationIdx,
+        a_eq_coercion: VdMirSeparatorCoercion,
+        b_eq_coercion: VdMirSeparatorCoercion,
     },
     /// derive `a - b => term` from `a + (-b) => term`
     SubEqsAddNeg {
@@ -304,10 +306,12 @@ impl VdMirTermDerivationConstruction {
             }
             VdMirTermDerivationConstruction::NumComparison {
                 separator,
-                lhs_nf,
-                rhs_nf,
-                lhs_nf_minus_rhs_nf_nf,
-            } => check_num_comparison(prop, separator, lhs_nf, rhs_nf, lhs_nf_minus_rhs_nf_nf, hc),
+                a_nf,
+                b_nf,
+                a_nf_sub_b_nf_nf,
+                a_eq_coercion,
+                b_eq_coercion,
+            } => check_num_comparison(prop, separator, a_nf, b_nf, a_nf_sub_b_nf_nf, hc),
             VdMirTermDerivationConstruction::SubEqsAddNeg {
                 add_neg,
                 b_neg_coercion,

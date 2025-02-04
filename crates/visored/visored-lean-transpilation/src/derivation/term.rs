@@ -27,15 +27,19 @@ where
             VdMirTermDerivationConstruction::Reflection => None,
             VdMirTermDerivationConstruction::NumComparison {
                 separator,
-                lhs_nf,
-                rhs_nf,
-                lhs_nf_minus_rhs_nf_nf,
+                a_nf,
+                b_nf,
+                a_nf_sub_b_nf_nf,
+                a_eq_coercion,
+                b_eq_coercion,
             } => Some(
                 [
                     A(separator.unicode()),
-                    D(*lhs_nf),
-                    D(*rhs_nf),
-                    D(*lhs_nf_minus_rhs_nf_nf),
+                    D(*a_nf),
+                    D(*b_nf),
+                    D(*a_nf_sub_b_nf_nf),
+                    C(a_eq_coercion.into()),
+                    C(b_eq_coercion.into()),
                 ]
                 .to_lean(self),
             ),

@@ -1,4 +1,5 @@
 use super::*;
+use visored_mir_expr::coercion::VdMirSeparatorCoercion;
 use visored_mir_opr::separator::chaining::{
     VdMirBaseChainingSeparator, VdMirBaseComparisonSeparator, VdMirBaseRelationSeparator,
 };
@@ -67,20 +68,25 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     fn transcribe_num_comparison_chaining_separated_list_term_derivation_construction(
         &mut self,
-        lhs: VdBsqExprNormalized<'sess>,
+        a_nf: VdBsqExprNormalized<'sess>,
         signature: VdBaseChainingSeparatorSignature,
         separator: VdMirBaseComparisonSeparator,
-        rhs: VdBsqExprNormalized<'sess>,
+        b_nf: VdBsqExprNormalized<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let lhs_minus_rhs = self.mk_sub(**lhs, **rhs, hc);
+        let a_sub_b = self.mk_sub(**a_nf, **b_nf, hc);
+        let a_ty = a_nf.expr().ty();
+        let b_ty = b_nf.expr().ty();
+        let ab_ty = a_sub_b.ty();
         VdMirTermDerivationConstruction::NumComparison {
             separator,
-            lhs_nf: lhs.derivation(),
-            rhs_nf: rhs.derivation(),
-            lhs_nf_minus_rhs_nf_nf: self
-                .transcribe_expr_term_derivation(lhs_minus_rhs, hc)
+            a_nf: a_nf.derivation(),
+            b_nf: b_nf.derivation(),
+            a_nf_sub_b_nf_nf: self
+                .transcribe_expr_term_derivation(a_sub_b, hc)
                 .derivation(),
+            a_eq_coercion: VdMirSeparatorCoercion::new_eq(a_ty, ab_ty),
+            b_eq_coercion: VdMirSeparatorCoercion::new_eq(b_ty, ab_ty),
         }
     }
 }
