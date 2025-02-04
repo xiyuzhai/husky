@@ -129,7 +129,10 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a * a => 1 * a^2`
     AtomMulAtomEqual,
     /// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
-    AtomMulAtomGreater,
+    AtomMulAtomGreater {
+        a_pow_one_pow_coercion: VdMirPowCoercion,
+        b_pow_one_pow_coercion: VdMirPowCoercion,
+    },
     /// derive `√a => 1 * a_nf^(1/2)` from `a => a_nf`
     Sqrt {
         radicand_nf: VdMirTermDerivationIdx,
@@ -387,7 +390,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AtomMulAtomEqual => {
                 check_atom_mul_atom_equal(prop, hc)
             }
-            VdMirTermDerivationConstruction::AtomMulAtomGreater => {
+            VdMirTermDerivationConstruction::AtomMulAtomGreater { .. } => {
                 check_atom_mul_atom_greater(prop, hc)
             }
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {

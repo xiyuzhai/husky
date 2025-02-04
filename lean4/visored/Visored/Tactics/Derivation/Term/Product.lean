@@ -260,7 +260,23 @@ macro "term_derivation_atom_mul_atom_less"
 
 macro "term_derivation_atom_mul_atom_equal" : tactic => `(tactic| fail "not implemented")
 
-macro "term_derivation_atom_mul_atom_greater" : tactic => `(tactic| fail "not implemented")
+theorem term_derivation_atom_mul_atom_greater
+  {αβ}
+  {a_αβ b_αβ a_pow_one_αβ b_pow_one_αβ : αβ}
+  [CommSemiring αβ]
+  (ha_pow_one_pow_coercion : a_pow_one_αβ = a_αβ^(1:ℕ))
+  (hb_pow_one_pow_coercion : b_pow_one_αβ = b_αβ^(1:ℕ))
+  : a_αβ * b_αβ = ((1:ℕ):αβ) * (b_pow_one_αβ * a_pow_one_αβ) := by
+  rw[ha_pow_one_pow_coercion]
+  rw[hb_pow_one_pow_coercion]
+  rw[mul_comm]
+  simp
+
+/-- derive `a * b => 1 * (b^1 * a^1)` if `a` and `b` are atoms with the term order of `a` being greater than `b` -/
+macro "term_derivation_atom_mul_atom_greater"
+  ha_pow_one_pow_coercion:term:1024
+  hb_pow_one_pow_coercion:term:1024
+  : tactic => `(tactic| exact term_derivation_atom_mul_atom_greater $ha_pow_one_pow_coercion $hb_pow_one_pow_coercion)
 
 theorem term_derivation_sqrt
   {a a_nf : ℝ}

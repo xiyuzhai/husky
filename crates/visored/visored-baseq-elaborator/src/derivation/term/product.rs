@@ -403,7 +403,22 @@ fn derive_mul_base<'db, 'sess>(
                     ),
                 },
                 std::cmp::Ordering::Equal => VdMirTermDerivationConstruction::AtomMulAtomEqual,
-                std::cmp::Ordering::Greater => VdMirTermDerivationConstruction::AtomMulAtomGreater,
+                std::cmp::Ordering::Greater => {
+                    VdMirTermDerivationConstruction::AtomMulAtomGreater {
+                        a_pow_one_pow_coercion: VdMirPowCoercion::new(
+                            a_ty,
+                            elr.ty_menu().nat,
+                            ab_ty,
+                            elr.ty_menu().nat,
+                        ),
+                        b_pow_one_pow_coercion: VdMirPowCoercion::new(
+                            b_ty,
+                            elr.ty_menu().nat,
+                            ab_ty,
+                            elr.ty_menu().nat,
+                        ),
+                    }
+                }
             };
             (construction, None)
         }

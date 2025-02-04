@@ -116,7 +116,16 @@ where
                 .to_lean(self),
             ),
             VdMirTermDerivationConstruction::AtomMulAtomEqual => None,
-            VdMirTermDerivationConstruction::AtomMulAtomGreater => None,
+            VdMirTermDerivationConstruction::AtomMulAtomGreater {
+                a_pow_one_pow_coercion,
+                b_pow_one_pow_coercion,
+            } => Some(
+                [
+                    C(a_pow_one_pow_coercion.into()),
+                    C(b_pow_one_pow_coercion.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
                 Some([D(*radicand_nf)].to_lean(self))
             }
