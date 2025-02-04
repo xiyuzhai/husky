@@ -20,7 +20,7 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : ((a / 
   have h6 : ((a / b : ℝ) + (b / a : ℝ) : ℝ) ≥ ((2:ℕ) : ℝ) := by
     have d : a = a := by term_derivation_reflection
     have d1 : b = b := by term_derivation_reflection
-    have d2 : (a * (b ^ (-1:ℤ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_exponential_greater
+    have d2 : (a * (b ^ (-1:ℤ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_exponential_greater real_pow_nat_to_real_pow_nat_coercion
     have d3 : (a / b : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_div_atom
     have d4 : (a / b : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_div_eq d d1 eq_identity_coercion eq_identity_coercion d3
     have d5 : (-((2:ℕ) : ℤ) : ℤ) = (-2:ℤ) := by term_derivation_neg_literal
@@ -65,7 +65,7 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : ((a / 
     have d44 : (((a / b : ℝ) - ((2:ℕ) : ℝ) : ℝ) + (b / a : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ ((((-2:ℤ) : ℝ) + (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison ≥ d15 d16 d43 eq_identity_coercion eq_nat_to_real_coercion
     have d45 : a = a := by term_derivation_reflection
     have d46 : b = b := by term_derivation_reflection
-    have d47 : (a * (b ^ (-1:ℤ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_exponential_greater
+    have d47 : (a * (b ^ (-1:ℤ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_exponential_greater real_pow_nat_to_real_pow_nat_coercion
     have d48 : (a / b : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_div_atom
     have d49 : (a / b : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_div_eq d45 d46 eq_identity_coercion eq_identity_coercion d48
     have d50 : b = b := by term_derivation_reflection

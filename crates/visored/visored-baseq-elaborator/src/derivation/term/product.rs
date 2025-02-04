@@ -314,6 +314,11 @@ fn derive_mul_exponential<'db, 'sess>(
                 VdBsqTerm::Comnum(VdBsqComnumTerm::Atom(_))
             ));
             let lopd_base = exponential_base(lopd);
+            let a = lopd;
+            let b = ropd;
+            let α = a.ty();
+            let β = b.ty();
+            let αβ = hc.infer_mul_signature(α, β).expr_ty();
             match lopd_base.cmp(&ropd_base) {
                 std::cmp::Ordering::Less => (
                     VdMirTermDerivationConstruction::AtomMulExponentialLess,
@@ -321,7 +326,14 @@ fn derive_mul_exponential<'db, 'sess>(
                 ),
                 std::cmp::Ordering::Equal => todo!(),
                 std::cmp::Ordering::Greater => (
-                    VdMirTermDerivationConstruction::AtomMulExponentialGreater,
+                    VdMirTermDerivationConstruction::AtomMulExponentialGreater {
+                        a_pow_one_pow_coercion: VdMirPowCoercion::new(
+                            α,
+                            elr.ty_menu().nat,
+                            αβ,
+                            elr.ty_menu().nat,
+                        ),
+                    },
                     None,
                 ),
             }

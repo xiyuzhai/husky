@@ -351,3 +351,19 @@ macro "term_derivation_simple_product_mul_exponential_less"
     $hb_αβ_αβγ_coercion_triangle
     $ha_αβ_αβγ_coercion_triangle
   )
+
+theorem term_derivation_atom_mul_exponential_greater
+  {αβ}
+  {a_αβ b_αβ a_pow_one_αβ : αβ}
+  [CommSemiring αβ]
+  (ha_pow_one_pow_coercion : a_pow_one_αβ = a_αβ^(1:ℕ))
+  : a_αβ * b_αβ = ((1:ℕ):αβ) * (b_αβ * a_pow_one_αβ) := by
+  rw[ha_pow_one_pow_coercion]
+  rw[mul_comm]
+  simp
+
+
+/-- derive `a * b => 1 * (b * a^1)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base -/
+macro "term_derivation_atom_mul_exponential_greater"
+  ha_pow_one_pow_coercion:term:1024
+  : tactic => `(tactic| exact term_derivation_atom_mul_exponential_greater $ha_pow_one_pow_coercion)
