@@ -1,3 +1,5 @@
+use visored_mir_expr::coercion::{VdMirPrefixOprCoercion, VdMirSeparatorCoercion};
+
 use super::*;
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
@@ -94,10 +96,24 @@ fn neg_sum_construction_and_derived<'db, 'sess>(
     let neg_a_nf = neg_derived(a, elr, hc);
     let neg_b_nf = neg_derived(b, elr, hc);
     let derived = elr.mk_add(*neg_a_nf, *neg_b_nf, hc);
+    let a_ty = neg_a_nf.expr().ty();
+    let b_ty = neg_b_nf.expr().ty();
+    let ab_ty = hc.infer_add_signature(a_ty, b_ty).expr_ty();
+    let a_term_add_b_term_ty = hc
+        .infer_add_signature(neg_a_nf.derived().ty(), neg_b_nf.derived().ty())
+        .expr_ty();
     (
         VdMirTermDerivationConstruction::NegSum {
             neg_a_nf: neg_a_nf.derivation(),
             neg_b_nf: neg_b_nf.derivation(),
+            a_eq_coercion: VdMirSeparatorCoercion::new_eq(a_ty, ab_ty),
+            b_eq_coercion: VdMirSeparatorCoercion::new_eq(b_ty, ab_ty),
+            a_neg_coercion: VdMirPrefixOprCoercion::new_neg(a_ty, ab_ty),
+            b_neg_coercion: VdMirPrefixOprCoercion::new_neg(b_ty, ab_ty),
+            neg_a_term_add_neg_b_term_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(
+                a_term_add_b_term_ty,
+                ab_ty,
+            ),
         },
         Some(derived),
     )

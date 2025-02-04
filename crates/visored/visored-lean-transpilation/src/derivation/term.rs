@@ -75,7 +75,26 @@ where
                 neg_a_term_nf,
             } => Some([D(*opd_nf), D(*neg_a_term_nf)].to_lean(self)),
             VdMirTermDerivationConstruction::NegAtom => None,
-            VdMirTermDerivationConstruction::NegSum { neg_a_nf, neg_b_nf } => None,
+            VdMirTermDerivationConstruction::NegSum {
+                neg_a_nf,
+                neg_b_nf,
+                a_eq_coercion: ha_eq_coercion,
+                b_eq_coercion: hb_eq_coercion,
+                a_neg_coercion: ha_neg_coercion,
+                b_neg_coercion: hb_neg_coercion,
+                neg_a_term_add_neg_b_term_add_coercion,
+            } => Some(
+                [
+                    D(*neg_a_nf),
+                    D(*neg_b_nf),
+                    C(ha_eq_coercion.into()),
+                    C(hb_eq_coercion.into()),
+                    C(ha_neg_coercion.into()),
+                    C(hb_neg_coercion.into()),
+                    C(neg_a_term_add_neg_b_term_add_coercion.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::NegProduct => None,
             VdMirTermDerivationConstruction::NegExponential => None,
             VdMirTermDerivationConstruction::AtomAddNonZeroLiteral => None,

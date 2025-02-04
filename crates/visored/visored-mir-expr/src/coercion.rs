@@ -107,3 +107,9 @@ impl VdMirBinaryOprCoercion {
         Self::new(VdMirBaseBinaryOpr::COMM_RING_SUB, source_ty, target_ty)
     }
 }
+
+impl VdMirPrefixOprCoercion {
+    pub fn new_neg(source_ty: VdType, target_ty: VdType) -> Self {
+        Self::new(VdMirBasePrefixOpr::RING_NEG, source_ty, target_ty)
+    }
+}

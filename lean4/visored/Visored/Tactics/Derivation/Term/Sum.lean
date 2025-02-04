@@ -223,3 +223,35 @@ macro "term_derivation_sum_add_product_greater"
   ha_αγ_αβγ_coercion_triangle:term:1024
   hc_αγ_αβγ_coercion_triangle:term:1024
   : tactic => `(tactic| exact term_derivation_sum_add_product_greater $hac $hacb $ha_add_b_αβγ_add_coercion $ha_αβ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hac_eq_coercion $ha_add_c_αβγ_add_coercion $ha_αγ_αβγ_coercion_triangle $hc_αγ_αβγ_coercion_triangle)
+
+theorem term_derivation_neg_sum
+  {α β αβ}
+  {a neg_a_term : α}
+  {b neg_b_term : β}
+  {a_αβ b_αβ neg_a_αβ neg_b_αβ neg_a_term_αβ neg_b_term_αβ neg_a_term_add_neg_b_term_αβ: αβ}
+  [Neg α] [Neg β] [CommRing αβ]
+  (h_neg_a: -a = neg_a_term)
+  (h_neg_b: -b = neg_b_term)
+  (ha_eq_coercion: -a = neg_a_term ↔ neg_a_αβ = neg_a_term_αβ)
+  (hb_eq_coercion: -b = neg_b_term ↔ neg_b_αβ = neg_b_term_αβ)
+  (ha_neg_coercion: neg_a_αβ = -a_αβ)
+  (hb_neg_coercion: neg_b_αβ = -b_αβ)
+  (hneg_a_term_add_neg_b_term_αβ_add_coercion: neg_a_term_add_neg_b_term_αβ = neg_a_term_αβ + neg_b_term_αβ)
+  : -(a_αβ + b_αβ) = neg_a_term_add_neg_b_term_αβ := by
+  rw [neg_add]
+  rw [← ha_neg_coercion]
+  rw [← hb_neg_coercion]
+  rw [hneg_a_term_add_neg_b_term_αβ_add_coercion]
+  rw [← ha_eq_coercion.mp h_neg_a]
+  rw [← hb_eq_coercion.mp h_neg_b]
+
+/-- derive `-(a + b) => neg_a_term + neg_b_term` from `-a => neg_a_term` and `-b => neg_b_term` -/
+macro "term_derivation_neg_sum"
+  h_neg_a:term:1024
+  h_neg_b:term:1024
+  ha_eq_coercion:term:1024
+  hb_eq_coercion:term:1024
+  ha_neg_coercion:term:1024
+  hb_neg_coercion:term:1024
+  hneg_a_term_add_neg_b_term_αβ_add_coercion:term:1024
+  : tactic => `(tactic| exact term_derivation_neg_sum $h_neg_a $h_neg_b $ha_eq_coercion $hb_eq_coercion $ha_neg_coercion $hb_neg_coercion $hneg_a_term_add_neg_b_term_αβ_add_coercion)

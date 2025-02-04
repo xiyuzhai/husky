@@ -166,6 +166,11 @@ pub enum VdMirTermDerivationConstruction {
     NegSum {
         neg_a_nf: VdMirTermDerivationIdx,
         neg_b_nf: VdMirTermDerivationIdx,
+        a_eq_coercion: VdMirSeparatorCoercion,
+        b_eq_coercion: VdMirSeparatorCoercion,
+        a_neg_coercion: VdMirPrefixOprCoercion,
+        b_neg_coercion: VdMirPrefixOprCoercion,
+        neg_a_term_add_neg_b_term_add_coercion: VdMirSeparatorCoercion,
     },
     /// derive `-(c * a) => (-c) * a` if `c` is a litnum
     NegProduct,
@@ -349,9 +354,9 @@ impl VdMirTermDerivationConstruction {
                 neg_a_term_nf,
             } => check_neg_eq(prop, opd_nf, neg_a_term_nf, hc),
             VdMirTermDerivationConstruction::NegAtom => check_neg_atom(prop, hc),
-            VdMirTermDerivationConstruction::NegSum { neg_a_nf, neg_b_nf } => {
-                check_neg_sum(prop, neg_a_nf, neg_b_nf, hc)
-            }
+            VdMirTermDerivationConstruction::NegSum {
+                neg_a_nf, neg_b_nf, ..
+            } => check_neg_sum(prop, neg_a_nf, neg_b_nf, hc),
             VdMirTermDerivationConstruction::NegProduct => check_neg_product(prop, hc),
             VdMirTermDerivationConstruction::NegExponential => check_neg_exponential(prop, hc),
             VdMirTermDerivationConstruction::AddEq {
