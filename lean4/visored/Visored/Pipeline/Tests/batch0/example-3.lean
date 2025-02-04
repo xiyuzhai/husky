@@ -22,15 +22,15 @@ def h (a b c : ℝ) : (((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ 
     have d2 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d3 : a = a := by term_derivation_reflection
     have d4 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d5 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d5 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d3 d4
     have d6 : b = b := by term_derivation_reflection
     have d7 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d8 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d8 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d6 d7
     have d9 : ((((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_product_greater comm_ring_add_identity_coercion
     have d10 : ((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d5 d8 eq_identity_coercion eq_identity_coercion d9
     have d11 : c = c := by term_derivation_reflection
     have d12 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d13 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d13 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d11 d12
     have d14 : ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d15 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d16 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sum_add_product_greater d14 d15 comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle eq_identity_coercion comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle
@@ -215,15 +215,15 @@ def h (a b c : ℝ) : (((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ 
     have d195 : ((((((2:ℕ) : ℝ) * ((((((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ (2:ℕ) : ℝ) : ℝ) - (a * b : ℝ) : ℝ) - (b * c : ℝ) : ℝ) - (c * a : ℝ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) / ((2:ℕ) : ℝ) : ℝ) - ((0:ℕ) : ℝ) : ℝ) = ((((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (b ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) := by term_derivation_sub_eqs_add_neg d194 neg_nat_to_real_coercion
     have d196 : a = a := by term_derivation_reflection
     have d197 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d198 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d198 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d196 d197
     have d199 : b = b := by term_derivation_reflection
     have d200 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d201 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d201 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d199 d200
     have d202 : ((((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_product_greater comm_ring_add_identity_coercion
     have d203 : ((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d198 d201 eq_identity_coercion eq_identity_coercion d202
     have d204 : c = c := by term_derivation_reflection
     have d205 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d206 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d206 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d204 d205
     have d207 : ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d208 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d209 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sum_add_product_greater d207 d208 comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle eq_identity_coercion comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle
@@ -300,15 +300,15 @@ def h (a b c : ℝ) : (((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ 
   have h6 : (((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ (2:ℕ) : ℝ) : ℝ) ≥ (((a * b : ℝ) + (b * c : ℝ) : ℝ) + (c * a : ℝ) : ℝ) := by
     have d279 : a = a := by term_derivation_reflection
     have d280 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d281 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d281 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d279 d280
     have d282 : b = b := by term_derivation_reflection
     have d283 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d284 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d284 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d282 d283
     have d285 : ((((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_product_greater comm_ring_add_identity_coercion
     have d286 : ((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d281 d284 eq_identity_coercion eq_identity_coercion d285
     have d287 : c = c := by term_derivation_reflection
     have d288 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d289 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d289 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d287 d288
     have d290 : ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d291 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d292 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sum_add_product_greater d290 d291 comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle eq_identity_coercion comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle
@@ -399,19 +399,19 @@ def h (a b c : ℝ) : (((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ 
     have d377 : ((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d362 d375 eq_identity_coercion eq_identity_coercion d376
     have d378 : b = b := by term_derivation_reflection
     have d379 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d380 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d380 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d378 d379
     have d381 : (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d382 : (((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d383 : (((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d377 d381 eq_identity_coercion eq_identity_coercion d382
     have d384 : c = c := by term_derivation_reflection
     have d385 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d386 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d386 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d384 d385
     have d387 : (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d388 : ((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d389 : ((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d383 d387 eq_identity_coercion eq_identity_coercion d388
     have d390 : a = a := by term_derivation_reflection
     have d391 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d392 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d392 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d390 d391
     have d393 : (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d394 : (((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d395 : (((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d389 d393 eq_identity_coercion eq_identity_coercion d394
@@ -437,15 +437,15 @@ def h (a b c : ℝ) : (((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ 
     have d415 : ((((((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ (2:ℕ) : ℝ) : ℝ) - (a * b : ℝ) : ℝ) - (b * c : ℝ) : ℝ) - (c * a : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ ((((((((0:ℕ) : ℝ) + (((-1:ℤ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((-1:ℤ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (b ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison ≥ d347 d348 d414 eq_identity_coercion eq_nat_to_real_coercion
     have d416 : a = a := by term_derivation_reflection
     have d417 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d418 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d418 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d416 d417
     have d419 : b = b := by term_derivation_reflection
     have d420 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d421 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d421 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d419 d420
     have d422 : ((((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_product_greater comm_ring_add_identity_coercion
     have d423 : ((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d418 d421 eq_identity_coercion eq_identity_coercion d422
     have d424 : c = c := by term_derivation_reflection
     have d425 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d426 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d426 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d424 d425
     have d427 : ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d428 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d429 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_sum_add_product_greater d427 d428 comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle eq_identity_coercion comm_ring_add_identity_coercion real_real_real_coercion_triangle real_real_real_coercion_triangle
@@ -470,18 +470,18 @@ def h (a b c : ℝ) : (((a ^ (2:ℕ) : ℝ) + (b ^ (2:ℕ) : ℝ) : ℝ) + (c ^ 
     have d448 : (((a * b : ℝ) + (b * c : ℝ) : ℝ) + (c * a : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * ((c ^ (1:ℕ) : ℝ) * (b ^ (1:ℕ) : ℝ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d440 d444 eq_identity_coercion eq_identity_coercion d447
     have d449 : b = b := by term_derivation_reflection
     have d450 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d451 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d451 : (b ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d449 d450
     have d452 : (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d453 : (((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_zero_add
     have d454 : c = c := by term_derivation_reflection
     have d455 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d456 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d456 : (c ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d454 d455
     have d457 : (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d458 : ((((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_product_less comm_ring_add_identity_coercion
     have d459 : ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d453 d457 eq_identity_coercion eq_identity_coercion d458
     have d460 : a = a := by term_derivation_reflection
     have d461 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d462 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d462 : (a ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d460 d461
     have d463 : (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d464 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d465 : (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((((0:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (b ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (c ^ (2:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (a ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d459 d463 eq_identity_coercion eq_identity_coercion d464

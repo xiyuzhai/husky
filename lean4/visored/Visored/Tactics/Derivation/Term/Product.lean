@@ -264,4 +264,21 @@ macro "term_derivation_atom_mul_atom_greater" : tactic => `(tactic| fail "not im
 
 macro "term_derivation_sqrt" : tactic => `(tactic| fail "not implemented")
 
-macro "term_derivation_non_reduced_power" : tactic => `(tactic| fail "not implemented")
+theorem term_derivation_non_reduced_power
+  {α β αβ}
+  [HPow α β αβ]
+  [CommSemiring αβ]
+  {a a_term : α}
+  {b b_term : β}
+  (ha : a = a_term)
+  (hb : b = b_term)
+  : a^b = ((1:ℕ):αβ) * (a_term^b_term) := by
+  rw[ha]
+  rw[hb]
+  simp
+
+/-- derive `a^b => 1 * a_term^b_term` from `a => a_term` and `b => b_term` -/
+macro "term_derivation_non_reduced_power"
+  ha:term:1024
+  hb:term:1024
+  : tactic => `(tactic| exact term_derivation_non_reduced_power $ha $hb)

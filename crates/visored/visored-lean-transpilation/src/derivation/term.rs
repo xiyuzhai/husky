@@ -135,7 +135,9 @@ where
                 ]
                 .to_lean(self),
             ),
-            VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => None,
+            VdMirTermDerivationConstruction::NonReducedPower { base, exponent } => {
+                Some([D(*base), D(*exponent)].to_lean(self))
+            }
             VdMirTermDerivationConstruction::PowerOne { base } => None,
             VdMirTermDerivationConstruction::AtomAddProductLess {
                 zero_add_one_mul_a_pow_one_add_coercion,

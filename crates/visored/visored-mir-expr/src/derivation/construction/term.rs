@@ -142,6 +142,7 @@ pub enum VdMirTermDerivationConstruction {
         ab_mul_coercion: VdMirSeparatorCoercion,
         bc_mul_coercion: VdMirSeparatorCoercion,
     },
+    /// derive `a^b => 1 * a_term^b_term` from `a => a_term` and `b => b_term`
     NonReducedPower {
         base: VdMirTermDerivationIdx,
         exponent: VdMirTermDerivationIdx,

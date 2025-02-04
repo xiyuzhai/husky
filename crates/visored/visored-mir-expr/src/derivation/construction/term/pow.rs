@@ -1,5 +1,6 @@
 use super::*;
 
+/// derive `a^b => 1 * a_term^b_term` from `a => a_term` and `b => b_term`
 pub(super) fn check_non_reduced_power<'db, Src>(
     prop: VdMirExprIdx,
     base_nf: VdMirTermDerivationIdx,

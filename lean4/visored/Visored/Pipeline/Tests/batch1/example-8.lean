@@ -38,7 +38,7 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : ((a / 
     have d17 : (-2:ℤ) = (-2:ℤ) := by term_derivation_reflection
     have d18 : b = b := by term_derivation_reflection
     have d19 : (-1:ℤ) = (-1:ℤ) := by term_derivation_reflection
-    have d20 : (b ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d20 : (b ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d18 d19
     have d21 : a = a := by term_derivation_reflection
     have d22 : (a ^ (1:ℕ) : ℝ) = a := by term_derivation_power_one
     have d23 : ((((1:ℕ) : ℝ) * (b ^ (-1:ℤ) : ℝ) : ℝ) * a : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_simple_product_mul_base_less
@@ -50,7 +50,7 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : ((a / 
     have d29 : (b ^ (1:ℕ) : ℝ) = b := by term_derivation_power_one
     have d30 : a = a := by term_derivation_reflection
     have d31 : (-1:ℤ) = (-1:ℤ) := by term_derivation_reflection
-    have d32 : (a ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d32 : (a ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d30 d31
     have d33 : (b * ((1:ℕ) : ℝ) : ℝ) = b := by term_derivation_mul_one
     have d34 : (b * (a ^ (-1:ℤ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_exponential_less
     have d35 : (b * (((1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_product d33 d34 eq_identity_coercion comm_ring_mul_identity_coercion comm_ring_mul_identity_coercion
@@ -78,7 +78,7 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : ((a / 
     have d57 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d58 : b = b := by term_derivation_reflection
     have d59 : (-1:ℤ) = (-1:ℤ) := by term_derivation_reflection
-    have d60 : (b ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d60 : (b ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (b ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d58 d59
     have d61 : a = a := by term_derivation_reflection
     have d62 : (a ^ (1:ℕ) : ℝ) = a := by term_derivation_power_one
     have d63 : ((((1:ℕ) : ℝ) * (b ^ (-1:ℤ) : ℝ) : ℝ) * a : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (-1:ℤ) : ℝ) * (a ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_simple_product_mul_base_less
@@ -89,7 +89,7 @@ def h (a b : ℝ) (h1 : a > ((0:ℕ) : ℝ)) (h2 : b > ((0:ℕ) : ℝ)) : ((a / 
     have d68 : (b ^ (1:ℕ) : ℝ) = b := by term_derivation_power_one
     have d69 : a = a := by term_derivation_reflection
     have d70 : (-1:ℤ) = (-1:ℤ) := by term_derivation_reflection
-    have d71 : (a ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d71 : (a ^ (-1:ℤ) : ℝ) = (((1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d69 d70
     have d72 : (b * ((1:ℕ) : ℝ) : ℝ) = b := by term_derivation_mul_one
     have d73 : (b * (a ^ (-1:ℤ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_exponential_less
     have d74 : (b * (((1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((b ^ (1:ℕ) : ℝ) * (a ^ (-1:ℤ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_product d72 d73 eq_identity_coercion comm_ring_mul_identity_coercion comm_ring_mul_identity_coercion

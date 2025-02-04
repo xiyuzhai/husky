@@ -17,7 +17,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : (x + (((1:ℕ) : ℝ) / x : ℝ) : 
   have h5 : ((x ^ (2:ℕ) : ℝ) + ((1:ℕ) : ℝ) : ℝ) ≥ (((2:ℕ) : ℝ) * x : ℝ) := by
     have d : x = x := by term_derivation_reflection
     have d1 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d2 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d2 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d d1
     have d3 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d4 : x = x := by term_derivation_reflection
     have d5 : (((2:ℕ) : ℝ) * x : ℝ) = (((2:ℕ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) := by term_derivation_non_one_literal_mul_atom
@@ -46,7 +46,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : (x + (((1:ℕ) : ℝ) / x : ℝ) : 
     have d28 : (((1:ℕ) : ℝ) + (((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) + (((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d21 d26 eq_nat_to_real_coercion eq_identity_coercion d27
     have d29 : x = x := by term_derivation_reflection
     have d30 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d31 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d31 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d29 d30
     have d32 : (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d33 : ((((1:ℕ) : ℝ) + (((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((1:ℕ) : ℝ) + (((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d34 : ((((1:ℕ) : ℝ) + (((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = ((((1:ℕ) : ℝ) + (((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d28 d32 eq_identity_coercion eq_identity_coercion d33
@@ -57,7 +57,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : (x + (((1:ℕ) : ℝ) / x : ℝ) : 
     have d39 : (((x ^ (2:ℕ) : ℝ) - (((2:ℕ) : ℝ) * x : ℝ) : ℝ) + ((1:ℕ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) ↔ ((((1:ℕ) : ℝ) + (((-2:ℤ) : ℝ) * (x ^ (1:ℕ) : ℝ) : ℝ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) ≥ ((0:ℕ) : ℝ) := by term_derivation_num_comparison ≥ d19 d20 d38 eq_identity_coercion eq_nat_to_real_coercion
     have d40 : x = x := by term_derivation_reflection
     have d41 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d42 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d42 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d40 d41
     have d43 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection
     have d44 : ((((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) + ((1:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_product_add_literal
     have d45 : ((x ^ (2:ℕ) : ℝ) + ((1:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d42 d43 eq_identity_coercion eq_nat_to_real_coercion d44
@@ -68,7 +68,7 @@ def h (x : ℝ) (h1 : x > ((0:ℕ) : ℝ)) : (x + (((1:ℕ) : ℝ) / x : ℝ) : 
     have d50 : (1:ℕ) = (1:ℕ) := by term_derivation_reflection
     have d51 : x = x := by term_derivation_reflection
     have d52 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
-    have d53 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power
+    have d53 : (x ^ (2:ℕ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_non_reduced_power d51 d52
     have d54 : (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d55 : (((1:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_reflection
     have d56 : (((1:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) + (((1:ℕ) : ℝ) * (x ^ (2:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_add_eq d50 d54 eq_nat_to_real_coercion eq_identity_coercion d55
