@@ -237,7 +237,26 @@ macro "term_derivation_simple_product_mul_literal"
   he_αε_αγδ_coercion_triangle:term:1024
   : tactic => `(tactic| exact term_derivation_simple_product_mul_literal (by norm_num) $hc_mul_a_mul_coercion $he_mul_a_mul_coercion $ha_αε_αγδ_coercion_triangle $ha_αγ_αγδ_coercion_triangle $he_αε_αγδ_coercion_triangle)
 
-macro "term_derivation_atom_mul_atom_less" : tactic => `(tactic| fail "not implemented")
+theorem term_derivation_atom_mul_atom_less
+  {αβ}
+  {a_αβ b_αβ a_pow_one_αβ b_pow_one_αβ : αβ}
+  [CommSemiring αβ]
+  (ha_pow_one_pow_coercion : a_pow_one_αβ = a_αβ^(1:ℕ))
+  (hb_pow_one_pow_coercion : b_pow_one_αβ = b_αβ^(1:ℕ))
+  : a_αβ * b_αβ = ((1:ℕ):αβ) * (a_pow_one_αβ * b_pow_one_αβ) := by
+  rw[ha_pow_one_pow_coercion]
+  rw[hb_pow_one_pow_coercion]
+  simp
+
+/-- derive `a * b => 1 * (a^1 * b^1)` if `a` and `b` are atoms with the term order of `a` being lesser than `b` -/
+macro "term_derivation_atom_mul_atom_less"
+  ha_pow_one_pow_coercion:term:1024
+  hb_pow_one_pow_coercion:term:1024
+  : tactic =>
+  `(tactic| exact term_derivation_atom_mul_atom_less
+    $ha_pow_one_pow_coercion
+    $hb_pow_one_pow_coercion
+  )
 
 macro "term_derivation_atom_mul_atom_equal" : tactic => `(tactic| fail "not implemented")
 

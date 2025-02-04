@@ -17,7 +17,7 @@ theorem nat_rat_rat_coercion_triangle {a: ℕ} : ((a : ℚ) : ℚ) = (a : ℚ) :
 theorem nat_rat_real_coercion_triangle {a: ℕ} : ((a : ℚ) : ℝ) = (a : ℝ) := by simp
 theorem nat_rat_complex_coercion_triangle {a: ℕ} : ((a : ℚ) : ℂ) = (a : ℂ) := by simp
 
-theorem nat_real_real_coercion_triangle {a: ℕ} : ((a : ℝ) : ℝ) = (a : ℝ) := by simp
+theorem nat_real_real_coercion_triangle {a: ℕ} : (↑(↑ a : ℝ) : ℝ) = (a : ℝ) := by simp
 theorem nat_real_complex_coercion_triangle {a: ℕ} : ((a : ℝ) : ℂ) = (a : ℂ) := by simp
 
 theorem nat_complex_complex_coercion_triangle {a: ℕ} : ((a : ℂ) : ℂ) = (a : ℂ) := by simp

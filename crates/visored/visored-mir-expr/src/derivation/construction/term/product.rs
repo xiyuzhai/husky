@@ -66,7 +66,7 @@ pub(super) fn check_mul_eq<'db, Src>(
     assert_deep_eq!(term_b1, term_b, hc);
 }
 
-/// derive `a * b => 1 * a^1 * b^1` if `a` and `b` are atoms with the term order of `a` being lesser than `b`
+/// derive `a * b => 1 * (a^1 * b^1)` if `a` and `b` are atoms with the term order of `a` being lesser than `b`
 pub(super) fn check_atom_mul_atom_less<'db, Src>(
     prop: VdMirExprIdx,
     hc: &mut VdMirHypothesisConstructor<'db, Src>,

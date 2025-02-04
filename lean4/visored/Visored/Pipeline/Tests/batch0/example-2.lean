@@ -16,7 +16,7 @@ def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : �
     have d1 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d2 : x = x := by term_derivation_reflection
     have d3 : y = y := by term_derivation_reflection
-    have d4 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less
+    have d4 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less real_pow_nat_to_real_pow_nat_coercion real_pow_nat_to_real_pow_nat_coercion
     have d5 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_eq d2 d3 d4 eq_identity_coercion eq_identity_coercion
     have d6 : √ (x * y : ℝ) = (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_sqrt
     have d7 : ((2:ℕ) * (1:ℕ) : ℕ) = (2:ℕ) := by term_derivation_mul_one
@@ -50,7 +50,7 @@ def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : �
     have d35 : (x ^ (1:ℕ) : ℝ) = x := by term_derivation_power_one
     have d36 : y = y := by term_derivation_reflection
     have d37 : (y ^ (1:ℕ) : ℝ) = y := by term_derivation_power_one
-    have d38 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less
+    have d38 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less real_pow_nat_to_real_pow_nat_coercion real_pow_nat_to_real_pow_nat_coercion
     have d39 : ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_eq d35 d37 d38 eq_identity_coercion eq_identity_coercion
     have d40 : (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d41 : ((1:ℚ)/2:ℚ) = ((1:ℚ)/2:ℚ) := by term_derivation_reflection
@@ -74,7 +74,7 @@ def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : �
     have d59 : (2:ℕ) = (2:ℕ) := by term_derivation_reflection
     have d60 : x = x := by term_derivation_reflection
     have d61 : y = y := by term_derivation_reflection
-    have d62 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less
+    have d62 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less real_pow_nat_to_real_pow_nat_coercion real_pow_nat_to_real_pow_nat_coercion
     have d63 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_eq d60 d61 d62 eq_identity_coercion eq_identity_coercion
     have d64 : √ (x * y : ℝ) = (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_sqrt
     have d65 : ((2:ℕ) * (1:ℕ) : ℕ) = (2:ℕ) := by term_derivation_mul_one
@@ -96,7 +96,7 @@ def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : �
     have d81 : (x ^ (1:ℕ) : ℝ) = x := by term_derivation_power_one
     have d82 : y = y := by term_derivation_reflection
     have d83 : (y ^ (1:ℕ) : ℝ) = y := by term_derivation_power_one
-    have d84 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less
+    have d84 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less real_pow_nat_to_real_pow_nat_coercion real_pow_nat_to_real_pow_nat_coercion
     have d85 : ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_eq d81 d83 d84 eq_identity_coercion eq_identity_coercion
     have d86 : (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_one_mul
     have d87 : ((1:ℚ)/2:ℚ) = ((1:ℚ)/2:ℚ) := by term_derivation_reflection

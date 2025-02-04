@@ -105,7 +105,16 @@ where
                 src_nf,
                 dst_nf,
             } => Some([H(src), D(*src_nf), D(*dst_nf)].to_lean(self)),
-            VdMirTermDerivationConstruction::AtomMulAtomLess => None,
+            VdMirTermDerivationConstruction::AtomMulAtomLess {
+                a_pow_one_pow_coercion,
+                b_pow_one_pow_coercion,
+            } => Some(
+                [
+                    C(a_pow_one_pow_coercion.into()),
+                    C(b_pow_one_pow_coercion.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::AtomMulAtomEqual => None,
             VdMirTermDerivationConstruction::AtomMulAtomGreater => None,
             VdMirTermDerivationConstruction::Sqrt { radicand_nf } => None,

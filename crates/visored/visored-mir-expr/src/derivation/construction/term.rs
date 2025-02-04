@@ -121,8 +121,11 @@ pub enum VdMirTermDerivationConstruction {
         src_nf: VdMirTermDerivationIdx,
         dst_nf: VdMirTermDerivationIdx,
     },
-    /// derive `a * b => 1 * a^1 * b^1` if `a` and `b` are atoms with the term order of `a` being lesser than `b`
-    AtomMulAtomLess,
+    /// derive `a * b => 1 * (a^1 * b^1)` if `a` and `b` are atoms with the term order of `a` being lesser than `b`
+    AtomMulAtomLess {
+        a_pow_one_pow_coercion: VdMirPowCoercion,
+        b_pow_one_pow_coercion: VdMirPowCoercion,
+    },
     /// derive `a * a => 1 * a^2`
     AtomMulAtomEqual,
     /// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
@@ -369,7 +372,9 @@ impl VdMirTermDerivationConstruction {
                 src_nf,
                 dst_nf,
             } => check_non_trivial_hypothesis_equivalence(prop, src, src_nf, dst_nf, hc),
-            VdMirTermDerivationConstruction::AtomMulAtomLess => check_atom_mul_atom_less(prop, hc),
+            VdMirTermDerivationConstruction::AtomMulAtomLess { .. } => {
+                check_atom_mul_atom_less(prop, hc)
+            }
             VdMirTermDerivationConstruction::AtomMulAtomEqual => {
                 check_atom_mul_atom_equal(prop, hc)
             }

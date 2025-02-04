@@ -356,8 +356,24 @@ fn derive_mul_base<'db, 'sess>(
             )
         }
         VdBsqExprData::Variable(..) => {
+            let a_ty = lopd.ty();
+            let b_ty = ropd.ty();
+            let ab_ty = hc.infer_mul_signature(a_ty, b_ty).expr_ty();
             let construction = match lopd.term().cmp(&ropd.term()) {
-                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::AtomMulAtomLess,
+                std::cmp::Ordering::Less => VdMirTermDerivationConstruction::AtomMulAtomLess {
+                    a_pow_one_pow_coercion: VdMirPowCoercion::new(
+                        a_ty,
+                        elr.ty_menu().nat,
+                        ab_ty,
+                        elr.ty_menu().nat,
+                    ),
+                    b_pow_one_pow_coercion: VdMirPowCoercion::new(
+                        b_ty,
+                        elr.ty_menu().nat,
+                        ab_ty,
+                        elr.ty_menu().nat,
+                    ),
+                },
                 std::cmp::Ordering::Equal => VdMirTermDerivationConstruction::AtomMulAtomEqual,
                 std::cmp::Ordering::Greater => VdMirTermDerivationConstruction::AtomMulAtomGreater,
             };
