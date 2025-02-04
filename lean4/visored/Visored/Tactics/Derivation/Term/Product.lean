@@ -262,7 +262,19 @@ macro "term_derivation_atom_mul_atom_equal" : tactic => `(tactic| fail "not impl
 
 macro "term_derivation_atom_mul_atom_greater" : tactic => `(tactic| fail "not implemented")
 
-macro "term_derivation_sqrt" : tactic => `(tactic| fail "not implemented")
+theorem term_derivation_sqrt
+  {a a_nf : ℝ}
+  (ha_nf : a = a_nf)
+  : √ a = ((1:ℕ):ℝ) * a_nf^(((1:ℚ)/(2:ℚ):ℚ):ℝ):= by
+  rw[← ha_nf]
+  simp
+  have h : √ a = a^(1/(2:ℝ)) := Real.sqrt_eq_rpow a
+  simp at h
+  exact h
+
+macro "term_derivation_sqrt"
+  ha_nf:term:1024
+  : tactic => `(tactic| exact term_derivation_sqrt $ha_nf)
 
 theorem term_derivation_non_reduced_power
   {α β αβ}

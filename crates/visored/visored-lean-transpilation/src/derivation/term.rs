@@ -117,7 +117,9 @@ where
             ),
             VdMirTermDerivationConstruction::AtomMulAtomEqual => None,
             VdMirTermDerivationConstruction::AtomMulAtomGreater => None,
-            VdMirTermDerivationConstruction::Sqrt { radicand_nf } => None,
+            VdMirTermDerivationConstruction::Sqrt { radicand_nf } => {
+                Some([D(*radicand_nf)].to_lean(self))
+            }
             VdMirTermDerivationConstruction::MulProduct {
                 rsignature,
                 ab_nf,

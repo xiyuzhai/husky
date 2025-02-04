@@ -18,7 +18,7 @@ def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : �
     have d3 : y = y := by term_derivation_reflection
     have d4 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less real_pow_nat_to_real_pow_nat_coercion real_pow_nat_to_real_pow_nat_coercion
     have d5 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_eq d2 d3 d4 eq_identity_coercion eq_identity_coercion
-    have d6 : √ (x * y : ℝ) = (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_sqrt
+    have d6 : √ (x * y : ℝ) = (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_sqrt d5
     have d7 : ((2:ℕ) * (1:ℕ) : ℕ) = (2:ℕ) := by term_derivation_mul_one
     have d8 : (((2:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) = (((2:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_reflection
     have d9 : (((2:ℕ) : ℝ) * (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) : ℝ) = (((2:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_mul_product d7 d8 eq_nat_to_real_coercion comm_ring_mul_nat_to_real_coercion comm_ring_mul_identity_coercion
@@ -76,7 +76,7 @@ def h (x : ℝ) (h1 : x ≥ ((0:ℕ) : ℝ)) (y : ℝ) (h2 : y ≥ ((0:ℕ) : �
     have d61 : y = y := by term_derivation_reflection
     have d62 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_atom_mul_atom_less real_pow_nat_to_real_pow_nat_coercion real_pow_nat_to_real_pow_nat_coercion
     have d63 : (x * y : ℝ) = (((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) := by term_derivation_mul_eq d60 d61 d62 eq_identity_coercion eq_identity_coercion
-    have d64 : √ (x * y : ℝ) = (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_sqrt
+    have d64 : √ (x * y : ℝ) = (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_sqrt d63
     have d65 : ((2:ℕ) * (1:ℕ) : ℕ) = (2:ℕ) := by term_derivation_mul_one
     have d66 : (((2:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) = (((2:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_reflection
     have d67 : (((2:ℕ) : ℝ) * (((1:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) : ℝ) = (((2:ℕ) : ℝ) * ((((1:ℕ) : ℝ) * ((x ^ (1:ℕ) : ℝ) * (y ^ (1:ℕ) : ℝ) : ℝ) : ℝ) ^ (((1:ℚ)/2:ℚ)) : ℝ) : ℝ) := by term_derivation_mul_product d65 d66 eq_nat_to_real_coercion comm_ring_mul_nat_to_real_coercion comm_ring_mul_identity_coercion

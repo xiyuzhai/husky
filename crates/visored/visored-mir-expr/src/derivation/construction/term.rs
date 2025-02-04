@@ -130,6 +130,7 @@ pub enum VdMirTermDerivationConstruction {
     AtomMulAtomEqual,
     /// derive `a * b => 1 * b^1 * a^1` if `a` and `b` are atoms with the term order of `a` being greater than `b`
     AtomMulAtomGreater,
+    /// derive `√a => 1 * a_nf^(1/2)` from `a => a_nf`
     Sqrt {
         radicand_nf: VdMirTermDerivationIdx,
     },
