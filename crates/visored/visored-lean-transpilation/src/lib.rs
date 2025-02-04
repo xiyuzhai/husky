@@ -1,3 +1,6 @@
+#![allow(confusable_idents)]
+#![allow(mixed_script_confusables)]
+#![allow(uncommon_codepoints)]
 mod builder;
 mod coercion;
 pub mod derivation;

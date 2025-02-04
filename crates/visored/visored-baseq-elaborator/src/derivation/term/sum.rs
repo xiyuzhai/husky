@@ -396,8 +396,28 @@ fn merge_sum_construction<'db, 'sess>(
     let (b, _, c) = ropd.split_folding_separated_list(VdMirBaseFoldingSeparator::CommRingAdd, elr);
     let a_add_b_derived = derive_add(a, b, elr, hc);
     let a_add_b_derived_add_c_derived = derive_add(a_add_b_derived.derived(), c, elr, hc);
+    let α = a.ty();
+    let β = b.ty();
+    let γ = c.ty();
+    let αβ = a_add_b_derived.expr().ty();
+    let βγ = ropd.ty();
+    let αβˈ = a_add_b_derived.derived().ty();
+    let αβγ = hc.infer_add_signature(αβ, γ).expr_ty();
+    let αβˈγ = a_add_b_derived_add_c_derived.derived().ty();
     VdMirTermDerivationConstruction::AddSum {
         a_add_b_derivation: a_add_b_derived.derivation(),
         a_add_b_derived_add_c_derivation: a_add_b_derived_add_c_derived.derivation(),
+        b_add_c_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(βγ, αβγ),
+        b_βγ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(β, βγ, αβγ),
+        c_βγ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(γ, βγ, αβγ),
+        a_add_b_eq_coercion: VdMirSeparatorCoercion::new_eq(αβ, αβγ),
+        a_add_b_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(αβ, αβγ),
+        a_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(α, αβ, αβγ),
+        b_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(β, αβ, αβγ),
+        ab_term_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(αβˈ, αβ, αβγ),
+        ab_term_add_c_eq_coercion: VdMirSeparatorCoercion::new_eq(αβγ, αβˈγ),
+        ab_term_add_c_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(αβγ, αβˈγ),
+        ab_term_αβˈγ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(αβˈ, αβˈγ, αβγ),
+        c_αβˈγ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(γ, αβˈ, αβγ),
     }
 }

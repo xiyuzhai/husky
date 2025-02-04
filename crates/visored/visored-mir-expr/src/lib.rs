@@ -1,3 +1,6 @@
+#![allow(confusable_idents)]
+#![allow(mixed_script_confusables)]
+#![allow(uncommon_codepoints)]
 #![feature(let_chains)]
 #![feature(if_let_guard)]
 pub mod builder;

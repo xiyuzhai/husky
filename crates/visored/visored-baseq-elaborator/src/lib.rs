@@ -1,3 +1,6 @@
+#![allow(confusable_idents)]
+#![allow(mixed_script_confusables)]
+#![allow(uncommon_codepoints)]
 #![feature(if_let_guard)]
 #![feature(never_type)]
 #![feature(proc_macro_hygiene)]

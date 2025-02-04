@@ -253,28 +253,62 @@ macro "term_derivation_neg_sum"
   : tactic => `(tactic| exact term_derivation_neg_sum $h_neg_a $h_neg_b $ha_eq_coercion $hb_eq_coercion $ha_neg_coercion $hb_neg_coercion $hneg_a_term_add_neg_b_term_αβ_add_coercion)
 
 theorem term_derivation_add_sum
-  {αβ αβ' αβ'γ αβγ}
-  {a_αβ b_αβ term_ab_αβ : αβ}
-  {term_ab_αβ' : αβ'}
-  {a_αβγ b_αβγ c_αβγ term_ab_add_c term b_add_c_αβγ term_αβγ term_ab_αβγ : αβγ}
-  {term_ab_αβ'γ c_αβ'γ term: αβ'γ}
+  {αβ αβ'γ αβγ}
+  {a_αβ b_αβ ab_term_αβ : αβ}
+  {a_αβγ b_αβγ c_αβγ b_add_c_αβγ ab_term_αβγ : αβγ}
+  {a_add_b_αβγ ab_term_αβ_αβγ a_αβ_αβγ b_αβ_αβγ b_βγ_αβγ c_βγ_αβγ: αβγ}
+  {ab_term_αβ'γ c_αβ'γ term: αβ'γ}
+  {ab_term_αβ'γ_αβγ c_αβ'γ_αβγ term_αβγ ab_term_add_c_αβγ: αβγ}
   [AddCommSemigroup αβ]
   [AddCommSemigroup αβ'γ]
   [AddCommSemigroup αβγ]
-  (h_ab: a_αβ + b_αβ = term_ab_αβ)
-  (h_ab_add_c: term_ab_αβ'γ + c_αβ'γ = term)
-  (hb_add_c_add_coercion: b_add_c_αβγ = b_αβγ + c_αβγ)
+  (ha_add_b_dn: a_αβ + b_αβ = ab_term_αβ)
+  (hab_term_add_c_dn: ab_term_αβ'γ + c_αβ'γ = term)
+  (hb_add_c_add_coercion: b_add_c_αβγ = b_βγ_αβγ + c_βγ_αβγ)
+  (hb_βγ_αβγ_coercion_triangle: b_βγ_αβγ = b_αβγ)
+  (hc_βγ_αβγ_coercion_triangle: c_βγ_αβγ = c_αβγ)
+  (ha_add_b_eq_coercion: a_αβ + b_αβ = ab_term_αβ ↔ a_add_b_αβγ = ab_term_αβ_αβγ)
+  (ha_add_b_add_coercion: a_add_b_αβγ = a_αβ_αβγ + b_αβ_αβγ)
+  (ha_αβ_αβγ_coercion_triangle: a_αβ_αβγ = a_αβγ)
+  (hb_αβ_αβγ_coercion_triangle: b_αβ_αβγ = b_αβγ)
+  (hab_term_αβ_αβγ_coercion_triangle: ab_term_αβ_αβγ = ab_term_αβγ)
+  (hab_term_add_c_eq_coercion: ab_term_αβ'γ + c_αβ'γ = term ↔ ab_term_add_c_αβγ = term_αβγ)
+  (hab_term_add_c_add_coercion: ab_term_add_c_αβγ = ab_term_αβ'γ_αβγ + c_αβ'γ_αβγ)
+  (hab_term_αβ'γ_αβγ_coercion_triangle: ab_term_αβ'γ_αβγ = ab_term_αβγ)
+  (hc_αβ'γ_αβγ_coercion_triangle: c_αβ'γ_αβγ = c_αβγ)
   : a_αβγ + b_add_c_αβγ = term_αβγ := by
   rw [hb_add_c_add_coercion]
+  rw [hb_βγ_αβγ_coercion_triangle]
+  rw [hc_βγ_αβγ_coercion_triangle]
   rw [← add_assoc]
-  have h : a_αβγ + b_αβγ = term_ab_αβγ := by
-    sorry
+  have h : a_αβγ + b_αβγ = ab_term_αβγ := by
+    have h : a_add_b_αβγ = ab_term_αβ_αβγ := ha_add_b_eq_coercion.mp ha_add_b_dn
+    rw [ha_add_b_add_coercion] at h
+    rw [ha_αβ_αβγ_coercion_triangle] at h
+    rw [hb_αβ_αβγ_coercion_triangle] at h
+    rw [hab_term_αβ_αβγ_coercion_triangle] at h
+    exact h
   rw [h]
-  -- exact h_ab_add_c
-  sorry
+  have h : ab_term_add_c_αβγ = term_αβγ := hab_term_add_c_eq_coercion.mp hab_term_add_c_dn
+  rw [hab_term_add_c_add_coercion] at h
+  rw [hab_term_αβ'γ_αβγ_coercion_triangle] at h
+  rw [hc_αβ'γ_αβγ_coercion_triangle] at h
+  exact h
 
 /-- derive `a + (b + c) => term` from `a + b => term_ab` and `term_ab + c => term` -/
 macro "term_derivation_add_sum"
   term_ab:term:1024
   term_ab_add_c:term:1024
-  : tactic => `(tactic| exact term_derivation_add_sum $term_ab $term_ab_add_c)
+  hb_add_c_add_coercion:term:1024
+  hb_βγ_αβγ_coercion_triangle:term:1024
+  hc_βγ_αβγ_coercion_triangle:term:1024
+  ha_add_b_eq_coercion:term:1024
+  ha_add_b_add_coercion:term:1024
+  ha_αβ_αβγ_coercion_triangle:term:1024
+  hb_αβ_αβγ_coercion_triangle:term:1024
+  hab_term_αβ_αβγ_coercion_triangle:term:1024
+  hab_term_add_c_eq_coercion:term:1024
+  hab_term_add_c_add_coercion:term:1024
+  hab_term_αβ'γ_αβγ_coercion_triangle:term:1024
+  hc_αβ'γ_αβγ_coercion_triangle:term:1024
+  : tactic => `(tactic| exact term_derivation_add_sum $term_ab $term_ab_add_c $hb_add_c_add_coercion $hb_βγ_αβγ_coercion_triangle $hc_βγ_αβγ_coercion_triangle $ha_add_b_eq_coercion $ha_add_b_add_coercion $ha_αβ_αβγ_coercion_triangle $hb_αβ_αβγ_coercion_triangle $hab_term_αβ_αβγ_coercion_triangle $hab_term_add_c_eq_coercion $hab_term_add_c_add_coercion $hab_term_αβ'γ_αβγ_coercion_triangle $hc_αβ'γ_αβγ_coercion_triangle)

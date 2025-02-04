@@ -213,6 +213,18 @@ pub enum VdMirTermDerivationConstruction {
     AddSum {
         a_add_b_derivation: VdMirTermDerivationIdx,
         a_add_b_derived_add_c_derivation: VdMirTermDerivationIdx,
+        b_add_c_add_coercion: VdMirSeparatorCoercion,
+        b_βγ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        c_βγ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        a_add_b_eq_coercion: VdMirSeparatorCoercion,
+        a_add_b_add_coercion: VdMirSeparatorCoercion,
+        a_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        b_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        ab_term_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        ab_term_add_c_eq_coercion: VdMirSeparatorCoercion,
+        ab_term_add_c_add_coercion: VdMirSeparatorCoercion,
+        ab_term_αβˈγ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        c_αβˈγ_αβγ_coercion_triangle: VdMirCoercionTriangle,
     },
     /// derive `a / b => term` from `a => a_term`, `b => b_term` and `a_term / b_term => term`
     DivEq {
@@ -468,6 +480,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AddSum {
                 a_add_b_derivation,
                 a_add_b_derived_add_c_derivation,
+                ..
             } => check_add_sum(
                 prop,
                 a_add_b_derivation,
