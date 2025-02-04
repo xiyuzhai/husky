@@ -180,7 +180,20 @@ where
             ),
             VdMirTermDerivationConstruction::AtomAddProductEqualKeep => None,
             VdMirTermDerivationConstruction::AtomAddProductEqualCancel => None,
-            VdMirTermDerivationConstruction::AtomAddProductGreater => None,
+            VdMirTermDerivationConstruction::AtomAddProductGreater {
+                zero_add_b_αβ_add_coercion,
+                one_mul_a_pow_one_αβ_mul_coercion,
+                one_α_αβ_coercion_triangle,
+                a_pow_one_αβ_pow_coercion,
+            } => Some(
+                [
+                    C(zero_add_b_αβ_add_coercion.into()),
+                    C(one_mul_a_pow_one_αβ_mul_coercion.into()),
+                    C(one_α_αβ_coercion_triangle.into()),
+                    C(a_pow_one_αβ_pow_coercion.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::ZeroAdd { .. } => None,
             VdMirTermDerivationConstruction::AddAtom { add_product_nf } => {
                 Some([add_product_nf].to_lean(self))

@@ -71,7 +71,12 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `a + b => 0` if `a` is an atom and `b` is a product with same stem and coefficient d=-1
     AtomAddProductEqualCancel,
     /// derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem
-    AtomAddProductGreater,
+    AtomAddProductGreater {
+        zero_add_b_αβ_add_coercion: VdMirSeparatorCoercion,
+        one_mul_a_pow_one_αβ_mul_coercion: VdMirSeparatorCoercion,
+        one_α_αβ_coercion_triangle: VdMirCoercionTriangle,
+        a_pow_one_αβ_pow_coercion: VdMirPowCoercion,
+    },
     /// derive `a + b * x + c * x => a + (b + c) * x`
     SumAddProductEqualKeep,
     /// derive `a + b * x + c * x => a` if `b + c` is zero
@@ -438,7 +443,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::AtomAddProductEqualCancel => {
                 check_atom_add_product_equal_cancel(prop, hc)
             }
-            VdMirTermDerivationConstruction::AtomAddProductGreater => {
+            VdMirTermDerivationConstruction::AtomAddProductGreater { .. } => {
                 check_atom_add_product_greater(prop, hc)
             }
             VdMirTermDerivationConstruction::SumAddProductGreater {

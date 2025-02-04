@@ -257,31 +257,48 @@ fn merge_product_construction<'db, 'sess>(
                 VdBsqTerm::Prop(lopd) => todo!(),
                 VdBsqTerm::Set(lopd) => todo!(),
             };
-            let a_ty = lopd.ty();
-            let b_ty = ropd.ty();
-            let ab_ty = hc.infer_add_signature(a_ty, b_ty).expr_ty();
+            let α = lopd.ty();
+            let β = ropd.ty();
+            let αβ = hc.infer_add_signature(α, β).expr_ty();
             match lopd_stem.cmp(&ropd_stem) {
                 std::cmp::Ordering::Less => VdMirTermDerivationConstruction::AtomAddProductLess {
                     zero_add_one_mul_a_pow_one_add_coercion:
-                        VdMirSeparatorCoercion::new_comm_ring_add(a_ty, ab_ty),
+                        VdMirSeparatorCoercion::new_comm_ring_add(α, αβ),
                     one_mul_a_pow_one_add_coercion: VdMirSeparatorCoercion::new_comm_ring_mul(
-                        a_ty, ab_ty,
+                        α, αβ,
                     ),
                     one_a_ac_coercion_triangle: VdMirCoercionTriangle::new(
                         elr.ty_menu().nat,
-                        a_ty,
-                        ab_ty,
+                        α,
+                        αβ,
                     ),
                     a_pow_one_pow_coercion: VdMirPowCoercion::new(
-                        a_ty,
+                        α,
                         elr.ty_menu().nat,
-                        ab_ty,
+                        αβ,
                         elr.ty_menu().nat,
                     ),
                 },
                 std::cmp::Ordering::Equal => todo!(),
                 std::cmp::Ordering::Greater => {
-                    VdMirTermDerivationConstruction::AtomAddProductGreater
+                    VdMirTermDerivationConstruction::AtomAddProductGreater {
+                        zero_add_b_αβ_add_coercion: VdMirSeparatorCoercion::new_comm_ring_add(
+                            β, αβ,
+                        ),
+                        one_mul_a_pow_one_αβ_mul_coercion:
+                            VdMirSeparatorCoercion::new_comm_ring_mul(α, αβ),
+                        one_α_αβ_coercion_triangle: VdMirCoercionTriangle::new(
+                            elr.ty_menu().nat,
+                            α,
+                            αβ,
+                        ),
+                        a_pow_one_αβ_pow_coercion: VdMirPowCoercion::new(
+                            α,
+                            elr.ty_menu().nat,
+                            αβ,
+                            elr.ty_menu().nat,
+                        ),
+                    }
                 }
             }
         }

@@ -176,6 +176,30 @@ macro "term_derivation_atom_add_product_less"
   : tactic
   => `(tactic| exact term_derivation_atom_add_product_less $hzero_add_one_mul_a_pow_one_αβ_mul_coercion $hone_mul_a_pow_one_αβ_mul_coercion $hone_α_αβ_coercion_triangle $ha_pow_one_αβ_pow_coercion)
 
+theorem term_derivation_atom_add_product_greater
+  {αβ}
+  {one_α_αβ a_αβ a_pow_one_αβ b_αβ zero_add_b_αβ one_mul_a_pow_one_αβ : αβ}
+  [CommSemiring αβ]
+  (hzero_add_b_αβ_add_coercion: zero_add_b_αβ = ((0:ℕ):αβ) + b_αβ)
+  (hone_mul_a_pow_one_αβ_mul_coercion: one_mul_a_pow_one_αβ = one_α_αβ * a_pow_one_αβ)
+  (hone_α_αβ_coercion_triangle: one_α_αβ = ((1:ℕ):αβ))
+  (ha_pow_one_αβ_pow_coercion: a_pow_one_αβ = (a_αβ)^(1:ℕ))
+  : a_αβ + b_αβ = zero_add_b_αβ + one_mul_a_pow_one_αβ := by
+  rw [hzero_add_b_αβ_add_coercion]
+  rw [hone_mul_a_pow_one_αβ_mul_coercion]
+  rw [hone_α_αβ_coercion_triangle]
+  rw [ha_pow_one_αβ_pow_coercion]
+  ring
+
+/-- derive `a + b => 0 + b + 1 * a^1` if `a` is an atom and `b` is a product with lower stem -/
+macro "term_derivation_atom_add_product_greater"
+  hzero_add_b_αβ_add_coercion:term:1024
+  hone_mul_a_pow_one_αβ_mul_coercion:term:1024
+  hone_α_αβ_coercion_triangle:term:1024
+  ha_pow_one_αβ_pow_coercion:term:1024
+  : tactic
+  => `(tactic| exact term_derivation_atom_add_product_greater $hzero_add_b_αβ_add_coercion $hone_mul_a_pow_one_αβ_mul_coercion $hone_α_αβ_coercion_triangle $ha_pow_one_αβ_pow_coercion)
+
 -- TODO: ac_term could be of its own type
 theorem term_derivation_sum_add_product_greater
     {αγ αβγ}
