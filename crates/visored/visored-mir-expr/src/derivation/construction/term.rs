@@ -201,7 +201,14 @@ pub enum VdMirTermDerivationConstruction {
     /// derive `c * a * b => c * (b * a)` if `a` and `b` are exponentials with `a`'s base being greater than `b`'s base
     SimpleProductMulExponentialGreater,
     /// derive `c * a * b => c * (a * b^1)`
-    SimpleProductMulBaseLess,
+    SimpleProductMulBaseLess {
+        a_mul_b_αβγ_mul_coercion: VdMirSeparatorCoercion,
+        b_pow_one_αβ_αβγ_coercion: VdMirPowCoercion,
+        c_mul_a_αβγ_mul_coercion: VdMirSeparatorCoercion,
+        c_αγ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        a_αγ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+        a_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle,
+    },
     /// derive `c * a * b => c * (b^1 * a)`
     SimpleProductMulBaseGreater,
     /// derive `a + (b + c) => term` from `a + b => term_ab` and `term_ab + c => term`
@@ -465,7 +472,7 @@ impl VdMirTermDerivationConstruction {
             VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => {
                 check_simple_product_mul_exponential_greater(prop, hc)
             }
-            VdMirTermDerivationConstruction::SimpleProductMulBaseLess => {
+            VdMirTermDerivationConstruction::SimpleProductMulBaseLess { .. } => {
                 check_simple_product_mul_base_less(prop, hc)
             }
             VdMirTermDerivationConstruction::SimpleProductMulBaseGreater => {

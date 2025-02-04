@@ -452,11 +452,41 @@ fn derive_mul_base<'db, 'sess>(
             VdMirBaseFoldingSeparator::CommRingAdd => todo!(),
             VdMirBaseFoldingSeparator::CommRingMul => {
                 if is_product_simple(leader, followers) {
-                    let a_base = exponential_base(followers[0].1);
-                    let b_base = exponential_base(ropd);
+                    let a = followers[0].1;
+                    let a_base = exponential_base(a);
+                    let b = ropd;
+                    let b_base = exponential_base(b);
+                    let c = leader;
+                    assert!(matches!(c.data(), VdBsqExprData::Literal(_)));
+                    let α = a.ty();
+                    let β = b.ty();
+                    let γ = c.ty();
+                    let αβ = hc.infer_mul_signature(α, β).expr_ty();
+                    let αγ = hc.infer_mul_signature(α, γ).expr_ty();
+                    let αβγ = hc.infer_mul_signature(αβ, γ).expr_ty();
                     match a_base.cmp(&b_base) {
                         core::cmp::Ordering::Less => (
-                            VdMirTermDerivationConstruction::SimpleProductMulBaseLess,
+                            VdMirTermDerivationConstruction::SimpleProductMulBaseLess {
+                                a_mul_b_αβγ_mul_coercion:
+                                    VdMirSeparatorCoercion::new_comm_ring_mul(αβ, αβγ),
+                                b_pow_one_αβ_αβγ_coercion: VdMirPowCoercion::new(
+                                    β,
+                                    elr.ty_menu().nat,
+                                    αβγ,
+                                    elr.ty_menu().nat,
+                                ),
+                                c_mul_a_αβγ_mul_coercion:
+                                    VdMirSeparatorCoercion::new_comm_ring_mul(αγ, αβγ),
+                                c_αγ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(
+                                    γ, αγ, αβγ,
+                                ),
+                                a_αγ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(
+                                    α, αγ, αβγ,
+                                ),
+                                a_αβ_αβγ_coercion_triangle: VdMirCoercionTriangle::new(
+                                    α, αβ, αβγ,
+                                ),
+                            },
                             None,
                         ),
                         core::cmp::Ordering::Equal => todo!(),

@@ -238,7 +238,24 @@ where
                 .to_lean(self),
             ),
             VdMirTermDerivationConstruction::SimpleProductMulExponentialGreater => None,
-            VdMirTermDerivationConstruction::SimpleProductMulBaseLess => None,
+            VdMirTermDerivationConstruction::SimpleProductMulBaseLess {
+                a_mul_b_αβγ_mul_coercion,
+                b_pow_one_αβ_αβγ_coercion,
+                c_mul_a_αβγ_mul_coercion,
+                c_αγ_αβγ_coercion_triangle,
+                a_αγ_αβγ_coercion_triangle,
+                a_αβ_αβγ_coercion_triangle,
+            } => Some(
+                [
+                    C(a_mul_b_αβγ_mul_coercion.into()),
+                    C(b_pow_one_αβ_αβγ_coercion.into()),
+                    C(c_mul_a_αβγ_mul_coercion.into()),
+                    C(c_αγ_αβγ_coercion_triangle.into()),
+                    C(a_αγ_αβγ_coercion_triangle.into()),
+                    C(a_αβ_αβγ_coercion_triangle.into()),
+                ]
+                .to_lean(self),
+            ),
             VdMirTermDerivationConstruction::SimpleProductMulBaseGreater => None,
             VdMirTermDerivationConstruction::AddSum {
                 a_add_b_derivation,

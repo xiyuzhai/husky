@@ -399,8 +399,43 @@ macro "term_derivation_div_atom"
   ha_mul_b_inv_dn:term:1024
   : tactic => `(tactic| exact term_derivation_div_atom $ha_mul_b_inv_dn)
 
+theorem term_derivation_simple_product_mul_base_less
+  {αβγ}
+  {c_mul_a_αβγ b_αβγ c_αβγ a_mul_b_pow_one_αβγ a_αβ_αβγ a_αγ_αβγ c_αγ_αβγ a_αβγ: αβγ}
+  {b_pow_one_αβ_αβγ : αβγ}
+  [CommSemiring αβγ]
+  (ha_mul_b_αβγ_mul_coercion : a_mul_b_pow_one_αβγ = a_αβ_αβγ * b_pow_one_αβ_αβγ)
+  (hb_pow_one_αβ_αβγ_coercion : b_pow_one_αβ_αβγ = b_αβγ^(1:ℕ))
+  (hc_mul_a_αβγ_mul_coercion : c_mul_a_αβγ = c_αγ_αβγ * a_αγ_αβγ)
+  (hc_αγ_αβγ_coercion_triangle: c_αγ_αβγ = c_αβγ)
+  (ha_αγ_αβγ_coercion_triangle: a_αγ_αβγ = a_αβγ)
+  (ha_αβ_αβγ_coercion_triangle: a_αβ_αβγ = a_αβγ)
+  : c_mul_a_αβγ * b_αβγ = c_αβγ * a_mul_b_pow_one_αβγ := by
+  rw [ha_mul_b_αβγ_mul_coercion]
+  rw [hb_pow_one_αβ_αβγ_coercion]
+  simp
+  rw [hc_mul_a_αβγ_mul_coercion]
+  rw [hc_αγ_αβγ_coercion_triangle]
+  rw [ha_αγ_αβγ_coercion_triangle]
+  rw [ha_αβ_αβγ_coercion_triangle]
+  rw [← mul_assoc]
+
+/-- derive `c * a * b => c * (a * b^1)` if `a`'s base being less than `b`'s base -/
 macro "term_derivation_simple_product_mul_base_less"
-  : tactic => `(tactic| fail "not implemented")
+  ha_mul_b_αβγ_mul_coercion:term:1024
+  hb_pow_one_αβ_αβγ_coercion:term:1024
+  hc_mul_a_αβγ_mul_coercion:term:1024
+  hc_αγ_αβγ_coercion_triangle:term:1024
+  ha_αγ_αβγ_coercion_triangle:term:1024
+  ha_αβ_αβγ_coercion_triangle:term:1024
+  : tactic => `(tactic| exact term_derivation_simple_product_mul_base_less
+    $ha_mul_b_αβγ_mul_coercion
+    $hb_pow_one_αβ_αβγ_coercion
+    $hc_mul_a_αβγ_mul_coercion
+    $hc_αγ_αβγ_coercion_triangle
+    $ha_αγ_αβγ_coercion_triangle
+    $ha_αβ_αβγ_coercion_triangle
+  )
 
 macro "term_derivation_simple_product_mul_base_equal"
   : tactic => `(tactic| fail "not implemented")
