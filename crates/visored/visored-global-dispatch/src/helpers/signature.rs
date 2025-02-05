@@ -51,7 +51,55 @@ impl VdDefaultGlobalDispatchTable {
     ) -> VdBaseChainingSeparatorSignature {
         self.infer_base_chaining_separator_signature(
             prev_item_ty,
-            VdBaseSeparator::Eq,
+            VdBaseSeparator::EQ,
+            next_item_ty,
+        )
+    }
+
+    pub fn infer_gt_signature(
+        &self,
+        prev_item_ty: VdType,
+        next_item_ty: VdType,
+    ) -> VdBaseChainingSeparatorSignature {
+        self.infer_base_chaining_separator_signature(
+            prev_item_ty,
+            VdBaseSeparator::GT,
+            next_item_ty,
+        )
+    }
+
+    pub fn infer_ge_signature(
+        &self,
+        prev_item_ty: VdType,
+        next_item_ty: VdType,
+    ) -> VdBaseChainingSeparatorSignature {
+        self.infer_base_chaining_separator_signature(
+            prev_item_ty,
+            VdBaseSeparator::GE,
+            next_item_ty,
+        )
+    }
+
+    pub fn infer_lt_signature(
+        &self,
+        prev_item_ty: VdType,
+        next_item_ty: VdType,
+    ) -> VdBaseChainingSeparatorSignature {
+        self.infer_base_chaining_separator_signature(
+            prev_item_ty,
+            VdBaseSeparator::LT,
+            next_item_ty,
+        )
+    }
+
+    pub fn infer_le_signature(
+        &self,
+        prev_item_ty: VdType,
+        next_item_ty: VdType,
+    ) -> VdBaseChainingSeparatorSignature {
+        self.infer_base_chaining_separator_signature(
+            prev_item_ty,
+            VdBaseSeparator::LE,
             next_item_ty,
         )
     }

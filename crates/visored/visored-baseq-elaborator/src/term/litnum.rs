@@ -87,7 +87,7 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
         }
     }
 
-    pub fn sign(self, db: &FloaterDb) -> VdBsqSign {
+    pub fn sign(self) -> VdBsqSign {
         match self {
             VdBsqLitnumTerm::Int128(i) => {
                 if i > 0 {
@@ -104,7 +104,7 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
     }
 
     pub fn with_sign(self, sign: VdBsqSign, db: &FloaterDb) -> Self {
-        if self.sign(db) == sign {
+        if self.sign() == sign {
             self
         } else {
             match sign {

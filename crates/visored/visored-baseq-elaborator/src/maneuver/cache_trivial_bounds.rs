@@ -1,4 +1,8 @@
 use super::{expr::VdBsqExpr, *};
+use hypothesis::construction::{
+    trivial_bound::VdBsqTrivialBoundHypothesisConstruction, VdBsqHypothesisConstruction,
+};
+use num_bigint::Sign;
 use term::{
     comnum::{
         atom::{VdBsqAtomTerm, VdBsqComnumAtomTermData},
@@ -83,7 +87,22 @@ fn try_even_power<'db, 'sess>(
                     | VdPreludeSetPath::RationalNumber
                     | VdPreludeSetPath::Integer
                     | VdPreludeSetPath::RealNumber => {
-                        let hypothesis = todo!();
+                        let sign = product.litnum_factor().sign();
+                        let prop = match sign {
+                            Sign::Minus => {
+                                let product = product.expr(elr);
+                                elr.mk_lt(product, elr.mk_zero())
+                            }
+                            Sign::NoSign => unreachable!(),
+                            Sign::Plus => {
+                                let product = product.expr(elr);
+                                elr.mk_lt(product, elr.mk_zero())
+                            }
+                        };
+                        let construction = VdBsqHypothesisConstruction::TrivialBound(
+                            VdBsqTrivialBoundHypothesisConstruction::EvenPower { sign },
+                        );
+                        let hypothesis = elr.hc.construct_new_hypothesis(prop, construction);
                         Some(hypothesis)
                     }
                     VdPreludeSetPath::ComplexNumber => return None,

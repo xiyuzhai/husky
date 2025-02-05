@@ -1,3 +1,6 @@
+pub mod trivial_bound;
+
+use self::trivial_bound::VdBsqTrivialBoundHypothesisConstruction;
 use super::*;
 use crate::coercion::VdBsqCoercion;
 use stashes::litnum_bound::{VdBsqLitnumBound, VdBsqLitnumBoundSrc};
@@ -22,4 +25,5 @@ pub enum VdBsqHypothesisConstruction<'sess> {
     LitnumBound {
         bound: VdBsqLitnumBound<'sess>,
     },
+    TrivialBound(VdBsqTrivialBoundHypothesisConstruction),
 }

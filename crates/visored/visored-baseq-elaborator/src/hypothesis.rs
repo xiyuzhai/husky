@@ -116,6 +116,7 @@ impl<'db, 'sess> VdBsqHypothesisIdx<'sess> {
                     derivation_chunk: elr.transcribe_litnum_bound_derivation(self, bound, hc),
                 }
             }
+            VdBsqHypothesisConstruction::TrivialBound(construction) => todo!(),
         };
         let hypothesis_entry = &elr.hc.arena()[self];
         let prop = match explicit_prop {

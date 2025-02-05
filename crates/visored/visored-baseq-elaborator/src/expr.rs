@@ -298,11 +298,12 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         VdBsqExpr::new_inner(expr_data, ty, term, db)
     }
 
-    pub(crate) fn mk_zero(&self) -> VdBsqExpr<'sess> {
-        self.mk_expr(
-            VdBsqExprData::Literal(self.term_menu().zero),
-            self.ty_menu().nat,
-        )
+    pub fn mk_zero(&self) -> VdBsqExpr<'sess> {
+        self.mk_i128(0)
+    }
+
+    pub fn mk_one(&self) -> VdBsqExpr<'sess> {
+        self.mk_i128(1)
     }
 
     pub fn mk_i128(&self, i: i128) -> VdBsqExpr<'sess> {
@@ -333,13 +334,61 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         )
     }
 
-    pub(crate) fn mk_eq(
-        &self,
-        lopd: VdBsqExpr<'sess>,
-        ropd: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
-        let signature = hc.infer_eq_signature(lopd.ty(), ropd.ty());
+    pub(crate) fn mk_eq(&self, lopd: VdBsqExpr<'sess>, ropd: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
+        let signature = dt.infer_eq_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprData::ChainingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
+                joined_signature: None,
+            },
+            signature.expr_ty(),
+        )
+    }
+
+    pub(crate) fn mk_gt(&self, lopd: VdBsqExpr<'sess>, ropd: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
+        let signature = dt.infer_gt_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprData::ChainingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
+                joined_signature: None,
+            },
+            signature.expr_ty(),
+        )
+    }
+
+    pub(crate) fn mk_ge(&self, lopd: VdBsqExpr<'sess>, ropd: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
+        let signature = dt.infer_ge_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprData::ChainingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
+                joined_signature: None,
+            },
+            signature.expr_ty(),
+        )
+    }
+
+    pub(crate) fn mk_lt(&self, lopd: VdBsqExpr<'sess>, ropd: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
+        let signature = dt.infer_lt_signature(lopd.ty(), ropd.ty());
+        self.mk_expr(
+            VdBsqExprData::ChainingSeparatedList {
+                leader: lopd,
+                followers: smallvec![(signature, ropd)],
+                joined_signature: None,
+            },
+            signature.expr_ty(),
+        )
+    }
+
+    pub(crate) fn mk_le(&self, lopd: VdBsqExpr<'sess>, ropd: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
+        let signature = dt.infer_le_signature(lopd.ty(), ropd.ty());
         self.mk_expr(
             VdBsqExprData::ChainingSeparatedList {
                 leader: lopd,

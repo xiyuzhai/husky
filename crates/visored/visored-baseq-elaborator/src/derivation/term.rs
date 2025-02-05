@@ -74,7 +74,7 @@ where
         assert_eq!(src.term(), dst.term());
         let src_nf = self.transcribe_expr_term_derivation(src, hc);
         let dst_nf = self.transcribe_expr_term_derivation(dst, hc);
-        let prop = self.mk_eq(src, dst, hc).transcribe(None, self, hc);
+        let prop = self.mk_eq(src, dst).transcribe(None, self, hc);
         hc.alloc_term_derivation(
             prop,
             VdMirTermDerivationConstruction::NonTrivialExprEquivalence {
