@@ -9,6 +9,12 @@ pub struct VdBsqSumTerm<'sess> {
     data: VdBsqComnumSumTermData<'sess>,
 }
 
+impl<'sess> From<VdBsqSumTerm<'sess>> for VdBsqTerm<'sess> {
+    fn from(term: VdBsqSumTerm<'sess>) -> Self {
+        VdBsqTerm::Comnum(term.into())
+    }
+}
+
 #[derive(Debug, Clone, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub struct VdBsqComnumSumTermData<'sess> {
     constant_term: VdBsqLitnumTerm<'sess>,
@@ -213,20 +219,22 @@ impl<'db, 'sess> VdBsqSumTerm<'sess> {
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        let leader = self.constant_term().expr(elr, hc);
-        let mut prev_summand_ty = leader.ty();
-        let mut followers = smallvec![];
-        for (stem, coeff) in self.monomials().data() {
-            let coeff_expr = coeff.expr(elr, hc);
-            let stem = stem.expr(elr, hc);
-            let monomial = elr.mk_mul(coeff_expr, stem, hc);
-            let signature = hc.infer_add_signature(prev_summand_ty, monomial.ty());
-            followers.push((signature, monomial));
-            prev_summand_ty = signature.expr_ty();
-        }
-        elr.mk_expr(
-            VdBsqExprData::FoldingSeparatedList { leader, followers },
-            prev_summand_ty,
-        )
+        elr.do_term_to_expr(self, |elr| {
+            let leader = self.constant_term().expr(elr, hc);
+            let mut prev_summand_ty = leader.ty();
+            let mut followers = smallvec![];
+            for (stem, coeff) in self.monomials().data() {
+                let coeff_expr = coeff.expr(elr, hc);
+                let stem = stem.expr(elr, hc);
+                let monomial = elr.mk_mul(coeff_expr, stem, hc);
+                let signature = hc.infer_add_signature(prev_summand_ty, monomial.ty());
+                followers.push((signature, monomial));
+                prev_summand_ty = signature.expr_ty();
+            }
+            elr.mk_expr(
+                VdBsqExprData::FoldingSeparatedList { leader, followers },
+                prev_summand_ty,
+            )
+        })
     }
 }

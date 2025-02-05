@@ -9,6 +9,12 @@ pub struct VdBsqAtomTerm<'sess> {
     data: VdBsqComnumAtomTermData,
 }
 
+impl<'sess> From<VdBsqAtomTerm<'sess>> for VdBsqTerm<'sess> {
+    fn from(term: VdBsqAtomTerm<'sess>) -> Self {
+        VdBsqTerm::Comnum(term.into())
+    }
+}
+
 impl<'sess> std::fmt::Debug for VdBsqAtomTerm<'sess> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("AtomTerm(`")?;
@@ -134,11 +140,13 @@ impl<'sess> VdBsqAtomTerm<'sess> {
 impl<'db, 'sess> VdBsqAtomTerm<'sess> {
     pub(crate) fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
-        elr.mk_expr(expr_data, ty)
+        elr.do_term_to_expr(self, |elr| {
+            let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
+            elr.mk_expr(expr_data, ty)
+        })
     }
 
     fn expr_data_and_ty(

@@ -59,6 +59,7 @@ where
         VdBsqProductStem::NonTrivial(stem) => {
             if stem.exponentials().len() == 1 {
                 let (base, exponent) = stem.exponentials().data()[0];
+                base.expr(elr, hc).cache();
                 match exponent {
                     term::num::VdBsqNumTerm::Litnum(vd_bsq_litnum_term) => todo!(),
                     term::num::VdBsqNumTerm::Comnum(vd_bsq_comnum_term) => todo!(),

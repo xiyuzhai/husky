@@ -12,6 +12,12 @@ pub struct VdBsqProductTerm<'sess> {
     stem: VdBsqProductStem<'sess>,
 }
 
+impl<'sess> From<VdBsqProductTerm<'sess>> for VdBsqTerm<'sess> {
+    fn from(term: VdBsqProductTerm<'sess>) -> Self {
+        VdBsqTerm::Comnum(term.into())
+    }
+}
+
 impl<'sess> VdBsqProductTerm<'sess> {
     pub fn new(
         litnum_factor: impl Into<VdBsqLitnumTerm<'sess>>,
@@ -342,7 +348,9 @@ impl<'db, 'sess> VdBsqProductTerm<'sess> {
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        product_expr(self.stem(), self.litnum_factor(), elr, hc)
+        elr.do_term_to_expr(self, |elr| {
+            product_expr(self.stem(), self.litnum_factor(), elr, hc)
+        })
     }
 }
 
@@ -353,7 +361,10 @@ impl<'db, 'sess> VdBsqProductStem<'sess> {
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         match self {
-            VdBsqProductStem::Atom(slf) => elr.mk_pow(slf.expr(elr, hc), elr.mk_i128(1), hc),
+            VdBsqProductStem::Atom(slf) => {
+                let slf = slf.expr(elr, hc);
+                elr.mk_pow(slf, elr.mk_i128(1), hc)
+            }
             VdBsqProductStem::NonTrivial(slf) => slf.expr(elr, hc),
         }
     }

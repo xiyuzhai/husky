@@ -10,6 +10,12 @@ pub struct VdBsqNumRelation<'sess> {
     pub opr: VdBsqComparisonOpr,
 }
 
+impl<'sess> From<VdBsqNumRelation<'sess>> for VdBsqTerm<'sess> {
+    fn from(slf: VdBsqNumRelation<'sess>) -> Self {
+        VdBsqTerm::Prop(slf.into())
+    }
+}
+
 impl<'sess> VdBsqNumRelation<'sess> {
     pub fn new(
         lhs: VdBsqNumTerm<'sess>,
@@ -83,21 +89,23 @@ impl<'db, 'sess> VdBsqNumRelation<'sess> {
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        let lhs_minus_rhs = self.lhs_minus_rhs().expr(elr, hc);
-        let lhs_minus_rhs_ty = lhs_minus_rhs.ty();
-        let signature = hc.infer_base_comparison_separator_signature(
-            lhs_minus_rhs_ty,
-            self.opr().into(),
-            lhs_minus_rhs_ty,
-        );
-        let zero = elr.mk_zero();
-        elr.mk_expr(
-            VdBsqExprData::ChainingSeparatedList {
-                leader: lhs_minus_rhs,
-                followers: smallvec![(signature.into(), zero)],
-                joined_signature: None,
-            },
-            signature.expr_ty(),
-        )
+        elr.do_term_to_expr(self, |elr| {
+            let lhs_minus_rhs = self.lhs_minus_rhs().expr(elr, hc);
+            let lhs_minus_rhs_ty = lhs_minus_rhs.ty();
+            let signature = hc.infer_base_comparison_separator_signature(
+                lhs_minus_rhs_ty,
+                self.opr().into(),
+                lhs_minus_rhs_ty,
+            );
+            let zero = elr.mk_zero();
+            elr.mk_expr(
+                VdBsqExprData::ChainingSeparatedList {
+                    leader: lhs_minus_rhs,
+                    followers: smallvec![(signature.into(), zero)],
+                    joined_signature: None,
+                },
+                signature.expr_ty(),
+            )
+        })
     }
 }
