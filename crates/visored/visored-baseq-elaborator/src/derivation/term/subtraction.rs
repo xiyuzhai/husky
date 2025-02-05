@@ -10,7 +10,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         ropd: VdBsqExpr<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let add_neg = self.mk_add(lopd, self.mk_neg(ropd, hc), hc);
+        let add_neg = self.mk_add(lopd, self.mk_neg(ropd), hc);
         let source_ty = ropd.ty();
         let target_ty = signature.ropd_ty();
         VdMirTermDerivationConstruction::SubEqsAddNeg {

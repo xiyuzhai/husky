@@ -146,14 +146,10 @@ impl<'sess> VdBsqNumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqNumTerm<'sess> {
-    pub(crate) fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         match self {
-            VdBsqNumTerm::Litnum(slf) => slf.expr(elr, hc),
-            VdBsqNumTerm::Comnum(slf) => slf.expr(elr, hc),
+            VdBsqNumTerm::Litnum(slf) => slf.expr(elr),
+            VdBsqNumTerm::Comnum(slf) => slf.expr(elr),
         }
     }
 }

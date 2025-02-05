@@ -383,13 +383,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         )
     }
 
-    pub(crate) fn mk_sub(
-        &self,
-        lhs: VdBsqExpr<'sess>,
-        rhs: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
-        let signature = hc.infer_sub_signature(lhs.ty(), rhs.ty());
+    pub(crate) fn mk_sub(&self, lhs: VdBsqExpr<'sess>, rhs: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
+        let signature = dt.infer_sub_signature(lhs.ty(), rhs.ty());
         self.mk_expr(
             VdBsqExprData::Application {
                 function: VdMirFunc::NormalBaseBinaryOpr(signature),
@@ -399,12 +395,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         )
     }
 
-    pub(crate) fn mk_neg(
-        &self,
-        expr: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
-        let signature = hc.infer_neg_signature(expr.ty());
+    pub(crate) fn mk_neg(&self, expr: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
+        let signature = dt.infer_neg_signature(expr.ty());
         self.mk_expr(
             VdBsqExprData::Application {
                 function: VdMirFunc::NormalBasePrefixOpr(signature),
@@ -418,9 +411,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         lopd: VdBsqExpr<'sess>,
         ropd: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        let signature = hc.infer_mul_signature(lopd.ty(), ropd.ty());
+        let dt = self.dispatch_table();
+        let signature = dt.infer_mul_signature(lopd.ty(), ropd.ty());
         self.mk_expr(
             VdBsqExprData::FoldingSeparatedList {
                 leader: lopd,
@@ -434,9 +427,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         numerator: VdBsqExpr<'sess>,
         denominator: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        let signature = hc.infer_div_signature(numerator.ty(), denominator.ty());
+        let dt = self.dispatch_table();
+        let signature = dt.infer_div_signature(numerator.ty(), denominator.ty());
         self.mk_expr(
             VdBsqExprData::Application {
                 function: VdMirFunc::NormalBaseBinaryOpr(signature),
@@ -450,9 +443,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         &self,
         base: VdBsqExpr<'sess>,
         exponent: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        let signature = hc.infer_pow_signature(base.ty(), exponent.ty());
+        let dt = self.dispatch_table();
+        let signature = dt.infer_pow_signature(base.ty(), exponent.ty());
         self.mk_expr(
             VdBsqExprData::Application {
                 function: VdMirFunc::Power(signature),
@@ -462,20 +455,12 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         )
     }
 
-    pub(crate) fn mk_pow_one(
-        &self,
-        base: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
-        self.mk_pow(base, self.mk_litnum(VdBsqLitnumTerm::Int128(1)), hc)
+    pub(crate) fn mk_pow_one(&self, base: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        self.mk_pow(base, self.mk_litnum(VdBsqLitnumTerm::Int128(1)))
     }
 
-    pub(crate) fn mk_inv(
-        &self,
-        expr: VdBsqExpr<'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
-        self.mk_pow(expr, self.mk_litnum(VdBsqLitnumTerm::Int128(-1)), hc)
+    pub(crate) fn mk_inv(&self, expr: VdBsqExpr<'sess>) -> VdBsqExpr<'sess> {
+        self.mk_pow(expr, self.mk_litnum(VdBsqLitnumTerm::Int128(-1)))
     }
 
     pub(crate) fn mk_trivial_chaining_separated_list(
@@ -485,8 +470,9 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         follower: VdBsqExpr<'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
+        let dt = self.dispatch_table();
         let signature =
-            hc.infer_base_chaining_separator_signature(leader.ty(), separator, follower.ty());
+            dt.infer_base_chaining_separator_signature(leader.ty(), separator, follower.ty());
         self.mk_expr(
             VdBsqExprData::ChainingSeparatedList {
                 leader,

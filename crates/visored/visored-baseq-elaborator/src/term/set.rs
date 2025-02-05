@@ -23,11 +23,7 @@ impl<'sess> VdBsqSetTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqSetTerm<'sess> {
-    pub(crate) fn expr(
-        self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn expr(self, elr: &VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         todo!()
     }
 }

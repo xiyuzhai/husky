@@ -23,7 +23,7 @@ impl<'db, 'sess> VdBsqExprDerived<'sess> {
         elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> Self {
-        let derived = derived.unwrap_or_else(|| expr.term().expr(elr, hc));
+        let derived = derived.unwrap_or_else(|| expr.term().expr(elr));
         let prop = transcribe_expr_derivation_prop(expr, derived, elr, hc);
         let derivation = hc.alloc_term_derivation(prop, construction);
         Self {

@@ -135,6 +135,11 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub(crate) fn mir_expr_to_bsq_map(&self) -> &VdMirExprMap<VdBsqExpr<'sess>> {
         &self.mir_to_bsq_expr_map
     }
+
+    pub(crate) fn dispatch_table(&self) -> &'sess VdDefaultGlobalDispatchTable {
+        todo!()
+        // self.session.dispatch_table()
+    }
 }
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {

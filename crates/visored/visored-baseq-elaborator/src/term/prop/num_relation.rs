@@ -84,15 +84,12 @@ impl<'sess> VdBsqNumRelation<'sess> {
 }
 
 impl<'db, 'sess> VdBsqNumRelation<'sess> {
-    pub(crate) fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         elr.do_term_to_expr(self, |elr| {
-            let lhs_minus_rhs = self.lhs_minus_rhs().expr(elr, hc);
+            let dt = elr.dispatch_table();
+            let lhs_minus_rhs = self.lhs_minus_rhs().expr(elr);
             let lhs_minus_rhs_ty = lhs_minus_rhs.ty();
-            let signature = hc.infer_base_comparison_separator_signature(
+            let signature = dt.infer_base_comparison_separator_signature(
                 lhs_minus_rhs_ty,
                 self.opr().into(),
                 lhs_minus_rhs_ty,

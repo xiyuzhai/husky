@@ -74,7 +74,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
         b_nf: VdBsqExprNormalized<'sess>,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirTermDerivationConstruction {
-        let a_sub_b = self.mk_sub(**a_nf, **b_nf, hc);
+        let a_sub_b = self.mk_sub(**a_nf, **b_nf);
         let a_ty = a_nf.expr().ty();
         let b_ty = b_nf.expr().ty();
         let ab_ty = a_sub_b.ty();

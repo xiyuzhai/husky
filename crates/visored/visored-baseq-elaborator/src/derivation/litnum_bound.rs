@@ -44,8 +44,8 @@ where
             let (src_nf, src_nf_dn) =
                 normalize_litnum_bound(src.litnum_factor(), src.hypothesis(), self, hc);
             let (dst_nf, dst_nf_dn) = normalize_litnum_bound(bound.litnum_factor(), dst, self, hc);
-            let src_diff = self.mk_sub(src_nf, self.mk_litnum(src.litnum_summand()), hc);
-            let dst_diff = self.mk_sub(dst_nf, self.mk_litnum(bound.litnum_summand()), hc);
+            let src_diff = self.mk_sub(src_nf, self.mk_litnum(src.litnum_summand()));
+            let dst_diff = self.mk_sub(dst_nf, self.mk_litnum(bound.litnum_summand()));
             let src_nf_and_dst_nf_equivalence_dn = self
                 .transcribe_non_trivial_expr_equivalence_term_derivation(src_diff, dst_diff, hc);
             let src = src.hypothesis().transcribe(self, None, hc);
@@ -85,8 +85,8 @@ fn normalize_litnum_bound<'db, 'sess>(
     let litnum_factor = elr.mk_litnum(litnum_factor);
     let prop = elr.hc.arena()[hypothesis].prop();
     let (lhs, signature, rhs) = prop.split_trivial_chaining_separated_list(elr, hc);
-    let expr = elr.mk_sub(lhs, rhs, hc);
-    let expr = elr.mk_div(expr, litnum_factor, hc);
+    let expr = elr.mk_sub(lhs, rhs);
+    let expr = elr.mk_div(expr, litnum_factor);
     let VdBaseChainingSeparatorSignature::Relation(VdBaseRelationSeparatorSignature::Comparison(
         signature,
     )) = signature

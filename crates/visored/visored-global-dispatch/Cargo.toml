@@ -24,6 +24,7 @@ husky-print-utils.workspace = true
 husky-path-utils.workspace = true
 # visored
 visored-opr.workspace = true
+visored-mir-opr.workspace = true
 visored-term.workspace = true
 visored-signature.workspace = true
 

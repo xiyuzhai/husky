@@ -316,16 +316,12 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 }
 
 impl<'db, 'sess> VdBsqTerm<'sess> {
-    pub fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         match self {
-            VdBsqTerm::Litnum(litnum) => litnum.expr(elr, hc),
-            VdBsqTerm::Comnum(comnum) => comnum.expr(elr, hc),
-            VdBsqTerm::Prop(prop) => prop.expr(elr, hc),
-            VdBsqTerm::Set(set) => set.expr(elr, hc),
+            VdBsqTerm::Litnum(litnum) => litnum.expr(elr),
+            VdBsqTerm::Comnum(comnum) => comnum.expr(elr),
+            VdBsqTerm::Prop(prop) => prop.expr(elr),
+            VdBsqTerm::Set(set) => set.expr(elr),
         }
     }
 }

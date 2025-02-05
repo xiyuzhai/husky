@@ -46,14 +46,10 @@ impl<'sess> VdBsqPropTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqPropTerm<'sess> {
-    pub(crate) fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         match self {
-            VdBsqPropTerm::NumRelation(num_relation) => num_relation.expr(elr, hc),
-            VdBsqPropTerm::NumChain(num_chain) => num_chain.expr(elr, hc),
+            VdBsqPropTerm::NumRelation(num_relation) => num_relation.expr(elr),
+            VdBsqPropTerm::NumChain(num_chain) => num_chain.expr(elr),
             VdBsqPropTerm::Trivial(b) => {
                 let path = match b {
                     true => VdItemPath::TRUE,

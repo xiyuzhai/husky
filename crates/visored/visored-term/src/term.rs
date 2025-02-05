@@ -127,6 +127,10 @@ pub enum VdTermData {
     Abstraction(VdAbstractionData),
 }
 
+impl VdTermData {
+    pub const PROP: Self = Self::ItemPath(VdItemPathTermData::PROP);
+}
+
 impl VdTerm {
     pub fn to_ty(self) -> VdType {
         VdType::new(self)

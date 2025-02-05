@@ -40,7 +40,7 @@ fn derive_div<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprNormalized<'sess> {
     let construction = derive_div_construction(numerator, denominator, elr, hc);
-    let expr = elr.mk_div(**numerator, **denominator, hc);
+    let expr = elr.mk_div(**numerator, **denominator);
     VdBsqExprNormalized::new(expr, construction, elr, hc)
 }
 
@@ -65,7 +65,7 @@ fn derive_div_construction<'db, 'sess>(
             VdBsqComnumTerm::Atom(denominator_term) => {
                 let a = **numerator;
                 let b = **denominator;
-                let a_mul_b_inv_dn = derive_product(a, elr.mk_inv(b, hc), elr, hc);
+                let a_mul_b_inv_dn = derive_product(a, elr.mk_inv(b), elr, hc);
                 VdMirTermDerivationConstruction::DivAtom {
                     a_mul_b_inv_dn: a_mul_b_inv_dn.derivation(),
                 }

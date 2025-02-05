@@ -45,11 +45,7 @@ impl<'db, 'sess> VdBsqNumChain<'sess> {
 }
 
 impl<'db, 'sess> VdBsqNumChain<'sess> {
-    pub(crate) fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         todo!()
     }
 }

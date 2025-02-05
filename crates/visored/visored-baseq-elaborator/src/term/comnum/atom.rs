@@ -138,13 +138,9 @@ impl<'sess> VdBsqAtomTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqAtomTerm<'sess> {
-    pub(crate) fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         elr.do_term_to_expr(self, |elr| {
-            let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
+            let (expr_data, ty) = self.expr_data_and_ty(elr);
             elr.mk_expr(expr_data, ty)
         })
     }
@@ -152,7 +148,6 @@ impl<'db, 'sess> VdBsqAtomTerm<'sess> {
     fn expr_data_and_ty(
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> (VdBsqExprData<'sess>, VdType) {
         match *self.data() {
             VdBsqComnumAtomTermData::Variable {

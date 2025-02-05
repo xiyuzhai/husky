@@ -105,7 +105,7 @@ fn derive_product_aux<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprDerived<'sess> {
     let (construction, derived) = derive_product_construction(lopd, ropd, elr, hc);
-    let expr = elr.mk_mul(lopd, ropd, hc);
+    let expr = elr.mk_mul(lopd, ropd);
     VdBsqExprDerived::new(expr, derived, construction, elr, hc)
 }
 
@@ -224,7 +224,7 @@ fn derive_mul_literal<'db, 'sess>(
             }
         }
         _ => {
-            let derived = elr.mk_mul(ropd, elr.mk_pow_one(lopd, hc), hc);
+            let derived = elr.mk_mul(ropd, elr.mk_pow_one(lopd));
             (
                 VdMirTermDerivationConstruction::BaseMulLiteral,
                 Some(derived),
@@ -396,7 +396,7 @@ fn derive_mul_base<'db, 'sess>(
     match *lopd.data() {
         VdBsqExprData::Literal(literal) => {
             assert!(!literal.is_one());
-            let derived = elr.mk_mul(lopd, elr.mk_pow_one(ropd, hc), hc);
+            let derived = elr.mk_mul(lopd, elr.mk_pow_one(ropd));
             (
                 VdMirTermDerivationConstruction::NonOneLiteralMulAtom,
                 Some(derived),

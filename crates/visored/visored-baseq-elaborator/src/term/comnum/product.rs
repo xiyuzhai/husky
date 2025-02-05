@@ -343,49 +343,38 @@ impl<'sess> VdBsqNonTrivialProductStem<'sess> {
 }
 
 impl<'db, 'sess> VdBsqProductTerm<'sess> {
-    pub fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         elr.do_term_to_expr(self, |elr| {
-            product_expr(self.stem(), self.litnum_factor(), elr, hc)
+            product_expr(self.stem(), self.litnum_factor(), elr)
         })
     }
 }
 
 impl<'db, 'sess> VdBsqProductStem<'sess> {
-    pub fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         match self {
             VdBsqProductStem::Atom(slf) => {
-                let slf = slf.expr(elr, hc);
-                elr.mk_pow(slf, elr.mk_i128(1), hc)
+                let slf = slf.expr(elr);
+                elr.mk_pow(slf, elr.mk_i128(1))
             }
-            VdBsqProductStem::NonTrivial(slf) => slf.expr(elr, hc),
+            VdBsqProductStem::NonTrivial(slf) => slf.expr(elr),
         }
     }
 }
 
 impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
-    pub fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
+        let dt = elr.dispatch_table();
         if self.exponentials().len() == 1 {
-            return exponential_expr(self.exponentials().data()[0], elr, hc);
+            return exponential_expr(self.exponentials().data()[0], elr);
         }
         let mut exponentials = self.exponentials().into_iter().copied();
-        let leader = exponential_expr(exponentials.next().unwrap(), elr, hc);
+        let leader = exponential_expr(exponentials.next().unwrap(), elr);
         let mut prev_exponential_ty = leader.ty();
         let mut followers = smallvec![];
         for exponential in exponentials {
-            let exponential = exponential_expr(exponential, elr, hc);
-            let signature = hc.infer_mul_signature(prev_exponential_ty, exponential.ty());
+            let exponential = exponential_expr(exponential, elr);
+            let signature = dt.infer_mul_signature(prev_exponential_ty, exponential.ty());
             followers.push((signature, exponential));
             prev_exponential_ty = signature.expr_ty();
         }
@@ -400,23 +389,22 @@ fn product_expr<'db, 'sess>(
     stem: VdBsqProductStem<'sess>,
     factor: VdBsqLitnumTerm<'sess>,
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-    hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExpr<'sess> {
     assert!(!factor.is_zero());
-    let factor = factor.expr(elr, hc);
-    let stem = stem.expr(elr, hc);
-    elr.mk_mul(factor, stem, hc)
+    let factor = factor.expr(elr);
+    let stem = stem.expr(elr);
+    elr.mk_mul(factor, stem)
 }
 
 fn exponential_expr<'db, 'sess>(
     (base, exponent): (VdBsqNumTerm<'sess>, VdBsqNumTerm<'sess>),
     elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-    hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExpr<'sess> {
     assert!(!exponent.is_zero_trivially());
-    let base = base.expr(elr, hc);
-    let exponent = exponent.expr(elr, hc);
-    let power_signature = hc.infer_power_signature(base.ty(), exponent.ty());
+    let base = base.expr(elr);
+    let exponent = exponent.expr(elr);
+    let dt = elr.dispatch_table();
+    let power_signature = dt.infer_power_signature(base.ty(), exponent.ty());
     let arguments = smallvec![base, exponent];
     elr.mk_expr(
         VdBsqExprData::Application {

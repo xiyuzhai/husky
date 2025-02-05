@@ -100,15 +100,11 @@ impl<'sess> VdBsqComnumTerm<'sess> {
 }
 
 impl<'db, 'sess> VdBsqComnumTerm<'sess> {
-    pub(crate) fn expr(
-        self,
-        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
-        hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
-    ) -> VdBsqExpr<'sess> {
+    pub(crate) fn expr(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdBsqExpr<'sess> {
         match self {
-            VdBsqComnumTerm::Atom(slf) => slf.expr(elr, hc),
-            VdBsqComnumTerm::Sum(slf) => slf.expr(elr, hc),
-            VdBsqComnumTerm::Product(slf) => slf.expr(elr, hc),
+            VdBsqComnumTerm::Atom(slf) => slf.expr(elr),
+            VdBsqComnumTerm::Sum(slf) => slf.expr(elr),
+            VdBsqComnumTerm::Product(slf) => slf.expr(elr),
         }
     }
 }

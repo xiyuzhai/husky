@@ -16,6 +16,12 @@ pub struct VdItemPathTermData {
     item_path: VdItemPath,
 }
 
+impl VdItemPathTermData {
+    pub const PROP: Self = Self {
+        item_path: VdItemPath::PROP,
+    };
+}
+
 impl VdItemPathTerm {
     pub fn data(self) -> &'static VdItemPathTermData {
         match self.0.data() {

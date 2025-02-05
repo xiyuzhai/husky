@@ -1,5 +1,6 @@
 pub mod default_table;
 pub mod dispatch;
+pub mod helpers;
 pub mod menu;
 #[cfg(test)]
 mod tests;

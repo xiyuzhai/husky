@@ -88,7 +88,7 @@ fn derive_add_construction<'db, 'sess>(
             }
         }
         VdBsqExprData::Variable(lx_math_letter, arena_idx) => {
-            let ropd = elr.mk_mul(elr.mk_i128(1), elr.mk_pow(ropd, elr.mk_i128(1), hc), hc);
+            let ropd = elr.mk_mul(elr.mk_i128(1), elr.mk_pow(ropd, elr.mk_i128(1)));
             let add_product_nf = derive_add(lopd, ropd, elr, hc).derivation();
             VdMirTermDerivationConstruction::AddAtom { add_product_nf }
         }

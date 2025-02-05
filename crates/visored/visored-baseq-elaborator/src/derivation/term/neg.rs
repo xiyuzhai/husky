@@ -45,7 +45,7 @@ fn neg_derived<'db, 'sess>(
     hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExprDerived<'sess> {
     let (construction, derived) = neg_nf_construction_and_derived(opd, elr, hc);
-    let expr = elr.mk_neg(opd, hc);
+    let expr = elr.mk_neg(opd);
     VdBsqExprDerived::new(expr, derived, construction, elr, hc)
 }
 
@@ -73,7 +73,7 @@ fn neg_nf_construction_and_derived<'db, 'sess>(
             }
             VdMirBaseFoldingSeparator::CommRingMul => (
                 neg_product_construction(opd, elr, hc),
-                Some(elr.mk_neg(opd, hc).term().expr(elr, hc)),
+                Some(elr.mk_neg(opd).term().expr(elr)),
             ),
             VdMirBaseFoldingSeparator::SetTimes => todo!(),
             VdMirBaseFoldingSeparator::TensorOtimes => todo!(),
