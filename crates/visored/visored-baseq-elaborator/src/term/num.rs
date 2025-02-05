@@ -3,7 +3,9 @@ use crate::term::sum::VdBsqSumTerm;
 use builder::sum::VdBsqSumBuilder;
 use product::VdBsqProductTerm;
 use smallvec::*;
+use visored_entity_path::path::set::{VdPreludeSetPath, VdSetPath};
 use visored_opr::precedence::VdPrecedence;
+use visored_term::term::VdTerm;
 
 #[enum_class::from_variants]
 #[derive(Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
@@ -150,6 +152,16 @@ impl<'db, 'sess> VdBsqNumTerm<'sess> {
         match self {
             VdBsqNumTerm::Litnum(slf) => slf.expr(elr),
             VdBsqNumTerm::Comnum(slf) => slf.expr(elr),
+        }
+    }
+
+    pub(crate) fn ty(self, elr: &mut VdBsqElaboratorInner<'db, 'sess>) -> VdPreludeSetPath {
+        match *self.expr(elr).ty() {
+            VdTerm::ItemPath(term) => match term.data().item_path() {
+                VdItemPath::Set(VdSetPath::Prelude(path)) => path,
+                _ => unreachable!(),
+            },
+            _ => unreachable!(),
         }
     }
 }

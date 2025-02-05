@@ -1,70 +1,96 @@
 use super::{expr::VdBsqExpr, *};
-use term::comnum::{
-    atom::{VdBsqAtomTerm, VdBsqComnumAtomTermData},
-    product::{VdBsqProductStem, VdBsqProductTerm},
-    sum::VdBsqSumTerm,
-    VdBsqComnumTerm,
+use term::{
+    comnum::{
+        atom::{VdBsqAtomTerm, VdBsqComnumAtomTermData},
+        product::{VdBsqProductStem, VdBsqProductTerm},
+        sum::VdBsqSumTerm,
+        VdBsqComnumTerm,
+    },
+    litnum::VdBsqLitnumTerm,
+    num::VdBsqNumTerm,
 };
+use visored_entity_path::path::set::VdPreludeSetPath;
 
 // returns unit because we just cache the results
 pub fn cache_trivial_boundsm<'db, 'sess>(term: VdBsqComnumTerm<'sess>) -> impl ElabM<'db, 'sess, ()>
 where
     'db: 'sess,
 {
-    VdBsqManeuverCall::CacheTrivialBounds.wrap(cache_trivial_boundsm_inner(term))
+    VdBsqManeuverCall::CacheTrivialBounds.wrap(
+        move |elr: &mut Elr<'db, 'sess>, f: &Heuristic<'_, 'db, 'sess, ()>| -> Mhr<'sess> {
+            cache_trivial_boundsm_inner(term, elr);
+            f(elr, ())
+        },
+    )
 }
 
 fn cache_trivial_boundsm_inner<'db, 'sess>(
     term: VdBsqComnumTerm<'sess>,
-) -> impl ElabM<'db, 'sess, ()>
-where
-    'db: 'sess,
-{
-    #[unify_elabm]
-    match term {
-        VdBsqComnumTerm::Atom(atom) => cache_atom_trivial_boundsm(atom),
-        VdBsqComnumTerm::Sum(sum) => cache_sum_trivial_boundsm(sum),
-        VdBsqComnumTerm::Product(product) => cache_product_trivial_boundsm(product),
-    }
+    elr: &mut Elr<'db, 'sess>,
+) {
+    let bounds = match term {
+        VdBsqComnumTerm::Atom(atom) => calc_atom_trivial_bounds(atom, elr),
+        VdBsqComnumTerm::Sum(sum) => calc_sum_trivial_bounds(sum, elr),
+        VdBsqComnumTerm::Product(product) => calc_product_trivial_bounds(product, elr),
+    };
+    todo!()
 }
 
-fn cache_atom_trivial_boundsm<'db, 'sess>(atom: VdBsqAtomTerm<'sess>) -> impl ElabM<'db, 'sess, ()>
-where
-    'db: 'sess,
-{
+fn calc_atom_trivial_bounds<'db, 'sess>(
+    atom: VdBsqAtomTerm<'sess>,
+    elr: &mut Elr<'db, 'sess>,
+) -> Option<Vec<VdBsqHypothesisIdx<'sess>>> {
     match atom.data() {
         VdBsqComnumAtomTermData::Variable {
             lx_math_letter,
             local_defn_idx,
             ty,
-        } => (),
+        } => None,
     }
 }
 
-fn cache_sum_trivial_boundsm<'db, 'sess>(sum: VdBsqSumTerm<'sess>) -> impl ElabM<'db, 'sess, ()>
-where
-    'db: 'sess,
-{
-    ()
+fn calc_sum_trivial_bounds<'db, 'sess>(
+    sum: VdBsqSumTerm<'sess>,
+    elr: &mut Elr<'db, 'sess>,
+) -> Option<Vec<VdBsqHypothesisIdx<'sess>>> {
+    None
 }
 
-fn cache_product_trivial_boundsm<'db, 'sess>(
+fn calc_product_trivial_bounds<'db, 'sess>(
     product: VdBsqProductTerm<'sess>,
-) -> impl ElabM<'db, 'sess, ()>
-where
-    'db: 'sess,
-{
+    elr: &mut Elr<'db, 'sess>,
+) -> Option<Vec<VdBsqHypothesisIdx<'sess>>> {
+    let mut bounds = vec![];
+    bounds.extend(try_even_power(product, elr));
+    Some(bounds)
+}
+
+fn try_even_power<'db, 'sess>(
+    product: VdBsqProductTerm<'sess>,
+    elr: &mut Elr<'db, 'sess>,
+) -> Option<VdBsqHypothesisIdx<'sess>> {
     match product.stem() {
         VdBsqProductStem::Atom(stem) => todo!(),
         VdBsqProductStem::NonTrivial(stem) => {
             if stem.exponentials().len() == 1 {
                 let (base, exponent) = stem.exponentials().data()[0];
-                todo!();
-                // base.expr(elr, hc).cache();
                 match exponent {
-                    term::num::VdBsqNumTerm::Litnum(vd_bsq_litnum_term) => todo!(),
-                    term::num::VdBsqNumTerm::Comnum(vd_bsq_comnum_term) => todo!(),
+                    VdBsqNumTerm::Litnum(VdBsqLitnumTerm::Int128(i)) if i % 2 == 0 => (),
+                    _ => return None,
                 }
+                match base.ty(elr) {
+                    VdPreludeSetPath::NaturalNumber
+                    | VdPreludeSetPath::RationalNumber
+                    | VdPreludeSetPath::Integer
+                    | VdPreludeSetPath::RealNumber => {
+                        let hypothesis = todo!();
+                        Some(hypothesis)
+                    }
+                    VdPreludeSetPath::ComplexNumber => return None,
+                    _ => todo!(),
+                }
+            } else {
+                None
             }
         }
     }
