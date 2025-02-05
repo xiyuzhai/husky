@@ -148,6 +148,13 @@ impl<'sess> VdBsqHypothesisStack<'sess> {
     }
 }
 
+// # mut getters
+impl<'sess> VdBsqHypothesisStack<'sess> {
+    pub fn caches_mut(&mut self) -> &mut VdBsqHypothesisCaches<'sess> {
+        &mut self.caches
+    }
+}
+
 impl<'sess> VdBsqHypothesisStack<'sess> {
     pub fn push(
         &mut self,

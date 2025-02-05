@@ -51,6 +51,13 @@ impl<'db, 'sess> VdBsqHypothesisConstructor<'db, 'sess> {
     }
 }
 
+// # mut getters
+impl<'db, 'sess> VdBsqHypothesisConstructor<'db, 'sess> {
+    pub fn stack_mut(&mut self) -> &mut VdBsqHypothesisStack<'sess> {
+        &mut self.stack
+    }
+}
+
 impl<'db, 'sess> VdBsqHypothesisConstructor<'db, 'sess> {
     /// Attempts to find an existing hypothesis that matches the given expression.
     ///

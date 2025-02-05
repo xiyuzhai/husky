@@ -1,6 +1,9 @@
 use super::{expr::VdBsqExpr, *};
-use hypothesis::construction::{
-    trivial_bound::VdBsqTrivialBoundHypothesisConstruction, VdBsqHypothesisConstruction,
+use hypothesis::{
+    caches::trivial_bounds::VdBsqTrivialBoundsHypothesisCache,
+    construction::{
+        trivial_bound::VdBsqTrivialBoundHypothesisConstruction, VdBsqHypothesisConstruction,
+    },
 };
 use num_bigint::Sign;
 use term::{
@@ -22,57 +25,64 @@ where
 {
     VdBsqManeuverCall::CacheTrivialBounds.wrap(
         move |elr: &mut Elr<'db, 'sess>, f: &Heuristic<'_, 'db, 'sess, ()>| -> Mhr<'sess> {
-            cache_trivial_boundsm_inner(term, elr);
+            cache_trivial_bounds(term, elr);
             f(elr, ())
         },
     )
 }
 
-fn cache_trivial_boundsm_inner<'db, 'sess>(
+fn cache_trivial_bounds<'db, 'sess>(term: VdBsqComnumTerm<'sess>, elr: &mut Elr<'db, 'sess>) {
+    VdBsqTrivialBoundsHypothesisCache::cache_trivial_bounds(
+        term,
+        |elr| calc_trivial_bounds(term, elr),
+        elr,
+    )
+}
+
+fn calc_trivial_bounds<'db, 'sess>(
     term: VdBsqComnumTerm<'sess>,
     elr: &mut Elr<'db, 'sess>,
-) {
-    let bounds = match term {
+) -> Vec<VdBsqHypothesisIdx<'sess>> {
+    match term {
         VdBsqComnumTerm::Atom(atom) => calc_atom_trivial_bounds(atom, elr),
         VdBsqComnumTerm::Sum(sum) => calc_sum_trivial_bounds(sum, elr),
         VdBsqComnumTerm::Product(product) => calc_product_trivial_bounds(product, elr),
-    };
-    todo!()
+    }
 }
 
 fn calc_atom_trivial_bounds<'db, 'sess>(
     atom: VdBsqAtomTerm<'sess>,
     elr: &mut Elr<'db, 'sess>,
-) -> Option<Vec<VdBsqHypothesisIdx<'sess>>> {
+) -> Vec<VdBsqHypothesisIdx<'sess>> {
     match atom.data() {
         VdBsqComnumAtomTermData::Variable {
             lx_math_letter,
             local_defn_idx,
             ty,
-        } => None,
+        } => vec![],
     }
 }
 
 fn calc_sum_trivial_bounds<'db, 'sess>(
     sum: VdBsqSumTerm<'sess>,
     elr: &mut Elr<'db, 'sess>,
-) -> Option<Vec<VdBsqHypothesisIdx<'sess>>> {
-    None
+) -> Vec<VdBsqHypothesisIdx<'sess>> {
+    vec![]
 }
 
 fn calc_product_trivial_bounds<'db, 'sess>(
     product: VdBsqProductTerm<'sess>,
     elr: &mut Elr<'db, 'sess>,
-) -> Option<Vec<VdBsqHypothesisIdx<'sess>>> {
+) -> Vec<VdBsqHypothesisIdx<'sess>> {
     let mut bounds = vec![];
     bounds.extend(try_even_power(product, elr));
-    Some(bounds)
+    bounds
 }
 
 fn try_even_power<'db, 'sess>(
     product: VdBsqProductTerm<'sess>,
     elr: &mut Elr<'db, 'sess>,
-) -> Option<VdBsqHypothesisIdx<'sess>> {
+) -> Vec<VdBsqHypothesisIdx<'sess>> {
     match product.stem() {
         VdBsqProductStem::Atom(stem) => todo!(),
         VdBsqProductStem::NonTrivial(stem) => {
@@ -80,7 +90,7 @@ fn try_even_power<'db, 'sess>(
                 let (base, exponent) = stem.exponentials().data()[0];
                 match exponent {
                     VdBsqNumTerm::Litnum(VdBsqLitnumTerm::Int128(i)) if i % 2 == 0 => (),
-                    _ => return None,
+                    _ => return vec![],
                 }
                 match base.ty(elr) {
                     VdPreludeSetPath::NaturalNumber
@@ -103,13 +113,13 @@ fn try_even_power<'db, 'sess>(
                             VdBsqTrivialBoundHypothesisConstruction::EvenPower { sign },
                         );
                         let hypothesis = elr.hc.construct_new_hypothesis(prop, construction);
-                        Some(hypothesis)
+                        vec![hypothesis]
                     }
-                    VdPreludeSetPath::ComplexNumber => return None,
+                    VdPreludeSetPath::ComplexNumber => vec![],
                     _ => todo!(),
                 }
             } else {
-                None
+                vec![]
             }
         }
     }

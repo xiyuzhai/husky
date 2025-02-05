@@ -13,6 +13,7 @@ use std::{
     path::{Path, PathBuf},
     sync::Arc,
 };
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 use visored_lean_transpilation::scheme::dense::VdLeanTranspilationDenseScheme;
 use visored_models::VdModels;
 use visored_syn_expr::vibe::VdSynExprVibe;
@@ -40,7 +41,9 @@ fn visored_tactic_baseq_elaborator_works() {
                 .to_case(Case::Pascal)
                 .with_extension("lean");
             let content = std::fs::read_to_string(&src_file_path).unwrap();
-            let session = &VdBsqSession::new(db);
+            let dispatch_table =
+                Arc::new(VdDefaultGlobalDispatchTable::from_standard_lisp_csv_file_dir(db));
+            let session = &VdBsqSession::new(db, dispatch_table);
             let tracker = VdBsqElaboratorTracker::new(
                 LxDocumentInput {
                     specs_dir: dev_paths.specs_dir().to_path_buf(),

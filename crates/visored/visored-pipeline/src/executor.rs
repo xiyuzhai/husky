@@ -15,6 +15,7 @@ use visored_baseq_elaborator::{
     elaborator::{VdBsqElaborator, VdBsqElaboratorInner},
     session::VdBsqSession,
 };
+use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 use visored_lean_transpilation::{
     helpers::tracker::VdLeanTranspilationTracker, scheme::dense::VdLeanTranspilationDenseScheme,
 };
@@ -196,7 +197,9 @@ We have $x^2 \ge 0$ because these are real numbers.
         let regularized_proof = extract_proof(&regularized_proof);
         self.regularized_proof = Some((transformations, regularized_proof.clone()));
         let file_path = LxFilePath::new(PathBuf::from(file!()), self.db);
-        let session = &VdBsqSession::new(self.db);
+        let dispatch_table =
+            Arc::new(VdDefaultGlobalDispatchTable::from_standard_lisp_csv_file_dir(self.db));
+        let session = &VdBsqSession::new(self.db, dispatch_table);
         let tracker = VdLeanTranspilationTracker::new(
             LxDocumentBodyInput {
                 specs_dir: self.specs_dir,

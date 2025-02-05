@@ -1,4 +1,4 @@
-mod trivial_bounds;
+pub mod trivial_bounds;
 
 use self::trivial_bounds::VdBsqTrivialBoundsHypothesisCache;
 

@@ -137,8 +137,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     }
 
     pub(crate) fn dispatch_table(&self) -> &'sess VdDefaultGlobalDispatchTable {
-        todo!()
-        // self.session.dispatch_table()
+        self.session.dispatch_table()
     }
 }
 

@@ -40,6 +40,7 @@ visored-mir-expr.workspace = true
 visored-models.workspace = true
 visored-syn-expr.workspace = true
 visored-baseq-elaborator.workspace = true
+visored-global-dispatch.workspace = true
 
 [dev-dependencies]
 expect-test.workspace = true

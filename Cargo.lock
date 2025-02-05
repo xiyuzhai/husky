@@ -13738,6 +13738,7 @@ dependencies = [
  "thiserror",
  "tokio",
  "visored-baseq-elaborator",
+ "visored-global-dispatch",
  "visored-lean-transpilation",
  "visored-mir-expr",
  "visored-models",

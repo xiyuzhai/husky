@@ -80,7 +80,7 @@ pub struct VdBaseFracKey {
 }
 
 impl VdDefaultGlobalDispatchTable {
-    pub fn new(
+    pub(crate) fn new(
         base_prefix_opr_default_dispatches: impl IntoIterator<
             Item = (VdBasePrefixOprKey, VdPrefixOprGlobalDispatch),
         >,
