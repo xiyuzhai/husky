@@ -66,7 +66,6 @@ impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
         self,
         litnum_factor: VdBsqLitnumTerm<'sess>,
         litnum_summand: VdBsqLitnumTerm<'sess>,
-        opr: VdBsqBoundOpr,
         db: &'sess FloaterDb,
     ) -> VdBsqLitnumBound<'sess> {
         VdBsqLitnumBound {
@@ -79,7 +78,6 @@ impl<'sess> VdBsqNormalizedLitnumBound<'sess> {
                 .add(litnum_summand, db)
                 .mul(litnum_factor, db),
             boundary_kind: self.inner.boundary_kind,
-            query_opr: opr,
         }
     }
 }

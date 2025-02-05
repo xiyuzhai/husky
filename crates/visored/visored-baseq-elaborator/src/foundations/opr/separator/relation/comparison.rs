@@ -7,6 +7,8 @@ use visored_mir_opr::separator::{
 };
 use visored_opr::separator::VdBaseSeparator;
 
+use crate::foundations::bound::VdBsqBoundKind;
+
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub enum VdBsqComparisonOpr {
     Bound(VdBsqBoundOpr),
@@ -45,6 +47,16 @@ impl VdBsqBoundOpr {
             VdMirBaseComparisonSeparator::Le => Some(Self::Le),
             VdMirBaseComparisonSeparator::Ge => Some(Self::Ge),
             _ => None,
+        }
+    }
+
+    /// `x > 1` is a lower bound, `x < 1` is an upper bound
+    pub(crate) fn bound_kind(self) -> VdBsqBoundKind {
+        match self {
+            VdBsqBoundOpr::Lt => VdBsqBoundKind::Upper,
+            VdBsqBoundOpr::Gt => VdBsqBoundKind::Lower,
+            VdBsqBoundOpr::Le => VdBsqBoundKind::Upper,
+            VdBsqBoundOpr::Ge => VdBsqBoundKind::Lower,
         }
     }
 }

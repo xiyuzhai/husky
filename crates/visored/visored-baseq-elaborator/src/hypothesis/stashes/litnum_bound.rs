@@ -6,6 +6,7 @@ use super::*;
 use crate::{
     expr::VdBsqExpr,
     foundations::{
+        bound::VdBsqBoundKind,
         num::VdBsqSign,
         opr::separator::relation::comparison::{
             VdBsqBoundBoundaryKind, VdBsqBoundOpr, VdBsqComparisonOpr,
@@ -27,6 +28,7 @@ use crate::{
         prop::VdBsqPropTerm,
         VdBsqTerm,
     },
+    Elr,
 };
 use floated_sequential::db::FloaterDb;
 use husky_control_flow_utils::require;
@@ -39,7 +41,6 @@ pub struct VdBsqLitnumBoundScheme;
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct VdBsqLitnumBound<'sess> {
     src: VdBsqLitnumBoundSrc<'sess>,
-    query_opr: VdBsqBoundOpr,
     litnum_factor: VdBsqLitnumTerm<'sess>,
     litnum_summand: VdBsqLitnumTerm<'sess>,
     bound_litnum: VdBsqLitnumTerm<'sess>,
@@ -74,10 +75,6 @@ impl<'sess> VdBsqLitnumBound<'sess> {
     pub fn boundary_kind(&self) -> VdBsqBoundBoundaryKind {
         self.boundary_kind
     }
-
-    pub fn query_opr(&self) -> VdBsqBoundOpr {
-        self.query_opr
-    }
 }
 
 impl<'sess> VdBsqLitnumBoundSrc<'sess> {
@@ -95,18 +92,23 @@ impl<'sess> VdBsqLitnumBoundSrc<'sess> {
 }
 
 impl<'sess> VdBsqLitnumBound<'sess> {
-    pub fn finalize(self, rhs: VdBsqLitnumTerm<'sess>, db: &'sess FloaterDb) -> bool {
+    pub fn try_infer(
+        self,
+        opr: VdBsqBoundOpr,
+        rhs: VdBsqLitnumTerm<'sess>,
+        db: &'sess FloaterDb,
+    ) -> bool {
         // range A contains range B means if x is in B, then x is in A
-        if self.query_opr.boundary_kind().contains(self.boundary_kind) {
+        if opr.boundary_kind().contains(self.boundary_kind) {
             if self.bound_litnum == rhs {
                 return true;
             }
-            match self.query_opr {
+            match opr {
                 VdBsqBoundOpr::Lt | VdBsqBoundOpr::Le => self.bound_litnum <= rhs,
                 VdBsqBoundOpr::Gt | VdBsqBoundOpr::Ge => self.bound_litnum >= rhs,
             }
         } else {
-            match self.query_opr {
+            match opr {
                 VdBsqBoundOpr::Lt | VdBsqBoundOpr::Le => self.bound_litnum < rhs,
                 VdBsqBoundOpr::Gt | VdBsqBoundOpr::Ge => self.bound_litnum > rhs,
             }
@@ -140,7 +142,8 @@ impl IsVdBsqHypothesisUpgradeStashScheme for VdBsqLitnumBoundScheme {
             return None;
         };
         require!(let VdBsqNumTerm::Comnum(term) = term.lhs_minus_rhs());
-        let (litnum_factor, (litnum_summand, normalized_monomials)) = split(term, opr, db);
+        let (litnum_factor, (litnum_summand, normalized_monomials)) =
+            split(term, opr.bound_kind(), db);
         let lower_bound_litnum = litnum_summand.neg(db);
         let boundary_kind = opr.boundary_kind();
         let src = VdBsqLitnumBoundSrc {
@@ -158,52 +161,64 @@ impl IsVdBsqHypothesisUpgradeStashScheme for VdBsqLitnumBoundScheme {
 /// will reduce upper bound to lower bound
 fn split<'sess>(
     lhs_minus_rhs: VdBsqComnumTerm<'sess>,
-    opr: VdBsqBoundOpr,
+    bound_kind: VdBsqBoundKind,
     db: &'sess FloaterDb,
 ) -> (
     VdBsqLitnumTerm<'sess>,
     (VdBsqLitnumTerm<'sess>, VdBsqComnumTerm<'sess>),
 ) {
-    let sign = match opr {
-        VdBsqBoundOpr::Lt => VdBsqSign::Minus,
-        VdBsqBoundOpr::Gt => VdBsqSign::Plus,
-        VdBsqBoundOpr::Le => VdBsqSign::Minus,
-        VdBsqBoundOpr::Ge => VdBsqSign::Plus,
+    let sign = match bound_kind {
+        VdBsqBoundKind::Upper => VdBsqSign::Minus,
+        VdBsqBoundKind::Lower => VdBsqSign::Plus,
     };
     let (factor, (litnum, normalized_monomials)) =
         lhs_minus_rhs.split_sum_fld(|factor| factor.with_sign(sign, db), db);
     (factor, (litnum, normalized_monomials))
 }
 
-impl<'sess> VdBsqHypothesisStack<'sess> {
+impl<'db, 'sess> Elr<'db, 'sess> {
     pub(crate) fn get_active_litnum_bound(
         &self,
         term: VdBsqComnumTerm<'sess>,
-        opr: VdBsqBoundOpr,
+        bound_kind: VdBsqBoundKind,
+    ) -> Option<VdBsqLitnumBound<'sess>> {
+        let db = self.floater_db();
+        self.hc
+            .stack()
+            .get_active_litnum_bound(term, bound_kind, db)
+    }
+}
+
+impl<'sess> VdBsqHypothesisStack<'sess> {
+    fn get_active_litnum_bound(
+        &self,
+        term: VdBsqComnumTerm<'sess>,
+        bound_kind: VdBsqBoundKind,
         db: &'sess FloaterDb,
     ) -> Option<VdBsqLitnumBound<'sess>> {
-        self.stashes()
-            .litnum_bound()
-            .get_active_bound(term, opr, self.active_hypotheses(), db)
+        self.stashes().litnum_bound().get_active_bound(
+            term,
+            bound_kind,
+            self.active_hypotheses(),
+            db,
+        )
     }
 }
 
 impl<'sess> VdBsqLitnumBoundHypothesisStash<'sess> {
-    pub(crate) fn get_active_bound(
+    fn get_active_bound(
         &self,
         term: VdBsqComnumTerm<'sess>,
-        opr: VdBsqBoundOpr,
+        bound_kind: VdBsqBoundKind,
         active_hypotheses: &VdBsqActiveHypotheses<'sess>,
         db: &'sess FloaterDb,
     ) -> Option<VdBsqLitnumBound<'sess>> {
-        let (litnum_factor, (litnum_summand, normalized_monomials)) = split(term, opr, db);
+        let (litnum_factor, (litnum_summand, normalized_monomials)) = split(term, bound_kind, db);
         self.get_active_value_with(
             VdBsqNormalizedLitnumBoundKey::new(normalized_monomials),
             db,
             active_hypotheses,
-            |&normalized_bound| {
-                normalized_bound.unnormalize(litnum_factor, litnum_summand, opr, db)
-            },
+            |&normalized_bound| normalized_bound.unnormalize(litnum_factor, litnum_summand, db),
         )
     }
 }

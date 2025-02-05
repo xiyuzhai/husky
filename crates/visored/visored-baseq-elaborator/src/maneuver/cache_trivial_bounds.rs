@@ -84,7 +84,7 @@ fn try_even_power<'db, 'sess>(
     elr: &mut Elr<'db, 'sess>,
 ) -> Vec<VdBsqHypothesisIdx<'sess>> {
     match product.stem() {
-        VdBsqProductStem::Atom(stem) => todo!(),
+        VdBsqProductStem::Atom(stem) => vec![],
         VdBsqProductStem::NonTrivial(stem) => {
             if stem.exponentials().len() == 1 {
                 let (base, exponent) = stem.exponentials().data()[0];

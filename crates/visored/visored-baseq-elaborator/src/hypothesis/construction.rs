@@ -2,7 +2,9 @@ pub mod trivial_bound;
 
 use self::trivial_bound::VdBsqTrivialBoundHypothesisConstruction;
 use super::*;
-use crate::coercion::VdBsqCoercion;
+use crate::{
+    coercion::VdBsqCoercion, foundations::opr::separator::relation::comparison::VdBsqBoundOpr,
+};
 use stashes::litnum_bound::{VdBsqLitnumBound, VdBsqLitnumBoundSrc};
 use std::marker::PhantomData;
 use visored_entity_path::theorem::VdTheoremPath;
@@ -24,6 +26,7 @@ pub enum VdBsqHypothesisConstruction<'sess> {
     LitnumReduce,
     LitnumBound {
         bound: VdBsqLitnumBound<'sess>,
+        opr: VdBsqBoundOpr,
     },
     TrivialBound(VdBsqTrivialBoundHypothesisConstruction),
 }

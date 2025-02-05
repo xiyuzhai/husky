@@ -72,11 +72,12 @@ fn try_one_shot<'db, 'sess>(
     let VdBsqNumTerm::Comnum(lhs_sub_rhs) = num_relation_prop.lhs_minus_rhs() else {
         unreachable!()
     };
-    litnum_boundm(lhs_sub_rhs).eval(elr, &|elr, bound| {
-        require!(bound.finalize(VdBsqLitnumTerm::ZERO, db));
-        let hypothesis = elr
-            .hc
-            .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound { bound });
+    litnum_boundm(lhs_sub_rhs, opr.bound_kind()).eval(elr, &|elr, bound| {
+        require!(bound.try_infer(opr, VdBsqLitnumTerm::ZERO, db));
+        let hypothesis = elr.hc.construct_new_hypothesis(
+            prop,
+            VdBsqHypothesisConstruction::LitnumBound { opr, bound },
+        );
         AltJustOk(Ok(hypothesis))
     })
 }

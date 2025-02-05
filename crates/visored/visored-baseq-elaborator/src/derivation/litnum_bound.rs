@@ -28,6 +28,7 @@ where
         &mut self,
         dst: VdBsqHypothesisIdx<'sess>,
         bound: VdBsqLitnumBound<'sess>,
+        opr: VdBsqBoundOpr,
         hc: &mut VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdMirDerivationChunk {
         hc.obtain_derivation_chunk_within_hypothesis(|hc| {
@@ -37,7 +38,7 @@ where
                 VdBsqBoundBoundaryKind::Closed => VdMirBaseComparisonSeparator::GE,
                 VdBsqBoundBoundaryKind::Open => VdMirBaseComparisonSeparator::GT,
             };
-            let b_opr = match bound.query_opr() {
+            let b_opr = match opr {
                 VdBsqBoundOpr::Le | VdBsqBoundOpr::Ge => VdMirBaseComparisonSeparator::GE,
                 VdBsqBoundOpr::Lt | VdBsqBoundOpr::Gt => VdMirBaseComparisonSeparator::GT,
             };
