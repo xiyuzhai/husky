@@ -1,3 +1,4 @@
+//! this stores the best litnum bounds for terms
 mod normalized;
 
 use self::normalized::*;

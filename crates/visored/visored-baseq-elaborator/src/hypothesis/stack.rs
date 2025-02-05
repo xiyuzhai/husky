@@ -1,6 +1,7 @@
 use super::*;
 use crate::term::{num::VdBsqNumTerm, prop::VdBsqPropTerm, VdBsqTerm};
 use crate::{hypothesis::stashes::VdBsqHypothesisStashes, term::litnum::VdBsqLitnumTerm};
+use caches::VdBsqHypothesisCaches;
 use floated_sequential::db::FloaterDb;
 use rustc_hash::FxHashMap;
 
@@ -29,6 +30,7 @@ pub struct VdBsqHypothesisStack<'sess> {
     expr_to_hypothesis_map: FxHashMap<VdBsqExpr<'sess>, VdBsqHypothesisStackRecord<'sess>>,
     term_to_hypothesis_map: FxHashMap<VdBsqTerm<'sess>, VdBsqHypothesisStackRecord<'sess>>,
     stashes: VdBsqHypothesisStashes<'sess>,
+    caches: VdBsqHypothesisCaches<'sess>,
 }
 
 pub struct VdBsqActiveHypotheses<'sess>(Vec<VdBsqHypothesisIdx<'sess>>);
@@ -103,6 +105,7 @@ impl<'sess> VdBsqHypothesisStack<'sess> {
             expr_to_hypothesis_map: FxHashMap::default(),
             term_to_hypothesis_map: FxHashMap::default(),
             stashes: VdBsqHypothesisStashes::new(),
+            caches: VdBsqHypothesisCaches::default(),
         }
     }
 }

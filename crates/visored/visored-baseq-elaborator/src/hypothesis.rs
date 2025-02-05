@@ -1,8 +1,14 @@
+/// abstract cache types
+pub mod cache;
+/// concrete cache types
+pub mod caches;
 pub mod construction;
 pub mod constructor;
 pub mod contradiction;
 pub mod region;
+/// abstract stash types
 pub mod stack;
+/// concrete stash types
 pub mod stash;
 pub mod stashes;
 
