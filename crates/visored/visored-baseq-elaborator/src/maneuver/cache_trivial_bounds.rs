@@ -1,3 +1,8 @@
+mod atom;
+mod product;
+mod sum;
+
+use self::{atom::*, product::*, sum::*};
 use super::{expr::VdBsqExpr, *};
 use hypothesis::{
     caches::trivial_bounds::VdBsqTrivialBoundsHypothesisCache,
@@ -48,26 +53,6 @@ fn calc_trivial_bounds<'db, 'sess>(
         VdBsqComnumTerm::Sum(sum) => calc_sum_trivial_bounds(sum, elr),
         VdBsqComnumTerm::Product(product) => calc_product_trivial_bounds(product, elr),
     }
-}
-
-fn calc_atom_trivial_bounds<'db, 'sess>(
-    atom: VdBsqAtomTerm<'sess>,
-    elr: &mut Elr<'db, 'sess>,
-) -> Vec<VdBsqHypothesisIdx<'sess>> {
-    match atom.data() {
-        VdBsqComnumAtomTermData::Variable {
-            lx_math_letter,
-            local_defn_idx,
-            ty,
-        } => vec![],
-    }
-}
-
-fn calc_sum_trivial_bounds<'db, 'sess>(
-    sum: VdBsqSumTerm<'sess>,
-    elr: &mut Elr<'db, 'sess>,
-) -> Vec<VdBsqHypothesisIdx<'sess>> {
-    vec![]
 }
 
 fn calc_product_trivial_bounds<'db, 'sess>(
