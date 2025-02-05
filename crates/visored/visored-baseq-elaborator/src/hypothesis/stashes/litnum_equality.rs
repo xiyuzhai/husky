@@ -21,7 +21,8 @@ use crate::{
 use floated_sequential::db::FloaterDb;
 use husky_control_flow_utils::require;
 
-pub type LitnumEqualityStash<'sess> = VdBsqHypothesisUniqueStash<'sess, VdBsqLitnumEqualityScheme>;
+pub type VdBsqLitnumEqualityHypothesisStash<'sess> =
+    VdBsqHypothesisUniqueStash<'sess, VdBsqLitnumEqualityScheme>;
 
 pub struct VdBsqLitnumEqualityScheme;
 
@@ -71,7 +72,7 @@ impl IsVdBsqHypothesisUniqueStashScheme for VdBsqLitnumEqualityScheme {
     }
 }
 
-impl<'sess> LitnumEqualityStash<'sess> {
+impl<'sess> VdBsqLitnumEqualityHypothesisStash<'sess> {
     pub fn reduce(
         &self,
         term: VdBsqComnumTerm<'sess>,

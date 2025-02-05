@@ -102,7 +102,7 @@ impl<'sess> VdBsqComnumTerm<'sess> {
 impl<'db, 'sess> VdBsqComnumTerm<'sess> {
     pub(crate) fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         match self {

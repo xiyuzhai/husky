@@ -7,6 +7,6 @@ use rustc_hash::FxHashMap;
 pub struct VdBsqTrivialBounds<'sess>(Vec<VdBsqHypothesisIdx<'sess>>);
 
 #[derive(Debug, Default)]
-pub struct VdBsqTrivialBoundsCache<'sess> {
+pub struct VdBsqTrivialBoundsHypothesisCache<'sess> {
     data: FxHashMap<VdBsqComnumTerm<'sess>, VdBsqTrivialBounds<'sess>>,
 }

@@ -339,7 +339,7 @@ impl<'sess> VdBsqNonTrivialProductStem<'sess> {
 impl<'db, 'sess> VdBsqProductTerm<'sess> {
     pub fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         product_expr(self.stem(), self.litnum_factor(), elr, hc)
@@ -349,7 +349,7 @@ impl<'db, 'sess> VdBsqProductTerm<'sess> {
 impl<'db, 'sess> VdBsqProductStem<'sess> {
     pub fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         match self {
@@ -362,7 +362,7 @@ impl<'db, 'sess> VdBsqProductStem<'sess> {
 impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
     pub fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         if self.exponentials().len() == 1 {
@@ -388,16 +388,18 @@ impl<'db, 'sess> VdBsqNonTrivialProductStem<'sess> {
 fn product_expr<'db, 'sess>(
     stem: VdBsqProductStem<'sess>,
     factor: VdBsqLitnumTerm<'sess>,
-    elr: &VdBsqElaboratorInner<'db, 'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExpr<'sess> {
     assert!(!factor.is_zero());
-    elr.mk_mul(factor.expr(elr, hc), stem.expr(elr, hc), hc)
+    let factor = factor.expr(elr, hc);
+    let stem = stem.expr(elr, hc);
+    elr.mk_mul(factor, stem, hc)
 }
 
 fn exponential_expr<'db, 'sess>(
     (base, exponent): (VdBsqNumTerm<'sess>, VdBsqNumTerm<'sess>),
-    elr: &VdBsqElaboratorInner<'db, 'sess>,
+    elr: &mut VdBsqElaboratorInner<'db, 'sess>,
     hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
 ) -> VdBsqExpr<'sess> {
     assert!(!exponent.is_zero_trivially());

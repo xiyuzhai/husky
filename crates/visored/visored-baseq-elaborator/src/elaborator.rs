@@ -18,6 +18,7 @@ use miracle::{error::MiracleAltMaybeResult, HasMiracle, Miracle};
 use rustc_hash::FxHashMap;
 use smallvec::*;
 use std::marker::PhantomData;
+use term::VdBsqTerm;
 use visored_global_dispatch::default_table::VdDefaultGlobalDispatchTable;
 use visored_mir_expr::{
     elaborator::linear::{IsVdMirSequentialElaboratorInner, VdMirSequentialElaborator},
@@ -55,7 +56,8 @@ pub struct VdBsqElaboratorInner<'db, 'sess> {
     term_menu: &'db VdTermMenu,
     ty_menu: &'db VdTypeMenu,
     signature_menu: &'db VdSignatureMenu,
-    expr_to_fld_map: VdMirExprMap<VdBsqExpr<'sess>>,
+    mir_to_bsq_expr_map: VdMirExprMap<VdBsqExpr<'sess>>,
+    term_to_expr_map: FxHashMap<VdBsqTerm<'sess>, VdBsqExpr<'sess>>,
     miracle: Miracle,
     pub(crate) hc: VdBsqHypothesisConstructor<'db, 'sess>,
     pub(crate) call_stack: VdBsqCallStack,
@@ -78,9 +80,10 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
             ty_menu: vd_ty_menu(session.eterner_db()),
             signature_menu: vd_signature_menu(session.eterner_db()),
             hc: VdBsqHypothesisConstructor::new(session),
-            expr_to_fld_map: VdMirExprMap::new2(region_data.expr_arena),
+            mir_to_bsq_expr_map: VdMirExprMap::new2(region_data.expr_arena),
             miracle: Miracle::new_uninitialized(),
             call_stack: VdBsqCallStack::new(),
+            term_to_expr_map: FxHashMap::default(),
         }
     }
 }
@@ -126,17 +129,32 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 
     #[track_caller]
     pub fn expr_fld(&self, expr: VdMirExprIdx) -> VdBsqExpr<'sess> {
-        self.expr_to_fld_map[expr]
+        self.mir_to_bsq_expr_map[expr]
     }
 
     pub(crate) fn mir_expr_to_bsq_map(&self) -> &VdMirExprMap<VdBsqExpr<'sess>> {
-        &self.expr_to_fld_map
+        &self.mir_to_bsq_expr_map
     }
 }
 
 impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
     pub(crate) fn save_expr_fld(&mut self, expr: VdMirExprIdx, fld: VdBsqExpr<'sess>) {
-        self.expr_to_fld_map.insert_new(expr, fld);
+        self.mir_to_bsq_expr_map.insert_new(expr, fld);
+    }
+
+    pub(crate) fn do_term_to_expr(
+        &mut self,
+        term: impl Into<VdBsqTerm<'sess>>,
+        f: impl FnOnce(&mut Self) -> VdBsqExpr<'sess>,
+    ) -> VdBsqExpr<'sess> {
+        let term = term.into();
+        if let Some(&expr) = self.term_to_expr_map.get(&term) {
+            expr
+        } else {
+            let expr = f(self);
+            self.term_to_expr_map.insert(term, expr);
+            expr
+        }
     }
 }
 
@@ -210,7 +228,7 @@ impl<'db, 'sess> IsVdMirSequentialElaboratorInner<'db> for VdBsqElaboratorInner<
         hint: Option<VdMirHintIdx>,
         region_data: VdMirExprRegionDataRef,
     ) -> VdBsqHypothesisResult<'sess, VdBsqHypothesisIdx<'sess>> {
-        let prop = self.expr_to_fld_map[prop];
+        let prop = self.mir_to_bsq_expr_map[prop];
         match hint {
             Some(hint) => todo!(),
             None => self.run_obvious(prop),

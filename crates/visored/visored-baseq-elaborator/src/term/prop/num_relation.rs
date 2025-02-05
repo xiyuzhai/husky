@@ -80,7 +80,7 @@ impl<'sess> VdBsqNumRelation<'sess> {
 impl<'db, 'sess> VdBsqNumRelation<'sess> {
     pub(crate) fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         let lhs_minus_rhs = self.lhs_minus_rhs().expr(elr, hc);

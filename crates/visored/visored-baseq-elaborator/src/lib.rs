@@ -36,6 +36,7 @@ use husky_debug_utils::*;
 use husky_print_utils::*;
 use hypothesis::{contradiction::VdBsqHypothesisResult, VdBsqHypothesisIdx};
 use miracle::error::MiracleAltMaybeResult;
+use visored_baseq_elaborator_macros::unify_elabm;
 use visored_models::VdModels;
 
 type Elr<'db, 'sess> = VdBsqElaboratorInner<'db, 'sess>;

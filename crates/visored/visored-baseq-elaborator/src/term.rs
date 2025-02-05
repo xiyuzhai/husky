@@ -318,7 +318,7 @@ impl<'db, 'sess> VdBsqElaboratorInner<'db, 'sess> {
 impl<'db, 'sess> VdBsqTerm<'sess> {
     pub fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         match self {

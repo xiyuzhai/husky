@@ -17,7 +17,7 @@ pub enum VdBsqManeuver {
 pub enum VdBsqManeuverCall {
     Diff,
     LitnumRewrite,
-    TrivialBounds,
+    CacheTrivialBounds,
     LitnumBound,
 }
 

@@ -210,14 +210,16 @@ impl<'db, 'sess> VdBsqSumTerm<'sess> {
     /// This is different from product.
     pub(crate) fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
         let leader = self.constant_term().expr(elr, hc);
         let mut prev_summand_ty = leader.ty();
         let mut followers = smallvec![];
         for (stem, coeff) in self.monomials().data() {
-            let monomial = elr.mk_mul(coeff.expr(elr, hc), stem.expr(elr, hc), hc);
+            let coeff_expr = coeff.expr(elr, hc);
+            let stem = stem.expr(elr, hc);
+            let monomial = elr.mk_mul(coeff_expr, stem, hc);
             let signature = hc.infer_add_signature(prev_summand_ty, monomial.ty());
             followers.push((signature, monomial));
             prev_summand_ty = signature.expr_ty();

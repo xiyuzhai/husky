@@ -31,7 +31,8 @@ use crate::{
 use floated_sequential::db::FloaterDb;
 use husky_control_flow_utils::require;
 
-pub type VdBsqLitnumBoundStash<'sess> = VdBsqHypothesisUpgradeStash<'sess, VdBsqLitnumBoundScheme>;
+pub type VdBsqLitnumBoundHypothesisStash<'sess> =
+    VdBsqHypothesisUpgradeStash<'sess, VdBsqLitnumBoundScheme>;
 
 pub struct VdBsqLitnumBoundScheme;
 
@@ -187,7 +188,7 @@ impl<'sess> VdBsqHypothesisStack<'sess> {
     }
 }
 
-impl<'sess> VdBsqLitnumBoundStash<'sess> {
+impl<'sess> VdBsqLitnumBoundHypothesisStash<'sess> {
     pub(crate) fn get_active_bound(
         &self,
         term: VdBsqComnumTerm<'sess>,

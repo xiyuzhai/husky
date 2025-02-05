@@ -7,6 +7,8 @@ use crate::{
 use alt_option::*;
 use foundations::opr::separator::relation::comparison::VdBsqBoundOpr;
 use husky_control_flow_utils::require;
+use hypothesis::stashes::litnum_bound::VdBsqLitnumBound;
+use maneuver::litnum_bound::litnum_boundsm;
 use term::{litnum::VdBsqLitnumTerm, num::VdBsqNumTerm, prop::VdBsqPropTerm, VdBsqTerm};
 use visored_baseq_elaborator_macros::unify_elabm;
 use visored_entity_path::{
@@ -70,13 +72,11 @@ fn try_one_shot<'db, 'sess>(
     let VdBsqNumTerm::Comnum(lhs_sub_rhs) = num_relation_prop.lhs_minus_rhs() else {
         unreachable!()
     };
-    let bound = elr
-        .hc
-        .stack()
-        .get_active_litnum_bound(lhs_sub_rhs, opr, db)?;
-    require!(bound.finalize(VdBsqLitnumTerm::ZERO, db));
-    let hypothesis = elr
-        .hc
-        .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound { bound });
-    AltJustOk(Ok(hypothesis))
+    litnum_boundsm(lhs_sub_rhs).eval(elr, &|elr, bound| {
+        require!(bound.finalize(VdBsqLitnumTerm::ZERO, db));
+        let hypothesis = elr
+            .hc
+            .construct_new_hypothesis(prop, VdBsqHypothesisConstruction::LitnumBound { bound });
+        AltJustOk(Ok(hypothesis))
+    })
 }

@@ -525,14 +525,16 @@ impl<'sess> VdBsqLitnumTerm<'sess> {
 impl<'db, 'sess> VdBsqLitnumTerm<'sess> {
     pub(crate) fn expr(
         self,
-        elr: &VdBsqElaboratorInner<'db, 'sess>,
+        elr: &mut VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
     ) -> VdBsqExpr<'sess> {
-        let (expr_data, ty) = self.expr_data_and_ty(elr, hc);
-        elr.mk_expr(expr_data, ty)
+        elr.do_term_to_expr(self, |elr| {
+            let (expr_data, ty) = self.calc_expr_data_and_ty(elr, hc);
+            elr.mk_expr(expr_data, ty)
+        })
     }
 
-    fn expr_data_and_ty(
+    fn calc_expr_data_and_ty(
         self,
         elr: &VdBsqElaboratorInner<'db, 'sess>,
         hc: &VdMirHypothesisConstructor<'db, VdBsqHypothesisIdx<'sess>>,
