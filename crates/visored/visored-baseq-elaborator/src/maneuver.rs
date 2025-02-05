@@ -1,4 +1,6 @@
+pub mod cache_trivial_bounds;
 pub mod diff;
+pub mod litnum_bound;
 pub mod litnum_rewrite;
 
 use crate::{elaborator::VdBsqElaboratorInner, *};
@@ -7,12 +9,16 @@ use crate::{elaborator::VdBsqElaboratorInner, *};
 pub enum VdBsqManeuver {
     Diff,
     LitnumRewrite,
+    CacheTrivialBounds,
+    LitnumBound,
 }
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum VdBsqManeuverCall {
     Diff,
     LitnumRewrite,
+    TrivialBounds,
+    LitnumBound,
 }
 
 impl VdBsqManeuverCall {
